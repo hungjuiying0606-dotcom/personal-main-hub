@@ -64,10 +64,11 @@
         {
           "id": "osaka-20260705",
           "title": "20260705大阪",
-          "description": "2026 大阪購物與在庫查詢手冊，包含個人尺碼、臨空城及 Montbell 資訊",
-          "status": "source-only",
-          "homepageState": "coming-soon",
-          "order": 10
+          "description": "2026 大阪購物與在庫查詢手冊，整理臨空城、Montbell 與市區商店資訊",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://hungjuiying0606-dotcom.github.io/osaka-20260705/"
         }
       ]
     },
