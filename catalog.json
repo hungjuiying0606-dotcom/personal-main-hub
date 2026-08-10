@@ -32,6 +32,15 @@
           "homepageState": "linked",
           "order": 30,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-arcade-hall-of-fame/"
+        },
+        {
+          "id": "juiying-teaching-channel",
+          "title": "Juiying 教學頻道",
+          "description": "理化、世界名人堂與課堂教學相關影片頻道",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 40,
+          "url": "https://www.youtube.com/@Juiying-t8i9y"
         }
       ]
     },
