@@ -23,6 +23,15 @@
           "homepageState": "linked",
           "order": 20,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
+        },
+        {
+          "id": "classroom-arcade-hall-of-fame",
+          "title": "Classroom Arcade 教室遊樂場",
+          "description": "世界名人堂課程使用的教室互動遊戲與答題競賽平台",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 30,
+          "url": "https://hungjuiying0606-dotcom.github.io/classroom-arcade-hall-of-fame/"
         }
       ]
     },
