@@ -1,0 +1,78 @@
+{
+  "lastUpdated": "2026-08-10",
+  "categories": [
+    {
+      "id": "teaching",
+      "title": "教學",
+      "order": 10,
+      "sites": [
+        {
+          "id": "naturelab",
+          "title": "NatureLab",
+          "description": "台灣國中理化互動學習與教學平台",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://naturelab-science-tw.hungjuiying0606.chatgpt.site/#portal"
+        },
+        {
+          "id": "classbuddy-classroom-toolbox",
+          "title": "ClassBuddy 班級互動工具箱",
+          "description": "提供班級抽籤、分組、計時、噪音觀測、學生名單與小組計分的教學工具",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 20,
+          "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
+        }
+      ]
+    },
+    {
+      "id": "investing",
+      "title": "理財",
+      "order": 20,
+      "sites": []
+    },
+    {
+      "id": "health",
+      "title": "健康",
+      "order": 30,
+      "sites": []
+    },
+    {
+      "id": "travel",
+      "title": "旅遊",
+      "order": 40,
+      "sites": [
+        {
+          "id": "osaka-20260705",
+          "title": "20260705大阪",
+          "description": "2026 大阪購物與在庫查詢手冊，包含個人尺碼、臨空城及 Montbell 資訊",
+          "status": "source-only",
+          "homepageState": "coming-soon",
+          "order": 10
+        }
+      ]
+    },
+    {
+      "id": "computer",
+      "title": "電腦",
+      "order": 50,
+      "sites": [
+        {
+          "id": "voice-cloner-agent",
+          "title": "Agent 代理複製你的聲音",
+          "description": "使用 VoxCPM2 在本機錄製參考聲音並生成語音的 AI Agent 工具包",
+          "status": "source-only",
+          "homepageState": "coming-soon",
+          "order": 10
+        }
+      ]
+    },
+    {
+      "id": "other",
+      "title": "其他",
+      "order": 90,
+      "sites": []
+    }
+  ]
+}
