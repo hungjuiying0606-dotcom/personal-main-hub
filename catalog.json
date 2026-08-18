@@ -25,12 +25,30 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#portal"
         },
         {
+          "id": "naturelab-book-selector",
+          "title": "按照課本進度學習",
+          "description": "選擇冊別與章節，依照學校課本進度學習。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 30,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#book-selector"
+        },
+        {
+          "id": "naturelab-senior-review",
+          "title": "九年級複習",
+          "description": "選擇冊別與章節，依需要複習學過的內容。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 40,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#senior-entry"
+        },
+        {
           "id": "classbuddy-classroom-toolbox",
           "title": "ClassBuddy 班級互動工具箱",
           "description": "提供班級抽籤、分組、計時、噪音觀測、學生名單與小組計分的教學工具",
           "status": "active",
           "homepageState": "linked",
-          "order": 30,
+          "order": 50,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
         },
         {
@@ -39,10 +57,11 @@
           "description": "世界名人堂課程使用的教室互動遊戲與答題競賽平台",
           "status": "active",
           "homepageState": "linked",
-          "order": 40,
+          "order": 60,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-arcade-hall-of-fame/"
         }
       ]
+
 
     },
     {
