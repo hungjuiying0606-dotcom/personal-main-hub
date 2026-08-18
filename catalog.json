@@ -43,24 +43,25 @@
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
         },
         {
-          "id": "naturelab",
-          "title": "教師派發任務",
-          "description": "開始進行課程管理，查看學生學習紀錄",
-          "status": "active",
-          "homepageState": "linked",
-          "order": 50,
-          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#portal"
-        },
-        {
           "id": "classroom-arcade-hall-of-fame",
           "title": "Classroom Arcade 教室遊樂場",
           "description": "世界名人堂課程使用的教室互動遊戲與答題競賽平台",
           "status": "active",
           "homepageState": "linked",
-          "order": 60,
+          "order": 50,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-arcade-hall-of-fame/"
+        },
+        {
+          "id": "naturelab",
+          "title": "教師派發任務",
+          "description": "開始進行課程管理，查看學生學習紀錄",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 60,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#portal"
         }
       ]
+
 
 
 
