@@ -1,11 +1,29 @@
 {
-  "lastUpdated": "2026-08-10",
+  "lastUpdated": "2026-08-18",
   "categories": [
     {
       "id": "teaching",
       "title": "教學",
       "order": 10,
       "sites": [
+        {
+          "id": "naturelab-book-selector",
+          "title": "按照課本進度學習",
+          "description": "選擇冊別與章節，依照學校課本進度學習。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 5,
+          "url": "https://naturelab-science-tw.hungjuiying0606.chatgpt.site/#book-selector"
+        },
+        {
+          "id": "naturelab-senior-review",
+          "title": "九年級複習",
+          "description": "選擇冊別與章節，依需要複習學過的內容。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 8,
+          "url": "https://naturelab-science-tw.hungjuiying0606.chatgpt.site/#senior-entry"
+        },
         {
           "id": "naturelab",
           "title": "NatureLab",
