@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>凸透鏡光路與焦距探索實驗室 | 113會考真題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .nav-link-btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #8ed8f8;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      background: #fafcfe;
+      cursor: crosshair;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas#opticsCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      pointer-events: none;
+    }
+
+    /* Quick Preset Buttons Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-val {
+      font-family: 'JetBrains Mono', monospace;
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    input[type="range"].custom-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    /* Status Display */
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #fffbeb;
+      border: 2px dashed #f59e0b;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #92400e;
+      text-align: center;
+    }
+
+    /* 113 Exam Challenge Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #ff7082;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-img-box {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-desc {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+    <nav class="nav-links">
+      <a href="review-hub.html" class="nav-link-btn">📚 回九年級複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>凸透鏡光路與焦距探索實驗室（113會考第5題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>✨</span> 幾何光學射線追蹤模擬器 (Ray Tracing)
+          </div>
+          <span style="font-size:0.75rem; font-weight:900; background:#fff; padding:0.2rem 0.6rem; border-radius:99px; border:1.5px solid var(--primary);">
+            即時運算
+          </span>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="opticsCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：在畫布左側直接用滑鼠／手指拖曳「光源點 P」試試看！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵定位：</span>
+          <button class="preset-btn" onclick="applyPreset('at_f')">🔥 位於焦點上 (p = 10cm · 會考真題)</button>
+          <button class="preset-btn" onclick="applyPreset('outside_2f')">📷 物在 2f 外 (照相機)</button>
+          <button class="preset-btn" onclick="applyPreset('at_2f')">📐 物在 2f 上 (等大)</button>
+          <button class="preset-btn" onclick="applyPreset('between_f_2f')">📽️ 物在 f~2f 間 (投影機)</button>
+          <button class="preset-btn" onclick="applyPreset('inside_f')">🔍 物在焦點內 (放大鏡)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Control Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 實驗參數控制
+          </div>
+
+          <!-- 物距 p -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>物距 p (光源 P 距鏡心)</span>
+              <span class="control-val" id="pValDisplay">10.0 cm</span>
+            </div>
+            <input type="range" class="custom-slider" id="pSlider" min="2" max="35" step="0.5" value="10">
+          </div>
+
+          <!-- 焦距 f -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>透鏡焦距 f</span>
+              <span class="control-val" id="fValDisplay">10.0 cm</span>
+            </div>
+            <input type="range" class="custom-slider" id="fSlider" min="5" max="20" step="1" value="10">
+          </div>
+
+          <!-- 透鏡種類 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>透鏡類型</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; margin-top:0.3rem;">
+              <button class="preset-btn active" id="btnConvex" onclick="setLensType('convex')">凸透鏡 (會聚)</button>
+              <button class="preset-btn" id="btnConcave" onclick="setLensType('concave')">凹透鏡 (發散)</button>
+            </div>
+          </div>
+
+          <!-- 光線模式 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>光束顯示模式</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; margin-top:0.3rem;">
+              <button class="preset-btn active" id="btnMultiRays" onclick="setRayMode('multi')">🌟 多發散光束</button>
+              <button class="preset-btn" id="btn3KeyRays" onclick="setRayMode('three')">📐 3大特殊光線</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 成像光學數據
+          </div>
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">像距 q</div>
+              <div class="status-item-val" id="qValDisplay">平行 (∞)</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">放大倍率 m</div>
+              <div class="status-item-val" id="magValDisplay">—</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            ⚡ 【物在焦點上 (p = f)】：折射光平行主軸射出，不成像（探照燈原理）！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 113 Exam Question Challenge -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">113 年國中教育會考 第 36 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：哪一個透鏡的焦距最可能為 10 cm？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#dc2626; background:#fee2e2; border:1.5px solid #dc2626; padding:0.3rem 0.7rem; border-radius:99px;">
+          全台通過率僅 33% · 高鑑別度難題
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：已知下列各選項的示意圖，表示由透鏡主軸上 <strong>P 點（距離鏡心 10 cm）</strong> 發射的光線，經過透鏡後的偏折情形。請點選下方選項親自檢驗：
+      </p>
+
+      <!-- 4 Option Cards -->
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamOption('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-img-box">
+            <svg width="100" height="60" viewBox="0 0 100 60">
+              <line x1="0" y1="30" x2="100" y2="30" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Convex Lens -->
+              <path d="M 50,5 Q 56,30 50,55 Q 44,30 50,5 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="1.5"/>
+              <!-- Point P at x=20 -->
+              <circle cx="20" cy="30" r="3" fill="#ef4444"/>
+              <text x="20" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">P (10cm)</text>
+              <!-- Diverging rays after lens -->
+              <line x1="20" y1="30" x2="50" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="20" y1="30" x2="50" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="15" x2="95" y2="5" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="45" x2="95" y2="55" stroke="#ef4444" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="option-desc">凸透鏡 · 折射後發散</div>
+        </div>
+
+        <!-- Option B (Correct) -->
+        <div class="option-card" onclick="testExamOption('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-img-box">
+            <svg width="100" height="60" viewBox="0 0 100 60">
+              <line x1="0" y1="30" x2="100" y2="30" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Convex Lens -->
+              <path d="M 50,5 Q 56,30 50,55 Q 44,30 50,5 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="1.5"/>
+              <!-- Point P at x=20 -->
+              <circle cx="20" cy="30" r="3" fill="#ef4444"/>
+              <text x="20" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">P (10cm)</text>
+              <!-- Parallel rays after lens -->
+              <line x1="20" y1="30" x2="50" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="20" y1="30" x2="50" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="15" x2="95" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="45" x2="95" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="option-desc">凸透鏡 · 折射後平行主軸</div>
+        </div>
+
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamOption('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-img-box">
+            <svg width="100" height="60" viewBox="0 0 100 60">
+              <line x1="0" y1="30" x2="100" y2="30" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Convex Lens -->
+              <path d="M 40,5 Q 46,30 40,55 Q 34,30 40,5 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="1.5"/>
+              <circle cx="15" cy="30" r="3" fill="#ef4444"/>
+              <text x="15" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">P (10cm)</text>
+              <!-- Converges at 20cm (x=80) -->
+              <line x1="15" y1="30" x2="40" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="15" y1="30" x2="40" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="40" y1="15" x2="80" y2="30" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="40" y1="45" x2="80" y2="30" stroke="#ef4444" stroke-width="1.2"/>
+              <text x="80" y="44" font-size="9" font-weight="bold" fill="#0284c7" text-anchor="middle">20cm</text>
+            </svg>
+          </div>
+          <div class="option-desc">凸透鏡 · 會聚於 20cm 處</div>
+        </div>
+
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamOption('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-img-box">
+            <svg width="100" height="60" viewBox="0 0 100 60">
+              <line x1="0" y1="30" x2="100" y2="30" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Concave Lens -->
+              <path d="M 46,5 Q 50,30 46,55 L 54,55 Q 50,30 54,5 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="1.5"/>
+              <circle cx="20" cy="30" r="3" fill="#ef4444"/>
+              <text x="20" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">P (10cm)</text>
+              <!-- Concave parallel rays -->
+              <line x1="20" y1="30" x2="50" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="20" y1="30" x2="50" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="15" x2="95" y2="15" stroke="#ef4444" stroke-width="1.2"/>
+              <line x1="50" y1="45" x2="95" y2="45" stroke="#ef4444" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="option-desc">凹透鏡 · 平行射出</div>
+        </div>
+      </div>
+
+      <!-- Explanation Box -->
+      <div class="exam-explanation-box" id="explanationBox">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitle">
+          題目詳解
+        </h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContent">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 幾何光學互動教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    // State
+    let lensType = 'convex'; // 'convex' | 'concave'
+    let rayMode = 'multi';   // 'multi' | 'three'
+    let focalLength = 10;    // cm
+    let objectDist = 10;     // cm (物距 p)
+
+    const canvas = document.getElementById('opticsCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const pSlider = document.getElementById('pSlider');
+    const fSlider = document.getElementById('fSlider');
+    const pValDisplay = document.getElementById('pValDisplay');
+    const fValDisplay = document.getElementById('fValDisplay');
+    const qValDisplay = document.getElementById('qValDisplay');
+    const magValDisplay = document.getElementById('magValDisplay');
+    const natureBanner = document.getElementById('natureBanner');
+
+    let isDragging = false;
+
+    // Resize canvas
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // Draw Simulation
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2;
+      const scale = w / 60; // 60 cm full width scale
+
+      // 1. Grid & Optical Axis
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += scale * 5) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+
+      // Main Axis
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, cy);
+      ctx.lineTo(w, cy);
+      ctx.stroke();
+
+      // Axis Marks (F, 2F)
+      const fPx = focalLength * scale;
+      drawAxisMark(cx - fPx, cy, 'F', '#3b82f6');
+      drawAxisMark(cx - 2 * fPx, cy, '2F', '#3b82f6');
+      drawAxisMark(cx + fPx, cy, "F'", '#3b82f6');
+      drawAxisMark(cx + 2 * fPx, cy, "2F'", '#3b82f6');
+
+      // 2. Draw Lens
+      const lensHalfH = 120;
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#0284c7';
+      ctx.fillStyle = 'rgba(186, 230, 253, 0.4)';
+
+      if (lensType === 'convex') {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - lensHalfH);
+        ctx.quadraticCurveTo(cx + 18, cy, cx, cy - lensHalfH);
+        ctx.quadraticCurveTo(cx - 18, cy, cx, cy - lensHalfH);
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(cx - 12, cy - lensHalfH);
+        ctx.lineTo(cx + 12, cy - lensHalfH);
+        ctx.quadraticCurveTo(cx, cy, cx + 12, cy + lensHalfH);
+        ctx.lineTo(cx - 12, cy + lensHalfH);
+        ctx.quadraticCurveTo(cx, cy, cx - 12, cy - lensHalfH);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Lens Center Line
+      ctx.strokeStyle = 'rgba(2, 132, 199, 0.5)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - lensHalfH - 10);
+      ctx.lineTo(cx, cy + lensHalfH + 10);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 3. Object Point P
+      const pPx = objectDist * scale;
+      const px = cx - pPx;
+      const py = cy; // point source on axis
+
+      // Draw Rays from P
+      ctx.lineWidth = 1.8;
+
+      if (rayMode === 'multi') {
+        // Multi Rays from Point P
+        const angles = [-0.45, -0.3, -0.15, 0.15, 0.3, 0.45];
+        angles.forEach(ang => {
+          const rayH = Math.tan(ang) * pPx;
+          if (Math.abs(rayH) < lensHalfH - 10) {
+            drawRayFromP(px, py, cx, cy + rayH, scale);
+          }
+        });
+      } else {
+        // 3 Key Rays
+        // 1. Ray through center (Blue)
+        ctx.strokeStyle = '#2563eb';
+        ctx.beginPath();
+        ctx.moveTo(px, py - 30);
+        ctx.lineTo(cx, cy);
+        ctx.lineTo(cx + 400, cy + (30 / pPx) * 400);
+        ctx.stroke();
+
+        // 2. Parallel ray (Red)
+        ctx.strokeStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(px, py - 30);
+        ctx.lineTo(cx, cy - 30);
+        if (lensType === 'convex') {
+          ctx.lineTo(cx + fPx, cy);
+          ctx.lineTo(cx + 400, cy + (30 / fPx) * (400 - fPx));
+        } else {
+          ctx.lineTo(cx + 400, cy - 30 - (30 / fPx) * 400);
+        }
+        ctx.stroke();
+      }
+
+      // Draw Point P Glow & Marker
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // P Label
+      ctx.fillStyle = '#1e293b';
+      ctx.font = 'bold 13px Noto Sans TC, sans-serif';
+      ctx.fillText(`P (${objectDist.toFixed(1)} cm)`, px - 25, py + 22);
+
+      // Update UI Data
+      updateDataDisplay();
+    }
+
+    function drawAxisMark(x, y, label, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = 'bold 11px Outfit, sans-serif';
+      ctx.fillText(label, x - 6, y - 8);
+    }
+
+    function drawRayFromP(px, py, lx, ly, scale) {
+      // Incident ray from P to Lens (Red)
+      ctx.strokeStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(lx, ly);
+      ctx.stroke();
+
+      // Refracted ray calculations
+      const p = objectDist;
+      const f = focalLength;
+      const yRel = ly - (container.clientHeight / 2);
+
+      if (lensType === 'convex') {
+        if (Math.abs(p - f) < 0.05) {
+          // Exactly at focal point (PARALLEL TO MAIN AXIS!) -> 113 Exam Q5!
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(container.clientWidth, ly);
+          ctx.stroke();
+        } else if (p > f) {
+          // Real Image (Converging)
+          const q = (p * f) / (p - f);
+          const qPx = q * scale;
+          const imgX = lx + qPx;
+          const imgY = container.clientHeight / 2;
+
+          ctx.strokeStyle = '#10b981';
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(imgX, imgY);
+          ctx.lineTo(container.clientWidth, imgY - (yRel / qPx) * (container.clientWidth - imgX));
+          ctx.stroke();
+        } else {
+          // Virtual Image (Diverging)
+          const q = (p * f) / (f - p);
+          const qPx = q * scale;
+          const virtX = lx - qPx;
+          const virtY = container.clientHeight / 2;
+
+          ctx.strokeStyle = '#10b981';
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(container.clientWidth, ly + (yRel / qPx) * (container.clientWidth - lx));
+          ctx.stroke();
+
+          ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(virtX, virtY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      } else {
+        // Concave Lens
+        const q = (p * f) / (p + f);
+        const qPx = q * scale;
+        const virtX = lx - qPx;
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.moveTo(lx, ly);
+        ctx.lineTo(container.clientWidth, ly + (yRel / qPx) * (container.clientWidth - lx));
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(lx, ly);
+        ctx.lineTo(virtX, container.clientHeight / 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    function updateDataDisplay() {
+      pValDisplay.textContent = `${objectDist.toFixed(1)} cm`;
+      fValDisplay.textContent = `${focalLength.toFixed(1)} cm`;
+
+      const p = objectDist;
+      const f = focalLength;
+
+      if (lensType === 'convex') {
+        if (Math.abs(p - f) < 0.05) {
+          qValDisplay.textContent = '平行 (∞)';
+          magValDisplay.textContent = '不成像';
+          natureBanner.innerHTML = '⚡ <strong>【物在焦點上 (p = f)】</strong>：由焦點發出的光線，折射後<strong>完全平行主軸射出</strong>（探照燈原理，即會考第 5 題核心）！';
+          natureBanner.style.background = '#fef08a';
+          natureBanner.style.borderColor = '#ca8a04';
+        } else if (p > 2 * f) {
+          const q = (p * f) / (p - f);
+          const m = (q / p).toFixed(2);
+          qValDisplay.textContent = `${q.toFixed(1)} cm`;
+          magValDisplay.textContent = `${m}x`;
+          natureBanner.innerHTML = `📷 <strong>【物在 2f 外 (p > ${2*f}cm)】</strong>：成像於 f ~ 2f 間（q = ${q.toFixed(1)}cm），形成<strong>倒立、縮小、實像</strong>（照相機原理）。`;
+          natureBanner.style.background = '#f0fdf4';
+          natureBanner.style.borderColor = '#16a34a';
+        } else if (Math.abs(p - 2 * f) < 0.05) {
+          qValDisplay.textContent = `${(2*f).toFixed(1)} cm`;
+          magValDisplay.textContent = '1.00x';
+          natureBanner.innerHTML = `📐 <strong>【物在 2f 上 (p = ${2*f}cm)】</strong>：成像於另一側 2f 處，形成<strong>倒立、等大、實像</strong>。`;
+          natureBanner.style.background = '#f0fdf4';
+          natureBanner.style.borderColor = '#16a34a';
+        } else if (p > f && p < 2 * f) {
+          const q = (p * f) / (p - f);
+          const m = (q / p).toFixed(2);
+          qValDisplay.textContent = `${q.toFixed(1)} cm`;
+          magValDisplay.textContent = `${m}x`;
+          natureBanner.innerHTML = `📽️ <strong>【物在 f ~ 2f 間】</strong>：成像於 2f 外（q = ${q.toFixed(1)}cm），形成<strong>倒立、放大、實像</strong>（投影機原理）。`;
+          natureBanner.style.background = '#eff6ff';
+          natureBanner.style.borderColor = '#2563eb';
+        } else {
+          const q = (p * f) / (f - p);
+          const m = (q / p).toFixed(2);
+          qValDisplay.textContent = `虛像 ${q.toFixed(1)} cm`;
+          magValDisplay.textContent = `${m}x`;
+          natureBanner.innerHTML = '🔍 <strong>【物在焦點內 (p < f)】</strong>：折射光發散，反向延長在物體同側形成<strong>正立、放大、虛像</strong>（放大鏡原理）。';
+          natureBanner.style.background = '#faf5ff';
+          natureBanner.style.borderColor = '#9333ea';
+        }
+      } else {
+        const q = (p * f) / (p + f);
+        const m = (q / p).toFixed(2);
+        qValDisplay.textContent = `虛像 ${q.toFixed(1)} cm`;
+        magValDisplay.textContent = `${m}x`;
+        natureBanner.innerHTML = '👓 <strong>【凹透鏡成像】</strong>：凹透鏡對光線具發散作用，無論物距為何，皆形成<strong>正立、縮小、虛像</strong>（近視眼鏡原理）。';
+        natureBanner.style.background = '#f0f9ff';
+        natureBanner.style.borderColor = '#0284c7';
+      }
+    }
+
+    // Sliders
+    pSlider.addEventListener('input', (e) => {
+      objectDist = parseFloat(e.target.value);
+      draw();
+    });
+
+    fSlider.addEventListener('input', (e) => {
+      focalLength = parseFloat(e.target.value);
+      draw();
+    });
+
+    // Mouse/Touch Drag on Canvas
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return (clientX - rect.left);
+    }
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      handleDrag(e);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) handleDrag(e);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      handleDrag(e);
+    }, { passive: false });
+
+    window.addEventListener('touchmove', (e) => {
+      if (isDragging) handleDrag(e);
+    }, { passive: false });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    function handleDrag(e) {
+      const posX = getPointerPos(e);
+      const cx = container.clientWidth / 2;
+      const scale = container.clientWidth / 60;
+      let dist = (cx - posX) / scale;
+
+      if (dist < 2) dist = 2;
+      if (dist > 35) dist = 35;
+
+      objectDist = dist;
+      pSlider.value = dist;
+      draw();
+    }
+
+    // Presets
+    window.applyPreset = function(type) {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (type === 'at_f') {
+        lensType = 'convex';
+        focalLength = 10;
+        objectDist = 10;
+      } else if (type === 'outside_2f') {
+        lensType = 'convex';
+        focalLength = 10;
+        objectDist = 25;
+      } else if (type === 'at_2f') {
+        lensType = 'convex';
+        focalLength = 10;
+        objectDist = 20;
+      } else if (type === 'between_f_2f') {
+        lensType = 'convex';
+        focalLength = 10;
+        objectDist = 15;
+      } else if (type === 'inside_f') {
+        lensType = 'convex';
+        focalLength = 10;
+        objectDist = 6;
+      }
+      pSlider.value = objectDist;
+      fSlider.value = focalLength;
+      document.getElementById('btnConvex').classList.add('active');
+      document.getElementById('btnConcave').classList.remove('active');
+      draw();
+    };
+
+    window.setLensType = function(type) {
+      lensType = type;
+      if (type === 'convex') {
+        document.getElementById('btnConvex').classList.add('active');
+        document.getElementById('btnConcave').classList.remove('active');
+      } else {
+        document.getElementById('btnConcave').classList.add('active');
+        document.getElementById('btnConvex').classList.remove('active');
+      }
+      draw();
+    };
+
+    window.setRayMode = function(mode) {
+      rayMode = mode;
+      if (mode === 'multi') {
+        document.getElementById('btnMultiRays').classList.add('active');
+        document.getElementById('btn3KeyRays').classList.remove('active');
+      } else {
+        document.getElementById('btn3KeyRays').classList.add('active');
+        document.getElementById('btnMultiRays').classList.remove('active');
+      }
+      draw();
+    };
+
+    // 113 Exam Challenge
+    window.testExamOption = function(opt, evt) {
+      const expBox = document.getElementById('explanationBox');
+      const expTitle = document.getElementById('expTitle');
+      const expContent = document.getElementById('expContent');
+      const cards = document.querySelectorAll('.option-card');
+
+      cards.forEach(c => {
+        c.classList.remove('selected-correct', 'selected-wrong');
+      });
+
+      if (opt === 'B') {
+        // Correct Answer
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(B)】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【會考核心考點拆解】</strong><br>
+          1. 根據<strong>光路可逆性</strong>：平行主軸入射的光線，經凸透鏡折射後會聚於焦點 $F$；反之，<strong>由焦點 $F$ 發出的光線，經凸透鏡折射後必「平行主軸射出」</strong>。<br>
+          2. 圖中 $P$ 點距離鏡心為 $10\\text{ cm}$，光線穿過凸透鏡後完全平行於主軸射出，代表 $P$ 點恰好就是焦點，因此<strong>此凸透鏡焦距 $f = 10\\text{ cm}$</strong>！
+        `;
+        applyPreset('at_f');
+      } else if (opt === 'A') {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項 (A) 分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `
+          <strong>為什麼 (A) 不正確？</strong><br>
+          凸透鏡對光線具有「會聚作用」。由 $P$ 點發出的光線穿過凸透鏡後反而發散，這是不符合凸透鏡基本光學特性的錯誤光路。
+        `;
+      } else if (opt === 'C') {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項 (C) 分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `
+          <strong>為什麼 (C) 的焦距不是 10 cm？</strong><br>
+          圖中光線從 $P$ 點（物距 $p=10\\text{ cm}$）出發，折射後在右側 $20\\text{ cm}$ 處會聚成實像（像距 $q=20\\text{ cm}$）。<br>
+          代入透鏡成像公式 $\\frac{1}{f} = \\frac{1}{p} + \\frac{1}{q} = \\frac{1}{10} + \\frac{1}{20} = \\frac{3}{20}$，可算得焦距 $f = \\frac{20}{3} \\approx 6.67\\text{ cm}$，而非 $10\\text{ cm}$。
+        `;
+      } else if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項 (D) 分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `
+          <strong>為什麼 (D) 不正確？</strong><br>
+          圖中為「凹透鏡」。凹透鏡具有發散光線的特性，由實物點發出的光線經過凹透鏡折射後必然更加發散，不可能折射成平行光。
+        `;
+      }
+
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>
