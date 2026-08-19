@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>海鯤號潛望鏡 ✕ 雙45°平面鏡光路實驗室 | 第62頁第2題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #bae6fd;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#periscopeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #38bdf8;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #38bdf8;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Eyepiece HUD Box */
+    .hud-eyepiece {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      background: #0284c7;
+      margin: 0.4rem auto;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    .hud-crosshair-h {
+      position: absolute;
+      width: 100%;
+      height: 1.5px;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .hud-crosshair-v {
+      position: absolute;
+      height: 100%;
+      width: 1.5px;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .hud-target-img {
+      font-size: 3rem;
+      transition: all 0.2s;
+    }
+
+    .control-row {
+      margin-bottom: 0.8rem;
+    }
+
+    .control-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-slider {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #e0f2fe;
+      border: 2px dashed #0284c7;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0369a1;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="periscope-submarine-lab.html" class="nav-link-btn" style="background:#bae6fd;">🚢 潛望鏡雙反射</a>
+      <a href="spoon-curved-mirror-lab.html" class="nav-link-btn" style="background:#e0e7ff;">🥄 湯匙凹凸面鏡</a>
+      <a href="sugar-refraction-curve-lab.html" class="nav-link-btn" style="background:#fed7aa;">🧪 糖水光線彎曲</a>
+      <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 介質波長色散</a>
+      <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="background:#a5f3fc;">👁️ 角膜塑型聚焦</a>
+      <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色紙網格吸光</a>
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>海鯤號潛望鏡 ✕ 雙45°平面鏡光路實驗室（第62頁第2題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🚢</span> 海鯤號潛艦潛望鏡雙反射射線追蹤 (45° 平面鏡)
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="periscopeCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：光線撞擊鏡 A 向下轉 90°（D 路徑），撞擊鏡 B 向前轉 90° 進入眼睛！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵標準：</span>
+          <button class="preset-btn active" onclick="setMirrorAngles(45, 45)">⚓ 標準 45° 雙鏡 (D 路徑 · 等大正立成像)</button>
+          <button class="preset-btn" onclick="setMirrorAngles(30, 45)">⚠️ 鏡 A 偏角 30° (光線偏離鏡筒壁)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Eyepiece View Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>👁️</span> 軍官潛望鏡目鏡視野 HUD
+          </div>
+          <div class="hud-eyepiece">
+            <div class="hud-crosshair-h"></div>
+            <div class="hud-crosshair-v"></div>
+            <div class="hud-target-img" id="hudTarget">🚢</div>
+          </div>
+          <div style="text-align:center; font-size:0.75rem; color:var(--text-muted); font-weight:700;">
+            兩次平面鏡反射 ➔ 像與原物一樣大、正立不顛倒！
+          </div>
+        </div>
+
+        <!-- Angle Adjustments Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📐</span> 鏡片角度調節
+          </div>
+          <div class="control-row">
+            <div class="control-label">
+              <span>平面鏡 A 角度</span>
+              <span id="dispAngleA" style="font-family:'JetBrains Mono'; font-weight:900;">45°</span>
+            </div>
+            <input type="range" id="sliderAngleA" class="control-slider" min="30" max="60" value="45" oninput="updateAngles()">
+          </div>
+
+          <div class="control-row">
+            <div class="control-label">
+              <span>平面鏡 B 角度</span>
+              <span id="dispAngleB" style="font-family:'JetBrains Mono'; font-weight:900;">45°</span>
+            </div>
+            <input type="range" id="sliderAngleB" class="control-slider" min="30" max="60" value="45" oninput="updateAngles()">
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">光線路徑</div>
+              <div class="status-item-val" style="color:#0284c7;">D 路徑 ✅</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">成像大小</div>
+              <div class="status-item-val" style="color:#15803d;">與原物一樣大</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            ⚓ <strong>【平面鏡二次反射定律】</strong>：<br>
+            光線在鏡 A 轉向 90° 向下（<strong>D 路徑</strong>），在鏡 B 轉向 90° 進入眼睛。平面鏡成像<strong>永遠與原物一樣大</strong>（選項 D 正確）！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 62 頁 生活素養題 第 2 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：從潛望鏡觀看物體，光線所走的路徑和成像的大小為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#0284c7; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
+          平面鏡反射 ✕ 潛望鏡光路
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：臺灣自製的潛艦海鯤號即將下水測試，潛艦內的軍官可以用潛望鏡觀察水面上的動靜。小明對此很感興趣，就拆開了自己的玩具潛望鏡。他看到鏡筒內部有兩片平面鏡（如右圖中的 A、B）以 45 度角放在鏡筒的轉角。請問小明從潛望鏡觀看物體，光線所走的路徑和成像的大小，下列何者正確？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ2('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">C 路徑，像比原物小</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ2('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">C 路徑，像與原物一樣大</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ2('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">D 路徑，像比原物小</div>
+        </div>
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ2('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">D 路徑，像與原物一樣大 (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ2">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ2">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ2"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 潛望鏡光學與生活素養教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let angleA = 45;
+    let angleB = 45;
+
+    const canvas = document.getElementById('periscopeCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const sliderA = document.getElementById('sliderAngleA');
+    const sliderB = document.getElementById('sliderAngleB');
+    const dispAngleA = document.getElementById('dispAngleA');
+    const dispAngleB = document.getElementById('dispAngleB');
+    const hudTarget = document.getElementById('hudTarget');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function updateAngles() {
+      angleA = parseFloat(sliderA.value);
+      angleB = parseFloat(sliderB.value);
+      dispAngleA.textContent = `${angleA}°`;
+      dispAngleB.textContent = `${angleB}°`;
+
+      if (angleA === 45 && angleB === 45) {
+        hudTarget.style.display = 'block';
+        hudTarget.style.filter = 'none';
+      } else {
+        hudTarget.style.filter = 'blur(10px) brightness(0.2)';
+      }
+      draw();
+    }
+
+    function setMirrorAngles(a, b) {
+      sliderA.value = a;
+      sliderB.value = b;
+      updateAngles();
+    }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      // Waterline
+      const waterY = 130;
+      ctx.fillStyle = '#0369a1';
+      ctx.fillRect(0, waterY, w, h - waterY);
+
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, waterY);
+      ctx.lineTo(w, waterY);
+      ctx.stroke();
+
+      ctx.fillStyle = '#bae6fd';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('🌊 水面線', 20, waterY - 8);
+
+      // 1. Target Ship above water
+      const targetX = 60;
+      const targetY = 70;
+      ctx.font = '40px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🚢', targetX, targetY);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('水面目標 (軍艦)', targetX, targetY + 24);
+
+      // 2. Periscope Tube Structure
+      const tubeW = 44;
+      const pTopX = w * 0.46;
+      const pTopY = 40;
+      const pBottomY = h - 60;
+      const pEyeX = w * 0.78;
+
+      ctx.strokeStyle = '#64748b';
+      ctx.fillStyle = '#1e293b';
+      ctx.lineWidth = 3;
+
+      // Outer Periscope Body
+      ctx.beginPath();
+      // Top entrance
+      ctx.moveTo(pTopX - 40, pTopY);
+      ctx.lineTo(pTopX + tubeW, pTopY);
+      ctx.lineTo(pTopX + tubeW, pBottomY);
+      ctx.lineTo(pEyeX, pBottomY);
+      ctx.lineTo(pEyeX, pBottomY + tubeW);
+      ctx.lineTo(pTopX, pBottomY + tubeW);
+      ctx.lineTo(pTopX, pTopY + tubeW);
+      ctx.lineTo(pTopX - 40, pTopY + tubeW);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 3. Mirror A (Top Corner)
+      const mirrorACenterX = pTopX + tubeW / 2;
+      const mirrorACenterY = pTopY + tubeW / 2;
+      drawMirror(mirrorACenterX, mirrorACenterY, angleA, '平面鏡 A');
+
+      // 4. Mirror B (Bottom Corner)
+      const mirrorBCenterX = pTopX + tubeW / 2;
+      const mirrorBCenterY = pBottomY + tubeW / 2;
+      drawMirror(mirrorBCenterX, mirrorBCenterY, angleB, '平面鏡 B');
+
+      // 5. Military Observer Eye on the Right
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('👁️', pEyeX + 10, pBottomY + tubeW * 0.7);
+
+      ctx.fillStyle = '#ffd85c';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('軍官眼睛', pEyeX + 10, pBottomY + tubeW + 18);
+
+      // 6. Laser Raytracing Paths
+      // (a) Incident Ray from Target to Mirror A
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 3.5;
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(targetX + 25, mirrorACenterY);
+      ctx.lineTo(mirrorACenterX, mirrorACenterY);
+      ctx.stroke();
+
+      // (b) Reflected Ray at Mirror A
+      // Standard: 45 deg -> 90 deg downwards (D Path!)
+      const radA = (angleA * Math.PI) / 180;
+      const reflectAngleA = Math.PI - 2 * radA;
+      const rayLenA = pBottomY - pTopY;
+      const rayAEndX = mirrorACenterX + Math.cos(reflectAngleA) * rayLenA;
+      const rayAEndY = mirrorACenterY + Math.sin(reflectAngleA) * rayLenA;
+
+      ctx.beginPath();
+      ctx.moveTo(mirrorACenterX, mirrorACenterY);
+      ctx.lineTo(rayAEndX, rayAEndY);
+      ctx.stroke();
+
+      // Path Label D
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '900 16px Outfit, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('D 路徑 (反射向下)', mirrorACenterX - 12, (mirrorACenterY + mirrorBCenterY) / 2);
+
+      // Hypothetical C Path (straight through - dashed)
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(mirrorACenterX, mirrorACenterY);
+      ctx.lineTo(mirrorACenterX + 80, mirrorACenterY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('C 路徑 (直通·錯誤)', mirrorACenterX + 85, mirrorACenterY + 4);
+
+      // (c) Reflected Ray at Mirror B
+      if (angleA === 45) {
+        ctx.strokeStyle = '#fbbf24';
+        const radB = (angleB * Math.PI) / 180;
+        const reflectAngleB = 2 * radB - Math.PI / 2;
+        const rayLenB = pEyeX - mirrorBCenterX;
+        const rayBEndX = mirrorBCenterX + Math.cos(reflectAngleB) * rayLenB;
+        const rayBEndY = mirrorBCenterY + Math.sin(reflectAngleB) * rayLenB;
+
+        ctx.beginPath();
+        ctx.moveTo(mirrorBCenterX, mirrorBCenterY);
+        ctx.lineTo(rayBEndX, rayBEndY);
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    function drawMirror(cx, cy, deg, label) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate((deg * Math.PI) / 180);
+
+      // Mirror Glass
+      ctx.fillStyle = '#38bdf8';
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.fillRect(-22, -3, 44, 6);
+      ctx.strokeRect(-22, -3, 44, 6);
+
+      // Silver backing hatch
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      for (let x = -18; x <= 18; x += 6) {
+        ctx.beginPath();
+        ctx.moveTo(x, 3);
+        ctx.lineTo(x + 4, 7);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, cx + 18, cy - 8);
+    }
+
+    // Exam Handler
+    window.testExamQ2 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ2');
+      const expTitle = document.getElementById('expTitleQ2');
+      const expContent = document.getElementById('expContentQ2');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) D 路徑，像與原物一樣大】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【海鯤號潛望鏡生活素養題詳解】</strong><br>
+          1. <strong>光線行進路徑（D 路徑）</strong>：<br>
+             - 水面物體發出的光線進入潛望鏡上方開口，撞擊傾斜 $45^\\circ$ 的<strong>平面鏡 A</strong>，依反射定律轉折 $90^\\circ$ 垂直向下行進，即<strong>走路徑 D</strong>（非直通的 C 路徑）。<br>
+             - 接著撞擊底部的<strong>平面鏡 B</strong>，再次轉折 $90^\\circ$ 射入軍官眼睛。<br>
+          2. <strong>成像大小特徵（與原物一樣大）</strong>：<br>
+             - 平面鏡成像必為<strong>「等大虛像（與原物一樣大）」</strong>。<br>
+             - 兩片平行平面鏡連續反射兩次（負負得正），視野影像不僅<strong>正立不顛倒</strong>，大小也完全與原物一樣大！<br>
+          3. 故本題正解為 <strong>(D)</strong>！
+        `;
+        setMirrorAngles(45, 45);
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `光線在平面鏡 A 處會向下反射走 D 路徑（不會穿透走 C 路徑）。且平面鏡成像永遠是「等大」，絕不會縮小！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+      updateAngles();
+    }, 100);
+  </script>
+</body>
+</html>

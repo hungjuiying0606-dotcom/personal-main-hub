@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光亮湯匙面鏡 ✕ 凹面聚光 vs 凸面廣角探索實驗室 | 第62頁第1題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #e0e7ff;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .spoon-side-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: #ffffff;
+      padding: 0.3rem 0.5rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+    }
+
+    .spoon-tab {
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      border: 1.5px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: transparent;
+      color: var(--primary);
+      transition: all 0.15s;
+    }
+
+    .spoon-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#spoonCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #a5b4fc;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #a5b4fc;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .control-row {
+      margin-bottom: 0.8rem;
+    }
+
+    .control-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-slider {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0.6rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #f8fafc;
+      margin-top: 0.5rem;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #e0e7ff;
+      border: 2px dashed #4338ca;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #312e81;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #4f46e5;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="periscope-submarine-lab.html" class="nav-link-btn" style="background:#bae6fd;">🚢 潛望鏡雙反射</a>
+      <a href="spoon-curved-mirror-lab.html" class="nav-link-btn" style="background:#e0e7ff;">🥄 湯匙凹凸面鏡</a>
+      <a href="sugar-refraction-curve-lab.html" class="nav-link-btn" style="background:#fed7aa;">🧪 糖水光線彎曲</a>
+      <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 介質波長色散</a>
+      <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="background:#a5f3fc;">👁️ 角膜塑型聚焦</a>
+      <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色紙網格吸光</a>
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>光亮湯匙面鏡 ✕ 凹面聚光 vs 凸面廣角探索實驗室（第62頁第1題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🥄</span> 不鏽鋼湯匙面鏡成像模擬器
+          </div>
+          <div class="spoon-side-tabs">
+            <button class="spoon-tab active" id="tabSpoonJia" onclick="setSpoonSide('jia')">🥄 甲面 (盛湯凹面鏡·聚光)</button>
+            <button class="spoon-tab" id="tabSpoonYi" onclick="setSpoonSide('yi')">🥄 乙面 (湯匙背面凸面鏡·發散)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="spoonCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：拖曳右側物距滑桿；觀察甲面（凹面）如何「忽大忽小、忽正忽倒」！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 快速觀察：</span>
+          <button class="preset-btn active" onclick="applyPreset('concave-far')">🔍 甲面 2F 外 (倒立縮小實像)</button>
+          <button class="preset-btn" onclick="applyPreset('concave-mid')">🔍 甲面 F~2F 間 (倒立放大實像)</button>
+          <button class="preset-btn" onclick="applyPreset('concave-near')">🔍 甲面 F 內 (正立放大虛像·化妝鏡)</button>
+          <button class="preset-btn" onclick="applyPreset('convex')">🌐 乙面凸面 (永遠正立縮小·後視鏡)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Object Distance Control Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📏</span> 物距距離控制 (人臉到湯匙)
+          </div>
+          <div class="control-row">
+            <div class="control-label">
+              <span>物距 p</span>
+              <span id="dispDist" style="font-family:'JetBrains Mono'; font-weight:900;">50 cm (2F 外)</span>
+            </div>
+            <input type="range" id="objDist" class="control-slider" min="6" max="75" value="50" oninput="updateControls()">
+          </div>
+
+          <div class="toggle-row">
+            <span>顯示幾何光路射線 (Raytracing)</span>
+            <input type="checkbox" id="chkRays" checked onchange="draw()">
+          </div>
+        </div>
+
+        <!-- Image Properties Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 成像光學性質
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">成像方向</div>
+              <div class="status-item-val" id="dispOrientation" style="color:#b91c1c;">倒立 🙃</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">像的大小</div>
+              <div class="status-item-val" id="dispScale" style="color:#0284c7;">縮小 ▫️</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🥄 <strong>【甲面 (凹面鏡)】</strong>：<br>
+            物在 2F 外成<strong>倒立縮小實像</strong>；移至 F 內成<strong>正立放大虛像</strong>！因此能看到「<strong>忽大忽小、忽正立忽倒立</strong>」！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 62 頁 生活素養題 第 1 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：改變湯匙和自己的距離，可以在哪一面看到自己的像「忽大忽小，忽正立忽倒立」？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#4f46e5; background:#e0e7ff; border:1.5px solid #4f46e5; padding:0.3rem 0.7rem; border-radius:99px;">
+          面鏡成像 ✕ 凹面鏡全態規律
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：小秀新買了一支表面非常光亮的湯匙，如右圖，當她對著湯匙並改變湯匙和自己的距離時，可以在哪一面看到自己的像忽大忽小，忽正立忽倒立？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A (Correct) -->
+        <div class="option-card" onclick="testExamQ1('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">只有甲面 (盛湯凹面·正確)</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ1('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">只有乙面 (背面凸面)</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ1('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">甲、乙兩面均可</div>
+        </div>
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ1('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">甲、乙兩面均不可</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ1">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ1">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ1"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 面鏡光學與生活素養教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let spoonSide = 'jia'; // 'jia' (凹面鏡) | 'yi' (凸面鏡)
+    let objDistVal = 50;   // 6 to 75 (focal length f = 20)
+    const focalF = 20;
+
+    const canvas = document.getElementById('spoonCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const sliderDist = document.getElementById('objDist');
+    const dispDist = document.getElementById('dispDist');
+    const dispOrientation = document.getElementById('dispOrientation');
+    const dispScale = document.getElementById('dispScale');
+    const chkRays = document.getElementById('chkRays');
+    const natureBanner = document.getElementById('natureBanner');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function updateControls() {
+      objDistVal = parseFloat(sliderDist.value);
+      let desc = '';
+      if (spoonSide === 'jia') {
+        if (objDistVal > 40) desc = '(2F 外 · 遠距)';
+        else if (objDistVal === 40) desc = '(2F 處)';
+        else if (objDistVal > 20) desc = '(F ~ 2F 間 · 中距)';
+        else desc = '(F 內 · 極近距)';
+      }
+      dispDist.textContent = `${objDistVal} cm ${desc}`;
+      draw();
+    }
+
+    function setSpoonSide(side) {
+      spoonSide = side;
+      document.getElementById('tabSpoonJia').classList.toggle('active', side === 'jia');
+      document.getElementById('tabSpoonYi').classList.toggle('active', side === 'yi');
+      updateControls();
+    }
+
+    function applyPreset(preset) {
+      if (preset === 'concave-far') {
+        setSpoonSide('jia');
+        sliderDist.value = 52;
+      } else if (preset === 'concave-mid') {
+        setSpoonSide('jia');
+        sliderDist.value = 30;
+      } else if (preset === 'concave-near') {
+        setSpoonSide('jia');
+        sliderDist.value = 12;
+      } else if (preset === 'convex') {
+        setSpoonSide('yi');
+        sliderDist.value = 35;
+      }
+      updateControls();
+    }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const cy = h / 2;
+      const spoonX = w * 0.65;
+      const spoonRadius = 110;
+
+      // 1. Draw Optical Axis
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.moveTo(30, cy);
+      ctx.lineTo(w - 30, cy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 2. Draw Focal Points (F and 2F)
+      const pxPerCm = 3.8;
+      const fX = spoonX - focalF * pxPerCm;
+      const twoFX = spoonX - 2 * focalF * pxPerCm;
+
+      if (spoonSide === 'jia') {
+        // Concave Real F and 2F in front of mirror
+        drawFocalMark(fX, cy, '焦點 F (20cm)');
+        drawFocalMark(twoFX, cy, '2F (40cm)');
+      } else {
+        // Convex Virtual F behind mirror
+        const vFX = spoonX + focalF * pxPerCm;
+        drawFocalMark(vFX, cy, '虛焦點 F');
+      }
+
+      // 3. Draw Spoon Metallic Body & Curved Surface
+      ctx.save();
+      // Metallic Gradient
+      const metalGrad = ctx.createLinearGradient(spoonX - 40, cy - spoonRadius, spoonX + 40, cy + spoonRadius);
+      metalGrad.addColorStop(0, '#94a3b8');
+      metalGrad.addColorStop(0.3, '#f8fafc');
+      metalGrad.addColorStop(0.7, '#cbd5e1');
+      metalGrad.addColorStop(1, '#64748b');
+
+      ctx.fillStyle = metalGrad;
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3.5;
+
+      const curveSign = spoonSide === 'jia' ? 1 : -1; // jia: concave (curves left), yi: convex (curves right)
+      ctx.beginPath();
+      ctx.ellipse(spoonX, cy, 26, spoonRadius, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Spoon Handle
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(spoonX + 12, cy - 8, 80, 16);
+      ctx.strokeRect(spoonX + 12, cy - 8, 80, 16);
+
+      // Label on Spoon
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(spoonSide === 'jia' ? '甲面 (凹面鏡)' : '乙面 (凸面鏡)', spoonX, cy - spoonRadius - 15);
+      ctx.restore();
+
+      // 4. Object Position (Face Icon)
+      const objX = spoonX - objDistVal * pxPerCm;
+      const objHeight = 55;
+      drawFaceObject(objX, cy, objHeight, true, '👦 臉 (物體)');
+
+      // 5. Image Calculation & Raytracing
+      let isUpright = true;
+      let scaleFactor = 1;
+      let imgX = 0;
+      let isVirtual = false;
+
+      if (spoonSide === 'jia') {
+        // Concave Mirror
+        if (objDistVal > focalF) {
+          // Real Inverted Image
+          // 1/p + 1/q = 1/f -> q = (p*f)/(p - f)
+          const q = (objDistVal * focalF) / (objDistVal - focalF);
+          scaleFactor = q / objDistVal;
+          imgX = spoonX - q * pxPerCm;
+          isUpright = false;
+          isVirtual = false;
+        } else {
+          // Virtual Upright Magnified Image
+          const q = (objDistVal * focalF) / (focalF - objDistVal);
+          scaleFactor = q / objDistVal;
+          imgX = spoonX + q * pxPerCm;
+          isUpright = true;
+          isVirtual = true;
+        }
+      } else {
+        // Convex Mirror (1/p - 1/q = -1/f -> q = (p*f)/(p + f))
+        const q = (objDistVal * focalF) / (objDistVal + focalF);
+        scaleFactor = q / objDistVal;
+        imgX = spoonX + q * pxPerCm;
+        isUpright = true;
+        isVirtual = true;
+      }
+
+      // Clamp image display scale for visualization
+      scaleFactor = Math.min(Math.max(scaleFactor, 0.35), 2.2);
+
+      // Draw Reflected Image inside/near Spoon
+      if (imgX > 20 && imgX < w - 20) {
+        drawFaceImage(imgX, cy, objHeight * scaleFactor, isUpright, isVirtual);
+      }
+
+      // 6. Draw Raytracing Lines
+      if (chkRays.checked) {
+        drawRaytraces(objX, cy, objHeight, spoonX, spoonSide, fX, isUpright, imgX);
+      }
+
+      updateStatusBadges(isUpright, scaleFactor);
+    }
+
+    function drawFocalMark(x, cy, label) {
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(x, cy, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 11px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x, cy + 18);
+    }
+
+    function drawFaceObject(x, cy, h, isReal, label) {
+      ctx.save();
+      ctx.translate(x, cy);
+
+      // Arrow stem
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -h);
+      ctx.stroke();
+
+      // Face circle on top of arrow
+      ctx.fillStyle = '#ffd85c';
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, -h, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Eyes & Smile
+      ctx.fillStyle = '#203a5b';
+      ctx.beginPath();
+      ctx.arc(-5, -h - 2, 2, 0, Math.PI * 2);
+      ctx.arc(5, -h - 2, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#203a5b';
+      ctx.beginPath();
+      ctx.arc(0, -h + 2, 6, 0, Math.PI);
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, 0, -h - 24);
+      ctx.restore();
+    }
+
+    function drawFaceImage(x, cy, h, isUpright, isVirtual) {
+      ctx.save();
+      ctx.translate(x, cy);
+      if (!isUpright) ctx.scale(1, -1);
+
+      ctx.globalAlpha = isVirtual ? 0.75 : 0.95;
+
+      // Arrow stem
+      ctx.strokeStyle = isVirtual ? '#ec4899' : '#10b981';
+      ctx.lineWidth = 2.5;
+      if (isVirtual) ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -h);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Face circle
+      ctx.fillStyle = isVirtual ? '#fbcfe8' : '#bbf7d0';
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, -h, 14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Eyes & Smile
+      ctx.fillStyle = '#203a5b';
+      ctx.beginPath();
+      ctx.arc(-4, -h - 2, 1.8, 0, Math.PI * 2);
+      ctx.arc(4, -h - 2, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#203a5b';
+      ctx.beginPath();
+      ctx.arc(0, -h + 2, 5, 0, Math.PI);
+      ctx.stroke();
+
+      ctx.fillStyle = isVirtual ? '#ec4899' : '#10b981';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      let tag = isVirtual ? '✨ 虛像' : '📸 實像';
+      ctx.fillText(tag, 0, isUpright ? (-h - 20) : 22);
+      ctx.restore();
+    }
+
+    function drawRaytraces(ox, cy, oh, sx, side, fx, isUpright, ix) {
+      ctx.save();
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.6;
+
+      const objTopY = cy - oh;
+
+      // 1. Parallel Ray -> hits spoon -> reflects through Focus
+      ctx.beginPath();
+      ctx.moveTo(ox, objTopY);
+      ctx.lineTo(sx - 10, objTopY);
+      if (side === 'jia') {
+        ctx.lineTo(fx, cy);
+      } else {
+        ctx.lineTo(sx + 80, cy - (cy - objTopY) * 1.5);
+      }
+      ctx.stroke();
+
+      // 2. Central Ray -> hits mirror vertex -> reflects with equal angle
+      ctx.beginPath();
+      ctx.moveTo(ox, objTopY);
+      ctx.lineTo(sx - 10, cy);
+      if (side === 'jia') {
+        ctx.lineTo(ox, cy + oh);
+      } else {
+        ctx.lineTo(ox, cy + oh * 0.7);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function updateStatusBadges(isUpright, scaleFactor) {
+      if (isUpright) {
+        dispOrientation.textContent = '正立 😃';
+        dispOrientation.style.color = '#15803d';
+      } else {
+        dispOrientation.textContent = '倒立 🙃';
+        dispOrientation.style.color = '#b91c1c';
+      }
+
+      if (scaleFactor > 1.15) {
+        dispScale.textContent = '放大 🔍';
+        dispScale.style.color = '#7c3aed';
+      } else if (scaleFactor < 0.85) {
+        dispScale.textContent = '縮小 ▫️';
+        dispScale.style.color = '#0284c7';
+      } else {
+        dispScale.textContent = '等大 ⬛';
+        dispScale.style.color = '#ca8a04';
+      }
+
+      if (spoonSide === 'jia') {
+        natureBanner.innerHTML = `
+          🥄 <strong>【甲面 (盛湯面·凹面鏡)】</strong>：<br>
+          - <strong>遠距 (2F 外)</strong>：成倒立縮小實像。<br>
+          - <strong>中距 (F~2F)</strong>：成倒立放大實像。<br>
+          - <strong>極近 (F 內)</strong>：成<strong>正立放大虛像（化妝放大鏡）</strong>！<br>
+          因此能看到「<strong>忽大忽小、忽正立忽倒立</strong>」！
+        `;
+        natureBanner.style.background = '#e0e7ff';
+        natureBanner.style.borderColor = '#4338ca';
+        natureBanner.style.color = '#312e81';
+      } else {
+        natureBanner.innerHTML = `
+          🥄 <strong>【乙面 (背面·凸面鏡)】</strong>：<br>
+          無論距離多遠多近，<strong>永遠只能成「正立縮小虛像」</strong>（轉彎處後視鏡、便利商店防盜鏡），絕不可能倒立或放大！
+        `;
+        natureBanner.style.background = '#fee2e2';
+        natureBanner.style.borderColor = '#dc2626';
+        natureBanner.style.color = '#991b1b';
+      }
+    }
+
+    // Exam Handler
+    window.testExamQ1 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ1');
+      const expTitle = document.getElementById('expTitleQ1');
+      const expContent = document.getElementById('expContentQ1');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'A') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(A) 只有甲面】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【生活素養題第 1 題詳解】</strong><br>
+          1. <strong>甲面（盛湯面）為「凹面鏡」</strong>：<br>
+             - 凹面鏡具有<strong>會聚光線</strong>的功能。<br>
+             - 物在 $2F$ 外：倒立縮小實像。<br>
+             - 物在 $2F$ 上：倒立等大實像。<br>
+             - 物在 $F \\sim 2F$ 間：倒立放大實像。<br>
+             - 物在 $F$ 內：<strong>正立放大虛像</strong>！<br>
+             - 因此只有甲面能夠產生「<strong>忽大忽小、忽正立忽倒立</strong>」的成像變化！<br>
+          2. <strong>乙面（背面）為「凸面鏡」</strong>：<br>
+             - 凸面鏡發散光線，無論距離遠近，<strong>永遠只能成正立縮小虛像</strong>。<br>
+          3. 故本題正解為 <strong>(A)</strong>！
+        `;
+        setSpoonSide('jia');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `乙面為凸面鏡，永遠只能成正立縮小虛像，無法忽大忽小忽正忽倒。只有甲面（凹面鏡）具有會聚光線功能，隨距離改變會成倒立實像或正立虛像。`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+      applyPreset('concave-far');
+    }, 100);
+  </script>
+</body>
+</html>
