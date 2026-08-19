@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>凹透鏡發散 ✕ 水位折射光斑實驗室 | 第59頁第12題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #bbf7d0;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      background: #0f172a;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas#refractCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: ns-resize;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #4ade80;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #4ade80;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-val {
+      font-family: 'JetBrains Mono', monospace;
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    input[type="range"].custom-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.8rem;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #f8fafc;
+      margin-bottom: 0.5rem;
+    }
+
+    .toggle-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #15803d;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #dcfce7;
+      border: 2px dashed #15803d;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #14532d;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #10b981;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>凹透鏡發散 ✕ 水位折射光斑實驗室（第59頁第12題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔬</span> 凹透鏡發散光束與容器水位折射光斑模擬
+          </div>
+          <span style="font-size:0.75rem; font-weight:900; background:#fff; padding:0.2rem 0.6rem; border-radius:99px; border:1.5px solid var(--primary);">
+            界面二次折射
+          </span>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="refractCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：可以在水槽區域上下拖曳滑鼠／手指，直接調節水槽內的「水位高度」！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵狀態：</span>
+          <button class="preset-btn active" id="btnFull" onclick="setWaterLevel(100)">🌊 容器注滿水 (X ≈ 6.5 cm)</button>
+          <button class="preset-btn" id="btnEmpty" onclick="setWaterLevel(0)">🚫 未裝水空氣 (X = 10.0 cm)</button>
+          <button class="preset-btn" id="btnHalf" onclick="setWaterLevel(50)">💧 半水槽水位 (X ≈ 8.2 cm)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Control Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 水位與輔助線控制
+          </div>
+
+          <!-- 水位高度 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>水槽水位高度</span>
+              <span class="control-val" id="dispWaterPct">100%</span>
+            </div>
+            <input type="range" class="custom-slider" id="sliderWater" min="0" max="100" step="1" value="100">
+          </div>
+
+          <div class="toggle-row">
+            <span>顯示水面折射法線 (垂直虛線)</span>
+            <input type="checkbox" id="chkNormal" checked onchange="draw()">
+          </div>
+
+          <div class="toggle-row">
+            <span>顯示未裝水原路徑 (黃色虛線)</span>
+            <input type="checkbox" id="chkOriginal" checked onchange="draw()">
+          </div>
+        </div>
+
+        <!-- Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 底部光點距離測量
+          </div>
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">初始入射間距</div>
+              <div class="status-item-val" style="color:#64748b;">3.0 cm</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">底部光斑間距 X</div>
+              <div class="status-item-val" id="dispSpotDist">6.5 cm</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🎉 <strong>【幾何範圍：3 &lt; X &lt; 10 cm】</strong><br>
+            光線由空氣進入水（光速快入慢），<strong>偏向法線（往內折）</strong>，光點距離比未裝水 (10cm) 縮小，但仍大於原入射間距 (3cm)！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 59 頁 重點 3 第 12 題 · 優質題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：若在容器內注滿水，容器底部兩個光點的距離 X 為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#15803d; background:#dcfce7; border:1.5px solid #15803d; padding:0.3rem 0.7rem; border-radius:99px;">
+          凹透鏡發散 ✕ 空氣入水偏向法線
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：如圖所示，一個未裝水的容器置於水平桌面上，在其上方放置一個與容器底面平行的凹透鏡。今有兩道相距 3cm 的平行雷射光，由凹透鏡上方鉛直射向容器，雷射光經過凹透鏡後偏折，照射在容器底部所形成的兩個光點距離為 10cm。若在容器內注滿水，待水面平靜後，容器底部兩個光點的距離為 X cm，則下列何者正確？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ12('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">X &gt; 10</div>
+        </div>
+
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ12('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">X = 10</div>
+        </div>
+
+        <!-- Option C (Correct) -->
+        <div class="option-card" onclick="testExamQ12('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">3 &lt; X &lt; 10 (正確)</div>
+        </div>
+
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ12('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">X &lt; 3</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ12">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ12">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ12"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 界面折射與透鏡光學教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let waterPercent = 100; // 0% ~ 100%
+
+    const canvas = document.getElementById('refractCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const sliderWater = document.getElementById('sliderWater');
+    const dispWaterPct = document.getElementById('dispWaterPct');
+    const dispSpotDist = document.getElementById('dispSpotDist');
+    const natureBanner = document.getElementById('natureBanner');
+    const chkNormal = document.getElementById('chkNormal');
+    const chkOriginal = document.getElementById('chkOriginal');
+
+    let isDragging = false;
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+
+      // 1. Structure Vertical Coordinates
+      const laserTopY = 30;
+      const lensY = 95;
+      const containerTopY = 165;
+      const containerBotY = 390;
+      const containerH = containerBotY - containerTopY;
+
+      // Water Level Y inside Container (from bottom up)
+      const waterH = (waterPercent / 100) * containerH;
+      const waterSurfaceY = containerBotY - waterH;
+
+      // Container Dimensions
+      const containerW = 260;
+      const containerLeft = cx - containerW / 2;
+      const containerRight = cx + containerW / 2;
+
+      // 2. Draw Table Surface (Bottom thick line)
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(cx - 180, containerBotY, 360, 14);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('水平桌面', cx, containerBotY + 28);
+
+      // 3. Draw Water Container (U-shape vessel)
+      // Water fill if waterH > 0
+      if (waterH > 0) {
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+        ctx.fillRect(containerLeft + 4, waterSurfaceY, containerW - 8, waterH);
+
+        // Water surface line
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(containerLeft + 4, waterSurfaceY);
+        ctx.lineTo(containerRight - 4, waterSurfaceY);
+        ctx.stroke();
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 10px Noto Sans TC, sans-serif';
+        ctx.fillText(`水面 (${waterPercent}%)`, containerRight + 35, waterSurfaceY + 3);
+      }
+
+      // Container Glass Walls
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(containerLeft, containerTopY);
+      ctx.lineTo(containerLeft, containerBotY);
+      ctx.lineTo(containerRight, containerBotY);
+      ctx.lineTo(containerRight, containerTopY);
+      ctx.stroke();
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('容器', containerRight + 25, (containerTopY + containerBotY) / 2);
+
+      // 4. Draw Concave Lens (Double Concave profile)
+      const lensW = 160;
+      const lensH = 20;
+      const lensLeft = cx - lensW / 2;
+      const lensRight = cx + lensW / 2;
+
+      ctx.fillStyle = 'rgba(186, 230, 253, 0.4)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(lensLeft, lensY - lensH / 2);
+      ctx.lineTo(lensRight, lensY - lensH / 2);
+      ctx.quadraticCurveTo(cx, lensY - 4, lensRight, lensY + lensH / 2);
+      ctx.lineTo(lensLeft, lensY + lensH / 2);
+      ctx.quadraticCurveTo(cx, lensY + 4, lensLeft, lensY - lensH / 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('凹透鏡', lensRight + 30, lensY + 4);
+
+      // 5. Laser Sources (2 Parallel beams at d = 3cm)
+      // Scale: 1cm = 20px -> 3cm = 60px -> Half offset = 30px
+      const scaleX = 20;
+      const initialHalfDist = 1.5 * scaleX; // 30px (3cm total)
+      const leftBeamX0 = cx - initialHalfDist;
+      const rightBeamX0 = cx + initialHalfDist;
+
+      // Draw Laser Emitters
+      [leftBeamX0, rightBeamX0].forEach(bx => {
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(bx - 6, laserTopY - 14, 12, 14);
+        ctx.strokeStyle = '#059669';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(bx - 6, laserTopY - 14, 12, 14);
+      });
+
+      // Dimension line for 3cm
+      drawDimension(leftBeamX0, rightBeamX0, laserTopY - 20, '3 cm', '#10b981');
+
+      // 6. Ray Calculation:
+      // Ray 1: Laser Top -> Lens Entry (Vertical)
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#4ade80';
+      ctx.shadowBlur = 6;
+
+      ctx.beginPath();
+      ctx.moveTo(leftBeamX0, laserTopY);
+      ctx.lineTo(leftBeamX0, lensY);
+      ctx.moveTo(rightBeamX0, laserTopY);
+      ctx.lineTo(rightBeamX0, lensY);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Ray 2: Divergence from Lens in Air
+      // Unfilled container (waterH = 0): hits containerBotY at dist = 10cm (halfDist = 5cm = 100px)
+      const emptyHalfDist = 5.0 * scaleX; // 100px (10cm total)
+      const divergenceSlope = (emptyHalfDist - initialHalfDist) / (containerBotY - lensY);
+
+      // Find Ray position at waterSurfaceY
+      const surfaceHalfDist = initialHalfDist + divergenceSlope * (waterSurfaceY - lensY);
+      const surfaceLeftX = cx - surfaceHalfDist;
+      const surfaceRightX = cx + surfaceHalfDist;
+
+      // Draw Ray from Lens to Water Surface (in Air)
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(leftBeamX0, lensY);
+      ctx.lineTo(surfaceLeftX, waterSurfaceY);
+      ctx.moveTo(rightBeamX0, lensY);
+      ctx.lineTo(surfaceRightX, waterSurfaceY);
+      ctx.stroke();
+
+      // Original Unrefracted Path (Dashed Yellow) if Water is present
+      if (waterPercent > 0 && chkOriginal.checked) {
+        ctx.strokeStyle = 'rgba(250, 204, 21, 0.6)';
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(surfaceLeftX, waterSurfaceY);
+        ctx.lineTo(cx - emptyHalfDist, containerBotY);
+        ctx.moveTo(surfaceRightX, waterSurfaceY);
+        ctx.lineTo(cx + emptyHalfDist, containerBotY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Label for 10cm empty points
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 10px JetBrains Mono, monospace';
+        ctx.fillText('10 cm (未裝水原點)', cx - emptyHalfDist, containerBotY + 12);
+        ctx.fillText('10 cm (未裝水原點)', cx + emptyHalfDist, containerBotY + 12);
+      }
+
+      // Normal Line at Water Surface Entry Points
+      if (waterPercent > 0 && waterPercent < 100 && chkNormal.checked) {
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([3, 3]);
+        [surfaceLeftX, surfaceRightX].forEach(sx => {
+          ctx.beginPath();
+          ctx.moveTo(sx, waterSurfaceY - 30);
+          ctx.lineTo(sx, waterSurfaceY + 30);
+          ctx.stroke();
+        });
+        ctx.setLineDash([]);
+      }
+
+      // Ray 3: Refraction into Water (Snell's Law: Bends TOWARDS normal -> angle reduced by ~1/1.33)
+      // Refracted slope = divergenceSlope / 1.333
+      const refractedSlope = divergenceSlope / 1.333;
+      const finalHalfDist = surfaceHalfDist + refractedSlope * (containerBotY - waterSurfaceY);
+      const finalLeftX = cx - finalHalfDist;
+      const finalRightX = cx + finalHalfDist;
+
+      // Draw Ray in Water from Surface to Bottom
+      if (waterH > 0) {
+        ctx.strokeStyle = '#4ade80';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#4ade80';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(surfaceLeftX, waterSurfaceY);
+        ctx.lineTo(finalLeftX, containerBotY);
+        ctx.moveTo(surfaceRightX, waterSurfaceY);
+        ctx.lineTo(finalRightX, containerBotY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Laser Spots on Container Bottom
+      [finalLeftX, finalRightX].forEach(fx => {
+        ctx.fillStyle = '#22c55e';
+        ctx.beginPath();
+        ctx.arc(fx, containerBotY, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+
+      // Calculate Total Distance X in cm
+      const actualSpotDistCm = ((finalRightX - finalLeftX) / scaleX).toFixed(1);
+      dispSpotDist.textContent = `${actualSpotDistCm} cm`;
+
+      // Draw Dimension for Final Spot Distance X
+      drawDimension(finalLeftX, finalRightX, containerBotY - 15, `X = ${actualSpotDistCm} cm`, '#22c55e');
+
+      updateUI(actualSpotDistCm);
+    }
+
+    function drawDimension(x1, x2, y, text, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      ctx.lineTo(x2, y);
+      // T-bars
+      ctx.moveTo(x1, y - 5); ctx.lineTo(x1, y + 5);
+      ctx.moveTo(x2, y - 5); ctx.lineTo(x2, y + 5);
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.font = 'bold 11px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(text, (x1 + x2) / 2, y - 5);
+    }
+
+    function updateUI(distCm) {
+      dispWaterPct.textContent = `${waterPercent}%`;
+      const numDist = parseFloat(distCm);
+
+      if (waterPercent === 0) {
+        natureBanner.innerHTML = `🚫 <strong>【容器未裝水】</strong>：光線在空氣中直線發散，底部光點距離 <strong>X = 10.0 cm</strong>。`;
+      } else if (waterPercent === 100) {
+        natureBanner.innerHTML = `🌊 <strong>【容器注滿水 (第12題情境)】</strong>：<br>光線由空氣進入水（光速快入慢），<strong>偏向法線（向內偏折）</strong>！<br>底部光點距離向內收縮至 <strong>X ≈ ${distCm} cm</strong>（確定 <strong>3 &lt; X &lt; 10 cm</strong>）！`;
+      } else {
+        natureBanner.innerHTML = `💧 <strong>【水位 ${waterPercent}%】</strong>：光點距離向內收縮為 <strong>X ≈ ${distCm} cm</strong>（落在 3 ~ 10 cm 之間）。`;
+      }
+    }
+
+    // Sliders
+    sliderWater.addEventListener('input', (e) => {
+      waterPercent = parseInt(e.target.value);
+      updatePresetButtons();
+      draw();
+    });
+
+    window.setWaterLevel = function(pct) {
+      waterPercent = pct;
+      sliderWater.value = pct;
+      updatePresetButtons();
+      draw();
+    };
+
+    function updatePresetButtons() {
+      document.getElementById('btnFull').classList.toggle('active', waterPercent === 100);
+      document.getElementById('btnEmpty').classList.toggle('active', waterPercent === 0);
+      document.getElementById('btnHalf').classList.toggle('active', waterPercent === 50);
+    }
+
+    // Canvas Dragging Water Level
+    function handlePointer(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const y = clientY - rect.top;
+
+      const containerTopY = 165;
+      const containerBotY = 390;
+      const containerH = containerBotY - containerTopY;
+
+      if (y >= containerTopY - 20 && y <= containerBotY + 20) {
+        let pct = Math.round(((containerBotY - y) / containerH) * 100);
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        waterPercent = pct;
+        sliderWater.value = pct;
+        updatePresetButtons();
+        draw();
+      }
+    }
+
+    container.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mousemove', (e) => { if (isDragging) handlePointer(e); });
+    window.addEventListener('mouseup', () => isDragging = false);
+
+    container.addEventListener('touchstart', (e) => { isDragging = true; handlePointer(e); }, { passive: false });
+    window.addEventListener('touchmove', (e) => { if (isDragging) handlePointer(e); }, { passive: false });
+    window.addEventListener('touchend', () => isDragging = false);
+
+    // Exam Handler
+    window.testExamQ12 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ12');
+      const expTitle = document.getElementById('expTitleQ12');
+      const expContent = document.getElementById('expContentQ12');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'C') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(C) 3 < X < 10】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【透鏡與水面雙重折射光路拆解】</strong><br>
+          1. <strong>第一次折射（凹透鏡發散）</strong>：<br>
+             - 兩道平行雷射光（初始間距 3cm）經凹透鏡後<strong>發散偏折</strong>，未裝水時沿直線在底部形成 10cm 的光斑。<br>
+          2. <strong>第二次折射（水面折射 · 快入慢偏向法線）</strong>：<br>
+             - 容器注水後，發散的光線由<strong>空氣（光速快）進入水（光速慢）</strong>，折射光線<strong>偏向法線（往內偏折）</strong>。<br>
+             - 往內偏折使得射在底部的光點向內收縮，因此光點距離 <strong>$X < 10\\text{ cm}$</strong>。<br>
+          3. <strong>幾何範圍推導（為什麼 $X > 3$）</strong>：<br>
+             - 光線在凹透鏡處已經發散（間距已大於 3cm），水面折射偏向法線只是減緩發散幅度，並不會使光線變成會聚光，因此底部光距仍<strong>大於初始間距 3cm（$X > 3$）</strong>。<br>
+          4. 綜合可得：<strong>$3 < X < 10\\text{ cm}$（選項 C）</strong>！
+        `;
+        setWaterLevel(100);
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        if (opt === 'A' || opt === 'B') {
+          expContent.innerHTML = `光由空氣進入水中（光速快到慢）必定「偏向法線（向內折）」，光點間距必定小於未裝水時的 10cm，不可能大於或等於 10cm。`;
+        } else if (opt === 'D') {
+          expContent.innerHTML = `光線在凹透鏡處已經發散至大於 3cm，進入水中偏向法線只是減緩向外散開的幅度，並未形成會聚交叉，因此抵達底部時仍大於 3cm。`;
+        }
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>
