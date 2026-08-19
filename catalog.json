@@ -18,11 +18,11 @@
         {
           "id": "naturelab-senior-review",
           "title": "九年級複習",
-          "description": "選擇冊別與章節，依需要複習學過的內容。",
+          "description": "理化 3-4 冊總複習互動題庫、概念挖空卷、Kahoot 挑戰與動態實驗室。",
           "status": "active",
           "homepageState": "linked",
           "order": 20,
-          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#senior-entry"
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/review-hub.html"
         },
         {
           "id": "juiying-teaching-channel",
