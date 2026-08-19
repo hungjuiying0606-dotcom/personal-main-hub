@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三層介質折射波長 ✕ 三稜鏡色散實驗室 | 第60頁第13、17題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #fed7aa;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mode-tabs {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .mode-tab {
+      padding: 0.35rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .mode-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#opticsCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #fed7aa;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fed7aa;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.8rem;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #f8fafc;
+      margin-bottom: 0.5rem;
+    }
+
+    .toggle-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.3rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #ffedd5;
+      border: 2px dashed #ea580c;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #9a3412;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #ea580c;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 介質波長色散</a>
+      <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="background:#a5f3fc;">👁️ 角膜塑型聚焦</a>
+      <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色紙網格吸光</a>
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>三層介質折射波長 ✕ 三稜鏡色散實驗室（第60頁第13、17題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span id="headerIcon">🌊</span> <span id="headerTitle">三層平行介質光速與波長波導模擬 (第13題)</span>
+          </div>
+          <div class="mode-tabs">
+            <button class="mode-tab active" id="tabModeA" onclick="switchLabMode('modeA')">🌊 模式 A：三層介質折射 (第13題)</button>
+            <button class="mode-tab" id="tabModeB" onclick="switchLabMode('modeB')">🌈 模式 B：三稜鏡日光色散 (第17題)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="opticsCanvas"></canvas>
+          <div class="canvas-hint-overlay" id="canvasHint">
+            💡 提示：動態展示波前疏密動畫，直觀驗證「角度大 ➔ 光速快 ➔ 波長長 (λ ∝ v ∝ θ)」！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 快捷觀看：</span>
+          <button class="preset-btn active" id="btnPreset1" onclick="applyPresetA()">📖 第13題原題 (θ3 &gt; θ1 &gt; θ2 · 波長 III &gt; I &gt; II)</button>
+          <button class="preset-btn" id="btnPreset2" onclick="switchLabMode('modeB')">🌈 第17題三稜鏡日光色散 (紅光偏折小、光速快)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Visualization Options Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 動態顯示設定
+          </div>
+          <div class="toggle-row">
+            <span>顯示光波波動波前 (Wavefronts)</span>
+            <input type="checkbox" id="chkWavefronts" checked onchange="draw()">
+          </div>
+          <div class="toggle-row">
+            <span>顯示法線與折射角 (θ1, θ2, θ3)</span>
+            <input type="checkbox" id="chkAngles" checked onchange="draw()">
+          </div>
+        </div>
+
+        <!-- Status Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> <span id="metricsHeading">三層介質波長與光速分析</span>
+          </div>
+
+          <div class="status-badge-grid" id="metricsGrid">
+            <div class="status-item">
+              <div class="status-item-label">介質 I (中速)</div>
+              <div class="status-item-val" style="color:#0284c7;">θ₁ = 45°<br><span style="font-size:0.75rem;">波長中等</span></div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">介質 II (最慢)</div>
+              <div class="status-item-val" style="color:#ca8a04;">θ₂ = 20°<br><span style="font-size:0.75rem;">波長最短</span></div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">介質 III (最快)</div>
+              <div class="status-item-val" style="color:#15803d;">θ₃ = 65°<br><span style="font-size:0.75rem;">波長最長</span></div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            ⚡ <strong>【三位一體物理定理：λ ∝ v ∝ θ】</strong><br>
+            光跨介質折射時「頻率 f 保持不變」！<br>
+            已知 <strong>θ₃ &gt; θ₁ &gt; θ₂</strong> ➔ 光速 <strong>v₃ &gt; v₁ &gt; v₂</strong> ➔ 波長 <strong>III &gt; I &gt; II</strong>（選項 A 正確）！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section (Question 13) -->
+    <section class="exam-section" id="examSecQ13">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 60 頁 重點 3 第 13 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 1：若 θ₃ &gt; θ₁ &gt; θ₂，則光在三個介質裡的波長大小關係為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#ea580c; background:#ffedd5; border:1.5px solid #ea580c; padding:0.3rem 0.7rem; border-radius:99px;">
+          折射角度 ✕ 波速公式 v = f·λ
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：三種介質形成兩個平行界面，如右圖，若光線由介質 I 以入射角 $\theta_1$ 進入介質 II 時，折射角為 $\theta_2$，再經介質 II、III 所形成的界面時，在介質 III 中的折射角為 $\theta_3$。經測量知 $\theta_3 > \theta_1 > \theta_2$，則光在三個介質裡的行進波長大小關係為何？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A (Correct) -->
+        <div class="option-card" onclick="testExamQ13('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">III &gt; I &gt; II (正確)</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ13('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">III &lt; I &lt; II</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ13('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">III ＝ I ＝ II</div>
+        </div>
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ13('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">無法確定</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ13">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ13">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ13"></div>
+      </div>
+    </section>
+
+    <!-- Exam Section (Question 17) -->
+    <section class="exam-section" id="examSecQ17">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge" style="background:#7c3aed;">第 60 頁 重點 5 第 17 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 2：太陽光通過三稜鏡後的色散情形，何者敘述【錯誤】？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#7c3aed; background:#ede9fe; border:1.5px solid #7c3aed; padding:0.3rem 0.7rem; border-radius:99px;">
+          三稜鏡色散 ✕ 各色光折射率與光速
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：右圖為太陽光通過三稜鏡後的情形，則下列相關敘述何者錯誤？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ17('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">此為光的色散現象</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ17('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">光因折射分為七色光</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ17('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">甲為紅光</div>
+        </div>
+        <!-- Option D (Correct - False statement) -->
+        <div class="option-card" onclick="testExamQ17('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">在三稜鏡中光速 甲 &lt; 丙 (錯誤·選D)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ17">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ17">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ17"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 折射光學與色散光譜教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let labMode = 'modeA'; // 'modeA' (三層介質折射) | 'modeB' (三稜鏡色散)
+    let waveOffset = 0;
+
+    const canvas = document.getElementById('opticsCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const chkWavefronts = document.getElementById('chkWavefronts');
+    const chkAngles = document.getElementById('chkAngles');
+    const headerTitle = document.getElementById('headerTitle');
+    const headerIcon = document.getElementById('headerIcon');
+    const canvasHint = document.getElementById('canvasHint');
+    const metricsHeading = document.getElementById('metricsHeading');
+    const metricsGrid = document.getElementById('metricsGrid');
+    const natureBanner = document.getElementById('natureBanner');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function animationLoop() {
+      waveOffset = (waveOffset + 0.8) % 30;
+      draw();
+      requestAnimationFrame(animationLoop);
+    }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (labMode === 'modeA') {
+        drawModeA(w, h);
+      } else {
+        drawModeB(w, h);
+      }
+    }
+
+    // --- 模式 A：三層平行介質折射 ---
+    function drawModeA(w, h) {
+      const layerH = h / 3;
+
+      // 1. Layer Backgrounds
+      // Layer I (Medium speed)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 0, w, layerH);
+
+      // Layer II (Slowest speed, dense)
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, layerH, w, layerH);
+
+      // Layer III (Fastest speed, fast)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, layerH * 2, w, layerH);
+
+      // Interface Lines (Thick white horizontal lines)
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, layerH); ctx.lineTo(w, layerH);
+      ctx.moveTo(0, layerH * 2); ctx.lineTo(w, layerH * 2);
+      ctx.stroke();
+
+      // Layer Labels
+      ctx.font = '900 16px Outfit, sans-serif';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('介質 I (中速 v₁)', 25, 30);
+      ctx.fillStyle = '#facc15';
+      ctx.fillText('介質 II (最慢 v₂)', 25, layerH + 30);
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('介質 III (最快 v₃)', 25, layerH * 2 + 30);
+
+      // 2. Ray Points Calculation
+      // Ray entry in I (x0, 0) -> interface 1 (x1, layerH) with theta1 = 45 deg
+      const x1 = w * 0.42;
+      const y1 = layerH;
+      const theta1 = 45 * Math.PI / 180;
+      const x0 = x1 - Math.tan(theta1) * layerH;
+      const y0 = 0;
+
+      // In II: theta2 = 20 deg (bends towards normal)
+      const theta2 = 20 * Math.PI / 180;
+      const y2 = layerH * 2;
+      const x2 = x1 + Math.tan(theta2) * layerH;
+
+      // In III: theta3 = 65 deg (bends far away from normal)
+      const theta3 = 65 * Math.PI / 180;
+      const y3 = h;
+      const x3 = x2 + Math.tan(theta3) * layerH;
+
+      // 3. Normal Lines at (x1, y1) and (x2, y2)
+      if (chkAngles.checked) {
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+
+        ctx.beginPath();
+        ctx.moveTo(x1, 15); ctx.lineTo(x1, layerH * 1.6);
+        ctx.moveTo(x2, layerH * 1.4); ctx.lineTo(x2, h - 15);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Angle arcs & labels
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 13px JetBrains Mono, monospace';
+        ctx.fillText('θ₁ = 45°', x1 - 50, y1 - 20);
+
+        ctx.fillStyle = '#facc15';
+        ctx.fillText('θ₂ = 20°', x1 + 8, y1 + 35);
+
+        ctx.fillStyle = '#4ade80';
+        ctx.fillText('θ₃ = 65°', x2 + 15, y2 + 45);
+      }
+
+      // 4. Wavefronts Animation (Perpendicular lines showing wavelength compression/expansion)
+      if (chkWavefronts.checked) {
+        // In I: lambda1 = 20px
+        drawWavefrontsOnSegment(x0, y0, x1, y1, 20, '#38bdf8', waveOffset);
+        // In II: lambda2 = 10px (compressed!)
+        drawWavefrontsOnSegment(x1, y1, x2, y2, 10, '#facc15', waveOffset * (10 / 20));
+        // In III: lambda3 = 32px (expanded!)
+        drawWavefrontsOnSegment(x2, y2, x3, y3, 32, '#4ade80', waveOffset * (32 / 20));
+      }
+
+      // 5. Laser Ray Line
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 3.5;
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function drawWavefrontsOnSegment(x_start, y_start, x_end, y_end, lambda, color, offset) {
+      const dx = x_end - x_start;
+      const dy = y_end - y_start;
+      const len = Math.hypot(dx, dy);
+      const angle = Math.atan2(dy, dx);
+      const perpAngle = angle + Math.PI / 2;
+      const barLen = 14;
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.7;
+
+      for (let dist = (offset % lambda); dist < len; dist += lambda) {
+        const px = x_start + (dx / len) * dist;
+        const py = y_start + (dy / len) * dist;
+
+        ctx.beginPath();
+        ctx.moveTo(px - Math.cos(perpAngle) * barLen, py - Math.sin(perpAngle) * barLen);
+        ctx.lineTo(px + Math.cos(perpAngle) * barLen, py + Math.sin(perpAngle) * barLen);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // --- 模式 B：三稜鏡日光色散 ---
+    function drawModeB(w, h) {
+      const cx = w * 0.45;
+      const cy = h * 0.52;
+      const prismSize = 130;
+
+      // 1. Draw Prism (Equilateral Triangle)
+      const p1 = { x: cx, y: cy - prismSize };
+      const p2 = { x: cx - prismSize * 0.9, y: cy + prismSize * 0.6 };
+      const p3 = { x: cx + prismSize * 0.9, y: cy + prismSize * 0.6 };
+
+      ctx.fillStyle = 'rgba(186, 230, 253, 0.25)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.lineTo(p3.x, p3.y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('三稜鏡 (玻璃介質)', cx, cy + prismSize * 0.75);
+
+      // 2. Incident White Light Beam from Left
+      const entryX = cx - prismSize * 0.45;
+      const entryY = cy - prismSize * 0.05;
+      const beamStartX = 40;
+      const beamStartY = cy - prismSize * 0.4;
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 5;
+      ctx.shadowColor = '#ffffff';
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.moveTo(beamStartX, beamStartY);
+      ctx.lineTo(entryX, entryY);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('太陽白光', beamStartX + 30, beamStartY - 10);
+
+      // 3. Dispersion Spectrum inside Prism & Exit to Right Screen
+      // 7 colors from Red to Violet
+      const colors = [
+        { name: '甲 (紅光)', hex: '#ef4444', exitY: cy - 20, endY: cy - 60, speed: '最快', angle: '最小' },
+        { name: '橙光', hex: '#f97316', exitY: cy - 14, endY: cy - 40, speed: '快', angle: '小' },
+        { name: '黃光', hex: '#facc15', exitY: cy - 8, endY: cy - 20, speed: '中', angle: '中' },
+        { name: '乙 (綠光)', hex: '#22c55e', exitY: cy - 2, endY: cy, speed: '中', angle: '中' },
+        { name: '藍光', hex: '#38bdf8', exitY: cy + 4, endY: cy + 20, speed: '慢', angle: '大' },
+        { name: '靛光', hex: '#6366f1', exitY: cy + 10, endY: cy + 40, speed: '慢', angle: '大' },
+        { name: '丙 (紫光)', hex: '#a855f7', exitY: cy + 16, endY: cy + 60, speed: '最慢', angle: '最大' }
+      ];
+
+      const exitSurfaceX = cx + prismSize * 0.45;
+      const screenX = w - 40;
+
+      colors.forEach(col => {
+        // Ray inside prism
+        ctx.strokeStyle = col.hex;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(entryX, entryY);
+        ctx.lineTo(exitSurfaceX, col.exitY);
+        ctx.stroke();
+
+        // Ray outside prism to screen
+        ctx.lineWidth = 2.8;
+        ctx.shadowColor = col.hex;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.moveTo(exitSurfaceX, col.exitY);
+        ctx.lineTo(screenX, col.endY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Label on Right
+        if (col.name.includes('甲') || col.name.includes('乙') || col.name.includes('丙')) {
+          ctx.fillStyle = col.hex;
+          ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(`➔ ${col.name} (偏折${col.angle}·光速${col.speed})`, screenX - 10, col.endY + 4);
+        }
+      });
+    }
+
+    // Switch Mode
+    window.switchLabMode = function(m) {
+      labMode = m;
+      document.getElementById('tabModeA').classList.toggle('active', m === 'modeA');
+      document.getElementById('tabModeB').classList.toggle('active', m === 'modeB');
+
+      if (m === 'modeA') {
+        headerTitle.textContent = '三層平行介質光速與波長波導模擬 (第13題)';
+        headerIcon.textContent = '🌊';
+        canvasHint.textContent = '💡 提示：動態展示波前疏密動畫，直觀驗證「角度大 ➔ 光速快 ➔ 波長長 (λ ∝ v ∝ θ)」！';
+        metricsHeading.textContent = '三層介質波長與光速分析';
+        metricsGrid.innerHTML = `
+          <div class="status-item">
+            <div class="status-item-label">介質 I (中速)</div>
+            <div class="status-item-val" style="color:#0284c7;">θ₁ = 45°<br><span style="font-size:0.75rem;">波長中等</span></div>
+          </div>
+          <div class="status-item">
+            <div class="status-item-label">介質 II (最慢)</div>
+            <div class="status-item-val" style="color:#ca8a04;">θ₂ = 20°<br><span style="font-size:0.75rem;">波長最短</span></div>
+          </div>
+          <div class="status-item">
+            <div class="status-item-label">介質 III (最快)</div>
+            <div class="status-item-val" style="color:#15803d;">θ₃ = 65°<br><span style="font-size:0.75rem;">波長最長</span></div>
+          </div>
+        `;
+        natureBanner.innerHTML = `
+          ⚡ <strong>【三位一體物理定理：λ ∝ v ∝ θ】</strong><br>
+          光跨介質折射時「頻率 f 保持不變」！<br>
+          已知 <strong>θ₃ &gt; θ₁ &gt; θ₂</strong> ➔ 光速 <strong>v₃ &gt; v₁ &gt; v₂</strong> ➔ 波長 <strong>III &gt; I &gt; II</strong>（選項 A 正確）！
+        `;
+      } else {
+        headerTitle.textContent = '三稜鏡日光連續色散光譜儀 (第17題)';
+        headerIcon.textContent = '🌈';
+        canvasHint.textContent = '💡 提示：太陽白光經三稜鏡兩次折射，紅光 (甲) 偏折最小光速最快；紫光 (丙) 偏折最大光速最慢！';
+        metricsHeading.textContent = '三稜鏡色散光譜物理特性';
+        metricsGrid.innerHTML = `
+          <div class="status-item" style="grid-column: span 1.5;">
+            <div class="status-item-label">甲 (紅光)</div>
+            <div class="status-item-val" style="color:#ef4444;">偏折最小<br><span style="font-size:0.75rem;">玻璃中光速最快</span></div>
+          </div>
+          <div class="status-item" style="grid-column: span 1.5;">
+            <div class="status-item-label">丙 (紫光)</div>
+            <div class="status-item-val" style="color:#a855f7;">偏折最大<br><span style="font-size:0.75rem;">玻璃中光速最慢</span></div>
+          </div>
+        `;
+        natureBanner.innerHTML = `
+          🌈 <strong>【三稜鏡色散關鍵盲點】</strong>：<br>
+          在三稜鏡玻璃中，紅光折射率小 ➔ <strong>光速快 (甲 &gt; 丙)</strong>；紫光折射率大 ➔ <strong>光速慢</strong>。<br>
+          因此選項 (D) 敘述「甲 &lt; 丙」錯誤，為本題正解！
+        `;
+      }
+      draw();
+    };
+
+    window.applyPresetA = function() {
+      switchLabMode('modeA');
+    };
+
+    // Exam Handlers
+    window.testExamQ13 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ13');
+      const expTitle = document.getElementById('expTitleQ13');
+      const expContent = document.getElementById('expContentQ13');
+      const cards = document.querySelectorAll('#examSecQ13 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'A') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(A) III > I > II】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【折射角 ✕ 光速 ✕ 波長連動關係式】</strong><br>
+          1. <strong>角度與光速關係</strong>：光線折射角越大（偏離法線越遠），代表該介質中<strong>光速越快</strong>。已知 $\\theta_3 > \\theta_1 > \\theta_2 \\rightarrow v_3 > v_1 > v_2$。<br>
+          2. <strong>波速公式與波長</strong>：光跨介質時「<strong>頻率 $f$ 保持不變</strong>」，由 $v = f \\lambda$ 可知，波長與波速成正比（$\\lambda \\propto v$）。<br>
+          3. 綜合可得波長大小為：<strong>$\\text{III} > \\text{I} > \\text{II}$（選項 A）</strong>！
+        `;
+        switchLabMode('modeA');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `光速與折射角成正比，波長與光速成正比。$\\theta_3 > \\theta_1 > \\theta_2$ 意味著介質 III 波長最長，介質 II 波長最短。`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    window.testExamQ17 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ17');
+      const expTitle = document.getElementById('expTitleQ17');
+      const expContent = document.getElementById('expContentQ17');
+      const cards = document.querySelectorAll('#examSecQ17 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 在三稜鏡中，光速大小：甲 < 丙（敘述錯誤·選D）】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【三稜鏡色散各項解析】</strong><br>
+          - (A) 太陽光分開為各色光的現象稱為「色散」。（正確）<br>
+          - (B) 各色光在玻璃中的折射率不同而產生偏折。（正確）<br>
+          - (C) 甲偏折角最小，為紅光；丙偏折角最大，為紫光。（正確）<br>
+          - (D) <strong>光速大小應為「甲 (紅) > 丙 (紫)」</strong>。紅光在玻璃中的折射率最小、光速最快；紫光折射率最大、光速最慢。因此 (D) 的敘述錯誤，為本題所選！
+        `;
+        switchLabMode('modeB');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【此選項為正確敘述，題目要求選錯誤者】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `請注意題目要求選出【錯誤】的敘述。在三稜鏡玻璃中，紅光（甲）光速比紫光（丙）快，因此 (D) 寫「甲 < 丙」才是錯誤敘述！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Start
+    resizeCanvas();
+    animationLoop();
+  </script>
+</body>
+</html>
