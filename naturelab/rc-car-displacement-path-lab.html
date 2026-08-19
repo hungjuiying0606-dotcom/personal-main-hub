@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 園遊會遙控車競速：直線單向行駛 vs 直線折返 (單元卷第1頁第21題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ea580c;       /* RC Orange */
+      --primary-dark: #c2410c;
+      --disp-red: #ef4444;      /* Red for Displacement */
+      --path-purple: #8b5cf6;   /* Purple for Path */
+      --road-gray: #1e293b;
+      --bg: #fff7ed;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #fed7aa;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(234, 88, 12, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffedd5;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Stage Canvas Box */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    /* Preset Scenarios */
+    .preset-bar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover { background: #ffedd5; }
+    .preset-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    /* RC Controller Buttons */
+    .rc-controls {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .rc-btn {
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .rc-btn-forward { background: #16a34a; color: white; }
+    .rc-btn-forward:hover { background: #15803d; }
+    .rc-btn-backward { background: #dc2626; color: white; }
+    .rc-btn-backward:hover { background: #b91c1c; }
+    .rc-btn-reset { background: #64748b; color: white; }
+    .rc-btn-reset:hover { background: #475569; }
+
+    /* Dual Telemetry Cards */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .t-card.disp { border-color: #fecaca; background: #fef2f2; }
+    .t-card.path { border-color: #ddd6fe; background: #faf5ff; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .t-card.disp h4 { color: #dc2626; }
+    .t-card.path h4 { color: #7e22ce; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    .t-card.disp .t-val { color: #dc2626; }
+    .t-card.path .t-val { color: #7e22ce; }
+
+    .t-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Comparison Status Card */
+    .compare-status-card {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.8rem;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      margin-bottom: 0.4rem;
+    }
+
+    .status-equal { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+    .status-not-equal { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #fff7ed;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏎️ 園遊會遙控車競速：直線單向行駛 vs 直線折返</span>
+          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第21題</span>
+        </h1>
+        <p>前進 10m ➔ 後退 4m：位移大小＝6m，路徑長＝14m！破除「只要在直線上運動，位移必等於路徑長」之迷思！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: RC Car Track Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏎️ 直線遙控車跑道與即時胎印軌跡</span>
+          </div>
+          <div class="rc-controls">
+            <button class="rc-btn rc-btn-forward" onclick="driveCar(2)">▶ 前進 (+2m)</button>
+            <button class="rc-btn rc-btn-backward" onclick="driveCar(-2)">◀ 倒退 (-2m)</button>
+            <button class="rc-btn rc-btn-reset" onclick="resetCar()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>🏎️ 目前位置：<strong id="hudPos" style="color: #38bdf8; font-family: 'Outfit';">+6.0 m</strong></span>
+            <span>🔴 位移 \( |\Delta \vec{x}| \)：<strong id="hudDisp" style="color: #f87171; font-family: 'Outfit';">6.0 m</strong></span>
+            <span>🟣 路徑長 \( S \)：<strong id="hudPath" style="color: #c084fc; font-family: 'Outfit';">14.0 m</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        </div>
+
+        <!-- Presets Bar -->
+        <div class="control-panel">
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
+            🎯 經典物理情境一鍵演繹：
+          </div>
+          <div class="preset-bar">
+            <button class="preset-btn active" onclick="loadScenario('turnaround', this)">⚡ 情境 B：前進 10m ➔ 後退 4m (折返 · 位移6m ≠ 路徑長14m · 題21破盲)</button>
+            <button class="preset-btn" onclick="loadScenario('straight', this)">⚡ 情境 A：單向直行 10m (不折返 · 位移10m ＝ 路徑長10m)</button>
+            <button class="preset-btn" onclick="loadScenario('roundtrip', this)">⚡ 情境 C：折返回原點 (前進10m➔後退10m · 位移0m · 路徑長20m)</button>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+            💡 <strong>黃金結論：</strong>只有在<strong>「沿直線且不折返（方向不變）」</strong>的情況下，位移大小才會等於路徑長！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Telemetry & Comparison Card & Quiz -->
+      <div>
+        
+        <!-- Dual Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Displacement -->
+          <div class="t-card disp">
+            <h4>🔴 直線位移大小 \( |\Delta \vec{x}| \)</h4>
+            <div class="t-val" id="valDisp">6.0 m</div>
+            <div class="t-sub" id="subDisp">起訖點位置變化量：\( 6.0 - 0 = \mathbf{6.0\text{ m}} \)</div>
+          </div>
+
+          <!-- Path Length -->
+          <div class="t-card path">
+            <h4>🟣 總累積路徑長 \( S \)</h4>
+            <div class="t-val" id="valPath">14.0 m</div>
+            <div class="t-sub" id="subPath">實際走過距離：\( 10.0 + 4.0 = \mathbf{14.0\text{ m}} \)</div>
+          </div>
+        </div>
+
+        <!-- Comparison Status Card -->
+        <div class="compare-status-card">
+          <div class="status-badge status-not-equal" id="statusBadge">⚠️ 位移大小 ≠ 路徑長 (6m ≠ 14m)</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: #334155;" id="statusDesc">
+            因遙控車在直線上有「折返」動作，故路徑長大於位移大小！
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 單元課次卷第 1 頁第 21 題核心解析：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>位移（Displacement）：</strong>位置的變化量（\( \Delta x = x_2 - x_1 \)），具有方向性。</li>
+            <li><strong>路徑長（Path Length）：</strong>運動路線的總長度（純量），沒有方向性。</li>
+            <li><strong>破解 (D) 選項迷思：</strong>「只要在直線上運動，位移大小就與路徑長相同」是<strong>錯誤的</strong>！一旦有折返，位移大小必定小於路徑長（選 D）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 單元卷第 21 題原題測驗</div>
+
+          <div class="quiz-item">
+            <p>關於遙控車「位移」與「路徑長」的敘述，下列何者「錯誤」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(21, 'D', this)">(D) 只要遙控車在直線上運動，其位移大小會與路徑長相同（若有折返則不相同）</button>
+              <button class="quiz-btn" onclick="checkQuiz(21, 'A', this)">(A) 遙控車移動時，車子位置的變化量，稱為位移</button>
+              <button class="quiz-btn" onclick="checkQuiz(21, 'B', this)">(B) 遙控車實際運動路線的總長度稱為路徑長</button>
+              <button class="quiz-btn" onclick="checkQuiz(21, 'C', this)">(C) 位移具有方向性、路徑長沒有方向性</button>
+            </div>
+            <div class="quiz-feedback" id="fb21"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+  </footer>
+
+  <script>
+    let carX = 6.0; // Current position
+    let pathHistory = [
+      { from: 0, to: 10 },
+      { from: 10, to: 6 }
+    ];
+    let totalPath = 14.0;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function driveCar(delta) {
+      const prevX = carX;
+      carX = Math.max(-2, Math.min(18, carX + delta));
+      const walked = Math.abs(carX - prevX);
+      if (walked > 0) {
+        pathHistory.push({ from: prevX, to: carX });
+        totalPath += walked;
+      }
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      updateUI();
+    }
+
+    function resetCar() {
+      carX = 0;
+      pathHistory = [];
+      totalPath = 0;
+      updateUI();
+    }
+
+    function loadScenario(type, el) {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      if (type === 'straight') {
+        // Forward 10m
+        carX = 10.0;
+        pathHistory = [{ from: 0, to: 10 }];
+        totalPath = 10.0;
+      } else if (type === 'turnaround') {
+        // Forward 10m -> Backward 4m (End at 6m)
+        carX = 6.0;
+        pathHistory = [{ from: 0, to: 10 }, { from: 10, to: 6 }];
+        totalPath = 14.0;
+      } else if (type === 'roundtrip') {
+        // Forward 10m -> Backward 10m (End at 0m)
+        carX = 0.0;
+        pathHistory = [{ from: 0, to: 10 }, { from: 10, to: 0 }];
+        totalPath = 20.0;
+      }
+      updateUI();
+    }
+
+    function updateUI() {
+      const disp = Math.abs(carX);
+      const isEqual = (Math.abs(disp - totalPath) < 0.01 && totalPath > 0);
+
+      document.getElementById('hudPos').innerText = (carX >= 0) ? `+${carX.toFixed(1)} m` : `${carX.toFixed(1)} m`;
+      document.getElementById('hudDisp').innerText = `${disp.toFixed(1)} m`;
+      document.getElementById('hudPath').innerText = `${totalPath.toFixed(1)} m`;
+
+      document.getElementById('valDisp').innerText = `${disp.toFixed(1)} m`;
+      document.getElementById('valPath').innerText = `${totalPath.toFixed(1)} m`;
+
+      document.getElementById('subDisp').innerHTML = `起訖點位置變化量：\\( ${carX.toFixed(1)} - 0 = \\mathbf{${carX.toFixed(1)}\\text{ m}} \\)`;
+      document.getElementById('subPath').innerHTML = `實際走過總長度：\\( \\mathbf{${totalPath.toFixed(1)}\\text{ m}} \\)`;
+
+      const badge = document.getElementById('statusBadge');
+      const desc = document.getElementById('statusDesc');
+
+      if (isEqual) {
+        badge.className = 'status-badge status-equal';
+        badge.innerText = `✅ 位移大小 ＝ 路徑長 (${disp.toFixed(1)}m ＝ ${totalPath.toFixed(1)}m)`;
+        desc.innerText = '單向直線行駛且無折返，此時位移大小恰好等於路徑長！';
+      } else {
+        badge.className = 'status-badge status-not-equal';
+        badge.innerText = `⚠️ 位移大小 ≠ 路徑長 (${disp.toFixed(1)}m ≠ ${totalPath.toFixed(1)}m)`;
+        desc.innerText = '遙控車在直線上有「折返」動作，故路徑長大於位移大小！';
+      }
+
+      draw(disp);
+    }
+
+    function draw(disp) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      const originPxX = 100;
+      const roadY = 240;
+      const scale = 28; // 1m = 28px
+
+      function toPx(x) { return originPxX + x * scale; }
+
+      // ==========================================
+      // 1. Draw Asphalt Road Track
+      // ==========================================
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(40, roadY - 40, cw - 80, 80);
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(40, roadY - 40, cw - 80, 80);
+
+      // Road Dashed Centerline
+      ctx.strokeStyle = '#fde047';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 8]);
+      ctx.beginPath(); ctx.moveTo(50, roadY); ctx.lineTo(cw - 50, roadY); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Number line scale ticks
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      for (let x = 0; x <= 18; x += 2) {
+        const px = toPx(x);
+        ctx.beginPath(); ctx.moveTo(px, roadY + 40); ctx.lineTo(px, roadY + 50); ctx.stroke();
+        ctx.fillStyle = (x === 0) ? '#fde047' : '#94a3b8';
+        ctx.font = 'bold 11px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${x}m`, px, roadY + 65);
+      }
+
+      // Origin Starting Flag (0m)
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath(); ctx.arc(toPx(0), roadY - 20, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fde047';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText('🚩 起點 (0m)', toPx(0), roadY - 50);
+
+      // ==========================================
+      // 2. Draw Walked Path Trails (Purple Layers)
+      // ==========================================
+      pathHistory.forEach((seg, idx) => {
+        const p1 = toPx(seg.from);
+        const p2 = toPx(seg.to);
+        const offset = (seg.to < seg.from) ? 14 : -14;
+
+        ctx.strokeStyle = (seg.to < seg.from) ? '#ec4899' : '#a855f7';
+        ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(p1, roadY + offset); ctx.lineTo(p2, roadY + offset); ctx.stroke();
+
+        // Direction Arrow
+        const midPx = (p1 + p2) / 2;
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.beginPath();
+        if (seg.to > seg.from) {
+          ctx.moveTo(midPx + 6, roadY + offset);
+          ctx.lineTo(midPx - 4, roadY + offset - 4);
+          ctx.lineTo(midPx - 4, roadY + offset + 4);
+        } else {
+          ctx.moveTo(midPx - 6, roadY + offset);
+          ctx.lineTo(midPx + 4, roadY + offset - 4);
+          ctx.lineTo(midPx + 4, roadY + offset + 4);
+        }
+        ctx.fill();
+      });
+
+      // ==========================================
+      // 3. Draw Red Straight Displacement Vector
+      // ==========================================
+      if (carX !== 0) {
+        const carPx = toPx(carX);
+        const origPx = toPx(0);
+
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.moveTo(origPx, roadY + 95); ctx.lineTo(carPx, roadY + 95); ctx.stroke();
+
+        // Arrowhead
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        if (carX > 0) {
+          ctx.moveTo(carPx, roadY + 95);
+          ctx.lineTo(carPx - 8, roadY + 90);
+          ctx.lineTo(carPx - 8, roadY + 100);
+        } else {
+          ctx.moveTo(carPx, roadY + 95);
+          ctx.lineTo(carPx + 8, roadY + 90);
+          ctx.lineTo(carPx + 8, roadY + 100);
+        }
+        ctx.fill();
+
+        ctx.fillStyle = '#f87171';
+        ctx.font = 'bold 12px Noto Sans TC';
+        ctx.textAlign = 'center';
+        ctx.fillText(`🔴 位移 Δx = ${carX.toFixed(1)} m`, (origPx + carPx) / 2, roadY + 115);
+      }
+
+      // ==========================================
+      // 4. Draw RC Car Avatar
+      // ==========================================
+      const curCarPx = toPx(carX);
+      ctx.font = '34px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🏎️', curCarPx, roadY + 8);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'D') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>「在直線上運動」若有<strong>折返</strong>，位移大小必定<strong>小於</strong>路徑長！唯有在「直線且不折返（方向不變）」時兩者才會相同，故 (D) 敘述錯誤！';
+      } else {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>小心！</strong> 此選項是正確的定義，題目要求選出「錯誤」的敘述喔（請選 D）！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      loadScenario('turnaround', document.querySelectorAll('.preset-btn')[0]);
+    });
+  </script>
+</body>
+</html>

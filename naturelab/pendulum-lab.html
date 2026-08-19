@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 單擺變因控制虛擬實驗室 (P.7-8)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e6091;
+      --primary-dark: #184e77;
+      --primary-light: #52b69a;
+      --accent: #f77f00;
+      --accent-hover: #d62828;
+      --bg: #f4f7fb;
+      --card-bg: #ffffff;
+      --text: #1d2d44;
+      --text-muted: #5c6b73;
+      --border: #e0e6ed;
+      --success: #2b9348;
+      --warn: #d90429;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(30, 96, 145, 0.06);
+      --shadow-md: 0 8px 24px rgba(30, 96, 145, 0.1);
+      --shadow-lg: 0 16px 36px rgba(30, 96, 145, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #184e77 0%, #1e6091 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card Styles */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Grid Layouts */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Canvas / Stage Area */
+    .stage-container {
+      background: #f8fbfe;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #dbe5ef;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 420px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(4px);
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(30, 96, 145, 0.15);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .stage-hud div {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .stage-hud span {
+      color: var(--text-muted);
+    }
+
+    .stage-hud strong {
+      color: var(--primary-dark);
+    }
+
+    .flash-indicator {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 96, 145, 0.9);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.35rem 0.9rem;
+      border-radius: 99px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+
+    .flash-indicator.show {
+      opacity: 1;
+    }
+
+    /* Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .preset-btns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .preset-btn {
+      background: #eef4f9;
+      border: 1.5px solid #d0deeb;
+      color: var(--text);
+      padding: 0.6rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: #e1edf7;
+      border-color: var(--primary-light);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slider-group {
+      background: #f8fbfe;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .slider-item {
+      margin-bottom: 0.85rem;
+    }
+
+    .slider-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .slider-val {
+      color: var(--primary);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Stopwatch Section */
+    .stopwatch-card {
+      background: #184e77;
+      color: white;
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timer-display {
+      font-family: 'Outfit', monospace;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #76c893;
+      text-shadow: 0 0 12px rgba(118, 200, 147, 0.4);
+    }
+
+    .timer-info {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #1e7033;
+    }
+
+    .speed-selector {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      font-size: 0.8rem;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.25rem 0.5rem;
+      border-radius: 99px;
+    }
+
+    .speed-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 99px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .speed-btn.active {
+      background: white;
+      color: var(--primary-dark);
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    th {
+      background: #eef4f9;
+      color: var(--primary-dark);
+      font-weight: 800;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 0.7rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:hover td {
+      background: #f8fbfe;
+    }
+
+    .highlight-row {
+      background: #e8f4f8 !important;
+      font-weight: 700;
+    }
+
+    /* Comparison Section Styles */
+    .compare-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .compare-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compare-card {
+      background: #f8fbfe;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .compare-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .compare-card.active {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .compare-card .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag-blue { background: #d0ebff; color: #1971c2; }
+    .tag-orange { background: #ffe8cc; color: #d9480f; }
+    .tag-green { background: #d3f9d8; color: #2b8a3e; }
+
+    .compare-dual-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    @media (max-width: 680px) {
+      .compare-dual-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dual-pendulum-box {
+      background: #f8fbfe;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .dual-pendulum-box h4 {
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-box {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .quiz-box h4 {
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      background: white;
+      border: 1.5px solid #d0deeb;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover {
+      border-color: var(--primary);
+      background: #eef4f9;
+    }
+
+    .quiz-btn.correct {
+      background: #2b9348;
+      color: white;
+      border-color: #1e7033;
+    }
+
+    .quiz-btn.wrong {
+      background: #d90429;
+      color: white;
+      border-color: #a80320;
+    }
+
+    .feedback-msg {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: none;
+    }
+
+    .feedback-msg.show {
+      display: block;
+    }
+
+    /* Graph Demo Area */
+    .graph-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .graph-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Clock Calibration Sandbox */
+    .clock-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: #fdfefe;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .clock-status {
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.5rem 1.25rem;
+      border-radius: 99px;
+    }
+
+    .clock-status.fast { background: #ffe3e3; color: #c92a2a; }
+    .clock-status.slow { background: #e7f5ff; color: #1864ab; }
+    .clock-status.exact { background: #d3f9d8; color: #2b8a3e; }
+
+    footer {
+      background: #e9ecef;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>⏱️ 單擺變因控制虛擬實驗室</span>
+          <span class="badge">國中自然 3上 · 課本 P.7-8</span>
+        </h1>
+        <p>探究單擺等時性、擺長／質量／擺角對週期的影響、控制變因法與圖表分析</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('lab')">🔬 探索實驗室</button>
+        <button class="nav-btn" onclick="switchTab('compare')">⚖️ 三組控制變因</button>
+        <button class="nav-btn" onclick="switchTab('graph')">📈 例題 1-1 圖表解析</button>
+        <button class="nav-btn" onclick="switchTab('clock')">🕰️ 擺鐘調校挑戰</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tab 1: Investigation Lab -->
+    <section id="tab-lab" class="tab-section active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🧪 探索活動：影響單擺擺動週期的因素</span>
+          </div>
+          <div class="speed-selector">
+            <span>播放速度：</span>
+            <button class="speed-btn" onclick="setSpeed(0.25)">0.25x</button>
+            <button class="speed-btn" onclick="setSpeed(0.5)">0.5x</button>
+            <button class="speed-btn active" onclick="setSpeed(1.0)">1.0x</button>
+          </div>
+        </div>
+
+        <div class="lab-grid">
+          <!-- Left: Simulation Canvas -->
+          <div class="stage-container">
+            <canvas id="labCanvas" width="600" height="380"></canvas>
+            <div class="stage-hud">
+              <div><span>擺長 (L)：</span><strong id="hudLength">100 cm</strong></div>
+              <div><span>質量 (m)：</span><strong id="hudMass">20 g</strong></div>
+              <div><span>擺角 (θ)：</span><strong id="hudAngle">10°</strong></div>
+              <div><span>理論週期 (T)：</span><strong id="hudPeriod">2.00 秒</strong></div>
+            </div>
+            <div class="flash-indicator" id="flashPass">🔔 通過平衡點</div>
+          </div>
+
+          <!-- Right: Controls & Stopwatch -->
+          <div class="controls-panel">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark); display: block; margin-bottom: 0.4rem;">
+                📌 課本 4 組標準實驗條件：
+              </label>
+              <div class="preset-btns">
+                <button class="preset-btn active" onclick="applyPreset(1)">① 100cm<br>20g / 10°</button>
+                <button class="preset-btn" onclick="applyPreset(2)">② 100cm<br>20g / 5°</button>
+                <button class="preset-btn" onclick="applyPreset(3)">③ 100cm<br>40g / 10°</button>
+                <button class="preset-btn" onclick="applyPreset(4)">④ 25cm<br>20g / 10°</button>
+              </div>
+            </div>
+
+            <!-- Sliders -->
+            <div class="slider-group">
+              <div class="slider-item">
+                <div class="slider-header">
+                  <span>擺長 \( L \) (cm)</span>
+                  <span class="slider-val" id="valLength">100 cm</span>
+                </div>
+                <input type="range" id="rangeLength" min="20" max="100" value="100" oninput="onParamChange()">
+              </div>
+              <div class="slider-item">
+                <div class="slider-header">
+                  <span>擺錘質量 \( m \) (g)</span>
+                  <span class="slider-val" id="valMass">20 g</span>
+                </div>
+                <input type="range" id="rangeMass" min="10" max="50" step="5" value="20" oninput="onParamChange()">
+              </div>
+              <div class="slider-item">
+                <div class="slider-header">
+                  <span>擺角 \( \theta \) (度)</span>
+                  <span class="slider-val" id="valAngle">10°</span>
+                </div>
+                <input type="range" id="rangeAngle" min="2" max="15" value="10" oninput="onParamChange()">
+              </div>
+            </div>
+
+            <!-- Stopwatch -->
+            <div class="stopwatch-card">
+              <div class="timer-display" id="timerDisplay">00.00 秒</div>
+              <div class="timer-info">
+                <span>來回次數：<strong id="swingCountDisplay" style="color: #ffd166;">0</strong> / 10 次</span>
+                <span>即時平均週期：<strong id="measuredPeriodDisplay" style="color: #a7c957;">--</strong></span>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-primary" id="btnStartStop" onclick="toggleTimer()">▶ 開始計時</button>
+                <button class="btn btn-secondary" onclick="resetTimer()">🔄 重置</button>
+                <button class="btn btn-success" onclick="recordCurrentData()">📝 記錄數據</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-container">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th>實驗組別</th>
+                <th>擺長 \( L \) (cm)</th>
+                <th>擺錘質量 \( m \) (g)</th>
+                <th>擺角 \( \theta \) (°)</th>
+                <th>來回 10 次時間 (秒)</th>
+                <th>計算週期 \( T \) (秒)</th>
+                <th>備註分析</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Will be filled dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Control Variables (Figure 1-3) -->
+    <section id="tab-compare" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>⚖️ 課本圖 1-3：三組控制變因比較</span>
+          </div>
+          <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="syncReleaseCompare()">
+            🚀 同步釋放雙擺觀察
+          </button>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          運用「控制變因法」：每次實驗只改變一個操作變因，並控制其他變因不變，觀察週期 \( T \) 是否改變。
+        </p>
+
+        <div class="compare-container">
+          <div class="compare-card active" onclick="selectCompareMode('A', this)">
+            <span class="tag tag-blue">任務 A · 改變擺角</span>
+            <h4>固定 \( L=100\text{cm}, m=20\text{g} \)</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">比較 \( \theta = 10^\circ \) vs \( \theta = 5^\circ \)</p>
+          </div>
+          <div class="compare-card" onclick="selectCompareMode('B', this)">
+            <span class="tag tag-orange">任務 B · 改變擺錘質量</span>
+            <h4>固定 \( L=100\text{cm}, \theta=10^\circ \)</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">比較 \( m = 20\text{g} \) vs \( m = 40\text{g} \)</p>
+          </div>
+          <div class="compare-card" onclick="selectCompareMode('C', this)">
+            <span class="tag tag-green">任務 C · 改變擺長</span>
+            <h4>固定 \( m=20\text{g}, \theta=10^\circ \)</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">比較 \( L = 100\text{cm} \) vs \( L = 25\text{cm} \)</p>
+          </div>
+        </div>
+
+        <!-- Dual Stage Canvas -->
+        <div class="compare-dual-stage">
+          <div class="dual-pendulum-box">
+            <h4 id="dualLeftTitle">單擺 1 (左側)</h4>
+            <canvas id="dualLeftCanvas" width="280" height="260"></canvas>
+            <p id="dualLeftInfo" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;"></p>
+          </div>
+          <div class="dual-pendulum-box">
+            <h4 id="dualRightTitle">單擺 2 (右側)</h4>
+            <canvas id="dualRightCanvas" width="280" height="260"></canvas>
+            <p id="dualRightInfo" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;"></p>
+          </div>
+        </div>
+
+        <!-- Quiz / Evidence Check -->
+        <div class="quiz-box">
+          <h4 id="compareQuestion">🤔 思考與預測：兩組單擺擺動 10 次的週期 \( T_1 \) 與 \( T_2 \) 關係為何？</h4>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkCompareAnswer('equal')">\( T_1 = T_2 \)（週期相同）</button>
+            <button class="quiz-btn" onclick="checkCompareAnswer('left')">\( T_1 > T_2 \)（左側週期較長）</button>
+            <button class="quiz-btn" onclick="checkCompareAnswer('right')">\( T_1 < T_2 \)（右側週期較長）</button>
+          </div>
+          <div class="feedback-msg" id="compareFeedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Example 1-1 Graph -->
+    <section id="tab-graph" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📈 例題 1-1：單擺次數與時間關係圖（斜率判讀）</span>
+          </div>
+        </div>
+
+        <div class="graph-container">
+          <div>
+            <canvas id="chartCanvas" width="450" height="340" style="background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border);"></canvas>
+          </div>
+          <div>
+            <div style="background: #f8fbfe; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+              <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.75rem;">📊 課本例題 1-1 解析</h3>
+              <p style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+                甲、乙兩單擺在同一地點擺動，其擺動次數與時間關係如左圖所示：
+              </p>
+              <ul style="padding-left: 1.2rem; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                <li><strong>擺動 20 次時：</strong>甲耗時 20 秒，乙耗時 10 秒。</li>
+                <li><strong>甲週期 \( T_甲 \)：</strong>\( 20\text{ 秒} \div 20\text{ 次} = 1.0\text{ 秒} \)</li>
+                <li><strong>乙週期 \( T_乙 \)：</strong>\( 10\text{ 秒} \div 20\text{ 次} = 0.5\text{ 秒} \)</li>
+              </ul>
+              
+              <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary);">
+                <strong style="color: var(--primary-dark);">💡 觀念總結：</strong>
+                <p style="font-size: 0.85rem; margin-top: 0.25rem;">
+                  \( T_甲 (1.0\text{s}) > T_乙 (0.5\text{s}) \)，週期越長代表擺動越慢，因此<strong>甲的擺長較長</strong>。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Clock Calibration -->
+    <section id="tab-clock" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🕰️ 動腦時間：咕咕擺鐘調校任務</span>
+          </div>
+        </div>
+
+        <div class="clock-widget">
+          <p style="max-width: 600px; text-align: center; font-size: 0.95rem;">
+            學校大廳的復古擺鐘每天都會<strong>走快 3 分鐘</strong>（擺動過快）。請試著調整擺鐘下方的調校螺帽，讓擺鐘恢復精準走時！
+          </p>
+
+          <div class="clock-status fast" id="clockStatus">
+            ⚠️ 目前狀態：走得太快（週期太短）
+          </div>
+
+          <div style="width: 100%; max-width: 480px;">
+            <canvas id="clockCanvas" width="480" height="260" style="background: #f8fbfe; border-radius: var(--radius-md); border: 1px solid var(--border);"></canvas>
+          </div>
+
+          <div style="width: 100%; max-width: 450px; background: #f8fbfe; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div class="slider-header">
+              <span>旋轉調校螺帽（調整擺長 \( L \)）</span>
+              <span class="slider-val" id="clockLengthVal">70 cm</span>
+            </div>
+            <input type="range" id="clockRange" min="50" max="130" value="70" oninput="onClockNutAdjust()">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
+              <span>旋緊螺帽（擺長變短）</span>
+              <span>標準精準 (100 cm)</span>
+              <span>旋鬆螺帽（擺長變長）</span>
+            </div>
+          </div>
+
+          <div id="clockResultMsg" style="font-size: 0.95rem; font-weight: 700; color: var(--success); display: none;">
+            🎉 太棒了！將擺長調長後，單擺週期變大（擺動變慢），擺鐘恢復精準計時！
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // Constants & State
+    const G = 980; // cm/s^2 (standard gravity scaled)
+    let currentSpeed = 1.0;
+    let labParams = { length: 100, mass: 20, angle: 10 };
+    let labAnim = { angle: 10, vel: 0, time: 0, isRunning: true };
+    let stopwatch = { isRunning: false, startTime: 0, elapsed: 0, swingCount: 0, lastCrossDir: 0 };
+    
+    // Preset configurations matching textbook P.7
+    const presets = {
+      1: { length: 100, mass: 20, angle: 10, expected10: 20.0 },
+      2: { length: 100, mass: 20, angle: 5,  expected10: 20.0 },
+      3: { length: 100, mass: 40, angle: 10, expected10: 20.0 },
+      4: { length: 25,  mass: 20, angle: 10, expected10: 10.0 }
+    };
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+
+      if (tabId === 'compare') initDualPendulum();
+      if (tabId === 'graph') drawGraph();
+      if (tabId === 'clock') drawClock();
+    }
+
+    function setSpeed(sp) {
+      currentSpeed = sp;
+      document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // Tab 1: Lab Logic
+    function applyPreset(num) {
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      const p = presets[num];
+      labParams.length = p.length;
+      labParams.mass = p.mass;
+      labParams.angle = p.angle;
+      document.getElementById('rangeLength').value = p.length;
+      document.getElementById('rangeMass').value = p.mass;
+      document.getElementById('rangeAngle').value = p.angle;
+      onParamChange();
+    }
+
+    function onParamChange() {
+      labParams.length = parseFloat(document.getElementById('rangeLength').value);
+      labParams.mass = parseFloat(document.getElementById('rangeMass').value);
+      labParams.angle = parseFloat(document.getElementById('rangeAngle').value);
+
+      document.getElementById('valLength').innerText = labParams.length + ' cm';
+      document.getElementById('valMass').innerText = labParams.mass + ' g';
+      document.getElementById('valAngle').innerText = labParams.angle + '°';
+
+      document.getElementById('hudLength').innerText = labParams.length + ' cm';
+      document.getElementById('hudMass').innerText = labParams.mass + ' g';
+      document.getElementById('hudAngle').innerText = labParams.angle + '°';
+
+      // Small angle period: T = 2 * pi * sqrt(L / g)
+      const period = 2 * Math.PI * Math.sqrt(labParams.length / G);
+      document.getElementById('hudPeriod').innerText = period.toFixed(2) + ' 秒';
+      
+      resetTimer();
+    }
+
+    // Stopwatch Controls
+    function toggleTimer() {
+      const btn = document.getElementById('btnStartStop');
+      if (!stopwatch.isRunning) {
+        stopwatch.isRunning = true;
+        stopwatch.startTime = performance.now() - stopwatch.elapsed;
+        btn.innerText = '⏸ 暫停計時';
+        btn.style.background = '#d90429';
+      } else {
+        stopwatch.isRunning = false;
+        btn.innerText = '▶ 繼續計時';
+        btn.style.background = 'var(--accent)';
+      }
+    }
+
+    function resetTimer() {
+      stopwatch.isRunning = false;
+      stopwatch.elapsed = 0;
+      stopwatch.swingCount = 0;
+      stopwatch.lastCrossDir = 0;
+      document.getElementById('timerDisplay').innerText = '00.00 秒';
+      document.getElementById('swingCountDisplay').innerText = '0';
+      document.getElementById('measuredPeriodDisplay').innerText = '--';
+      const btn = document.getElementById('btnStartStop');
+      btn.innerText = '▶ 開始計時';
+      btn.style.background = 'var(--accent)';
+    }
+
+    function recordCurrentData() {
+      const tbody = document.querySelector('#dataTable tbody');
+      const row = document.createElement('tr');
+      const time10 = stopwatch.elapsed > 0 ? (stopwatch.elapsed / 1000).toFixed(2) : (2 * Math.PI * Math.sqrt(labParams.length / G) * 10).toFixed(1);
+      const measuredT = (time10 / 10).toFixed(2);
+
+      let note = '擺長 ' + labParams.length + 'cm';
+      if (labParams.length === 100) note = '標準 100cm (週期 2.0s)';
+      if (labParams.length === 25) note = '擺長縮為 1/4，週期減半 (1.0s)';
+
+      row.innerHTML = `
+        <td>自訂 / 探索</td>
+        <td>${labParams.length}</td>
+        <td>${labParams.mass}</td>
+        <td>${labParams.angle}</td>
+        <td>${time10}</td>
+        <td><strong>${measuredT}</strong></td>
+        <td>${note}</td>
+      `;
+      tbody.prepend(row);
+    }
+
+    // Fill Initial Table with 4 Textbook Experiments
+    function initTable() {
+      const tbody = document.querySelector('#dataTable tbody');
+      const notes = [
+        '基準組 (週期 2.0s)',
+        '改變擺角 (θ=5°)，週期仍為 2.0s → 與擺角無關',
+        '改變質量 (m=40g)，週期仍為 2.0s → 與質量無關',
+        '改變擺長 (L=25cm)，週期變為 1.0s → 擺長越短週期越短'
+      ];
+      for (let i = 1; i <= 4; i++) {
+        const p = presets[i];
+        const row = document.createElement('tr');
+        if (i === 1) row.className = 'highlight-row';
+        row.innerHTML = `
+          <td>課本第 ${i} 組</td>
+          <td>${p.length}</td>
+          <td>${p.mass}</td>
+          <td>${p.angle}</td>
+          <td>${p.expected10.toFixed(1)}</td>
+          <td><strong>${(p.expected10 / 10).toFixed(1)}</strong></td>
+          <td>${notes[i - 1]}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    // Simulation Loop
+    const labCanvas = document.getElementById('labCanvas');
+    const labCtx = labCanvas.getContext('2d');
+
+    let prevTheta = 0;
+    let passFlashTimer = 0;
+
+    function renderLab(timestamp) {
+      labCtx.clearRect(0, 0, labCanvas.width, labCanvas.height);
+      const centerX = labCanvas.width / 2;
+      const centerY = 50;
+      
+      // Physics calc: simple harmonic / pendulum angular motion
+      const omega = Math.sqrt(G / labParams.length); // rad/s
+      const currentTheta = (labParams.angle * Math.PI / 180) * Math.cos(omega * (timestamp / 1000) * currentSpeed);
+      
+      // Detect passing equilibrium (zero crossing) for counting
+      if (prevTheta < 0 && currentTheta >= 0) {
+        if (stopwatch.isRunning) {
+          stopwatch.swingCount += 1;
+          document.getElementById('swingCountDisplay').innerText = stopwatch.swingCount;
+          if (stopwatch.swingCount > 0 && stopwatch.elapsed > 0) {
+            const avgT = (stopwatch.elapsed / 1000 / stopwatch.swingCount).toFixed(2);
+            document.getElementById('measuredPeriodDisplay').innerText = avgT + ' 秒';
+          }
+          if (stopwatch.swingCount >= 10) {
+            toggleTimer(); // Stop at 10 swings automatically
+          }
+        }
+        passFlashTimer = 10;
+      }
+      prevTheta = currentTheta;
+
+      if (passFlashTimer > 0) {
+        document.getElementById('flashPass').classList.add('show');
+        passFlashTimer--;
+      } else {
+        document.getElementById('flashPass').classList.remove('show');
+      }
+
+      // Draw Support Beam
+      labCtx.fillStyle = '#203a5b';
+      labCtx.fillRect(centerX - 100, centerY - 10, 200, 10);
+      labCtx.beginPath();
+      labCtx.arc(centerX, centerY, 6, 0, Math.PI * 2);
+      labCtx.fillStyle = '#ff7082';
+      labCtx.fill();
+
+      // Draw Protractor Arc
+      labCtx.beginPath();
+      labCtx.arc(centerX, centerY, 60, 0, Math.PI);
+      labCtx.strokeStyle = 'rgba(30, 96, 145, 0.2)';
+      labCtx.lineWidth = 2;
+      labCtx.stroke();
+
+      // Draw Center Equilibrium Line
+      labCtx.beginPath();
+      labCtx.setLineDash([4, 4]);
+      labCtx.moveTo(centerX, centerY);
+      labCtx.lineTo(centerX, centerY + 280);
+      labCtx.strokeStyle = '#94a3b8';
+      labCtx.stroke();
+      labCtx.setLineDash([]);
+
+      // Pendulum Position
+      const pixelLength = 60 + (labParams.length / 100) * 200;
+      const bobX = centerX + Math.sin(currentTheta) * pixelLength;
+      const bobY = centerY + Math.cos(currentTheta) * pixelLength;
+      const bobRadius = 10 + (labParams.mass / 50) * 12;
+
+      // Draw String
+      labCtx.beginPath();
+      labCtx.moveTo(centerX, centerY);
+      labCtx.lineTo(bobX, bobY);
+      labCtx.strokeStyle = '#1e6091';
+      labCtx.lineWidth = 3;
+      labCtx.stroke();
+
+      // Draw Bob
+      labCtx.beginPath();
+      labCtx.arc(bobX, bobY, bobRadius, 0, Math.PI * 2);
+      labCtx.fillStyle = '#ffd166';
+      labCtx.fill();
+      labCtx.strokeStyle = '#d49a15';
+      labCtx.lineWidth = 3;
+      labCtx.stroke();
+
+      // Update Stopwatch elapsed
+      if (stopwatch.isRunning) {
+        stopwatch.elapsed = performance.now() - stopwatch.startTime;
+        const s = (stopwatch.elapsed / 1000).toFixed(2);
+        document.getElementById('timerDisplay').innerText = (s < 10 ? '0' + s : s) + ' 秒';
+      }
+
+      requestAnimationFrame(renderLab);
+    }
+
+    // Tab 2: Control Variables Dual Simulation
+    let compareMode = 'A';
+    let dualStartTime = 0;
+
+    const dualP = {
+      A: {
+        left: { length: 100, mass: 20, angle: 10 },
+        right: { length: 100, mass: 20, angle: 5 },
+        question: '🤔 任務 A（改變擺角 θ）：兩組單擺擺動週期 T₁ 與 T₂ 的關係？',
+        correct: 'equal',
+        desc: '固定擺長與質量，改變擺角，兩組週期皆為 2.0 秒 → 週期與擺角無關！'
+      },
+      B: {
+        left: { length: 100, mass: 20, angle: 10 },
+        right: { length: 100, mass: 40, angle: 10 },
+        question: '🤔 任務 B（改變擺錘質量 m）：兩組單擺擺動週期 T₁ 與 T₂ 的關係？',
+        correct: 'equal',
+        desc: '固定擺長與擺角，改變質量，兩組週期皆為 2.0 秒 → 週期與擺錘質量無關！'
+      },
+      C: {
+        left: { length: 100, mass: 20, angle: 10 },
+        right: { length: 25, mass: 20, angle: 10 },
+        question: '🤔 任務 C（改變擺長 L）：左側 (100cm) 與右側 (25cm) 週期關係？',
+        correct: 'left',
+        desc: '固定質量與擺角，擺長 100cm 週期 2.0s，擺長 25cm 週期 1.0s → 擺長越長週期越長！'
+      }
+    };
+
+    function selectCompareMode(mode, el) {
+      compareMode = mode;
+      document.querySelectorAll('.compare-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      
+      const q = dualP[mode];
+      document.getElementById('compareQuestion').innerText = q.question;
+      document.getElementById('compareFeedback').className = 'feedback-msg';
+      document.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.classList.remove('correct', 'wrong');
+      });
+
+      dualStartTime = performance.now();
+    }
+
+    function syncReleaseCompare() {
+      dualStartTime = performance.now();
+    }
+
+    function checkCompareAnswer(ans) {
+      const q = dualP[compareMode];
+      const fb = document.getElementById('compareFeedback');
+      fb.classList.add('show');
+      if (ans === q.correct) {
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '🎉 <strong>答對了！</strong>' + q.desc;
+        event.target.classList.add('correct');
+      } else {
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>再想想看！</strong>觀察上方兩組單擺擺動快慢，' + (q.correct === 'equal' ? '兩者來回節奏是完全相同的！' : '擺長較長的那組來回一次花比較多時間！');
+        event.target.classList.add('wrong');
+      }
+    }
+
+    function initDualPendulum() {
+      dualStartTime = performance.now();
+    }
+
+    function drawSingleBob(canvasId, p, timestamp) {
+      const c = document.getElementById(canvasId);
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      const cx = c.width / 2;
+      const cy = 30;
+      const omega = Math.sqrt(G / p.length);
+      const theta = (p.angle * Math.PI / 180) * Math.cos(omega * ((timestamp - dualStartTime) / 1000));
+      
+      const pixelL = 40 + (p.length / 100) * 160;
+      const bx = cx + Math.sin(theta) * pixelL;
+      const by = cy + Math.cos(theta) * pixelL;
+      const r = 8 + (p.mass / 50) * 10;
+
+      // Beam
+      ctx.fillStyle = '#203a5b';
+      ctx.fillRect(cx - 50, cy - 6, 100, 6);
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff7082';
+      ctx.fill();
+
+      // String
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(bx, by);
+      ctx.strokeStyle = '#1e6091';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Bob
+      ctx.beginPath();
+      ctx.arc(bx, by, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffd166';
+      ctx.fill();
+      ctx.strokeStyle = '#d49a15';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function renderDualLoop(timestamp) {
+      if (document.getElementById('tab-compare').classList.contains('active')) {
+        const conf = dualP[compareMode];
+        drawSingleBob('dualLeftCanvas', conf.left, timestamp);
+        drawSingleBob('dualRightCanvas', conf.right, timestamp);
+        document.getElementById('dualLeftInfo').innerText = `擺長 ${conf.left.length}cm · 質量 ${conf.left.mass}g · 擺角 ${conf.left.angle}°`;
+        document.getElementById('dualRightInfo').innerText = `擺長 ${conf.right.length}cm · 質量 ${conf.right.mass}g · 擺角 ${conf.right.angle}°`;
+      }
+      requestAnimationFrame(renderDualLoop);
+    }
+
+    // Tab 3: Chart
+    function drawGraph() {
+      const canvas = document.getElementById('chartCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const ox = 60, oy = 280, w = 350, h = 230;
+
+      // Axes
+      ctx.beginPath();
+      ctx.moveTo(ox, oy - h);
+      ctx.lineTo(ox, oy);
+      ctx.lineTo(ox + w, oy);
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Labels
+      ctx.fillStyle = '#203a5b';
+      ctx.font = 'bold 13px Noto Sans TC';
+      ctx.fillText('擺動時間 (秒)', ox - 10, oy - h - 15);
+      ctx.fillText('擺動次數 (次)', ox + w - 40, oy + 35);
+
+      // Grid
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 6; i++) {
+        const x = ox + (i / 6) * 300;
+        ctx.beginPath(); ctx.moveTo(x, oy); ctx.lineTo(x, oy - h); ctx.stroke();
+        ctx.fillText(i * 10, x - 8, oy + 18);
+      }
+      for (let j = 1; j <= 6; j++) {
+        const y = oy - (j / 6) * 210;
+        ctx.beginPath(); ctx.moveTo(ox, y); ctx.lineTo(ox + w, y); ctx.stroke();
+        ctx.fillText(j * 5, ox - 25, y + 4);
+      }
+
+      // Line A (甲): 20 swings = 20s (Slope = 1)
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(ox + (20/60)*300, oy - (20/30)*210);
+      ctx.strokeStyle = '#1e6091';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+      ctx.fillStyle = '#1e6091';
+      ctx.fillText('甲 (T=1.0s, 較長)', ox + (20/60)*300 + 10, oy - (20/30)*210);
+
+      // Line B (乙): 20 swings = 10s (Slope = 0.5)
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(ox + (40/60)*300, oy - (20/30)*210);
+      ctx.strokeStyle = '#f77f00';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+      ctx.fillStyle = '#f77f00';
+      ctx.fillText('乙 (T=0.5s, 較短)', ox + (40/60)*300 + 10, oy - (20/30)*210);
+    }
+
+    // Tab 4: Clock Sandbox
+    let clockLen = 70;
+    function onClockNutAdjust() {
+      clockLen = parseFloat(document.getElementById('clockRange').value);
+      document.getElementById('clockLengthVal').innerText = clockLen + ' cm';
+      const statusEl = document.getElementById('clockStatus');
+      const msgEl = document.getElementById('clockResultMsg');
+
+      if (clockLen < 95) {
+        statusEl.className = 'clock-status fast';
+        statusEl.innerText = '⚠️ 擺長過短 (' + clockLen + 'cm) → 擺動太快，每天快 ' + Math.round((100 - clockLen)/5) + ' 分鐘';
+        msgEl.style.display = 'none';
+      } else if (clockLen > 105) {
+        statusEl.className = 'clock-status slow';
+        statusEl.innerText = '⚠️ 擺長過長 (' + clockLen + 'cm) → 擺動太慢，每天慢 ' + Math.round((clockLen - 100)/5) + ' 分鐘';
+        msgEl.style.display = 'none';
+      } else {
+        statusEl.className = 'clock-status exact';
+        statusEl.innerText = '✅ 擺長適中 (100cm) → 週期精準 2.0 秒，走時完全精確！';
+        msgEl.style.display = 'block';
+      }
+    }
+
+    function drawClock() {
+      const c = document.getElementById('clockCanvas');
+      const ctx = c.getContext('2d');
+      function anim(t) {
+        if (!document.getElementById('tab-clock').classList.contains('active')) return;
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        const cx = c.width / 2;
+        const cy = 20;
+        const omega = Math.sqrt(G / clockLen);
+        const theta = (8 * Math.PI / 180) * Math.cos(omega * (t / 1000));
+        const pl = 40 + (clockLen / 130) * 160;
+        const bx = cx + Math.sin(theta) * pl;
+        const by = cy + Math.cos(theta) * pl;
+
+        // Rod
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(bx, by);
+        ctx.strokeStyle = '#718096';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Nut & Bob
+        ctx.beginPath();
+        ctx.arc(bx, by, 18, 0, Math.PI * 2);
+        ctx.fillStyle = '#ecc94b';
+        ctx.fill();
+        ctx.strokeStyle = '#b7791f';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        requestAnimationFrame(anim);
+      }
+      requestAnimationFrame(anim);
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      initTable();
+      onParamChange();
+      requestAnimationFrame(renderLab);
+      requestAnimationFrame(renderDualLoop);
+    });
+  </script>
+</body>
+</html>

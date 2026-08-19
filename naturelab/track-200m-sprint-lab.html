@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 200公尺短跑競藝：彎道路徑長 vs 直線位移與極速加速度分析 (習作 P.9 素養活用篇)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ea580c;       /* Track Orange / Flame */
+      --primary-dark: #c2410c;
+      --bolt-gold: #eab308;
+      --path-purple: #a855f7;
+      --disp-red: #ef4444;
+      --bg: #fff7ed;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #fed7aa;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(234, 88, 12, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffedd5;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Stadium Canvas Stage */
+    .stage-box {
+      background: #064e3b;      /* Grass green stadium infield */
+      border: 2px solid #065f46;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* 4 Phases Telemetry Grid */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+    }
+
+    .t-card.path { border-color: #d8b4fe; background: #faf5ff; }
+    .t-card.disp { border-color: #fecaca; background: #fef2f2; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .t-card.path h4 { color: #7e22ce; }
+    .t-card.disp h4 { color: #dc2626; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .t-card.path .t-val { color: #7e22ce; }
+    .t-card.disp .t-val { color: #dc2626; }
+
+    /* 4 Splits Table */
+    .splits-table-box {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: white;
+    }
+
+    table.splits-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    table.splits-table th {
+      background: #ffedd5;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    table.splits-table td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.splits-table tr.active-row {
+      background: #fff7ed;
+      font-weight: 800;
+    }
+
+    .tag-peak {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #fff7ed;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏃 200公尺短跑競藝：彎道路徑長 vs 直線位移與極速加速度分析</span>
+          <span class="badge">國中自然 3上 · 習作 P.9 素養活用篇</span>
+        </h1>
+        <p>200公尺是沿跑道之「路徑長」；55~100m (t1~t2) 達最高速率；彎道方向改變＋速率改變 ➔ 屬於「加速度運動」！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Stadium Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏟️ 400m 國際標準田徑場（200m 彎道起跑 ➔ 直道終點）</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnSprint" onclick="toggleSprint()">▶ 博爾特鳴槍起跑</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回起跑線</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>⏱️ 耗時：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.00 秒</strong></span>
+            <span>⚡ 即時速率：<strong id="hudSpeed" style="color: #38bdf8; font-family: 'Outfit';">0.0 m/s</strong></span>
+            <span>🏆 世界紀錄：<strong>19.19 秒 (博爾特)</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        </div>
+
+        <!-- Controls / Scrubber -->
+        <div class="control-panel">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
+            <span>手動拖曳短跑進度 (0～19.19秒)：</span>
+            <span id="sliderVal">t = 0.00 秒</span>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="19.19" step="0.05" value="0" style="width: 100%; accent-color: var(--primary);" oninput="onSliderChange(this.value)">
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            💡 <strong>關鍵觀察點：</strong>請觀察選手在彎道（0~100m）時，<strong>運動方向隨弧線不斷旋轉</strong>；在 55~100m 區間達到極速（\( 12.4\text{ m/s} \)），故屬於「加速度運動」！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 2 Metrics & Splits Table & Quiz -->
+      <div>
+        
+        <!-- Dual Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Path Length -->
+          <div class="t-card path">
+            <h4>🟣 跑道路徑長 \( S \)</h4>
+            <div class="t-val" id="valPath">0.0 m</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">題1：200m 代表沿跑道路徑長</div>
+          </div>
+
+          <!-- Displacement -->
+          <div class="t-card disp">
+            <h4>🔴 起訖點直線位移 \( |\Delta \vec{x}| \)</h4>
+            <div class="t-val" id="valDisp">0.0 m</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">割線直線距離（＜ 200m）</div>
+          </div>
+        </div>
+
+        <!-- 4 Splits Table -->
+        <div class="splits-table-box">
+          <table class="splits-table">
+            <thead>
+              <tr>
+                <th>時段分區</th>
+                <th>路程區間</th>
+                <th>運動特徵與速度表現</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="spRow1">
+                <td><strong>\( 0 \sim t_1 \)</strong></td>
+                <td>0 ～ 50 m</td>
+                <td>起跑加速期（爆發起步，進入彎道）</td>
+              </tr>
+              <tr id="spRow2" class="active-row">
+                <td><strong>\( t_1 \sim t_2 \)</strong></td>
+                <td><strong>50 ～ 100 m</strong></td>
+                <td><span class="tag-peak">🔥 達最高速率 (55~100m，題2答案)</span></td>
+              </tr>
+              <tr id="spRow3">
+                <td><strong>\( t_2 \sim t_3 \)</strong></td>
+                <td>100 ～ 150 m</td>
+                <td>出彎進入直道（速率微幅下降）</td>
+              </tr>
+              <tr id="spRow4">
+                <td><strong>\( t_3 \sim t_4 \)</strong></td>
+                <td>150 ～ 200 m</td>
+                <td>終點前全力衝刺壓線（19.19s）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.9 素養活用篇三大解析：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>題 1（200m 的意義）：</strong>選手全程跑在各自專屬跑道上，不可搶道，故 200 公尺代表<strong>從 B 點沿跑道跑到 D 點的「路徑長」</strong>（選 D）。</li>
+            <li><strong>題 2（最快速率時段）：</strong>文中指出大部分選手在 55～100 公尺達到最高速率，對應 <strong>\( t_1 \sim t_2 \)</strong>（選 B）。</li>
+            <li><strong>題 3（運動類型判定）：</strong>短跑過程速率會加速與減速，且<strong>前半程在彎道上運動方向持續改變</strong>，故為<strong>「加速度運動」</strong>（選 C）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作 P.9 素養活用篇測驗</div>
+
+          <div class="quiz-item">
+            <p>Q1. (第1題) 下列何者為 200 公尺短跑中「200公尺」的物理意義？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 從 B 點沿跑道跑到 D 點的路徑長</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 從 A 點沿跑道跑到 C 點的位移</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 從 A 點沿跑道跑到 D 點的位移</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. (第2題) 推測選手的最快速率最可能出現在哪段時間？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) t1～t2（50～100 公尺，第 55~100m 達最高速率）</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 0～t1</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) t2～t3</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q3. (第3題) 根據文中敘述，一般的 200 公尺短跑最接近下列哪種運動？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(3, 'C', this)">(C) 加速度運動（方向改變 ＋ 速率改變）</button>
+              <button class="quiz-btn" onclick="checkQuiz(3, 'A', this)">(A) 等速率運動</button>
+              <button class="quiz-btn" onclick="checkQuiz(3, 'B', this)">(B) 等速度運動</button>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章素養活用篇配套互動教具</p>
+  </footer>
+
+  <script>
+    let isSprinting = false;
+    let animId = null;
+    let lastTime = 0;
+    let simSeconds = 0; // 0 to 19.19s
+    const worldRecordTime = 19.19;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Sprint physics approximation:
+    // S(t) maps 0 to 19.19s -> 0 to 200m
+    function getSprintPhysics(t) {
+      const prog = Math.min(1.0, t / worldRecordTime);
+      // Non-linear s-curve progress
+      // 0~50m: ~5.8s, 50~100m: ~4.2s (fastest), 100~150m: ~4.5s, 150~200m: ~4.69s
+      let pathM = 0;
+      let speedMs = 0;
+      let splitIdx = 1;
+
+      if (t <= 5.8) {
+        // 0 to 50m
+        const p = t / 5.8;
+        pathM = p * 50.0;
+        speedMs = p * 11.5;
+        splitIdx = 1;
+      } else if (t <= 10.0) {
+        // 50 to 100m (peak speed ~ 12.4 m/s)
+        const p = (t - 5.8) / 4.2;
+        pathM = 50.0 + p * 50.0;
+        speedMs = 11.5 + Math.sin(p * Math.PI) * 0.9;
+        splitIdx = 2;
+      } else if (t <= 14.5) {
+        // 100 to 150m
+        const p = (t - 10.0) / 4.5;
+        pathM = 100.0 + p * 50.0;
+        speedMs = 11.8 - p * 0.3;
+        splitIdx = 3;
+      } else {
+        // 150 to 200m
+        const p = (t - 14.5) / 4.69;
+        pathM = 150.0 + p * 50.0;
+        speedMs = 11.5 + p * 0.4;
+        splitIdx = 4;
+      }
+
+      if (t >= worldRecordTime) {
+        pathM = 200.0;
+        speedMs = 11.9;
+      }
+
+      return { pathM, speedMs, splitIdx };
+    }
+
+    function toggleSprint() {
+      const btn = document.getElementById('btnSprint');
+      if (!isSprinting) {
+        if (simSeconds >= worldRecordTime) simSeconds = 0;
+        isSprinting = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isSprinting = false;
+        btn.innerText = '▶ 繼續衝刺';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isSprinting = false;
+      simSeconds = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnSprint').innerText = '▶ 博爾特鳴槍起跑';
+      document.getElementById('btnSprint').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onSliderChange(val) {
+      simSeconds = parseFloat(val);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isSprinting) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // 19.19s in 8 seconds real time
+      simSeconds += dt * (19.19 / 8.0);
+
+      if (simSeconds >= worldRecordTime) {
+        simSeconds = worldRecordTime;
+        isSprinting = false;
+        document.getElementById('btnSprint').innerText = '🔄 重新衝刺';
+        document.getElementById('btnSprint').style.background = 'var(--primary)';
+      }
+
+      document.getElementById('timeSlider').value = simSeconds;
+      updateUI();
+
+      if (isSprinting) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const sp = getSprintPhysics(simSeconds);
+
+      document.getElementById('hudTime').innerText = `${simSeconds.toFixed(2)} 秒`;
+      document.getElementById('hudSpeed').innerText = `${sp.speedMs.toFixed(1)} m/s (${(sp.speedMs * 3.6).toFixed(1)} km/h)`;
+      document.getElementById('sliderVal').innerText = `t = ${simSeconds.toFixed(2)} 秒`;
+
+      document.getElementById('valPath').innerText = `${sp.pathM.toFixed(1)} m`;
+
+      // Highlight Table Rows
+      for (let i = 1; i <= 4; i++) {
+        const r = document.getElementById(`spRow${i}`);
+        if (i === sp.splitIdx && simSeconds > 0) r.classList.add('active-row');
+        else r.classList.remove('active-row');
+      }
+
+      draw(sp);
+    }
+
+    function draw(sp) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      // 1. Draw 400m Stadium Oval Track
+      // Track geometry: Left Curve (B to apex), Bottom Straight (apex to D)
+      // Radius R = 110, straight len L = 220
+      const cx = 200, cy = 220, r = 130;
+      const straightEndX = cx + 240;
+
+      // Infield Grass
+      ctx.fillStyle = '#065f46';
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 30, Math.PI * 0.5, Math.PI * 1.5);
+      ctx.fillRect(cx, cy - r + 30, 240, (r - 30) * 2);
+      ctx.arc(straightEndX, cy, r - 30, Math.PI * 1.5, Math.PI * 0.5);
+      ctx.fill();
+
+      // Red Track Lanes
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 40;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, Math.PI * 0.5, Math.PI * 1.5);
+      ctx.lineTo(straightEndX, cy - r);
+      ctx.arc(straightEndX, cy, r, Math.PI * 1.5, Math.PI * 0.5);
+      ctx.lineTo(cx, cy + r);
+      ctx.stroke();
+
+      // Lane White Markings
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Points: B (Start, at angle ~120 deg on curve), D (Finish Line at bottom straight)
+      // 200m Path: Starts at B (top-right of left curve), travels around curve, ends at D (bottom straight)
+      const startAngle = Math.PI * 1.5; // Top of curve (B)
+      const curveLen = Math.PI * r; // half circle ~ 100m
+      const straightLen = 100;      // bottom straight ~ 100m
+
+      const startX = cx;
+      const startY = cy - r; // Point B
+
+      const finishX = cx + 180;
+      const finishY = cy + r; // Point D
+
+      // 2. Draw Start (B) & Finish (D) Labels
+      ctx.fillStyle = '#fde047';
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText('🏁 B 點 (200m 彎道起跑點)', startX - 20, startY - 28);
+      ctx.fillText('🏆 D 點 (終點線)', finishX + 20, finishY + 32);
+
+      // Start Line
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(startX, startY - 20); ctx.lineTo(startX, startY + 20); ctx.stroke();
+
+      // Finish Line (Checkerboard)
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(finishX, finishY - 20); ctx.lineTo(finishX, finishY + 20); ctx.stroke();
+
+      // 3. Compute Current Runner Position on 200m Route
+      let runnerX = startX, runnerY = startY;
+      const runnerProg = sp.pathM / 200.0; // 0 to 1
+
+      if (runnerProg <= 0.5) {
+        // Curve phase (0 to 100m): angle goes from 1.5 PI to 0.5 PI (counter-clockwise)
+        const angle = Math.PI * 1.5 - (runnerProg / 0.5) * Math.PI;
+        runnerX = cx + Math.cos(angle) * r;
+        runnerY = cy + Math.sin(angle) * r;
+      } else {
+        // Straight phase (100 to 200m): bottom straight from cx to finishX
+        const sProg = (runnerProg - 0.5) / 0.5;
+        runnerX = cx + sProg * (finishX - cx);
+        runnerY = cy + r;
+      }
+
+      // 4. Draw Straight Displacement Vector (Red Line: Start B -> Current Runner Pos)
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(runnerX, runnerY); ctx.stroke();
+      ctx.setLineDash([]);
+
+      const curDispM = Math.hypot(runnerX - startX, runnerY - startY) * (200.0 / (Math.PI * r + (finishX - cx)));
+      document.getElementById('valDisp').innerText = `${curDispM.toFixed(1)} m`;
+
+      // 5. Draw Runner Avatar (Usain Bolt)
+      ctx.font = '28px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🏃', runnerX, runnerY + 10);
+
+      // Peak Speed Halo (if in 50~100m)
+      if (sp.splitIdx === 2) {
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(runnerX, runnerY, 22, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#fde047';
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.fillText('⚡ 最高速率巔峰 (12.4 m/s)', runnerX, runnerY - 26);
+      }
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'D') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong> 選手全程跑在各自的彎道跑道上，不可搶道，故 200 公尺代表<strong>從 B 點沿跑道跑到 D 點的「路徑長」</strong>！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心陷阱！</strong> 跑道是有弧度的彎道，200公尺是選手跑過的實際長度（路徑長），不是直線位移！';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'B') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong> 文中指出大部分選手在 <strong>第 55～100 公尺區間達到最高速率</strong>，對應表格中的 <strong>\( t_1 \sim t_2 \)</strong>！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 根據文章統計，選手在第 55～100 公尺達到最高速率，故出現在 \( t_1 \sim t_2 \)！';
+        }
+      } else if (qNum === 3) {
+        if (ans === 'C') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！物理核心素養題！</strong><br>① 速率大小隨起跑、極速、減速而不斷改變。<br>② 前半程在彎道上，<strong>運動方向持續改變</strong>！只要「大小或方向改變」就是<strong>加速度運動</strong>！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 彎道運動方向持續改變，速度必定隨之改變，故屬於「加速度運動」！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

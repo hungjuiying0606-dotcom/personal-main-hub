@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · Google Maps 電子地圖導航：步行 vs 開車 4大物理量對照儀 (習作 P.4 第9題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;       /* Dark Navy */
+      --walk-color: #0284c7;     /* Sky Blue / Walking */
+      --car-color: #ea580c;      /* Orange / Driving */
+      --disp-color: #ef4444;     /* Red / Displacement */
+      --bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 58, 138, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Map Canvas Container */
+    .map-box {
+      background: #e2e8f0;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .map-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 10;
+    }
+
+    canvas.map-canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+    }
+
+    /* Controls */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #172554;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Comparison 4 Metrics Table */
+    .metric-table-box {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: white;
+    }
+
+    table.metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    table.metric-table th {
+      background: #f1f5f9;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    table.metric-table td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.metric-table tr.highlight {
+      background: #fef2f2;
+      font-weight: 800;
+    }
+
+    .tag-walk {
+      color: var(--walk-color);
+      font-weight: 800;
+    }
+
+    .tag-car {
+      color: var(--car-color);
+      font-weight: 800;
+    }
+
+    .tag-same {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    .tag-diff {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🗺️ Google Maps 電子地圖導航：步行 vs 開車 4大物理量對照儀</span>
+          <span class="badge">國中自然 3上 · 習作 P.4 第9題 (會考類題)</span>
+        </h1>
+        <p>起訖點相同 ➔ 直線位移完全相同（Δx 相同）；路徑長、時間、平均速率與平均速度皆不相同！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Map Simulation Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🧭 電子地圖規劃：瀑布登山步道 ➔ 大草原</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnNav" onclick="toggleNav()">▶ 開始導航出發</button>
+            <button class="btn btn-secondary" onclick="resetNav()">🔄 重置導航</button>
+          </div>
+        </div>
+
+        <div class="map-box">
+          <div class="map-hud">
+            <span>⏱️ 虛擬導航計時：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">00:00</strong></span>
+          </div>
+          <canvas id="mapCanvas" class="map-canvas" width="650" height="380"></canvas>
+        </div>
+
+        <!-- Route Legend -->
+        <div class="control-panel">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; font-weight: 800;">
+            <span style="color: var(--walk-color);">🚶 步行路線：2.3 公里 · 預估 40 分鐘</span>
+            <span style="color: var(--car-color);">🚗 開車路線：6.5 公里 · 預估 15 分鐘</span>
+            <span style="color: var(--disp-color);">🔴 直線位移（直線段）：1.8 公里 朝東北</span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+            💡 <strong>會考核心重點：</strong>兩條路線起點皆在「瀑布登山步道」，終點皆在「大草原」，因此<strong>位置的變化量（位移）完全相同</strong>！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 4 Metrics Matrix & Quiz -->
+      <div>
+        
+        <!-- Comparison 4 Metrics Table -->
+        <div class="metric-table-box">
+          <table class="metric-table">
+            <thead>
+              <tr>
+                <th>物理量項目</th>
+                <th>🚶 步行規劃</th>
+                <th>🚗 開車規劃</th>
+                <th>比較結果</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td><strong>1. 位移 \( \Delta \vec{x} \)</strong></td>
+                <td>1.8 km (朝東北)</td>
+                <td>1.8 km (朝東北)</td>
+                <td><span class="tag-same">相同 (答案C)</span></td>
+              </tr>
+              <tr>
+                <td><strong>2. 路徑長 \( S \)</strong></td>
+                <td>2.3 km (步道)</td>
+                <td>6.5 km (外環道)</td>
+                <td><span class="tag-diff">開車 ＞ 步行</span></td>
+              </tr>
+              <tr>
+                <td><strong>3. 行駛時間 \( \Delta t \)</strong></td>
+                <td>40 分鐘 (2400s)</td>
+                <td>15 分鐘 (900s)</td>
+                <td><span class="tag-diff">步行 ＞ 開車</span></td>
+              </tr>
+              <tr>
+                <td><strong>4. 平均速率 \( v_{\text{avg}} \)</strong></td>
+                <td>\( \frac{2.3}{40/60} = \mathbf{3.45\text{ km/h}} \)</td>
+                <td>\( \frac{6.5}{15/60} = \mathbf{26.0\text{ km/h}} \)</td>
+                <td><span class="tag-diff">開車 ＞ 步行</span></td>
+              </tr>
+              <tr>
+                <td><strong>5. 平均速度 \( |\vec{v}_{\text{avg}}| \)</strong></td>
+                <td>\( \frac{1.8}{40/60} = \mathbf{2.70\text{ km/h}} \)</td>
+                <td>\( \frac{1.8}{15/60} = \mathbf{7.20\text{ km/h}} \)</td>
+                <td><span class="tag-diff">開車 ＞ 步行</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.4 第 9 題詳解：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>位移（Displacement）：</strong>起點（瀑布步道）與終點（大草原）完全相同，故<strong>位移必定相同</strong>（選 C）。</li>
+            <li><strong>路徑長：</strong>步行 2.3km $\neq$ 開車 6.5km，故 (D) 錯誤。</li>
+            <li><strong>平均速率：</strong>步行 3.45 km/h $\neq$ 開車 26.0 km/h，故 (B) 錯誤。</li>
+            <li><strong>平均速度：</strong>步行 2.7 km/h $\neq$ 開車 7.2 km/h，故 (A) 錯誤。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作第 9 題會考原題挑戰</div>
+
+          <div class="quiz-item">
+            <p>阿康使用電子地圖規劃由瀑布步道到大草原，提供步行(2.3km, 40分)與開車(6.5km, 15分)，下列敘述何者正確？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 位移相同</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 平均速度相同</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 平均速率相同</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 路徑長相同</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
+  </footer>
+
+  <script>
+    let isNavigating = false;
+    let animId = null;
+    let lastTime = 0;
+    let navSimMinutes = 0; // 0 to 40 mins
+
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Waypoints for Map
+    // Start: Waterfall (100, 300)
+    // End: Prairie (520, 100)
+    const pStart = { x: 100, y: 300, name: '瀑布登山步道' };
+    const pEnd = { x: 520, y: 100, name: '大草原' };
+
+    // Walking path: Shorter mountain trail (2.3 km)
+    const walkWaypoints = [
+      { x: 100, y: 300 },
+      { x: 160, y: 260 },
+      { x: 210, y: 270 },
+      { x: 270, y: 220 },
+      { x: 330, y: 230 },
+      { x: 400, y: 170 },
+      { x: 460, y: 140 },
+      { x: 520, y: 100 }
+    ];
+
+    // Driving path: Longer highway bypass (6.5 km)
+    const carWaypoints = [
+      { x: 100, y: 300 },
+      { x: 120, y: 340 },
+      { x: 240, y: 350 },
+      { x: 380, y: 340 },
+      { x: 500, y: 300 },
+      { x: 580, y: 220 },
+      { x: 570, y: 140 },
+      { x: 520, y: 100 }
+    ];
+
+    function toggleNav() {
+      const btn = document.getElementById('btnNav');
+      if (!isNavigating) {
+        if (navSimMinutes >= 40) navSimMinutes = 0;
+        isNavigating = true;
+        btn.innerText = '⏸ 暫停導航';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isNavigating = false;
+        btn.innerText = '▶ 繼續導航';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetNav() {
+      isNavigating = false;
+      navSimMinutes = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnNav').innerText = '▶ 開始導航出發';
+      document.getElementById('btnNav').style.background = 'var(--primary)';
+      document.getElementById('hudTime').innerText = '00:00';
+      draw();
+    }
+
+    function loop(now) {
+      if (!isNavigating) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // 40 minutes simulation in 10 seconds real time
+      navSimMinutes += dt * 4.0;
+
+      if (navSimMinutes >= 40) {
+        navSimMinutes = 40;
+        isNavigating = false;
+        document.getElementById('btnNav').innerText = '🔄 重新導航';
+        document.getElementById('btnNav').style.background = 'var(--primary)';
+      }
+
+      const mins = Math.floor(navSimMinutes);
+      const secs = Math.floor((navSimMinutes - mins) * 60);
+      document.getElementById('hudTime').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+      draw();
+      if (isNavigating) animId = requestAnimationFrame(loop);
+    }
+
+    function getInterpolatedPoint(points, progress) {
+      if (progress <= 0) return points[0];
+      if (progress >= 1) return points[points.length - 1];
+
+      let totalLen = 0;
+      for (let i = 0; i < points.length - 1; i++) {
+        const dx = points[i+1].x - points[i].x;
+        const dy = points[i+1].y - points[i].y;
+        totalLen += Math.sqrt(dx * dx + dy * dy);
+      }
+
+      const target = progress * totalLen;
+      let cum = 0;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p1 = points[i];
+        const p2 = points[i+1];
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const seg = Math.sqrt(dx * dx + dy * dy);
+        if (cum + seg >= target) {
+          const t = (target - cum) / seg;
+          return { x: p1.x + dx * t, y: p1.y + dy * t };
+        }
+        cum += seg;
+      }
+      return points[points.length - 1];
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Map Background Grid & Terrain
+      ctx.fillStyle = '#f1f5f9';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle Mountain / Nature zones
+      ctx.fillStyle = '#dcfce7'; // Forest
+      ctx.beginPath();
+      ctx.ellipse(280, 220, 160, 90, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Draw Straight Displacement Vector (Red Arrow from Start to End)
+      drawDisplacementVector(ctx, pStart.x, pStart.y, pEnd.x, pEnd.y);
+
+      // 3. Draw Driving Highway (Orange Outer Route)
+      drawPolyline(ctx, carWaypoints, '#fdba74', 6, [0]);
+      drawPolyline(ctx, carWaypoints, '#ea580c', 3.5, [0]);
+
+      // 4. Draw Walking Trail (Blue Dashed Mountain Route)
+      drawPolyline(ctx, walkWaypoints, '#0284c7', 3, [6, 4]);
+
+      // 5. Draw Start & End Landmark Pins
+      drawLandmark(pStart.x, pStart.y, '🏞️', '起點：瀑布登山步道', '#15803d');
+      drawLandmark(pEnd.x, pEnd.y, '🌲', '終點：大草原', '#b91c1c');
+
+      // 6. Draw Moving Car (Finishes at 15 mins)
+      const carProgress = Math.min(1.0, navSimMinutes / 15.0);
+      const carPos = getInterpolatedPoint(carWaypoints, carProgress);
+      ctx.font = '26px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🚗', carPos.x, carPos.y + 8);
+      if (carProgress >= 1.0) {
+        ctx.fillStyle = '#ea580c';
+        ctx.font = 'bold 10px Noto Sans TC';
+        ctx.fillText('🚗 已於 15分 到達！', carPos.x, carPos.y - 18);
+      }
+
+      // 7. Draw Moving Walker (Finishes at 40 mins)
+      const walkProgress = Math.min(1.0, navSimMinutes / 40.0);
+      const walkPos = getInterpolatedPoint(walkWaypoints, walkProgress);
+      ctx.font = '24px sans-serif';
+      ctx.fillText('🚶', walkPos.x, walkPos.y + 8);
+      if (walkProgress >= 1.0) {
+        ctx.fillStyle = '#0284c7';
+        ctx.font = 'bold 10px Noto Sans TC';
+        ctx.fillText('🚶 於 40分 到達！', walkPos.x, walkPos.y - 18);
+      }
+    }
+
+    function drawPolyline(ctx, pts, color, width, dash = []) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash);
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) {
+        ctx.lineTo(pts[i].x, pts[i].y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawDisplacementVector(ctx, x1, y1, x2, y2) {
+      ctx.strokeStyle = '#ef4444';
+      ctx.fillStyle = '#ef4444';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrow head
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      const headLen = 10;
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      // Label
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2;
+      ctx.fillStyle = '#ef4444';
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText('🔴 直線位移 Δx (1.8km)', midX - 25, midY - 10);
+    }
+
+    function drawLandmark(x, y, emoji, title, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.font = '16px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(emoji, x, y + 5);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.fillText(title, x, y + 28);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb1');
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'C') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong> 位移是位置的變化量，只取決於<strong>「起點」與「終點」</strong>。由於步行與開車的起點皆為瀑布步道、終點皆為大草原，因此<strong>兩者的位移完全相同</strong>！';
+      } else if (ans === 'D') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 路徑長是實際走過的路程長度，步行路徑長為 2.3km，開車路徑長為 6.5km，兩者不相同！';
+      } else if (ans === 'B') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 平均速率 ＝ 路徑長／時間，步行平均速率約 3.45 km/h，開車約 26.0 km/h，兩者不相同！';
+      } else if (ans === 'A') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 平均速度 ＝ 位移／時間，雖然兩者位移相同，但花費的時間不同（40分 vs 15分），因此平均速度大小不同！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      draw();
+    });
+  </script>
+</body>
+</html>

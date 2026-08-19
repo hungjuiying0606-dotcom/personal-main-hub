@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 自由落體 g=9.8 閃頻解析器與例題 1-9 高度測量儀 (P.26)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #0f172a;
+      --accent: #f59e0b;
+      --vt-color: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 58, 138, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Drop Tower Viewport */
+    .tower-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .tower-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    canvas.tower-canvas {
+      display: block;
+      width: 100%;
+      height: 480px;
+    }
+
+    /* v-t Graph Box */
+    .graph-box {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.graph-canvas {
+      display: block;
+      width: 100%;
+      height: 270px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #172554;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Celestial Gravity Buttons */
+    .planet-bar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+    .planet-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .planet-btn.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      color: var(--primary);
+    }
+
+    /* Metric Cards */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .metric-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      background: #ffffff;
+    }
+
+    .metric-card h4 {
+      font-size: 0.85rem;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .metric-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary);
+    }
+
+    /* Worksheet Card (Example 1-9) */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 0.35rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🍎 自由落體 g=9.8 閃頻解析器與例題 1-9 高度測量儀</span>
+          <span class="badge">國中自然 3上 · 課本 P.26 圖 1-26/例題 1-9</span>
+        </h1>
+        <p>重力加速度 g=9.8 m/s² 速度階梯、閃頻等時點距比例 (1:3:5:7) 與 v-t 面積求樓高</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="loadMode('textbook')">📖 課本圖 1-26 閃頻實驗 (5秒下落)</button>
+        <button class="nav-btn" onclick="loadMode('example')">📝 例題 1-9 自由落體求高度 (2秒著地)</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Drop Tower & Strobe Trail -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span id="towerTitle">🗼 課本圖 1-26 自由落體閃頻攝影塔</span>
+          </div>
+        </div>
+
+        <div class="tower-box">
+          <div class="tower-hud">
+            <span>時間 \( t \)：<strong id="hudTime" style="color: #38bdf8;">0.00 秒</strong></span>
+            <span>下落距離 \( h \)：<strong id="hudH" style="color: #fbbf24;">0.0 m</strong></span>
+            <span>速度 \( v \)：<strong id="hudV" style="color: #60a5fa;">0.0 m/s</strong></span>
+          </div>
+          <canvas id="towerCanvas" class="tower-canvas" width="480" height="480"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div class="control-panel">
+          <div class="btn-row">
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-primary" id="btnPlayPause" onclick="togglePlay()">▶ 釋放落體</button>
+              <button class="btn btn-secondary" onclick="resetPlay()">🔄 重置回頂部</button>
+            </div>
+            <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1rem; color: var(--primary);" id="timeReadout">
+              t = 0.00 秒
+            </div>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="5" step="0.02" value="0" oninput="onScrubTime()">
+        </div>
+      </div>
+
+      <!-- Right Column: v-t Graph, Planetary Sandbox & Example 1-9 -->
+      <div>
+        
+        <!-- Celestial Gravity Selector -->
+        <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary); margin-bottom: 0.3rem;">
+          🪐 天體重力加速度環境切換：
+        </div>
+        <div class="planet-bar">
+          <button class="planet-btn active" onclick="setGravity('earth', 9.8, this)">🌍 地球 (g = 9.8 m/s²)</button>
+          <button class="planet-btn" onclick="setGravity('moon', 1.63, this)">🌕 月球 (g = 1.63 m/s²)</button>
+          <button class="planet-btn" onclick="setGravity('mars', 3.71, this)">🔴 火星 (g = 3.71 m/s²)</button>
+          <button class="planet-btn" onclick="setGravity('jupiter', 24.79, this)">🪐 木星 (g = 24.79 m/s²)</button>
+        </div>
+
+        <!-- v-t Graph with Triangle Area -->
+        <div class="graph-box">
+          <canvas id="graphCanvas" class="graph-canvas" width="620" height="270"></canvas>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="metric-grid">
+          <div class="metric-card">
+            <h4>📐 當前下落總高度 (v-t 面積)</h4>
+            <div class="metric-val" id="metricH">0.0 m</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" id="formulaH">\( h = \frac{1}{2}gt^2 \)</div>
+          </div>
+
+          <div class="metric-card">
+            <h4>⚡ 瞬時末速度</h4>
+            <div class="metric-val" id="metricV">0.0 m/s</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" id="formulaV">\( v = gt \)</div>
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 課本 P.26 核心數值與規律：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>速度每秒增加 \( 9.8\text{ m/s} \)：</strong>\( 0 \rightarrow 9.8 \rightarrow 19.6 \rightarrow 29.4 \rightarrow 39.2 \rightarrow 49.0\text{ m/s} \)。</li>
+            <li><strong>閃頻點距比（奇數比）：</strong>第 1~5 秒各區間下落距離比為 \( \mathbf{1 : 3 : 5 : 7 : 9} \)（\( 4.9\text{m}, 14.7\text{m}, 24.5\text{m}, 34.3\text{m}, 44.1\text{m} \)）。</li>
+            <li><strong>下落總高度（平方比）：</strong>\( h = \frac{1}{2}gt^2 \)，總距離比為 \( \mathbf{1 : 4 : 9 : 16 : 25} \)。</li>
+          </ul>
+        </div>
+
+        <!-- Example 1-9 Worksheet -->
+        <div class="quiz-card" id="exampleCard">
+          <div class="quiz-title">📝 課本例題 1-9 隨堂解題（2 秒著地）</div>
+
+          <div class="quiz-item">
+            <p>(1) 自由落下的球在第 2 秒著地瞬間，速度為多少 \( \text{m/s} \)？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, '19.6', this)">19.6 m/s (9.8 × 2)</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, '9.8', this)">9.8 m/s</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, '39.2', this)">39.2 m/s</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>(2) 依 \( v-t \) 圖三角形面積，此顆球最初下落的高度為多少公尺？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, '19.6', this)">19.6 公尺 (\(\frac{2 \times 19.6}{2}\))</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, '39.2', this)">39.2 公尺</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, '9.8', this)">9.8 公尺</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    let curMode = 'textbook'; // 'textbook' (5s) or 'example' (2s)
+    let gVal = 9.8; // m/s^2
+    let planetName = '地球';
+    let maxT = 5.0;
+    let currentTime = 0;
+    let isPlaying = false;
+    let animId = null;
+    let lastTime = 0;
+
+    // Strobe data for Earth g=9.8
+    const strobeSeconds = [0, 1, 2, 3, 4, 5];
+
+    // Canvases
+    const towerCanvas = document.getElementById('towerCanvas');
+    const towerCtx = towerCanvas.getContext('2d');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const graphCtx = graphCanvas.getContext('2d');
+
+    function loadMode(mode) {
+      curMode = mode;
+      document.querySelectorAll('.nav-tabs .nav-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (mode === 'textbook') {
+        maxT = 5.0;
+        document.getElementById('towerTitle').innerText = '🗼 課本圖 1-26 自由落體閃頻攝影塔 (5秒下落)';
+        document.getElementById('timeSlider').max = 5;
+      } else {
+        maxT = 2.0;
+        document.getElementById('towerTitle').innerText = '📝 例題 1-9 自由落體求高度 (2秒著地)';
+        document.getElementById('timeSlider').max = 2;
+      }
+      resetPlay();
+    }
+
+    function setGravity(planet, g, el) {
+      gVal = g;
+      planetName = el.innerText.split(' ')[0];
+      document.querySelectorAll('.planet-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      resetPlay();
+    }
+
+    function togglePlay() {
+      const btn = document.getElementById('btnPlayPause');
+      if (!isPlaying) {
+        if (currentTime >= maxT) currentTime = 0;
+        isPlaying = true;
+        btn.innerText = '⏸ 暫停落體';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isPlaying = false;
+        btn.innerText = '▶ 繼續下落';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetPlay() {
+      isPlaying = false;
+      currentTime = 0;
+      document.getElementById('btnPlayPause').innerText = '▶ 釋放落體';
+      document.getElementById('btnPlayPause').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onScrubTime() {
+      currentTime = parseFloat(document.getElementById('timeSlider').value);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isPlaying) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      currentTime += dt * 0.75;
+      if (currentTime >= maxT) {
+        currentTime = maxT;
+        togglePlay();
+      }
+      document.getElementById('timeSlider').value = currentTime;
+      updateUI();
+
+      if (isPlaying) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      document.getElementById('timeReadout').innerText = `t = ${currentTime.toFixed(2)} 秒 (全體 ${maxT.toFixed(1)} 秒)`;
+      document.getElementById('hudTime').innerText = `${currentTime.toFixed(2)} 秒`;
+
+      const curV = gVal * currentTime;
+      const curH = 0.5 * gVal * currentTime * currentTime;
+
+      document.getElementById('hudV').innerText = `${curV.toFixed(1)} m/s`;
+      document.getElementById('hudH').innerText = `${curH.toFixed(1)} m`;
+
+      document.getElementById('metricV').innerText = `${curV.toFixed(1)} m/s`;
+      document.getElementById('metricH').innerText = `${curH.toFixed(1)} m`;
+
+      drawTower(curH, curV);
+      drawGraph(curV, curH);
+    }
+
+    // Draw Tower & Strobe Images
+    function drawTower(curH, curV) {
+      towerCtx.clearRect(0, 0, towerCanvas.width, towerCanvas.height);
+      const cw = towerCanvas.width;
+      const topY = 60;
+      const bottomY = 440;
+      const maxHVal = 0.5 * gVal * maxT * maxT; // Max height at maxT
+
+      const toPy = (h) => topY + (h / Math.max(1, maxHVal)) * (bottomY - topY);
+
+      // Tower Structure
+      towerCtx.fillStyle = '#1e293b';
+      towerCtx.fillRect(60, topY - 15, 70, (bottomY - topY) + 30);
+
+      // Metre Ruler on Tower
+      towerCtx.strokeStyle = '#475569';
+      towerCtx.lineWidth = 1;
+      for (let sec = 0; sec <= maxT; sec++) {
+        const hSec = 0.5 * gVal * sec * sec;
+        const py = toPy(hSec);
+        towerCtx.beginPath();
+        towerCtx.moveTo(120, py);
+        towerCtx.lineTo(135, py);
+        towerCtx.strokeStyle = '#94a3b8';
+        towerCtx.stroke();
+
+        towerCtx.fillStyle = '#94a3b8';
+        towerCtx.font = '10px Outfit';
+        towerCtx.fillText(`${hSec.toFixed(1)}m`, 70, py + 3);
+      }
+
+      // Ground line
+      towerCtx.fillStyle = '#334155';
+      towerCtx.fillRect(20, bottomY + 12, cw - 40, 10);
+
+      // Strobe Ghost Drops (sec = 0, 1, 2, 3, 4, 5)
+      for (let s = 0; s <= maxT; s++) {
+        if (currentTime >= s) {
+          const hGhost = 0.5 * gVal * s * s;
+          const vGhost = gVal * s;
+          const py = toPy(hGhost);
+
+          // Ghost Ball
+          towerCtx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+          towerCtx.beginPath();
+          towerCtx.arc(200, py, 9, 0, Math.PI * 2);
+          towerCtx.fill();
+
+          // Label
+          towerCtx.fillStyle = '#cbd5e1';
+          towerCtx.font = '11px Noto Sans TC';
+          towerCtx.fillText(`t=${s}s: ${vGhost.toFixed(1)} m/s (h=${hGhost.toFixed(1)}m)`, 220, py + 4);
+        }
+      }
+
+      // Live Apple / Ball
+      const livePy = toPy(curH);
+      towerCtx.font = '24px sans-serif';
+      towerCtx.fillText('🍎', 188, livePy + 8);
+
+      // Live Tag
+      towerCtx.fillStyle = '#ffffff';
+      towerCtx.font = 'bold 11px Noto Sans TC';
+      towerCtx.fillText(`${curV.toFixed(1)} m/s`, 220, livePy + 4);
+    }
+
+    // Draw v-t Graph with Filled Triangle
+    function drawGraph(curV, curH) {
+      graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+      const ox = 60, oy = 220, w = 520, h = 180;
+      const maxGraphV = Math.ceil((gVal * maxT) / 10) * 10;
+
+      const toGx = (t) => ox + (t / maxT) * w;
+      const toGy = (v) => oy - (v / maxGraphV) * h;
+
+      // 1. Shaded Triangle Area (0 to currentTime)
+      if (currentTime > 0.05) {
+        graphCtx.beginPath();
+        graphCtx.moveTo(toGx(0), toGy(0));
+        graphCtx.lineTo(toGx(currentTime), toGy(curV));
+        graphCtx.lineTo(toGx(currentTime), toGy(0));
+        graphCtx.closePath();
+        graphCtx.fillStyle = 'rgba(37, 99, 235, 0.2)';
+        graphCtx.fill();
+
+        graphCtx.fillStyle = '#1d4ed8';
+        graphCtx.font = 'bold 12px Noto Sans TC';
+        graphCtx.textAlign = 'center';
+        graphCtx.fillText(`面積 h = ${curH.toFixed(1)} m`, (toGx(0) + toGx(currentTime)) / 2 + 10, oy - 15);
+      }
+
+      // 2. Axes
+      graphCtx.beginPath();
+      graphCtx.moveTo(ox, oy - h - 10); graphCtx.lineTo(ox, oy); graphCtx.lineTo(ox + w, oy);
+      graphCtx.strokeStyle = '#1e3a8a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
+
+      graphCtx.font = 'bold 12px Noto Sans TC'; graphCtx.fillStyle = '#1e3a8a';
+      graphCtx.fillText('時間 t (秒)', ox + w - 35, oy + 28);
+      graphCtx.fillText('速度 v (m/s)', ox - 35, oy - h - 12);
+
+      // Y Ticks
+      const stepY = maxGraphV <= 20 ? 5 : 10;
+      for (let v = 0; v <= maxGraphV; v += stepY) {
+        const gy = toGy(v);
+        graphCtx.beginPath(); graphCtx.moveTo(ox - 4, gy); graphCtx.lineTo(ox + w, gy);
+        graphCtx.strokeStyle = '#f1f5f9'; graphCtx.stroke();
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'right';
+        graphCtx.fillText(v, ox - 6, gy + 3);
+      }
+
+      // X Ticks
+      for (let t = 0; t <= maxT; t += 1) {
+        const gx = toGx(t);
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'center';
+        graphCtx.fillText(t, gx, oy + 14);
+      }
+
+      // 3. Slope Line
+      graphCtx.beginPath();
+      graphCtx.moveTo(toGx(0), toGy(0));
+      graphCtx.lineTo(toGx(maxT), toGy(gVal * maxT));
+      graphCtx.strokeStyle = '#2563eb';
+      graphCtx.lineWidth = 3.5;
+      graphCtx.stroke();
+
+      graphCtx.fillStyle = '#2563eb';
+      graphCtx.font = 'bold 11px Noto Sans TC';
+      graphCtx.textAlign = 'left';
+      graphCtx.fillText(`斜率 g = ${gVal} m/s²`, ox + 40, toGy((gVal * maxT) / 2) - 15);
+
+      // 4. Time Scrubber & Dot
+      const scanX = toGx(currentTime);
+      const dotY = toGy(curV);
+      graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - h); graphCtx.lineTo(scanX, oy);
+      graphCtx.strokeStyle = '#9333ea'; graphCtx.lineWidth = 1.5; graphCtx.setLineDash([4, 4]); graphCtx.stroke(); graphCtx.setLineDash([]);
+
+      graphCtx.beginPath(); graphCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
+      graphCtx.fillStyle = '#2563eb'; graphCtx.fill();
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === '19.6') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 每秒速度增加 \( 9.8\text{ m/s} \)，經過 2 秒後末速度為 \( v = 9.8 \times 2 = \mathbf{19.6\text{ m/s}} \)。';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 速度公式為 \( v = gt \)。';
+        }
+      } else if (qNum === 2) {
+        if (ans === '19.6') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！太棒了！</strong> 三角形面積 \( h = \frac{\text{底 } 2 \times \text{高 } 19.6}{2} = \mathbf{19.6\text{ 公尺}} \)。';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 三角形面積要記得除以 2！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

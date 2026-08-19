@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 威利颱風 2D 格點坐標 ＋ 畢氏 3-4-5 位移 500km 氣象預報儀 (綜合卷第6頁題組2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;       /* Ocean Weather Blue */
+      --primary-dark: #0369a1;
+      --vec-x: #3b82f6;         /* East-West Dx (400km) */
+      --vec-y: #10b981;         /* North-South Dy (300km) */
+      --vec-disp: #ef4444;      /* Total Displacement (500km) */
+      --typhoon-cyan: #06b6d4;
+      --bg: #f0f9ff;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #bae6fd;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e0f2fe;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Canvas Stage Box */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 490px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .slider-row label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      min-width: 110px;
+    }
+
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* 3 Pillars Telemetry Grid */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .t-card.dx { border-color: #bae6fd; background: #f0f9ff; }
+    .t-card.dy { border-color: #a7f3d0; background: #ecfdf5; }
+    .t-card.disp { border-color: #fecaca; background: #fef2f2; }
+
+    .t-card h4 {
+      font-size: 0.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .t-card.dx h4 { color: #0284c7; }
+    .t-card.dy h4 { color: #059669; }
+    .t-card.disp h4 { color: #dc2626; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .t-card.dx .t-val { color: #0284c7; }
+    .t-card.dy .t-val { color: #059669; }
+    .t-card.disp .t-val { color: #dc2626; }
+
+    .t-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Proof Box */
+    .proof-box {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .proof-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #f0f9ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🌀 威利颱風 2D 格點坐標 ＋ 畢氏 3-4-5 位移 500km 氣象預報儀</span>
+          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第6頁題組2</span>
+        </h1>
+        <p>以臺東(0,0)為參考點：A點坐標(3,-1) (選B)；由A移至B(-1,2) ➔ Δx=-400km, Δy=+300km ➔ 畢氏位移 500km (選C)！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Radar Grid Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📡 臺灣東南海域氣象雷達 ＋ 2D 方格位移 (每格 100km)</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnMove" onclick="toggleMove()">▶ 颱風路徑動態預報</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>🚩 參考點：<strong style="color: #34d399; font-family: 'Outfit';">臺東 (0, 0)</strong></span>
+            <span>🌀 颱風中心：<strong id="hudPos" style="color: #38bdf8; font-family: 'Outfit';">A 點 (3, -1)</strong></span>
+            <span>🔴 畢氏位移：<strong id="hudDisp" style="color: #f87171; font-family: 'Outfit';">500 km (選 C)</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="490"></canvas>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="control-panel">
+          <div class="slider-row">
+            <label for="timeSlider">⏱️ 時間進度：</label>
+            <input type="range" id="timeSlider" min="0" max="20" step="0.5" value="0" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; min-width: 70px;">0.0 hr</span>
+          </div>
+          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
+            💡 <strong>題組 2 核心考點：</strong><br>
+            ① <strong>A 點坐標判讀：</strong>在臺東東方 3 格、南方 1 格 ➔ 坐標為 \( \mathbf{(3, -1)} \)（選 B）。<br>
+            ② <strong>位移向量計算：</strong>向西 4 格（400km）、向北 3 格（300km） ➔ 直線位移 \( \sqrt{400^2 + 300^2} = \mathbf{500\text{ 公里}} \)（選 C）！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 3 Pillars & Proof & 2 Quizzes -->
+      <div>
+        
+        <!-- 3 Pillars Telemetry Grid -->
+        <div class="telemetry-grid">
+          <!-- Dx -->
+          <div class="t-card dx">
+            <h4>🔵 東西向位移 Δx</h4>
+            <div class="t-val" id="valDx">-400 km</div>
+            <div class="t-sub">向西 4 格 (\(-1 - 3\))</div>
+          </div>
+
+          <!-- Dy -->
+          <div class="t-card dy">
+            <h4>🟢 南北向位移 Δy</h4>
+            <div class="t-val" id="valDy">+300 km</div>
+            <div class="t-sub">向北 3 格 (\(2 - (-1)\))</div>
+          </div>
+
+          <!-- Displacement -->
+          <div class="t-card disp">
+            <h4>🔴 總位移量值</h4>
+            <div class="t-val" id="valDisp">500 km</div>
+            <div class="t-sub"><strong>題組 2(2) 選 (C)</strong></div>
+          </div>
+        </div>
+
+        <!-- Geometric Proof Box -->
+        <div class="proof-box">
+          <div class="proof-title">📐 畢氏定理 3-4-5 向量推導：</div>
+          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
+            <li><strong>A 點坐標（9/1 10:00）：</strong>\( (3, -1) \)（臺東東方 300km、南方 100km）。</li>
+            <li><strong>B 點坐標（9/2 06:00）：</strong>\( (-1, 2) \)（臺東西方 100km、北方 200km）。</li>
+            <li><strong>位移分量：</strong>\( \Delta x = -400\text{km}, \Delta y = +300\text{km} \)。</li>
+            <li><strong>直線位移大小：</strong>
+              $$|\Delta\vec{x}| = \sqrt{(-400)^2 + 300^2} = \sqrt{160000 + 90000} = \mathbf{500\text{ 公里}}\text{（選 C）}$$
+            </li>
+          </ul>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 國中自然 2D 坐標位移黃金口訣：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li>平面上的位移絕不能直接相加（不可寫 400 + 300 = 700）！</li>
+            <li>必須將水平位移與垂直位移視為兩股，<strong>用畢氏定理 \( \sqrt{\Delta x^2 + \Delta y^2} \) 求斜邊</strong>！</li>
+          </ul>
+        </div>
+
+        <!-- 2 Quizzes Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 單元綜合卷題組 2 原題全兩題測驗</div>
+
+          <div class="quiz-item">
+            <p>Q1. (1) 若以臺東為參考點，B 點坐標為 (-1, 2)，請問 A 點坐標應如何標示？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) (3, －1)（東方 3 格為 +3，南方 1 格為 -1）</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) (1, －2)</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) (－1, 3)</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) (－2, 1)</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. (2) 每格邊長代表 100 公里，颱風中心由 A 點移動至 B 點，其「位移大小」為多少公里？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) 500 公里（√(400² ＋ 300²) ＝ 500 公里）</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 300 公里</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 400 公里</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'D', this)">(D) 600 公里</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+  </footer>
+
+  <script>
+    let simHours = 0; // 0 to 20 hrs (9/1 10:00 to 9/2 06:00)
+    let isRunning = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Coordinate Grid Scale:
+    // Origin (Taitung (0,0)) at center (260, 270)
+    // 1 grid = 100km = 65 pixels
+    const originX = 260, originY = 270;
+    const pxPerGrid = 65;
+
+    // A = (3, -1) -> (300km East, 100km South)
+    // B = (-1, 2) -> (100km West, 200km North)
+    const gridA = { x: 3, y: -1 };
+    const gridB = { x: -1, y: 2 };
+
+    function toCanvasPx(gx, gy) {
+      return {
+        x: originX + gx * pxPerGrid,
+        y: originY - gy * pxPerGrid // Cartesian invert Y
+      };
+    }
+
+    function onSliderChange(val) {
+      simHours = parseFloat(val);
+      document.getElementById('sliderVal').innerText = `${simHours.toFixed(1)} hr`;
+      updateUI();
+    }
+
+    function toggleMove() {
+      const btn = document.getElementById('btnMove');
+      if (!isRunning) {
+        if (simHours >= 20.0) simHours = 0;
+        isRunning = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        loop();
+      } else {
+        isRunning = false;
+        btn.innerText = '▶ 颱風路徑動態預報';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isRunning = false;
+      simHours = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnMove').innerText = '▶ 颱風路徑動態預報';
+      document.getElementById('btnMove').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      document.getElementById('sliderVal').innerText = '0.0 hr';
+      updateUI();
+    }
+
+    function loop() {
+      if (!isRunning) return;
+      simHours += 0.08;
+      if (simHours >= 20.0) {
+        simHours = 20.0;
+        isRunning = false;
+        document.getElementById('btnMove').innerText = '🔄 重新預報';
+        document.getElementById('btnMove').style.background = 'var(--primary)';
+      }
+      document.getElementById('timeSlider').value = simHours.toFixed(1);
+      document.getElementById('sliderVal').innerText = `${simHours.toFixed(1)} hr`;
+      updateUI();
+      if (isRunning) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const frac = Math.min(1.0, simHours / 20.0);
+      const curGX = gridA.x + (gridB.x - gridA.x) * frac;
+      const curGY = gridA.y + (gridB.y - gridA.y) * frac;
+
+      const dxKm = (curGX - gridA.x) * 100.0;
+      const dyKm = (curGY - gridA.y) * 100.0;
+      const dispKm = Math.sqrt(dxKm * dxKm + dyKm * dyKm);
+
+      document.getElementById('hudPos').innerText = `(${curGX.toFixed(1)}, ${curGY.toFixed(1)})`;
+      document.getElementById('hudDisp').innerText = `${dispKm.toFixed(0)} km`;
+
+      document.getElementById('valDx').innerText = `${dxKm.toFixed(0)} km`;
+      document.getElementById('valDy').innerText = `+${dyKm.toFixed(0)} km`;
+      document.getElementById('valDisp').innerText = `${dispKm.toFixed(0)} km`;
+
+      draw(curGX, curGY, frac);
+    }
+
+    function draw(curGX, curGY, frac) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      // ==========================================
+      // 1. Sea Background & Radar Circles
+      // ==========================================
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, cw, ch);
+
+      // Radar Concentric Circles around Taitung (0,0)
+      [1, 2, 3, 4].forEach(r => {
+        ctx.strokeStyle = 'rgba(2, 132, 199, 0.2)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.arc(originX, originY, r * pxPerGrid, 0, Math.PI * 2); ctx.stroke();
+      });
+      ctx.setLineDash([]);
+
+      // ==========================================
+      // 2. 2D Coordinate Grid Lines (-3 to +4, -3 to +4)
+      // ==========================================
+      ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1;
+      for (let gx = -3; gx <= 5; gx++) {
+        const px = originX + gx * pxPerGrid;
+        ctx.beginPath(); ctx.moveTo(px, 30); ctx.lineTo(px, ch - 30); ctx.stroke();
+
+        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${gx}`, px, originY + 16);
+      }
+      for (let gy = -3; gy <= 3; gy++) {
+        const py = originY - gy * pxPerGrid;
+        ctx.beginPath(); ctx.moveTo(40, py); ctx.lineTo(cw - 40, py); ctx.stroke();
+
+        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'right';
+        if (gy !== 0) ctx.fillText(`${gy}`, originX - 8, py + 4);
+      }
+
+      // X & Y Axes (Cross at Taitung (0,0))
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(40, originY); ctx.lineTo(cw - 40, originY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(originX, 30); ctx.lineTo(originX, ch - 30); ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('東 (＋x)', cw - 45, originY - 8);
+      ctx.textAlign = 'center'; ctx.fillText('北 (＋y)', originX, 22);
+
+      // ==========================================
+      // 3. Taiwan Silhouette & Taitung Marker
+      // ==========================================
+      // Simplified Taiwan Island Map
+      ctx.fillStyle = '#065f46';
+      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
+      ctx.beginPath();
+      const twO = toCanvasPx(-0.5, 0.5);
+      ctx.moveTo(twO.x - 25, twO.y - 120); // Keelung
+      ctx.lineTo(twO.x + 10, twO.y - 80);  // Yilan
+      ctx.lineTo(twO.x + 15, twO.y + 10);  // Hualien
+      ctx.lineTo(originX, originY);        // Taitung (0,0)
+      ctx.lineTo(twO.x - 10, twO.y + 80);  // Hengchun
+      ctx.lineTo(twO.x - 45, twO.y + 30);  // Kaohsiung
+      ctx.lineTo(twO.x - 55, twO.y - 30);  // Taichung
+      ctx.lineTo(twO.x - 35, twO.y - 100); // Taipei
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Taitung Marker (0,0)
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(originX, originY, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillText('⭐ 臺東 (0, 0)', originX - 10, originY - 6);
+
+      // ==========================================
+      // 4. Point A (3, -1) and Point B (-1, 2)
+      // ==========================================
+      const pxA = toCanvasPx(gridA.x, gridA.y);
+      const pxB = toCanvasPx(gridB.x, gridB.y);
+
+      // Point A Marker
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(pxA.x, pxA.y, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fde68a'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'left';
+      ctx.fillText('🚩 A (3, －1) · 9/1 10:00', pxA.x + 12, pxA.y + 4);
+
+      // Point B Marker
+      ctx.fillStyle = '#06b6d4';
+      ctx.beginPath(); ctx.arc(pxB.x, pxB.y, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#bae6fd'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillText('🎯 B (－1, 2) · 9/2 06:00', pxB.x - 12, pxB.y - 6);
+
+      // ==========================================
+      // 5. Pythagorean 3-4-5 Triangle Lines
+      // ==========================================
+      const cornerPx = toCanvasPx(gridB.x, gridA.y); // Corner at (-1, -1)
+
+      // Horizontal Leg Dx = -400km (Blue)
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(pxA.x, pxA.y); ctx.lineTo(cornerPx.x, cornerPx.y); ctx.stroke();
+      ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 11px Outfit'; ctx.textAlign = 'center';
+      ctx.fillText('Δx ＝ －400 km (向西 4 格)', (pxA.x + cornerPx.x) / 2, pxA.y + 20);
+
+      // Vertical Leg Dy = +300km (Green)
+      ctx.strokeStyle = '#34d399'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(cornerPx.x, cornerPx.y); ctx.lineTo(pxB.x, pxB.y); ctx.stroke();
+      ctx.fillStyle = '#34d399'; ctx.font = 'bold 11px Outfit'; ctx.textAlign = 'right';
+      ctx.fillText('Δy ＝ ＋300 km (向北 3 格)', cornerPx.x - 12, (cornerPx.y + pxB.y) / 2);
+      ctx.setLineDash([]);
+
+      // Red Hypotenuse Displacement Vector |Δx| = 500km
+      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(pxA.x, pxA.y); ctx.lineTo(pxB.x, pxB.y); ctx.stroke();
+
+      ctx.fillStyle = '#f87171'; ctx.font = 'bold 13px Outfit'; ctx.textAlign = 'center';
+      ctx.fillText('🔴 直線位移 ＝ 500 km (3-4-5 斜邊·選 C)', (pxA.x + pxB.x) / 2 + 35, (pxA.y + pxB.y) / 2 - 15);
+
+      // ==========================================
+      // 6. Animated Typhoon Avatar 🌀
+      // ==========================================
+      const curPx = toCanvasPx(curGX, curGY);
+
+      // Rotating Swirl Effect
+      ctx.save();
+      ctx.translate(curPx.x, curPx.y);
+      ctx.rotate(-simHours * 0.8);
+      ctx.font = '36px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🌀', 0, 0);
+      ctx.restore();
+
+      // Typhoon Name Tag
+      ctx.fillStyle = '#fde047'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
+      ctx.fillText('威利颱風', curPx.x, curPx.y + 28);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'B') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong><br>以臺東 (0,0) 為基準，A 點位於東方 3 格（+3）、南方 1 格（-1），故坐標為 <strong>(3, －1)（選 B）</strong>！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心方位坐標！</strong> 東方為正、西方為負；北方為正、南方為負。A 點在東 3 南 1，故為 (3, -1)（選 B）！';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'C') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong><br>① \( \\Delta x = -1 - 3 = -4\\text{ 格} = -400\\text{ km} \)<br>② \( \\Delta y = 2 - (-1) = 3\\text{ 格} = 300\\text{ km} \)<br>③ 畢氏定理：\( |\\Delta\\vec{x}| = \\sqrt{400^2 + 300^2} = \\mathbf{500\\text{ 公里}} \)（選 C）！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心斜邊計算！</strong> 平面位移必須用畢氏定理 √(400² + 300²) ＝ 500 公里（選 C）！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

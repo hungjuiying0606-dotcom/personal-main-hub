@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中三年級自然 · 第一章 直線運動 互動教具總覽 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #203a5b 0%, #312e81 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 3px solid var(--primary);
+      box-shadow: 8px 10px var(--primary);
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 800px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-tag {
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    /* Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.1rem;
+      border: 2px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 4px 4px var(--accent);
+    }
+
+    /* Grid of Tools */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      border: 2.5px solid var(--primary);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-solid);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-top {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+    }
+
+    .tool-card.blue .card-top { background: #8ed8f8; }
+    .tool-card.pink .card-top { background: #ffcad2; }
+    .tool-card.mint .card-top { background: #bcebd9; }
+    .tool-card.yellow .card-top { background: #ffd85c; }
+
+    .card-icon {
+      font-size: 2rem;
+    }
+
+    .card-badge {
+      padding: 0.25rem 0.6rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-section {
+      color: var(--pink);
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+    }
+
+    .btn-play {
+      padding: 0.6rem 0.9rem;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-play:hover {
+      background: var(--purple);
+    }
+
+    .btn-link {
+      padding: 0.6rem 0.8rem;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-link:hover {
+      background: var(--accent);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 1.25rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 1320px;
+      height: 94vh;
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 0.75rem 1.25rem;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .modal-btn-open {
+      padding: 0.35rem 0.9rem;
+      border: 1.5px solid #ffffff;
+      border-radius: 99px;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-btn-open:hover {
+      background: #ffffff;
+      color: var(--primary);
+    }
+
+    .modal-btn-close {
+      padding: 0.35rem 0.9rem;
+      border: 1.5px solid var(--pink);
+      border-radius: 99px;
+      background: var(--pink);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #f8fafc;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    footer {
+      background: #ffffff;
+      border-top: 2.5px solid var(--primary);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <header class="optics-nav">
+    <div class="nav-brand">
+      <span>🧬 自然</span>
+      <span class="nav-badge">國中三年級 · 第 1 章</span>
+    </div>
+    <div style="font-size: 0.85rem; font-weight: 800;">
+      直線運動 14 大核心互動教具箱
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div>
+        <span class="hero-tag">CHAPTER 1 INTERACTIVE TOOLKIT</span>
+        <h1 class="hero-title">第一章 直線運動<br>專屬互動教具箱</h1>
+        <p class="hero-desc">
+          收錄 14 款專為 115 課綱課本例題、實驗活動與物理難點打造的深度互動沙盒。點擊「⚡ 即刻體驗」即可在彈窗中直接操作，亦可點擊「↗」在新分頁進行大螢幕全螢幕投影！
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">14</div>
+          <div class="hero-stat-label">款專屬物理沙盒</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">大核心單元覆蓋</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCategory('all', this)">全部教具 (66)</button>
+      <button class="filter-btn" onclick="filterCategory('1-1', this)">⏱️ 1-1 時間的測量 (7)</button>
+      <button class="filter-btn" onclick="filterCategory('1-2', this)">↔️ 1-2 位置與位移 (20)</button>
+      <button class="filter-btn" onclick="filterCategory('1-3', this)">🏃 1-3 速率與速度 (20)</button>
+      <button class="filter-btn" onclick="filterCategory('1-4', this)">⚡ 1-4 加速度與落體 (19)</button>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid" id="toolsGrid">
+      <!-- Generated by JS -->
+    </div>
+
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span id="modalIcon">⏱️</span>
+          <span id="modalTitle">教具名稱</span>
+          <small id="modalPage" style="opacity: 0.8; font-weight: normal; margin-left: 6px;">(P.7-8)</small>
+        </div>
+        <div class="modal-actions">
+          <a href="#" target="_blank" class="modal-btn-open" id="modalExtLink">新分頁全螢幕 ↗</a>
+          <button class="modal-btn-close" onclick="closeModal()">✕ 關閉</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" src="" title="Interactive Lab"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上課本第 1 章直線運動配套教具系統</p>
+  </footer>
+
+  <script>
+    const tools = [
+      // 1-1
+      {
+        id: 'pendulum-lab',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '⏱️',
+        title: '單擺變因控制虛擬實驗室',
+        page: 'P.7～8 探索 1-1',
+        desc: '擺長、擺角與質量的控制變因探索，搭配自動 10 次計時碼錶與擺鐘調校任務。',
+        file: 'pendulum-lab.html',
+        color: 'blue'
+      },
+      {
+        id: 'pendulum-graph',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '📈',
+        title: '單擺圖表斜率解析器',
+        page: 'P.8 例題 1-1',
+        desc: '實體甲乙雙擺同步擺動與動態打點，切換標準斜率（週期）vs 翻轉陷阱坐標軸。',
+        file: 'pendulum-graph-analyzer.html',
+        color: 'blue'
+      },
+      {
+        id: 'pendulum-mass-length',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '⏱️',
+        title: '三人三球單擺同頻 vs 擺長週期減半',
+        page: '習作 P.3 題2-3',
+        desc: '30g/40g/50g 三球質量無關同頻擺動 (T₁=T₂=T₃)；擺長 1/4 倍週期減半對比。',
+        file: 'pendulum-mass-length-lab.html',
+        color: 'blue'
+      },
+      {
+        id: 'vibration-frequency-period-converter',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '🪥',
+        title: '電動牙刷 vs 聲波頻率：每分鐘次數 ➔ Hz 與週期',
+        page: '單元卷 01 卷第4題',
+        desc: '每分鐘 12000 次 ➔ 頻率 f = 200 Hz；週期 T = 1/200 秒；實時示波器與生活生物頻率換算。',
+        file: 'vibration-frequency-period-converter.html',
+        color: 'blue'
+      },
+      {
+        id: 'park-swings-length-period',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '🌳',
+        title: '公園甲乙雙秋千：繩長 vs 擺動週期競速',
+        page: '單元卷 01 卷第1、8題',
+        desc: '長繩甲 (3.6m) vs 短繩乙 (0.9m)；同擺角下甲週期較長；繩長 4 倍 ➔ 週期剛好 2 倍！',
+        file: 'park-swings-length-period-lab.html',
+        color: 'blue'
+      },
+      {
+        id: 'pendulum-data-fit-predictor',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '⏱️',
+        title: '單擺實驗數據擬合與任意次數時間預測器',
+        page: '單元卷 01 卷第3題',
+        desc: '10次(15.1s)➔50次(75.0s)；單擺等時性 T=1.50s；動態散佈圖擬合直線秒算 15 次需 22.5 秒！',
+        file: 'pendulum-data-fit-predictor.html',
+        color: 'blue'
+      },
+      {
+        id: 'pendulum-slope-multi-variable',
+        sec: '1-1',
+        secName: '1-1 時間的測量',
+        icon: '📈',
+        title: '次數-時間圖 A/B區斜率 ＋ 三人三擺多變因對決',
+        page: '單元卷 01 卷第9、10、11題',
+        desc: '擺長增加 ➔ 週期變大 ➔ 斜率落入 B 區；三人三擺極限競速，證明唯有擺長決定週期！',
+        file: 'pendulum-slope-multi-variable-lab.html',
+        color: 'blue'
+      },
+
+      // 1-2
+      {
+        id: 'displacement-sandbox',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '↔️',
+        title: '數線位移與路徑長互動沙盒',
+        page: 'P.10～11 例題 1-2',
+        desc: '正負數線點擊移動、位移向量箭頭（Δx）vs 累加足跡線（S）與折返跑例題。',
+        file: 'displacement-sandbox.html',
+        color: 'pink'
+      },
+      {
+        id: 'relative-position-observer',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🎯',
+        title: '三人數線：觀測者基準點動態切換器',
+        page: '習作 P.3 第4題',
+        desc: '一鍵切換小碩/小雄/小麗為基準點，動態計算東/西方相對方向與距離。',
+        file: 'relative-position-observer-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'ant-grid-displacement',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🐜',
+        title: '網格迷宮螞蟻爬行：位移 vs 路徑長',
+        page: '習作 P.3 第5題',
+        desc: '1cm 方格網上自由繪製路徑，實時計算足跡路徑長（S）與起訖點位移向量（Δx）。',
+        file: 'ant-grid-displacement-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'xt-peaks-valleys-turnaround',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '📈',
+        title: 'x-t 圖山峰山谷：折返點動態掃描儀',
+        page: '習作 P.4 第6題',
+        desc: '喬丹南北跑道與 x-t 折線圖同步掃描，實時偵測波峰與波谷 3 次改變運動方向。',
+        file: 'xt-peaks-valleys-turnaround-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'roller-skating-trajectory',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🛼',
+        title: '直排輪直線甲 vs S形乙：雙軌跡沙盒',
+        page: '習作 P.4 第7題 (會考)',
+        desc: 'P點到Q點：位移大小 甲＝乙（最短直線）；S形蛇行幅度可調，路徑長 甲＜乙。',
+        file: 'roller-skating-trajectory-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'compass-vector-walk',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🧭',
+        title: '阿海 2D 羅盤漫步：東4➔北3➔西8 向量位移',
+        page: '單元卷 01 卷第16題',
+        desc: '東4➔北3➔西8；總路徑長 15km；淨位移 (西4, 北3) ➔ 3-4-5 畢氏定理直線位移 5 公里！',
+        file: 'compass-vector-walk-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'five-points-plane-coords',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🗺️',
+        title: '五點平面坐標矩陣：折線路徑長 vs 畢氏位移',
+        page: '單元卷 01 卷第15題',
+        desc: '甲乙丙丁戊五點；丁➔甲➔乙➔丙路徑長 7cm (非5cm)；乙到丁畢氏斜邊位移 3√2 cm！',
+        file: 'five-points-plane-coords-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'circular-pond-walk',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🌊',
+        title: '小葵圓形水池漫步：一圈 vs 半圈 vs 任意弧',
+        page: '單元卷 01 卷第19題＋題組2',
+        desc: '半徑 R 水池跑一圈 ➔ 位移＝0，路徑長＝2πR；跑半圈 ➔ 位移＝直徑 2R，路徑長＝πR！',
+        file: 'circular-pond-walk-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'corridor-monitor-position',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🏫',
+        title: '走廊班長位置坐標 +5：正負雙向距離 d=4',
+        page: '單元卷 01 卷第18題',
+        desc: '班長在 +5；距離為 4 ➔ 向左(5-4=+1) 或 向右(5+4=+9)；雙解雷達直觀破盲！',
+        file: 'corridor-monitor-position-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'rc-car-displacement-path',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🏎️',
+        title: '園遊會遙控車：直線單向行駛 vs 直線折返',
+        page: '單元卷 01 卷第21題',
+        desc: '前進 10m ➔ 倒車 4m：位移 6m ≠ 路徑長 14m！破除「直線運動位移必等於路徑長」之迷思！',
+        file: 'rc-car-displacement-path-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'inclined-plane-push-box',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '📦',
+        title: '阿吉推箱上斜面：斜面長 5m vs 水平 4m ＋ 垂直 3m',
+        page: '單元卷 01 卷第24題',
+        desc: '高3m、長5m ➔ 水平位移4m、垂直位移3m、斜面路徑長5m (非4+3=7m)！',
+        file: 'inclined-plane-push-box-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'ladybug-number-line-walk',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🐞',
+        title: '數線瓢蟲爬行大賽：4 條路徑起訖位移 vs 路徑長',
+        page: '單元卷 01 卷第23題',
+        desc: 'C(-4)➔B(+3) 位移 ＋7 奪冠；位移只看起訖點（Δx = x末 - x初），與折返路徑長無關！',
+        file: 'ladybug-number-line-walk-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'observer-reference-matrix',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🧭',
+        title: '小惠小明小美 3-4-5 方位矩陣：參考點＋方向＋距離',
+        page: '單元卷 01 卷第22題',
+        desc: '位置三大要素：參考點、方向、距離！從小明看小惠在「北方 3m」；從小美看小惠在「西北方 5m」！',
+        file: 'observer-reference-matrix-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'skater-circular-track',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '⛸️',
+        title: '滑冰選手繞一圈 200m：位移 0 vs 路徑長 200m',
+        page: '單元卷 02 卷第4頁題組1',
+        desc: '繞環形冰道一圈 200m 回到起點 A：位移＝0 (起訖點重合·選C)；路徑長＝200m；v-t 圖先升後降 (選A)！',
+        file: 'skater-circular-track-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'circular-track-onesixth',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🏃',
+        title: '阿布 100m 操場跑 1/6 圈：60° 正三角形位移 100m',
+        page: '綜合卷 03 卷第7題',
+        desc: '跑 1/6 圈 ➔ 圓心角 60° 構成邊長 100m 正三角形 ➔ 位移＝100m (選A)；路徑長＝104.7m！',
+        file: 'circular-track-onesixth-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'three-cyclists-race',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🚴',
+        title: '小偉小瑩小哈三車競騎：等速 vs 靜止 vs 變速追逐',
+        page: '綜合卷 03 卷第6題',
+        desc: '小偉衝至10m後停留；小瑩等速2m/s穩健騎行 (5s末同達10m·位移相同·選A)；小哈變速達12m！',
+        file: 'three-cyclists-race-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'cablecar-mountain-displacement',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🚠',
+        title: '沛沛直線纜車 vs 小雯蜿蜒山路：山頂會合',
+        page: '綜合卷 03 卷第9題',
+        desc: '同起點出發同至山頂：起訖點相同 ➔ 兩人位移完全相同 (選B)；小雯繞山路徑長遠大於沛沛！',
+        file: 'cablecar-mountain-displacement-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'four-animals-grid-radar',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🧭',
+        title: '四隻動物 2D 方格坐標：參考點切換與方位雷達',
+        page: '綜合卷 03 卷第8題',
+        desc: '位置三要素：參考點＋方向＋距離！蚱蜢在螞蟻西南方距離為 3√2 ≈ 4.24cm (非3cm·選D)！',
+        file: 'four-animals-grid-radar-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'dual-car-xt-chase',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🚗',
+        title: 'A、B 雙車追逐 x-t 領先與交會：t=0 A車在前方',
+        page: '綜合卷 03 卷第13題',
+        desc: 't=0 時 A 車在前方 x₀>0，B 車自原點加速起跑 ➔ t=0 時 A 車在前方 (選B)；t₁ 速率相等；t₂ 相遇交會！',
+        file: 'dual-car-xt-chase-lab.html',
+        color: 'pink'
+      },
+      {
+        id: 'typhoon-grid-displacement',
+        sec: '1-2',
+        secName: '1-2 位置與位移',
+        icon: '🌀',
+        title: '威利颱風 2D 格點坐標 ＋ 畢氏 3-4-5 位移 500km',
+        page: '綜合卷 03 卷第6頁題組2',
+        desc: '以臺東(0,0)為參考點：A點坐標(3,-1) (選B)；移動至B(-1,2) ➔ 畢氏位移 √(400²+300²)＝500km (選C)！',
+        file: 'typhoon-grid-displacement-lab.html',
+        color: 'pink'
+      },
+
+      // 1-3
+      {
+        id: 'speed-velocity-sandbox',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏊',
+        title: '泳池折返跑與區間測速沙盒',
+        page: 'P.12～14',
+        desc: '25m 泳池折返平均速度為零的視覺對比，搭配 8025m 國道隧道區間測速執法挑戰。',
+        file: 'speed-velocity-sandbox.html',
+        color: 'mint'
+      },
+      {
+        id: 'motion-graph-simulator',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏎️',
+        title: 'x-t ↔ v-t 雙向動態轉換器與跑道',
+        page: 'P.15～16 例題 1-4',
+        desc: '實體數線跑道、x-t 圖斜率與 v-t 圖階梯水平線三視圖實時同步連動。',
+        file: 'motion-graph-simulator.html',
+        color: 'mint'
+      },
+      {
+        id: 'vt-area-displacement',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '📐',
+        title: 'v-t 圖面積求位移與路徑長解析器',
+        page: 'P.17 例題 1-5',
+        desc: '上方面積（正向位移）vs 下方面積（負向折返）動態填色與幾何公式拆解。',
+        file: 'vt-area-displacement-analyzer.html',
+        color: 'mint'
+      },
+      {
+        id: 'navigation-displacement-speed',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🗺️',
+        title: 'Google Maps 地圖導航 4大物理量對照儀',
+        page: '習作 P.4 第9題 (會考)',
+        desc: '瀑布步道到大草原：步行 vs 開車位移完全相同；路徑長、時間、速率與速度全對比。',
+        file: 'navigation-displacement-speed-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'xt-intersection-chase',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏃',
+        title: '小雯與沛沛散步：x-t 圖相遇 vs 速度斜率',
+        page: '習作 P.5 第11題',
+        desc: '2秒相遇交點 (3m) 破盲；斜率三角形解析沛沛速度 (+1.5 m/s) ＞ 小雯 (+0.5 m/s)。',
+        file: 'xt-intersection-chase-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'four-cars-vt-distance',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏎️',
+        title: '四車 v-t 圖與實體跑道車距變化實驗室',
+        page: '習作 P.5 第13題 (會考)',
+        desc: '甲正等速/乙靜止/丙反向/丁正加速；雷射測距雷達解析丙丁背向行駛車距越來越遠。',
+        file: 'four-cars-vt-distance-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'olympic-swim-displacement-speed',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏊',
+        title: '奧運 50m 泳池 100m 自由式折返挑戰',
+        page: '習作 P.5 第10題',
+        desc: '折返回到原點全程位移＝0m；路徑長 100m，平均速率 2.13 m/s ＞ 2 m/s。',
+        file: 'olympic-swim-displacement-speed-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'xt-four-segments-motion',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏃',
+        title: 'x-t 圖四時段：正向/靜止/折返模擬儀',
+        page: '習作 P.6 第14題',
+        desc: '0~2s 正向 ➔ 2~3s 水平靜止 (v=0) ➔ 3~7s 負向折返 ➔ 7~10s 再度正向動態對照。',
+        file: 'xt-four-segments-motion-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'physics-quantities-vector-scalar',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🧭',
+        title: '物理量方向性羅盤分類器 (向量vs純量)',
+        page: '習作 P.6 第16題',
+        desc: '360° 羅盤探測位移/速度/加速度/位置（向量）vs 路徑長/速率/時間/質量（純量）。',
+        file: 'physics-quantities-vector-scalar-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'motion-graphs-equivalence-matcher',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '📈',
+        title: 'x-t vs v-t 四圖同構對照儀 (乙＝丙)',
+        page: '習作 P.7 第19題',
+        desc: '甲(x-t水平靜止)/乙(x-t斜線等速)/丙(v-t水平等速)/丁(v-t斜線等加速)；一鍵配對乙＝丙。',
+        file: 'motion-graphs-equivalence-matcher.html',
+        color: 'mint'
+      },
+      {
+        id: 'train-travel-speed-velocity',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🚆',
+        title: '搭火車去旅行：時刻表速率 vs 速度與進站v-t',
+        page: '習作 P.8 素養活用篇',
+        desc: '臺南至屏東路徑長 67.6km ➔ 區間丙平均速率 45km/h；彎道位移小 ➔ 平均速度約 35km/h。',
+        file: 'train-travel-speed-velocity-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'track-200m-sprint',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏃',
+        title: '200m 短跑競藝：彎道路徑長 vs 極速加速度',
+        page: '習作 P.9 素養活用篇',
+        desc: '200m是彎道路徑長；55~100m (t1~t2) 達最高速率；彎道方向改變屬於加速度運動！',
+        file: 'track-200m-sprint-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'roundtrip-harmonic-speed-velocity',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '☕',
+        title: '咖啡廳往返書店調和平均 ＋ 黃伯伯爬山位移歸零',
+        page: '單元卷 02 卷第9、2題',
+        desc: '相距 12km (3km/h & 6km/h) ➔ 平均速率 4km/h (調和非4.5)；原路下山位移為零 ➔ 平均速度 0m/s！',
+        file: 'roundtrip-harmonic-speed-velocity-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'ant-grid-velocity',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🐜',
+        title: '小螞蟻 2D 方格漫步：P(4,3)➔Q(8,6) 畢氏位移與速度',
+        page: '單元卷 02 卷第7題',
+        desc: 'Δx=4cm, Δy=3cm ➔ 直線位移 5cm；10 秒爬完 ➔ 平均速度大小 0.5 cm/s！',
+        file: 'ant-grid-velocity-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'truck-braking-vt-area',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🚚',
+        title: '卡車筆直公路煞車減速：v-t 圖梯形面積與 175m 位移',
+        page: '單元卷 02 卷第4題',
+        desc: '初速 25m/s 減速至 10m/s 耗時 10s；梯形面積 (10+25)×10/2 ＝ 長方形 100m ＋ 三角形 75m ＝ 175m！',
+        file: 'truck-braking-vt-area-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'vt-crossover-xt-shopping',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏃',
+        title: '小智折返跑 v-t 穿軸 ＋ 小華購物 x-t 停步',
+        page: '單元卷 02 卷第12、11題',
+        desc: 'v-t 圖穿過時間軸橫軸 3 次 ➔ 速度方向改變 3 次；x-t 水平線停留 2 次，回原點平均速度 0！',
+        file: 'vt-crossover-xt-shopping-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'tunnel-200m-vt-area-race',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏎️',
+        title: '甲乙丙三車闖 200m 隧道：v-t 圖面積積分賽跑儀',
+        page: '單元卷 02 卷第13題',
+        desc: '通過 200m 隧道 ➔ 誰的 v-t 累積面積最快滿 200m 誰先出！丙車初速高早期面積大 ➔ 丙車奪冠！',
+        file: 'tunnel-200m-vt-area-race-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'elevator-roundtrip-time',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🏗️',
+        title: '48m 大樓升降機：上升 6m/s (8s) ＋ 下降 8m/s (6s) ＝ 14s',
+        page: '綜合卷 03 卷第10題',
+        desc: '爬升 48m (6m/s) 耗時 8s；下降 48m (8m/s) 耗時 6s ➔ 升降一趟總耗時 8＋6＝14 秒 (選C)！',
+        file: 'elevator-roundtrip-time-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'xt-to-vt-steps',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '📈',
+        title: 'x-t 折線 ➔ v-t 正負階梯微分儀：前進、停留、折返',
+        page: '綜合卷 03 卷第12題',
+        desc: 'x-t 正斜率前進 ➔ v-t 正值階梯；x-t 水平線停留 ➔ v-t 零值；x-t 負斜率折返 ➔ v-t 負值階梯 (選B)！',
+        file: 'xt-to-vt-steps-lab.html',
+        color: 'mint'
+      },
+      {
+        id: 'tortoise-hare-race',
+        sec: '1-3',
+        secName: '1-3 速率與速度',
+        icon: '🐢',
+        title: '龜兔賽跑 x-t 圖：途中 3 次相遇 ＋ 烏龜奪冠平均速度',
+        page: '綜合卷 03 卷第6頁題組3',
+        desc: '烏龜等速直線；兔子暴衝➔樹下睡覺(水平線)➔狂追！途中相遇 3 次 (選C)；50分烏龜平均速度較大 (選A)！',
+        file: 'tortoise-hare-race-lab.html',
+        color: 'mint'
+      },
+
+      // 1-4
+      {
+        id: 'thsrc-trapezoid-vt',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🚄',
+        title: '台灣高鐵 2.5 分鐘破 300km/h ＋ 梯形 v-t 圖巡航解析器',
+        page: '綜合卷 03 卷第6頁題組4',
+        desc: '常用加速度 2.0 km/h/s ➔ 破 300km/h 需 2.5 分鐘 (選A)；加速→等速→減速呈現「等腰梯形 v-t 圖」(選B)！',
+        file: 'thsrc-trapezoid-vt-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'galileo-freefall-mass',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🧱',
+        title: '5kg 磚塊 vs 10kg 鐵球落體等時儀：質量無關 3 秒落地',
+        page: '綜合卷 03 卷第18題',
+        desc: '不計阻力下自由落體 g=9.8m/s² 與質量無關！5kg 磚塊需 3s，10kg 鐵球亦為 3s (選B)！',
+        file: 'galileo-freefall-mass-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'bullet-train-braking',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🚄',
+        title: '法國 360km/h 子彈列車 400m 煞停：a = -12.5 m/s²',
+        page: '綜合卷 03 卷第16題',
+        desc: '360km/h ＝ 100m/s，400m 煞停 ➔ a ＝ (0²-100²)/(2×400) ＝ －12.5 m/s² (選B)；需時 8 秒！',
+        file: 'bullet-train-braking-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'weather-braking-distance',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🚗',
+        title: '晴天 4s(32m, a=4) vs 雨天 8s(64m, a=2) 濕滑路面煞車比較儀',
+        page: '單元卷 02 卷第4頁題組2',
+        desc: '初速 16m/s：晴天 a=4(4s·32m)；雨天濕滑 a=2(時間翻倍8s·距離翻倍64m)！',
+        file: 'weather-braking-distance-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'freefall-500m-supercar-accel',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🏢',
+        title: '10秒自由落體 500m 摩天大樓 ＋ 跑車破百加速度計',
+        page: '單元卷 02 卷第24、19題',
+        desc: '落體 10s 高度 h=1/2gt²=500m (末速 100m/s)；跑車 2 秒加速到 100m/s ➔ a = 50 m/s²！',
+        file: 'freefall-500m-supercar-accel-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'deceleration-three-vectors',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🎯',
+        title: '減速跑道三向量雷達：位移與速度永遠同向 vs 加速度反向',
+        page: '單元卷 02 卷第22、18題',
+        desc: '向前減速時位移與速度恆同向向前 (選C)；加速度反向向後拖拽；加速度單位為 m/s²！',
+        file: 'deceleration-three-vectors-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'vt-to-at-multi-stage',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '📊',
+        title: 'v-t ↔ a-t 多段折線微分器 ＋ 第 30 秒等速 a=0 解析器',
+        page: '單元卷 02 卷第25、21題',
+        desc: 'v-t 斜率轉 a-t 階梯圖 (正階梯→零→負階梯·選C)；第 30 秒為等速水平線 ➔ a＝0 m/s² (選C)！',
+        file: 'vt-to-at-multi-stage-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'ticker-20hz-xt-slope',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '📏',
+        title: '20Hz 打點紙帶掃描 ＋ x-t 斜率比較',
+        page: '單元卷 02 卷第17、10題',
+        desc: '20Hz 時間間隔 0.05s，點距均勻為等速 (選C)；x-t 斜率最平緩者速率最慢 (選C)！',
+        file: 'ticker-20hz-xt-slope-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'ticker-tape-lab',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '📏',
+        title: '打點計時器與紙帶分析實驗室',
+        page: 'P.18～20 探索 1-2',
+        desc: '50Hz 打點計時器模擬、可拖曳透明直尺量測點距與逐點速度/加速度分析表。',
+        file: 'ticker-tape-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'four-tapes-ticker-timer',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '📏',
+        title: '四條紙帶甲乙丙丁：打點痕跡解析',
+        page: '習作 P.6 題組17-18',
+        desc: '甲乙等速（乙 2.0cm ＞ 甲 1.5cm 速度較快）；丙減速、丁加速（點距漸大速度漸快）。',
+        file: 'four-tapes-ticker-timer-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'acceleration-velocity-sandbox',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🚀',
+        title: 'a 與 v 方向關係：推力與煞車沙盒',
+        page: 'P.21 圖 1-19/20',
+        desc: '賽車即時雙向量箭頭、推力火焰 vs 煞車煙霧，破解「負加速度必為減速」迷思。',
+        file: 'acceleration-velocity-sandbox.html',
+        color: 'yellow'
+      },
+      {
+        id: 'vt-slope-comparator',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '📈',
+        title: '等加速度 v-t 圖斜率比較器',
+        page: 'P.21 圖 1-21',
+        desc: '甲乙雙車同起跑線競速、斜率越大代表加速度越大，附時間/速度雙掃描射線。',
+        file: 'vt-slope-comparator.html',
+        color: 'yellow'
+      },
+      {
+        id: 'vt-at-converter-lab',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '⚡',
+        title: 'v-t ↔ a-t 雙向對照與閃頻實驗室',
+        page: 'P.22～23 圖 1-22/23',
+        desc: '甲車（加速斜線/正水平線）vs 乙車（減速斜線/負水平線）閃頻照片軌跡對照。',
+        file: 'vt-at-converter-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'vt-crossing-axis',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🎯',
+        title: '例題 1-7：穿過時間軸折返解析器',
+        page: 'P.24 例題 1-7',
+        desc: '斜直線穿過時間軸的物理意義：正向減速 (0~10s) ➔ 速度為零折返點 (t=10s) ➔ 負向加速。',
+        file: 'vt-crossing-axis-analyzer.html',
+        color: 'yellow'
+      },
+      {
+        id: 'at-ladder-accumulator',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🪜',
+        title: '例題 1-8：a-t 階梯與速度累積儀',
+        page: 'P.24 例題 1-8',
+        desc: 'a-t 階梯面積＝速度變化量（Δv = a × Δt）；實時同步生成 v-t 圖與賽車跑道。',
+        file: 'at-ladder-velocity-accumulator.html',
+        color: 'yellow'
+      },
+      {
+        id: 'boyle-vacuum-freefall',
+        sec: '1-4',
+        secName: '1-4 自由落體運動',
+        icon: '🪶',
+        title: '波以耳真空管 vs 比薩斜塔實驗室',
+        page: 'P.25 圖 1-24/25',
+        desc: '大氣管 vs 真空管羽毛硬幣下落對比，可調氣壓幫浦與毫秒著地感應器。',
+        file: 'boyle-vacuum-freefall-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'freefall-gravity-analyzer',
+        sec: '1-4',
+        secName: '1-4 自由落體運動',
+        icon: '🍎',
+        title: '自由落體 g=9.8 閃頻與高度測量儀',
+        page: 'P.26 圖 1-26',
+        desc: '重力加速度 g=9.8 速度階梯、閃頻等時點距比例 (1:3:5:7)、多天體引力與 v-t 面積求樓高。',
+        file: 'freefall-gravity-analyzer.html',
+        color: 'yellow'
+      },
+      {
+        id: 'autonomous-ev-vt-track',
+        sec: '1-4',
+        secName: '1-4 加速度與等加速度',
+        icon: '🏎️',
+        title: '自駕電動車 v-t 性能測試與南向折返',
+        page: '習作 P.7 題組21-23',
+        desc: '0~2s正加速/2~4s等速/4~6s煞車/6s折返/6~8s南向加速；4~8s連續等加速度完整診斷。',
+        file: 'autonomous-ev-vt-track-lab.html',
+        color: 'yellow'
+      },
+      {
+        id: 'freefall-mass-independence',
+        sec: '1-4',
+        secName: '1-4 自由落體運動',
+        icon: '🍎',
+        title: '自由落體質量無關：鐵球vs橡皮擦同步落地',
+        page: '習作 P.7 第20題',
+        desc: '400g 鐵球 vs 40g 橡皮擦 78.4m 樓頂釋放，g=9.8m/s² 恆定，4秒同時精準著地！',
+        file: 'freefall-mass-independence-lab.html',
+        color: 'yellow'
+      }
+    ];
+
+    function renderTools(filter = 'all') {
+      const grid = document.getElementById('toolsGrid');
+      grid.innerHTML = '';
+
+      const filtered = (filter === 'all') ? tools : tools.filter(t => t.sec === filter);
+
+      filtered.forEach((t) => {
+        const card = document.createElement('div');
+        card.className = `tool-card ${t.color}`;
+        card.innerHTML = `
+          <div class="card-top">
+            <span class="card-icon">${t.icon}</span>
+            <span class="card-badge">${t.page}</span>
+          </div>
+          <div class="card-body">
+            <span class="card-section">${t.secName}</span>
+            <h3 class="card-title">${t.title}</h3>
+            <p class="card-desc">${t.desc}</p>
+            <div class="card-actions">
+              <button type="button" class="btn-play" onclick="openModal('${t.id}')">
+                ⚡ 即刻體驗
+              </button>
+              <a href="./${t.file}" target="_blank" class="btn-link" title="在新分頁全螢幕開啟（適合電子白板投影）">
+                ↗
+              </a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderTools(cat);
+    }
+
+    function openModal(toolId) {
+      const t = tools.find(item => item.id === toolId);
+      if (!t) return;
+
+      document.getElementById('modalIcon').innerText = t.icon;
+      document.getElementById('modalTitle').innerText = t.title;
+      document.getElementById('modalPage').innerText = `(${t.page})`;
+      document.getElementById('modalExtLink').href = `./${t.file}`;
+      document.getElementById('modalIframe').src = `./${t.file}`;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.getElementById('modalIframe').src = '';
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTools('all');
+    });
+  </script>
+</body>
+</html>

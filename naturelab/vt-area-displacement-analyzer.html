@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · v-t 圖面積求位移與路徑長解析器 (P.17 例題 1-5)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #0f172a;
+      --area-pos: #2563eb;       /* Positive Area (Blue) */
+      --area-pos-bg: rgba(37, 99, 235, 0.18);
+      --area-neg: #dc2626;       /* Negative Area (Red) */
+      --area-neg-bg: rgba(220, 38, 38, 0.18);
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #ea580c;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 58, 138, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Layout Grids */
+    .analyzer-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .analyzer-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Track Viewport */
+    .track-box {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .track-head {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #15803d;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    canvas.track-canvas {
+      display: block;
+      width: 100%;
+      height: 120px;
+    }
+
+    /* Graph Canvas Box */
+    .graph-box {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.graph-canvas {
+      display: block;
+      width: 100%;
+      height: 320px;
+    }
+
+    /* Playback & Scrub Bar */
+    .playback-bar {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .play-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #172554;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Area Cards & Formula Box */
+    .area-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .area-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+    }
+
+    .area-card.pos {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .area-card.neg {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    .area-card h4 {
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.3rem;
+    }
+
+    .area-card .math-line {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .area-card.pos .math-line { color: var(--area-pos); }
+    .area-card.neg .math-line { color: var(--area-neg); }
+
+    /* Results Dashboard */
+    .result-box {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .result-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .result-formula {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Core Concept Callout */
+    .concept-card {
+      background: #eff6ff;
+      border-left: 4px solid var(--area-pos);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .concept-card strong {
+      color: var(--primary);
+    }
+
+    /* Quiz Container */
+    .quiz-section {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-input-group {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-input {
+      padding: 0.4rem 0.8rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 100px;
+      text-align: center;
+    }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show {
+      display: block;
+    }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>📐 v-t 圖面積求位移與路徑長解析器</span>
+          <span class="badge">國中自然 3上 · 課本 P.17 例題 1-5</span>
+        </h1>
+        <p>掌握「幾何面積＝位移大小」、時間軸上方面積（＋）與下方面積（－）、總位移 vs 總路徑長拆解</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="loadCase('ex15')">📖 課本例題 1-5（前進 6s ➔ 折返 4s）</button>
+        <button class="nav-btn" onclick="loadCase('return')">🔄 原點折返型（總位移為 0）</button>
+        <button class="nav-btn" onclick="loadCase('triple')">⚡ 三段變速運動（含靜止）</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- 1. Real Track Motion Simulation -->
+    <div class="track-box">
+      <div class="track-head">
+        <span>🏃 實體跑道即時位置與折返軌跡模擬</span>
+        <span id="trackStatusText">狀態：向右等速前進 (v = +4.0 m/s)</span>
+      </div>
+      <canvas id="trackCanvas" class="track-canvas" width="1280" height="120"></canvas>
+    </div>
+
+    <!-- 2. Main Two-Column Layout -->
+    <div class="analyzer-layout">
+      
+      <!-- Left Column: Interactive v-t Graph with Shaded Areas -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📊 v-t 圖動態面積渲染板</span>
+          </div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">
+            💡 面積 \( A = v \times \Delta t \)
+          </div>
+        </div>
+
+        <div class="graph-box">
+          <canvas id="graphCanvas" class="graph-canvas" width="650" height="320"></canvas>
+        </div>
+
+        <!-- Playback Controller -->
+        <div class="playback-bar">
+          <div class="play-row">
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-primary" id="btnPlayPause" onclick="togglePlay()">▶ 播放運動</button>
+              <button class="btn btn-secondary" onclick="resetPlay()">🔄 重置</button>
+            </div>
+            <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.1rem; color: var(--primary);" id="timeReadout">
+              t = 0.00 秒
+            </div>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="10" step="0.05" value="0" oninput="onScrubTime()">
+        </div>
+      </div>
+
+      <!-- Right Column: Area Breakdown, Formulas & Calculations -->
+      <div>
+        
+        <!-- Area Decomposition Cards -->
+        <div class="area-cards-grid">
+          <div class="area-card pos">
+            <h4 style="color: var(--area-pos);">
+              <span>🟦 時間軸上方面積 \( A_1 \)</span>
+              <span id="posTimeSpan">0 ～ 6 s</span>
+            </h4>
+            <div class="math-line" id="posMath">長 6 × 寬 (+4) = +24 m</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">
+              代表<strong>正向位移（向右移動 24 公尺）</strong>
+            </div>
+          </div>
+
+          <div class="area-card neg">
+            <h4 style="color: var(--area-neg);">
+              <span>🟥 時間軸下方面積 \( A_2 \)</span>
+              <span id="negTimeSpan">6 ～ 10 s</span>
+            </h4>
+            <div class="math-line" id="negMath">長 4 × 寬 (-2) = -8 m</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">
+              代表<strong>負向位移（向左折返 8 公尺）</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Physics Calculations Result Box -->
+        <div class="result-box">
+          <div class="result-row">
+            <div>
+              <div class="result-label">全程總位移 \( \Delta x \)</div>
+              <div class="result-formula">\( \Delta x = \text{上方面積} + \text{下方面積 (含正負號)} \)</div>
+            </div>
+            <div class="result-val" id="valDisp" style="color: var(--area-pos);">+16.0 m</div>
+          </div>
+
+          <div class="result-row">
+            <div>
+              <div class="result-label">全程總路徑長 \( S \)</div>
+              <div class="result-formula">\( S = |\text{上方面積}| + |\text{下方面積}| \)（純量絕對值累加）</div>
+            </div>
+            <div class="result-val" id="valPath" style="color: var(--warn);">32.0 m</div>
+          </div>
+
+          <div class="result-row">
+            <div>
+              <div class="result-label">全程平均速度 \( \bar{v} \)</div>
+              <div class="result-formula">\( \bar{v} = \text{總位移} \div \text{總時間} \)</div>
+            </div>
+            <div class="result-val" id="valAvgV" style="font-size: 1.1rem; color: var(--primary);">+1.6 m/s</div>
+          </div>
+
+          <div class="result-row">
+            <div>
+              <div class="result-label">全程平均速率 \( \bar{s} \)</div>
+              <div class="result-formula">\( \bar{s} = \text{總路徑長} \div \text{總時間} \)</div>
+            </div>
+            <div class="result-val" id="valAvgS" style="font-size: 1.1rem; color: var(--warn);">3.2 m/s</div>
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-card">
+          <strong>📖 課本 P.17 核心金句：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li>\( v-t \) 圖與時間軸圍成的<strong>矩形面積 ＝ 物體的位移大小</strong>。</li>
+            <li><strong>速度為正（上方）</strong>：代表向正方向前進；<strong>速度為負（下方）</strong>：代表向負方向折返。</li>
+            <li>求<strong>位移</strong>時面積需<strong>代入正負號相加</strong>；求<strong>路徑長</strong>時面積<strong>全部取正值累加</strong>！</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 3. Interactive Practice / Quiz Section (Example 1-5) -->
+    <div class="card quiz-section" id="quizBox">
+      <div class="quiz-title">
+        <span>📝 隨堂自我挑戰（例題 1-5）</span>
+      </div>
+      <p style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+        請根據上方 \( v-t \) 圖，試著算出在 \( 0\sim 10\text{ s} \) 內物體的<strong>總位移</strong>與<strong>總路徑長</strong>：
+      </p>
+      
+      <div class="quiz-input-group">
+        <label style="font-weight: 700; font-size: 0.9rem;">
+          (1) 全程位移 \( \Delta x \) ＝ 
+          <input type="number" class="quiz-input" id="quizAnsDisp" placeholder="請輸入"> 公尺
+        </label>
+        <label style="font-weight: 700; font-size: 0.9rem;">
+          (2) 全程路徑長 \( S \) ＝ 
+          <input type="number" class="quiz-input" id="quizAnsPath" placeholder="請輸入"> 公尺
+        </label>
+        <button class="btn btn-primary" onclick="checkQuiz()">檢查答案</button>
+      </div>
+
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // Cases Data
+    const cases = {
+      ex15: {
+        title: '課本例題 1-5',
+        maxT: 10,
+        segments: [
+          { t1: 0, t2: 6, v: 4, label: '第 1 段 (0~6s, v=+4m/s)' },
+          { t1: 6, t2: 10, v: -2, label: '第 2 段 (6~10s, v=-2m/s)' }
+        ]
+      },
+      return: {
+        title: '原點折返型',
+        maxT: 8,
+        segments: [
+          { t1: 0, t2: 4, v: 3, label: '第 1 段 (0~4s, v=+3m/s)' },
+          { t1: 4, t2: 8, v: -3, label: '第 2 段 (4~8s, v=-3m/s)' }
+        ]
+      },
+      triple: {
+        title: '三段變速運動',
+        maxT: 10,
+        segments: [
+          { t1: 0, t2: 3, v: 6, label: '第 1 段 (0~3s, v=+6m/s)' },
+          { t1: 3, t2: 6, v: 0, label: '第 2 段 (3~6s, v=0m/s 靜止)' },
+          { t1: 6, t2: 10, v: -3, label: '第 3 段 (6~10s, v=-3m/s)' }
+        ]
+      }
+    };
+
+    let activeCase = 'ex15';
+    let currentTime = 0;
+    let isPlaying = false;
+    let animId = null;
+    let lastTime = 0;
+
+    // Canvases
+    const trackCanvas = document.getElementById('trackCanvas');
+    const trackCtx = trackCanvas.getContext('2d');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const graphCtx = graphCanvas.getContext('2d');
+
+    function loadCase(key) {
+      activeCase = key;
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const conf = cases[key];
+      document.getElementById('timeSlider').max = conf.maxT;
+      
+      resetPlay();
+      updateStaticMath();
+    }
+
+    function getPositionAt(t) {
+      const conf = cases[activeCase];
+      let pos = 0;
+      let curV = 0;
+      let path = 0;
+
+      for (let s of conf.segments) {
+        if (t <= s.t1) break;
+        const dt = Math.min(t, s.t2) - s.t1;
+        pos += s.v * dt;
+        path += Math.abs(s.v) * dt;
+        if (t >= s.t1 && t <= s.t2) curV = s.v;
+      }
+      return { x: pos, v: curV, path };
+    }
+
+    function togglePlay() {
+      const btn = document.getElementById('btnPlayPause');
+      const conf = cases[activeCase];
+      if (!isPlaying) {
+        if (currentTime >= conf.maxT) currentTime = 0;
+        isPlaying = true;
+        btn.innerText = '⏸ 暫停運動';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isPlaying = false;
+        btn.innerText = '▶ 繼續播放';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetPlay() {
+      isPlaying = false;
+      currentTime = 0;
+      document.getElementById('btnPlayPause').innerText = '▶ 播放運動';
+      document.getElementById('btnPlayPause').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onScrubTime() {
+      currentTime = parseFloat(document.getElementById('timeSlider').value);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isPlaying) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      const conf = cases[activeCase];
+      currentTime += dt;
+      if (currentTime >= conf.maxT) {
+        currentTime = conf.maxT;
+        togglePlay();
+      }
+      document.getElementById('timeSlider').value = currentTime;
+      updateUI();
+
+      if (isPlaying) animId = requestAnimationFrame(loop);
+    }
+
+    function updateStaticMath() {
+      const conf = cases[activeCase];
+      let posSum = 0, negSum = 0;
+      let posText = '', negText = '';
+      let posSpan = '', negSpan = '';
+
+      for (let s of conf.segments) {
+        const dt = s.t2 - s.t1;
+        const area = s.v * dt;
+        if (s.v > 0) {
+          posSum += area;
+          posSpan = `${s.t1} ～ ${s.t2} s`;
+          posText = `長 ${dt} × 寬 (+${s.v}) = +${area} m`;
+        } else if (s.v < 0) {
+          negSum += area;
+          negSpan = `${s.t1} ～ ${s.t2} s`;
+          negText = `長 ${dt} × 寬 (${s.v}) = ${area} m`;
+        }
+      }
+
+      document.getElementById('posTimeSpan').innerText = posSpan || '無';
+      document.getElementById('posMath').innerText = posText || '無正向運動';
+      document.getElementById('negTimeSpan').innerText = negSpan || '無';
+      document.getElementById('negMath').innerText = negText || '無負向運動';
+
+      const totalDisp = posSum + negSum;
+      const totalPath = Math.abs(posSum) + Math.abs(negSum);
+      const avgV = (totalDisp / conf.maxT).toFixed(1);
+      const avgS = (totalPath / conf.maxT).toFixed(1);
+
+      document.getElementById('valDisp').innerText = `${totalDisp > 0 ? '+' : ''}${totalDisp.toFixed(1)} m`;
+      document.getElementById('valPath').innerText = `${totalPath.toFixed(1)} m`;
+      document.getElementById('valAvgV').innerText = `${avgV > 0 ? '+' : ''}${avgV} m/s`;
+      document.getElementById('valAvgS').innerText = `${avgS} m/s`;
+    }
+
+    function updateUI() {
+      document.getElementById('timeReadout').innerText = `t = ${currentTime.toFixed(2)} 秒`;
+      const m = getPositionAt(currentTime);
+
+      if (m.v > 0) {
+        document.getElementById('trackStatusText').innerText = `狀態：向右等速前進 (v = +${m.v.toFixed(1)} m/s)`;
+      } else if (m.v < 0) {
+        document.getElementById('trackStatusText').innerText = `狀態：向左等速折返 (v = ${m.v.toFixed(1)} m/s)`;
+      } else {
+        document.getElementById('trackStatusText').innerText = `狀態：靜止停留 (v = 0 m/s)`;
+      }
+
+      drawTrack(m);
+      drawGraph();
+    }
+
+    // Draw Track
+    function drawTrack(m) {
+      trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
+      const cw = trackCanvas.width;
+      const cy = 70;
+      const minX = -5, maxX = 30;
+
+      const toPx = (v) => 60 + ((v - minX) / (maxX - minX)) * (cw - 120);
+
+      // Track Line
+      trackCtx.beginPath();
+      trackCtx.moveTo(40, cy);
+      trackCtx.lineTo(cw - 40, cy);
+      trackCtx.strokeStyle = '#15803d';
+      trackCtx.lineWidth = 3;
+      trackCtx.stroke();
+
+      // Ticks
+      for (let x = -5; x <= 30; x += 5) {
+        const px = toPx(x);
+        trackCtx.beginPath();
+        trackCtx.moveTo(px, cy - (x === 0 ? 10 : 5));
+        trackCtx.lineTo(px, cy + (x === 0 ? 10 : 5));
+        trackCtx.strokeStyle = x === 0 ? '#dc2626' : '#86efac';
+        trackCtx.lineWidth = x === 0 ? 3 : 1.5;
+        trackCtx.stroke();
+
+        trackCtx.fillStyle = x === 0 ? '#dc2626' : '#166534';
+        trackCtx.font = x === 0 ? 'bold 13px Outfit' : '11px Outfit';
+        trackCtx.fillText((x > 0 ? '+' : '') + x + 'm', px - 12, cy + 24);
+      }
+
+      // Origin Marker
+      const p0 = toPx(0);
+      trackCtx.beginPath(); trackCtx.arc(p0, cy, 5, 0, Math.PI * 2);
+      trackCtx.fillStyle = '#dc2626'; trackCtx.fill();
+      trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.fillText('起點 0', p0 - 16, cy - 14);
+
+      // Current Runner
+      const curPx = toPx(m.x);
+      trackCtx.font = '28px sans-serif';
+      trackCtx.fillText(m.v < 0 ? '🏃‍♂️' : '🏃', curPx - 14, cy - 10);
+
+      // Current Pos Box
+      trackCtx.fillStyle = '#1e3a8a';
+      trackCtx.font = 'bold 12px Noto Sans TC';
+      trackCtx.fillText(`目前位置: ${m.x > 0 ? '+' : ''}${m.x.toFixed(1)} m`, curPx - 35, cy - 42);
+    }
+
+    // Draw v-t Graph with Color Areas
+    function drawGraph() {
+      graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+      const conf = cases[activeCase];
+      const ox = 60, oy = 160, w = 550, h = 240;
+      const maxT = conf.maxT;
+      const maxV = 8; // -8 to +8 m/s
+
+      const toGx = (t) => ox + (t / maxT) * w;
+      const toGy = (v) => oy - (v / maxV) * 110;
+
+      // 1. Shaded Areas
+      conf.segments.forEach((s) => {
+        const x1 = toGx(s.t1);
+        const x2 = toGx(s.t2);
+        const yTop = toGy(s.v);
+        const yZero = oy;
+
+        graphCtx.fillStyle = s.v >= 0 ? 'rgba(37, 99, 235, 0.18)' : 'rgba(220, 38, 38, 0.18)';
+        graphCtx.fillRect(x1, Math.min(yZero, yTop), x2 - x1, Math.abs(yTop - yZero));
+
+        // Area border dash
+        graphCtx.strokeStyle = s.v >= 0 ? '#3b82f6' : '#ef4444';
+        graphCtx.lineWidth = 1;
+        graphCtx.setLineDash([3, 3]);
+        graphCtx.strokeRect(x1, Math.min(yZero, yTop), x2 - x1, Math.abs(yTop - yZero));
+        graphCtx.setLineDash([]);
+
+        // Area text label
+        const dt = s.t2 - s.t1;
+        const area = s.v * dt;
+        if (s.v !== 0) {
+          graphCtx.font = 'bold 13px Outfit';
+          graphCtx.fillStyle = s.v > 0 ? '#1d4ed8' : '#b91c1c';
+          graphCtx.textAlign = 'center';
+          graphCtx.fillText(`面積 = ${area > 0 ? '+' : ''}${area} m`, (x1 + x2) / 2, (yZero + yTop) / 2 + 5);
+        }
+      });
+
+      // 2. Axes
+      graphCtx.beginPath();
+      graphCtx.moveTo(ox, oy); graphCtx.lineTo(ox + w, oy); // t-axis
+      graphCtx.strokeStyle = '#0f172a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
+
+      graphCtx.beginPath();
+      graphCtx.moveTo(ox, oy - 120); graphCtx.lineTo(ox, oy + 120); // v-axis
+      graphCtx.strokeStyle = '#0f172a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
+
+      // Axis labels
+      graphCtx.font = 'bold 12px Noto Sans TC'; graphCtx.fillStyle = '#0f172a';
+      graphCtx.textAlign = 'center';
+      graphCtx.fillText('時間 t (秒)', ox + w - 40, oy + 25);
+      graphCtx.fillText('速度 v (m/s)', ox - 35, oy - 125);
+
+      // Y Ticks
+      [-6, -4, -2, 0, 2, 4, 6].forEach(v => {
+        const gy = toGy(v);
+        graphCtx.beginPath(); graphCtx.moveTo(ox - 5, gy); graphCtx.lineTo(ox + w, gy);
+        graphCtx.strokeStyle = v === 0 ? '#0f172a' : '#f1f5f9'; graphCtx.stroke();
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '11px Outfit'; graphCtx.textAlign = 'right';
+        graphCtx.fillText((v > 0 ? '+' : '') + v, ox - 8, gy + 4);
+      });
+
+      // X Ticks
+      for (let t = 0; t <= maxT; t += 2) {
+        const gx = toGx(t);
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '11px Outfit'; graphCtx.textAlign = 'center';
+        graphCtx.fillText(t, gx, oy + 16);
+      }
+
+      // 3. Thick Velocity Profile Lines
+      conf.segments.forEach(s => {
+        const x1 = toGx(s.t1);
+        const x2 = toGx(s.t2);
+        const y = toGy(s.v);
+
+        graphCtx.beginPath();
+        graphCtx.moveTo(x1, y);
+        graphCtx.lineTo(x2, y);
+        graphCtx.strokeStyle = s.v >= 0 ? '#2563eb' : '#dc2626';
+        graphCtx.lineWidth = 4;
+        graphCtx.stroke();
+      });
+
+      // 4. Time Scrubber Line
+      const scanX = toGx(currentTime);
+      graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - 120); graphCtx.lineTo(scanX, oy + 120);
+      graphCtx.strokeStyle = '#9333ea'; graphCtx.lineWidth = 2; graphCtx.setLineDash([4, 4]); graphCtx.stroke(); graphCtx.setLineDash([]);
+    }
+
+    // Quiz Check
+    function checkQuiz() {
+      const ansDisp = parseFloat(document.getElementById('quizAnsDisp').value);
+      const ansPath = parseFloat(document.getElementById('quizAnsPath').value);
+      const fb = document.getElementById('quizFeedback');
+      fb.classList.add('show');
+
+      if (ansDisp === 16 && ansPath === 32) {
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = `🎉 <strong>答對了！太厲害了！</strong><br>
+        (1) 全程位移 ＝ 上方面積 (+24) ＋ 下方面積 (-8) ＝ <strong>+16 公尺</strong>。<br>
+        (2) 全程路徑長 ＝ |+24| ＋ |-8| ＝ <strong>32 公尺</strong>！`;
+      } else {
+        fb.style.color = 'var(--area-neg)';
+        fb.innerHTML = `❌ <strong>答案不完全正確喔！</strong><br>
+        提示：上方面積是 \( 6 \times (+4) = +24\text{m} \)，下方面積是 \( 4 \times (-2) = -8\text{m} \)。<br>
+        • 位移請將正負面積相加：\( (+24) + (-8) \)<br>
+        • 路徑長請將面積純量相加：\( 24 + 8 \)`;
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCase('ex15');
+    });
+  </script>
+</body>
+</html>

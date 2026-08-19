@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 三人三球單擺同頻 vs 擺長四分之一週期減半實驗室 (習作 P.3 題2-3)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4338ca;       /* Indigo */
+      --primary-dark: #312e81;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(67, 56, 202, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Stage Canvas Box */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Right Column: Comparative Data Cards */
+    .pendulum-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .p-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .p-card.c1 { border-color: #93c5fd; background: #eff6ff; }
+    .p-card.c2 { border-color: #a7f3d0; background: #ecfdf5; }
+    .p-card.c3 { border-color: #fbcfe8; background: #fdf2f8; }
+
+    .p-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .p-card.c1 h4 { color: #1d4ed8; }
+    .p-card.c2 h4 { color: #047857; }
+    .p-card.c3 h4 { color: #be185d; }
+
+    .p-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .p-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 0.35rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>⏱️ 三人三球單擺同頻 vs 擺長四分之一週期減半實驗室</span>
+          <span class="badge">國中自然 3上 · 習作 P.3 題2-3</span>
+        </h1>
+        <p>質量大小完全不影響單擺週期（T₁=T₂=T₃）；擺長變 1/4 倍，週期縮短為 1/2 倍（2s ➔ 1s）</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchMode('mass')">👧 模式 ①：三人三球質量無關 (習作題3)</button>
+        <button class="nav-btn" onclick="switchMode('length')">📏 模式 ②：擺長四分之一週期減半 (習作題2)</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Simulation Stage & Controls -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span id="stageTitle">👧 琪珍(30g) vs 品潔(40g) vs 家華(50g) 三球並排同步擺動</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnSwing" onclick="toggleSwing()">▶ 同步釋放擺動</button>
+            <button class="btn btn-secondary" onclick="resetSwing()">🔄 重置回最大擺角</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>⏱️ 碼錶計時：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">0.00 秒</strong></span>
+            <span>擺動狀態：<strong id="hudState" style="color: #fbbf24;">等待釋放</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="380"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div class="control-panel">
+          <div style="font-size: 0.85rem; color: var(--text-muted);" id="stageHint">
+            💡 <strong>物理定律：</strong>單擺週期公式 \( T = 2\pi\sqrt{\frac{L}{g}} \)，只與<strong>擺長 \( L \)</strong> 及<strong>重力加速度 \( g \)</strong> 有關，與<strong>擺錘質量</strong>完全無關！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Comparative Metrics & Quiz -->
+      <div>
+        
+        <!-- Live Pendulum Cards -->
+        <div class="pendulum-cards-grid" id="cardsGrid">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.3 題 2 & 3 核心考點精華：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>題 3（質量無關）：</strong>繩長皆為 100cm，擺錘質量分別為 30g、40g、50g，因質量不影響週期，故 \( \mathbf{T_1 = T_2 = T_3} \)。</li>
+            <li><strong>題 2（擺長平方根關係）：</strong>擺長 \( L \) 由 \( 100\text{ cm} \rightarrow 25\text{ cm} \)（變為 \( \frac{1}{4} \) 倍），週期 \( T \) 由 \( 2\text{ 秒} \rightarrow 2 \times \sqrt{\frac{1}{4}} = \mathbf{1\text{ 秒}} \)（減半）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作第 2、3 題隨堂測驗</div>
+
+          <div class="quiz-item">
+            <p>Q1. (習作第2題) 裘莉以擺長 100cm 單擺測得週期為 2 秒，若改以擺長 25cm 單擺重做實驗，測得週期最可能為多少？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 1 秒</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 2 秒</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 3 秒</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 4 秒</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. (習作第3題) 琪珍(30g)、品潔(40g)、家華(50g)各用長 100cm 繩子做單擺實驗，所測週期大小關係為何？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) T₁ = T₂ = T₃</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) T₁ > T₂ > T₃</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) T₁ < T₂ < T₃</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
+  </footer>
+
+  <script>
+    let mode = 'mass'; // 'mass' (3 people) or 'length' (100cm vs 25cm)
+    let isSwinging = false;
+    let animId = null;
+    let lastTime = 0;
+    let simTime = 0;
+
+    const initialAngle = 8 * (Math.PI / 180); // 8 degrees (<= 10 deg)
+
+    // Pendulums definition
+    // Mode mass: 3 pendulums, L=100cm, masses: 30g, 40g, 50g -> T = 2.0s
+    // Mode length: 2 pendulums, m=30g, L=100cm (T=2.0s) vs L=25cm (T=1.0s)
+    let pendulums = [];
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function switchMode(newMode) {
+      mode = newMode;
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (mode === 'mass') {
+        document.getElementById('stageTitle').innerText = '👧 琪珍(30g) vs 品潔(40g) vs 家華(50g) 三球並排同步擺動 (T₁=T₂=T₃)';
+        document.getElementById('stageHint').innerHTML = '💡 <strong>質量無關特性：</strong>三人使用相同 100cm 繩長，擺錘質量 30g、40g、50g 完全不影響週期，三者精確同頻同步晃動！';
+        pendulums = [
+          { name: '琪珍', mass: '30g', lenCm: 100, T: 2.0, color: '#3b82f6', radius: 14, xRatio: 0.25 },
+          { name: '品潔', mass: '40g', lenCm: 100, T: 2.0, color: '#10b981', radius: 18, xRatio: 0.50 },
+          { name: '家華', mass: '50g', lenCm: 100, T: 2.0, color: '#ec4899', radius: 22, xRatio: 0.75 }
+        ];
+      } else {
+        document.getElementById('stageTitle').innerText = '📏 裘莉的單擺：擺長 100cm (T=2s) vs 擺長 25cm (T=1s) 雙擺競速';
+        document.getElementById('stageHint').innerHTML = '💡 <strong>擺長平方根律：</strong>短擺 (25cm) 擺長為長擺 (100cm) 的 1/4 倍，因此短擺擺動 2 次時，長擺剛好擺動 1 次！';
+        pendulums = [
+          { name: '長擺 (100cm)', mass: '40g', lenCm: 100, T: 2.0, color: '#3b82f6', radius: 18, xRatio: 0.35 },
+          { name: '短擺 (25cm)', mass: '40g', lenCm: 25, T: 1.0, color: '#f59e0b', radius: 18, xRatio: 0.65 }
+        ];
+      }
+
+      renderCards();
+      resetSwing();
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = '';
+
+      pendulums.forEach((p, idx) => {
+        const card = document.createElement('div');
+        card.className = `p-card c${idx + 1}`;
+        card.innerHTML = `
+          <h4>${p.name}</h4>
+          <div class="p-val" id="cardT_${idx}">T = ${p.T.toFixed(1)}s</div>
+          <div class="p-sub">擺長 ${p.lenCm}cm · 質量 ${p.mass}</div>
+          <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;" id="cardCount_${idx}">擺動次數：0 次</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleSwing() {
+      const btn = document.getElementById('btnSwing');
+      if (!isSwinging) {
+        isSwinging = true;
+        btn.innerText = '⏸ 暫停擺動';
+        btn.style.background = '#dc2626';
+        document.getElementById('hudState').innerText = '擺動進行中...';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isSwinging = false;
+        btn.innerText = '▶ 繼續擺動';
+        btn.style.background = 'var(--primary)';
+        document.getElementById('hudState').innerText = '已暫停';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSwing() {
+      isSwinging = false;
+      simTime = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnSwing').innerText = '▶ 同步釋放擺動';
+      document.getElementById('btnSwing').style.background = 'var(--primary)';
+      document.getElementById('hudTime').innerText = '0.00 秒';
+      document.getElementById('hudState').innerText = '等待釋放';
+
+      pendulums.forEach((_, idx) => {
+        const countEl = document.getElementById(`cardCount_${idx}`);
+        if (countEl) countEl.innerText = '擺動次數：0 次';
+      });
+
+      draw();
+    }
+
+    function loop(now) {
+      if (!isSwinging) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      simTime += dt;
+      document.getElementById('hudTime').innerText = `${simTime.toFixed(2)} 秒`;
+
+      pendulums.forEach((p, idx) => {
+        const count = Math.floor(simTime / p.T);
+        const countEl = document.getElementById(`cardCount_${idx}`);
+        if (countEl) countEl.innerText = `擺動次數：${count} 次`;
+      });
+
+      draw();
+      if (isSwinging) animId = requestAnimationFrame(loop);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width;
+      const pivotY = 50;
+
+      // Draw Top Pivot Bar
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(40, pivotY - 8, cw - 80, 10);
+
+      pendulums.forEach((p) => {
+        const pivotX = cw * p.xRatio;
+
+        // Angle theta(t) = theta0 * cos(2 * pi * t / T)
+        const omega = (2 * Math.PI) / p.T;
+        const theta = initialAngle * Math.cos(omega * simTime);
+
+        // Visual length scaling
+        const visualLen = (p.lenCm === 100) ? 240 : 120;
+        const bobX = pivotX + visualLen * Math.sin(theta);
+        const bobY = pivotY + visualLen * Math.cos(theta);
+
+        // Pivot joint
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath(); ctx.arc(pivotX, pivotY, 4, 0, Math.PI * 2); ctx.fill();
+
+        // String
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(pivotX, pivotY); ctx.lineTo(bobX, bobY); ctx.stroke();
+
+        // Bob
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(bobX, bobY, p.radius, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+
+        // Bob Label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${p.name}`, bobX, bobY + p.radius + 16);
+        ctx.fillText(`(${p.mass})`, bobX, bobY + p.radius + 28);
+      });
+
+      // Synchronous Alignment dashed guide line across all long pendulums
+      if (mode === 'mass') {
+        const p0 = pendulums[0];
+        const theta0 = initialAngle * Math.cos(((2 * Math.PI) / p0.T) * simTime);
+        const bobY0 = pivotY + 240 * Math.cos(theta0);
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(40, bobY0);
+        ctx.lineTo(cw - 40, bobY0);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 10px Outfit';
+        ctx.textAlign = 'right';
+        ctx.fillText('三球完全同頻齊高', cw - 45, bobY0 - 6);
+      }
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 擺長 \( L \) 變為原來的 \( \frac{25}{100} = \frac{1}{4} \) 倍，週期 \( T \propto \sqrt{L} \) 會變為 \( \sqrt{\frac{1}{4}} = \frac{1}{2} \) 倍，故週期由 2 秒減半為 <strong>1 秒</strong>！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 單擺週期與「擺長的平方根」成正比，擺長變 1/4 倍，週期會變為 1/2 倍！';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'C') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！太棒了！</strong> 單擺週期只受擺長影響，<strong>擺錘質量大小完全不影響週期</strong>，因此 \( \mathbf{T_1 = T_2 = T_3} \)。';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心迷思！</strong> 擺錘質量不影響單擺週期，三人測得的週期是完全相同的！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      switchMode('mass');
+    });
+  </script>
+</body>
+</html>

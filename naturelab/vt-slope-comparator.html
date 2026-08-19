@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 等加速度 v-t 圖斜率比較器 (P.21 圖 1-21)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --car-a: #2563eb;      /* Car A (Blue / High Accel) */
+      --car-b: #dc2626;      /* Car B (Red / Low Accel) */
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #ea580c;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 58, 138, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Dual Track Viewport */
+    .track-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .track-head {
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid #334155;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    canvas.track-canvas {
+      display: block;
+      width: 100%;
+      height: 160px;
+    }
+
+    /* Main Grid Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Chart Box */
+    .chart-box {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.chart-canvas {
+      display: block;
+      width: 100%;
+      height: 340px;
+    }
+
+    /* Playback & Controls */
+    .control-panel {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .play-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #172554;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Right Column: Comparative Metrics */
+    .cars-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .car-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+    }
+
+    .car-card.a {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .car-card.b {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    .car-card h4 {
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+
+    .car-card.a h4 { color: var(--car-a); }
+    .car-card.b h4 { color: var(--car-b); }
+
+    .car-stat-row {
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
+
+    .car-stat-val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+    }
+
+    /* Slider Adjuster for Custom Acceleration */
+    .accel-slider-box {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .accel-slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .accel-slider-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .accel-slider-head.a { color: var(--car-a); }
+    .accel-slider-head.b { color: var(--car-b); }
+
+    /* Concept Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 0.35rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>📈 等加速度 v-t 圖斜率比較器</span>
+          <span class="badge">國中自然 3上 · 課本 P.21 圖 1-21</span>
+        </h1>
+        <p>斜直線傾斜度（斜率）＝加速度 a 大小；雙車同起跑線競速與同時間/同速度雙重分析射線</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- 1. Real Dual-Car Track Viewport -->
+    <div class="track-box">
+      <div class="track-head">
+        <span>🏎️ 雙車等加速度實體競速跑道（由靜止起跑）</span>
+        <span id="trackTimeStatus">時間：t = 0.00 秒</span>
+      </div>
+      <canvas id="trackCanvas" class="track-canvas" width="1280" height="160"></canvas>
+    </div>
+
+    <!-- 2. Main Two-Column View -->
+    <div class="main-grid">
+      
+      <!-- Left Column: v-t Graph & Playback -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📊 v-t 圖即時斜率比對板</span>
+          </div>
+          <div style="display: flex; gap: 0.4rem;">
+            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="loadTextbookPreset()">
+              📖 恢復課本圖 1-21 數據 (a=20 vs 10)
+            </button>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chartCanvas" class="chart-canvas" width="620" height="340"></canvas>
+        </div>
+
+        <!-- Playback Controller -->
+        <div class="control-panel">
+          <div class="play-row">
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-primary" id="btnPlayPause" onclick="togglePlay()">▶ 開始賽跑</button>
+              <button class="btn btn-secondary" onclick="resetPlay()">🔄 重置</button>
+            </div>
+            <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.1rem; color: var(--primary);" id="timeReadout">
+              t = 0.00 秒 (全體 4.0 秒)
+            </div>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="4" step="0.02" value="0" oninput="onScrubTime()">
+        </div>
+      </div>
+
+      <!-- Right Column: Comparative Metrics & Sliders -->
+      <div>
+        
+        <!-- Live Car Status Cards -->
+        <div class="cars-compare-grid">
+          <!-- Car A -->
+          <div class="car-card a">
+            <h4>
+              <span>🔵 甲車 (直線較陡)</span>
+              <span id="cardAccelA">a = 20 m/s²</span>
+            </h4>
+            <div class="car-stat-row">
+              <span>當前時速 \( v_甲 \)：</span>
+              <span class="car-stat-val" id="statVA" style="color: var(--car-a);">0.0 m/s</span>
+            </div>
+            <div class="car-stat-row">
+              <span>行駛位移 \( x_甲 \)：</span>
+              <span class="car-stat-val" id="statXA">0.0 m</span>
+            </div>
+            <div class="car-stat-row">
+              <span>4 秒後時速：</span>
+              <span class="car-stat-val" id="endVA">80.0 m/s</span>
+            </div>
+          </div>
+
+          <!-- Car B -->
+          <div class="car-card b">
+            <h4>
+              <span>🔴 乙車 (直線較平)</span>
+              <span id="cardAccelB">a = 10 m/s²</span>
+            </h4>
+            <div class="car-stat-row">
+              <span>當前時速 \( v_乙 \)：</span>
+              <span class="car-stat-val" id="statVB" style="color: var(--car-b);">0.0 m/s</span>
+            </div>
+            <div class="car-stat-row">
+              <span>行駛位移 \( x_乙 \)：</span>
+              <span class="car-stat-val" id="statXB">0.0 m</span>
+            </div>
+            <div class="car-stat-row">
+              <span>4 秒後時速：</span>
+              <span class="car-stat-val" id="endVB">40.0 m/s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Acceleration Sliders -->
+        <div class="accel-slider-box">
+          <div class="accel-slider-row">
+            <div class="accel-slider-head a">
+              <span>調整甲車加速度 \( a_甲 \)</span>
+              <span id="sliderValA">20 m/s²</span>
+            </div>
+            <input type="range" id="rangeA" min="5" max="30" step="1" value="20" oninput="onAccelChange()">
+          </div>
+
+          <div class="accel-slider-row">
+            <div class="accel-slider-head b">
+              <span>調整乙車加速度 \( a_乙 \)</span>
+              <span id="sliderValB">10 m/s²</span>
+            </div>
+            <input type="range" id="rangeB" min="5" max="30" step="1" value="10" oninput="onAccelChange()">
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 課本 P.21 圖 1-21 核心結論：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.35rem;">
+            <li>\( v-t \) 圖為<strong>斜直線</strong>代表物體做「<strong>等加速度運動</strong>」。</li>
+            <li>斜直線的<strong>傾斜度（斜率）越陡</strong>，代表在相同時間內速度增加越多，即<strong>加速度越大</strong>（\( \text{斜率} = \frac{\Delta v}{\Delta t} = a \)）。</li>
+            <li>甲直線傾斜度大於乙直線，因此 \( a_甲 (20\text{m/s}^2) > a_乙 (10\text{m/s}^2) \)。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">🧠 隨堂概念診斷</div>
+
+          <div class="quiz-item">
+            <p>Q1. 若甲車直線比乙車陡，在相同時間（如 4 秒）內，哪一輛車速度增加較多？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">甲車增加較多</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">乙車增加較多</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'equal', this)">一樣多</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. 若兩車都要加速到時速 \( 60\text{ m/s} \)，哪一輛車所需花費的時間較短？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">甲車花的時間較短</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">乙車花的時間較短</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // State & Physics
+    let accelA = 20; // m/s^2 (Textbook P.21 Car A: reaches 80m/s in 4s)
+    let accelB = 10; // m/s^2 (Textbook P.21 Car B: reaches 40m/s in 4s)
+    const maxT = 4.0; // total 4 seconds
+    let currentTime = 0;
+    let isPlaying = false;
+    let animId = null;
+    let lastTime = 0;
+
+    // Canvases
+    const trackCanvas = document.getElementById('trackCanvas');
+    const trackCtx = trackCanvas.getContext('2d');
+    const chartCanvas = document.getElementById('chartCanvas');
+    const chartCtx = chartCanvas.getContext('2d');
+
+    function loadTextbookPreset() {
+      accelA = 20;
+      accelB = 10;
+      document.getElementById('rangeA').value = 20;
+      document.getElementById('rangeB').value = 10;
+      onAccelChange();
+    }
+
+    function onAccelChange() {
+      accelA = parseFloat(document.getElementById('rangeA').value);
+      accelB = parseFloat(document.getElementById('rangeB').value);
+
+      document.getElementById('sliderValA').innerText = `${accelA} m/s²`;
+      document.getElementById('sliderValB').innerText = `${accelB} m/s²`;
+      document.getElementById('cardAccelA').innerText = `a = ${accelA} m/s²`;
+      document.getElementById('cardAccelB').innerText = `a = ${accelB} m/s²`;
+
+      document.getElementById('endVA').innerText = `${(accelA * maxT).toFixed(1)} m/s`;
+      document.getElementById('endVB').innerText = `${(accelB * maxT).toFixed(1)} m/s`;
+
+      updateUI();
+    }
+
+    function togglePlay() {
+      const btn = document.getElementById('btnPlayPause');
+      if (!isPlaying) {
+        if (currentTime >= maxT) currentTime = 0;
+        isPlaying = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isPlaying = false;
+        btn.innerText = '▶ 繼續賽跑';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetPlay() {
+      isPlaying = false;
+      currentTime = 0;
+      document.getElementById('btnPlayPause').innerText = '▶ 開始賽跑';
+      document.getElementById('btnPlayPause').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onScrubTime() {
+      currentTime = parseFloat(document.getElementById('timeSlider').value);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isPlaying) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      currentTime += dt * 0.8; // slightly slowed for observation
+      if (currentTime >= maxT) {
+        currentTime = maxT;
+        togglePlay();
+      }
+      document.getElementById('timeSlider').value = currentTime;
+      updateUI();
+
+      if (isPlaying) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      document.getElementById('timeReadout').innerText = `t = ${currentTime.toFixed(2)} 秒 (全體 4.0 秒)`;
+      document.getElementById('trackTimeStatus').innerText = `時間：t = ${currentTime.toFixed(2)} 秒`;
+
+      const vA = accelA * currentTime;
+      const xA = 0.5 * accelA * currentTime * currentTime;
+      const vB = accelB * currentTime;
+      const xB = 0.5 * accelB * currentTime * currentTime;
+
+      document.getElementById('statVA').innerText = `${vA.toFixed(1)} m/s`;
+      document.getElementById('statXA').innerText = `${xA.toFixed(1)} m`;
+      document.getElementById('statVB').innerText = `${vB.toFixed(1)} m/s`;
+      document.getElementById('statXB').innerText = `${xB.toFixed(1)} m`;
+
+      drawTrack(xA, xB, vA, vB);
+      drawChart(vA, vB);
+    }
+
+    // Draw Track Viewport
+    function drawTrack(xA, xB, vA, vB) {
+      trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
+      const cw = trackCanvas.width;
+      const maxDistance = 0.5 * Math.max(accelA, accelB) * maxT * maxT * 1.1; // scale to max possible distance
+
+      const toPx = (m) => 60 + (m / maxDistance) * (cw - 140);
+
+      // Track Lanes
+      trackCtx.fillStyle = '#1e293b';
+      trackCtx.fillRect(40, 20, cw - 80, 50); // Lane A
+      trackCtx.fillRect(40, 90, cw - 80, 50); // Lane B
+
+      // Lane Divider & Lines
+      trackCtx.strokeStyle = '#64748b';
+      trackCtx.lineWidth = 1.5;
+      trackCtx.setLineDash([8, 8]);
+      trackCtx.beginPath(); trackCtx.moveTo(40, 45); trackCtx.lineTo(cw - 40, 45); trackCtx.stroke();
+      trackCtx.beginPath(); trackCtx.moveTo(40, 115); trackCtx.lineTo(cw - 40, 115); trackCtx.stroke();
+      trackCtx.setLineDash([]);
+
+      // Start Line (x = 0)
+      const startPx = toPx(0);
+      trackCtx.strokeStyle = '#ef4444';
+      trackCtx.lineWidth = 3;
+      trackCtx.beginPath(); trackCtx.moveTo(startPx, 15); trackCtx.lineTo(startPx, 145); trackCtx.stroke();
+      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.fillText('起點 0m', startPx - 18, 155);
+
+      // Cars
+      const pxA = toPx(xA);
+      trackCtx.font = '28px sans-serif';
+      trackCtx.fillText('🏎️', pxA - 15, 52);
+      trackCtx.fillStyle = '#60a5fa'; trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.fillText(`甲車 (${vA.toFixed(0)}m/s, ${xA.toFixed(0)}m)`, pxA - 20, 22);
+
+      const pxB = toPx(xB);
+      trackCtx.fillText('🏎️', pxB - 15, 122);
+      trackCtx.fillStyle = '#f87171';
+      trackCtx.fillText(`乙車 (${vB.toFixed(0)}m/s, ${xB.toFixed(0)}m)`, pxB - 20, 92);
+    }
+
+    // Draw v-t Chart
+    function drawChart(curVA, curVB) {
+      chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+      const ox = 60, oy = 290, w = 520, h = 240;
+      const maxYVal = Math.max(100, Math.ceil((Math.max(accelA, accelB) * maxT) / 20) * 20);
+
+      // Axes
+      chartCtx.beginPath();
+      chartCtx.moveTo(ox, oy - h);
+      chartCtx.lineTo(ox, oy);
+      chartCtx.lineTo(ox + w, oy);
+      chartCtx.strokeStyle = '#1e3a8a';
+      chartCtx.lineWidth = 2.5;
+      chartCtx.stroke();
+
+      // Labels
+      chartCtx.font = 'bold 12px Noto Sans TC';
+      chartCtx.fillStyle = '#1e3a8a';
+      chartCtx.textAlign = 'center';
+      chartCtx.fillText('時間 t (秒)', ox + w - 40, oy + 32);
+      chartCtx.fillText('速度 v (m/s)', ox - 35, oy - h - 10);
+
+      // X Ticks
+      for (let t = 0; t <= maxT; t += 1) {
+        const gx = ox + (t / maxT) * w;
+        chartCtx.beginPath(); chartCtx.moveTo(gx, oy); chartCtx.lineTo(gx, oy - h);
+        chartCtx.strokeStyle = '#f1f5f9'; chartCtx.stroke();
+        chartCtx.fillStyle = '#64748b'; chartCtx.font = '11px Outfit';
+        chartCtx.fillText(t, gx, oy + 16);
+      }
+
+      // Y Ticks
+      for (let v = 0; v <= maxYVal; v += 20) {
+        const gy = oy - (v / maxYVal) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, gy); chartCtx.lineTo(ox + w, gy);
+        chartCtx.strokeStyle = '#f1f5f9'; chartCtx.stroke();
+        chartCtx.fillStyle = '#64748b'; chartCtx.font = '11px Outfit'; chartCtx.textAlign = 'right';
+        chartCtx.fillText(v, ox - 8, gy + 4);
+      }
+
+      // Line A (Blue, High Accel)
+      const endAy = oy - ((accelA * maxT) / maxYVal) * h;
+      chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(ox + w, endAy);
+      chartCtx.strokeStyle = '#2563eb'; chartCtx.lineWidth = 3.5; chartCtx.stroke();
+      chartCtx.fillStyle = '#2563eb'; chartCtx.font = 'bold 13px Noto Sans TC'; chartCtx.textAlign = 'left';
+      chartCtx.fillText(`甲 (斜率 = ${accelA} m/s², 較陡)`, ox + w - 160, endAy - 8);
+
+      // Line B (Red, Low Accel)
+      const endBy = oy - ((accelB * maxT) / maxYVal) * h;
+      chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(ox + w, endBy);
+      chartCtx.strokeStyle = '#dc2626'; chartCtx.lineWidth = 3.5; chartCtx.stroke();
+      chartCtx.fillStyle = '#dc2626'; chartCtx.font = 'bold 13px Noto Sans TC';
+      chartCtx.fillText(`乙 (斜率 = ${accelB} m/s², 較平)`, ox + w - 160, endBy + 18);
+
+      // Time Scrubber Vertical Line
+      const scanX = ox + (currentTime / maxT) * w;
+      chartCtx.beginPath(); chartCtx.moveTo(scanX, oy); chartCtx.lineTo(scanX, oy - h);
+      chartCtx.strokeStyle = '#9333ea'; chartCtx.lineWidth = 1.5; chartCtx.setLineDash([4, 4]); chartCtx.stroke(); chartCtx.setLineDash([]);
+
+      // Current Dots on Lines
+      const dotAy = oy - (curVA / maxYVal) * h;
+      const dotBy = oy - (curVB / maxYVal) * h;
+
+      chartCtx.beginPath(); chartCtx.arc(scanX, dotAy, 6, 0, Math.PI * 2); chartCtx.fillStyle = '#2563eb'; chartCtx.fill();
+      chartCtx.beginPath(); chartCtx.arc(scanX, dotBy, 6, 0, Math.PI * 2); chartCtx.fillStyle = '#dc2626'; chartCtx.fill();
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 甲線較陡代表斜率（加速度 \( a \)）較大，在相同的時間內，甲的速度增加量 \( \Delta v \) 較大！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> \( v-t \) 圖直線越陡，代表垂直上升的高度（速度變化量）越大！';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong> 甲車每秒增加 \( 20\text{ m/s} \)，只要 \( 3\text{ 秒} \) 就能達到 \( 60\text{ m/s} \)；乙車每秒增加 \( 10\text{ m/s} \)，需要 \( 6\text{ 秒} \)！甲車花費時間較短！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 加速度大的車子提速更快，達到相同目標時速所花的時間一定比較短！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      onAccelChange();
+    });
+  </script>
+</body>
+</html>
