@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中理化 · 光學與波動聲學 17 大動態互動教具總覽 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 50%, #0d9488 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 3.5px solid var(--primary);
+      box-shadow: 8px 10px var(--primary);
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 850px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-tag {
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px rgba(0,0,0,0.2);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    /* Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.1rem;
+      border: 2.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 4px 4px var(--accent);
+    }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      border: 2.5px solid var(--primary);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-solid);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-top {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+    }
+
+    .tool-card.blue .card-top { background: #bae6fd; }
+    .tool-card.pink .card-top { background: #fbcfe8; }
+    .tool-card.mint .card-top { background: #bbf7d0; }
+    .tool-card.yellow .card-top { background: #fde68a; }
+    .tool-card.orange .card-top { background: #fed7aa; }
+    .tool-card.purple .card-top { background: #e0e7ff; }
+
+    .card-icon {
+      font-size: 2.2rem;
+    }
+
+    .card-badge {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-section {
+      color: #0284c7;
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .btn-play {
+      padding: 0.65rem 0.9rem;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-play:hover {
+      background: #2b4c77;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="optics-nav">
+    <a href="optics-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學與波動聲學 Hub</span>
+    </a>
+        <nav class="nav-links">
+      <a href="optics-hub.html" class="nav-link-btn" style="background:#ffd85c;">🌟 光學17大教具總覽</a>
+      <a href="color-filter-overlap-lab.html" class="nav-link-btn" style="background:#bbf7d0;">🟩 玻璃紙重疊濾光</a>
+      <a href="eye-camera-vision-lab.html" class="nav-link-btn" style="background:#cffafe;">👁️ 近視遠視與相機</a>
+      <a href="concert-hall-acoustics-lab.html" class="nav-link-btn" style="background:#fde68a;">🎭 歌劇院聲學設計</a>
+      <a href="periscope-submarine-lab.html" class="nav-link-btn" style="background:#bae6fd;">🚢 潛望鏡雙反射</a>
+      <a href="spoon-curved-mirror-lab.html" class="nav-link-btn" style="background:#e0e7ff;">🥄 湯匙凹凸面鏡</a>
+      <a href="sugar-refraction-curve-lab.html" class="nav-link-btn" style="background:#fed7aa;">🧪 糖水光線彎曲</a>
+      <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 介質波長色散</a>
+      <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="background:#a5f3fc;">👁️ 角膜塑型聚焦</a>
+      <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色紙網格吸光</a>
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div>
+        <span class="hero-tag">🌟 NATURELAB · OPTICS & ACOUSTICS INTERACTIVE HUB</span>
+        <h1 class="hero-title">國中理化 · 光學與波動聲學<br>17 大動態互動教具總覽</h1>
+        <p class="hero-desc">
+          將國中教育會考最核心的「光的反射與面鏡」、「光的折射與透鏡」、「色彩與濾光吸收」、「眼睛相機解剖」以及「音樂廳聲學設計」全部轉化為純 HTML5 Canvas 物理動態教具。拖曳光束、旋轉面鏡、切換介質，直觀掌握會考關鍵觀念！
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">17</div>
+          <div class="hero-stat-label">全端獨立教具</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">會考重點真題覆蓋</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">HTML5</div>
+          <div class="hero-stat-label">即時射線追蹤引擎</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">免安裝 · 即開即用</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCards('all', event)">
+        <span>🌟</span> 全部教具 (17)
+      </button>
+      <button class="filter-btn" onclick="filterCards('reflection', event)">
+        <span>🔍</span> 光的反射與面鏡 (5)
+      </button>
+      <button class="filter-btn" onclick="filterCards('refraction', event)">
+        <span>🌈</span> 光的折射與透鏡 (6)
+      </button>
+      <button class="filter-btn" onclick="filterCards('color', event)">
+        <span>🎨</span> 色光與物體顏色 (3)
+      </button>
+      <button class="filter-btn" onclick="filterCards('vision', event)">
+        <span>👁️</span> 眼睛照相機與生活 (2)
+      </button>
+      <button class="filter-btn" onclick="filterCards('sound', event)">
+        <span>🎭</span> 波動與聲學設計 (1)
+      </button>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid" id="toolsGrid">
+
+      <!-- Card 1 -->
+      <div class="tool-card mint" data-category="color">
+        <div class="card-top">
+          <span class="card-icon">🟩</span>
+          <span class="card-badge">第 55 頁重點</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 光的吸收與濾鏡</div>
+          <div class="card-title">多層彩色玻璃紙濾光 ✕ 重疊遮罩實驗室</div>
+          <div class="card-desc">模擬紅＋藍雙層濾光全黑吸收、綠光照射紅綠重疊區域（甲黑/乙黑/丙綠）、以及綠色濾鏡觀察盆栽（綠盆/黑花/綠葉）與國旗滿地黑。</div>
+          <div class="card-actions">
+            <a href="color-filter-overlap-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="tool-card blue" data-category="vision">
+        <div class="card-top">
+          <span class="card-icon">👁️</span>
+          <span class="card-badge">第 53 頁重點</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 眼睛成像與視力矯正</div>
+          <div class="card-title">近視遠視眼球矯正 ✕ 眼睛 vs 相機實驗室</div>
+          <div class="card-desc">眼球剖面射線追蹤：正常眼聚焦視網膜、近視眼戴凹透鏡發散矯正、遠視眼戴凸透鏡會聚矯正，並 1:1 對照照相機倒立縮小實像。</div>
+          <div class="card-actions">
+            <a href="eye-camera-vision-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="tool-card yellow" data-category="sound">
+        <div class="card-top">
+          <span class="card-icon">🎭</span>
+          <span class="card-badge">第 63 頁題組</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 3 · 聲音傳播與反射</div>
+          <div class="card-title">國家音樂廳聲學設計 ✕ 反射板 vs 吸音地毯</div>
+          <div class="card-desc">音樂廳四周木質反射板（強烈反射）vs 布幔地毯（吸音衰減），並展示女高音與管絃樂團在同一空氣介質中「波速完全相同」之競速測試。</div>
+          <div class="card-actions">
+            <a href="concert-hall-acoustics-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="tool-card blue" data-category="reflection">
+        <div class="card-top">
+          <span class="card-icon">🚢</span>
+          <span class="card-badge">第 62 頁第 2 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 平面鏡反射</div>
+          <div class="card-title">海鯤號潛望鏡 ✕ 雙 45° 平面鏡光路實驗室</div>
+          <div class="card-desc">解剖海鯤號潛艦潛望鏡：水面軍艦光線撞擊鏡 A 向下轉 90°（D 路徑）、撞擊鏡 B 向前進入眼睛，呈現正立等大影像。</div>
+          <div class="card-actions">
+            <a href="periscope-submarine-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="tool-card purple" data-category="reflection">
+        <div class="card-top">
+          <span class="card-icon">🥄</span>
+          <span class="card-badge">第 62 頁第 1 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 面鏡成像</div>
+          <div class="card-title">光亮湯匙面鏡 ✕ 凹面聚光 vs 凸面廣角探索</div>
+          <div class="card-desc">金屬湯匙 3D 翻轉：甲面盛湯凹面鏡（像忽大忽小、忽正忽倒）、乙面背面凸面鏡（永遠正立縮小虛像），直觀破解會考題。</div>
+          <div class="card-actions">
+            <a href="spoon-curved-mirror-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="tool-card orange" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">🧪</span>
+          <span class="card-badge">第 61 頁題組</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 連續折射與梯度</div>
+          <div class="card-title">糖水濃度梯度 ✕ 雷射光奇幻彎曲實驗室</div>
+          <div class="card-desc">非均勻糖水濃度梯度射線追蹤（GRIN Raytracer）：雷射光由快入慢向下彎曲拋物線光路，一鍵對比均勻溶液（直線傳播）。</div>
+          <div class="card-actions">
+            <a href="sugar-refraction-curve-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="tool-card orange" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">🌈</span>
+          <span class="card-badge">第 60 頁 13/17 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 折射波長與色散</div>
+          <div class="card-title">三層介質折射波長 ✕ 三稜鏡色散實驗室</div>
+          <div class="card-desc">三層介質平行界面波前波動動畫（折射角越大波速越快波長越長）＋ 三稜鏡日光色散光譜儀（紅光偏折最小光速最快、紫光偏折最大）。</div>
+          <div class="card-actions">
+            <a href="dispersion-refraction-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="tool-card blue" data-category="vision">
+        <div class="card-top">
+          <span class="card-icon">👁️</span>
+          <span class="card-badge">第 60 頁第 16 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 視力矯正素養</div>
+          <div class="card-title">角膜塑型片與近視眼聚焦光學實驗室</div>
+          <div class="card-desc">眼球剖面射線追蹤：甲/乙/丙角膜形狀切換，驗證丙中央變薄壓平具有「凹透鏡」發散效果，焦點後移至視網膜以矯正近視。</div>
+          <div class="card-actions">
+            <a href="orthok-eye-optics-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="tool-card pink" data-category="color">
+        <div class="card-top">
+          <span class="card-icon">🎨</span>
+          <span class="card-badge">第 60 頁第 18 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 色紙網格吸光</div>
+          <div class="card-title">色光照射 ✕ 色紙網格吸光計算盤</div>
+          <div class="card-desc">8×8 色紙網格紅/綠/藍/白光照射即時吸光計算黑色面積（40 cm²）、支援自訂塗鴉畫筆與自訂題目網格顏色。</div>
+          <div class="card-actions">
+            <a href="color-grid-absorb-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="tool-card mint" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">💧</span>
+          <span class="card-badge">第 59 頁第 12 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 凹透鏡二次折射</div>
+          <div class="card-title">凹透鏡發散 ✕ 水位折射光斑實驗室</div>
+          <div class="card-desc">凹透鏡發散光束＋容器注水水位二次折射：光線由空氣入水偏向法線向內偏折，直觀驗證光斑直徑滿足 3 < X < 10 cm。</div>
+          <div class="card-actions">
+            <a href="concave-water-refraction-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="tool-card blue" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">🌊</span>
+          <span class="card-badge">第 59 頁第 6 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 視深與視高折射</div>
+          <div class="card-title">鳥看魚 vs 魚看鳥 視深視高折射實驗室</div>
+          <div class="card-desc">斯乃爾定律雙向折射追蹤：空氣中水鳥看水裡魚（視深變淺 < 1m）、水中魚看天上水鳥（視高變高 > 2m）。</div>
+          <div class="card-actions">
+            <a href="apparent-depth-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="tool-card yellow" data-category="reflection">
+        <div class="card-top">
+          <span class="card-icon">🕳️</span>
+          <span class="card-badge">第 58 頁第 1 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 光的直線傳播</div>
+          <div class="card-title">針孔成像動態光路實驗室</div>
+          <div class="card-desc">暗室針孔光線交叉追蹤：LED 象限圖案上下顛倒左右相反（右上黑色）、相似三角形物距與紙屏距離放大倍率 m=q/p 計算。</div>
+          <div class="card-actions">
+            <a href="pinhole-imaging-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 13 -->
+      <div class="tool-card orange" data-category="reflection">
+        <div class="card-top">
+          <span class="card-icon">🏰</span>
+          <span class="card-badge">第 58 頁第 2 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 平面鏡視角與虛像</div>
+          <div class="card-title">平面鏡視角與障礙遮擋解謎實驗室</div>
+          <div class="card-desc">俯視網格地圖、Raycasting 視線追蹤、對稱虛像法與石柱障礙物遮擋，直觀驗證只能看到 A、B 兩物體的幾何光學。</div>
+          <div class="card-actions">
+            <a href="mirror-sightline-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 14 -->
+      <div class="tool-card pink" data-category="color">
+        <div class="card-top">
+          <span class="card-icon">🎨</span>
+          <span class="card-badge">110 & 114 會考</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 色光照射與物體顏色</div>
+          <div class="card-title">色光照射與物體顏色判色實驗室</div>
+          <div class="card-desc">聚光燈濾鏡照射圖卡、紅/綠/藍色光照射三顆神秘小球原色推論台，涵蓋 110 會考第 9 題與 114 會考第 14 題。</div>
+          <div class="card-actions">
+            <a href="color-perception-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 15 -->
+      <div class="tool-card orange" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">🌈</span>
+          <span class="card-badge">100 會考第 17 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 雷射反射與顏色</div>
+          <div class="card-title">三色雷射反射與彩色牆面吸光實驗室</div>
+          <div class="card-desc">紅/綠/藍三色雷射平面鏡反射光路、白/藍/紅彩色牆面吸光/反光物理引擎，模擬僅有綠光反射至白牆被看見的物理過程。</div>
+          <div class="card-actions">
+            <a href="color-reflection-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 16 -->
+      <div class="tool-card mint" data-category="reflection">
+        <div class="card-top">
+          <span class="card-icon">📐</span>
+          <span class="card-badge">110 會考補考</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 反射定律幾何</div>
+          <div class="card-title">雷射光反射角度動態量角器</div>
+          <div class="card-desc">半圓形量角器、旋轉雷射筆入射角反射角對稱追蹤，即時互餘幾何計算 X + θ = 90°，破解 110 會考補考第 9 題。</div>
+          <div class="card-actions">
+            <a href="reflection-angle-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 17 -->
+      <div class="tool-card blue" data-category="refraction">
+        <div class="card-top">
+          <span class="card-icon">🔍</span>
+          <span class="card-badge">113 會考第 36 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 4 · 凸透鏡焦距</div>
+          <div class="card-title">凸透鏡光路與焦距探索實驗室</div>
+          <div class="card-desc">即時凸透鏡光學射線追蹤（Ray Tracing）、拖曳點光源 P、凸/凹透鏡切換、焦距 f=20cm 計算與折射光路演示。</div>
+          <div class="card-actions">
+            <a href="lens-focal-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 光學與波動聲學 17 大動態互動教具總覽 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    function filterCards(category, evt) {
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+
+      const cards = document.querySelectorAll('.tool-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
