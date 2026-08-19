@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>針孔成像動態光路實驗室 | 第58頁第1題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #fde047;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background: #0f172a;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas#pinholeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: ew-resize;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #ffd85c;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffd85c;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-val {
+      font-family: 'JetBrains Mono', monospace;
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    input[type="range"].custom-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .btn-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      margin-top: 0.3rem;
+    }
+
+    /* Status Display */
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #fef08a;
+      border: 2px dashed #ca8a04;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #854d0e;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #eab308;
+      color: #000;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-svg-box {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-desc {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#bae6fd;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>針孔成像動態光路實驗室（第58頁第1題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🕳️</span> 針孔幾何光線交叉與屏風投影模擬器
+          </div>
+          <span style="font-size:0.75rem; font-weight:900; background:#fff; padding:0.2rem 0.6rem; border-radius:99px; border:1.5px solid var(--primary);">
+            光的直進性
+          </span>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="pinholeCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：在畫布左側可拖曳「發光LED物距 p」，右側可拖曳「屏風像距 q」！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵定位：</span>
+          <button class="preset-btn active" onclick="applyPreset('p_less_q')">🔥 第58頁第1題 (p &lt; q · 屏風遠離放大像)</button>
+          <button class="preset-btn" onclick="applyPreset('p_equal_q')">📐 物距等於像距 (p = q · 等大像)</button>
+          <button class="preset-btn" onclick="applyPreset('p_greater_q')">🔍 物距大於像距 (p &gt; q · 縮小像)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Control Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 實驗距離與圖案控制
+          </div>
+
+          <!-- 物距 p -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>物距 p (發光體距小孔)</span>
+              <span class="control-val" id="dispP">12.0 cm</span>
+            </div>
+            <input type="range" class="custom-slider" id="sliderP" min="6" max="30" step="0.5" value="12">
+          </div>
+
+          <!-- 像距 q -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>像距 q (屏風距小孔)</span>
+              <span class="control-val" id="dispQ">24.0 cm</span>
+            </div>
+            <input type="range" class="custom-slider" id="sliderQ" min="6" max="30" step="0.5" value="24">
+          </div>
+
+          <!-- 圖案選擇 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>發光物體圖案</span>
+            </div>
+            <div class="btn-grid-2">
+              <button class="preset-btn active" id="btnPatLED" onclick="setPattern('led')">💽 LED 象限圓盤</button>
+              <button class="preset-btn" id="btnPatCandle" onclick="setPattern('candle')">🕯️ 燃燒蠟燭</button>
+              <button class="preset-btn" id="btnPatF" onclick="setPattern('letterF')">🔤 字母 F</button>
+              <button class="preset-btn" id="btnPatArrow" onclick="setPattern('arrow')">⬆️ 向上箭頭</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 成像比例數據
+          </div>
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">放大率 m = q / p</div>
+              <div class="status-item-val" id="dispMag">2.00x</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">成像性質</div>
+              <div class="status-item-val" id="dispProp" style="font-size:0.95rem; color:#ca8a04;">倒立 放大 實像</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            ⚡ <strong>【物距 p &lt; 像距 q】</strong>：<br>
+            光線直線交叉，像被<strong>放大 (2.0x)</strong>，且<strong>上下顛倒、左右相反</strong>（左下黑變成右上黑）！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 58 頁 重點 1 第 1 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：屏風遠離針孔使 p &lt; q，站在屏風前所看的像為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#854d0e; background:#fef9c3; border:1.5px solid #eab308; padding:0.3rem 0.7rem; border-radius:99px;">
+          針孔成像 ✕ 上下顛倒左右相反 ✕ 放大實像
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：右圖為暗室中「針孔成像」的示意圖，在 A 點的觀察者將一根蠟燭點燃後，置於針孔前方 $p\text{ cm}$ 處，屏風在針孔後方 $q\text{ cm}$ 處，且 $p = q$。若將蠟燭換成發光的 LED 燈（LED 燈本身的圖案為左下角黑色、其餘白色），並將屏風遠離針孔，使得 $p < q$，站在屏風前所看的像為下列何者？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ1('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-svg-box">
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="22" fill="#fff" stroke="#203a5b" stroke-width="2"/>
+              <line x1="8" y1="30" x2="52" y2="30" stroke="#203a5b" stroke-width="1.5"/>
+              <line x1="30" y1="8" x2="30" y2="52" stroke="#203a5b" stroke-width="1.5"/>
+              <!-- Bottom-Left black (Small) -->
+              <path d="M 30,30 L 8,30 A 22,22 0 0,0 30,52 Z" fill="#203a5b"/>
+            </svg>
+          </div>
+          <div class="option-desc">縮小 · 左下黑</div>
+        </div>
+
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ1('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-svg-box">
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="22" fill="#fff" stroke="#203a5b" stroke-width="2"/>
+              <line x1="8" y1="30" x2="52" y2="30" stroke="#203a5b" stroke-width="1.5"/>
+              <line x1="30" y1="8" x2="30" y2="52" stroke="#203a5b" stroke-width="1.5"/>
+              <!-- Top-Right black (Small) -->
+              <path d="M 30,30 L 52,30 A 22,22 0 0,0 30,8 Z" fill="#203a5b"/>
+            </svg>
+          </div>
+          <div class="option-desc">縮小 · 右上黑</div>
+        </div>
+
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ1('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-svg-box">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle cx="35" cy="35" r="28" fill="#fff" stroke="#203a5b" stroke-width="2"/>
+              <line x1="7" y1="35" x2="63" y2="35" stroke="#203a5b" stroke-width="1.5"/>
+              <line x1="35" y1="7" x2="35" y2="63" stroke="#203a5b" stroke-width="1.5"/>
+              <!-- Bottom-Left black (Large) -->
+              <path d="M 35,35 L 7,35 A 28,28 0 0,0 35,63 Z" fill="#203a5b"/>
+            </svg>
+          </div>
+          <div class="option-desc">放大 · 左下黑</div>
+        </div>
+
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ1('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-svg-box">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle cx="35" cy="35" r="28" fill="#fff" stroke="#203a5b" stroke-width="2"/>
+              <line x1="7" y1="35" x2="63" y2="35" stroke="#203a5b" stroke-width="1.5"/>
+              <line x1="35" y1="7" x2="35" y2="63" stroke="#203a5b" stroke-width="1.5"/>
+              <!-- Top-Right black (Large) -->
+              <path d="M 35,35 L 63,35 A 28,28 0 0,0 35,7 Z" fill="#203a5b"/>
+            </svg>
+          </div>
+          <div class="option-desc">放大 · 右上黑 (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ1">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ1">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ1"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 光學傳播與針孔成像教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let pDist = 12; // cm
+    let qDist = 24; // cm
+    let patternType = 'led'; // 'led' | 'candle' | 'letterF' | 'arrow'
+    let objectHeight = 50;   // px (half height 25)
+
+    const canvas = document.getElementById('pinholeCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const sliderP = document.getElementById('sliderP');
+    const sliderQ = document.getElementById('sliderQ');
+    const dispP = document.getElementById('dispP');
+    const dispQ = document.getElementById('dispQ');
+    const dispMag = document.getElementById('dispMag');
+    const dispProp = document.getElementById('dispProp');
+    const natureBanner = document.getElementById('natureBanner');
+
+    let isDraggingP = false;
+    let isDraggingQ = false;
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2;
+      const scale = 11; // 1cm = 11px
+
+      // Pinhole Wall at cx
+      const pinholeX = cx;
+      const pinholeY = cy;
+      const pinholeSize = 6;
+
+      // 1. Draw Pinhole Barrier Wall (Vertical dark blue bar with gap in center)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(pinholeX - 6, 20, 12, pinholeY - pinholeSize / 2 - 20);
+      ctx.fillRect(pinholeX - 6, pinholeY + pinholeSize / 2, 12, h - pinholeY - pinholeSize / 2 - 20);
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(pinholeX - 6, 20, 12, pinholeY - pinholeSize / 2 - 20);
+      ctx.strokeRect(pinholeX - 6, pinholeY + pinholeSize / 2, 12, h - pinholeY - pinholeSize / 2 - 20);
+
+      // Pinhole label
+      ctx.fillStyle = '#ffd85c';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('針孔 (Pinhole)', pinholeX, 15);
+
+      // 2. Calculate Positions of Object and Screen
+      const objX = pinholeX - pDist * scale;
+      const screenX = pinholeX + qDist * scale;
+
+      const mag = qDist / pDist;
+      const imgHeight = objectHeight * mag;
+
+      // 3. Draw Optical Axis (Dashed centerline)
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(30, cy);
+      ctx.lineTo(w - 30, cy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 4. Draw Crossed Light Rays (Top & Bottom points of object)
+      const objTopY = cy - objectHeight / 2;
+      const objBotY = cy + objectHeight / 2;
+      const imgTopY = cy + imgHeight / 2; // Inverted! Top goes to bottom
+      const imgBotY = cy - imgHeight / 2; // Bottom goes to top
+
+      // Ray 1: Top of Object -> Pinhole -> Bottom of Screen (Red)
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = '#f87171';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(objX, objTopY);
+      ctx.lineTo(pinholeX, pinholeY);
+      ctx.lineTo(screenX, imgTopY);
+      ctx.stroke();
+
+      // Ray 2: Bottom of Object -> Pinhole -> Top of Screen (Cyan)
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = '#60a5fa';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(objX, objBotY);
+      ctx.lineTo(pinholeX, pinholeY);
+      ctx.lineTo(screenX, imgBotY);
+      ctx.stroke();
+
+      // Ray 3: Center Ray (Yellow)
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(objX, cy);
+      ctx.lineTo(screenX, cy);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // 5. Draw Screen (White vertical bar on right)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.fillRect(screenX - 4, 30, 8, h - 60);
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(screenX - 4, 30, 8, h - 60);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.fillText(`屏風 (q = ${qDist.toFixed(1)} cm)`, screenX, h - 12);
+
+      // 6. Draw Object Pattern at objX and Inverted Pattern on Screen at screenX
+      drawObjectPattern(objX, cy, objectHeight, false);
+      drawObjectPattern(screenX, cy, imgHeight, true);
+
+      // 7. Distance Labels
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px JetBrains Mono, monospace';
+      ctx.fillText(`物距 p = ${pDist.toFixed(1)} cm`, (objX + pinholeX) / 2, cy + 85);
+
+      ctx.fillStyle = '#facc15';
+      ctx.fillText(`像距 q = ${qDist.toFixed(1)} cm`, (pinholeX + screenX) / 2, cy + 85);
+
+      updateDisplays();
+    }
+
+    function drawObjectPattern(x, y, size, isInverted) {
+      ctx.save();
+      ctx.translate(x, y);
+
+      const r = size / 2;
+
+      if (patternType === 'led') {
+        // LED Quadrants Disk (Book Question)
+        // Original: Bottom-Left quadrant is BLACK, rest are WHITE
+        // Inverted: Top-Right quadrant is BLACK, rest are WHITE
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#203a5b';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Cross lines
+        ctx.beginPath();
+        ctx.moveTo(-r, 0); ctx.lineTo(r, 0);
+        ctx.moveTo(0, -r); ctx.lineTo(0, r);
+        ctx.stroke();
+
+        // Black Quadrant
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        if (!isInverted) {
+          // Bottom-Left (PI/2 to PI)
+          ctx.arc(0, 0, r, Math.PI / 2, Math.PI);
+        } else {
+          // Top-Right (-PI/2 to 0) -> Up-Down + Left-Right Inverted!
+          ctx.arc(0, 0, r, -Math.PI / 2, 0);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        // Label
+        ctx.fillStyle = '#ffd85c';
+        ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(isInverted ? '倒立放大實像 (右上黑)' : '發光LED燈 (左下黑)', 0, -r - 10);
+
+      } else if (patternType === 'candle') {
+        // Candle
+        if (!isInverted) {
+          // Normal upright candle
+          ctx.fillStyle = '#ef4444';
+          ctx.fillRect(-6, 0, 12, r); // Body
+          ctx.fillStyle = '#f97316';
+          ctx.beginPath();
+          ctx.ellipse(0, -10, 5, 12, 0, 0, Math.PI * 2); // Flame
+          ctx.fill();
+        } else {
+          // Inverted candle
+          ctx.fillStyle = '#ef4444';
+          ctx.fillRect(-6, -r, 12, r);
+          ctx.fillStyle = '#f97316';
+          ctx.beginPath();
+          ctx.ellipse(0, 10, 5, 12, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else if (patternType === 'letterF') {
+        // Letter F
+        ctx.font = `900 ${size}px Outfit, sans-serif`;
+        ctx.fillStyle = isInverted ? '#4ade80' : '#f87171';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        if (isInverted) {
+          ctx.scale(-1, -1); // 180 deg rotation
+        }
+        ctx.fillText('F', 0, 0);
+      } else if (patternType === 'arrow') {
+        // Up/Down Arrow
+        ctx.strokeStyle = isInverted ? '#38bdf8' : '#f87171';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        if (!isInverted) {
+          ctx.moveTo(0, r); ctx.lineTo(0, -r);
+          ctx.lineTo(-8, -r + 12);
+          ctx.moveTo(0, -r); ctx.lineTo(8, -r + 12);
+        } else {
+          ctx.moveTo(0, -r); ctx.lineTo(0, r);
+          ctx.lineTo(-8, r - 12);
+          ctx.moveTo(0, r); ctx.lineTo(8, r - 12);
+        }
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function updateDisplays() {
+      dispP.textContent = `${pDist.toFixed(1)} cm`;
+      dispQ.textContent = `${qDist.toFixed(1)} cm`;
+      const mag = (qDist / pDist).toFixed(2);
+      dispMag.textContent = `${mag}x`;
+
+      let prop = '';
+      if (Math.abs(pDist - qDist) < 0.2) {
+        prop = '倒立 等大 實像';
+        dispProp.textContent = prop;
+        dispProp.style.color = '#15803d';
+        natureBanner.innerHTML = `📐 <strong>【物距 p = 像距 q】</strong>：屏風上形成<strong>等大實像 (1.00x)</strong>，上下顛倒、左右相反。`;
+      } else if (pDist < qDist) {
+        prop = '倒立 放大 實像';
+        dispProp.textContent = prop;
+        dispProp.style.color = '#ca8a04';
+        natureBanner.innerHTML = `⚡ <strong>【物距 p &lt; 像距 q (第1題情境)】</strong>：屏風遠離使像距變大，形成<strong>放大實像 (${mag}x)</strong>，且<strong>上下顛倒、左右相反</strong>（左下黑 ➔ <strong>右上黑</strong>）！`;
+      } else {
+        prop = '倒立 縮小 實像';
+        dispProp.textContent = prop;
+        dispProp.style.color = '#2563eb';
+        natureBanner.innerHTML = `🔍 <strong>【物距 p &gt; 像距 q】</strong>：形成<strong>縮小實像 (${mag}x)</strong>，上下顛倒、左右相反。`;
+      }
+    }
+
+    // Sliders
+    sliderP.addEventListener('input', (e) => {
+      pDist = parseFloat(e.target.value);
+      draw();
+    });
+
+    sliderQ.addEventListener('input', (e) => {
+      qDist = parseFloat(e.target.value);
+      draw();
+    });
+
+    // Canvas Dragging
+    function handlePointer(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const x = clientX - rect.left;
+      const cx = container.clientWidth / 2;
+      const scale = 11;
+
+      if (x < cx - 40) {
+        // Drag Object
+        let p = (cx - x) / scale;
+        if (p < 6) p = 6;
+        if (p > 30) p = 30;
+        pDist = p;
+        sliderP.value = p;
+        draw();
+      } else if (x > cx + 40) {
+        // Drag Screen
+        let q = (x - cx) / scale;
+        if (q < 6) q = 6;
+        if (q > 30) q = 30;
+        qDist = q;
+        sliderQ.value = q;
+        draw();
+      }
+    }
+
+    container.addEventListener('mousedown', () => isDraggingP = true);
+    window.addEventListener('mousemove', (e) => { if (isDraggingP) handlePointer(e); });
+    window.addEventListener('mouseup', () => isDraggingP = false);
+
+    container.addEventListener('touchstart', (e) => { isDraggingP = true; handlePointer(e); }, { passive: false });
+    window.addEventListener('touchmove', (e) => { if (isDraggingP) handlePointer(e); }, { passive: false });
+    window.addEventListener('touchend', () => isDraggingP = false);
+
+    window.applyPreset = function(type) {
+      document.querySelectorAll('.preset-bar .preset-btn').forEach(b => b.classList.remove('active'));
+      if (type === 'p_less_q') {
+        pDist = 10;
+        qDist = 22;
+      } else if (type === 'p_equal_q') {
+        pDist = 16;
+        qDist = 16;
+      } else if (type === 'p_greater_q') {
+        pDist = 24;
+        qDist = 10;
+      }
+      sliderP.value = pDist;
+      sliderQ.value = qDist;
+      event.target.classList.add('active');
+      draw();
+    };
+
+    window.setPattern = function(p) {
+      patternType = p;
+      ['btnPatLED', 'btnPatCandle', 'btnPatF', 'btnPatArrow'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      if (p === 'led') document.getElementById('btnPatLED').classList.add('active');
+      if (p === 'candle') document.getElementById('btnPatCandle').classList.add('active');
+      if (p === 'letterF') document.getElementById('btnPatF').classList.add('active');
+      if (p === 'arrow') document.getElementById('btnPatArrow').classList.add('active');
+      draw();
+    };
+
+    // Exam Handler
+    window.testExamQ1 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ1');
+      const expTitle = document.getElementById('expTitleQ1');
+      const expContent = document.getElementById('expContentQ1');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 放大 · 右上黑】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【針孔成像兩大核心考點拆解】</strong><br>
+          1. <strong>光的直進性（上下顛倒、左右相反）</strong>：<br>
+             - 發光 LED 燈原圖案為「<strong>左下象限黑色</strong>」。<br>
+             - 光線通過針孔直線交叉後，左側光線到右側、下方光線到上方，因此在屏風上必呈現「<strong>右上象限黑色</strong>」！<br>
+          2. <strong>相似三角形幾何比例（像的大小）</strong>：<br>
+             - 題目明確指出「屏風遠離針孔，使得 $\\mathbf{p < q}$（物距小於像距）」。<br>
+             - 放大倍率 $m = \\frac{q}{p} > 1$，因此屏風上的像必定比原本的 LED 燈<strong>「放大」</strong>！<br>
+          3. 綜合以上兩點，所看見的像為<strong>【放大、右上黑】（選項 D）</strong>！
+        `;
+        applyPreset('p_less_q');
+        setPattern('led');
+      } else if (opt === 'A' || opt === 'C') {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【方向未顛倒錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `針孔成像具有「上下顛倒、左右相反」的特性，左下角黑色通過小孔後必然翻轉為「右上角黑色」，不可能仍為左下黑。`;
+      } else if (opt === 'B') {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【大小比例判斷錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `題目說明「屏風遠離針孔，使得 $p < q$（物距小於像距）」，依相似三角形原理，此時像的尺寸必定「放大」，而非縮小。`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>
