@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>近視與遠視眼球光學矯正 ✕ 眼睛 vs 照相機實驗室 | 第53頁重點互動解密 | NatureLab</title>
+  <title>多層彩色玻璃紙濾光 ✕ 重疊遮罩與盆栽濾鏡實驗室 | 第55頁重點互動解密 | NatureLab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
@@ -165,7 +165,7 @@
 
     .panel-header {
       padding: 1rem 1.25rem;
-      background: #cffafe;
+      background: #bbf7d0;
       border-bottom: 2.5px solid var(--primary);
       display: flex;
       justify-content: space-between;
@@ -183,7 +183,7 @@
       gap: 0.5rem;
     }
 
-    .eye-mode-tabs {
+    .mode-tabs {
       display: flex;
       gap: 0.4rem;
       background: #ffffff;
@@ -192,7 +192,7 @@
       border: 2px solid var(--primary);
     }
 
-    .eye-tab {
+    .mode-tab {
       padding: 0.25rem 0.65rem;
       border-radius: 99px;
       border: 1.5px solid transparent;
@@ -204,7 +204,7 @@
       transition: all 0.15s;
     }
 
-    .eye-tab.active {
+    .mode-tab.active {
       background: var(--primary);
       color: #ffffff;
     }
@@ -221,7 +221,7 @@
       overflow: hidden;
     }
 
-    canvas#eyeCanvas {
+    canvas#filterCanvas {
       width: 100%;
       height: 100%;
       display: block;
@@ -232,12 +232,12 @@
       bottom: 10px;
       left: 15px;
       background: rgba(15, 23, 42, 0.85);
-      border: 1.5px solid #38bdf8;
+      border: 1.5px solid #10b981;
       border-radius: var(--radius-sm);
       padding: 0.3rem 0.7rem;
       font-size: 0.75rem;
       font-weight: 700;
-      color: #38bdf8;
+      color: #34d399;
       pointer-events: none;
     }
 
@@ -308,28 +308,30 @@
       padding-bottom: 0.4rem;
     }
 
-    /* Vision HUD Box */
-    .vision-hud-box {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      border: 4px solid var(--primary);
-      background: #0284c7;
+    /* Plant HUD Box */
+    .plant-hud-box {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-md);
+      border: 3px solid var(--primary);
+      background: #f8fafc;
       margin: 0.3rem auto 0.6rem;
       position: relative;
       overflow: hidden;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.15);
     }
 
-    .vision-target {
-      font-size: 3.2rem;
-      transition: filter 0.3s ease;
+    .plant-item-row {
+      font-size: 1.8rem;
+      line-height: 1.1;
+      transition: filter 0.3s;
     }
 
-    .toggle-glass-btn {
+    .toggle-filter-btn {
       width: 100%;
       padding: 0.6rem;
       border-radius: var(--radius-sm);
@@ -337,13 +339,13 @@
       font-weight: 900;
       font-size: 0.85rem;
       cursor: pointer;
-      background: #ffd85c;
+      background: #86efac;
       color: var(--primary);
       box-shadow: 2px 2px var(--primary);
       transition: all 0.15s;
     }
 
-    .toggle-glass-btn:hover {
+    .toggle-filter-btn:hover {
       transform: translateY(-2px);
       box-shadow: 3px 3px var(--primary);
     }
@@ -377,32 +379,14 @@
 
     .nature-banner {
       margin-top: 0.8rem;
-      background: #e0f2fe;
-      border: 2px dashed #0284c7;
+      background: #dcfce7;
+      border: 2px dashed #16a34a;
       border-radius: var(--radius-sm);
       padding: 0.75rem;
       font-size: 0.85rem;
       font-weight: 700;
-      color: #0369a1;
+      color: #15803d;
       text-align: center;
-    }
-
-    /* Comparison Table Card */
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 0.4rem;
-    }
-    .compare-table th, .compare-table td {
-      border: 1.5px solid var(--primary);
-      padding: 0.35rem 0.4rem;
-      text-align: center;
-      font-weight: 700;
-    }
-    .compare-table th {
-      background: #e2e8f0;
-      font-weight: 900;
     }
 
     /* Exam Section */
@@ -427,7 +411,7 @@
     }
 
     .exam-title-badge {
-      background: #0284c7;
+      background: #16a34a;
       color: #ffffff;
       padding: 0.3rem 0.8rem;
       border-radius: 99px;
@@ -532,9 +516,9 @@
   <header class="optics-nav">
     <a href="review-hub.html" class="nav-brand">
       <span>🔬 NatureLab</span>
-      <span class="nav-badge">光學與眼球實驗室</span>
+      <span class="nav-badge">光學實驗室</span>
     </a>
-            <nav class="nav-links">
+        <nav class="nav-links">
       <a href="color-filter-overlap-lab.html" class="nav-link-btn" style="background:#bbf7d0;">🟩 玻璃紙重疊濾光</a>
       <a href="eye-camera-vision-lab.html" class="nav-link-btn" style="background:#cffafe;">👁️ 近視遠視與相機</a>
       <a href="concert-hall-acoustics-lab.html" class="nav-link-btn" style="background:#fde68a;">🎭 歌劇院聲學設計</a>
@@ -564,7 +548,7 @@
       <span>›</span>
       <a href="review-hub.html">九年級理化複習</a>
       <span>›</span>
-      <span>近視與遠視眼球光學矯正 ✕ 眼睛 vs 照相機實驗室（第53頁重點）</span>
+      <span>多層彩色玻璃紙濾光 ✕ 重疊遮罩與盆栽濾鏡實驗室（第55頁重點）</span>
     </div>
 
     <!-- Main Lab Layout -->
@@ -573,102 +557,72 @@
       <div class="canvas-panel">
         <div class="panel-header">
           <div class="panel-title">
-            <span id="headerIcon">👁️</span> <span id="headerTitle">眼球剖面射線追蹤與鏡片矯正模擬器</span>
+            <span>🟩</span> 多層玻璃紙濾光與物體顏色模擬器
           </div>
-          <div class="eye-mode-tabs">
-            <button class="eye-tab active" id="tabModeNormal" onclick="setEyeMode('normal')">👁️ 正常眼</button>
-            <button class="eye-tab" id="tabModeMyopia" onclick="setEyeMode('myopia')">👓 近視眼</button>
-            <button class="eye-tab" id="tabModeHyperopia" onclick="setEyeMode('hyperopia')">🔍 遠視眼</button>
-            <button class="eye-tab" id="tabModeCamera" onclick="setEyeMode('camera')">📷 照相機對照</button>
+          <div class="mode-tabs">
+            <button class="mode-tab active" id="tabModeDouble" onclick="setLabMode('double')">🔦 題 1: 紅+藍雙層</button>
+            <button class="mode-tab" id="tabModeOverlap" onclick="setLabMode('overlap')">🟩 題 2: 綠光照紅綠重疊</button>
+            <button class="mode-tab" id="tabModePlant" onclick="setLabMode('plant')">🌿 題 3: 綠濾鏡看盆栽</button>
           </div>
         </div>
 
         <div class="interactive-canvas-container" id="canvasContainer">
-          <canvas id="eyeCanvas"></canvas>
+          <canvas id="filterCanvas"></canvas>
           <div class="canvas-hint-overlay" id="canvasHint">
-            💡 提示：近視眼光線在視網膜前聚焦；點擊右側按鈕戴上凹透鏡矯正！
+            💡 提示：透明體只透過同色光（吸收其他色光）；紅＋藍重疊時無光線通過！
           </div>
         </div>
 
         <!-- Presets -->
         <div class="preset-bar">
           <span class="preset-label">🎯 一鍵情境：</span>
-          <button class="preset-btn active" onclick="setEyeMode('myopia')">👓 近視眼 (物距無限遠 ➔ 聚焦視網膜前)</button>
-          <button class="preset-btn" onclick="setEyeMode('hyperopia')">🔍 遠視眼 (近處物體 ➔ 聚焦視網膜後)</button>
-          <button class="preset-btn" onclick="setEyeMode('camera')">📷 照相機成像 (p > 2f ➔ 倒立縮小實像)</button>
+          <button class="preset-btn active" onclick="setLabMode('double')">🔦 第 1 題：白光 ➔ 紅玻璃紙 ➔ 藍玻璃紙 (白紙呈黑色)</button>
+          <button class="preset-btn" onclick="setLabMode('overlap')">🟩 第 2 題：綠光照甲(紅)、乙(紅綠疊)、丙(綠) ➔ 黑、黑、綠</button>
+          <button class="preset-btn" onclick="setLabMode('plant')">🌿 第 3 題：綠玻璃紙看白盆、紅花、綠葉 ➔ 綠、黑、綠</button>
         </div>
       </div>
 
       <!-- Right: Sidebar Controls -->
       <div class="controls-panel">
-        <!-- Subjective Vision HUD Card -->
-        <div class="control-card">
+        <!-- Plant / Subjective View Card -->
+        <div class="control-card" id="cardSubjectiveView">
           <div class="card-heading">
-            <span>👁️</span> 主觀視野體驗 (視網膜成像)
+            <span>👀</span> 透過綠色玻璃紙觀察視野
           </div>
-          <div class="vision-hud-box">
-            <div class="vision-target" id="visionTarget">🌳</div>
+          <div class="plant-hud-box">
+            <div class="plant-item-row" id="hudPlant">
+              <span id="hudFlower">🌹</span><br>
+              <span id="hudLeaves">🌿</span><br>
+              <span id="hudPot">🪴</span>
+            </div>
           </div>
-          <button class="toggle-glass-btn" id="btnToggleGlass" onclick="toggleGlass()">
-            👓 配戴矯正鏡片 (凹透鏡)
+          <button class="toggle-filter-btn" id="btnToggleFilter" onclick="toggleGreenFilter()">
+            🟩 戴上綠色玻璃紙濾鏡
           </button>
         </div>
 
         <!-- Optics Details Card -->
         <div class="control-card">
           <div class="card-heading">
-            <span>📊</span> 光學解剖數據分析
+            <span>📊</span> 光學吸收數據分析
           </div>
 
           <div class="status-badge-grid">
             <div class="status-item">
-              <div class="status-item-label">聚焦點位置</div>
-              <div class="status-item-val" id="dispFocalPos" style="color:#15803d;">視網膜上 ✅</div>
+              <div class="status-item-label">到達白紙光線</div>
+              <div class="status-item-val" id="dispReachLight" style="color:#dc2626;">無光線 (黑)</div>
             </div>
             <div class="status-item">
-              <div class="status-item-label">成像性質</div>
-              <div class="status-item-val" id="dispImageType" style="color:#0284c7;">倒立縮小實像</div>
+              <div class="status-item-label">呈現顏色</div>
+              <div class="status-item-val" id="dispFinalColor" style="color:#0f172a;">黑色 ⬛</div>
             </div>
-          </div>
-
-          <!-- Comparison Table -->
-          <div style="margin-top:0.8rem;">
-            <div style="font-size:0.75rem; font-weight:900; color:var(--primary); margin-bottom:0.3rem;">
-              📷 眼睛 vs 照相機構造對照表：
-            </div>
-            <table class="compare-table">
-              <tr>
-                <th>人體眼睛</th>
-                <th>照相機構造</th>
-                <th>主要功能</th>
-              </tr>
-              <tr>
-                <td>水晶體 (凸透鏡)</td>
-                <td>鏡頭 (凸透鏡組)</td>
-                <td>折射會聚光線</td>
-              </tr>
-              <tr>
-                <td>視網膜</td>
-                <td>感光元件 (底片)</td>
-                <td>倒立縮小實像</td>
-              </tr>
-              <tr>
-                <td>瞳孔</td>
-                <td>光圈</td>
-                <td>控制進光量</td>
-              </tr>
-              <tr>
-                <td>眼瞼</td>
-                <td>快門</td>
-                <td>控制曝光時間</td>
-              </tr>
-            </table>
           </div>
 
           <div class="nature-banner" id="natureBanner">
-            👓 <strong>【近視與遠視光學矯正】</strong>：<br>
-            - <strong>近視</strong>：像落在<strong>視網膜前</strong> ➔ 戴<strong>凹透鏡</strong>（發散後移）！<br>
-            - <strong>遠視</strong>：像落在<strong>視網膜後</strong> ➔ 戴<strong>凸透鏡</strong>（會聚前移）！
+            🌈 <strong>【透明體濾光黃金定律】</strong>：<br>
+            - <strong>紅色玻璃紙</strong>：只透紅光，吸收綠/藍光！<br>
+            - <strong>綠色玻璃紙</strong>：只透綠光，吸收紅/藍光！<br>
+            - <strong>紅＋藍雙層</strong>：紅光被藍紙吸收 ➔ <strong>無光穿透（黑色）</strong>！
           </div>
         </div>
       </div>
@@ -678,40 +632,40 @@
     <section class="exam-section" id="examSecQ1">
       <div class="exam-header">
         <div>
-          <span class="exam-title-badge">第 53 頁 基本題型 第 1 題</span>
+          <span class="exam-title-badge">第 55 頁 基本題型 第 1 題</span>
           <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
-            🎯 歷屆難題挑戰 1：照相機在感光元件所成像的性質為何？
+            🎯 歷屆難題挑戰 1：紅色及藍色玻璃紙疊在一起套在手電筒，暗箱內白紙呈何種顏色？
           </h2>
         </div>
-        <span style="font-size:0.85rem; font-weight:900; color:#0284c7; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
-          凸透鏡成像 ✕ 照相機原理
+        <span style="font-size:0.85rem; font-weight:900; color:#dc2626; background:#fee2e2; border:1.5px solid #dc2626; padding:0.3rem 0.7rem; border-radius:99px;">
+          雙層濾光 ✕ 吸收全黑
         </span>
       </div>
 
       <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
-        題目：照相機在感光元件所成像的性質，與原物作比較，請問下列何者正確？
+        題目：若將紅色及藍色玻璃紙疊在一起後，套在手電筒白色光源的外部，打開光源後，照在暗箱內的白紙上，則白紙呈什麼顏色？
       </p>
 
       <div class="options-grid">
         <!-- Option A -->
         <div class="option-card" onclick="testExamQ1('A', event)">
           <div class="option-letter">A</div>
-          <div class="option-desc">倒立放大實像</div>
+          <div class="option-desc">紅色</div>
         </div>
         <!-- Option B -->
         <div class="option-card" onclick="testExamQ1('B', event)">
           <div class="option-letter">B</div>
-          <div class="option-desc">正立縮小虛像</div>
+          <div class="option-desc">藍色</div>
         </div>
         <!-- Option C -->
         <div class="option-card" onclick="testExamQ1('C', event)">
           <div class="option-letter">C</div>
-          <div class="option-desc">正立放大虛像</div>
+          <div class="option-desc">綠色</div>
         </div>
         <!-- Option D (Correct) -->
         <div class="option-card" onclick="testExamQ1('D', event)">
           <div class="option-letter">D</div>
-          <div class="option-desc">倒立縮小實像 (正確)</div>
+          <div class="option-desc">黑色 (正確)</div>
         </div>
       </div>
 
@@ -725,40 +679,40 @@
     <section class="exam-section" id="examSecQ2">
       <div class="exam-header">
         <div>
-          <span class="exam-title-badge">第 53 頁 基本題型 第 2 題</span>
+          <span class="exam-title-badge">第 55 頁 基本題型 第 2 題</span>
           <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
-            🎯 歷屆難題挑戰 2：相機透鏡組焦距 40cm，物體應位於前方何處才能清楚成像？
+            🎯 歷屆難題挑戰 2：綠光照射紅色與綠色玻璃紙重疊區，白紙板甲、乙、丙呈現何種顏色？
           </h2>
         </div>
-        <span style="font-size:0.85rem; font-weight:900; color:#15803d; background:#dcfce7; border:1.5px solid #15803d; padding:0.3rem 0.7rem; border-radius:99px;">
-          物距計算 ✕ p > 2f
+        <span style="font-size:0.85rem; font-weight:900; color:#16a34a; background:#dcfce7; border:1.5px solid #16a34a; padding:0.3rem 0.7rem; border-radius:99px;">
+          重疊濾光 ✕ 甲乙丙分區
         </span>
       </div>
 
       <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
-        題目：珉豪幫秀英照相，秀英應位於相機透鏡組（焦距 40cm）前方何處，才能清楚成像？
+        題目：將一張紅色玻璃紙與一張綠色玻璃紙部分重疊，然後置於一白色紙板之上，以綠光照射，如右圖所示。請問在白色紙板甲、乙、丙三個區域主要呈現出何種顏色？
       </p>
 
       <div class="options-grid">
-        <!-- Option A -->
+        <!-- Option A (Correct) -->
         <div class="option-card" onclick="testExamQ2('A', event)">
           <div class="option-letter">A</div>
-          <div class="option-desc">30cm</div>
+          <div class="option-desc">黑、黑、綠 (正確)</div>
         </div>
         <!-- Option B -->
         <div class="option-card" onclick="testExamQ2('B', event)">
           <div class="option-letter">B</div>
-          <div class="option-desc">40cm</div>
+          <div class="option-desc">黃、黃、綠</div>
         </div>
         <!-- Option C -->
         <div class="option-card" onclick="testExamQ2('C', event)">
           <div class="option-letter">C</div>
-          <div class="option-desc">60cm</div>
+          <div class="option-desc">紅、黑、黑</div>
         </div>
-        <!-- Option D (Correct) -->
+        <!-- Option D -->
         <div class="option-card" onclick="testExamQ2('D', event)">
           <div class="option-letter">D</div>
-          <div class="option-desc">95cm (正確)</div>
+          <div class="option-desc">黃、黑、綠</div>
         </div>
       </div>
 
@@ -772,40 +726,40 @@
     <section class="exam-section" id="examSecQ3">
       <div class="exam-header">
         <div>
-          <span class="exam-title-badge">第 53 頁 基本題型 第 3 題</span>
+          <span class="exam-title-badge">第 55 頁 基本題型 第 3 題</span>
           <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
-            🎯 歷屆難題挑戰 3：放大鏡、複式顯微鏡、近視眼鏡分別是用哪種透鏡？
+            🎯 歷屆難題挑戰 3：用綠色玻璃紙觀察白色花盆所種的紅色花，所看見「白盆、紅花、綠葉」顏色依序為何？
           </h2>
         </div>
         <span style="font-size:0.85rem; font-weight:900; color:#9333ea; background:#f3e8ff; border:1.5px solid #9333ea; padding:0.3rem 0.7rem; border-radius:99px;">
-          光學儀器分類 ✕ 透鏡判別
+          濾鏡看物體 ✕ 反射與吸收
         </span>
       </div>
 
       <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
-        題目：下列三種物品，依順序分別是用哪種透鏡？(甲) 放大鏡、(乙) 複式顯微鏡、(丙) 近視眼鏡。
+        題目：映瑋用綠色玻璃紙觀察白色花盆所種的紅色花時，她所看見「白盆」、「紅花」、「綠葉」的顏色依序為何？
       </p>
 
       <div class="options-grid">
-        <!-- Option A -->
+        <!-- Option A (Correct) -->
         <div class="option-card" onclick="testExamQ3('A', event)">
           <div class="option-letter">A</div>
-          <div class="option-desc">凹透鏡、凹透鏡、凸透鏡</div>
+          <div class="option-desc">綠、黑、綠 (正確)</div>
         </div>
-        <!-- Option B (Correct) -->
+        <!-- Option B -->
         <div class="option-card" onclick="testExamQ3('B', event)">
           <div class="option-letter">B</div>
-          <div class="option-desc">凸透鏡、凸透鏡、凹透鏡 (正確)</div>
+          <div class="option-desc">綠、綠、綠</div>
         </div>
         <!-- Option C -->
         <div class="option-card" onclick="testExamQ3('C', event)">
           <div class="option-letter">C</div>
-          <div class="option-desc">凹透鏡、凸透鏡、凹透鏡</div>
+          <div class="option-desc">白、黑、綠</div>
         </div>
         <!-- Option D -->
         <div class="option-card" onclick="testExamQ3('D', event)">
           <div class="option-letter">D</div>
-          <div class="option-desc">凸透鏡、凹透鏡、凸透鏡</div>
+          <div class="option-desc">黑、黑、綠</div>
         </div>
       </div>
 
@@ -817,23 +771,25 @@
   </main>
 
   <footer>
-    <p>國中自然科 · NatureLab 眼球光學與生活儀器教學系統 | 正式發布於 GitHub Pages</p>
+    <p>國中自然科 · NatureLab 玻璃紙濾光與色彩光學教學系統 | 正式發布於 GitHub Pages</p>
   </footer>
 
   <script>
-    let currentMode = 'myopia'; // 'normal' | 'myopia' | 'hyperopia' | 'camera'
-    let hasGlass = false;
+    let labMode = 'double'; // 'double' | 'overlap' | 'plant'
+    let hasGreenFilter = false;
 
-    const canvas = document.getElementById('eyeCanvas');
+    const canvas = document.getElementById('filterCanvas');
     const ctx = canvas.getContext('2d');
     const container = document.getElementById('canvasContainer');
 
-    const visionTarget = document.getElementById('visionTarget');
-    const btnToggleGlass = document.getElementById('btnToggleGlass');
-    const dispFocalPos = document.getElementById('dispFocalPos');
-    const dispImageType = document.getElementById('dispImageType');
+    const dispReachLight = document.getElementById('dispReachLight');
+    const dispFinalColor = document.getElementById('dispFinalColor');
     const natureBanner = document.getElementById('natureBanner');
     const canvasHint = document.getElementById('canvasHint');
+    const btnToggleFilter = document.getElementById('btnToggleFilter');
+    const hudFlower = document.getElementById('hudFlower');
+    const hudLeaves = document.getElementById('hudLeaves');
+    const hudPot = document.getElementById('hudPot');
 
     function resizeCanvas() {
       const rect = container.getBoundingClientRect();
@@ -845,73 +801,56 @@
 
     window.addEventListener('resize', resizeCanvas);
 
-    function setEyeMode(mode) {
-      currentMode = mode;
-      hasGlass = false;
+    function setLabMode(mode) {
+      labMode = mode;
+      hasGreenFilter = false;
 
-      document.querySelectorAll('.eye-tab').forEach(t => t.classList.remove('active'));
-      if (mode === 'normal') document.getElementById('tabModeNormal').classList.add('active');
-      if (mode === 'myopia') document.getElementById('tabModeMyopia').classList.add('active');
-      if (mode === 'hyperopia') document.getElementById('tabModeHyperopia').classList.add('active');
-      if (mode === 'camera') document.getElementById('tabModeCamera').classList.add('active');
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      if (mode === 'double') document.getElementById('tabModeDouble').classList.add('active');
+      if (mode === 'overlap') document.getElementById('tabModeOverlap').classList.add('active');
+      if (mode === 'plant') document.getElementById('tabModePlant').classList.add('active');
 
       updateState();
       draw();
     }
 
-    function toggleGlass() {
-      hasGlass = !hasGlass;
+    function toggleGreenFilter() {
+      hasGreenFilter = !hasGreenFilter;
       updateState();
       draw();
     }
 
     function updateState() {
-      if (currentMode === 'normal') {
-        btnToggleGlass.style.display = 'none';
-        visionTarget.style.filter = 'none';
-        dispFocalPos.textContent = '視網膜上 ✅';
-        dispFocalPos.style.color = '#15803d';
-        dispImageType.textContent = '倒立縮小實像';
-        canvasHint.textContent = '💡 正常眼：光線完美聚焦在視網膜黃斑部，視野清晰！';
-        natureBanner.innerHTML = '👁️ <strong>【正常眼】</strong>：角膜與水晶體折光正常，遠處物體光線精準聚焦在視網膜上。';
-      } else if (currentMode === 'myopia') {
-        btnToggleGlass.style.display = 'block';
-        btnToggleGlass.textContent = hasGlass ? '❌ 取下矯正鏡片' : '👓 配戴矯正鏡片 (凹透鏡)';
-        if (hasGlass) {
-          visionTarget.style.filter = 'none';
-          dispFocalPos.textContent = '矯正至視網膜 ✅';
-          dispFocalPos.style.color = '#15803d';
-          canvasHint.textContent = '💡 配戴凹透鏡：光線先發散再入眼，焦點精準後移至視網膜！';
+      if (labMode === 'double') {
+        dispReachLight.textContent = '無光線到達 ❌';
+        dispReachLight.style.color = '#dc2626';
+        dispFinalColor.textContent = '黑色 ⬛';
+        canvasHint.textContent = '💡 白光經紅玻璃紙只剩紅光，再遇藍玻璃紙全被吸收 ➔ 白紙呈黑色！';
+        natureBanner.innerHTML = '🔦 <strong>【第 1 題：紅＋藍雙層濾光】</strong>：白光 ➔ 紅紙(透紅) ➔ 藍紙(吸紅) ➔ <strong>無光線穿透，白紙呈黑色</strong>！';
+      } else if (labMode === 'overlap') {
+        dispReachLight.textContent = '甲黑 / 乙黑 / 丙綠';
+        dispReachLight.style.color = '#16a34a';
+        dispFinalColor.textContent = '黑、黑、綠';
+        canvasHint.textContent = '💡 綠光照射：甲(紅紙吸綠=黑)、乙(紅綠疊吸綠=黑)、丙(綠紙透綠=綠)！';
+        natureBanner.innerHTML = '🟩 <strong>【第 2 題：綠光照紅綠重疊】</strong>：甲(紅吸綠=黑)、乙(重疊吸綠=黑)、丙(綠透綠=綠) ➔ <strong>(A) 黑、黑、綠</strong>！';
+      } else if (labMode === 'plant') {
+        btnToggleFilter.textContent = hasGreenFilter ? '❌ 取下綠色濾鏡' : '🟩 戴上綠色玻璃紙濾鏡';
+        if (hasGreenFilter) {
+          hudFlower.style.filter = 'brightness(0.1)'; // Red becomes Black
+          hudLeaves.style.filter = 'none'; // Green stays Green
+          hudPot.style.filter = 'hue-rotate(90deg) brightness(1.2)'; // White becomes Green
+          dispReachLight.textContent = '綠光進入眼睛';
+          dispFinalColor.textContent = '綠盆、黑花、綠葉';
+          canvasHint.textContent = '💡 透過綠濾鏡：白盆反射綠光(變綠)、紅花吸收綠光(變黑)、綠葉反射綠光(變綠)！';
         } else {
-          visionTarget.style.filter = 'blur(8px)';
-          dispFocalPos.textContent = '視網膜前方 ⚠️';
-          dispFocalPos.style.color = '#dc2626';
-          canvasHint.textContent = '💡 近視眼：眼軸過長/水晶體過凸，光線在視網膜前聚焦，視野模糊！';
+          hudFlower.style.filter = 'none';
+          hudLeaves.style.filter = 'none';
+          hudPot.style.filter = 'none';
+          dispReachLight.textContent = '自然全色光';
+          dispFinalColor.textContent = '白盆、紅花、綠葉';
+          canvasHint.textContent = '💡 自然光下：白花盆、紅玫瑰、綠葉片。點擊右側按鈕戴上綠色玻璃紙！';
         }
-        natureBanner.innerHTML = '👓 <strong>【近視眼 (Myopia)】</strong>：像落在<strong>視網膜前方</strong> ➔ 配戴<strong>凹透鏡</strong>發散光線矯正！';
-      } else if (currentMode === 'hyperopia') {
-        btnToggleGlass.style.display = 'block';
-        btnToggleGlass.textContent = hasGlass ? '❌ 取下矯正鏡片' : '🔍 配戴矯正鏡片 (凸透鏡)';
-        if (hasGlass) {
-          visionTarget.style.filter = 'none';
-          dispFocalPos.textContent = '矯正至視網膜 ✅';
-          dispFocalPos.style.color = '#15803d';
-          canvasHint.textContent = '💡 配戴凸透鏡：光線提早會聚，焦點拉回視網膜上！';
-        } else {
-          visionTarget.style.filter = 'blur(8px)';
-          dispFocalPos.textContent = '視網膜後方 ⚠️';
-          dispFocalPos.style.color = '#dc2626';
-          canvasHint.textContent = '💡 遠視眼：眼軸過短/水晶體過扁，光線在視網膜後聚焦，視野模糊！';
-        }
-        natureBanner.innerHTML = '🔍 <strong>【遠視眼 (Hyperopia)】</strong>：像落在<strong>視網膜後方</strong> ➔ 配戴<strong>凸透鏡</strong>會聚光線矯正！';
-      } else if (currentMode === 'camera') {
-        btnToggleGlass.style.display = 'none';
-        visionTarget.style.filter = 'none';
-        dispFocalPos.textContent = '感光元件上 ✅';
-        dispFocalPos.style.color = '#0284c7';
-        dispImageType.textContent = '倒立縮小實像';
-        canvasHint.textContent = '📷 照相機：物在 2f 外（p > 2f），在感光元件成倒立縮小實像！';
-        natureBanner.innerHTML = '📷 <strong>【照相機原理】</strong>：鏡頭為凸透鏡組，物在 2f 外 ➔ 感光元件成<strong>倒立縮小實像</strong>！';
+        natureBanner.innerHTML = '🌿 <strong>【第 3 題：綠濾鏡看盆栽】</strong>：白盆(透綠=綠)、紅花(吸綠=黑)、綠葉(透綠=綠) ➔ <strong>(A) 綠、黑、綠</strong>！';
       }
     }
 
@@ -920,229 +859,248 @@
       const h = container.clientHeight;
       ctx.clearRect(0, 0, w, h);
 
-      if (currentMode === 'camera') {
-        drawCamera(w, h);
-      } else {
-        drawEye(w, h);
+      if (labMode === 'double') {
+        drawDoubleFilter(w, h);
+      } else if (labMode === 'overlap') {
+        drawOverlapGrid(w, h);
+      } else if (labMode === 'plant') {
+        drawPlantFilter(w, h);
       }
     }
 
-    function drawEye(w, h) {
-      const eyeCx = w * 0.62;
-      const eyeCy = h / 2;
-      const eyeRx = currentMode === 'myopia' ? 120 : (currentMode === 'hyperopia' ? 85 : 100);
-      const eyeRy = 90;
-      const retinaX = eyeCx + eyeRx;
+    function drawDoubleFilter(w, h) {
+      // 1. Flashlight on left
+      const lightX = 60;
+      const lightY = h / 2;
 
-      // 1. Light source / object on left
-      const objX = 50;
-      const objY = eyeCy;
-      ctx.font = '36px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('🌳', objX, objY + 12);
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(lightX - 40, lightY - 25, 40, 50);
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.moveTo(lightX, lightY - 35);
+      ctx.lineTo(lightX + 15, lightY - 25);
+      ctx.lineTo(lightX + 15, lightY + 25);
+      ctx.lineTo(lightX, lightY + 35);
+      ctx.closePath();
+      ctx.fill();
+
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-      ctx.fillText('遠處物體', objX, objY + 32);
-
-      // 2. Glasses lens (if worn)
-      const glassX = eyeCx - eyeRx - 45;
-      if (hasGlass) {
-        ctx.strokeStyle = '#38bdf8';
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
-        ctx.lineWidth = 3;
-
-        if (currentMode === 'myopia') {
-          // Concave lens
-          ctx.beginPath();
-          ctx.moveTo(glassX - 6, eyeCy - 60);
-          ctx.lineTo(glassX + 6, eyeCy - 60);
-          ctx.quadraticCurveTo(glassX + 1, eyeCy, glassX + 6, eyeCy + 60);
-          ctx.lineTo(glassX - 6, eyeCy + 60);
-          ctx.quadraticCurveTo(glassX - 1, eyeCy, glassX - 6, eyeCy - 60);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = '#38bdf8';
-          ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-          ctx.fillText('凹透鏡 (發散)', glassX, eyeCy - 70);
-        } else if (currentMode === 'hyperopia') {
-          // Convex lens
-          ctx.beginPath();
-          ctx.moveTo(glassX, eyeCy - 60);
-          ctx.quadraticCurveTo(glassX + 10, eyeCy, glassX, eyeCy + 60);
-          ctx.quadraticCurveTo(glassX - 10, eyeCy, glassX, eyeCy - 60);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = '#ffd85c';
-          ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-          ctx.fillText('凸透鏡 (會聚)', glassX, eyeCy - 70);
-        }
-      }
-
-      // 3. Eyeball Outline
-      ctx.strokeStyle = '#94a3b8';
-      ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-      ctx.lineWidth = 3.5;
-      ctx.beginPath();
-      ctx.ellipse(eyeCx, eyeCy, eyeRx, eyeRy, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      // Retina (Yellow curve on the back)
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.arc(eyeCx, eyeCy, eyeRx - 2, -Math.PI * 0.35, Math.PI * 0.35);
-      ctx.stroke();
-
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText('視網膜', retinaX + 8, eyeCy + 4);
-
-      // 4. Crystalline Lens (Cornea / Lens)
-      const lensX = eyeCx - eyeRx + 15;
-      ctx.fillStyle = '#67e8f9';
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(lensX, eyeCy, currentMode === 'myopia' ? 14 : 10, 45, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#67e8f9';
-      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('水晶體', lensX, eyeCy - 55);
+      ctx.fillText('白光手電筒', lightX - 15, lightY + 50);
 
-      // 5. Raytracing Rays
-      let focalX = retinaX;
-      if (currentMode === 'normal') {
-        focalX = retinaX;
-      } else if (currentMode === 'myopia') {
-        focalX = hasGlass ? retinaX : retinaX - 45;
-      } else if (currentMode === 'hyperopia') {
-        focalX = hasGlass ? retinaX : retinaX + 40;
-      }
-
-      const rays = [-30, 0, 30];
-      ctx.strokeStyle = '#fbbf24';
-      ctx.lineWidth = 2.5;
-      ctx.shadowColor = '#fbbf24';
-      ctx.shadowBlur = 6;
-
-      rays.forEach(offsetY => {
-        ctx.beginPath();
-        ctx.moveTo(objX + 25, objY + offsetY * 0.3);
-
-        if (hasGlass) {
-          ctx.lineTo(glassX, eyeCy + offsetY * 0.85);
-          // slight bend at glasses
-          if (currentMode === 'myopia') {
-            ctx.lineTo(lensX, eyeCy + offsetY * 1.15);
-          } else {
-            ctx.lineTo(lensX, eyeCy + offsetY * 0.65);
-          }
-        } else {
-          ctx.lineTo(lensX, eyeCy + offsetY);
-        }
-
-        ctx.lineTo(focalX, eyeCy);
-        ctx.stroke();
-      });
-
-      // Focal point marker
-      ctx.fillStyle = focalX === retinaX ? '#10b981' : '#ef4444';
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = ctx.fillStyle;
-      ctx.beginPath();
-      ctx.arc(focalX, eyeCy, 6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      ctx.font = '900 12px Noto Sans TC, sans-serif';
-      ctx.fillText(focalX === retinaX ? '🎯 焦點在視網膜上' : (focalX < retinaX ? '⚠️ 焦點在視網膜前' : '⚠️ 焦點在視網膜後'), focalX, eyeCy + 20);
-    }
-
-    function drawCamera(w, h) {
-      const camCx = w * 0.55;
-      const camCy = h / 2;
-      const camW = 200;
-      const camH = 140;
-
-      // 1. Object on left
-      const objX = 60;
-      const objY = camCy;
-      ctx.font = '40px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('👩', objX, objY + 12);
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-      ctx.fillText('被攝人物 (物在 2f 外)', objX, objY + 34);
-
-      // 2. Camera Body
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#94a3b8';
+      // 2. Red Filter Sheet
+      const redX = w * 0.38;
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.45)';
+      ctx.strokeStyle = '#ef4444';
       ctx.lineWidth = 3;
-      ctx.strokeRect(camCx - camW / 2, camCy - camH / 2, camW, camH);
-      ctx.fillRect(camCx - camW / 2, camCy - camH / 2, camW, camH);
+      ctx.fillRect(redX - 6, lightY - 90, 12, 180);
+      ctx.strokeRect(redX - 6, lightY - 90, 12, 180);
 
-      // 3. Camera Lens (Convex)
-      const lensX = camCx - camW / 2;
-      ctx.fillStyle = '#38bdf8';
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.ellipse(lensX, camCy, 12, 50, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
-      ctx.fillText('鏡頭 (凸透鏡組)', lensX, camCy - 60);
-
-      // 4. Sensor / Film
-      const sensorX = camCx + camW / 2 - 15;
-      ctx.fillStyle = '#f59e0b';
-      ctx.fillRect(sensorX - 3, camCy - 45, 6, 90);
-
-      ctx.fillStyle = '#f59e0b';
-      ctx.fillText('感光元件 (CMOS/底片)', sensorX, camCy - 55);
-
-      // 5. Rays and Inverted Real Image
-      ctx.strokeStyle = '#fbbf24';
-      ctx.lineWidth = 2.5;
-      ctx.shadowColor = '#fbbf24';
-      ctx.shadowBlur = 6;
-
-      // Ray from head to bottom of sensor
-      ctx.beginPath();
-      ctx.moveTo(objX + 20, objY - 20);
-      ctx.lineTo(lensX, camCy - 20);
-      ctx.lineTo(sensorX, camCy + 15);
-      ctx.stroke();
-
-      // Center ray
-      ctx.beginPath();
-      ctx.moveTo(objX + 20, objY - 20);
-      ctx.lineTo(lensX, camCy);
-      ctx.lineTo(sensorX, camCy + 15);
-      ctx.stroke();
-
-      // Inverted image icon on sensor
-      ctx.shadowBlur = 0;
-      ctx.save();
-      ctx.translate(sensorX - 18, camCy + 12);
-      ctx.scale(0.55, -0.55); // inverted & scaled down!
-      ctx.fillText('👩', 0, 0);
-      ctx.restore();
-
-      ctx.fillStyle = '#10b981';
+      ctx.fillStyle = '#ef4444';
       ctx.font = '900 12px Noto Sans TC, sans-serif';
-      ctx.fillText('倒立縮小實像 ✅', sensorX - 25, camCy + 40);
+      ctx.fillText('🔴 紅色玻璃紙', redX, lightY - 100);
+      ctx.font = 'bold 10px Noto Sans TC, sans-serif';
+      ctx.fillText('(只透過紅光)', redX, lightY + 110);
+
+      // 3. Blue Filter Sheet
+      const blueX = w * 0.62;
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.45)';
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = 3;
+      ctx.fillRect(blueX - 6, lightY - 90, 12, 180);
+      ctx.strokeRect(blueX - 6, lightY - 90, 12, 180);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.fillText('🔵 藍色玻璃紙', blueX, lightY - 100);
+      ctx.font = 'bold 10px Noto Sans TC, sans-serif';
+      ctx.fillText('(吸收紅光)', blueX, lightY + 110);
+
+      // 4. White Paper on Right
+      const paperX = w * 0.86;
+      ctx.fillStyle = '#f8fafc';
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 3;
+      ctx.fillRect(paperX - 10, lightY - 100, 20, 200);
+      ctx.strokeRect(paperX - 10, lightY - 100, 20, 200);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('暗箱白紙', paperX, lightY - 110);
+
+      // 5. Light Beams
+      // White beam from torch to Red filter
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.beginPath();
+      ctx.moveTo(lightX + 15, lightY - 25);
+      ctx.lineTo(redX - 6, lightY - 70);
+      ctx.lineTo(redX - 6, lightY + 70);
+      ctx.lineTo(lightX + 15, lightY + 25);
+      ctx.closePath();
+      ctx.fill();
+
+      // Red beam from Red filter to Blue filter
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(redX + 6, lightY - 70);
+      ctx.lineTo(blueX - 6, lightY - 70);
+      ctx.lineTo(blueX - 6, lightY + 70);
+      ctx.lineTo(redX + 6, lightY + 70);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = '#ef4444';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('➡️ 只有紅光穿透', (redX + blueX) / 2, lightY);
+
+      // After Blue filter -> BLOCKED! NO LIGHT!
+      ctx.strokeStyle = '#ef4444';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(blueX + 6, lightY - 70);
+      ctx.lineTo(paperX - 10, lightY - 70);
+      ctx.moveTo(blueX + 6, lightY + 70);
+      ctx.lineTo(paperX - 10, lightY + 70);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('🚫 紅光被藍紙吸收 (無光通過)', (blueX + paperX) / 2, lightY - 10);
+      ctx.fillStyle = '#f87171';
+      ctx.fillText('⬛ 白紙呈現【黑色】', (blueX + paperX) / 2, lightY + 15);
+    }
+
+    function drawOverlapGrid(w, h) {
+      const topY = 60;
+      const redLayerY = 160;
+      const greenLayerY = 190;
+      const paperY = 330;
+
+      const secX1 = w * 0.18; // Left
+      const secX2 = w * 0.45; // Overlap start
+      const secX3 = w * 0.58; // Overlap end
+      const secX4 = w * 0.85; // Right
+
+      // 1. Green Incident Light Beams from Top
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+      ctx.fillRect(secX1, topY, secX4 - secX1, 80);
+
+      // Green Arrows
+      ctx.fillStyle = '#22c55e';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('⬇️ ⬇️ ⬇️ 綠色平行光束 ⬇️ ⬇️ ⬇️', (secX1 + secX4) / 2, topY + 45);
+
+      // 2. Red Filter Sheet (甲 + 乙)
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.6)';
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.fillRect(secX1, redLayerY, secX3 - secX1, 14);
+      ctx.strokeRect(secX1, redLayerY, secX3 - secX1, 14);
+
+      ctx.fillStyle = '#ef4444';
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('🔴 紅色玻璃紙', secX1 - 95, redLayerY + 11);
+
+      // 3. Green Filter Sheet (乙 + 丙)
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.6)';
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 3;
+      ctx.fillRect(secX2, greenLayerY, secX4 - secX2, 14);
+      ctx.strokeRect(secX2, greenLayerY, secX4 - secX2, 14);
+
+      ctx.fillStyle = '#22c55e';
+      ctx.textAlign = 'right';
+      ctx.fillText('🟢 綠色玻璃紙', secX4 + 95, greenLayerY + 11);
+
+      // 4. White Paper Board at Bottom
+      ctx.fillStyle = '#f8fafc';
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 3;
+      ctx.fillRect(secX1, paperY, secX4 - secX1, 24);
+      ctx.strokeRect(secX1, paperY, secX4 - secX1, 24);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('白色紙板', (secX1 + secX4) / 2, paperY + 45);
+
+      // 5. Zone Labels & Light Patches on White Paper
+      // Zone 甲: secX1 ~ secX2 (Red only) -> Green blocked by Red -> Black
+      const jiaMid = (secX1 + secX2) / 2;
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(secX1 + 4, paperY + 3, (secX2 - secX1) - 8, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('【甲區】黑色 ⬛', jiaMid, paperY + 16);
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('(紅紙吸收綠光)', jiaMid, paperY - 30);
+
+      // Zone 乙: secX2 ~ secX3 (Red + Green Overlap) -> Green blocked by Red -> Black
+      const yiMid = (secX2 + secX3) / 2;
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(secX2 + 4, paperY + 3, (secX3 - secX2) - 8, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('【乙區】黑色 ⬛', yiMid, paperY + 16);
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('(紅綠重疊吸收)', yiMid, paperY - 50);
+
+      // Zone 丙: secX3 ~ secX4 (Green only) -> Green passes -> Green
+      const bingMid = (secX3 + secX4) / 2;
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(secX3 + 4, paperY + 3, (secX4 - secX3) - 8, 18);
+      ctx.fillStyle = '#064e3b';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('【丙區】綠色 🟩', bingMid, paperY + 16);
+
+      // Green beam going through Zone 丙
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.4)';
+      ctx.fillRect(secX3, greenLayerY + 14, secX4 - secX3, paperY - greenLayerY - 14);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('(綠光順利穿透)', bingMid, paperY - 30);
+    }
+
+    function drawPlantFilter(w, h) {
+      const centerX = w / 2;
+      const centerY = h / 2;
+
+      ctx.font = '900 14px Noto Sans TC, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText('☀️ 自然陽光照射下 ➔ 白盆 ＋ 紅花 ＋ 綠葉', centerX, 45);
+
+      // Draw Flower Pot
+      ctx.font = '60px sans-serif';
+      ctx.fillText(hasGreenFilter ? '⬛' : '🌹', centerX, centerY - 40);
+      ctx.fillText('🌿', centerX, centerY + 15);
+      ctx.font = '50px sans-serif';
+      ctx.fillText(hasGreenFilter ? '🟩' : '🪴', centerX, centerY + 70);
+
+      // Labels
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      if (hasGreenFilter) {
+        ctx.fillStyle = '#f87171';
+        ctx.fillText('紅花吸收綠光 ➔ 呈【黑色】', centerX + 160, centerY - 40);
+        ctx.fillStyle = '#34d399';
+        ctx.fillText('綠葉反射綠光 ➔ 呈【綠色】', centerX + 160, centerY + 15);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('白盆反射綠光 ➔ 呈【綠色】', centerX + 160, centerY + 70);
+      } else {
+        ctx.fillStyle = '#ef4444';
+        ctx.fillText('紅花 (反射紅光)', centerX + 150, centerY - 40);
+        ctx.fillStyle = '#22c55e';
+        ctx.fillText('綠葉 (反射綠光)', centerX + 150, centerY + 15);
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillText('白盆 (反射全色光)', centerX + 150, centerY + 70);
+      }
     }
 
     // Exam Handlers
@@ -1155,19 +1113,20 @@
 
       if (opt === 'D') {
         evt.currentTarget.classList.add('selected-correct');
-        expTitle.innerHTML = '🎉 【正確答案：(D) 倒立縮小實像】 完美答對！';
+        expTitle.innerHTML = '🎉 【正確答案：(D) 黑色】 完美答對！';
         expTitle.style.color = '#15803d';
         expContent.innerHTML = `
           <strong>【基本題型第 1 題詳解】</strong><br>
-          1. <strong>照相機成像原理</strong>：照相機鏡頭相當於凸透鏡，當被攝物體位於「兩倍焦距以外（$p > 2f$）」時，會在鏡頭後方的感光元件（CMOS 或底片，位置在 $f \\sim 2f$ 之間）上形成<strong>「倒立、縮小、實像」</strong>。<br>
-          2. 人體的眼睛水晶體與視網膜成像機制亦同此原理。故正解為 <strong>(D)</strong>！
+          1. <strong>紅色玻璃紙</strong>：白光通過紅色玻璃紙後，只允許「紅光」穿透，綠光與藍光被吸收。<br>
+          2. <strong>藍色玻璃紙</strong>：接著穿透的紅光遇到藍色玻璃紙，因為藍色玻璃紙只透藍光而吸收紅光，所以紅光被全數吸收！<br>
+          3. <strong>暗箱白紙</strong>：沒有任何光線能穿透雙層玻璃紙照射到白紙上，因此白紙呈現<strong>「黑色」</strong>！故選 <strong>(D)</strong>！
         `;
-        setEyeMode('camera');
+        setLabMode('double');
       } else {
         evt.currentTarget.classList.add('selected-wrong');
         expTitle.innerHTML = '❌ 【選項分析錯誤】';
         expTitle.style.color = '#b91c1c';
-        expContent.innerHTML = `照相機的感光元件上成的是「實像」（光線實際會聚），且必為「倒立、縮小」！`;
+        expContent.innerHTML = `紅玻璃紙只透紅光，藍玻璃紙只透藍光；兩者疊在一起時，紅光會被藍紙吸收，沒有光線能穿過！`;
       }
       expBox.style.display = 'block';
     };
@@ -1179,22 +1138,24 @@
       const cards = document.querySelectorAll('#examSecQ2 .option-card');
       cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
 
-      if (opt === 'D') {
+      if (opt === 'A') {
         evt.currentTarget.classList.add('selected-correct');
-        expTitle.innerHTML = '🎉 【正確答案：(D) 95cm】 完美答對！';
+        expTitle.innerHTML = '🎉 【正確答案：(A) 黑、黑、綠】 完美答對！';
         expTitle.style.color = '#15803d';
         expContent.innerHTML = `
           <strong>【基本題型第 2 題詳解】</strong><br>
-          1. <strong>照相機成像條件</strong>：物距必須大於兩倍焦距（$p > 2f$），才能在感光元件上清晰形成倒立縮小實像。<br>
-          2. <strong>數值計算</strong>：透鏡組焦距 $f = 40\\text{ cm} \\rightarrow 2f = 80\\text{ cm}$。<br>
-          3. 因此物距必須滿足 $p > 80\\text{ cm}$，四個選項中僅有 <strong>(D) 95cm</strong> 大於 80cm，故選 <strong>(D)</strong>！
+          以「綠光」垂直照射：<br>
+          1. <strong>甲區（只有紅色玻璃紙）</strong>：綠光被紅色玻璃紙吸收 ➔ 無光到達白紙 ➔ 呈現<strong>黑色</strong>。<br>
+          2. <strong>乙區（紅色與綠色玻璃紙重疊）</strong>：綠光穿過綠紙後被紅紙吸收 ➔ 無光到達白紙 ➔ 呈現<strong>黑色</strong>。<br>
+          3. <strong>丙區（只有綠色玻璃紙）</strong>：綠光順利透過綠色玻璃紙 ➔ 照射白紙反射綠光 ➔ 呈現<strong>綠色</strong>。<br>
+          4. 故甲、乙、丙依序為<strong>「黑、黑、綠」</strong>，選 <strong>(A)</strong>！
         `;
-        setEyeMode('camera');
+        setLabMode('overlap');
       } else {
         evt.currentTarget.classList.add('selected-wrong');
         expTitle.innerHTML = '❌ 【選項分析錯誤】';
         expTitle.style.color = '#b91c1c';
-        expContent.innerHTML = `焦距 $f = 40\\text{ cm}$，物體必須位於 $2f$ 外（即 $> 80\\text{ cm}$），才能在相機中清晰成像！`;
+        expContent.innerHTML = `綠光照射時，紅色玻璃紙會將綠光吸收（甲呈現黑色），重疊區也會被紅紙吸收（乙呈現黑色），只有丙能透過綠光！`;
       }
       expBox.style.display = 'block';
     };
@@ -1206,22 +1167,27 @@
       const cards = document.querySelectorAll('#examSecQ3 .option-card');
       cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
 
-      if (opt === 'B') {
+      if (opt === 'A') {
         evt.currentTarget.classList.add('selected-correct');
-        expTitle.innerHTML = '🎉 【正確答案：(B) 凸透鏡、凸透鏡、凹透鏡】 完美答對！';
+        expTitle.innerHTML = '🎉 【正確答案：(A) 綠、黑、綠】 完美答對！';
         expTitle.style.color = '#15803d';
         expContent.innerHTML = `
           <strong>【基本題型第 3 題詳解】</strong><br>
-          1. <strong>(甲) 放大鏡</strong>：單一<strong>凸透鏡</strong>（物在焦距內 $p < f$ 成正立放大虛像）。<br>
-          2. <strong>(乙) 複式顯微鏡</strong>：物鏡與目鏡均為<strong>凸透鏡</strong>。<br>
-          3. <strong>(丙) 近視眼鏡</strong>：<strong>凹透鏡</strong>（發散光束，使聚焦點後移至視網膜）。<br>
-          4. 故順序為「凸透鏡、凸透鏡、凹透鏡」，選 <strong>(B)</strong>！
+          自然陽光照射盆栽後，用「綠色玻璃紙」觀察：<br>
+          1. <strong>白盆</strong>：反射所有色光（包含綠光），綠光透過綠色玻璃紙進入眼睛 ➔ 看到<strong>綠色</strong>。<br>
+          2. <strong>紅花</strong>：只反射紅光，紅光遇到綠色玻璃紙被吸收，無光進入眼睛 ➔ 看到<strong>黑色</strong>。<br>
+          3. <strong>綠葉</strong>：只反射綠光，綠光順利透過綠色玻璃紙進入眼睛 ➔ 看到<strong>綠色</strong>。<br>
+          4. 故依序為<strong>「綠、黑、綠」</strong>，選 <strong>(A)</strong>！
         `;
+        setLabMode('plant');
+        hasGreenFilter = true;
+        updateState();
+        draw();
       } else {
         evt.currentTarget.classList.add('selected-wrong');
         expTitle.innerHTML = '❌ 【選項分析錯誤】';
         expTitle.style.color = '#b91c1c';
-        expContent.innerHTML = `放大鏡與複式顯微鏡都是利用「凸透鏡」放大，近視眼鏡則是配戴「凹透鏡」矯正！`;
+        expContent.innerHTML = `紅花反射紅光，紅光會被綠色玻璃紙吸收，因此紅花看起來是「黑色」；白盆反射綠光，看起來是「綠色」！`;
       }
       expBox.style.display = 'block';
     };
@@ -1229,7 +1195,7 @@
     // Initialize
     setTimeout(() => {
       resizeCanvas();
-      setEyeMode('myopia');
+      setLabMode('double');
     }, 100);
   </script>
 </body>
