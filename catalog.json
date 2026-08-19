@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-18",
+  "lastUpdated": "2026-08-19",
   "categories": [
     {
       "id": "teaching",
@@ -7,13 +7,13 @@
       "order": 10,
       "sites": [
         {
-          "id": "naturelab-book-selector",
-          "title": "按照課本進度學習",
-          "description": "選擇冊別與章節，依照學校課本進度學習。",
+          "id": "grade9-progress",
+          "title": "九年級進度",
+          "description": "九年級課程教學進度與 Google 雲端硬碟資源",
           "status": "active",
           "homepageState": "linked",
           "order": 10,
-          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#book-selector"
+          "url": "https://drive.google.com/drive/u/0/folders/1eWO8D3DHNSRnHuNy3jJWF-M257Ce6ESo"
         },
         {
           "id": "naturelab-senior-review",
@@ -59,6 +59,15 @@
           "homepageState": "linked",
           "order": 60,
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#portal"
+        },
+        {
+          "id": "naturelab-book-selector",
+          "title": "舊版互動式網頁",
+          "description": "選擇冊別與章節，依照學校課本進度學習。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 70,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#book-selector"
         }
       ]
     },
