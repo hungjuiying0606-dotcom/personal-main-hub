@@ -480,12 +480,12 @@
 
     <!-- Category Filter Tabs -->
     <div class="filter-tabs">
-      <button class="filter-btn active" onclick="filterCategory('all', this)">全部教具 (66)</button>
+      <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (14)</button>
+      <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (17)</button>
       <button class="filter-btn" onclick="filterCategory('unit1', this)">📄 單元卷 01 (12)</button>
       <button class="filter-btn" onclick="filterCategory('unit2', this)">📄 單元卷 02 (11)</button>
       <button class="filter-btn" onclick="filterCategory('unit3', this)">📑 綜合卷 03 (12)</button>
-      <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (14)</button>
-      <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (17)</button>
+      <button class="filter-btn active" onclick="filterCategory('all', this)">全部教具 (66)</button>
     </div>
 
     <!-- Tools Grid -->
@@ -1513,18 +1513,18 @@
 ];
 
     const groupMeta = {
+      textbook: { title: '📖 課本配套專區', desc: '課本探索實驗、例題與觀念沙盒 · 依課本 P.7～P.26 順序排列 (14 款)' },
+      workbook: { title: '✏️ 習作題型專區', desc: '習作重點題目與素養活用篇 · 依習作 P.3～P.9 題號排列 (17 款)' },
       unit1: { title: '📄 單元卷 01 專區', desc: '1-1～1-2 時間與位移考卷 · 依第 1～24 題順序排列 (12 款)' },
       unit2: { title: '📄 單元卷 02 專區', desc: '1-3～1-4 速度與加速度考卷 · 依第 2～25 題與題組排列 (11 款)' },
       unit3: { title: '📑 綜合卷 03 專區', desc: '第一章直線運動全單元總複習考卷 · 依第 6～18 題與題組排列 (12 款)' },
-      textbook: { title: '📖 課本配套專區', desc: '課本探索實驗、例題與觀念沙盒 · 依課本 P.7～P.26 順序排列 (14 款)' },
-      workbook: { title: '✏️ 習作題型專區', desc: '習作重點題目與素養活用篇 · 依習作 P.3～P.9 題號排列 (17 款)' },
     };
 
     function renderTools(filter = 'all') {
       const container = document.getElementById('toolsContainer');
       container.innerHTML = '';
 
-      const groups = ['unit1', 'unit2', 'unit3', 'textbook', 'workbook'];
+      const groups = ['textbook', 'workbook', 'unit1', 'unit2', 'unit3'];
 
       groups.forEach((grpKey) => {
         if (filter !== 'all' && filter !== grpKey) {
