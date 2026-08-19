@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國家音樂廳聲學設計 ✕ 聲波反射板 vs 吸音地毯實驗室 | 第63頁題組1~3題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #fde68a;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .wall-selector-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: #ffffff;
+      padding: 0.3rem 0.5rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+    }
+
+    .wall-tab {
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      border: 1.5px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: transparent;
+      color: var(--primary);
+      transition: all 0.15s;
+    }
+
+    .wall-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#acousticsCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fde68a;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .sound-source-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .sound-source-btn {
+      flex: 1;
+      padding: 0.45rem 0.3rem;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: #ffffff;
+      color: var(--primary);
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .sound-source-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #fef3c7;
+      border: 2px dashed #d97706;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #92400e;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #d97706;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+
+    .option-desc {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="optics-nav">
+    <a href="review-hub.html" class="nav-brand">
+      <span>🔬 NatureLab</span>
+      <span class="nav-badge">聲學與光學實驗室</span>
+    </a>
+        <nav class="nav-links">
+      <a href="concert-hall-acoustics-lab.html" class="nav-link-btn" style="background:#fde68a;">🎭 歌劇院聲學設計</a>
+      <a href="periscope-submarine-lab.html" class="nav-link-btn" style="background:#bae6fd;">🚢 潛望鏡雙反射</a>
+      <a href="spoon-curved-mirror-lab.html" class="nav-link-btn" style="background:#e0e7ff;">🥄 湯匙凹凸面鏡</a>
+      <a href="sugar-refraction-curve-lab.html" class="nav-link-btn" style="background:#fed7aa;">🧪 糖水光線彎曲</a>
+      <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 介質波長色散</a>
+      <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="background:#a5f3fc;">👁️ 角膜塑型聚焦</a>
+      <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色紙網格吸光</a>
+      <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="background:#bbf7d0;">💧 凹透鏡水位折射</a>
+      <a href="apparent-depth-lab.html" class="nav-link-btn" style="background:#bae6fd;">🌊 視深與視高</a>
+      <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="background:#fde047;">🕳️ 針孔成像</a>
+      <a href="mirror-sightline-lab.html" class="nav-link-btn" style="background:#fed7aa;">🏰 平面鏡視角</a>
+      <a href="color-perception-lab.html" class="nav-link-btn" style="background:#fbcfe8;">🎨 色光判色</a>
+      <a href="color-reflection-lab.html" class="nav-link-btn" style="background:#fed7aa;">🌈 三色雷射</a>
+      <a href="reflection-angle-lab.html" class="nav-link-btn" style="background:#bcebd9;">📐 雷射量角器</a>
+      <a href="lens-focal-lab.html" class="nav-link-btn">🔍 凸透鏡光路</a>
+      <a href="review-hub.html" class="nav-link-btn">📚 回複習總覽</a>
+      <a href="../index.html" class="nav-link-btn primary">🏠 回首頁</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>國家音樂廳聲學設計 ✕ 聲波反射板 vs 吸音地毯實驗室（第63頁題組1~3題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎭</span> 國家音樂廳聲波反射與吸收波動模擬器
+          </div>
+          <div class="wall-selector-tabs">
+            <button class="wall-tab active" id="tabWallWood" onclick="setWallMaterial('wood')">🌲 光滑上漆木板 (強烈反射·音量飽滿)</button>
+            <button class="wall-tab" id="tabWallCurtain" onclick="setWallMaterial('curtain')">🧶 吸音布幔 (大量吸音·反射衰減)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="acousticsCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：木質反射板能讓聲波均勻反射至後排；切換布幔觀察吸音衰減！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵情境：</span>
+          <button class="preset-btn active" onclick="setWallMaterial('wood')">🏛️ 國家音樂廳原裝 (木質反射板 + 布面座椅地毯)</button>
+          <button class="preset-btn" onclick="startSpeedRace()">⚡ 女高音 vs 管絃樂團 (同介質波速相同競速測試)</button>
+          <button class="preset-btn" onclick="setWallMaterial('curtain')">⚠️ 牆面換成布幔 (第2題錯誤選項 C 演示)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Sound Source Selection Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>🎵</span> 舞台聲音訊號源
+          </div>
+          <div class="sound-source-row">
+            <button class="sound-source-btn active" id="btnSourceSoprano" onclick="setSourceType('soprano')">👩‍🎤 女高音 (高頻·1000Hz)</button>
+            <button class="sound-source-btn" id="btnSourceCello" onclick="setSourceType('cello')">🎻 管絃樂 (低頻·150Hz)</button>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">
+            高音調（頻率高、密波）與低音調（頻率低、疏波）在同音樂廳內傳播。
+          </div>
+        </div>
+
+        <!-- Acoustics Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 聲學物理特性分析
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">牆面聲波效果</div>
+              <div class="status-item-val" id="dispWallEffect" style="color:#d97706;">強烈反射 📢</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">空氣中波速 v</div>
+              <div class="status-item-val" style="color:#15803d;">完全相同 ⚡</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🏛️ <strong>【音樂廳聲學設計黃金法則】</strong>：<br>
+            - <strong>四周木片</strong>：質地堅硬光滑 ➔ <strong>反射聲波</strong>！<br>
+            - <strong>座椅與地毯</strong>：鬆軟多孔 ➔ <strong>吸收雜音</strong>！<br>
+            - <strong>女高音與樂團</strong>：在同一空氣介質中 ➔ <strong>波速必然相同</strong>！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section (Question 1) -->
+    <section class="exam-section" id="examSecQ1">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 63 頁 題組 第 1 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 1：快速道路兩旁的金屬板之主要功能為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#d97706; background:#fef3c7; border:1.5px solid #d97706; padding:0.3rem 0.7rem; border-radius:99px;">
+          生活應用 ✕ 隔音牆吸音
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：圖(一) 快速道路兩旁的金屬板之主要功能為何？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ1('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">遮蔽太陽光，避免太陽光直接射入駕駛眼睛</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ1('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">吸收汽車排放的廢氣，減緩空氣污染問題</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ1('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">安全裝置，避免車子失控飛出橋上</div>
+        </div>
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ1('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">金屬板內含吸音材料，可以吸收快速道路及汽車發出的噪音 (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ1">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ1">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ1"></div>
+      </div>
+    </section>
+
+    <!-- Exam Section (Question 2) -->
+    <section class="exam-section" id="examSecQ2">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 63 頁 題組 第 2 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 2：下列關於文中「國家音樂廳」的描述，何者【錯誤】？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#dc2626; background:#fee2e2; border:1.5px solid #dc2626; padding:0.3rem 0.7rem; border-radius:99px;">
+          反射板 vs 布幔吸音 ✕ 找出錯誤
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：下列關於文中「國家音樂廳」的描述，何者錯誤？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ2('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">圖(二)中的大片光滑已上漆木片可作為聲波的反射板</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ2('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">文中提到的地毯和布面座椅具有吸收聲波的效果</div>
+        </div>
+        <!-- Option C (Correct - False statement) -->
+        <div class="option-card" onclick="testExamQ2('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">圖(二)中的大木片若用布幔取代，則聲波反射的效果更佳 (錯誤·選C)</div>
+        </div>
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ2('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">座椅的布面呈現紅色，是因為布面只會反射紅光，而吸收其他色光</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ2">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ2">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ2"></div>
+      </div>
+    </section>
+
+    <!-- Exam Section (Question 3) -->
+    <section class="exam-section" id="examSecQ3">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 63 頁 題組 第 3 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 3：樂團演奏的樂音與女高音演唱的聲音比較，何者正確？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#15803d; background:#dcfce7; border:1.5px solid #15803d; padding:0.3rem 0.7rem; border-radius:99px;">
+          同介質同溫度 ✕ 波速必相同
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：下列關於樂團演奏出的樂音與薇若妮卡演唱發出聲音的比較，何者正確？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ3('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">兩者的音色相同</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ3('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">兩者的音調相同</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ3('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">兩者的響度相同</div>
+        </div>
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ3('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">兩者的波速相同 (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ3">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ3">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ3"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 聲學設計與閱讀素養教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let wallMaterial = 'wood'; // 'wood' (反射強) | 'curtain' (吸音強)
+    let sourceType = 'soprano'; // 'soprano' (高頻) | 'cello' (低頻)
+    let waveTime = 0;
+
+    const canvas = document.getElementById('acousticsCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const dispWallEffect = document.getElementById('dispWallEffect');
+    const natureBanner = document.getElementById('natureBanner');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function animationLoop() {
+      waveTime += 0.05;
+      draw();
+      requestAnimationFrame(animationLoop);
+    }
+
+    function setWallMaterial(m) {
+      wallMaterial = m;
+      document.getElementById('tabWallWood').classList.toggle('active', m === 'wood');
+      document.getElementById('tabWallCurtain').classList.toggle('active', m === 'curtain');
+
+      if (m === 'wood') {
+        dispWallEffect.textContent = '強烈反射 📢';
+        dispWallEffect.style.color = '#d97706';
+        natureBanner.innerHTML = `
+          🌲 <strong>【大片光滑上漆木板 (正確設計)】</strong>：<br>
+          質地堅硬、表面光滑，<strong>能良好反射聲波</strong>，使整個音樂廳（包含後排觀眾席）都能聽見均勻飽滿的聲音！
+        `;
+        natureBanner.style.background = '#fef3c7';
+        natureBanner.style.borderColor = '#d97706';
+        natureBanner.style.color = '#92400e';
+      } else {
+        dispWallEffect.textContent = '吸音衰減 🔇';
+        dispWallEffect.style.color = '#dc2626';
+        natureBanner.innerHTML = `
+          🧶 <strong>【若改用布幔 (第2題錯誤選項 C)】</strong>：<br>
+          布幔材質鬆軟多孔，<strong>會大量吸收聲波</strong>，導致聲音反射嚴重減弱，後排聽起來沉悶無力！
+        `;
+        natureBanner.style.background = '#fee2e2';
+        natureBanner.style.borderColor = '#dc2626';
+        natureBanner.style.color = '#991b1b';
+      }
+    }
+
+    function setSourceType(t) {
+      sourceType = t;
+      document.getElementById('btnSourceSoprano').classList.toggle('active', t === 'soprano');
+      document.getElementById('btnSourceCello').classList.toggle('active', t === 'cello');
+    }
+
+    function startSpeedRace() {
+      setWallMaterial('wood');
+      // flash highlight
+    }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      // Concert Hall Architecture Boundary
+      const hallLeft = 40;
+      const hallRight = w - 40;
+      const hallTop = 40;
+      const hallBottom = h - 40;
+
+      // 1. Draw Hall Floor & Audience Seats
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(hallLeft, hallTop, hallRight - hallLeft, hallBottom - hallTop);
+
+      // Carpet Area (Red)
+      ctx.fillStyle = 'rgba(225, 29, 72, 0.25)';
+      ctx.fillRect(hallLeft + 120, hallTop + 40, hallRight - hallLeft - 140, hallBottom - hallTop - 80);
+
+      // Audience Seats (Rows of red dots)
+      ctx.fillStyle = '#ef4444';
+      for (let rx = hallLeft + 160; rx < hallRight - 40; rx += 45) {
+        for (let ry = hallTop + 60; ry < hallBottom - 60; ry += 35) {
+          ctx.beginPath();
+          ctx.arc(rx, ry, 5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.fillStyle = '#fca5a5';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('觀眾席 (布面座椅 & 地毯吸音)', (hallLeft + 160 + hallRight - 40) / 2, hallBottom - 45);
+
+      // 2. Draw Walls (Wood vs Curtain)
+      ctx.lineWidth = 8;
+      if (wallMaterial === 'wood') {
+        ctx.strokeStyle = '#d97706'; // Golden Wood
+      } else {
+        ctx.strokeStyle = '#64748b'; // Gray Curtain
+      }
+
+      // Top Wall Reflectors
+      ctx.beginPath();
+      ctx.moveTo(hallLeft, hallTop);
+      ctx.lineTo(hallRight, hallTop);
+      ctx.stroke();
+
+      // Bottom Wall Reflectors
+      ctx.beginPath();
+      ctx.moveTo(hallLeft, hallBottom);
+      ctx.lineTo(hallRight, hallBottom);
+      ctx.stroke();
+
+      // Back Wall (Left)
+      ctx.beginPath();
+      ctx.moveTo(hallLeft, hallTop);
+      ctx.lineTo(hallLeft, hallBottom);
+      ctx.stroke();
+
+      // Wall Label
+      ctx.fillStyle = wallMaterial === 'wood' ? '#fbbf24' : '#94a3b8';
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(wallMaterial === 'wood' ? '🌲 光滑上漆木板 (反射板)' : '🧶 鬆軟吸音布幔 (吸音牆)', hallLeft + 10, hallTop - 12);
+
+      // 3. Stage & Sound Source (Left Stage)
+      const stageX = hallLeft + 65;
+      const stageY = (hallTop + hallBottom) / 2;
+
+      ctx.fillStyle = '#fde68a';
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(stageX, stageY, 26, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = '24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(sourceType === 'soprano' ? '👩‍🎤' : '🎻', stageX, stageY + 8);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText(sourceType === 'soprano' ? '女高音' : '管絃樂團', stageX, stageY + 38);
+
+      // 4. Acoustic Wavefront Propagation Animation
+      const maxRadius = hallRight - stageX + 40;
+      const waveSpacing = sourceType === 'soprano' ? 18 : 45; // High pitch = dense waves; Low pitch = sparse waves
+
+      ctx.save();
+      for (let r = (waveTime * 35) % waveSpacing; r < maxRadius; r += waveSpacing) {
+        if (r < 10) continue;
+
+        // Direct Wave (Expanding from Stage)
+        const alpha = Math.max(0, 1 - r / maxRadius);
+        ctx.strokeStyle = sourceType === 'soprano' ? `rgba(56, 189, 248, ${alpha * 0.8})` : `rgba(250, 204, 21, ${alpha * 0.8})`;
+        ctx.lineWidth = 2.5;
+
+        ctx.beginPath();
+        ctx.arc(stageX, stageY, r, -Math.PI * 0.45, Math.PI * 0.45);
+        ctx.stroke();
+
+        // Reflected Waves from Top & Bottom Walls
+        if (wallMaterial === 'wood') {
+          // Strong reflected waves (Golden arcs)
+          ctx.strokeStyle = `rgba(251, 191, 36, ${alpha * 0.65})`;
+          ctx.lineWidth = 2;
+
+          // Virtual source top reflection
+          ctx.beginPath();
+          ctx.arc(stageX, hallTop - (stageY - hallTop), r, 0.15, Math.PI * 0.45);
+          ctx.stroke();
+
+          // Virtual source bottom reflection
+          ctx.beginPath();
+          ctx.arc(stageX, hallBottom + (hallBottom - stageY), r, -Math.PI * 0.45, -0.15);
+          ctx.stroke();
+        } else {
+          // Weak/Damped reflected waves (Dark gray faded arcs)
+          ctx.strokeStyle = `rgba(148, 163, 184, ${alpha * 0.18})`;
+          ctx.lineWidth = 1;
+
+          ctx.beginPath();
+          ctx.arc(stageX, hallTop - (stageY - hallTop), r, 0.2, Math.PI * 0.4);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    // Exam Handlers
+    window.testExamQ1 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ1');
+      const expTitle = document.getElementById('expTitleQ1');
+      const expContent = document.getElementById('expContentQ1');
+      const cards = document.querySelectorAll('#examSecQ1 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 金屬板內含吸音材料，可吸收噪音】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【題組第 1 題詳解】</strong><br>
+          快速道路兩旁的金屬板為「<strong>隔音牆</strong>」，其內部填充多孔吸音材料（如吸音棉、多孔消音板），能有效吸收汽車行駛時輪胎摩擦與引擎發出的噪音，保護兩旁居民安寧。故選 <strong>(D)</strong>！
+        `;
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `快速道路兩側設置金屬板的主要目的是作為隔音設施，減少噪音污染。`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    window.testExamQ2 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ2');
+      const expTitle = document.getElementById('expTitleQ2');
+      const expContent = document.getElementById('expContentQ2');
+      const cards = document.querySelectorAll('#examSecQ2 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'C') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(C) 大木片若用布幔取代，聲波反射效果更佳（錯誤·選C）】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【題組第 2 題詳解】</strong><br>
+          1. <strong>木板 vs 布幔的聲學差異</strong>：<br>
+             - <strong>光滑上漆木板</strong>：堅硬光滑 ➔ <strong>利於聲波反射</strong>（選項 A 正確）。<br>
+             - <strong>布幔／地毯／布面座椅</strong>：鬆軟多孔 ➔ <strong>利於吸收聲波</strong>（選項 B 正確）。<br>
+             - 若用「布幔」取代木板，聲波會被大量吸收，<strong>反射效果反而會大幅變差</strong>，故 (C) 敘述錯誤，為本題正解！<br>
+          2. <strong>選項 D 光學觀念</strong>：紅色布面反射紅光、吸收其他色光，完全正確！
+        `;
+        setWallMaterial('curtain');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【此選項為正確敘述，題目要求選出錯誤者】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `請注意：布幔是吸音材料，用布幔取代木板會讓反射變差，因此 (C) 的敘述是錯誤的！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    window.testExamQ3 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ3');
+      const expTitle = document.getElementById('expTitleQ3');
+      const expContent = document.getElementById('expContentQ3');
+      const cards = document.querySelectorAll('#examSecQ3 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 兩者的波速相同】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【題組第 3 題詳解】</strong><br>
+          1. <strong>聲音波速的決定因素</strong>：聲速 $v$ <strong>只由「傳播介質的種類、狀態與溫度」決定</strong>（空氣中 $v = 331 + 0.6T$）。<br>
+          2. <strong>女高音 vs 管絃樂團</strong>：兩者的音色（波形）、音調（頻率）、響度（振幅）均不相同，但在同一個音樂廳的空氣中傳播，<strong>兩者的「波速完全相同」</strong>！<br>
+          3. 故本題正解為 <strong>(D)</strong>！
+        `;
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `不同發聲體的音色不同、音調高低不同、響度大小不同；但只要在同一介質同溫度下，所有聲音的波速都相同！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+      animationLoop();
+    }, 100);
+  </script>
+</body>
+</html>
