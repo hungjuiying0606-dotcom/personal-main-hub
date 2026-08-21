@@ -1,0 +1,495 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>世界名人堂 - 個人主網頁</title>
+  <meta name="description" content="世界名人堂 - 精選科學家與歷史名人生平故事、課堂教學影音與沈浸式閱讀理解密室逃脫遊戲。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #faf8f5;
+      --bg-surface: #ffffff;
+      --bg-surface-muted: #f4f2ee;
+      --text-main: #1f2937;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --border-muted: #e2e0dc;
+      --primary: #0f766e;
+      --primary-hover: #115e59;
+      --primary-light: #ccfbf1;
+      --primary-light-text: #134e4a;
+      --accent-gold: #b45309;
+      --accent-gold-bg: #fef3c7;
+      --accent-blue: #1d4ed8;
+      --accent-blue-bg: #dbeafe;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Site Header */
+    .site-header {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-home-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--border-muted);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-main) 100%);
+    }
+
+    .hero-inner {
+      max-width: 780px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-stats {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.45rem 1rem;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 3rem 0 5rem;
+    }
+
+    .section-title-wrap {
+      margin-bottom: 1.75rem;
+    }
+
+    .section-title {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .hero-title {
+        font-size: 1.75rem;
+      }
+    }
+
+    .resource-card {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--primary);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .resource-card.yt-card::before {
+      background: #ef4444;
+    }
+
+    .resource-card.game-card::before {
+      background: #0f766e;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: #cbd5e1;
+    }
+
+    .resource-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .yt-icon-wrap {
+      background-color: #fee2e2;
+    }
+
+    .game-icon-wrap {
+      background-color: var(--primary-light);
+    }
+
+    .badge-wrap {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .badge-online {
+      background-color: #dcfce7;
+      color: #15803d;
+    }
+
+    .badge-type {
+      background-color: var(--bg-surface-muted);
+      color: var(--text-secondary);
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.65rem;
+      line-height: 1.35;
+    }
+
+    .card-description {
+      font-size: 0.975rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+
+    .card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.75rem;
+      padding: 0.85rem 1rem;
+      background-color: var(--bg-surface-muted);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .card-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-features li span {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-youtube {
+      background-color: #ef4444;
+      color: #ffffff;
+      border: 1px solid #dc2626;
+    }
+
+    .btn-youtube:hover {
+      background-color: #dc2626;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-game {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+    }
+
+    .btn-game:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.35);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
+        🏠 回首頁
+      </a>
+      <div class="header-brand">
+        <span>🌟 世界名人堂</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag">🏛️ 世界名人堂專區</div>
+      <h1 class="hero-title">世界名人堂學習殿堂</h1>
+      <p class="hero-description">
+        精選科學家與歷史名人生平故事、課堂教學影音與沈浸式閱讀理解密室逃脫遊戲，帶領學生探索大師智慧與科學探索精神。
+      </p>
+      <div class="hero-stats">
+        <span>📊 2 大核心資源</span>
+        <span>•</span>
+        <span>🟢 全面正式上線</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="section-title-wrap">
+        <h2 class="section-title">✨ 學習專區與互動平台</h2>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Card 1: YouTube 教學頻道 -->
+        <article class="resource-card yt-card">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap yt-icon-wrap">📺</div>
+              <div class="badge-wrap">
+                <span class="status-badge badge-type">影音頻道</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">Juiying 教學頻道</h3>
+            <p class="card-description">
+              世界名人堂與課堂教學相關影片頻道，精選各領域科學家精彩生平故事、理化課程知識點講解與素養主題影片。
+            </p>
+
+            <ul class="card-features">
+              <li><span>✓</span> 世界名人堂人物傳記影片</li>
+              <li><span>✓</span> 國中理化與自然課堂重點講解</li>
+              <li><span>✓</span> 生動有趣的科學素養補充</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://www.youtube.com/@Juiying-t8i9y" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-youtube">
+              觀看 YouTube 教學頻道 <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: 諾貝爾閱讀理解密室逃脫 -->
+        <article class="resource-card game-card">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap game-icon-wrap">🎮</div>
+              <div class="badge-wrap">
+                <span class="status-badge badge-type">密室逃脫</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">〈諾貝爾傳奇〉閱讀理解密室逃脫</h3>
+            <p class="card-description">
+              以阿佛烈·諾貝爾生平、炸藥發明、諾貝爾獎與搞笑諾貝爾獎為主題的互動解謎遊戲，支援雙模式挑戰與通關證書。
+            </p>
+
+            <ul class="card-features">
+              <li><span>✓</span> 新手探索者 & 高手挑戰者雙模式</li>
+              <li><span>✓</span> 漢字密碼碎片收集與防猜設計</li>
+              <li><span>✓</span> 通關即時產生榮譽證書下載</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/nobel-reading-escape-room/" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-game">
+              開始密室逃脫挑戰 <span>→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>個人主網頁 · 世界名人堂專區</p>
+      <p>&copy; 2026 個人主網頁. 保留所有權利。</p>
+    </div>
+  </footer>
+</body>
+</html>

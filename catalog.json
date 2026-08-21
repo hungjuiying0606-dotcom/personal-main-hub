@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19",
+  "lastUpdated": "2026-08-21",
   "categories": [
     {
       "id": "teaching",
@@ -25,13 +25,13 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/review-hub.html"
         },
         {
-          "id": "juiying-teaching-channel",
+          "id": "hall-of-fame-hub",
           "title": "世界名人堂",
-          "description": "世界名人堂與課堂教學相關影片頻道",
+          "description": "世界名人堂專區：精選課堂影音頻道與〈諾貝爾傳奇〉閱讀理解密室逃脫。",
           "status": "active",
           "homepageState": "linked",
           "order": 30,
-          "url": "https://www.youtube.com/@Juiying-t8i9y"
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html"
         },
         {
           "id": "classbuddy-classroom-toolbox",
