@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>世界名人堂 - 個人主網頁</title>
-  <meta name="description" content="世界名人堂 - 精選科學家與歷史名人生平故事、課堂教學影音與沈浸式閱讀理解密室逃脫遊戲。" />
+  <title>密室逃脫專區 - 個人主網頁</title>
+  <meta name="description" content="密室逃脫專區 - 精選〈諾貝爾傳奇〉與〈愛因斯坦實驗室〉沈浸式閱讀理解密室逃脫解謎遊戲。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -22,10 +22,8 @@
       --primary-hover: #115e59;
       --primary-light: #ccfbf1;
       --primary-light-text: #134e4a;
-      --accent-gold: #b45309;
-      --accent-gold-bg: #fef3c7;
-      --accent-blue: #1d4ed8;
-      --accent-blue-bg: #dbeafe;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fef3c7;
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
@@ -75,7 +73,13 @@
       justify-content: space-between;
     }
 
-    .back-home-btn {
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -91,7 +95,7 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .back-home-btn:hover {
+    .nav-btn:hover {
       background-color: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
@@ -223,12 +227,12 @@
       transition: opacity 0.25s ease;
     }
 
-    .resource-card.yt-card::before {
-      background: #ef4444;
+    .resource-card.nobel-card::before {
+      background: #0f766e;
     }
 
-    .resource-card.game-card::before {
-      background: #0f766e;
+    .resource-card.einstein-card::before {
+      background: #d97706;
     }
 
     .resource-card:hover {
@@ -260,12 +264,12 @@
       flex-shrink: 0;
     }
 
-    .yt-icon-wrap {
-      background-color: #fee2e2;
+    .nobel-icon-wrap {
+      background-color: var(--primary-light);
     }
 
-    .game-icon-wrap {
-      background-color: var(--primary-light);
+    .einstein-icon-wrap {
+      background-color: var(--accent-amber-light);
     }
 
     .badge-wrap {
@@ -329,6 +333,10 @@
       font-weight: bold;
     }
 
+    .card-features.einstein-features li span {
+      color: var(--accent-amber);
+    }
+
     .card-action-btn {
       display: inline-flex;
       align-items: center;
@@ -344,26 +352,26 @@
       cursor: pointer;
     }
 
-    .btn-youtube {
-      background-color: #ef4444;
-      color: #ffffff;
-      border: 1px solid #dc2626;
-    }
-
-    .btn-youtube:hover {
-      background-color: #dc2626;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
-    }
-
-    .btn-game {
+    .btn-nobel {
       background-color: var(--primary);
       color: #ffffff;
       border: 1px solid var(--primary-hover);
     }
 
-    .btn-game:hover {
+    .btn-nobel:hover {
       background-color: var(--primary-hover);
       box-shadow: 0 4px 12px rgba(15, 118, 110, 0.35);
+    }
+
+    .btn-einstein {
+      background-color: var(--accent-amber);
+      color: #ffffff;
+      border: 1px solid #b45309;
+    }
+
+    .btn-einstein:hover {
+      background-color: #b45309;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
     }
 
     /* Footer */
@@ -388,11 +396,16 @@
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
-        🏠 回首頁
-      </a>
+      <div class="nav-buttons">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-btn">
+          🏠 回首頁
+        </a>
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html" class="nav-btn">
+          🏛️ 回世界名人堂
+        </a>
+      </div>
       <div class="header-brand">
-        <span>🌟 世界名人堂</span>
+        <span>🎮 密室逃脫挑戰館</span>
       </div>
     </div>
   </header>
@@ -400,15 +413,15 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="container hero-inner">
-      <div class="hero-tag">🏛️ 世界名人堂專區</div>
-      <h1 class="hero-title">世界名人堂學習殿堂</h1>
+      <div class="hero-tag">🧩 閱讀理解密室逃脫</div>
+      <h1 class="hero-title">閱讀理解密室逃脫挑戰館</h1>
       <p class="hero-description">
-        精選科學家與歷史名人生平故事、課堂教學影音與沈浸式閱讀理解密室逃脫遊戲，帶領學生探索大師智慧與科學探索精神。
+        精選人物傳記、科學素養與沈浸式閱讀理解密室逃脫解謎遊戲，支援雙模式挑戰與通關證書。
       </p>
       <div class="hero-stats">
-        <span>📊 2 大核心資源</span>
+        <span>📊 2 大主題密室逃脫</span>
         <span>•</span>
-        <span>🟢 全面正式上線</span>
+        <span>🟢 全面開放挑戰</span>
       </div>
     </div>
   </section>
@@ -417,66 +430,66 @@
   <main class="main-content">
     <div class="container">
       <div class="section-title-wrap">
-        <h2 class="section-title">✨ 學習專區與互動平台</h2>
+        <h2 class="section-title">✨ 選擇密室逃脫主題</h2>
       </div>
 
       <div class="cards-grid">
-        <!-- Card 1: YouTube 教學頻道 -->
-        <article class="resource-card yt-card">
+        <!-- Card 1: 諾貝爾閱讀理解密室逃脫 -->
+        <article class="resource-card nobel-card">
           <div>
             <div class="card-header-row">
-              <div class="card-icon-wrap yt-icon-wrap">📺</div>
-              <div class="badge-wrap">
-                <span class="status-badge badge-type">影音頻道</span>
-                <span class="status-badge badge-online">已上線</span>
-              </div>
-            </div>
-
-            <h3 class="card-title">Juiying 教學頻道</h3>
-            <p class="card-description">
-              世界名人堂與課堂教學相關影片頻道，精選各領域科學家精彩生平故事、理化課程知識點講解與素養主題影片。
-            </p>
-
-            <ul class="card-features">
-              <li><span>✓</span> 世界名人堂人物傳記影片</li>
-              <li><span>✓</span> 國中理化與自然課堂重點講解</li>
-              <li><span>✓</span> 生動有趣的科學素養補充</li>
-            </ul>
-          </div>
-
-          <div>
-            <a href="https://www.youtube.com/@Juiying-t8i9y" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-youtube">
-              觀看 YouTube 教學頻道 <span>→</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Card 2: 密室逃脫 -->
-        <article class="resource-card game-card">
-          <div>
-            <div class="card-header-row">
-              <div class="card-icon-wrap game-icon-wrap">🎮</div>
+              <div class="card-icon-wrap nobel-icon-wrap">🎮</div>
               <div class="badge-wrap">
                 <span class="status-badge badge-type">密室逃脫</span>
                 <span class="status-badge badge-online">已上線</span>
               </div>
             </div>
 
-            <h3 class="card-title">密室逃脫</h3>
+            <h3 class="card-title">〈諾貝爾傳奇〉閱讀理解密室逃脫</h3>
             <p class="card-description">
-              收錄〈諾貝爾傳奇〉與〈愛因斯坦實驗室〉等多款沈浸式閱讀理解密室逃脫解謎遊戲。
+              以阿佛烈·諾貝爾生平、炸藥發明、諾貝爾獎與搞笑諾貝爾獎為主題的互動解謎遊戲，支援雙模式挑戰與通關證書。
             </p>
 
             <ul class="card-features">
-              <li><span>✓</span> 多主題科學與人物傳記密室</li>
-              <li><span>✓</span> 雙模式挑戰與題目密碼防猜設計</li>
-              <li><span>✓</span> 通關即時產生榮譽證書</li>
+              <li><span>✓</span> 新手探索者 & 高手挑戰者雙模式</li>
+              <li><span>✓</span> 漢字密碼碎片收集與防猜設計</li>
+              <li><span>✓</span> 通關即時產生榮譽證書下載</li>
             </ul>
           </div>
 
           <div>
-            <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/escape-rooms.html" class="card-action-btn btn-game">
-              進入密室逃脫專區 <span>→</span>
+            <a href="https://hungjuiying0606-dotcom.github.io/nobel-reading-escape-room/" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-nobel">
+              開始密室逃脫挑戰 <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: 愛因斯坦密室逃脫 -->
+        <article class="resource-card einstein-card">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap einstein-icon-wrap">⚛️</div>
+              <div class="badge-wrap">
+                <span class="status-badge badge-type">密室逃脫</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">〈愛因斯坦實驗室〉密室逃脫</h3>
+            <p class="card-description">
+              以愛因斯坦生平、相對論、光電效應與物理探索為主題的互動解謎密室逃脫遊戲，支援題目挑戰與時空探索。
+            </p>
+
+            <ul class="card-features einstein-features">
+              <li><span>✓</span> 探究光電效應與相對論概念</li>
+              <li><span>✓</span> 蒸氣賽博風格與互動解謎關卡</li>
+              <li><span>✓</span> 通關即時榮譽驗證與學習證書</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="einstein-escape-room/index.html" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-einstein">
+              開始密室逃脫挑戰 <span>→</span>
             </a>
           </div>
         </article>
@@ -487,7 +500,7 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>個人主網頁 · 世界名人堂專區</p>
+      <p>個人主網頁 · 密室逃脫專區</p>
       <p>&copy; 2026 個人主網頁. 保留所有權利。</p>
     </div>
   </footer>
