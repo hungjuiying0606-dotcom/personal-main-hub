@@ -264,53 +264,296 @@
       background-color: #ffffff;
       border: 2px solid var(--border-color);
       border-radius: var(--radius-xl);
-      padding: 1.75rem;
+      padding: 1.5rem 1.25rem;
       box-shadow: var(--shadow-lg);
       text-align: center;
       position: relative;
     }
 
-    .hero-avatar-wrap {
-      width: 140px;
-      height: 140px;
-      margin: 0 auto 1.25rem;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid var(--gold-light);
-      box-shadow: var(--shadow-md);
-      background-color: var(--bg-surface-muted);
+    /* 3D Card Stack Carousel Styles */
+    .card-stack-wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      margin-bottom: 0.75rem;
     }
 
-    .hero-avatar-wrap img {
+    .card-stack-scene {
+      position: relative;
+      width: 220px;
+      height: 230px;
+      transform-style: preserve-3d;
+    }
+
+    .stack-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: 2.5px solid #ffffff;
+      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      will-change: transform, opacity;
+    }
+
+    .stack-card .stack-img-wrap {
+      width: 100%;
+      height: 175px;
+      background-color: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stack-card .stack-img-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .stack-card:hover .stack-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .stack-card-caption {
+      padding: 0.45rem 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: #1e293b;
+      background: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-top: 1px solid #e2e8f0;
+      line-height: 1.3;
+    }
+
+    /* 3D Stack Layer Positions */
+    .stack-card.pos-front {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+      z-index: 10;
+      pointer-events: auto;
+      border-color: #f59e0b;
+      box-shadow: 0 16px 28px -6px rgba(180, 83, 9, 0.25), 0 6px 12px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .stack-card.pos-right-1 {
+      transform: translate3d(24px, 10px, -40px) scale(0.92) rotate(3.5deg);
+      opacity: 0.82;
+      z-index: 8;
+      pointer-events: auto;
+    }
+
+    .stack-card.pos-right-2 {
+      transform: translate3d(44px, 20px, -80px) scale(0.84) rotate(7deg);
+      opacity: 0.55;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .stack-card.pos-left-1 {
+      transform: translate3d(-24px, 10px, -40px) scale(0.92) rotate(-3.5deg);
+      opacity: 0.82;
+      z-index: 8;
+      pointer-events: auto;
+    }
+
+    .stack-card.pos-hidden {
+      transform: translate3d(0, 30px, -120px) scale(0.75);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Stack Nav Controls */
+    .stack-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 220px;
+      margin: 0.4rem auto 0;
+      gap: 0.5rem;
+    }
+
+    .stack-ctrl-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-color);
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .stack-ctrl-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .stack-counter-pill {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--gold-dark);
+      background-color: var(--gold-light);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid #fde68a;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-view-all-photos {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: var(--primary-light-text);
+      background-color: var(--primary-light);
+      border: 1px solid #99f6e4;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-view-all-photos:hover {
+      background-color: #0f766e;
+      color: #ffffff;
+      border-color: #0f766e;
+      transform: translateY(-1px);
+    }
+
+    /* Photo Drawer / Modal */
+    .photo-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-drawer-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .photo-drawer-box {
+      background-color: #ffffff;
+      border-radius: var(--radius-xl);
+      max-width: 960px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      animation: drawerPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes drawerPop {
+      from { transform: scale(0.92) translateY(20px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .photo-drawer-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1.5px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 10;
+    }
+
+    .photo-drawer-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .photo-drawer-body {
+      padding: 1.5rem;
+    }
+
+    .drawer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 860px) {
+      .drawer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .drawer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .hero-card-name {
       font-size: 1.35rem;
       font-weight: 900;
       color: var(--text-main);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .hero-card-latin {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.65rem;
     }
 
     .hero-card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.35rem;
       justify-content: center;
+      margin-bottom: 0.85rem;
     }
 
     .hero-mini-badge {
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
+      font-size: 0.72rem;
+      padding: 0.18rem 0.55rem;
       border-radius: 9999px;
       font-weight: 700;
       background-color: var(--bg-surface-muted);
@@ -1136,10 +1379,22 @@
         </div>
 
         <div class="hero-card-side">
-          <div class="hero-avatar-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾畫像.jpg" alt="諾貝爾畫像" onerror="this.src='./assets/nobel/image1.png'" />
+          <!-- 3D Card Stack Carousel -->
+          <div class="card-stack-wrapper" id="cardStackWrapper" title="可滑動切換或點擊放大觀賞">
+            <div class="card-stack-scene" id="cardStackScene">
+              <!-- Rendered dynamically by JS -->
+            </div>
           </div>
-          <h2 class="hero-card-name">諾貝爾</h2>
+
+          <!-- Stack Controls Bar -->
+          <div class="stack-controls-bar">
+            <button class="stack-ctrl-btn" id="stackPrevBtn" title="上一張照片" aria-label="上一張">◀</button>
+            <span class="stack-counter-pill" id="stackCounter">01 / 23</span>
+            <button class="stack-ctrl-btn" id="stackPlayBtn" title="暫停 / 繼續自動輪播" aria-label="播放暫停">⏸</button>
+            <button class="stack-ctrl-btn" id="stackNextBtn" title="下一張照片" aria-label="下一張">▶</button>
+          </div>
+
+          <h2 class="hero-card-name" style="margin-top: 0.85rem;">諾貝爾</h2>
           <p class="hero-card-latin">Alfred Bernhard Nobel</p>
           <div class="hero-card-tags">
             <span class="hero-mini-badge">炸藥之父</span>
@@ -1148,10 +1403,13 @@
             <span class="hero-mini-badge">和平主義者</span>
           </div>
 
-          <div style="margin-top: 1.25rem;">
+          <div style="margin-top: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
             <a href="#activities" class="activity-btn btn-act-primary" style="font-size: 0.9rem; padding: 0.65rem 1rem;">
               🚀 啟動課堂互動教具
             </a>
+            <button type="button" class="btn-view-all-photos" onclick="openPhotoDrawer()">
+              🖼️ 瀏覽全部 23 幅珍貴圖輯
+            </button>
           </div>
         </div>
       </div>
@@ -1420,122 +1678,143 @@
       </div>
 
       <div class="gallery-grid" id="galleryGrid">
-        <!-- 23 Gallery Items Generated Dynamically / Pre-rendered -->
-                <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎', './assets/nobel/gallery/搞笑諾貝爾獎.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/搞笑諾貝爾獎.jpg" alt="搞笑諾貝爾獎" loading="lazy" />
-          </div>
-          <div class="gallery-caption">搞笑諾貝爾獎</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎02', './assets/nobel/gallery/搞笑諾貝爾獎02.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/搞笑諾貝爾獎02.jpg" alt="搞笑諾貝爾獎02" loading="lazy" />
-          </div>
-          <div class="gallery-caption">搞笑諾貝爾獎02</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎03', './assets/nobel/gallery/搞笑諾貝爾獎03.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/搞笑諾貝爾獎03.jpg" alt="搞笑諾貝爾獎03" loading="lazy" />
-          </div>
-          <div class="gallery-caption">搞笑諾貝爾獎03</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('數學家米泰萊弗勒', './assets/nobel/gallery/數學家米泰萊弗勒.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/數學家米泰萊弗勒.jpg" alt="數學家米泰萊弗勒" loading="lazy" />
-          </div>
-          <div class="gallery-caption">數學家米泰萊弗勒</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('歐魯夫˙魯德貝克', './assets/nobel/gallery/歐魯夫˙魯德貝克.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/歐魯夫˙魯德貝克.jpg" alt="歐魯夫˙魯德貝克" loading="lazy" />
-          </div>
-          <div class="gallery-caption">歐魯夫˙魯德貝克</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('炸藥', './assets/nobel/gallery/炸藥.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/炸藥.jpg" alt="炸藥" loading="lazy" />
-          </div>
-          <div class="gallery-caption">炸藥</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('聖彼得堡', './assets/nobel/gallery/聖彼得堡.png')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/聖彼得堡.png" alt="聖彼得堡" loading="lazy" />
-          </div>
-          <div class="gallery-caption">聖彼得堡</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('英國詩人拜倫', './assets/nobel/gallery/英國詩人拜倫.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/英國詩人拜倫.jpg" alt="英國詩人拜倫" loading="lazy" />
-          </div>
-          <div class="gallery-caption">英國詩人拜倫</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('英國詩人雪萊', './assets/nobel/gallery/英國詩人雪萊.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/英國詩人雪萊.jpg" alt="英國詩人雪萊" loading="lazy" />
-          </div>
-          <div class="gallery-caption">英國詩人雪萊</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('菲爾茲獎（Fields medals）', './assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg" alt="菲爾茲獎（Fields medals）" loading="lazy" />
-          </div>
-          <div class="gallery-caption">菲爾茲獎（Fields medals）</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾03', './assets/nobel/gallery/諾貝爾03.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾03.jpg" alt="諾貝爾03" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾03</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾04', './assets/nobel/gallery/諾貝爾04.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾04.jpg" alt="諾貝爾04" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾04</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾家族老宅01', './assets/nobel/gallery/諾貝爾家族老宅01.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾家族老宅01.jpg" alt="諾貝爾家族老宅01" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾家族老宅01</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室舊照', './assets/nobel/gallery/諾貝爾實驗室舊照.png')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾實驗室舊照.png" alt="諾貝爾實驗室舊照" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾實驗室舊照</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室近代照片', './assets/nobel/gallery/諾貝爾實驗室近代照片.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾實驗室近代照片.jpg" alt="諾貝爾實驗室近代照片" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾實驗室近代照片</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾年輕畫像', './assets/nobel/gallery/諾貝爾年輕畫像.png')">
+        <div class="gallery-card" onclick="openImageModal('諾貝爾年輕畫像', './assets/nobel/gallery/諾貝爾年輕畫像.png')">
           <div class="gallery-img-wrap">
             <img src="./assets/nobel/gallery/諾貝爾年輕畫像.png" alt="諾貝爾年輕畫像" loading="lazy" />
           </div>
           <div class="gallery-caption">諾貝爾年輕畫像</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾父親畫像', './assets/nobel/gallery/諾貝爾父親畫像.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾父親畫像.jpg" alt="諾貝爾父親畫像" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾父親畫像</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾獎01', './assets/nobel/gallery/諾貝爾獎01.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾獎01.jpg" alt="諾貝爾獎01" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾獎01</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾獎02', './assets/nobel/gallery/諾貝爾獎02.jpg')">
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/諾貝爾獎02.jpg" alt="諾貝爾獎02" loading="lazy" />
-          </div>
-          <div class="gallery-caption">諾貝爾獎02</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像', './assets/nobel/gallery/諾貝爾畫像.jpg')">
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像', './assets/nobel/gallery/諾貝爾畫像.jpg')">
           <div class="gallery-img-wrap">
             <img src="./assets/nobel/gallery/諾貝爾畫像.jpg" alt="諾貝爾畫像" loading="lazy" />
           </div>
           <div class="gallery-caption">諾貝爾畫像</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像02', './assets/nobel/gallery/諾貝爾畫像02.jpg')">
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像02', './assets/nobel/gallery/諾貝爾畫像02.jpg')">
           <div class="gallery-img-wrap">
             <img src="./assets/nobel/gallery/諾貝爾畫像02.jpg" alt="諾貝爾畫像02" loading="lazy" />
           </div>
           <div class="gallery-caption">諾貝爾畫像02</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('雷管', './assets/nobel/gallery/雷管.jpg')">
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾03', './assets/nobel/gallery/諾貝爾03.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾03.jpg" alt="諾貝爾03" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾03</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾04', './assets/nobel/gallery/諾貝爾04.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾04.jpg" alt="諾貝爾04" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾04</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾父親畫像', './assets/nobel/gallery/諾貝爾父親畫像.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾父親畫像.jpg" alt="諾貝爾父親畫像" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾父親畫像</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾家族老宅01', './assets/nobel/gallery/諾貝爾家族老宅01.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾家族老宅01.jpg" alt="諾貝爾家族老宅01" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾家族老宅01</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('聖彼得堡', './assets/nobel/gallery/聖彼得堡.png')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/聖彼得堡.png" alt="聖彼得堡" loading="lazy" />
+          </div>
+          <div class="gallery-caption">聖彼得堡</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('英國詩人雪萊', './assets/nobel/gallery/英國詩人雪萊.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/英國詩人雪萊.jpg" alt="英國詩人雪萊" loading="lazy" />
+          </div>
+          <div class="gallery-caption">英國詩人雪萊</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('英國詩人拜倫', './assets/nobel/gallery/英國詩人拜倫.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/英國詩人拜倫.jpg" alt="英國詩人拜倫" loading="lazy" />
+          </div>
+          <div class="gallery-caption">英國詩人拜倫</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('歐魯夫˙魯德貝克', './assets/nobel/gallery/歐魯夫˙魯德貝克.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/歐魯夫˙魯德貝克.jpg" alt="歐魯夫˙魯德貝克" loading="lazy" />
+          </div>
+          <div class="gallery-caption">歐魯夫˙魯德貝克</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('炸藥', './assets/nobel/gallery/炸藥.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/炸藥.jpg" alt="炸藥" loading="lazy" />
+          </div>
+          <div class="gallery-caption">炸藥</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('雷管', './assets/nobel/gallery/雷管.jpg')">
           <div class="gallery-img-wrap">
             <img src="./assets/nobel/gallery/雷管.jpg" alt="雷管" loading="lazy" />
           </div>
           <div class="gallery-caption">雷管</div>
-        </div>\n        <div class="gallery-card" onclick="openImageModal('雷管02', './assets/nobel/gallery/雷管02.jpg')">
+        </div>
+        <div class="gallery-card" onclick="openImageModal('雷管02', './assets/nobel/gallery/雷管02.jpg')">
           <div class="gallery-img-wrap">
             <img src="./assets/nobel/gallery/雷管02.jpg" alt="雷管02" loading="lazy" />
           </div>
           <div class="gallery-caption">雷管02</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室舊照', './assets/nobel/gallery/諾貝爾實驗室舊照.png')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾實驗室舊照.png" alt="諾貝爾實驗室舊照" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾實驗室舊照</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室近代照片', './assets/nobel/gallery/諾貝爾實驗室近代照片.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾實驗室近代照片.jpg" alt="諾貝爾實驗室近代照片" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾實驗室近代照片</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾獎01', './assets/nobel/gallery/諾貝爾獎01.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾獎01.jpg" alt="諾貝爾獎01" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾獎01</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('諾貝爾獎02', './assets/nobel/gallery/諾貝爾獎02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾獎02.jpg" alt="諾貝爾獎02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾獎02</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('菲爾茲獎（Fields medals）', './assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg" alt="菲爾茲獎（Fields medals）" loading="lazy" />
+          </div>
+          <div class="gallery-caption">菲爾茲獎（Fields medals）</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('數學家米泰萊弗勒', './assets/nobel/gallery/數學家米泰萊弗勒.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/數學家米泰萊弗勒.jpg" alt="數學家米泰萊弗勒" loading="lazy" />
+          </div>
+          <div class="gallery-caption">數學家米泰萊弗勒</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎', './assets/nobel/gallery/搞笑諾貝爾獎.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎.jpg" alt="搞笑諾貝爾獎" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎02', './assets/nobel/gallery/搞笑諾貝爾獎02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎02.jpg" alt="搞笑諾貝爾獎02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎02</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎03', './assets/nobel/gallery/搞笑諾貝爾獎03.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎03.jpg" alt="搞笑諾貝爾獎03" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎03</div>
         </div>
       </div>
     </div>
@@ -1821,6 +2100,24 @@
     </div>
   </section>
 
+  <!-- Photo Drawer Modal (All 23 Images) -->
+  <div id="photoDrawer" class="photo-drawer-backdrop" onclick="closePhotoDrawer(event)">
+    <div class="photo-drawer-box" onclick="event.stopPropagation()">
+      <div class="photo-drawer-header">
+        <h3 class="photo-drawer-title">🖼️ 諾貝爾歷史文獻與珍貴照片典藏（共 23 幅）</h3>
+        <button class="modal-close-btn" onclick="closePhotoDrawer()">✕</button>
+      </div>
+      <div class="photo-drawer-body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          點選任一張照片可全螢幕放大觀賞，或直接在上方 3D 疊卡輪播中即時同步檢視。所有照片檔名皆為完整說明檔。
+        </p>
+        <div class="drawer-grid" id="drawerGrid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Photo / Lightbox Modal -->
   <div id="mediaModal" class="modal-backdrop" onclick="closeMediaModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
@@ -1853,8 +2150,202 @@
     </div>
   </footer>
 
-  <!-- Scripts for Modals, Timer, Tools -->
+  <!-- Scripts for 3D Card Stack, Modals, Timer, Tools -->
   <script>
+    // 23 Historical Photos Data
+    const NOBEL_PHOTOS = [
+      { id: 1, title: '諾貝爾年輕畫像', file: '諾貝爾年輕畫像.png' },
+      { id: 2, title: '諾貝爾畫像', file: '諾貝爾畫像.jpg' },
+      { id: 3, title: '諾貝爾畫像02', file: '諾貝爾畫像02.jpg' },
+      { id: 4, title: '諾貝爾03', file: '諾貝爾03.jpg' },
+      { id: 5, title: '諾貝爾04', file: '諾貝爾04.jpg' },
+      { id: 6, title: '諾貝爾父親畫像', file: '諾貝爾父親畫像.jpg' },
+      { id: 7, title: '諾貝爾家族老宅01', file: '諾貝爾家族老宅01.jpg' },
+      { id: 8, title: '聖彼得堡', file: '聖彼得堡.png' },
+      { id: 9, title: '英國詩人雪萊', file: '英國詩人雪萊.jpg' },
+      { id: 10, title: '英國詩人拜倫', file: '英國詩人拜倫.jpg' },
+      { id: 11, title: '歐魯夫˙魯德貝克', file: '歐魯夫˙魯德貝克.jpg' },
+      { id: 12, title: '炸藥', file: '炸藥.jpg' },
+      { id: 13, title: '雷管', file: '雷管.jpg' },
+      { id: 14, title: '雷管02', file: '雷管02.jpg' },
+      { id: 15, title: '諾貝爾實驗室舊照', file: '諾貝爾實驗室舊照.png' },
+      { id: 16, title: '諾貝爾實驗室近代照片', file: '諾貝爾實驗室近代照片.jpg' },
+      { id: 17, title: '諾貝爾獎01', file: '諾貝爾獎01.jpg' },
+      { id: 18, title: '諾貝爾獎02', file: '諾貝爾獎02.jpg' },
+      { id: 19, title: '菲爾茲獎（Fields medals）', file: '菲爾茲獎（Fields medals）.jpg' },
+      { id: 20, title: '數學家米泰萊弗勒', file: '數學家米泰萊弗勒.jpg' },
+      { id: 21, title: '搞笑諾貝爾獎', file: '搞笑諾貝爾獎.jpg' },
+      { id: 22, title: '搞笑諾貝爾獎02', file: '搞笑諾貝爾獎02.jpg' },
+      { id: 23, title: '搞笑諾貝爾獎03', file: '搞笑諾貝爾獎03.jpg' }
+    ];
+
+    let currentStackIndex = 0;
+    let stackAutoplayTimer = null;
+    let isStackPlaying = true;
+
+    // Initialize 3D Card Stack
+    function initCardStack() {
+      const scene = document.getElementById('cardStackScene');
+      if (!scene) return;
+      scene.innerHTML = '';
+
+      NOBEL_PHOTOS.forEach((photo, idx) => {
+        const card = document.createElement('div');
+        card.className = 'stack-card';
+        card.id = `stackCard-${idx}`;
+        card.innerHTML = `
+          <div class="stack-img-wrap">
+            <img src="./assets/nobel/gallery/${encodeURIComponent(photo.file)}" alt="${photo.title}" loading="lazy" />
+          </div>
+          <div class="stack-card-caption" title="${photo.title}">${photo.title}</div>
+        `;
+        card.onclick = () => handleCardClick(idx);
+        scene.appendChild(card);
+      });
+
+      updateStackPositions();
+      startStackAutoplay();
+      initDrawerGrid();
+
+      // Controls Binding
+      document.getElementById('stackPrevBtn').onclick = prevStackCard;
+      document.getElementById('stackNextBtn').onclick = nextStackCard;
+      document.getElementById('stackPlayBtn').onclick = toggleStackAutoplay;
+
+      // Mouse Hover Pause
+      const wrapper = document.getElementById('cardStackWrapper');
+      wrapper.addEventListener('mouseenter', stopStackAutoplay);
+      wrapper.addEventListener('mouseleave', () => {
+        if (isStackPlaying) startStackAutoplay();
+      });
+
+      // Touch swipe support
+      let touchStartX = 0;
+      wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      wrapper.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 40) nextStackCard();
+        else if (touchEndX - touchStartX > 40) prevStackCard();
+      }, { passive: true });
+    }
+
+    function updateStackPositions() {
+      const total = NOBEL_PHOTOS.length;
+      NOBEL_PHOTOS.forEach((_, idx) => {
+        const card = document.getElementById(`stackCard-${idx}`);
+        if (!card) return;
+
+        card.className = 'stack-card';
+        const diff = (idx - currentStackIndex + total) % total;
+
+        if (diff === 0) {
+          card.classList.add('pos-front');
+        } else if (diff === 1) {
+          card.classList.add('pos-right-1');
+        } else if (diff === 2) {
+          card.classList.add('pos-right-2');
+        } else if (diff === total - 1) {
+          card.classList.add('pos-left-1');
+        } else {
+          card.classList.add('pos-hidden');
+        }
+      });
+
+      const counter = document.getElementById('stackCounter');
+      if (counter) {
+        const curNum = String(currentStackIndex + 1).padStart(2, '0');
+        const totNum = String(total).padStart(2, '0');
+        counter.textContent = `${curNum} / ${totNum}`;
+      }
+    }
+
+    function handleCardClick(idx) {
+      if (idx === currentStackIndex) {
+        // Open lightbox modal for current front card
+        const photo = NOBEL_PHOTOS[idx];
+        openImageModal(photo.title, `./assets/nobel/gallery/${encodeURIComponent(photo.file)}`);
+      } else {
+        currentStackIndex = idx;
+        updateStackPositions();
+      }
+    }
+
+    function nextStackCard() {
+      currentStackIndex = (currentStackIndex + 1) % NOBEL_PHOTOS.length;
+      updateStackPositions();
+    }
+
+    function prevStackCard() {
+      currentStackIndex = (currentStackIndex - 1 + NOBEL_PHOTOS.length) % NOBEL_PHOTOS.length;
+      updateStackPositions();
+    }
+
+    function startStackAutoplay() {
+      stopStackAutoplay();
+      stackAutoplayTimer = setInterval(() => {
+        nextStackCard();
+      }, 4500);
+    }
+
+    function stopStackAutoplay() {
+      if (stackAutoplayTimer) {
+        clearInterval(stackAutoplayTimer);
+        stackAutoplayTimer = null;
+      }
+    }
+
+    function toggleStackAutoplay() {
+      const playBtn = document.getElementById('stackPlayBtn');
+      if (isStackPlaying) {
+        stopStackAutoplay();
+        isStackPlaying = false;
+        playBtn.textContent = '▶';
+        playBtn.title = '繼續自動輪播';
+      } else {
+        isStackPlaying = true;
+        startStackAutoplay();
+        playBtn.textContent = '⏸';
+        playBtn.title = '暫停自動輪播';
+      }
+    }
+
+    // Photo Drawer Grid
+    function initDrawerGrid() {
+      const grid = document.getElementById('drawerGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      NOBEL_PHOTOS.forEach((photo, idx) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-card';
+        item.innerHTML = `
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/${encodeURIComponent(photo.file)}" alt="${photo.title}" loading="lazy" />
+          </div>
+          <div class="gallery-caption">${photo.title}</div>
+        `;
+        item.onclick = () => {
+          closePhotoDrawer();
+          currentStackIndex = idx;
+          updateStackPositions();
+          openImageModal(photo.title, `./assets/nobel/gallery/${encodeURIComponent(photo.file)}`);
+        };
+        grid.appendChild(item);
+      });
+    }
+
+    function openPhotoDrawer() {
+      const drawer = document.getElementById('photoDrawer');
+      if (drawer) drawer.classList.add('active');
+    }
+
+    function closePhotoDrawer(e) {
+      const drawer = document.getElementById('photoDrawer');
+      if (drawer) drawer.classList.remove('active');
+    }
+
     // QR Code Modal
     function openQrModal(title, qrSrc, linkUrl, desc, pin) {
       document.getElementById('modalTitle').textContent = title;
@@ -1879,7 +2370,7 @@
     function openImageModal(title, imgSrc) {
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalImg').src = imgSrc;
-      document.getElementById('modalDesc').textContent = '歷史文獻與珍貴照片檔案';
+      document.getElementById('modalDesc').textContent = '歷史珍貴檔案文獻（檔名即為說明檔）';
       document.getElementById('modalPinWrap').style.display = 'none';
       document.getElementById('modalLink').style.display = 'none';
       document.getElementById('mediaModal').classList.add('active');
@@ -1917,11 +2408,17 @@
       alert(`🎉 幸運號碼抽籤結果：請【 ${num} 號 】同學回答問題！`);
     }
 
-    // Escape key closes modal
+    // Escape key closes modals
     window.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeMediaModal();
+        closePhotoDrawer();
       }
+    });
+
+    // Boot on DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      initCardStack();
     });
   </script>
 </body>
