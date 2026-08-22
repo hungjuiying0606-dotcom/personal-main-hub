@@ -229,7 +229,7 @@
 
     /* Controls Bar */
     .controls-bar {
-      margin: 1.75rem 0 2.5rem;
+      margin: 1.75rem 0 2rem;
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
@@ -348,35 +348,36 @@
       display: flex;
       flex-direction: column;
       box-shadow: var(--shadow-md);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .tool-card:hover {
-      border-color: var(--border-cute);
-      transform: translateY(-5px) scale(1.01);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
+      border-color: var(--border-cute);
     }
+
+    /* Top Strip / Color Themes */
+    .tool-card.mint { border-top: 5px solid var(--accent-green); }
+    .tool-card.pink { border-top: 5px solid var(--accent-pink); }
+    .tool-card.blue { border-top: 5px solid var(--primary); }
+    .tool-card.yellow { border-top: 5px solid var(--accent-yellow); }
+    .tool-card.purple { border-top: 5px solid var(--accent-purple); }
 
     .card-top {
-      padding: 1.1rem 1.3rem;
+      padding: 1.25rem 1.3rem 0.5rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border-color);
+      justify-content: space-between;
     }
 
-    .tool-card.blue .card-top { background: var(--primary-light); }
-    .tool-card.pink .card-top { background: var(--accent-pink-light); }
-    .tool-card.mint .card-top { background: var(--accent-green-light); }
-    .tool-card.yellow .card-top { background: var(--accent-yellow-light); }
-    .tool-card.purple .card-top { background: var(--accent-purple-light); }
-
     .card-icon {
-      font-size: 2rem;
-      line-height: 1;
+      font-size: 2.2rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
     }
 
     .card-badge {
+      display: inline-block;
       padding: 0.25rem 0.75rem;
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: var(--radius-full);
@@ -604,7 +605,107 @@
     }
 
     /* Footer */
+    .site-footer {
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.85);
+      border-top: 1.5px solid var(--border-color);
+      padding: 1.5rem 0;
+      text-align: center;
+    }
 
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
+        <span>🏠</span>
+        <span>回首頁</span>
+      </a>
+      <div class="header-brand">
+        <span>🏃</span>
+        <span>國中三年級自然 · 第一章 直線運動 互動教具總覽</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="路徑導覽">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/">首頁</a>
+      <span>›</span>
+      <span>國中自然科</span>
+      <span>›</span>
+      <span>九年級進度 · 第一章 直線運動</span>
+    </nav>
+  </div>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-tag">🌟 115 國中自然 3 上 · 直線運動探究實驗 🔬</div>
+        <h1 class="hero-title">第一章 直線運動 數位互動教具</h1>
+        <p class="hero-description">
+          收錄單擺等時性、位移與路程、v-t 圖斜率速度、等加速度打點計時器與動態模擬器，提供即時互動與白板全螢幕體驗。
+        </p>
+        <div class="hero-stats-row">
+          <div class="hero-stat-badge">
+            <span class="stat-num" id="totalToolsCount">30+</span>
+            <span class="stat-label">項動態互動教具</span>
+          </div>
+          <div class="hero-stat-badge">
+            <span class="stat-num">4</span>
+            <span class="stat-label">大進度單元全覆蓋</span>
+          </div>
+          <div class="hero-stat-badge">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">電子白板投影適配</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <!-- Search Input -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="toolSearchInput" class="search-box" placeholder="搜尋教具名稱、單元重點、秋千、打點計時器、v-t 圖、自由落體關鍵字...">
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterCategory('all', this)">🌟 全部教具</button>
+        <button class="filter-btn" onclick="filterCategory('1-1', this)">⏱️ 1-1 時間測量</button>
+        <button class="filter-btn" onclick="filterCategory('1-2', this)">📍 1-2 位置與位移</button>
+        <button class="filter-btn" onclick="filterCategory('1-3', this)">🚗 1-3 速度與速率</button>
+        <button class="filter-btn" onclick="filterCategory('1-4', this)">⚡ 1-4 等加速度</button>
+        <button class="filter-btn" onclick="filterCategory('unit1', this)">📄 單元卷 01</button>
+        <button class="filter-btn" onclick="filterCategory('unit2', this)">📄 單元卷 02</button>
+        <button class="filter-btn" onclick="filterCategory('past', this)">🎯 歷屆試題</button>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-block-header">
+      <h2 class="section-block-title" id="sectionHeadingTitle">📚 教具總覽清單</h2>
+      <span class="section-block-desc" id="toolsCountDisplay">載入中...</span>
+    </div>
+
+    <!-- Dynamic Tools Container -->
+    <div id="toolsContainer"></div>
   </main>
 
   <!-- Modal Overlay -->
@@ -628,8 +729,11 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上課本第 1 章直線運動配套教具系統</p>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>國中自然科 · NatureLab 115 國中自然 3 上第 1 章直線運動配套教具系統 | 正式發布於 GitHub Pages</p>
+      <p style="font-size: 0.8rem;">&copy; 2026 我的數位基地 · 個人主網頁. 保留所有權利。</p>
+    </div>
   </footer>
 
   <script>
@@ -1626,52 +1730,94 @@
   }
 ];
 
+    
+
     const groupMeta = {
-      textbook: { title: '📖 課本配套專區', desc: '課本探索實驗、例題與觀念沙盒 · 依課本 P.7～P.26 順序排列 (14 款)' },
-      workbook: { title: '✏️ 習作題型專區', desc: '習作重點題目與素養活用篇 · 依習作 P.3～P.9 題號排列 (17 款)' },
-      unit1: { title: '📄 單元卷 01 專區', desc: '1-1～1-2 時間與位移考卷 · 依第 1～24 題順序排列 (12 款)' },
-      unit2: { title: '📄 單元卷 02 專區', desc: '1-3～1-4 速度與加速度考卷 · 依第 2～25 題與題組排列 (11 款)' },
-      unit3: { title: '📑 綜合卷 03 專區', desc: '第一章直線運動全單元總複習考卷 · 依第 6～18 題與題組排列 (12 款)' },
+      '1-1': { title: '⏱️ 1-1 時間的測量', desc: '單擺等時性、擺長、擺角與擺動週期探究實驗' },
+      '1-2': { title: '📍 1-2 位置與位移', desc: '座標軸設定、路程 vs 位移與方向性作圖' },
+      '1-3': { title: '🚗 1-3 速度與速率', desc: '平均速度、瞬時速度、x-t 圖與 v-t 圖轉換規律' },
+      '1-4': { title: '⚡ 1-4 加速度與等加速度運動', desc: '加速度定義、打點計時器紙帶分析、自由落體與三大等加速公式' },
+      'unit1': { title: '📄 單元卷 01 專屬互動教具', desc: '配套單元卷 01 重點難題動態視覺化題庫' },
+      'unit2': { title: '📄 單元卷 02 專屬互動教具', desc: '配套單元卷 02 重點難題動態視覺化題庫' },
+      'past': { title: '🎯 會考與基測歷屆試題突破', desc: '歷屆大考經典運動學試題動態解構' }
     };
 
-    function renderTools(filter = 'all') {
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    function renderTools(cat) {
+      if (cat) currentCategory = cat;
       const container = document.getElementById('toolsContainer');
       container.innerHTML = '';
 
-      const groups = ['textbook', 'workbook', 'unit1', 'unit2', 'unit3'];
+      const query = searchQuery.toLowerCase().trim();
 
-      groups.forEach((grpKey) => {
-        if (filter !== 'all' && filter !== grpKey) {
-          return;
-        }
+      const filtered = tools.filter(t => {
+        const matchesCategory = (currentCategory === 'all') ||
+                                (currentCategory === t.sec) ||
+                                (currentCategory === t.category) ||
+                                (currentCategory === t.group);
 
-        const groupTools = tools.filter(t => t.group === grpKey);
-        if (groupTools.length === 0) return;
+        const matchesSearch = !query ||
+                              t.title.toLowerCase().includes(query) ||
+                              t.desc.toLowerCase().includes(query) ||
+                              t.secName.toLowerCase().includes(query) ||
+                              t.page.toLowerCase().includes(query);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      document.getElementById('toolsCountDisplay').textContent = `顯示 ${filtered.length} 項互動教具`;
+      document.getElementById('totalToolsCount').textContent = tools.length;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3.5rem 1.5rem; background: #ffffff; border-radius: 18px; border: 2px dashed #cbd5e1; color: #64748b;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔍</div>
+            <strong style="font-size: 1.15rem; color: #1e293b;">找不到符合條件的教具</strong>
+            <p style="margin-top: 0.4rem;">請嘗試更換搜尋關鍵字或點選其他單元分類標籤。</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Group filtered tools
+      const groups = {};
+      filtered.forEach(t => {
+        const grp = t.sec || t.category || t.group || '1-1';
+        if (!groups[grp]) groups[grp] = [];
+        groups[grp].push(t);
+      });
+
+      Object.keys(groups).forEach(grpKey => {
+        const groupTools = groups[grpKey];
+        if (!groupTools || groupTools.length === 0) return;
 
         const secBlock = document.createElement('section');
         secBlock.className = 'section-block';
 
         const headerDiv = document.createElement('div');
         headerDiv.className = 'section-block-header';
+        const meta = groupMeta[grpKey] || { title: grpKey, desc: '' };
         headerDiv.innerHTML = `
-          <h2 class="section-block-title">${groupMeta[grpKey].title}</h2>
-          <span class="section-block-desc">${groupMeta[grpKey].desc}</span>
+          <h2 class="section-block-title">${meta.title}</h2>
+          <span class="section-block-desc">${meta.desc}</span>
         `;
         secBlock.appendChild(headerDiv);
 
         const gridDiv = document.createElement('div');
         gridDiv.className = 'tools-grid';
 
-        groupTools.forEach((t) => {
+        groupTools.forEach(t => {
           const card = document.createElement('div');
-          card.className = `tool-card ${t.color}`;
+          card.className = `tool-card ${t.color || 'blue'}`;
           card.innerHTML = `
             <div class="card-top">
-              <span class="card-icon">${t.icon}</span>
-              <span class="card-badge">${t.page}</span>
+              <span class="card-icon">${t.icon || '🔬'}</span>
+              <span class="card-badge">${t.page || ''}</span>
             </div>
             <div class="card-body">
-              <span class="card-section">${t.categoryName} · ${t.secName}</span>
+              <span class="card-section">${t.categoryName || ''} · ${t.secName || ''}</span>
               <h3 class="card-title">${t.title}</h3>
               <p class="card-desc">${t.desc}</p>
               <div class="card-actions">
@@ -1715,9 +1861,16 @@
       document.getElementById('modalIframe').src = '';
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
       renderTools('all');
+
+      const searchInput = document.getElementById('toolSearchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value;
+          renderTools();
+        });
+      }
     });
   </script>
 </body>
