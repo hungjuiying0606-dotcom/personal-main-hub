@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>近視與遠視眼球光學矯正 ✕ 眼睛 vs 照相機實驗室 | 第53頁重點互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #cffafe;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .eye-mode-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: #ffffff;
+      padding: 0.3rem 0.5rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+    }
+
+    .eye-tab {
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      border: 1.5px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: transparent;
+      color: var(--primary);
+      transition: all 0.15s;
+    }
+
+    .eye-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#eyeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #38bdf8;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #38bdf8;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Vision HUD Box */
+    .vision-hud-box {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      background: #0284c7;
+      margin: 0.3rem auto 0.6rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .vision-target {
+      font-size: 3.2rem;
+      transition: filter 0.3s ease;
+    }
+
+    .toggle-glass-btn {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #ffd85c;
+      color: var(--primary);
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .toggle-glass-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #e0f2fe;
+      border: 2px dashed #0284c7;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0369a1;
+      text-align: center;
+    }
+
+    /* Comparison Table Card */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+    .compare-table th, .compare-table td {
+      border: 1.5px solid var(--primary);
+      padding: 0.35rem 0.4rem;
+      text-align: center;
+      font-weight: 700;
+    }
+    .compare-table th {
+      background: #e2e8f0;
+      font-weight: 900;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+
+    .option-desc {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+      <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>近視與遠視眼球光學矯正 ✕ 眼睛 vs 照相機實驗室（第53頁重點）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span id="headerIcon">👁️</span> <span id="headerTitle">眼球剖面射線追蹤與鏡片矯正模擬器</span>
+          </div>
+          <div class="eye-mode-tabs">
+            <button class="eye-tab active" id="tabModeNormal" onclick="setEyeMode('normal')">👁️ 正常眼</button>
+            <button class="eye-tab" id="tabModeMyopia" onclick="setEyeMode('myopia')">👓 近視眼</button>
+            <button class="eye-tab" id="tabModeHyperopia" onclick="setEyeMode('hyperopia')">🔍 遠視眼</button>
+            <button class="eye-tab" id="tabModeCamera" onclick="setEyeMode('camera')">📷 照相機對照</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="eyeCanvas"></canvas>
+          <div class="canvas-hint-overlay" id="canvasHint">
+            💡 提示：近視眼光線在視網膜前聚焦；點擊右側按鈕戴上凹透鏡矯正！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵情境：</span>
+          <button class="preset-btn active" onclick="setEyeMode('myopia')">👓 近視眼 (物距無限遠 ➔ 聚焦視網膜前)</button>
+          <button class="preset-btn" onclick="setEyeMode('hyperopia')">🔍 遠視眼 (近處物體 ➔ 聚焦視網膜後)</button>
+          <button class="preset-btn" onclick="setEyeMode('camera')">📷 照相機成像 (p > 2f ➔ 倒立縮小實像)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Subjective Vision HUD Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>👁️</span> 主觀視野體驗 (視網膜成像)
+          </div>
+          <div class="vision-hud-box">
+            <div class="vision-target" id="visionTarget">🌳</div>
+          </div>
+          <button class="toggle-glass-btn" id="btnToggleGlass" onclick="toggleGlass()">
+            👓 配戴矯正鏡片 (凹透鏡)
+          </button>
+        </div>
+
+        <!-- Optics Details Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 光學解剖數據分析
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">聚焦點位置</div>
+              <div class="status-item-val" id="dispFocalPos" style="color:#15803d;">視網膜上 ✅</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">成像性質</div>
+              <div class="status-item-val" id="dispImageType" style="color:#0284c7;">倒立縮小實像</div>
+            </div>
+          </div>
+
+          <!-- Comparison Table -->
+          <div style="margin-top:0.8rem;">
+            <div style="font-size:0.75rem; font-weight:900; color:var(--primary); margin-bottom:0.3rem;">
+              📷 眼睛 vs 照相機構造對照表：
+            </div>
+            <table class="compare-table">
+              <tr>
+                <th>人體眼睛</th>
+                <th>照相機構造</th>
+                <th>主要功能</th>
+              </tr>
+              <tr>
+                <td>水晶體 (凸透鏡)</td>
+                <td>鏡頭 (凸透鏡組)</td>
+                <td>折射會聚光線</td>
+              </tr>
+              <tr>
+                <td>視網膜</td>
+                <td>感光元件 (底片)</td>
+                <td>倒立縮小實像</td>
+              </tr>
+              <tr>
+                <td>瞳孔</td>
+                <td>光圈</td>
+                <td>控制進光量</td>
+              </tr>
+              <tr>
+                <td>眼瞼</td>
+                <td>快門</td>
+                <td>控制曝光時間</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            👓 <strong>【近視與遠視光學矯正】</strong>：<br>
+            - <strong>近視</strong>：像落在<strong>視網膜前</strong> ➔ 戴<strong>凹透鏡</strong>（發散後移）！<br>
+            - <strong>遠視</strong>：像落在<strong>視網膜後</strong> ➔ 戴<strong>凸透鏡</strong>（會聚前移）！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section (Question 1) -->
+    <section class="exam-section" id="examSecQ1">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 53 頁 基本題型 第 1 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 1：照相機在感光元件所成像的性質為何？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#0284c7; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
+          凸透鏡成像 ✕ 照相機原理
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：照相機在感光元件所成像的性質，與原物作比較，請問下列何者正確？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ1('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">倒立放大實像</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ1('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">正立縮小虛像</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ1('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">正立放大虛像</div>
+        </div>
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ1('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">倒立縮小實像 (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ1">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ1">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ1"></div>
+      </div>
+    </section>
+
+    <!-- Exam Section (Question 2) -->
+    <section class="exam-section" id="examSecQ2">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 53 頁 基本題型 第 2 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 2：相機透鏡組焦距 40cm，物體應位於前方何處才能清楚成像？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#15803d; background:#dcfce7; border:1.5px solid #15803d; padding:0.3rem 0.7rem; border-radius:99px;">
+          物距計算 ✕ p > 2f
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：珉豪幫秀英照相，秀英應位於相機透鏡組（焦距 40cm）前方何處，才能清楚成像？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ2('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">30cm</div>
+        </div>
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ2('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">40cm</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ2('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">60cm</div>
+        </div>
+        <!-- Option D (Correct) -->
+        <div class="option-card" onclick="testExamQ2('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">95cm (正確)</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ2">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ2">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ2"></div>
+      </div>
+    </section>
+
+    <!-- Exam Section (Question 3) -->
+    <section class="exam-section" id="examSecQ3">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 53 頁 基本題型 第 3 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰 3：放大鏡、複式顯微鏡、近視眼鏡分別是用哪種透鏡？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#9333ea; background:#f3e8ff; border:1.5px solid #9333ea; padding:0.3rem 0.7rem; border-radius:99px;">
+          光學儀器分類 ✕ 透鏡判別
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：下列三種物品，依順序分別是用哪種透鏡？(甲) 放大鏡、(乙) 複式顯微鏡、(丙) 近視眼鏡。
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ3('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">凹透鏡、凹透鏡、凸透鏡</div>
+        </div>
+        <!-- Option B (Correct) -->
+        <div class="option-card" onclick="testExamQ3('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">凸透鏡、凸透鏡、凹透鏡 (正確)</div>
+        </div>
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ3('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">凹透鏡、凸透鏡、凹透鏡</div>
+        </div>
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ3('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">凸透鏡、凹透鏡、凸透鏡</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ3">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ3">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ3"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 眼球光學與生活儀器教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let currentMode = 'myopia'; // 'normal' | 'myopia' | 'hyperopia' | 'camera'
+    let hasGlass = false;
+
+    const canvas = document.getElementById('eyeCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const visionTarget = document.getElementById('visionTarget');
+    const btnToggleGlass = document.getElementById('btnToggleGlass');
+    const dispFocalPos = document.getElementById('dispFocalPos');
+    const dispImageType = document.getElementById('dispImageType');
+    const natureBanner = document.getElementById('natureBanner');
+    const canvasHint = document.getElementById('canvasHint');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function setEyeMode(mode) {
+      currentMode = mode;
+      hasGlass = false;
+
+      document.querySelectorAll('.eye-tab').forEach(t => t.classList.remove('active'));
+      if (mode === 'normal') document.getElementById('tabModeNormal').classList.add('active');
+      if (mode === 'myopia') document.getElementById('tabModeMyopia').classList.add('active');
+      if (mode === 'hyperopia') document.getElementById('tabModeHyperopia').classList.add('active');
+      if (mode === 'camera') document.getElementById('tabModeCamera').classList.add('active');
+
+      updateState();
+      draw();
+    }
+
+    function toggleGlass() {
+      hasGlass = !hasGlass;
+      updateState();
+      draw();
+    }
+
+    function updateState() {
+      if (currentMode === 'normal') {
+        btnToggleGlass.style.display = 'none';
+        visionTarget.style.filter = 'none';
+        dispFocalPos.textContent = '視網膜上 ✅';
+        dispFocalPos.style.color = '#15803d';
+        dispImageType.textContent = '倒立縮小實像';
+        canvasHint.textContent = '💡 正常眼：光線完美聚焦在視網膜黃斑部，視野清晰！';
+        natureBanner.innerHTML = '👁️ <strong>【正常眼】</strong>：角膜與水晶體折光正常，遠處物體光線精準聚焦在視網膜上。';
+      } else if (currentMode === 'myopia') {
+        btnToggleGlass.style.display = 'block';
+        btnToggleGlass.textContent = hasGlass ? '❌ 取下矯正鏡片' : '👓 配戴矯正鏡片 (凹透鏡)';
+        if (hasGlass) {
+          visionTarget.style.filter = 'none';
+          dispFocalPos.textContent = '矯正至視網膜 ✅';
+          dispFocalPos.style.color = '#15803d';
+          canvasHint.textContent = '💡 配戴凹透鏡：光線先發散再入眼，焦點精準後移至視網膜！';
+        } else {
+          visionTarget.style.filter = 'blur(8px)';
+          dispFocalPos.textContent = '視網膜前方 ⚠️';
+          dispFocalPos.style.color = '#dc2626';
+          canvasHint.textContent = '💡 近視眼：眼軸過長/水晶體過凸，光線在視網膜前聚焦，視野模糊！';
+        }
+        natureBanner.innerHTML = '👓 <strong>【近視眼 (Myopia)】</strong>：像落在<strong>視網膜前方</strong> ➔ 配戴<strong>凹透鏡</strong>發散光線矯正！';
+      } else if (currentMode === 'hyperopia') {
+        btnToggleGlass.style.display = 'block';
+        btnToggleGlass.textContent = hasGlass ? '❌ 取下矯正鏡片' : '🔍 配戴矯正鏡片 (凸透鏡)';
+        if (hasGlass) {
+          visionTarget.style.filter = 'none';
+          dispFocalPos.textContent = '矯正至視網膜 ✅';
+          dispFocalPos.style.color = '#15803d';
+          canvasHint.textContent = '💡 配戴凸透鏡：光線提早會聚，焦點拉回視網膜上！';
+        } else {
+          visionTarget.style.filter = 'blur(8px)';
+          dispFocalPos.textContent = '視網膜後方 ⚠️';
+          dispFocalPos.style.color = '#dc2626';
+          canvasHint.textContent = '💡 遠視眼：眼軸過短/水晶體過扁，光線在視網膜後聚焦，視野模糊！';
+        }
+        natureBanner.innerHTML = '🔍 <strong>【遠視眼 (Hyperopia)】</strong>：像落在<strong>視網膜後方</strong> ➔ 配戴<strong>凸透鏡</strong>會聚光線矯正！';
+      } else if (currentMode === 'camera') {
+        btnToggleGlass.style.display = 'none';
+        visionTarget.style.filter = 'none';
+        dispFocalPos.textContent = '感光元件上 ✅';
+        dispFocalPos.style.color = '#0284c7';
+        dispImageType.textContent = '倒立縮小實像';
+        canvasHint.textContent = '📷 照相機：物在 2f 外（p > 2f），在感光元件成倒立縮小實像！';
+        natureBanner.innerHTML = '📷 <strong>【照相機原理】</strong>：鏡頭為凸透鏡組，物在 2f 外 ➔ 感光元件成<strong>倒立縮小實像</strong>！';
+      }
+    }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (currentMode === 'camera') {
+        drawCamera(w, h);
+      } else {
+        drawEye(w, h);
+      }
+    }
+
+    function drawEye(w, h) {
+      const eyeCx = w * 0.62;
+      const eyeCy = h / 2;
+      const eyeRx = currentMode === 'myopia' ? 120 : (currentMode === 'hyperopia' ? 85 : 100);
+      const eyeRy = 90;
+      const retinaX = eyeCx + eyeRx;
+
+      // 1. Light source / object on left
+      const objX = 50;
+      const objY = eyeCy;
+      ctx.font = '36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🌳', objX, objY + 12);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('遠處物體', objX, objY + 32);
+
+      // 2. Glasses lens (if worn)
+      const glassX = eyeCx - eyeRx - 45;
+      if (hasGlass) {
+        ctx.strokeStyle = '#38bdf8';
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+        ctx.lineWidth = 3;
+
+        if (currentMode === 'myopia') {
+          // Concave lens
+          ctx.beginPath();
+          ctx.moveTo(glassX - 6, eyeCy - 60);
+          ctx.lineTo(glassX + 6, eyeCy - 60);
+          ctx.quadraticCurveTo(glassX + 1, eyeCy, glassX + 6, eyeCy + 60);
+          ctx.lineTo(glassX - 6, eyeCy + 60);
+          ctx.quadraticCurveTo(glassX - 1, eyeCy, glassX - 6, eyeCy - 60);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+          ctx.fillText('凹透鏡 (發散)', glassX, eyeCy - 70);
+        } else if (currentMode === 'hyperopia') {
+          // Convex lens
+          ctx.beginPath();
+          ctx.moveTo(glassX, eyeCy - 60);
+          ctx.quadraticCurveTo(glassX + 10, eyeCy, glassX, eyeCy + 60);
+          ctx.quadraticCurveTo(glassX - 10, eyeCy, glassX, eyeCy - 60);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#ffd85c';
+          ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+          ctx.fillText('凸透鏡 (會聚)', glassX, eyeCy - 70);
+        }
+      }
+
+      // 3. Eyeball Outline
+      ctx.strokeStyle = '#94a3b8';
+      ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.ellipse(eyeCx, eyeCy, eyeRx, eyeRy, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Retina (Yellow curve on the back)
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(eyeCx, eyeCy, eyeRx - 2, -Math.PI * 0.35, Math.PI * 0.35);
+      ctx.stroke();
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('視網膜', retinaX + 8, eyeCy + 4);
+
+      // 4. Crystalline Lens (Cornea / Lens)
+      const lensX = eyeCx - eyeRx + 15;
+      ctx.fillStyle = '#67e8f9';
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(lensX, eyeCy, currentMode === 'myopia' ? 14 : 10, 45, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#67e8f9';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('水晶體', lensX, eyeCy - 55);
+
+      // 5. Raytracing Rays
+      let focalX = retinaX;
+      if (currentMode === 'normal') {
+        focalX = retinaX;
+      } else if (currentMode === 'myopia') {
+        focalX = hasGlass ? retinaX : retinaX - 45;
+      } else if (currentMode === 'hyperopia') {
+        focalX = hasGlass ? retinaX : retinaX + 40;
+      }
+
+      const rays = [-30, 0, 30];
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 6;
+
+      rays.forEach(offsetY => {
+        ctx.beginPath();
+        ctx.moveTo(objX + 25, objY + offsetY * 0.3);
+
+        if (hasGlass) {
+          ctx.lineTo(glassX, eyeCy + offsetY * 0.85);
+          // slight bend at glasses
+          if (currentMode === 'myopia') {
+            ctx.lineTo(lensX, eyeCy + offsetY * 1.15);
+          } else {
+            ctx.lineTo(lensX, eyeCy + offsetY * 0.65);
+          }
+        } else {
+          ctx.lineTo(lensX, eyeCy + offsetY);
+        }
+
+        ctx.lineTo(focalX, eyeCy);
+        ctx.stroke();
+      });
+
+      // Focal point marker
+      ctx.fillStyle = focalX === retinaX ? '#10b981' : '#ef4444';
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = ctx.fillStyle;
+      ctx.beginPath();
+      ctx.arc(focalX, eyeCy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.fillText(focalX === retinaX ? '🎯 焦點在視網膜上' : (focalX < retinaX ? '⚠️ 焦點在視網膜前' : '⚠️ 焦點在視網膜後'), focalX, eyeCy + 20);
+    }
+
+    function drawCamera(w, h) {
+      const camCx = w * 0.55;
+      const camCy = h / 2;
+      const camW = 200;
+      const camH = 140;
+
+      // 1. Object on left
+      const objX = 60;
+      const objY = camCy;
+      ctx.font = '40px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('👩', objX, objY + 12);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('被攝人物 (物在 2f 外)', objX, objY + 34);
+
+      // 2. Camera Body
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(camCx - camW / 2, camCy - camH / 2, camW, camH);
+      ctx.fillRect(camCx - camW / 2, camCy - camH / 2, camW, camH);
+
+      // 3. Camera Lens (Convex)
+      const lensX = camCx - camW / 2;
+      ctx.fillStyle = '#38bdf8';
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(lensX, camCy, 12, 50, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('鏡頭 (凸透鏡組)', lensX, camCy - 60);
+
+      // 4. Sensor / Film
+      const sensorX = camCx + camW / 2 - 15;
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(sensorX - 3, camCy - 45, 6, 90);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillText('感光元件 (CMOS/底片)', sensorX, camCy - 55);
+
+      // 5. Rays and Inverted Real Image
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 6;
+
+      // Ray from head to bottom of sensor
+      ctx.beginPath();
+      ctx.moveTo(objX + 20, objY - 20);
+      ctx.lineTo(lensX, camCy - 20);
+      ctx.lineTo(sensorX, camCy + 15);
+      ctx.stroke();
+
+      // Center ray
+      ctx.beginPath();
+      ctx.moveTo(objX + 20, objY - 20);
+      ctx.lineTo(lensX, camCy);
+      ctx.lineTo(sensorX, camCy + 15);
+      ctx.stroke();
+
+      // Inverted image icon on sensor
+      ctx.shadowBlur = 0;
+      ctx.save();
+      ctx.translate(sensorX - 18, camCy + 12);
+      ctx.scale(0.55, -0.55); // inverted & scaled down!
+      ctx.fillText('👩', 0, 0);
+      ctx.restore();
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = '900 12px Noto Sans TC, sans-serif';
+      ctx.fillText('倒立縮小實像 ✅', sensorX - 25, camCy + 40);
+    }
+
+    // Exam Handlers
+    window.testExamQ1 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ1');
+      const expTitle = document.getElementById('expTitleQ1');
+      const expContent = document.getElementById('expContentQ1');
+      const cards = document.querySelectorAll('#examSecQ1 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 倒立縮小實像】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【基本題型第 1 題詳解】</strong><br>
+          1. <strong>照相機成像原理</strong>：照相機鏡頭相當於凸透鏡，當被攝物體位於「兩倍焦距以外（$p > 2f$）」時，會在鏡頭後方的感光元件（CMOS 或底片，位置在 $f \\sim 2f$ 之間）上形成<strong>「倒立、縮小、實像」</strong>。<br>
+          2. 人體的眼睛水晶體與視網膜成像機制亦同此原理。故正解為 <strong>(D)</strong>！
+        `;
+        setEyeMode('camera');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `照相機的感光元件上成的是「實像」（光線實際會聚），且必為「倒立、縮小」！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    window.testExamQ2 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ2');
+      const expTitle = document.getElementById('expTitleQ2');
+      const expContent = document.getElementById('expContentQ2');
+      const cards = document.querySelectorAll('#examSecQ2 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'D') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(D) 95cm】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【基本題型第 2 題詳解】</strong><br>
+          1. <strong>照相機成像條件</strong>：物距必須大於兩倍焦距（$p > 2f$），才能在感光元件上清晰形成倒立縮小實像。<br>
+          2. <strong>數值計算</strong>：透鏡組焦距 $f = 40\\text{ cm} \\rightarrow 2f = 80\\text{ cm}$。<br>
+          3. 因此物距必須滿足 $p > 80\\text{ cm}$，四個選項中僅有 <strong>(D) 95cm</strong> 大於 80cm，故選 <strong>(D)</strong>！
+        `;
+        setEyeMode('camera');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `焦距 $f = 40\\text{ cm}$，物體必須位於 $2f$ 外（即 $> 80\\text{ cm}$），才能在相機中清晰成像！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    window.testExamQ3 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ3');
+      const expTitle = document.getElementById('expTitleQ3');
+      const expContent = document.getElementById('expContentQ3');
+      const cards = document.querySelectorAll('#examSecQ3 .option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'B') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(B) 凸透鏡、凸透鏡、凹透鏡】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【基本題型第 3 題詳解】</strong><br>
+          1. <strong>(甲) 放大鏡</strong>：單一<strong>凸透鏡</strong>（物在焦距內 $p < f$ 成正立放大虛像）。<br>
+          2. <strong>(乙) 複式顯微鏡</strong>：物鏡與目鏡均為<strong>凸透鏡</strong>。<br>
+          3. <strong>(丙) 近視眼鏡</strong>：<strong>凹透鏡</strong>（發散光束，使聚焦點後移至視網膜）。<br>
+          4. 故順序為「凸透鏡、凸透鏡、凹透鏡」，選 <strong>(B)</strong>！
+        `;
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `放大鏡與複式顯微鏡都是利用「凸透鏡」放大，近視眼鏡則是配戴「凹透鏡」矯正！`;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+      setEyeMode('myopia');
+    }, 100);
+  </script>
+</body>
+</html>

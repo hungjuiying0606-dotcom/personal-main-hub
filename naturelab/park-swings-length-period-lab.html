@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 公園甲乙雙秋千：繩長 vs 擺動週期競速實驗室 (單元卷第1頁第1、8題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #15803d;       /* Park Green */
+      --primary-dark: #166534;
+      --swing-a: #0284c7;       /* Blue for Swing A (Long) */
+      --swing-b: #ea580c;       /* Orange for Swing B (Short) */
+      --wood: #854d0e;
+      --bg: #f0fdf4;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #bbf7d0;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(21, 128, 61, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #dcfce7;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Swings Canvas Stage */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Dual Swings Telemetry Cards */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+    }
+
+    .t-card.a { border-color: #bae6fd; background: #f0f9ff; }
+    .t-card.b { border-color: #ffedd5; background: #fff7ed; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .t-card.a h4 { color: #0369a1; }
+    .t-card.b h4 { color: #c2410c; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .t-card.a .t-val { color: #0284c7; }
+    .t-card.b .t-val { color: #ea580c; }
+
+    .t-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Ratio Box */
+    .ratio-box {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .ratio-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .ratio-content {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #f0fdf4;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🌳 公園甲乙雙秋千：繩長 vs 擺動週期競速實驗室</span>
+          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第1、8題</span>
+        </h1>
+        <p>同擺角下甲繩長較長 ➔ 甲擺動一次時間較長（T ∝ √L）；繩長增為 4 倍 ➔ 週期剛好增為 2 倍！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Swings Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🌳 公園雙秋千同步擺動實景</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnRelease" onclick="toggleRelease()">▶ 同步拉開釋放</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回原點</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>👧 甲秋千(長繩 3.6m)：<strong id="hudCountA" style="color: #38bdf8; font-family: 'Outfit';">0 次 (T=3.81s)</strong></span>
+            <span>👦 乙秋千(短繩 0.9m)：<strong id="hudCountB" style="color: #fb923c; font-family: 'Outfit';">0 次 (T=1.90s)</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        </div>
+
+        <!-- Interactive Sliders / Parameter Tuning -->
+        <div class="control-panel">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: #0284c7;">
+                👧 甲秋千繩長：<span id="labelLenA">3.6 m</span>
+              </label>
+              <input type="range" id="lenASlider" min="1.0" max="4.0" step="0.1" value="3.6" style="width: 100%; accent-color: #0284c7;" oninput="onLenChange('A', this.value)">
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: #ea580c;">
+                👦 乙秋千繩長：<span id="labelLenB">0.9 m</span>
+              </label>
+              <input type="range" id="lenBSlider" min="0.5" max="2.0" step="0.1" value="0.9" style="width: 100%; accent-color: #ea580c;" oninput="onLenChange('B', this.value)">
+            </div>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+            💡 <strong>4倍繩長黃金比例：</strong>當甲繩長 3.6m（乙 0.9m 的 4 倍）時，乙盪完 <strong>2 次</strong>，甲剛好盪完 <strong>1 次</strong>！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Telemetry & Formula Ratio & Quiz -->
+      <div>
+        
+        <!-- Dual Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Swing A -->
+          <div class="t-card a">
+            <h4>
+              <span>👧 甲秋千 (長繩)</span>
+              <span id="badgeA">3.6 m</span>
+            </h4>
+            <div class="t-val" id="valPeriodA">T = 3.81 s</div>
+            <div class="t-sub" id="subA">擺動次數：0 次 · 擺動較慢</div>
+          </div>
+
+          <!-- Swing B -->
+          <div class="t-card b">
+            <h4>
+              <span>👦 乙秋千 (短繩)</span>
+              <span id="badgeB">0.9 m</span>
+            </h4>
+            <div class="t-val" id="valPeriodB">T = 1.90 s</div>
+            <div class="t-sub" id="subB">擺動次數：0 次 · 擺動較快 (2倍速)</div>
+          </div>
+        </div>
+
+        <!-- Ratio Visual Card -->
+        <div class="ratio-box">
+          <div class="ratio-title">📐 單擺開根號正比規律（T ∝ √L）</div>
+          <div class="ratio-content" id="ratioText">
+            \( \frac{T_{\text{甲}}}{T_{\text{乙}}} = \sqrt{\frac{L_{\text{甲}}}{L_{\text{乙}}}} = \sqrt{\frac{3.6}{0.9}} = \sqrt{4} = \mathbf{2\text{ 倍}} \)
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
+            繩長越長 ➔ 週期越長（擺動一次所需的時間越長）！
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 單元課次卷第 1 頁第 1 題與第 8 題解析：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>第 1 題（秋千繩長與週期）：</strong>當擺動角度相同（均小於10°），<strong>甲繩長較長 ➔ 週期較長（擺動一次所需時間較長，選 A）</strong>。</li>
+            <li><strong>第 8 題（相同擺長週期相同）：</strong>單擺的週期<strong>只由「擺長」決定</strong>，與擺錘質量、體重、擺角無關；故擺長相同之單擺（甲與乙）週期相同（選 A）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 單元卷第 1 題原題測驗</div>
+
+          <div class="quiz-item">
+            <p>公園有甲、乙兩座秋千，甲繩長較長，當兩者擺動角度相同，則「擺動一次所需的時間」何者較長？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 甲（繩長越長，擺動週期 T 越長）</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 乙</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 甲＝乙（誤以為角度相同時間就相同）</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 無法判定</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+  </footer>
+
+  <script>
+    let isSwinging = false;
+    let animId = null;
+    let simTime = 0;
+    let lastTime = 0;
+
+    let lenA = 3.6; // meters
+    let lenB = 0.9; // meters
+    const initialAngle = 10 * (Math.PI / 180); // 10 degrees
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function onLenChange(swing, val) {
+      if (swing === 'A') {
+        lenA = parseFloat(val);
+        document.getElementById('labelLenA').innerText = `${lenA.toFixed(1)} m`;
+        document.getElementById('badgeA').innerText = `${lenA.toFixed(1)} m`;
+      } else {
+        lenB = parseFloat(val);
+        document.getElementById('labelLenB').innerText = `${lenB.toFixed(1)} m`;
+        document.getElementById('badgeB').innerText = `${lenB.toFixed(1)} m`;
+      }
+      updateUI();
+    }
+
+    function toggleRelease() {
+      const btn = document.getElementById('btnRelease');
+      if (!isSwinging) {
+        isSwinging = true;
+        btn.innerText = '⏸ 暫停擺盪';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isSwinging = false;
+        btn.innerText = '▶ 繼續擺盪';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isSwinging = false;
+      simTime = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnRelease').innerText = '▶ 同步拉開釋放';
+      document.getElementById('btnRelease').style.background = 'var(--primary)';
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isSwinging) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      simTime += dt;
+      updateUI();
+
+      if (isSwinging) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const g = 9.8;
+      const tA = 2 * Math.PI * Math.sqrt(lenA / g);
+      const tB = 2 * Math.PI * Math.sqrt(lenB / g);
+
+      const countA = Math.floor(simTime / tA);
+      const countB = Math.floor(simTime / tB);
+
+      document.getElementById('valPeriodA').innerText = `T = ${tA.toFixed(2)} s`;
+      document.getElementById('valPeriodB').innerText = `T = ${tB.toFixed(2)} s`;
+
+      document.getElementById('hudCountA').innerText = `${countA} 次 (T=${tA.toFixed(2)}s)`;
+      document.getElementById('hudCountB').innerText = `${countB} 次 (T=${tB.toFixed(2)}s)`;
+
+      document.getElementById('subA').innerText = `擺動次數：${countA} 次 · 擺動較慢`;
+      document.getElementById('subB').innerText = `擺動次數：${countB} 次 · 擺動較快`;
+
+      const ratioL = lenA / lenB;
+      const ratioT = tA / tB;
+      document.getElementById('ratioText').innerHTML = `
+        \\( \\frac{T_{\\text{甲}}}{T_{\\text{乙}}} = \\sqrt{\\frac{L_{\\text{甲}}}{L_{\\text{乙}}}} = \\sqrt{\\frac{${lenA.toFixed(1)}}{${lenB.toFixed(1)}}} = \\sqrt{${ratioL.toFixed(1)}} \\approx \\mathbf{${ratioT.toFixed(2)}\\text{ 倍}} \\)
+      `;
+
+      draw(tA, tB);
+    }
+
+    function draw(tA, tB) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      // Park Background Grass & Top Beam
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 0, cw, ch);
+
+      // Grass Ground
+      ctx.fillStyle = '#065f46';
+      ctx.fillRect(0, ch - 50, cw, 50);
+
+      // Top Wooden Beam for Swings
+      ctx.fillStyle = '#854d0e';
+      ctx.fillRect(40, 40, cw - 80, 16);
+      ctx.strokeStyle = '#a16207';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, cw - 80, 16);
+
+      // Swing Pivot Points
+      const pivotAY = 48, pivotAX = 180;
+      const pivotBY = 48, pivotBX = cw - 180;
+
+      // Current angles (SHM theta(t) = theta0 * cos(2pi/T * t))
+      const thetaA = initialAngle * Math.cos((2 * Math.PI / tA) * simTime);
+      const thetaB = initialAngle * Math.cos((2 * Math.PI / tB) * simTime);
+
+      // Visual length scaling: 1m = 70px
+      const scale = 70;
+      const pxLenA = lenA * scale;
+      const pxLenB = lenB * scale;
+
+      // Draw Swing A (Girl 👧 on Left)
+      drawSingleSwing(pivotAX, pivotAY, pxLenA, thetaA, '#0284c7', '👧 甲秋千 (長繩)', `L = ${lenA.toFixed(1)}m`, `T = ${tA.toFixed(2)}s`);
+
+      // Draw Swing B (Boy 👦 on Right)
+      drawSingleSwing(pivotBX, pivotBY, pxLenB, thetaB, '#ea580c', '👦 乙秋千 (短繩)', `L = ${lenB.toFixed(1)}m`, `T = ${tB.toFixed(2)}s`);
+    }
+
+    function drawSingleSwing(px, py, pLen, theta, color, label, lenText, periodText) {
+      const bobX = px + pLen * Math.sin(theta);
+      const bobY = py + pLen * Math.cos(theta);
+
+      // Draw Dotted Equilibrium Line
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py + pLen + 40); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw Ropes (2 chains)
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(px - 10, py); ctx.lineTo(bobX - 10, bobY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px + 10, py); ctx.lineTo(bobX + 10, bobY); ctx.stroke();
+
+      // Swing Wooden Seat
+      ctx.fillStyle = '#b45309';
+      ctx.fillRect(bobX - 18, bobY, 36, 8);
+
+      // Character Head
+      ctx.font = '28px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(label.includes('甲') ? '👧' : '👦', bobX, bobY - 2);
+
+      // Labels below seat
+      ctx.fillStyle = color;
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.fillText(label, bobX, bobY + 24);
+
+      ctx.fillStyle = '#fde047';
+      ctx.font = '11px Outfit';
+      ctx.fillText(`${lenText} · ${periodText}`, bobX, bobY + 38);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'A') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>單擺週期公式 \( T = 2\pi \sqrt{\frac{L}{g}} \)，甲繩長較長，故擺動一次所需時間（週期）必定<strong>甲較長</strong>！';
+      } else {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>小心陷阱！</strong> 單擺週期只由「擺長」決定，擺長越長週期越長，故甲繩長較長，所需時間較長（選 A）！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

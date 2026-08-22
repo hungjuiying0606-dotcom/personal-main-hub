@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 晴天 4s(32m, a=4) vs 雨天 8s(64m, a=2) 濕滑路面煞車雙跑道比較儀 (單元卷第4頁題組2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;       /* Blue / Rainy vs Sunny */
+      --primary-dark: #1d4ed8;
+      --sunny-gold: #f59e0b;
+      --rainy-cyan: #06b6d4;
+      --bg: #eff6ff;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #bfdbfe;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(37, 99, 235, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #dbeafe;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Canvas Stage Box */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 470px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Dual Telemetry Cards */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.85rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .t-card.sunny { border-color: #fde68a; background: #fffbeb; }
+    .t-card.rainy { border-color: #bae6fd; background: #f0f9ff; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .t-card.sunny h4 { color: #b45309; }
+    .t-card.rainy h4 { color: #0284c7; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .t-card.sunny .t-val { color: #b45309; }
+    .t-card.rainy .t-val { color: #0284c7; }
+
+    .t-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Comparison Table Box */
+    .table-box {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>☀️ 晴天 4s(32m, a=4) vs 🌧️ 雨天 8s(64m, a=2) 濕滑路面煞車比較儀</span>
+          <span class="badge">國中自然 3上 · 單元課次卷 02 卷第4頁題組2</span>
+        </h1>
+        <p>初速 16m/s 煞停：晴天 a=4m/s²(4s煞停·32m)；雨天濕滑 a=2m/s²(時間翻倍8s·距離翻倍64m)！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Dual Track Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🚗 晴雨雙跑道煞車實況 ＋ 下方 v-t 圖面積雙對照</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnBrake" onclick="toggleBrake()">▶ 同時踩下煞車 (初速 16 m/s)</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>⏱️ 碼錶：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
+            <span>☀️ 晴天位移：<strong id="hudSunnyS" style="color: #f59e0b; font-family: 'Outfit';">0.0 m (32m停)</strong></span>
+            <span>🌧️ 雨天位移：<strong id="hudRainyS" style="color: #38bdf8; font-family: 'Outfit';">0.0 m (64m停)</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="470"></canvas>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="control-panel">
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
+            💡 核心物理素養精華：
+          </div>
+          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
+            初速度相同（\( 16\text{ m/s} \)）時：雨天地面濕滑使<strong>煞車加速度減半（\( 4 \rightarrow 2\text{ m/s}^2 \)）</strong> ➔ 煞車時間<strong>翻倍（\( 4\text{s} \rightarrow 8\text{s} \)）</strong> ➔ <strong>煞車距離直接翻倍（\( 32\text{m} \rightarrow 64\text{m} \)）</strong>！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Telemetry & Comparison & 3 Quizzes -->
+      <div>
+        
+        <!-- Dual Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Sunny -->
+          <div class="t-card sunny">
+            <h4>☀️ 晴天煞車 (良好)</h4>
+            <div class="t-val" id="valSunny">4s · 32m · a=4</div>
+            <div class="t-sub">加速度 \( |a_1| = \mathbf{4\text{ m/s}^2} \) (題1選B)</div>
+          </div>
+
+          <!-- Rainy -->
+          <div class="t-card rainy">
+            <h4>🌧️ 雨天煞車 (濕滑)</h4>
+            <div class="t-val" id="valRainy">8s · 64m · a=2</div>
+            <div class="t-sub">時間 \( \mathbf{8\text{s}} \) (題2選D) · \( a = \mathbf{2\text{ m/s}^2} \) (題3選A)</div>
+          </div>
+        </div>
+
+        <!-- Comparison Table Box -->
+        <div class="table-box">
+          <div class="tab-title">⚖️ 題組 2 晴天 vs 雨天煞車全要素精算表：</div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.3rem;">
+            <tr style="background: #f1f5f9; font-weight: 800;">
+              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">天氣情境</th>
+              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">煞車時間 t</th>
+              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">煞車距離 S</th>
+              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">加速度量值 |a|</th>
+            </tr>
+            <tr>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #b45309;">☀️ 晴天乾燥</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">4 秒</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">32 公尺</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #b45309;">\( 4\text{ m/s}^2 \) (題1選B)</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">🌧️ 雨天濕滑</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">8 秒 (題2選D)</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">64 公尺</td>
+              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">\( 2\text{ m/s}^2 \) (題3選A)</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 單元課次卷第 4 頁題組 2 公式詳解：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>(1) 晴天加速度：</strong>\( |a| = \frac{|0 - 16|}{4} = \mathbf{4\text{ m/s}^2} \)（選 B）。</li>
+            <li><strong>(2) 雨天時間：</strong>\( S = \frac{16 + 0}{2} \times t = 64 \implies t = \frac{64}{8} = \mathbf{8\text{ 秒}} \)（選 D）。</li>
+            <li><strong>(3) 雨天加速度：</strong>\( |a| = \frac{|0 - 16|}{8} = \mathbf{2\text{ m/s}^2} \)（選 A）。</li>
+          </ul>
+        </div>
+
+        <!-- 3 Quizzes Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 單元卷題組 2 原題全三小題測驗</div>
+
+          <div class="quiz-item">
+            <p>Q1. (1) 在晴天煞車效果好時，請問此時煞車的「加速度量值」為多少？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 4 m/s²（(16 - 0) / 4 ＝ 4 m/s²）</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 2 m/s²</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 6 m/s²</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. (2) 雨天路面濕滑煞車距離拉長至 64 公尺，共需要多少煞車時間？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'D', this)">(D) 8 秒（64 / (16/2) ＝ 8 秒）</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 5 秒</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 6 秒</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q3. (3) 承上題，此時雨天煞車的「加速度量值」為多少？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(3, 'A', this)">(A) 2 m/s²（(16 - 0) / 8 ＝ 2 m/s²）</button>
+              <button class="quiz-btn" onclick="checkQuiz(3, 'B', this)">(B) 4 m/s²</button>
+              <button class="quiz-btn" onclick="checkQuiz(3, 'C', this)">(C) 6 m/s²</button>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+  </footer>
+
+  <script>
+    let simTime = 0; // 0 to 8.5s
+    let isRunning = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Sunny Model (0 to 4s):
+    // v0 = 16, a = -4
+    // v(t) = max(0, 16 - 4*t)
+    // S(t) = (t <= 4) ? 16*t - 2*t^2 : 32.0
+    function getSunny(t) {
+      if (t >= 4.0) return { v: 0, s: 32.0, stopped: true };
+      const v = 16.0 - 4.0 * t;
+      const s = 16.0 * t - 2.0 * t * t;
+      return { v, s, stopped: false };
+    }
+
+    // Rainy Model (0 to 8s):
+    // v0 = 16, a = -2
+    // v(t) = max(0, 16 - 2*t)
+    // S(t) = (t <= 8) ? 16*t - 1.0*t^2 : 64.0
+    function getRainy(t) {
+      if (t >= 8.0) return { v: 0, s: 64.0, stopped: true };
+      const v = 16.0 - 2.0 * t;
+      const s = 16.0 * t - 1.0 * t * t;
+      return { v, s, stopped: false };
+    }
+
+    function toggleBrake() {
+      const btn = document.getElementById('btnBrake');
+      if (!isRunning) {
+        if (simTime >= 8.5) simTime = 0;
+        isRunning = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        loop();
+      } else {
+        isRunning = false;
+        btn.innerText = '▶ 同時踩下煞車 (初速 16 m/s)';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isRunning = false;
+      simTime = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnBrake').innerText = '▶ 同時踩下煞車 (初速 16 m/s)';
+      document.getElementById('btnBrake').style.background = 'var(--primary)';
+      updateUI();
+    }
+
+    function loop() {
+      if (!isRunning) return;
+      simTime += 0.025;
+      if (simTime >= 8.5) {
+        simTime = 8.5;
+        isRunning = false;
+        document.getElementById('btnBrake').innerText = '🔄 重新煞車對決';
+        document.getElementById('btnBrake').style.background = 'var(--primary)';
+      }
+      updateUI();
+      if (isRunning) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const s = getSunny(simTime);
+      const r = getRainy(simTime);
+
+      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
+      document.getElementById('hudSunnyS').innerText = `${s.s.toFixed(1)} m ${s.stopped ? '(已停)' : ''}`;
+      document.getElementById('hudRainyS').innerText = `${r.s.toFixed(1)} m ${r.stopped ? '(已停)' : ''}`;
+
+      draw(s, r);
+    }
+
+    function draw(s, r) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      // ==========================================
+      // 1. Top Section: Dual Tracks (y: 20 to 180)
+      // ==========================================
+      const trackX1 = 80, trackX2 = cw - 80;
+      const trackH = 55;
+      const track1Y = 30;  // Sunny
+      const track2Y = 100; // Rainy
+
+      function toTrackPx(dist) { return trackX1 + (dist / 64.0) * (trackX2 - trackX1); }
+
+      // Track 1: Sunny (Dry Asphalt)
+      ctx.fillStyle = '#1e293b'; ctx.fillRect(trackX1, track1Y, trackX2 - trackX1, trackH);
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2; ctx.strokeRect(trackX1, track1Y, trackX2 - trackX1, trackH);
+
+      // Track 2: Rainy (Wet Asphalt with puddle reflections)
+      ctx.fillStyle = '#0f172a'; ctx.fillRect(trackX1, track2Y, trackX2 - trackX1, trackH);
+      ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 2; ctx.strokeRect(trackX1, track2Y, trackX2 - trackX1, trackH);
+
+      // Distance Ticks (0m, 16m, 32m, 48m, 64m)
+      [0, 16, 32, 48, 64].forEach(d => {
+        const px = toTrackPx(d);
+        // Sunny Ticks
+        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(px, track1Y); ctx.lineTo(px, track1Y + trackH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(px, track2Y); ctx.lineTo(px, track2Y + trackH); ctx.stroke();
+
+        ctx.fillStyle = (d === 32 || d === 64) ? '#fde047' : '#64748b';
+        ctx.font = (d === 32 || d === 64) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${d}m`, px, track2Y + trackH + 16);
+      });
+
+      // Track Labels
+      ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillText('☀️ 晴天 (a=4)', trackX1 - 10, track1Y + 32);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('🌧️ 雨天 (a=2)', trackX1 - 10, track2Y + 32);
+
+      // Stop Line Markers
+      const px32 = toTrackPx(32);
+      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2.5; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(px32, track1Y); ctx.lineTo(px32, track1Y + trackH); ctx.stroke();
+      ctx.fillStyle = '#ef4444'; ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'center';
+      ctx.fillText('🏁 32m 煞停', px32, track1Y - 4);
+
+      const px64 = toTrackPx(64);
+      ctx.beginPath(); ctx.moveTo(px64, track2Y); ctx.lineTo(px64, track2Y + trackH); ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('🏁 64m 煞停', px64, track2Y - 4);
+      ctx.setLineDash([]);
+
+      // Draw Cars
+      const pxSunny = toTrackPx(s.s);
+      const pxRainy = toTrackPx(r.s);
+
+      // Sunny Car (Red 🚗)
+      ctx.font = '28px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🚗', pxSunny, track1Y + 36);
+
+      // Rainy Car (Blue 🚙)
+      ctx.fillText('🚙', pxRainy, track2Y + 36);
+
+      // Water splash effect if raining & moving
+      if (isRunning && !r.stopped) {
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.5)';
+        ctx.font = '14px sans-serif';
+        ctx.fillText('💦', pxRainy - 20, track2Y + 42);
+      }
+
+      // ==========================================
+      // 2. Bottom Section: v-t Graph (y: 200 to 430)
+      // ==========================================
+      const gx1 = 80, gx2 = cw - 70;
+      const gyZero = 420, gyTop = 210;
+
+      function mapX(t) { return gx1 + (t / 8.0) * (gx2 - gx1); }
+      function mapY(v) { return gyZero - (v / 20.0) * (gyZero - gyTop); }
+
+      // Shaded Areas
+      const curT = Math.min(8.0, simTime);
+
+      // Sunny Shaded Triangle (0 to min(4, curT))
+      const sunnyT = Math.min(4.0, curT);
+      if (sunnyT > 0) {
+        ctx.fillStyle = 'rgba(245, 158, 11, 0.3)';
+        ctx.beginPath();
+        ctx.moveTo(mapX(0), mapY(0));
+        ctx.lineTo(mapX(0), mapY(16));
+        ctx.lineTo(mapX(sunnyT), mapY(16 - 4 * sunnyT));
+        ctx.lineTo(mapX(sunnyT), mapY(0));
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Rainy Shaded Triangle (0 to curT)
+      if (curT > 0) {
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.2)';
+        ctx.beginPath();
+        ctx.moveTo(mapX(0), mapY(0));
+        ctx.lineTo(mapX(0), mapY(16));
+        ctx.lineTo(mapX(curT), mapY(16 - 2 * curT));
+        ctx.lineTo(mapX(curT), mapY(0));
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Grid
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
+      [2, 4, 6, 8].forEach(t => {
+        const px = mapX(t);
+        ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
+        ctx.fillStyle = (t === 4 || t === 8) ? '#fde047' : '#64748b';
+        ctx.font = (t === 4 || t === 8) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${t}s`, px, gyZero + 16);
+      });
+      [0, 8, 16].forEach(v => {
+        const py = mapY(v);
+        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${v}`, gx1 - 8, py + 4);
+      });
+
+      // Axes
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
+
+      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gx1 - 8, gyTop + 5);
+      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
+
+      // v-t Lines:
+      // 1. Sunny line: (0, 16) to (4, 0)
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3.5;
+      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(16)); ctx.lineTo(mapX(4), mapY(0)); ctx.stroke();
+
+      // 2. Rainy line: (0, 16) to (8, 0)
+      ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 3.5;
+      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(16)); ctx.lineTo(mapX(8), mapY(0)); ctx.stroke();
+
+      // Area Callouts
+      if (simTime >= 8.0) {
+        ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'center';
+        ctx.fillText('☀️ 晴天面積 32m', mapX(1.8), mapY(4));
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('🌧️ 雨天面積 64m (翻倍！)', mapX(5.2), mapY(5));
+      }
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'B') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong><br>晴天加速度量值 \( |a_1| = \\frac{|0 - 16|}{4} = \\mathbf{4\\text{ m/s}^2} \)（選 B）！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心計算！</strong> 加速度量值為 (16 - 0) / 4 ＝ 4 m/s²（選 B）！';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'D') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong><br>雨天煞車時間：\( S = \\frac{16 + 0}{2} \\times t = 64 \\implies t = \\frac{64}{8} = \\mathbf{8\\text{ 秒}} \)（選 D）！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心計算！</strong> 平均速度為 8 m/s，位移 64m 所需時間為 64 / 8 ＝ 8 秒（選 D）！';
+        }
+      } else if (qNum === 3) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>完全正確！</strong><br>雨天加速度量值 \( |a_2| = \\frac{|0 - 16|}{8} = \\mathbf{2\\text{ m/s}^2} \)（選 A）！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心計算！</strong> 雨天加速度量值為 (16 - 0) / 8 ＝ 2 m/s²（選 A）！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

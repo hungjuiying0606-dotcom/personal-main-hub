@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鳥看魚 vs 魚看鳥 視深視高折射實驗室 | 第59頁第6題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #bae6fd;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .perspective-switcher {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .perspective-tab {
+      padding: 0.4rem 0.9rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      font-weight: 900;
+      font-size: 0.8rem;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .perspective-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #f0f9ff;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas#refractionCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: ns-resize;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .control-val {
+      font-family: 'JetBrains Mono', monospace;
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    input[type="range"].custom-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #e0f2fe;
+      border: 2px dashed #0284c7;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0369a1;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+      <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>鳥看魚 vs 魚看鳥 視深視高折射實驗室（第59頁第6題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🌊</span> 水面折射與視深/視高雙向光路模擬器
+          </div>
+          <div class="perspective-switcher">
+            <button class="perspective-tab active" id="tabBird" onclick="switchMode('bird')">🦅 鳥看魚 (視深變淺)</button>
+            <button class="perspective-tab" id="tabFish" onclick="switchMode('fish')">🐟 魚看鳥 (視高變高)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="refractionCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：可以在畫布上直接拖曳「小鳥 (空中)」或「魚 (水中)」調整高度與深度！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵設定：</span>
+          <button class="preset-btn active" onclick="setPreset(2.0, 1.0)">📖 第59頁第6題原題 (鳥在2m, 魚在1m)</button>
+          <button class="preset-btn" onclick="setPreset(3.0, 2.0)">🌊 深度加倍 (鳥3m, 魚2m)</button>
+          <button class="preset-btn" onclick="setPreset(1.5, 0.6)">🤿 淺水區 (鳥1.5m, 魚0.6m)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Control Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 距離與深度調節
+          </div>
+
+          <!-- 鳥的高度 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>小鳥真實高度 (離水面)</span>
+              <span class="control-val" id="dispBirdH">2.0 m</span>
+            </div>
+            <input type="range" class="custom-slider" id="sliderBirdH" min="1.0" max="4.0" step="0.1" value="2.0">
+          </div>
+
+          <!-- 魚的深度 -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <span>魚真實深度 (水面下)</span>
+              <span class="control-val" id="dispFishD">1.0 m</span>
+            </div>
+            <input type="range" class="custom-slider" id="sliderFishD" min="0.5" max="3.0" step="0.1" value="1.0">
+          </div>
+        </div>
+
+        <!-- Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> <span id="metricsTitle">鳥看魚之視深數據</span>
+          </div>
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label" id="labelReal">魚真實深度 d</div>
+              <div class="status-item-val" id="valReal">1.0 m</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label" id="labelApparent">看見的視深 d'</div>
+              <div class="status-item-val" id="valApparent" style="color:#0284c7;">0.75 m</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🦅 <strong>【空中的鳥看水中的魚】</strong>：<br>
+            光由水進入空氣（光速慢到快），<strong>折射光線偏離法線</strong>，鳥眼順著光線反向直線延伸，看見魚的虛像<strong>往上浮起（視深變淺，小於 1m）</strong>！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 59 頁 重點 3 第 6 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：小鳥離水面 2 公尺，魚在水面下 1 公尺處，何者最合理？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#0369a1; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
+          光的折射 ✕ 偏離法線 ✕ 視深與視高
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：如右圖所示，小鳥離水面 2 公尺，魚在水面下 1 公尺處，則下列敘述何者最合理？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ6('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">空中的鳥看水中的魚，與自己的距離等於 3 公尺</div>
+        </div>
+
+        <!-- Option B (Correct) -->
+        <div class="option-card" onclick="testExamQ6('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">空中的鳥看水中的魚，與水面的距離小於 1 公尺 (正確)</div>
+        </div>
+
+        <!-- Option C -->
+        <div class="option-card" onclick="testExamQ6('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">水中的魚看空中的鳥，與水面的距離小於 2 公尺</div>
+        </div>
+
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ6('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">水中的魚看空中的鳥，與水面的距離等於 2 公尺</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ6">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ6">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ6"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 光的折射與視深視高教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let mode = 'bird'; // 'bird' (鳥看魚: 視深變淺) | 'fish' (魚看鳥: 視高變高)
+    let birdH = 2.0;   // meters (1.0 ~ 4.0)
+    let fishD = 1.0;   // meters (0.5 ~ 3.0)
+    const nWater = 1.333; // 折射率
+
+    const canvas = document.getElementById('refractionCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const sliderBirdH = document.getElementById('sliderBirdH');
+    const sliderFishD = document.getElementById('sliderFishD');
+    const dispBirdH = document.getElementById('dispBirdH');
+    const dispFishD = document.getElementById('dispFishD');
+    const metricsTitle = document.getElementById('metricsTitle');
+    const labelReal = document.getElementById('labelReal');
+    const valReal = document.getElementById('valReal');
+    const labelApparent = document.getElementById('labelApparent');
+    const valApparent = document.getElementById('valApparent');
+    const natureBanner = document.getElementById('natureBanner');
+
+    let isDragging = false;
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const waterLevelY = h * 0.48; // 水面 Y 坐標
+      const scaleY = 55; // 1m = 55px
+
+      // 1. Draw Background: Air (top) & Water (bottom)
+      // Air: Light Sky
+      ctx.fillStyle = '#f0f9ff';
+      ctx.fillRect(0, 0, w, waterLevelY);
+
+      // Water: Deep Cyan/Blue with subtle wave pattern
+      ctx.fillStyle = '#bae6fd';
+      ctx.fillRect(0, waterLevelY, w, h - waterLevelY);
+
+      // Water Surface Line (Thick wavy line)
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(0, waterLevelY);
+      ctx.lineTo(w, waterLevelY);
+      ctx.stroke();
+
+      // Surface Text
+      ctx.fillStyle = '#0369a1';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('🌊 水面 (Air / Water 介面)', 20, waterLevelY - 8);
+
+      // 2. Positions
+      // Bird position
+      const birdX = w * 0.72;
+      const birdY = waterLevelY - birdH * scaleY;
+
+      // Fish position
+      const fishX = w * 0.28;
+      const fishY = waterLevelY + fishD * scaleY;
+
+      // Surface refraction point (geometric point on water surface)
+      const surfaceRefractX = w * 0.5;
+
+      // 3. Normal Line (Vertical dashed line at refraction point)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(surfaceRefractX, 30);
+      ctx.lineTo(surfaceRefractX, h - 30);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('法線', surfaceRefractX + 6, 45);
+
+      // 4. Calculate Apparent Position & Draw Rays based on Mode
+      if (mode === 'bird') {
+        // --- 鳥看水中的魚 ---
+        // 光源：水中的魚 ➔ 水面折射 ➔ 空中的鳥眼
+        // 視深 d' = d / nWater (變淺)
+        const apparentDepth = fishD / nWater;
+        const fishImageY = waterLevelY + apparentDepth * scaleY;
+        const fishImageX = fishX;
+
+        // Incident Ray (In water, from Fish to Surface)
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#fbbf24';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(fishX, fishY);
+        ctx.lineTo(surfaceRefractX, waterLevelY);
+        ctx.stroke();
+
+        // Refracted Ray (In air, from Surface to Bird, 偏離法線)
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#f87171';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(surfaceRefractX, waterLevelY);
+        ctx.lineTo(birdX, birdY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Bird Eye Brain Back-Extension Dashed Line to Fish Virtual Image
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.7)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(surfaceRefractX, waterLevelY);
+        ctx.lineTo(fishImageX, fishImageY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Real Fish (Opaque)
+        drawFish(fishX, fishY, 1.0, false);
+        // Virtual Fish Image (Semi-transparent floating higher)
+        drawFish(fishImageX, fishImageY, 0.45, true);
+
+        // Real Bird (Observer)
+        drawBird(birdX, birdY, 1.0, true);
+
+        // Height & Depth dimension lines
+        drawDimensionLine(fishX - 45, waterLevelY, fishX - 45, fishY, `真深 d = ${fishD.toFixed(1)}m`, '#0284c7');
+        drawDimensionLine(fishX + 45, waterLevelY, fishX + 45, fishImageY, `視深 d' ≈ ${apparentDepth.toFixed(2)}m (< ${fishD.toFixed(1)}m)`, '#ef4444');
+        drawDimensionLine(birdX + 40, waterLevelY, birdX + 40, birdY, `鳥高 = ${birdH.toFixed(1)}m`, '#059669');
+
+      } else {
+        // --- 魚看空中的鳥 ---
+        // 光源：空中的鳥 ➔ 水面折射 ➔ 水中的魚眼
+        // 視高 h' = h * nWater (變高)
+        const apparentHeight = birdH * nWater;
+        const birdImageY = waterLevelY - apparentHeight * scaleY;
+        const birdImageX = birdX;
+
+        // Incident Ray (In air, from Bird to Surface)
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#fbbf24';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(birdX, birdY);
+        ctx.lineTo(surfaceRefractX, waterLevelY);
+        ctx.stroke();
+
+        // Refracted Ray (In water, from Surface to Fish, 偏向法線)
+        ctx.strokeStyle = '#3b82f6';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#60a5fa';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(surfaceRefractX, waterLevelY);
+        ctx.lineTo(fishX, fishY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Fish Eye Brain Back-Extension Dashed Line to Bird Virtual Image
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(surfaceRefractX, waterLevelY);
+        ctx.lineTo(birdImageX, birdImageY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Real Bird (Opaque)
+        drawBird(birdX, birdY, 1.0, false);
+        // Virtual Bird Image (Semi-transparent flying higher)
+        drawBird(birdImageX, birdImageY, 0.45, true);
+
+        // Real Fish (Observer)
+        drawFish(fishX, fishY, 1.0, true);
+
+        // Height & Depth dimension lines
+        drawDimensionLine(birdX - 45, waterLevelY, birdX - 45, birdY, `真高 h = ${birdH.toFixed(1)}m`, '#059669');
+        drawDimensionLine(birdX + 45, waterLevelY, birdX + 45, birdImageY, `視高 h' ≈ ${apparentHeight.toFixed(2)}m (> ${birdH.toFixed(1)}m)`, '#3b82f6');
+        drawDimensionLine(fishX - 40, waterLevelY, fishX - 40, fishY, `魚深 = ${fishD.toFixed(1)}m`, '#0284c7');
+      }
+
+      updateUI();
+    }
+
+    function drawFish(x, y, opacity, isVirtual) {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.translate(x, y);
+
+      // Fish Body (Orange)
+      ctx.fillStyle = '#f97316';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 22, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Fish Tail
+      ctx.beginPath();
+      ctx.moveTo(-18, 0);
+      ctx.lineTo(-30, -10);
+      ctx.lineTo(-30, 10);
+      ctx.closePath();
+      ctx.fillStyle = '#fb923c';
+      ctx.fill();
+      ctx.stroke();
+
+      // Eye
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(12, -4, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(13, -4, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = isVirtual ? '#ef4444' : '#0369a1';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(isVirtual ? '🐟 魚的虛像 (看起來變淺)' : '🐟 魚的真實位置', 0, 26);
+
+      ctx.restore();
+    }
+
+    function drawBird(x, y, opacity, isVirtualOrObserver) {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.translate(x, y);
+
+      // Bird Body (Green/Yellow)
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.arc(0, 0, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Wing
+      ctx.fillStyle = '#059669';
+      ctx.beginPath();
+      ctx.ellipse(4, 2, 10, 6, -0.3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Beak
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.moveTo(-14, -2);
+      ctx.lineTo(-24, 2);
+      ctx.lineTo(-14, 6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Eye
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-6, -4, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(-7, -4, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = (mode === 'fish' && opacity < 0.8) ? '#3b82f6' : '#15803d';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      if (mode === 'fish' && opacity < 0.8) {
+        ctx.fillText('🦅 鳥的虛像 (看起來變高)', 0, -22);
+      } else {
+        ctx.fillText('🦅 鳥的真實位置', 0, -22);
+      }
+
+      ctx.restore();
+    }
+
+    function drawDimensionLine(x1, y1, x2, y2, text, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      // T-bars
+      ctx.moveTo(x1 - 5, y1); ctx.lineTo(x1 + 5, y1);
+      ctx.moveTo(x2 - 5, y2); ctx.lineTo(x2 + 5, y2);
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.font = 'bold 11px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, x1, (y1 + y2) / 2);
+    }
+
+    function updateUI() {
+      dispBirdH.textContent = `${birdH.toFixed(1)} m`;
+      dispFishD.textContent = `${fishD.toFixed(1)} m`;
+
+      if (mode === 'bird') {
+        metricsTitle.textContent = '🦅 鳥看魚之視深數據';
+        labelReal.textContent = '魚真實深度 d';
+        valReal.textContent = `${fishD.toFixed(1)} m`;
+        labelApparent.textContent = '看見的視深 d\'';
+        const appD = (fishD / nWater).toFixed(2);
+        valApparent.textContent = `${appD} m`;
+        valApparent.style.color = '#ef4444';
+
+        natureBanner.innerHTML = `
+          🦅 <strong>【空中的鳥看水中的魚】</strong>：<br>
+          光線由水中進入空氣（光速慢到快），<strong>折射光線偏離法線</strong>。<br>
+          鳥眼看見魚的虛像<strong>往上浮起（視深變淺：${appD}m &lt; ${fishD.toFixed(1)}m）</strong>！<br>
+          鳥與魚虛像的總距離為 <strong>${(birdH + parseFloat(appD)).toFixed(2)}m (&lt; 3.0m)</strong>！
+        `;
+      } else {
+        metricsTitle.textContent = '🐟 魚看鳥之視高數據';
+        labelReal.textContent = '小鳥真實高度 h';
+        valReal.textContent = `${birdH.toFixed(1)} m`;
+        labelApparent.textContent = '看見的視高 h\'';
+        const appH = (birdH * nWater).toFixed(2);
+        valApparent.textContent = `${appH} m`;
+        valApparent.style.color = '#3b82f6';
+
+        natureBanner.innerHTML = `
+          🐟 <strong>【水中的魚看空中的鳥】</strong>：<br>
+          光線由空氣進入水中（光速快到慢），<strong>折射光線偏向法線</strong>。<br>
+          魚眼看見鳥的虛像<strong>往上抬高（視高變高：${appH}m &gt; ${birdH.toFixed(1)}m）</strong>！<br>
+          魚與鳥虛像的總距離為 <strong>${(fishD + parseFloat(appH)).toFixed(2)}m (&gt; 3.0m)</strong>！
+        `;
+      }
+    }
+
+    // Sliders
+    sliderBirdH.addEventListener('input', (e) => {
+      birdH = parseFloat(e.target.value);
+      draw();
+    });
+
+    sliderFishD.addEventListener('input', (e) => {
+      fishD = parseFloat(e.target.value);
+      draw();
+    });
+
+    // Switch Mode
+    window.switchMode = function(m) {
+      mode = m;
+      document.getElementById('tabBird').classList.toggle('active', m === 'bird');
+      document.getElementById('tabFish').classList.toggle('active', m === 'fish');
+      draw();
+    };
+
+    window.setPreset = function(bH, fD) {
+      birdH = bH;
+      fishD = fD;
+      sliderBirdH.value = bH;
+      sliderFishD.value = fD;
+      draw();
+    };
+
+    // Canvas Dragging
+    function handlePointer(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const y = clientY - rect.top;
+      const waterLevelY = container.clientHeight * 0.48;
+      const scaleY = 55;
+
+      if (y < waterLevelY - 20) {
+        // Drag Bird
+        let hVal = (waterLevelY - y) / scaleY;
+        if (hVal < 1.0) hVal = 1.0;
+        if (hVal > 4.0) hVal = 4.0;
+        birdH = hVal;
+        sliderBirdH.value = hVal;
+        draw();
+      } else if (y > waterLevelY + 20) {
+        // Drag Fish
+        let dVal = (y - waterLevelY) / scaleY;
+        if (dVal < 0.5) dVal = 0.5;
+        if (dVal > 3.0) dVal = 3.0;
+        fishD = dVal;
+        sliderFishD.value = dVal;
+        draw();
+      }
+    }
+
+    container.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mousemove', (e) => { if (isDragging) handlePointer(e); });
+    window.addEventListener('mouseup', () => isDragging = false);
+
+    container.addEventListener('touchstart', (e) => { isDragging = true; handlePointer(e); }, { passive: false });
+    window.addEventListener('touchmove', (e) => { if (isDragging) handlePointer(e); }, { passive: false });
+    window.addEventListener('touchend', () => isDragging = false);
+
+    // Exam Handler
+    window.testExamQ6 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ6');
+      const expTitle = document.getElementById('expTitleQ6');
+      const expContent = document.getElementById('expContentQ6');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'B') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(B) 空中的鳥看水中的魚，與水面的距離小於 1 公尺】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【光的雙向折射深度與高度剖析】</strong><br>
+          1. <strong>空中的鳥看水中的魚（選項 B 正確）</strong>：<br>
+             - 光線來自水中的魚，由<strong>水進入空氣（光速慢到快）</strong>，折射光線<strong>偏離法線</strong>。<br>
+             - 鳥眼順著進入的光線反向直線延伸，看見魚的虛像<strong>往水面浮起</strong>，因此魚的「視深」<strong>小於真實深度 1 公尺（約 0.75m）</strong>！<br>
+          2. <strong>水中的魚看空中的鳥（選項 C、D 錯誤）</strong>：<br>
+             - 光線來自空中的鳥，由<strong>空氣進入水（光速快到慢）</strong>，折射光線<strong>偏向法線</strong>。<br>
+             - 魚眼看見鳥的虛像<strong>往上抬高</strong>，因此鳥的「視高」<strong>大於真實高度 2 公尺（約 2.67m）</strong>！<br>
+          3. <strong>總距離分析（選項 A 錯誤）</strong>：<br>
+             - 鳥看魚時，總距離為「鳥真實高度 2m ＋ 魚視深 0.75m」$= 2.75\\text{ m} < 3\\text{ m}$，不可能等於 3 公尺。
+        `;
+        switchMode('bird');
+        setPreset(2.0, 1.0);
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        if (opt === 'A') {
+          expContent.innerHTML = `鳥看魚時，由於光線折射使魚看起來往上浮起（視深 $< 1\\text{m}$），因此鳥到魚像的距離為 $2\\text{m} + (< 1\\text{m}) < 3\\text{m}$，不會等於 3 公尺。`;
+        } else if (opt === 'C' || opt === 'D') {
+          expContent.innerHTML = `光由空氣進入水中（快到慢）會「偏向法線」，使魚看到的鳥虛像比真實位置更高（視高 $> 2\\text{m}$），不會小於或等於 2 公尺。`;
+          switchMode('fish');
+        }
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>

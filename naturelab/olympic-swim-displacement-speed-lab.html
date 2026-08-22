@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 奧運 50m 泳池 100m 自由式：折返位移為零 vs 平均速率金牌挑戰 (習作 P.5 第10題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;       /* Ocean Blue */
+      --primary-dark: #0369a1;
+      --pool-water: #38bdf8;
+      --gold: #eab308;
+      --path-color: #a855f7;     /* Purple / Path Length */
+      --disp-color: #ef4444;     /* Red / Displacement */
+      --bg: #f0fdf4;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #bae6fd;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: #f0f9ff;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e0f2fe;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Pool Canvas Container */
+    .stage-box {
+      background: #0284c7;
+      border: 3px solid #0369a1;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Dual Telemetry Cards */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+    }
+
+    .t-card.path { border-color: #d8b4fe; background: #faf5ff; }
+    .t-card.disp { border-color: #fecaca; background: #fef2f2; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .t-card.path h4 { color: #7e22ce; }
+    .t-card.disp h4 { color: #dc2626; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .t-card.path .t-val { color: #7e22ce; }
+    .t-card.disp .t-val { color: #dc2626; }
+
+    .t-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* 4 Items Matrix Table */
+    .matrix-box {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: white;
+    }
+
+    table.matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    table.matrix-table th {
+      background: #f1f5f9;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    table.matrix-table td {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.matrix-table tr.highlight {
+      background: #fefce8;
+      font-weight: 800;
+    }
+
+    .tag-correct {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    .tag-wrong {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #f0f9ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏊 奧運 50m 泳池 100m 自由式：折返位移為零 vs 平均速率金牌挑戰</span>
+          <span class="badge">國中自然 3上 · 習作 P.5 第10題</span>
+        </h1>
+        <p>2021 東京奧運德萊賽爾 47.02 秒破紀錄：折返回到原點全程位移＝0m；平均速率 2.13 m/s ＞ 2 m/s！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Pool Simulation Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏊‍♂️ 奧運 50 公尺標準泳池（100m 自由式折返競速）</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnSwim" onclick="toggleSwim()">▶ 選手入水出發</button>
+            <button class="btn btn-secondary" onclick="resetSwim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>⏱️ 比賽計時：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">0.00 秒</strong></span>
+            <span>🏊 狀態：<strong id="hudPhase" style="color: #fde047;">準備起跳</strong></span>
+            <span>🏆 奧運紀錄：<strong>47.02 秒</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="380"></canvas>
+        </div>
+
+        <!-- Scrubber & Controls -->
+        <div class="control-panel">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
+            <span>手動拖曳比賽進度 (0～47.02秒)：</span>
+            <span id="sliderVal">t = 0.00 秒</span>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="47.02" step="0.1" value="0" style="width: 100%; accent-color: var(--primary);" oninput="onSliderChange(this.value)">
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            💡 <strong>關鍵觀察點：</strong>請觀察去程 (0~22.5s) 紅色位移箭頭向右拉長到 50m；轉身回程後，紅色箭頭<strong>逐漸縮短</strong>，並在 47.02s 抵達出發點時<strong>完全歸零（位移＝0）</strong>！
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Metrics & Quiz -->
+      <div>
+        
+        <!-- Live Telemetry Grid -->
+        <div class="telemetry-grid">
+          <!-- Total Path Length -->
+          <div class="t-card path">
+            <h4>🟣 全程路徑長 \( S \)</h4>
+            <div class="t-val" id="valPath">0.0 m</div>
+            <div class="t-sub" id="subSpeed">平均速率：0.00 m/s</div>
+          </div>
+
+          <!-- Total Displacement -->
+          <div class="t-card disp">
+            <h4>🔴 全程位移 \( \Delta \vec{x} \)</h4>
+            <div class="t-val" id="valDisp">0.0 m</div>
+            <div class="t-sub" id="subVel">平均速度：0.00 m/s</div>
+          </div>
+        </div>
+
+        <!-- 4 Items Matrix Table -->
+        <div class="matrix-box">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>物理量項目</th>
+                <th>計算公式與數據</th>
+                <th>判定結果</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>(A) 全程位移 \( \Delta \vec{x} \)</td>
+                <td>出發點 0m ➔ 終點 0m：\( \Delta x = \mathbf{0\text{ m}} \)</td>
+                <td><span class="tag-wrong">錯誤 (非 100m)</span></td>
+              </tr>
+              <tr>
+                <td>(B) 全程路徑長 \( S \)</td>
+                <td>去程 50m ＋ 回程 50m ＝ \( \mathbf{100\text{ m}} \)</td>
+                <td><span class="tag-wrong">錯誤 (非 0m)</span></td>
+              </tr>
+              <tr>
+                <td>(C) 全程平均速度 \( |\vec{v}| \)</td>
+                <td>\( \frac{\text{位移 } 0\text{ m}}{47.02\text{ s}} = \mathbf{0\text{ m/s}} \)</td>
+                <td><span class="tag-wrong">錯誤 (非 ＞2m/s)</span></td>
+              </tr>
+              <tr class="highlight">
+                <td>(D) 全程平均速率 \( v_{\text{avg}} \)</td>
+                <td>\( \frac{\text{路徑長 } 100\text{ m}}{47.02\text{ s}} \approx \mathbf{2.13\text{ m/s} ＞ 2\text{ m/s}} \)</td>
+                <td><span class="tag-correct">正確 (答案 D)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.5 第 10 題解析重點：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>折返運動的位移：</strong>只要物體運動後<strong>回到出發點</strong>，起訖點重合，全程位移必為 <strong>0 公尺</strong>（平均速度必為 0 m/s）。</li>
+            <li><strong>折返運動的路徑長：</strong>路徑長不看方向，為實際游過總長度 <strong>100 公尺</strong>。</li>
+            <li><strong>平均速率：</strong>\( \frac{100}{47.02} \approx \mathbf{2.13\text{ m/s}} \)，大於 2 公尺/秒（選 D）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作第 10 題奧運原題測驗</div>
+
+          <div class="quiz-item">
+            <p>50公尺泳池游100公尺自由式（折返回出發點），47.02秒破紀錄奪金，下列敘述何者正確？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">
+                (D) 全程的平均速率大於 2 公尺∕秒
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">
+                (A) 全程的位移為 100 公尺
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">
+                (B) 全程的路徑長等於 0
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">
+                (C) 全程的平均速度大小大於 2 公尺∕秒
+              </button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
+  </footer>
+
+  <script>
+    let isSwimming = false;
+    let animId = null;
+    let lastTime = 0;
+    let simSeconds = 0; // 0 to 47.02s
+    const totalOlympicTime = 47.02; // seconds
+    const splitTime = 22.50; // 50m turn time
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function toggleSwim() {
+      const btn = document.getElementById('btnSwim');
+      if (!isSwimming) {
+        if (simSeconds >= totalOlympicTime) simSeconds = 0;
+        isSwimming = true;
+        btn.innerText = '⏸ 暫停比賽';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isSwimming = false;
+        btn.innerText = '▶ 繼續比賽';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSwim() {
+      isSwimming = false;
+      simSeconds = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnSwim').innerText = '▶ 選手入水出發';
+      document.getElementById('btnSwim').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onSliderChange(val) {
+      simSeconds = parseFloat(val);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isSwimming) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // 47.02 seconds in 10 seconds real time
+      simSeconds += dt * 4.702;
+
+      if (simSeconds >= totalOlympicTime) {
+        simSeconds = totalOlympicTime;
+        isSwimming = false;
+        document.getElementById('btnSwim').innerText = '🔄 重新比賽';
+        document.getElementById('btnSwim').style.background = 'var(--primary)';
+      }
+
+      document.getElementById('timeSlider').value = simSeconds;
+      updateUI();
+
+      if (isSwimming) animId = requestAnimationFrame(loop);
+    }
+
+    function getSwimmerPhysics(t) {
+      let curPosM = 0;
+      let pathLenM = 0;
+      let phase = '準備出發';
+
+      if (t <= splitTime) {
+        // Outbound (0 to 50m)
+        const prog = t / splitTime;
+        curPosM = prog * 50.0;
+        pathLenM = curPosM;
+        phase = '去程衝刺 ➡️ (0~50m)';
+      } else {
+        // Inbound (50 to 0m)
+        const prog = (t - splitTime) / (totalOlympicTime - splitTime);
+        curPosM = 50.0 - prog * 50.0;
+        pathLenM = 50.0 + prog * 50.0;
+        phase = '蹬牆轉身折返 ⬅️ (50~100m)';
+      }
+
+      if (t >= totalOlympicTime) {
+        curPosM = 0;
+        pathLenM = 100.0;
+        phase = '🏆 觸壁抵達終點！奪金破紀錄！';
+      }
+
+      const dispM = curPosM; // from start 0
+      const avgSpeed = (t > 0) ? (pathLenM / t) : 0;
+      const avgVel = (t > 0) ? (dispM / t) : 0;
+
+      return { curPosM, pathLenM, dispM, avgSpeed, avgVel, phase };
+    }
+
+    function updateUI() {
+      const p = getSwimmerPhysics(simSeconds);
+
+      document.getElementById('hudTime').innerText = `${simSeconds.toFixed(2)} 秒`;
+      document.getElementById('hudPhase').innerText = p.phase;
+      document.getElementById('sliderVal').innerText = `t = ${simSeconds.toFixed(2)} 秒`;
+
+      document.getElementById('valPath').innerText = `${p.pathLenM.toFixed(1)} m`;
+      document.getElementById('subSpeed').innerText = `平均速率：${p.avgSpeed.toFixed(2)} m/s`;
+
+      document.getElementById('valDisp').innerText = `${p.dispM.toFixed(1)} m ${p.dispM === 0 ? '(歸零)' : '向右'}`;
+      document.getElementById('subVel').innerText = `平均速度：${p.avgVel.toFixed(2)} m/s`;
+
+      draw(p);
+    }
+
+    function draw(p) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width;
+
+      // 1. Draw Olympic Pool Arena
+      const poolX1 = 70, poolX2 = cw - 70;
+      const poolY1 = 70, poolY2 = 290;
+      const poolLenPx = poolX2 - poolX1;
+
+      const toPoolPx = (m) => poolX1 + (m / 50.0) * poolLenPx;
+
+      // Water body
+      const waterGrad = ctx.createLinearGradient(0, poolY1, 0, poolY2);
+      waterGrad.addColorStop(0, '#0284c7');
+      waterGrad.addColorStop(1, '#0369a1');
+      ctx.fillStyle = waterGrad;
+      ctx.fillRect(poolX1, poolY1, poolLenPx, poolY2 - poolY1);
+
+      // Pool Lanes (8 lanes)
+      const laneH = (poolY2 - poolY1) / 4;
+      for (let i = 0; i <= 4; i++) {
+        const ly = poolY1 + i * laneH;
+        ctx.strokeStyle = (i === 0 || i === 4) ? '#ffffff' : 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = (i === 0 || i === 4) ? 3 : 1.5;
+        ctx.setLineDash([8, 6]);
+        ctx.beginPath(); ctx.moveTo(poolX1, ly); ctx.lineTo(poolX2, ly); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Starting Block (Left: 0m)
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(poolX1 - 25, poolY1 + laneH * 1.5 - 15, 25, 30);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText('起跳台', poolX1 - 12, poolY1 + laneH * 1.5 - 22);
+      ctx.fillText('(0m 出發/終點)', poolX1 - 12, poolY1 + laneH * 1.5 + 30);
+
+      // Turning Wall (Right: 50m)
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(poolX2, poolY1, 15, poolY2 - poolY1);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('觸壁轉身端 (50m)', poolX2 + 8, poolY1 - 10);
+
+      // Draw Distance Scale Ticks
+      [0, 10, 20, 30, 40, 50].forEach(m => {
+        const px = toPoolPx(m);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px Outfit';
+        ctx.fillText(`${m}m`, px, poolY2 + 18);
+      });
+
+      // 2. Draw Dynamic Displacement Vector (Red Arrow from 0 to curPosM)
+      const curPx = toPoolPx(p.curPosM);
+      const dispY = poolY1 - 25;
+
+      ctx.strokeStyle = '#ef4444';
+      ctx.fillStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(poolX1, dispY); ctx.lineTo(curPx, dispY); ctx.stroke();
+
+      if (p.curPosM > 1) {
+        // Arrow head
+        ctx.beginPath();
+        ctx.moveTo(curPx, dispY);
+        ctx.lineTo(curPx - 8, dispY - 5);
+        ctx.lineTo(curPx - 8, dispY + 5);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'center';
+      const dispMidX = (poolX1 + curPx) / 2;
+      ctx.fillText(`🔴 即時位移向量：${p.curPosM.toFixed(1)}m`, Math.max(poolX1 + 50, dispMidX), dispY - 8);
+
+      // 3. Draw Water Wake / Splash Footprint (Purple Line in Lane 2)
+      const swimmerY = poolY1 + laneH * 2;
+      ctx.strokeStyle = '#c084fc';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(poolX1, swimmerY);
+      if (simSeconds <= splitTime) {
+        ctx.lineTo(curPx, swimmerY);
+      } else {
+        ctx.lineTo(poolX2, swimmerY);
+        ctx.stroke();
+        // Return wake
+        ctx.strokeStyle = '#e879f9';
+        ctx.beginPath(); ctx.moveTo(poolX2, swimmerY + 8); ctx.lineTo(curPx, swimmerY + 8);
+      }
+      ctx.stroke();
+
+      // 4. Draw Swimmer Avatar
+      ctx.font = '28px sans-serif';
+      ctx.textAlign = 'center';
+      const swimmerEmoji = (simSeconds <= splitTime) ? '🏊‍♂️' : '🏊‍♂️';
+      ctx.fillText(swimmerEmoji, curPx, swimmerY + 8);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.fillText('德萊賽爾', curPx, swimmerY + 28);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb1');
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'D') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>全程平均速率 ＝ \( \frac{\text{總路徑長 } 100\text{m}}{\text{總時間 } 47.02\text{s}} \approx \mathbf{2.13\text{ m/s}} \)，大於 2 公尺∕秒，故 (D) 正確！';
+      } else if (ans === 'A') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>小心陷阱！</strong> 選手由出發點出發後折返回原點，起訖點重合，<strong>全程位移為 0 公尺</strong>，不是 100 公尺！';
+      } else if (ans === 'B') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 路徑長是實際游過的總長度（去程 50m ＋ 回程 50m ＝ 100m），不等於 0！';
+      } else if (ans === 'C') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 平均速度 ＝ 位移／時間 ＝ \( \frac{0}{47.02} = \mathbf{0\text{ m/s}} \)，不等於大於 2 m/s！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

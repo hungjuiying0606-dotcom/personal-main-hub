@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · x-t 圖 vs v-t 圖四圖同構對照儀：靜止/等速/等加速配對器 (習作 P.7 第19題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8b5cf6;       /* Purple */
+      --primary-dark: #7c3aed;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #ddd6fe;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --highlight: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(139, 92, 246, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: #faf5ff;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f3e8ff;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Top Track Simulation Arena */
+    .track-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .track-hud {
+      color: #38bdf8;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+
+    canvas.track-canvas {
+      display: block;
+      width: 100%;
+      height: 90px;
+    }
+
+    /* 4 Graphs 2x2 Grid */
+    .graphs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .graph-card {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .graph-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);
+    }
+
+    .graph-card.active {
+      border-color: var(--primary-dark);
+      background: #faf5ff;
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .graph-card.match {
+      border-color: #10b981 !important;
+      background: #f0fdf4 !important;
+      box-shadow: 0 0 0 2px #10b981 !important;
+    }
+
+    .graph-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .graph-head .name {
+      color: var(--primary-dark);
+    }
+
+    .graph-head .state-tag {
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+    }
+
+    .graph-card.match .state-tag {
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 900;
+    }
+
+    canvas.mini-graph {
+      display: block;
+      width: 100%;
+      height: 125px;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Controls Buttons */
+    .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Match Matrix Table */
+    .matrix-box {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: white;
+    }
+
+    table.matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    table.matrix-table th {
+      background: #f3e8ff;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    table.matrix-table td {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.matrix-table tr.highlight {
+      background: #f0fdf4;
+      font-weight: 800;
+    }
+
+    .tag-match {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #faf5ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>📈 x-t 圖 vs v-t 圖四圖同構對照儀：靜止/等速/等加速配對器</span>
+          <span class="badge">國中自然 3上 · 習作 P.7 第19題</span>
+        </h1>
+        <p>甲 (x-t 水平: 靜止) ｜ 乙 (x-t 斜線: 等速) ｜ 丙 (v-t 水平: 等速) ｜ 丁 (v-t 斜線: 等加速) ➔ 乙與丙同為等速度！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: 4-Quadrant Graphs & Real Track -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏁 4 圖運動行為即時跑道連動</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="triggerMatch()">✨ 一鍵尋找等效運動 (乙＝丙)</button>
+            <button class="btn btn-secondary" onclick="resetAll()">🔄 重置</button>
+          </div>
+        </div>
+
+        <!-- Top Track Live Demo -->
+        <div class="track-box">
+          <div class="track-hud">
+            <span>🚗 正在模擬：<strong id="trackTitle" style="color: #fde047;">乙圖（x-t 傾斜直線：等速度運動）</strong></span>
+            <span>⚡ 狀態：<strong id="trackState" style="color: #38bdf8;">v = 常數 (向右勻速)</strong></span>
+          </div>
+          <canvas id="trackCanvas" class="track-canvas" width="600" height="90"></canvas>
+        </div>
+
+        <!-- 4 Graphs 2x2 Grid -->
+        <div class="graphs-grid">
+          <!-- Graph A: x-t horizontal -->
+          <div class="graph-card" id="cardA" onclick="selectGraph('A')">
+            <div class="graph-head">
+              <span class="name">【甲圖】x-t 圖</span>
+              <span class="state-tag" id="tagA">水平線</span>
+            </div>
+            <canvas id="cvA" class="mini-graph" width="280" height="125"></canvas>
+          </div>
+
+          <!-- Graph B: x-t sloped -->
+          <div class="graph-card active" id="cardB" onclick="selectGraph('B')">
+            <div class="graph-head">
+              <span class="name">【乙圖】x-t 圖</span>
+              <span class="state-tag" id="tagB">傾斜直線</span>
+            </div>
+            <canvas id="cvB" class="mini-graph" width="280" height="125"></canvas>
+          </div>
+
+          <!-- Graph C: v-t horizontal -->
+          <div class="graph-card" id="cardC" onclick="selectGraph('C')">
+            <div class="graph-head">
+              <span class="name">【丙圖】v-t 圖</span>
+              <span class="state-tag" id="tagC">水平線</span>
+            </div>
+            <canvas id="cvC" class="mini-graph" width="280" height="125"></canvas>
+          </div>
+
+          <!-- Graph D: v-t sloped -->
+          <div class="graph-card" id="cardD" onclick="selectGraph('D')">
+            <div class="graph-head">
+              <span class="name">【丁圖】v-t 圖</span>
+              <span class="state-tag" id="tagD">傾斜直線</span>
+            </div>
+            <canvas id="cvD" class="mini-graph" width="280" height="125"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Equivalence Matrix & Quiz -->
+      <div>
+        
+        <!-- Equivalence Matrix Table -->
+        <div class="matrix-box">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>圖形編號</th>
+                <th>圖表坐標軸</th>
+                <th>圖形外觀</th>
+                <th>代表運動狀態</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="mRowA">
+                <td><strong>甲圖</strong></td>
+                <td>位置-時間 (\( x-t \))</td>
+                <td>水平直線</td>
+                <td><strong>靜止狀態</strong> (\( v=0 \))</td>
+              </tr>
+              <tr id="mRowB" class="highlight">
+                <td><strong>乙圖</strong></td>
+                <td>位置-時間 (\( x-t \))</td>
+                <td>傾斜直線</td>
+                <td><span class="tag-match">等速度運動</span> (\( v=\text{常數} \))</td>
+              </tr>
+              <tr id="mRowC" class="highlight">
+                <td><strong>丙圖</strong></td>
+                <td>速度-時間 (\( v-t \))</td>
+                <td>水平直線</td>
+                <td><span class="tag-match">等速度運動</span> (\( v=\text{常數} \))</td>
+              </tr>
+              <tr id="mRowD">
+                <td><strong>丁圖</strong></td>
+                <td>速度-時間 (\( v-t \))</td>
+                <td>傾斜直線</td>
+                <td><strong>等加速度運動</strong> (\( a=\text{常數} \))</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.7 第 19 題核心概念：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>看清楚縱坐標軸是「位置 \( x \)」還是「速度 \( v \)」：</strong></li>
+            <li><strong>水平線：</strong>\( x-t \) 水平代表<strong>位置不變（靜止）</strong>；\( v-t \) 水平代表<strong>速度不變（等速度運動）</strong>。</li>
+            <li><strong>斜直線：</strong>\( x-t \) 斜直線代表<strong>等速度運動</strong>；\( v-t \) 斜直線代表<strong>等加速度運動</strong>。</li>
+            <li><strong>等效配對：</strong><strong>乙（\( x-t \) 斜直線）與 丙（\( v-t \) 水平線）</strong> 皆代表物體做<strong>等速度運動</strong>（答案選 B）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作第 19 題原題測驗</div>
+
+          <div class="quiz-item">
+            <p>下列甲、乙、丙、丁四張圖中，哪兩張圖代表物體處於「相同的運動狀態」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(19, 'B', this)">
+                (B) 乙、丙（皆為等速度運動）
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'A', this)">
+                (A) 甲、丙
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'C', this)">
+                (C) 乙、丁
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'D', this)">
+                (D) 甲、丁
+              </button>
+            </div>
+            <div class="quiz-feedback" id="fb19"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
+  </footer>
+
+  <script>
+    let activeGraph = 'B';
+    let isMatched = false;
+    let trackSimTime = 0;
+    let animId = null;
+
+    const trackCanvas = document.getElementById('trackCanvas');
+    const tctx = trackCanvas.getContext('2d');
+
+    function selectGraph(gId) {
+      activeGraph = gId;
+      isMatched = false;
+      document.querySelectorAll('.graph-card').forEach(c => c.classList.remove('active', 'match'));
+      document.getElementById('card' + gId).classList.add('active');
+
+      const info = {
+        A: { title: '甲圖（x-t 水平直線）', state: '🛑 靜止狀態 (x固定, v=0)' },
+        B: { title: '乙圖（x-t 傾斜直線）', state: '➡️ 等速度運動 (v=常數, a=0)' },
+        C: { title: '丙圖（v-t 水平直線）', state: '➡️ 等速度運動 (v=常數, a=0)' },
+        D: { title: '丁圖（v-t 傾斜直線）', state: '🚀 等加速度運動 (速度漸增, a=常數)' }
+      };
+
+      document.getElementById('trackTitle').innerText = info[gId].title;
+      document.getElementById('trackState').innerText = info[gId].state;
+
+      trackSimTime = 0;
+      drawAllMiniGraphs();
+    }
+
+    function triggerMatch() {
+      isMatched = true;
+      document.querySelectorAll('.graph-card').forEach(c => c.classList.remove('active', 'match'));
+      document.getElementById('cardB').classList.add('match');
+      document.getElementById('cardC').classList.add('match');
+
+      document.getElementById('trackTitle').innerText = '✨ 乙圖 與 丙圖 等效共鳴！';
+      document.getElementById('trackState').innerText = '🎯 兩者皆代表【等速度運動】 (v = 常數)';
+
+      drawAllMiniGraphs();
+    }
+
+    function resetAll() {
+      isMatched = false;
+      selectGraph('B');
+    }
+
+    function loopTrack() {
+      trackSimTime += 0.016;
+      if (trackSimTime > 4.0) trackSimTime = 0;
+      drawTrack();
+      requestAnimationFrame(loopTrack);
+    }
+
+    function drawTrack() {
+      tctx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
+      const cw = trackCanvas.width, ch = trackCanvas.height;
+
+      // Track Road
+      tctx.fillStyle = '#1e293b';
+      tctx.fillRect(40, ch / 2 - 12, cw - 80, 24);
+
+      tctx.strokeStyle = '#f59e0b';
+      tctx.lineWidth = 1.5;
+      tctx.setLineDash([6, 6]);
+      tctx.beginPath(); tctx.moveTo(40, ch / 2); tctx.lineTo(cw - 40, ch / 2); tctx.stroke();
+      tctx.setLineDash([]);
+
+      const minX = 60, maxX = cw - 60;
+      let carPx = minX;
+
+      if (activeGraph === 'A') {
+        // Rest (static at 30% position)
+        carPx = minX + (maxX - minX) * 0.35;
+      } else if (activeGraph === 'B' || activeGraph === 'C' || isMatched) {
+        // Constant speed
+        const prog = (trackSimTime % 2.5) / 2.5;
+        carPx = minX + prog * (maxX - minX);
+      } else if (activeGraph === 'D') {
+        // Accelerating (quadratic progress)
+        const prog = Math.pow((trackSimTime % 2.5) / 2.5, 2);
+        carPx = minX + prog * (maxX - minX);
+      }
+
+      // Draw Car
+      tctx.font = '24px sans-serif';
+      tctx.textAlign = 'center';
+      tctx.fillText(activeGraph === 'A' ? '🛑' : (activeGraph === 'D' ? '🏎️' : '🚗'), carPx, ch / 2 + 8);
+    }
+
+    function drawMiniGraph(cvId, type, isSloped, color) {
+      const cv = document.getElementById(cvId);
+      const ctx = cv.getContext('2d');
+      ctx.clearRect(0, 0, cv.width, cv.height);
+
+      const w = cv.width, h = cv.height;
+      const ox = 35, oy = h - 25;
+      const gx2 = w - 25, gyTop = 20;
+
+      // Axes
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(ox, gyTop); ctx.lineTo(ox, oy);
+      ctx.lineTo(gx2, oy);
+      ctx.stroke();
+
+      // Axis Labels
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right';
+      ctx.fillText(type === 'x' ? '位置 x' : '速度 v', ox - 5, gyTop + 8);
+      ctx.textAlign = 'center';
+      ctx.fillText('時間 t', gx2 - 10, oy + 18);
+
+      // Origin
+      ctx.fillText('0', ox - 8, oy + 4);
+
+      // Plot Line
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+
+      if (type === 'x' && !isSloped) {
+        // Graph A: x-t horizontal
+        const hy = oy - 45;
+        ctx.moveTo(ox, hy); ctx.lineTo(gx2 - 10, hy);
+      } else if (type === 'x' && isSloped) {
+        // Graph B: x-t sloped up
+        ctx.moveTo(ox, oy); ctx.lineTo(gx2 - 10, gyTop + 10);
+      } else if (type === 'v' && !isSloped) {
+        // Graph C: v-t horizontal
+        const hy = oy - 45;
+        ctx.moveTo(ox, hy); ctx.lineTo(gx2 - 10, hy);
+      } else if (type === 'v' && isSloped) {
+        // Graph D: v-t sloped up
+        ctx.moveTo(ox, oy); ctx.lineTo(gx2 - 10, gyTop + 10);
+      }
+      ctx.stroke();
+    }
+
+    function drawAllMiniGraphs() {
+      const matchCol = '#10b981';
+      drawMiniGraph('cvA', 'x', false, '#94a3b8');
+      drawMiniGraph('cvB', 'x', true, isMatched ? matchCol : '#8b5cf6');
+      drawMiniGraph('cvC', 'v', false, isMatched ? matchCol : '#8b5cf6');
+      drawMiniGraph('cvD', 'v', true, '#ea580c');
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'B') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>① 乙圖是 \( x-t \) 圖中的傾斜直線，斜率代表速度且為常數，為<strong>等速度運動</strong>。<br>② 丙圖是 \( v-t \) 圖中的水平直線，速度數值固定不變，同樣為<strong>等速度運動</strong>！故 (B) 乙與丙運動狀態相同！';
+        triggerMatch();
+      } else {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 請注意看縱坐標軸：甲是靜止 (\( v=0 \))、乙是等速度、丙是等速度、丁是等加速度。故相同的只有 <strong>乙與丙</strong>！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      drawAllMiniGraphs();
+      loopTrack();
+    });
+  </script>
+</body>
+</html>

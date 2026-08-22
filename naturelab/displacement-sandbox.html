@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 數線位移與路徑長互動沙盒 (P.10-11)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1d3557;
+      --primary-light: #457b9d;
+      --accent-disp: #e63946;    /* Displacement (Vector / Red) */
+      --accent-path: #f4a261;    /* Path Length (Scalar / Amber-Orange) */
+      --accent-path-dark: #e76f51;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #2a9d8f;
+      --success-dark: #21867a;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(29, 53, 87, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card Styles */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Number Line Stage */
+    .stage-box {
+      background: #f8fbfe;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #dbe5ef;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 280px;
+      cursor: crosshair;
+    }
+
+    .stage-tip {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(29, 53, 87, 0.15);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Dashboard Metrics */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 800px) {
+      .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-card {
+      background: #fdfefe;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .metric-card.start::before { background: #64748b; }
+    .metric-card.current::before { background: var(--primary-light); }
+    .metric-card.disp::before { background: var(--accent-disp); }
+    .metric-card.path::before { background: var(--accent-path); }
+
+    .metric-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .metric-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .metric-value.disp-val { color: var(--accent-disp); }
+    .metric-value.path-val { color: var(--accent-path-dark); }
+
+    .metric-detail {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Action Toolbar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      background: #f1f5f9;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+    }
+
+    .tool-group {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tool-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-right: 0.3rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-step {
+      background: white;
+      border: 1px solid #cbd5e1;
+      color: var(--text);
+    }
+
+    .btn-step:hover {
+      background: #e2e8f0;
+      border-color: var(--primary-light);
+    }
+
+    .btn-primary {
+      background: var(--primary-light);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary);
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    /* Step History Timeline */
+    .history-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .history-card h4 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 120px;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      align-items: center;
+    }
+
+    .step-item.head {
+      background: #eef2f6;
+      font-weight: 800;
+      color: var(--primary);
+      border-color: #cbd5e1;
+    }
+
+    /* Concept Comparison Callout */
+    .concept-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .concept-box strong {
+      color: #1e40af;
+    }
+
+    /* Challenge Mode UI */
+    .quest-card {
+      background: #fdfdfd;
+      border: 2px solid #e0e7ff;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .quest-target {
+      background: #eef2ff;
+      border: 1.5px dashed #6366f1;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .quest-feedback {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: none;
+      margin-top: 0.75rem;
+    }
+
+    .quest-feedback.success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+      display: block;
+    }
+
+    .quest-feedback.trying {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      display: block;
+    }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏃 數線位移與路徑長互動沙盒</span>
+          <span class="badge">國中自然 3上 · 課本 P.10-11</span>
+        </h1>
+        <p>直觀掌握向量「位移」與純量「路徑長」的本質差異、正負方向意義與數線折返運動</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('sandbox')">🎮 自由互動沙盒</button>
+        <button class="nav-btn" onclick="switchTab('example')">📖 課本例題 1-2 折返跑</button>
+        <button class="nav-btn" onclick="switchTab('quest')">🏆 位移任務挑戰關卡</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tab 1: Free Sandbox -->
+    <section id="tab-sandbox" class="tab-section active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🕹️ 數線運動互動平台（支援點擊數線或步進控制）</span>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            數線範圍：<strong>-10 m ～ +10 m</strong>
+          </div>
+        </div>
+
+        <!-- Stage Canvas -->
+        <div class="stage-box">
+          <canvas id="sandboxCanvas" width="900" height="280"></canvas>
+          <div class="stage-tip">💡 提示：可直接在數線上<strong>點擊任意刻度</strong>，或使用下方步進按鈕移動小人！</div>
+        </div>
+
+        <!-- Metrics Dashboard -->
+        <div class="metric-grid">
+          <div class="metric-card start">
+            <div class="metric-title">起點坐標 \( x_1 \)</div>
+            <div class="metric-value" id="dispStart">0 m</div>
+            <div class="metric-detail">最初的出發基準位置</div>
+          </div>
+          <div class="metric-card current">
+            <div class="metric-title">當前坐標 \( x_2 \)</div>
+            <div class="metric-value" id="dispCurrent">0 m</div>
+            <div class="metric-detail" id="currentDirDesc">位於原點</div>
+          </div>
+          <div class="metric-card disp">
+            <div class="metric-title">向量位移 \( \Delta x = x_2 - x_1 \)</div>
+            <div class="metric-value disp-val" id="dispDelta">0 m</div>
+            <div class="metric-detail" id="dispDirectionDesc">起點直達終點向量</div>
+          </div>
+          <div class="metric-card path">
+            <div class="metric-title">純量路徑長 \( S \)</div>
+            <div class="metric-value path-val" id="dispPath">0 m</div>
+            <div class="metric-detail">累積行經所有足跡總長</div>
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="toolbar">
+          <div class="tool-group">
+            <span class="tool-label">🚶 步進移動：</span>
+            <button class="btn btn-step" onclick="stepMove(-3)">◀ -3 m</button>
+            <button class="btn btn-step" onclick="stepMove(-1)">◀ -1 m</button>
+            <button class="btn btn-step" onclick="stepMove(1)">+1 m ▶</button>
+            <button class="btn btn-step" onclick="stepMove(3)">+3 m ▶</button>
+          </div>
+
+          <div class="tool-group">
+            <span class="tool-label">🎯 快速跳至：</span>
+            <button class="btn btn-step" onclick="moveToPos(-5)">-5</button>
+            <button class="btn btn-step" onclick="moveToPos(-3)">-3</button>
+            <button class="btn btn-step" onclick="moveToPos(0)">原點 0</button>
+            <button class="btn btn-step" onclick="moveToPos(4)">+4</button>
+            <button class="btn btn-step" onclick="moveToPos(6)">+6</button>
+          </div>
+
+          <div class="tool-group">
+            <button class="btn btn-danger" onclick="resetSandbox()">🔄 全部重置</button>
+          </div>
+        </div>
+
+        <!-- History Log -->
+        <div class="history-card">
+          <h4>
+            <span>📜 移動歷史步驟紀錄</span>
+            <small style="font-weight: 500; color: var(--text-muted);">共 <span id="stepCount">0</span> 次移動</small>
+          </h4>
+          <div class="step-list" id="stepList">
+            <div class="step-item head">
+              <span>步驟</span>
+              <span>移動軌跡</span>
+              <span>該段位移</span>
+              <span>累計路徑長</span>
+            </div>
+            <!-- Dynamic items -->
+          </div>
+        </div>
+
+        <!-- Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 課本核心概念 (P.10-11)：</strong>
+          <ul style="padding-left: 1.2rem; margin-top: 0.35rem;">
+            <li><strong>位移（具有大小與方向）：</strong>只看「起點」與「終點」的直線距離與方向，公式為 \( \Delta x = x_2 - x_1 \)。正號代表向右，負號代表向左。若物體折返回到起點，位移為 \( 0 \)。</li>
+            <li><strong>路徑長（具有大小、無方向性）：</strong>物體實際走過路線的總長度（步數累積）。只要有移動，路徑長一定會持續增加，永遠大於或等於零。</li>
+            <li><strong>大小關係：</strong>只有在「單向直線運動（無折返）」時，位移大小才等於路徑長；一旦發生「折返」，<strong>路徑長必大於位移大小</strong>！</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Textbook Example 1-2 -->
+    <section id="tab-example" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📖 課本 P.11 例題 1-2：數線折返跑逐步解析</span>
+          </div>
+          <button class="btn btn-primary" onclick="playExampleAnimation()">
+            ▶ 逐步播放例題動畫
+          </button>
+        </div>
+
+        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <strong>情境題目：</strong>如右圖所示，阿康在數線上運動，由原點 \( 0 \) 出發，先向右走到 \( +2\text{ m} \)，再折返向左走到 \( -2\text{ m} \)，最後向右走到 \( +2\text{ m} \)。
+        </p>
+
+        <!-- Animation Canvas for Example 1-2 -->
+        <div class="stage-box">
+          <canvas id="exampleCanvas" width="900" height="240"></canvas>
+        </div>
+
+        <!-- 3 Questions of Example 1-2 -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+          <div style="background: #f8fbfe; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 1.2rem;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary-light); margin-bottom: 0.3rem;">第 (1) 小題</div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程的起點與終點位置？</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">起點：\( x_1 = 0\text{ m} \)<br>終點：\( x_2 = +2\text{ m} \)</p>
+            <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--success-dark);">
+              ✅ 終點位置坐標為 +2 m
+            </div>
+          </div>
+
+          <div style="background: #f8fbfe; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 1.2rem;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-disp); margin-bottom: 0.3rem;">第 (2) 小題</div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程的總位移 \( \Delta x \)？</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+              \( \Delta x = x_2 - x_1 = (+2) - 0 = +2\text{ m} \)
+            </p>
+            <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--accent-disp);">
+              ✅ 全程位移為 +2 m（向右 2 公尺）
+            </div>
+          </div>
+
+          <div style="background: #f8fbfe; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 1.2rem;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-path-dark); margin-bottom: 0.3rem;">第 (3) 小題</div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程所走過的路徑長 \( S \)？</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+              \( S = |0 \rightarrow 2| + |2 \rightarrow -2| + |-2 \rightarrow 2| \)<br>
+              \( S = 2 + 4 + 4 = 10\text{ m} \)
+            </p>
+            <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--accent-path-dark);">
+              ✅ 全程路徑長為 10 m
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Quest Challenges -->
+    <section id="tab-quest" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏆 位移任務大冒險（逆向思考挑戰）</span>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-step" onclick="loadQuest(1)">第 1 關</button>
+            <button class="btn btn-step" onclick="loadQuest(2)">第 2 關</button>
+            <button class="btn btn-step" onclick="loadQuest(3)">第 3 關</button>
+          </div>
+        </div>
+
+        <div class="quest-card">
+          <div class="quest-header">
+            <h3 id="questTitle" style="color: var(--primary);">第 1 關：單向直線衝刺</h3>
+            <span class="badge" style="background: #6366f1; color: white;">通關挑戰</span>
+          </div>
+
+          <p id="questDesc" style="font-size: 0.95rem; margin-bottom: 1rem;">
+            請從起點 \( 0 \) 出發，在數線上移動角色，達成下方的目標條件！
+          </p>
+
+          <div class="quest-target">
+            <div>目標位移 \( \Delta x \)：<strong id="targetDisp" style="color: var(--accent-disp); font-size: 1.2rem;">+5 m</strong></div>
+            <div>目標路徑長 \( S \)：<strong id="targetPath" style="color: var(--accent-path-dark); font-size: 1.2rem;">5 m</strong></div>
+            <div>目前達成：<span id="questStatus" style="color: var(--text-muted);">請開始操作</span></div>
+          </div>
+
+          <!-- Quest Stage Canvas -->
+          <div class="stage-box">
+            <canvas id="questCanvas" width="900" height="240"></canvas>
+          </div>
+
+          <!-- Controls for Quest -->
+          <div class="toolbar">
+            <div class="tool-group">
+              <span class="tool-label">🎮 移動小人：</span>
+              <button class="btn btn-step" onclick="questMove(-2)">◀ 向左 2m</button>
+              <button class="btn btn-step" onclick="questMove(-1)">◀ 向左 1m</button>
+              <button class="btn btn-step" onclick="questMove(1)">向右 1m ▶</button>
+              <button class="btn btn-step" onclick="questMove(2)">向右 2m ▶</button>
+            </div>
+            <button class="btn btn-danger" onclick="resetQuest()">🔄 重新本關</button>
+          </div>
+
+          <div class="quest-feedback" id="questFeedback"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // State for Tab 1: Sandbox
+    let startPos = 0;
+    let currentPos = 0;
+    let pathLength = 0;
+    let historySteps = [];
+    let pathHistory = [{ pos: 0, level: 0 }];
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+
+      if (tabId === 'sandbox') drawSandbox();
+      if (tabId === 'example') drawExampleScene();
+      if (tabId === 'quest') drawQuest();
+    }
+
+    // Number Line Coordinate Helper
+    function posToX(pos, canvasWidth) {
+      const margin = 70;
+      const usable = canvasWidth - margin * 2;
+      return margin + ((pos + 10) / 20) * usable;
+    }
+
+    function xToPos(x, canvasWidth) {
+      const margin = 70;
+      const usable = canvasWidth - margin * 2;
+      const raw = ((x - margin) / usable) * 20 - 10;
+      return Math.max(-10, Math.min(10, Math.round(raw)));
+    }
+
+    // Sandbox Actions
+    function moveToPos(target) {
+      if (target === currentPos) return;
+      const prev = currentPos;
+      const stepDist = Math.abs(target - prev);
+      const stepDisp = target - prev;
+      
+      currentPos = target;
+      pathLength += stepDist;
+
+      historySteps.push({
+        from: prev,
+        to: target,
+        disp: stepDisp,
+        totalPath: pathLength
+      });
+
+      pathHistory.push({ pos: target, level: pathHistory.length });
+
+      updateDashboard();
+      drawSandbox();
+    }
+
+    function stepMove(delta) {
+      const next = Math.max(-10, Math.min(10, currentPos + delta));
+      moveToPos(next);
+    }
+
+    function resetSandbox() {
+      startPos = 0;
+      currentPos = 0;
+      pathLength = 0;
+      historySteps = [];
+      pathHistory = [{ pos: 0, level: 0 }];
+      updateDashboard();
+      drawSandbox();
+    }
+
+    function updateDashboard() {
+      const deltaX = currentPos - startPos;
+      document.getElementById('dispStart').innerText = (startPos > 0 ? '+' : '') + startPos + ' m';
+      document.getElementById('dispCurrent').innerText = (currentPos > 0 ? '+' : '') + currentPos + ' m';
+      document.getElementById('dispDelta').innerText = (deltaX > 0 ? '+' : '') + deltaX + ' m';
+      document.getElementById('dispPath').innerText = pathLength + ' m';
+
+      // Directions
+      if (currentPos > 0) document.getElementById('currentDirDesc').innerText = '原點右方 ' + currentPos + ' m';
+      else if (currentPos < 0) document.getElementById('currentDirDesc').innerText = '原點左方 ' + Math.abs(currentPos) + ' m';
+      else document.getElementById('currentDirDesc').innerText = '正位於原點 (基準點)';
+
+      if (deltaX > 0) document.getElementById('dispDirectionDesc').innerText = '方向向右（正方向）';
+      else if (deltaX < 0) document.getElementById('dispDirectionDesc').innerText = '方向向左（負方向）';
+      else document.getElementById('dispDirectionDesc').innerText = '位移為 0（回到起點或未移動）';
+
+      document.getElementById('stepCount').innerText = historySteps.length;
+
+      // Render Step Table
+      const listEl = document.getElementById('stepList');
+      listEl.innerHTML = `
+        <div class="step-item head">
+          <span>步驟</span>
+          <span>移動軌跡</span>
+          <span>該段位移</span>
+          <span>累計路徑長</span>
+        </div>
+      `;
+      historySteps.slice().reverse().forEach((s, idx) => {
+        const item = document.createElement('div');
+        item.className = 'step-item';
+        item.innerHTML = `
+          <span>#${historySteps.length - idx}</span>
+          <span>${s.from > 0 ? '+'+s.from : s.from} ➔ ${s.to > 0 ? '+'+s.to : s.to} m</span>
+          <span style="color: var(--accent-disp); font-weight:700;">${s.disp > 0 ? '+'+s.disp : s.disp} m</span>
+          <span style="color: var(--accent-path-dark); font-weight:700;">${s.totalPath} m</span>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    // Canvas Drawing: Sandbox
+    const sCanvas = document.getElementById('sandboxCanvas');
+    const sCtx = sCanvas.getContext('2d');
+
+    function drawSandbox() {
+      sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+      const cw = sCanvas.width;
+      const cy = 160;
+
+      // 1. Draw Number Line Axis
+      sCtx.beginPath();
+      sCtx.moveTo(40, cy);
+      sCtx.lineTo(cw - 40, cy);
+      sCtx.strokeStyle = '#1d3557';
+      sCtx.lineWidth = 3;
+      sCtx.stroke();
+
+      // Arrows on axis
+      sCtx.fillStyle = '#1d3557';
+      sCtx.beginPath();
+      sCtx.moveTo(cw - 40, cy - 6); sCtx.lineTo(cw - 26, cy); sCtx.lineTo(cw - 40, cy + 6); sCtx.fill();
+      sCtx.beginPath();
+      sCtx.moveTo(40, cy - 6); sCtx.lineTo(26, cy); sCtx.lineTo(40, cy + 6); sCtx.fill();
+
+      // Axis label
+      sCtx.font = 'bold 13px Noto Sans TC';
+      sCtx.fillText('左 (負方向)', 30, cy - 18);
+      sCtx.fillText('右 (正方向) 位置 (m)', cw - 120, cy - 18);
+
+      // Ticks
+      for (let p = -10; p <= 10; p++) {
+        const x = posToX(p, cw);
+        const isOrigin = (p === 0);
+        sCtx.beginPath();
+        sCtx.moveTo(x, cy - (isOrigin ? 12 : 7));
+        sCtx.lineTo(x, cy + (isOrigin ? 12 : 7));
+        sCtx.strokeStyle = isOrigin ? '#e63946' : '#94a3b8';
+        sCtx.lineWidth = isOrigin ? 3 : 1.5;
+        sCtx.stroke();
+
+        sCtx.fillStyle = isOrigin ? '#e63946' : '#64748b';
+        sCtx.font = isOrigin ? 'bold 15px Outfit' : '13px Outfit';
+        sCtx.textAlign = 'middle';
+        const label = p > 0 ? '+' + p : '' + p;
+        sCtx.fillText(label, x - (p === 0 ? 5 : p > 0 ? 10 : 8), cy + 28);
+        if (isOrigin) {
+          sCtx.font = 'bold 12px Noto Sans TC';
+          sCtx.fillText('原點', x - 12, cy + 44);
+        }
+      }
+
+      // 2. Draw Cumulative Path (Arc tracks above line)
+      if (pathHistory.length > 1) {
+        for (let i = 0; i < pathHistory.length - 1; i++) {
+          const xA = posToX(pathHistory[i].pos, cw);
+          const xB = posToX(pathHistory[i + 1].pos, cw);
+          const trackY = cy - 25 - (i % 4) * 12;
+
+          sCtx.beginPath();
+          sCtx.moveTo(xA, cy - 8);
+          sCtx.lineTo(xA, trackY);
+          sCtx.lineTo(xB, trackY);
+          sCtx.lineTo(xB, cy - 8);
+          sCtx.strokeStyle = '#f4a261';
+          sCtx.lineWidth = 2.5;
+          sCtx.setLineDash([3, 3]);
+          sCtx.stroke();
+          sCtx.setLineDash([]);
+        }
+      }
+
+      // 3. Draw Displacement Vector Arrow (Big Red Arrow below line)
+      const startX = posToX(startPos, cw);
+      const endX = posToX(currentPos, cw);
+      const arrowY = cy + 70;
+
+      if (startPos !== currentPos) {
+        sCtx.beginPath();
+        sCtx.moveTo(startX, arrowY);
+        sCtx.lineTo(endX, arrowY);
+        sCtx.strokeStyle = '#e63946';
+        sCtx.lineWidth = 4;
+        sCtx.stroke();
+
+        // Arrow head
+        const dir = currentPos > startPos ? 1 : -1;
+        sCtx.fillStyle = '#e63946';
+        sCtx.beginPath();
+        sCtx.moveTo(endX, arrowY);
+        sCtx.lineTo(endX - dir * 10, arrowY - 6);
+        sCtx.lineTo(endX - dir * 10, arrowY + 6);
+        sCtx.closePath();
+        sCtx.fill();
+
+        // Displacement label
+        const deltaX = currentPos - startPos;
+        sCtx.font = 'bold 14px Noto Sans TC';
+        sCtx.fillStyle = '#e63946';
+        sCtx.textAlign = 'center';
+        sCtx.fillText(`位移 Δx = ${deltaX > 0 ? '+' : ''}${deltaX} m`, (startX + endX) / 2, arrowY + 22);
+      }
+
+      // 4. Draw Start Marker
+      sCtx.beginPath();
+      sCtx.arc(startX, cy, 6, 0, Math.PI * 2);
+      sCtx.fillStyle = '#64748b';
+      sCtx.fill();
+      sCtx.font = 'bold 12px Noto Sans TC';
+      sCtx.fillText('起點', startX - 12, cy - 14);
+
+      // 5. Draw Runner Avatar at Current Pos
+      sCtx.font = '32px sans-serif';
+      sCtx.fillText('🏃', endX - 16, cy - 10);
+    }
+
+    // Click on canvas to move
+    sCanvas.addEventListener('click', (e) => {
+      const rect = sCanvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (sCanvas.width / rect.width);
+      const targetPos = xToPos(clickX, sCanvas.width);
+      moveToPos(targetPos);
+    });
+
+    // Tab 2: Example 1-2 Animation Loop
+    const exCanvas = document.getElementById('exampleCanvas');
+    const exCtx = exCanvas.getContext('2d');
+    let exStep = 0;
+    const exStages = [
+      { from: 0, to: 2, label: '第 1 階段：從 0 向右走到 +2m' },
+      { from: 2, to: -2, label: '第 2 階段：從 +2 向左折返走到 -2m' },
+      { from: -2, to: 2, label: '第 3 階段：從 -2 再次向右走到 +2m' }
+    ];
+
+    function drawExampleScene() {
+      exCtx.clearRect(0, 0, exCanvas.width, exCanvas.height);
+      const cw = exCanvas.width;
+      const cy = 130;
+
+      // Draw axis from -4 to +4
+      exCtx.beginPath();
+      exCtx.moveTo(60, cy);
+      exCtx.lineTo(cw - 60, cy);
+      exCtx.strokeStyle = '#1d3557';
+      exCtx.lineWidth = 3;
+      exCtx.stroke();
+
+      for (let p = -4; p <= 4; p++) {
+        const x = 100 + ((p + 4) / 8) * (cw - 200);
+        exCtx.beginPath();
+        exCtx.moveTo(x, cy - 8);
+        exCtx.lineTo(x, cy + 8);
+        exCtx.strokeStyle = p === 0 ? '#e63946' : '#94a3b8';
+        exCtx.lineWidth = p === 0 ? 3 : 1.5;
+        exCtx.stroke();
+        exCtx.font = 'bold 14px Outfit';
+        exCtx.fillStyle = p === 0 ? '#e63946' : '#64748b';
+        exCtx.fillText(p > 0 ? '+' + p : '' + p, x - 8, cy + 28);
+      }
+
+      // Draw Trajectories for Example 1-2
+      const x0 = 100 + (4 / 8) * (cw - 200);
+      const xP2 = 100 + (6 / 8) * (cw - 200);
+      const xN2 = 100 + (2 / 8) * (cw - 200);
+
+      // Track 1: 0 -> +2
+      exCtx.beginPath();
+      exCtx.moveTo(x0, cy - 10);
+      exCtx.lineTo(xP2, cy - 10);
+      exCtx.strokeStyle = '#3b82f6';
+      exCtx.lineWidth = 3;
+      exCtx.stroke();
+      exCtx.fillStyle = '#3b82f6';
+      exCtx.font = 'bold 12px Noto Sans TC';
+      exCtx.fillText('① +2m', (x0 + xP2) / 2 - 15, cy - 18);
+
+      // Track 2: +2 -> -2
+      exCtx.beginPath();
+      exCtx.moveTo(xP2, cy - 35);
+      exCtx.lineTo(xN2, cy - 35);
+      exCtx.strokeStyle = '#f59e0b';
+      exCtx.lineWidth = 3;
+      exCtx.stroke();
+      exCtx.fillStyle = '#f59e0b';
+      exCtx.fillText('② -4m', (xP2 + xN2) / 2 - 15, cy - 42);
+
+      // Track 3: -2 -> +2
+      exCtx.beginPath();
+      exCtx.moveTo(xN2, cy - 60);
+      exCtx.lineTo(xP2, cy - 60);
+      exCtx.strokeStyle = '#10b981';
+      exCtx.lineWidth = 3;
+      exCtx.stroke();
+      exCtx.fillStyle = '#10b981';
+      exCtx.fillText('③ +4m', (xP2 + xN2) / 2 - 15, cy - 68);
+
+      // Overall Displacement Arrow (0 -> +2)
+      exCtx.beginPath();
+      exCtx.moveTo(x0, cy + 60);
+      exCtx.lineTo(xP2, cy + 60);
+      exCtx.strokeStyle = '#e63946';
+      exCtx.lineWidth = 4;
+      exCtx.stroke();
+      exCtx.fillStyle = '#e63946';
+      exCtx.beginPath();
+      exCtx.moveTo(xP2, cy + 60); exCtx.lineTo(xP2 - 10, cy + 54); exCtx.lineTo(xP2 - 10, cy + 66); exCtx.fill();
+      exCtx.font = 'bold 14px Noto Sans TC';
+      exCtx.fillText('全程總位移 Δx = +2 m (向右 2m)', (x0 + xP2) / 2 - 80, cy + 85);
+    }
+
+    function playExampleAnimation() {
+      drawExampleScene();
+    }
+
+    // Tab 3: Quest Mode
+    const quests = {
+      1: { title: '第 1 關：單向直線衝刺', targetDisp: 5, targetPath: 5, desc: '請移動小人，達成「位移 = +5 m」且「路徑長 = 5 m」。' },
+      2: { title: '第 2 關：原點折返跑', targetDisp: 0, targetPath: 8, desc: '請移動小人，達成「位移 = 0 m（回到起點）」但「路徑長 = 8 m」。' },
+      3: { title: '第 3 關：逆向折返高手', targetDisp: -3, targetPath: 9, desc: '請移動小人，達成「位移 = -3 m」但「路徑長 = 9 m」。' }
+    };
+    let currentQuestId = 1;
+    let questPos = 0;
+    let questPath = 0;
+
+    function loadQuest(id) {
+      currentQuestId = id;
+      questPos = 0;
+      questPath = 0;
+      const q = quests[id];
+      document.getElementById('questTitle').innerText = q.title;
+      document.getElementById('questDesc').innerText = q.desc;
+      document.getElementById('targetDisp').innerText = (q.targetDisp > 0 ? '+' : '') + q.targetDisp + ' m';
+      document.getElementById('targetPath').innerText = q.targetPath + ' m';
+      document.getElementById('questStatus').innerText = '進行中 (目前位移: 0m, 路徑: 0m)';
+      document.getElementById('questFeedback').className = 'quest-feedback';
+      drawQuest();
+    }
+
+    function questMove(delta) {
+      questPos = Math.max(-10, Math.min(10, questPos + delta));
+      questPath += Math.abs(delta);
+      checkQuestProgress();
+      drawQuest();
+    }
+
+    function resetQuest() {
+      loadQuest(currentQuestId);
+    }
+
+    function checkQuestProgress() {
+      const q = quests[currentQuestId];
+      const fb = document.getElementById('questFeedback');
+      document.getElementById('questStatus').innerText = `目前位移: ${questPos > 0 ? '+' : ''}${questPos}m, 路徑: ${questPath}m`;
+
+      if (questPos === q.targetDisp && questPath === q.targetPath) {
+        fb.className = 'quest-feedback success';
+        fb.innerHTML = `🎉 <strong>太厲害了！恭喜通關！</strong>成功達成目標（位移 ${q.targetDisp}m, 路徑長 ${q.targetPath}m）！`;
+      } else if (questPath > q.targetPath) {
+        fb.className = 'quest-feedback trying';
+        fb.innerHTML = `⚠️ <strong>路徑長已超過目標 (${questPath}m > ${q.targetPath}m)</strong>！請點「重新本關」再試一次！`;
+      }
+    }
+
+    function drawQuest() {
+      const c = document.getElementById('questCanvas');
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, c.width, c.height);
+      const cw = c.width;
+      const cy = 130;
+
+      // Axis
+      ctx.beginPath();
+      ctx.moveTo(50, cy); ctx.lineTo(cw - 50, cy);
+      ctx.strokeStyle = '#1d3557'; ctx.lineWidth = 3; ctx.stroke();
+
+      for (let p = -10; p <= 10; p++) {
+        const x = posToX(p, cw);
+        ctx.beginPath(); ctx.moveTo(x, cy - 6); ctx.lineTo(x, cy + 6);
+        ctx.strokeStyle = p === 0 ? '#e63946' : '#cbd5e1'; ctx.stroke();
+        if (p % 2 === 0) {
+          ctx.font = '12px Outfit'; ctx.fillStyle = '#64748b';
+          ctx.fillText(p > 0 ? '+' + p : '' + p, x - 8, cy + 24);
+        }
+      }
+
+      const qx = posToX(questPos, cw);
+      ctx.font = '30px sans-serif';
+      ctx.fillText('🏃', qx - 15, cy - 8);
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      resetSandbox();
+      loadQuest(1);
+    });
+  </script>
+</body>
+</html>

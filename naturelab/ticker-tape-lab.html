@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 打點計時器與紙帶分析虛擬實驗室 (P.18-20)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-dark: #312e81;
+      --primary-light: #6366f1;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(67, 56, 202, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Simulation Stage */
+    .sim-stage {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.sim-canvas {
+      display: block;
+      width: 100%;
+      height: 180px;
+    }
+
+    /* Strip Inspection Stage */
+    .strip-stage {
+      background: #fdfefe;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+
+    canvas.strip-canvas {
+      display: block;
+      width: 100%;
+      height: 140px;
+      cursor: ew-resize;
+    }
+
+    /* Control Toolbar */
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: #f8fafc;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 860px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-card {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      text-align: center;
+    }
+
+    .metric-card .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .metric-card .val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .metric-card .sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* Table */
+    .table-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: var(--primary-dark);
+      font-weight: 800;
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Example 1-6 Quiz Section */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct {
+      background: #16a34a;
+      color: white;
+      border-color: #15803d;
+    }
+
+    .quiz-btn.wrong {
+      background: #dc2626;
+      color: white;
+      border-color: #b91c1c;
+    }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .quiz-feedback.show {
+      display: block;
+    }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>⚡ 打點計時器與紙帶分析虛擬實驗室</span>
+          <span class="badge">國中自然 3上 · 課本 P.18-20</span>
+        </h1>
+        <p>探索打點頻率（50Hz / Δt=0.02s）、等間距（等速）vs 間距變大（加速）vs 間距變小（減速）與虛擬直尺量測</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('lab')">🔬 打點實驗室</button>
+        <button class="nav-btn" onclick="switchTab('quiz')">📝 課本例題 1-6 紙帶闖關</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tab 1: Virtual Ticker Lab -->
+    <section id="tab-lab" class="tab-section active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏎️ 滑車拉動與打點計時器即時實驗</span>
+          </div>
+          <div class="preset-btns">
+            <button class="preset-btn active" onclick="setMotionType('uniform')">紙帶甲：等速度運動 (等間距)</button>
+            <button class="preset-btn" onclick="setMotionType('accel')">紙帶乙：等加速度運動 (間距變大)</button>
+            <button class="preset-btn" onclick="setMotionType('decel')">紙帶丙：減速度運動 (間距變小)</button>
+          </div>
+        </div>
+
+        <!-- 1. Live Car Ticker Simulation -->
+        <div class="sim-stage">
+          <canvas id="simCanvas" class="sim-canvas" width="1280" height="180"></canvas>
+        </div>
+
+        <!-- Action Row -->
+        <div class="control-row">
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-primary" id="btnRun" onclick="startTickerRun()">🚀 啟動打點並拉動滑車</button>
+            <button class="btn btn-secondary" onclick="resetTicker()">🔄 重置實驗</button>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center; font-size: 0.85rem; font-weight: 700;">
+            <span>打點頻率：<strong style="color: var(--primary);">50 Hz</strong> (每點 \( \Delta t = 0.02\text{ 秒} \))</span>
+            <span>已打點數：<strong id="dotCountText" style="color: var(--warn); font-family: 'Outfit';">0</strong> 點</span>
+          </div>
+        </div>
+
+        <!-- 2. Strip Inspection with Virtual Ruler -->
+        <div class="card-header" style="margin-top: 1rem;">
+          <div class="card-title" style="font-size: 1rem;">
+            <span>📏 紙帶放大檢視與虛擬直尺量測（可按住滑鼠左右拖曳直尺）</span>
+          </div>
+          <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="toggleAutoMeasure()">
+            📐 切換自動標註點距
+          </button>
+        </div>
+
+        <div class="strip-stage">
+          <canvas id="stripCanvas" class="strip-canvas" width="1280" height="140"></canvas>
+        </div>
+
+        <!-- 3. Metrics Dashboard -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="label">運動特徵判定</div>
+            <div class="val" id="metricType" style="font-size: 1.1rem; color: var(--primary);">等速度運動</div>
+            <div class="sub" id="metricTypeSub">相鄰點距完全相同</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">相鄰打點時間間隔 \( \Delta t \)</div>
+            <div class="val">0.02 s</div>
+            <div class="sub">頻率 50 Hz (\( \frac{1}{50}\text{ s} \))</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">平均加速度 \( a \)</div>
+            <div class="val" id="metricAccel" style="color: var(--success);">0.00 m/s²</div>
+            <div class="sub" id="metricAccelSub">速度無增減</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">起點與拉動方向</div>
+            <div class="val" style="font-size: 1rem; color: var(--warn);">起點在右側 ➔</div>
+            <div class="sub">滑車向左拉動</div>
+          </div>
+        </div>
+
+        <!-- 4. Point Data Table -->
+        <div class="table-box">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th>點號區間</th>
+                <th>區間距離 \( \Delta x \) (cm)</th>
+                <th>時間間隔 \( \Delta t \) (s)</th>
+                <th>區間平均速度 \( v = \frac{\Delta x}{\Delta t} \) (cm/s)</th>
+                <th>區間平均速度 (m/s)</th>
+                <th>點距變化量 \( \Delta(\Delta x) \)</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tab 2: Textbook Example 1-6 Quiz -->
+    <section id="tab-quiz" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📝 課本例題 1-6：紙帶判讀三部曲</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          滑車向左運動，紙帶上的起點在右側（靠近滑車端）。請觀察甲、乙、丙三條紙帶並回答問題：
+        </p>
+
+        <!-- 3 Strips Visual Display -->
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem;">
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 0.75rem;">
+            <div style="font-weight: 800; font-size: 0.85rem; color: var(--primary); margin-bottom: 0.3rem;">紙帶甲：點距等寬 (● · · · ● · · · ● · · · ● · · · ●)</div>
+            <canvas id="quizStripA" width="1100" height="35" style="width: 100%; height: 35px; background: #fff; border: 1px dashed #cbd5e1; border-radius: 4px;"></canvas>
+          </div>
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 0.75rem;">
+            <div style="font-weight: 800; font-size: 0.85rem; color: var(--success); margin-bottom: 0.3rem;">紙帶乙：點距由密變疏 (●·●··●···●····●·····●) ➔ 間距變大</div>
+            <canvas id="quizStripB" width="1100" height="35" style="width: 100%; height: 35px; background: #fff; border: 1px dashed #cbd5e1; border-radius: 4px;"></canvas>
+          </div>
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 0.75rem;">
+            <div style="font-weight: 800; font-size: 0.85rem; color: var(--warn); margin-bottom: 0.3rem;">紙帶丙：點距由疏變密 (●·····●····●···●··●·●) ➔ 間距變小</div>
+            <canvas id="quizStripC" width="1100" height="35" style="width: 100%; height: 35px; background: #fff; border: 1px dashed #cbd5e1; border-radius: 4px;"></canvas>
+          </div>
+        </div>
+
+        <!-- 3 Questions -->
+        <div class="quiz-card">
+          <div class="quiz-title">💡 課本例題 1-6 隨堂診斷</div>
+
+          <div class="quiz-item">
+            <p>Q1. 哪一條紙帶代表滑車正在做「等速度運動」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuizAns(1, 'A', this)">紙帶甲</button>
+              <button class="quiz-btn" onclick="checkQuizAns(1, 'B', this)">紙帶乙</button>
+              <button class="quiz-btn" onclick="checkQuizAns(1, 'C', this)">紙帶丙</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. 哪一條紙帶代表滑車的「加速度方向與運動方向相同（加速）」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuizAns(2, 'A', this)">紙帶甲</button>
+              <button class="quiz-btn" onclick="checkQuizAns(2, 'B', this)">紙帶乙</button>
+              <button class="quiz-btn" onclick="checkQuizAns(2, 'C', this)">紙帶丙</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q3. 若持續運動，哪一條紙帶的滑車最有可能在不久後「減速停下（靜止）」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuizAns(3, 'A', this)">紙帶甲</button>
+              <button class="quiz-btn" onclick="checkQuizAns(3, 'B', this)">紙帶乙</button>
+              <button class="quiz-btn" onclick="checkQuizAns(3, 'C', this)">紙帶丙</button>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // State & Physics
+    let motionType = 'uniform'; // 'uniform', 'accel', 'decel'
+    let isRunning = false;
+    let animProgress = 0;
+    let generatedDots = [];
+    let rulerOffset = 0;
+    let isDraggingRuler = false;
+    let dragStartX = 0;
+    let autoMeasure = true;
+
+    // Canvases
+    const simCanvas = document.getElementById('simCanvas');
+    const simCtx = simCanvas.getContext('2d');
+    const stripCanvas = document.getElementById('stripCanvas');
+    const stripCtx = stripCanvas.getContext('2d');
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+
+      if (tabId === 'lab') {
+        drawSim();
+        drawStrip();
+      } else if (tabId === 'quiz') {
+        drawQuizStrips();
+      }
+    }
+
+    function setMotionType(type) {
+      if (isRunning) return;
+      motionType = type;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      resetTicker();
+    }
+
+    function resetTicker() {
+      isRunning = false;
+      animProgress = 0;
+      generatedDots = [];
+      rulerOffset = 0;
+      document.getElementById('btnRun').innerText = '🚀 啟動打點並拉動滑車';
+      document.getElementById('btnRun').disabled = false;
+      document.getElementById('dotCountText').innerText = '0';
+      
+      // Update Metric Labels
+      if (motionType === 'uniform') {
+        document.getElementById('metricType').innerText = '等速度運動';
+        document.getElementById('metricTypeSub').innerText = '相鄰點距完全相同 (約 4.0 cm)';
+        document.getElementById('metricAccel').innerText = '0.00 m/s²';
+      } else if (motionType === 'accel') {
+        document.getElementById('metricType').innerText = '等加速度運動 (加速)';
+        document.getElementById('metricTypeSub').innerText = '相鄰點距越來越大 (2➔4➔6➔8 cm)';
+        document.getElementById('metricAccel').innerText = '+5.00 m/s²';
+      } else {
+        document.getElementById('metricType').innerText = '等加速度運動 (減速)';
+        document.getElementById('metricTypeSub').innerText = '相鄰點距越來越小 (8➔6➔4➔2 cm)';
+        document.getElementById('metricAccel').innerText = '-5.00 m/s²';
+      }
+
+      buildEmptyTable();
+      drawSim();
+      drawStrip();
+    }
+
+    function startTickerRun() {
+      if (isRunning) return;
+      isRunning = true;
+      animProgress = 0;
+      generatedDots = [];
+      document.getElementById('btnRun').innerText = '⏳ 正在打點拉動中...';
+      document.getElementById('btnRun').disabled = true;
+
+      const totalDots = 7;
+      let dotIndex = 0;
+      
+      // Compute dot distances (in cm) from start (right to left)
+      let distances = [];
+      if (motionType === 'uniform') {
+        distances = [0, 4, 8, 12, 16, 20, 24];
+      } else if (motionType === 'accel') {
+        distances = [0, 1.5, 4.5, 9.0, 15.0, 22.5, 31.5]; // Delta = 1.5, 3.0, 4.5, 6.0, 7.5, 9.0
+      } else {
+        distances = [0, 9.0, 16.5, 22.5, 27.0, 30.0, 31.5]; // Delta = 9.0, 7.5, 6.0, 4.5, 3.0, 1.5
+      }
+
+      const timer = setInterval(() => {
+        if (dotIndex < totalDots) {
+          generatedDots.push(distances[dotIndex]);
+          dotIndex++;
+          document.getElementById('dotCountText').innerText = dotIndex;
+          animProgress = dotIndex / totalDots;
+          drawSim();
+          drawStrip();
+        } else {
+          clearInterval(timer);
+          isRunning = false;
+          document.getElementById('btnRun').innerText = '✅ 打點完成！請檢視下方紙帶';
+          document.getElementById('btnRun').disabled = false;
+          populateTable();
+          drawStrip();
+        }
+      }, 150);
+    }
+
+    function toggleAutoMeasure() {
+      autoMeasure = !autoMeasure;
+      drawStrip();
+    }
+
+    // Draw Simulation Viewport (Car & Ticker)
+    function drawSim() {
+      simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+      const cw = simCanvas.width;
+      const cy = 110;
+
+      // Track Board
+      simCtx.fillStyle = '#cbd5e1';
+      simCtx.fillRect(40, cy + 20, cw - 80, 10);
+
+      // Ticker Box (Fixed at x = 200)
+      const tickerX = 220;
+      simCtx.fillStyle = '#312e81';
+      simCtx.fillRect(tickerX - 40, cy - 45, 80, 65);
+      simCtx.fillStyle = '#ffffff';
+      simCtx.font = 'bold 11px Noto Sans TC';
+      simCtx.fillText('打點計時器', tickerX - 28, cy - 25);
+      simCtx.fillText('50 Hz', tickerX - 16, cy - 10);
+
+      // Vibrating Needle
+      simCtx.beginPath();
+      simCtx.arc(tickerX, cy + 10, 4, 0, Math.PI * 2);
+      simCtx.fillStyle = isRunning ? '#dc2626' : '#94a3b8';
+      simCtx.fill();
+
+      // Car Position (Moves from x = 450 to x = 1000)
+      const carStart = 450;
+      const carMaxTravel = 600;
+      const carX = carStart + animProgress * carMaxTravel;
+
+      // Paper Tape (from tickerX to carX)
+      simCtx.fillStyle = '#ffffff';
+      simCtx.fillRect(tickerX, cy + 2, carX - tickerX, 16);
+      simCtx.strokeStyle = '#94a3b8';
+      simCtx.lineWidth = 1;
+      simCtx.strokeRect(tickerX, cy + 2, carX - tickerX, 16);
+
+      // Draw dots on paper tape
+      generatedDots.forEach((d) => {
+        const dotCanvasX = carX - (d * 16); // scaled cm to pixels
+        if (dotCanvasX >= tickerX && dotCanvasX <= carX) {
+          simCtx.beginPath();
+          simCtx.arc(dotCanvasX, cy + 10, 3, 0, Math.PI * 2);
+          simCtx.fillStyle = '#0f172a';
+          simCtx.fill();
+        }
+      });
+
+      // Car
+      simCtx.fillStyle = '#4338ca';
+      simCtx.fillRect(carX, cy - 25, 90, 45);
+      simCtx.fillStyle = '#ffffff';
+      simCtx.font = 'bold 12px Noto Sans TC';
+      simCtx.fillText('實驗滑車', carX + 20, cy);
+      // Wheels
+      simCtx.fillStyle = '#1e293b';
+      simCtx.beginPath(); simCtx.arc(carX + 20, cy + 20, 8, 0, Math.PI * 2); simCtx.fill();
+      simCtx.beginPath(); simCtx.arc(carX + 70, cy + 20, 8, 0, Math.PI * 2); simCtx.fill();
+
+      // Motion Arrow
+      simCtx.fillStyle = '#4338ca';
+      simCtx.font = 'bold 13px Noto Sans TC';
+      simCtx.fillText('➔ 滑車向右拉動（紙帶起點在前方）', 500, 40);
+    }
+
+    // Draw Strip & Ruler Canvas
+    function drawStrip() {
+      stripCtx.clearRect(0, 0, stripCanvas.width, stripCanvas.height);
+      const cw = stripCanvas.width;
+      const stripY = 30;
+      const stripH = 34;
+
+      // Paper Strip (White Tape)
+      stripCtx.fillStyle = '#ffffff';
+      stripCtx.fillRect(50, stripY, cw - 100, stripH);
+      stripCtx.strokeStyle = '#cbd5e1';
+      stripCtx.lineWidth = 1.5;
+      stripCtx.strokeRect(50, stripY, cw - 100, stripH);
+
+      // Left & Right Labels
+      stripCtx.fillStyle = '#64748b';
+      stripCtx.font = 'bold 11px Noto Sans TC';
+      stripCtx.fillText('⇦ 後打的點 (末端)', 60, stripY + 22);
+      stripCtx.fillText('先打的點 (起點 靠近滑車) ⇨', cw - 230, stripY + 22);
+
+      // Origin on right: x0 = cw - 260
+      const originX = cw - 260;
+      const pxPerCm = 28;
+
+      if (generatedDots.length > 0) {
+        generatedDots.forEach((dist, idx) => {
+          const dotX = originX - dist * pxPerCm;
+          if (dotX >= 60) {
+            // Draw Dot
+            stripCtx.beginPath();
+            stripCtx.arc(dotX, stripY + stripH / 2, 4, 0, Math.PI * 2);
+            stripCtx.fillStyle = '#0f172a';
+            stripCtx.fill();
+
+            // Label number (❶, ❷, ❸...)
+            stripCtx.fillStyle = '#4338ca';
+            stripCtx.font = 'bold 12px Outfit';
+            stripCtx.textAlign = 'center';
+            stripCtx.fillText(`[${idx + 1}]`, dotX, stripY - 8);
+
+            // Auto measure bracket
+            if (autoMeasure && idx < generatedDots.length - 1) {
+              const nextDist = generatedDots[idx + 1];
+              const nextX = originX - nextDist * pxPerCm;
+              const deltaCm = (nextDist - dist).toFixed(1);
+              
+              stripCtx.strokeStyle = '#6366f1';
+              stripCtx.lineWidth = 1.5;
+              stripCtx.beginPath();
+              stripCtx.moveTo(dotX, stripY + stripH + 4);
+              stripCtx.lineTo(dotX, stripY + stripH + 12);
+              stripCtx.lineTo(nextX, stripY + stripH + 12);
+              stripCtx.lineTo(nextX, stripY + stripH + 4);
+              stripCtx.stroke();
+
+              stripCtx.fillStyle = '#4338ca';
+              stripCtx.font = 'bold 11px Outfit';
+              stripCtx.fillText(`${deltaCm} cm`, (dotX + nextX) / 2, stripY + stripH + 26);
+            }
+          }
+        });
+      }
+
+      // Draw Draggable Ruler
+      const rulerY = 85;
+      const rulerX = originX + rulerOffset - 35 * pxPerCm;
+      stripCtx.fillStyle = 'rgba(254, 243, 199, 0.75)';
+      stripCtx.fillRect(rulerX, rulerY, 38 * pxPerCm, 40);
+      stripCtx.strokeStyle = '#d97706';
+      stripCtx.lineWidth = 1.5;
+      stripCtx.strokeRect(rulerX, rulerY, 38 * pxPerCm, 40);
+
+      // Ruler Ticks
+      stripCtx.fillStyle = '#78350f';
+      stripCtx.font = '10px Outfit';
+      for (let cm = 0; cm <= 35; cm++) {
+        const rx = rulerX + cm * pxPerCm;
+        const isMajor = (cm % 5 === 0);
+        stripCtx.beginPath();
+        stripCtx.moveTo(rx, rulerY);
+        stripCtx.lineTo(rx, rulerY + (isMajor ? 12 : 6));
+        stripCtx.strokeStyle = '#78350f';
+        stripCtx.stroke();
+        if (isMajor) {
+          stripCtx.fillText(cm, rx - 3, rulerY + 24);
+        }
+      }
+    }
+
+    // Ruler Drag Events
+    stripCanvas.addEventListener('mousedown', (e) => {
+      isDraggingRuler = true;
+      dragStartX = e.clientX;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDraggingRuler) return;
+      const dx = e.clientX - dragStartX;
+      dragStartX = e.clientX;
+      rulerOffset += dx;
+      drawStrip();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDraggingRuler = false;
+    });
+
+    // Populate Table
+    function buildEmptyTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '<tr><td colspan="6" style="color: var(--text-muted);">請點擊「啟動打點並拉動滑車」開始記錄數據</td></tr>';
+    }
+
+    function populateTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      const dt = 0.02; // seconds
+
+      for (let i = 0; i < generatedDots.length - 1; i++) {
+        const dxCm = generatedDots[i + 1] - generatedDots[i];
+        const vCmS = (dxCm / dt).toFixed(1);
+        const vMS = (dxCm / 100 / dt).toFixed(2);
+
+        let deltaDelta = '--';
+        if (i > 0) {
+          const prevDx = generatedDots[i] - generatedDots[i - 1];
+          const diff = (dxCm - prevDx).toFixed(1);
+          deltaDelta = `${diff > 0 ? '+' : ''}${diff} cm`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>點 [${i + 1}] ➔ [${i + 2}]</td>
+          <td><strong>${dxCm.toFixed(1)} cm</strong></td>
+          <td>${dt} s</td>
+          <td>${vCmS} cm/s</td>
+          <td><strong style="color: var(--primary);">${vMS} m/s</strong></td>
+          <td style="color: var(--success); font-weight:700;">${deltaDelta}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // Tab 2: Quiz Strips Drawing
+    function drawSingleQuizStrip(canvasId, type) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      const cy = c.height / 2;
+      const originX = c.width - 50;
+
+      let dots = [];
+      if (type === 'A') dots = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+      if (type === 'B') dots = [0, 30, 80, 150, 240, 350, 480, 630, 800];
+      if (type === 'C') dots = [0, 170, 320, 450, 560, 650, 720, 770, 800];
+
+      dots.forEach((d, idx) => {
+        const x = originX - d;
+        if (x >= 40) {
+          ctx.beginPath();
+          ctx.arc(x, cy, 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#1e293b';
+          ctx.fill();
+        }
+      });
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 10px Noto Sans TC';
+      ctx.fillText('⇦ 滑車運動方向', 40, cy + 4);
+      ctx.fillText('起點 ⇨', originX - 40, cy + 4);
+    }
+
+    function drawQuizStrips() {
+      drawSingleQuizStrip('quizStripA', 'A');
+      drawSingleQuizStrip('quizStripB', 'B');
+      drawSingleQuizStrip('quizStripC', 'C');
+    }
+
+    // Quiz Check
+    function checkQuizAns(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 紙帶甲各點間距保持完全相同，代表在相同時間內移動相同距離，即為「等速度運動」。';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 等速度運動的紙帶特徵是「相鄰兩點間距固定不變」。';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'B') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 紙帶乙由右往左（起點向後）點距越來越大，表示速度越來越快，故加速度與運動方向相同（加速）！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 加速度與運動方向相同時物體會「越來越快」，點距應該「越來越大」。';
+        }
+      } else if (qNum === 3) {
+        if (ans === 'C') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 紙帶丙由右往左點距越來越小，表示速度越來越慢（減速），因此最有可能在不久後完全靜止！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 點距越來越密代表速度逐漸減小（減速），最有可能停下。';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      resetTicker();
+    });
+  </script>
+</body>
+</html>

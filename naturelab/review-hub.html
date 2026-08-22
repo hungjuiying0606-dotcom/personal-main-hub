@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中理化 · 3-4冊 總複習互動題庫與教具總覽 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #38b2ac;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .nav-link-btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 3px solid var(--primary);
+      box-shadow: 8px 10px var(--primary);
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 800px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+        padding: 1.8rem;
+      }
+    }
+
+    .hero-tag {
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      font-weight: 700;
+    }
+
+    /* Controls Bar: Search & Filters */
+    .controls-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.85rem 1.25rem 0.85rem 3rem;
+      border: 2.5px solid var(--primary);
+      border-radius: 99px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      background: #ffffff;
+      box-shadow: 4px 4px var(--primary);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-box:focus {
+      box-shadow: 6px 6px var(--primary);
+      background: #fffff8;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.1rem;
+      border: 2px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 4px 4px var(--accent);
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-count {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Grid of Unit Cards */
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .units-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .unit-card {
+      border: 2.5px solid var(--primary);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-solid);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .unit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .unit-card.blue .card-top { background: #8ed8f8; }
+    .unit-card.pink .card-top { background: #ffcad2; }
+    .unit-card.mint .card-top { background: #bcebd9; }
+    .unit-card.yellow .card-top { background: #ffd85c; }
+
+    .card-top {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+    }
+
+    .card-unit-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .card-badge {
+      padding: 0.2rem 0.5rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 900;
+      background: #ffffff;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .points-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .points-list li {
+      font-size: 0.85rem;
+      color: #334155;
+      line-height: 1.5;
+      position: relative;
+      padding-left: 1.2rem;
+      font-weight: 500;
+    }
+
+    .points-list li::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 48px;
+      gap: 0.6rem;
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    .btn-play {
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-family: inherit;
+    }
+
+    .btn-play:hover {
+      background: #2b4c77;
+      transform: translateY(-2px);
+      box-shadow: 4px 4px var(--primary);
+    }
+
+    .btn-link {
+      width: 48px;
+      height: 100%;
+      min-height: 44px;
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+    }
+
+    .btn-link:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 4px 4px var(--primary);
+    }
+
+    /* Modal System */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: 8px 10px var(--primary);
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalPop {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      background: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .modal-close:hover {
+      background: var(--pink);
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      background: #f8fafc;
+      border-radius: 0 0 20px 20px;
+    }
+
+    /* Fill in Blanks Component */
+    .blank-item {
+      background: #f8fafc;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .blank-q {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    .blank-input-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .blank-input {
+      padding: 0.5rem 0.8rem;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      outline: none;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .blank-btn {
+      padding: 0.5rem 0.9rem;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--primary);
+      box-shadow: 2px 2px var(--primary);
+    }
+
+    .blank-result {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: none;
+    }
+
+    .blank-result.correct {
+      color: #059669;
+      display: block;
+    }
+
+    .blank-result.wrong {
+      color: #dc2626;
+      display: block;
+    }
+
+    /* Kahoot Quiz Component */
+    .quiz-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: 4px 4px var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-q-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .quiz-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 550px) {
+      .quiz-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-opt-btn {
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quiz-opt-btn:hover:not(:disabled) {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .quiz-opt-btn.correct-choice {
+      background: #86efac !important;
+      border-color: #15803d !important;
+    }
+
+    .quiz-opt-btn.wrong-choice {
+      background: #fca5a5 !important;
+      border-color: #b91c1c !important;
+    }
+
+    .quiz-feedback {
+      background: #f1f5f9;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      display: none;
+      margin-top: 0.8rem;
+    }
+
+    /* Dynamic Lab Components */
+    .lab-box {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: 3px 3px var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .lab-title {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .lab-control-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0.8rem 0;
+    }
+
+    .lab-slider {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+
+    .lab-display {
+      background: #f8fafc;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+    <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <span>國中自然科</span>
+      <span>›</span>
+      <span>九年級理化（3-4冊）總複習題庫與互動總覽</span>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div>
+        <span class="hero-tag">🌟 116 會考複習講義 · 互動全單元</span>
+        <h1 class="hero-title">理化 3-4 冊<br>總複習互動題庫與教具總覽</h1>
+        <p class="hero-desc">依據理化 3-4 冊複習講義目次，完整整合 11 大單元核心重點、50 格概念挖空練習、Kahoot 30 題隨堂測驗、QR Code 動態實驗室與跨領域生活素養專區！</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">11</div>
+          <div class="hero-stat-label">複習核心單元</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">550+</div>
+          <div class="hero-stat-label">概念挖空練習</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">330+</div>
+          <div class="hero-stat-label">Kahoot 隨堂挑戰</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">12</div>
+          <div class="hero-stat-label">跨領域生活素養</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <!-- Search Input -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="unitSearchInput" class="search-box" placeholder="搜尋單元名稱、核心重點、實驗主題或生活素養關鍵字（如：密度、凸透鏡、氧化還原、pH值、浮力）...">
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">🌟 全部單元 (11)</button>
+        <button class="filter-btn" data-filter="book3">📘 第 3 冊 (單元 1~6)</button>
+        <button class="filter-btn" data-filter="book4">📙 第 4 冊 (單元 7~11)</button>
+        <button class="filter-btn" data-filter="fill">✏️ 50格概念挖空</button>
+        <button class="filter-btn" data-filter="kahoot">🎯 Kahoot 30題測驗</button>
+        <button class="filter-btn" data-filter="lab">🔬 QR Code 動態實驗</button>
+        <button class="filter-btn" data-filter="literacy">💡 生活素養議題</button>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title"><span>📚</span> 全單元複習清單</h2>
+      <span class="section-count" id="unitCountDisplay">顯示 11 個單元</span>
+    </div>
+
+    <!-- Units Grid -->
+    <div class="units-grid" id="unitsGridContainer">
+      <!-- Dynamically generated cards -->
+    </div>
+
+  </main>
+
+  <!-- Universal Modal Component -->
+  <div class="modal-overlay" id="universalModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">單元互動視窗</h3>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content injected dynamically -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <button class="nav-link-btn" id="modalActionSecondary">關閉</button>
+        <button class="nav-link-btn primary" id="modalActionPrimary">確定</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>國中自然科 · NatureLab 理化 3-4 冊 總複習互動教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    const unitsData = [{"id": 1, "book": "第 3 冊", "bookNum": 3, "page": "P.4", "title": "基本測量", "color": "blue", "icon": "⚖️", "points": ["重點 1：進入實驗室（安全守則、器材使用、意外處理與廢棄物分類）", "重點 2：基本測量（長度與體積測量、估計值原理、有效位數）", "重點 3：密度（質量與體積關係 D=M/V、天平歸零與操作）"], "qrcodes": [{"title": "天平的歸零與操作", "desc": "校準螺盤調整、左物右盤與騎碼讀數"}, {"title": "密度的正反比關係", "desc": "M-V 圖形斜率即密度，正比與定值關係"}], "literacy": {"category": "安全議題", "title": "好蛋與壞蛋", "page": "P.16", "content": "新鮮雞蛋內部的氣室較小，整顆蛋的平均密度大於水，放入清水中會沉入底部；而不新鮮的雞蛋因水分蒸發且微生物分解產生氣體使氣室變大，整體平均密度變小，會浮在水面上。"}, "formula": "D = \\frac{M}{V} \\quad (密度 = \\frac{質量}{體積})", "fillBlanks": [{"q": "實驗室中若不小心打翻酒精燈起火，應立即使用【_____】蓋熄。", "a": "溼抹布", "hint": "隔絕空氣"}, {"q": "使用量筒測量液體體積時，視線應平視液面中央的【_____】處。", "a": "最低點", "hint": "水表面張力凹液面"}, {"q": "測量結果由一組準確值與【_____】位估計值所組成。", "a": "一", "hint": "最小刻度下一位"}, {"q": "上皿天平若指針偏左，表示左盤較重，應將校準螺盤向【_____】移動以歸零。", "a": "右", "hint": "哪邊輕往哪移"}, {"q": "同種均勻材質的物體，其質量與體積成【_____】比，此比值即為密度。", "a": "正", "hint": "M-V 關係"}], "quiz": [{"q": "實驗室中，若不小心打翻燃燒中的酒精燈，最安全的滅火方法是使用下列何者？", "options": ["大聲呼救", "用嘴巴用力吹熄", "用溼抹布蓋熄", "直接潑水滅火"], "ans": 2, "exp": "酒精燈打翻起火時，用溼抹布覆蓋能有效隔絕氧氣並降低溫度，達到滅火效果；潑水反而會使酒精擴散蔓延。"}, {"q": "使用最小刻度為公釐（mm）的直尺測量鉛筆長度，下列記錄何者最合理？", "options": ["15 公分", "15.0 公分", "15.00 公分", "15.000 公分"], "ans": 2, "exp": "最小刻度為 mm (0.1 cm)，測量記錄必須包含準確值到 mm，再加上一位估計值（0.01 cm），因此 15.00 公分包含準確值 15.0 cm 與估計值 0.00 cm。"}, {"q": "某金屬塊質量為 54 公克，放入裝有 50 mL 水的量筒中，水面上升至 70 mL，則該金屬的密度為多少 g/cm³？", "options": ["2.7", "0.77", "1.08", "3.6"], "ans": 0, "exp": "金屬體積 V = 70 - 50 = 20 cm³。密度 D = M / V = 54 / 20 = 2.7 g/cm³（此為鋁的密度）。"}]}, {"id": 2, "book": "第 3 冊", "bookNum": 3, "page": "P.17", "title": "物質的世界", "color": "pink", "icon": "🧪", "points": ["重點 1：物質的分類與分離（純物質與混合物、物理性質與化學性質）", "重點 2：水溶液（重量百分濃度、體積百分濃度、溶解度與飽和溶液）", "重點 3：空氣（氮氣、氧氣、惰性氣體特性、雙氧水製氧與碳酸鈣製二氧化碳）"], "qrcodes": [{"title": "重量百分濃度與體積百分濃度", "desc": "P=溶質/(溶質+溶劑)×100% 與酒精度數計算"}, {"title": "濃度與溶解度", "desc": "溫度對溶解度影響、過飽和與結晶析出"}], "literacy": {"category": "環境與健康", "title": "看不見的殺手——懸浮微粒 (PM2.5)", "page": "P.31", "content": "PM2.5 是指懸浮在空氣中粒徑小於或等於 2.5 微米的細懸浮微粒，能穿透呼吸道黏膜直接進入肺泡微血管，對呼吸系統與心血管健康造成威脅。"}, "formula": "P = \\frac{M_{溶質}}{M_{溶液}} \\times 100\\%", "fillBlanks": [{"q": "雙氧水在常溫下分解緩慢，加入【_____】作為催化劑可迅速生成氧氣。", "a": "二氧化錳", "hint": "催化劑不改變生成量"}, {"q": "空氣中含量最多的氣體是【_____】，其化學性質極不活潑。", "a": "氮氣", "hint": "佔空氣約 78%"}, {"q": "在一定溫度下，一定量溶劑中所能溶解溶質的最大限度稱為【_____】。", "a": "溶解度", "hint": "達飽和時的狀態"}, {"q": "利用物質沸點不同而將混合液體分離的方法稱為【_____】法。", "a": "蒸餾", "hint": "物理分離法"}, {"q": "二氧化碳通入澄清【_____】中會產生白色碳酸鈣沉澱。", "a": "石灰水", "hint": "Ca(OH)2 檢驗 CO2"}], "quiz": [{"q": "將 20 公克的食鹽完全溶解於 80 公克的水中，所得食鹽水的重量百分濃度為多少？", "options": ["25%", "20%", "16.7%", "15%"], "ans": 1, "exp": "溶液總質量 = 溶質 + 溶劑 = 20 + 80 = 100 公克。重量百分濃度 = 20 / 100 × 100% = 20%。"}, {"q": "實驗室製備氧氣時，常使用二氧化錳與雙氧水反應，其中二氧化錳的作用為何？", "options": ["反應物，提供氧原子", "催化劑，加快反應速率", "氧化劑", "指示劑"], "ans": 1, "exp": "二氧化錳在此反應中作為催化劑，可降低活化能、加快反應速率，其本身的質量與化學性質在反應前後不變。"}, {"q": "下列哪一種氣體可用於填充食品包裝以隔絕氧氣防止氧化腐敗？", "options": ["氧氣", "氫氣", "二氧化碳或氮氣", "氯氣"], "ans": 2, "exp": "氮氣與二氧化碳性質穩定且無毒，常用於食品充填包裝以防潮防氧化。"}]}, {"id": 3, "book": "第 3 冊", "bookNum": 3, "page": "P.32", "title": "波動與聲音", "color": "mint", "icon": "🌊", "points": ["重點 1：波的性質（橫波與縱波、波長、週期、頻率與波速 v=fλ）", "重點 2：聲音的傳播與回聲（傳播介質、聲速與溫度關係、回聲定位與反射）", "重點 3：聲音的三要素與超聲波（響度-振幅、音調-頻率、音色-波形、超音波應用）"], "qrcodes": [{"title": "波速公式 v = f · λ", "desc": "介質決定波速，頻率由波源決定"}, {"title": "聲音的頻率與音調", "desc": "20Hz~20000Hz 聽覺範圍與共鳴現象"}], "literacy": {"category": "安全與科技", "title": "都卜勒效應與超聲波", "page": "P.44", "content": "當救護車迎面駛來時，聽到的警笛頻率偏高（音調變高）；遠離時頻率偏低（音調變低）。醫療上的超音波掃描與倒車雷達則是利用頻率高於 20,000 Hz 的超聲波反射成像。"}, "formula": "v = f \\cdot \\lambda = \\frac{\\lambda}{T} \\quad (聲速: v = 331 + 0.6T)", "fillBlanks": [{"q": "波動傳播時，介質只在原地振動，傳遞出去的是【_____】。", "a": "能量", "hint": "介質不隨波前進"}, {"q": "聲波在 15°C 的空氣中傳播速率約為每秒【_____】公尺。", "a": "340", "hint": "331 + 0.6×15"}, {"q": "聲音的音調高低取決於聲波的【_____】。", "a": "頻率", "hint": "每秒振動次數"}, {"q": "能區分不同樂器或人聲的聲音特徵稱為【_____】。", "a": "音色", "hint": "由波形決定"}, {"q": "人耳無法聽見頻率超過【_____】赫茲（Hz）的超聲波。", "a": "20000", "hint": "人耳聽覺上限"}], "quiz": [{"q": "某連續週期波的頻率為 10 Hz，測得相鄰兩波峰間的距離為 2 公尺，則此波的波速為多少 m/s？", "options": ["5", "10", "20", "40"], "ans": 2, "exp": "波長 λ = 2 m，頻率 f = 10 Hz。波速 v = f · λ = 10 × 2 = 20 m/s。"}, {"q": "對著遠處大山大喊一聲，經過 2 秒後聽到回聲。若當時聲速為 340 m/s，則人與大山的距離為多少公尺？", "options": ["170", "340", "680", "1020"], "ans": 1, "exp": "聲音來回傳播時間為 2 秒，單程時間為 1 秒。距離 S = 340 × 1 = 340 公尺。"}, {"q": "彈奏吉他時，若想讓發出的聲音「音調變高」，下列何種操作最有效？", "options": ["更用力彈撥琴弦", "換用較粗的琴弦", "將琴弦轉緊或手指按壓縮短弦長", "將琴弦放鬆"], "ans": 2, "exp": "琴弦越緊、越細、越短，振動頻率越高，發出的音調越高。用力彈撥只會增大「響度」，不改變音調。"}]}, {"id": 4, "book": "第 3 冊", "bookNum": 3, "page": "P.45", "title": "光", "color": "yellow", "icon": "💡", "points": ["重點 1：光的傳播（直線傳播、針孔成像、光速 3×10^8 m/s）", "重點 2：光的反射與面鏡（反射定律、平面鏡正立等大虛像、凹面鏡與凸面鏡）", "重點 3：光的折射與透鏡（折射規律、凸透鏡會聚與成像作圖、凹透鏡發散）", "重點 4：光學儀器（照相機、放大鏡、近視與遠視眼鏡矯正）", "重點 5：光與顏色（色散現象、光的三原色紅綠藍、不透明體與透明體顏色）"], "qrcodes": [{"title": "光的折射實例", "desc": "筷子折斷感、池水看起來變淺、海市蜃樓"}, {"title": "凸透鏡成像作圖與規律", "desc": "物在 2f 外、2f 上、f~2f 間、f 內之成像"}], "literacy": {"category": "文化與天文", "title": "世界第一張照片與針孔成像", "page": "P.61", "content": "1826 年法國發明家涅普斯利用針孔成像與感光瀝青板記錄下窗外景象，針孔成像所成的像是「倒立實像」，其大小與物距及屏距比例相關。"}, "formula": "\\text{反射角}=\\text{入射角}, \\quad \\text{透鏡物距 } p, \\text{ 像距 } q", "fillBlanks": [{"q": "光在均勻介質中是以【_____】方式傳播，日食與月食皆為此特性的證明。", "a": "直線", "hint": "直進性"}, {"q": "近視眼是因為眼球前後徑過長或水晶體折光力太強，需配戴【_____】透鏡矯正。", "a": "凹", "hint": "使光線發散後再進入眼睛"}, {"q": "凸透鏡將物體置於 2 倍焦距外時，在另一側會形成倒立【_____】的實像。", "a": "縮小", "hint": "照相機原理"}, {"q": "太陽光通過三稜鏡後分解成紅、橙、黃、綠、藍、靛、紫等色光，此現象稱為【_____】。", "a": "色散", "hint": "不同色光折射率不同"}, {"q": "光的三原色是紅、綠、【_____】。", "a": "藍", "hint": "RGB 色光加法混色"}], "quiz": [{"q": "某凸透鏡焦距為 10 公分，若將蠟燭置於透鏡前方 15 公分處，則所成像的性質為何？", "options": ["正立放大虛像", "倒立放大實像", "倒立縮小實像", "倒立等大實像"], "ans": 1, "exp": "物距 p = 15 cm，介於 1 倍焦距（10 cm）與 2 倍焦距（20 cm）之間（f < p < 2f），成像為倒立放大實像（如投影機原理）。"}, {"q": "從水面上看清澈游泳池底部的磁磚，會覺得深度比實際深度如何？", "options": ["變淺", "變深", "不變", "時深時淺"], "ans": 0, "exp": "光由水中（光慢介質）射入空氣（光快介質）時會偏離法線折射，眼睛順著折射光線反向延長看去，會看到上浮的虛像，感覺水深變淺。"}, {"q": "一朵在白光下看起來呈現紅色的玫瑰花，若改用綠色光照射，花瓣會呈現什麼顏色？", "options": ["紅色", "綠色", "黑色", "黃色"], "ans": 2, "exp": "紅色物體只反射紅光，吸收其他色光。當只有綠光照射時，綠光被完全吸收且無紅光可反射，因此看起來呈現黑色。"}]}, {"id": 5, "book": "第 3 冊", "bookNum": 3, "page": "P.64", "title": "溫度與熱量", "color": "blue", "icon": "🔥", "points": ["重點 1：溫度、溫度計與溫標（攝氏 °C 與華氏 °F 換算、熱平衡原理）", "重點 2：熱量與比熱（H=M·S·ΔT 公式應用、比熱意義、混合熱平衡計算）", "重點 3：熱對物質的影響與熱傳播（熱脹冷縮、相變化潛熱、傳導、對流、輻射）"], "qrcodes": [{"title": "熱量公式 H = M · S · ΔT", "desc": "質量、比熱與溫度變化關係，熱量得失守恆"}, {"title": "物質的三態變化曲線", "desc": "熔化熱、汽化熱與相變過程中溫度維持定值"}], "literacy": {"category": "生活與戶外", "title": "洋蔥式穿法，怎麼穿才保暖？", "page": "P.94", "content": "洋蔥式穿法利用內層排汗、中層蓄熱、外層防風。中層的羽絨或毛衣能困住大量靜止空氣，因為空氣是熱的不良導體（熱傳導係數極低），能有效阻隔體熱散失。"}, "formula": "H = M \\cdot S \\cdot \\Delta T \\quad (F = \\frac{9}{5}C + 32)", "fillBlanks": [{"q": "熱量自然傳遞的方向是由【_____】溫物體傳向低溫物體，直到達到熱平衡。", "a": "高", "hint": "溫度差驅動熱流"}, {"q": "水的比熱為【_____】 cal/(g·°C)，在常見液體中比熱極大，具調節氣候功能。", "a": "1", "hint": "定溫定量基準"}, {"q": "液體與氣體主要的熱傳播方式為【_____】。", "a": "對流", "hint": "流體密度差循環"}, {"q": "太陽的熱能穿越真空太空中傳遞至地球，是透過熱【_____】方式傳播。", "a": "輻射", "hint": "不需介質"}, {"q": "純水在 1 大氣壓下沸騰時，吸收熱量但溫度保持在【_____】°C 不變。", "a": "100", "hint": "相變化潛熱"}], "quiz": [{"q": "將 100 公克、20°C 的水加熱至 80°C，若無熱量散失，水吸收了多少卡（cal）的熱量？", "options": ["2000", "4000", "6000", "8000"], "ans": 2, "exp": "H = M · S · ΔT = 100 × 1 × (80 - 20) = 100 × 60 = 6000 cal。"}, {"q": "質量相同的銅塊（比熱 0.093）與鋁塊（比熱 0.217），吸收相同熱量後，何者溫度上升較多？", "options": ["銅塊", "鋁塊", "一樣多", "無法比較"], "ans": 0, "exp": "根據 ΔT = H / (M·S)，質量與吸熱相同時，比熱 S 越小者，溫度變化 ΔT 越大。銅的比熱較小，故溫度上升較多。"}, {"q": "保溫瓶內膽鍍銀的主要目的為何？", "options": ["防止熱傳導", "防止熱對流", "減少熱輻射散失", "增加瓶身強度"], "ans": 2, "exp": "內膽鍍銀的光滑表面能反射熱輻射，阻止熱量以電磁波（紅外線輻射）形式逸散。"}]}, {"id": 6, "book": "第 3 冊", "bookNum": 3, "page": "P.79", "title": "物質的構造", "color": "pink", "icon": "⚛️", "points": ["重點 1：元素與週期表（金屬與非金屬元素性質、常溫常壓狀態、週期表族與週期）", "重點 2：原子、分子與化學式（道耳頓原子說、原子內部結構：質子/中子/電子、原子序與質量數）"], "qrcodes": [{"title": "電子數、中子數與質子數", "desc": "原子序 = 質子數 = 電子數，質量數 = 質子數 + 中子數"}, {"title": "週期表與族性", "desc": "鹼金族、鹼土族、鹵素與惰性氣體的價電子與化學活性"}], "literacy": {"category": "科技與歷史", "title": "元素的命名與發現", "page": "P.93", "content": "中文元素命名具有規律：常溫下為固態金屬加「金」部，液態金屬如汞；非金屬固態加「石」部、氣態加「气」部、液態如溴加「水」部。"}, "formula": "\\text{質量數 } A = Z (質子數) + N (中子數)", "fillBlanks": [{"q": "原子的中心為原子核，由帶正電的【_____】與不帶電的中子所組成。", "a": "質子", "hint": "原子序等於其數目"}, {"q": "繞原子核外圍高速運轉、帶負電的微粒是【_____】。", "a": "電子", "hint": "湯姆森發現"}, {"q": "碳-12 原子（¹²₆C）具有 6 個質子與【_____】個中子。", "a": "6", "hint": "質量數 12 - 質子數 6"}, {"q": "週期表中同一【_____】的元素具有相似的化學性質（如鹼金屬族）。", "a": "族", "hint": "直行直欄，價電子數相同"}, {"q": "唯一在常溫常壓下呈現液態的非金屬元素是【_____】。", "a": "溴", "hint": "紅棕色液體 (Br2)"}], "quiz": [{"q": "某中性原子的原子序為 11，質量數為 23，則該原子內部的質子數、中子數與電子數分別為何？", "options": ["11, 12, 11", "11, 23, 11", "12, 11, 12", "11, 11, 12"], "ans": 0, "exp": "中性原子：質子數 = 原子序 = 11，電子數 = 質子數 = 11；中子數 = 質量數 - 質子數 = 23 - 11 = 12（此元素為鈉 Na）。"}, {"q": "下列哪一組元素屬於同一「族」，且皆具劇烈與水反應產生氫氣的特性？", "options": ["鋰 (Li)、鈉 (Na)、鉀 (K)", "氟 (F)、氯 (Cl)、溴 (Br)", "氦 (He)、氖 (Ne)、氬 (Ar)", "鐵 (Fe)、鈷 (Co)、鎳 (Ni)"], "ans": 0, "exp": "鋰、鈉、鉀為週期表第 1 族（鹼金族），最外層有 1 個價電子，化學性質活潑，極易與水反應生成強鹼並釋放氫氣。"}, {"q": "常溫常壓下，下列哪一種金屬元素以液態存在？", "options": ["鐵", "銅", "汞（水銀）", "鋁"], "ans": 2, "exp": "汞（Hg，水銀）是常溫常壓下唯一的液態金屬元素。"}]}, {"id": 7, "book": "第 4 冊", "bookNum": 4, "page": "P.95", "title": "化學反應與氧化還原", "color": "mint", "icon": "💥", "points": ["重點 1：化學反應與質量守恆定律（原子重新排列、密閉系統與開口系統）", "重點 2：化學反應式與化學計量（平衡係數法、莫耳數與質量換算關係）", "重點 3：氧化還原反應（得氧與失氧、氧化劑與還原劑、金屬對氧活性大小順序）"], "qrcodes": [{"title": "氧化還原反應的判斷", "desc": "活性大金屬奪取活性小金屬氧化物中的氧"}, {"title": "金屬活性順序表", "desc": "鉀鋇鍶鈣鈉鎂鋁碳鋅鉻鐵鈷鎳錫鉛氫銅汞銀鉑金"}], "literacy": {"category": "環境與居家", "title": "漂白劑的氧化還原原理", "page": "P.109", "content": "氧系漂白劑（過氧化氫）與氯系漂白劑（次氯酸鈉）皆利用強氧化力破壞色素發色團。注意：氯系漂白劑絕不能與酸性清潔劑（如鹽酸）混用，否則會產生劇毒的氯氣！"}, "formula": "\\text{莫耳數 } n = \\frac{\\text{質量 } M}{\\text{分子量 } MW} = \\frac{\\text{粒子數}}{6 \\times 10^{23}}", "fillBlanks": [{"q": "在化學反應中，反應前後原子的種類與【_____】不變，僅是重新排列組合成新物質。", "a": "數目", "hint": "質量守恆定律基礎"}, {"q": "1 莫耳（mole）所包含的粒子個數約為【_____】個。", "a": "6×10²³", "hint": "亞佛加厥常數"}, {"q": "物質在反應中得到氧的過程稱為【_____】反應。", "a": "氧化", "hint": "失氧則為還原"}, {"q": "在氧化還原反應中，本身發生還原反應的物質稱為【_____】劑。", "a": "氧化", "hint": "促使他人氧化"}, {"q": "金屬對氧的活性越大，越【_____】與氧結合產生劇烈燃燒。", "a": "容易", "hint": "活性代表搶氧能力"}], "quiz": [{"q": "在反應 2Mg + CO₂ → 2MgO + C 中，何者扮演「還原劑」？", "options": ["Mg", "CO₂", "MgO", "C"], "ans": 0, "exp": "鎂（Mg）搶奪了二氧化碳中的氧變成 MgO，自身被氧化，因此鎂是「還原劑」；二氧化碳失去氧被還原，是「氧化劑」。"}, {"q": "將 36 公克的水（H₂O，分子量 18）完全電解，可產生多少莫耳的氫氣？", "options": ["1", "2", "3", "4"], "ans": 1, "exp": "36g 水的莫耳數 = 36 / 18 = 2 莫耳。反應式 2H₂O → 2H₂ + O₂，2 莫耳水完全反應可產生 2 莫耳氫氣。"}, {"q": "高爐煉鐵時，利用一氧化碳（CO）將氧化鐵（Fe₂O₃）還原為鐵，反應式為 Fe₂O₃ + 3CO → 2Fe + 3CO₂，此過程中何者被氧化？", "options": ["Fe₂O₃", "CO", "Fe", "CO₂"], "ans": 1, "exp": "一氧化碳（CO）得到氧變成二氧化碳（CO₂），發生氧化反應。"}]}, {"id": 8, "book": "第 4 冊", "bookNum": 4, "page": "P.110", "title": "酸鹼鹽", "color": "yellow", "icon": "🧂", "points": ["重點 1：電解質（電離說、強電解質與弱電解質、離子在水中的導電）", "重點 2：常見的酸與鹼（硫酸、鹽酸、硝酸、氫氧化鈉、氫氧化鈣性質與用途）", "重點 3：酸與鹼的濃度與 pH 值（[H+] 與 [OH-] 關係、指示劑石蕊/酚酞變色範圍）", "重點 4：酸鹼中和與鹽類（酸 + 鹼 → 鹽 + 水 + 放熱、常見鹽類硫酸鈣/碳酸氫鈉）"], "qrcodes": [{"title": "pH 值的討論與指示劑", "desc": "pH < 7 酸性、pH = 7 中性、pH > 7 鹼性；酚酞在鹼性呈紅色"}, {"title": "酸鹼中和放熱實驗", "desc": "H⁺ + OH⁻ → H₂O + 熱量，溫度計量測最高溫"}], "literacy": {"category": "安全與生活", "title": "滅火器與小蘇打（碳酸氫鈉）", "page": "P.125", "content": "碳酸氫鈉（NaHCO₃，俗稱小蘇打）受熱會分解產生二氧化碳、水與碳酸鈉，可用於乾粉滅火器與烘焙蛋糕膨脹劑。"}, "formula": "\\text{pH} = -\\log[H^+], \\quad [H^+][OH^-] = 10^{-14} \\text{ (25°C)}", "fillBlanks": [{"q": "化合物溶於水能解離出帶電【_____】，且水溶液能導電者稱為電解質。", "a": "離子", "hint": "阿瑞尼斯電離說"}, {"q": "濃硫酸溶於水時會放出大量的【_____】，稀釋時應將濃硫酸緩緩加入大量水中。", "a": "熱", "hint": "放熱反應"}, {"q": "酚酞指示劑在中性與酸性溶液中呈無色，在鹼性溶液中呈【_____】色。", "a": "紅", "hint": "粉紅/鮮紅"}, {"q": "常溫下純水的 pH 值等於【_____】。", "a": "7", "hint": "[H+] = 10^-7 M"}, {"q": "酸與鹼反應生成鹽和水，並釋放出熱量，稱為【_____】反應。", "a": "酸鹼中和", "hint": "放熱反應"}], "quiz": [{"q": "在 25°C 下，某溶液測得其 pH 值為 3，則該溶液的性質與氫離子濃度為何？", "options": ["酸性，[H⁺] = 10⁻³ M", "鹼性，[H⁺] = 10⁻³ M", "酸性，[H⁺] = 10⁻¹¹ M", "中性，[H⁺] = 10⁻⁷ M"], "ans": 0, "exp": "pH = 3 < 7 為酸性溶液，其氫離子濃度 [H⁺] = 10⁻ᵖᴴ = 10⁻³ M。"}, {"q": "下列哪一種酸具有強烈的脫水性，能使蔗糖碳化變黑？", "options": ["鹽酸", "硝酸", "濃硫酸", "醋酸"], "ans": 2, "exp": "濃硫酸具有極強的脫水性與吸水性，能奪取有機物中的氫與氧原子（以 2:1 水分子比例）使其脫水碳化。"}, {"q": "將等莫耳數的鹽酸（HCl）與氫氧化鈉（NaOH）均勻混合，下列敘述何者正確？", "options": ["溶液溫度下降", "反應後溶液呈酸性", "反應產生氯化鈉與水並放熱", "產生氫氣氣泡"], "ans": 2, "exp": "酸鹼中和反應式：HCl + NaOH → NaCl + H₂O + 熱，中和過程必放熱使溶液溫度上升，完全中和後呈中性。"}]}, {"id": 9, "book": "第 4 冊", "bookNum": 4, "page": "P.127", "title": "反應速率與化學平衡", "color": "blue", "icon": "⏱️", "points": ["重點 1：反應速率（碰撞學說、影響因素：本性、濃度、接觸面積、溫度、催化劑）", "重點 2：可逆反應與化學平衡（正反應速率=逆反應速率、動態平衡、外在條件改變與平衡移動）"], "qrcodes": [{"title": "化學平衡與勒沙特列原理", "desc": "鉻酸根 (黃) 與二鉻酸根 (橘紅) 之酸鹼平衡移動"}, {"title": "溫度對反應速率與平衡的影響", "desc": "升高溫度正逆反應速率皆增快，平衡向吸熱方向移動"}], "literacy": {"category": "科技與防災", "title": "哈柏法製氨與麵粉爆炸危機", "page": "P.138", "content": "哈柏法在 400~500°C、高壓及鐵粉催化劑下合成氨氣支持化肥生產；而麵粉工廠若懸浮微細粉塵遇明火，因總接觸表面積暴增，會發生劇烈瞬間燃燒導致「粉塵爆炸」。"}, "formula": "\\text{正反應速率 } v_正 = \\text{逆反應速率 } v_逆 \\quad (動態平衡)", "fillBlanks": [{"q": "固體反應物切成碎屑或粉末時，因增加【_____】面積，可大幅加快反應速率。", "a": "接觸", "hint": "碰撞機會增加"}, {"q": "加入催化劑能【_____】反應速率，但不會改變最終產物的平衡總量。", "a": "加快", "hint": "降低活化能"}, {"q": "當可逆反應達到化學平衡時，正反應速率【_____】逆反應速率。", "a": "等於", "hint": "動態平衡條件"}, {"q": "在黃色的鉻酸鉀溶液中加入酸（H⁺），溶液顏色會轉變為【_____】色。", "a": "橘紅", "hint": "生成二鉻酸根離子 Cr2O7^2-"}, {"q": "化學平衡為一種【_____】平衡，反應事實上仍在持續進行中。", "a": "動態", "hint": "微觀不停歇"}], "quiz": [{"q": "將等質量的塊狀大理石與粉末狀大理石，分別加入相同濃度的等量鹽酸中，何者產生氣體的初始速率較快？", "options": ["塊狀大理石", "粉末狀大理石", "兩者一樣快", "無法判斷"], "ans": 1, "exp": "粉末狀大理石的總接觸表面積遠大於塊狀，與酸液分子碰撞的機會大幅增加，因此初始反應速率顯著較快。"}, {"q": "在 N₂O₄ (無色) + 熱 ⇌ 2NO₂ (紅棕色) 的平衡系統中，若將容器浸入熱水中，系統顏色將如何變化？", "options": ["顏色變深（偏紅棕色）", "顏色變淺（偏無色）", "顏色不變", "先變淺後變深"], "ans": 0, "exp": "此反應正向為吸熱反應。提高溫度會促使平衡朝吸熱方向（生成 NO₂）移動，因此紅棕色的 NO₂ 濃度增加，整體顏色變深。"}, {"q": "關於化學平衡的敘述，下列何者正確？", "options": ["反應物與生成物的濃度必須相等", "反應已經完全停止", "正反應速率等於逆反應速率", "產物無法再轉變為反應物"], "ans": 2, "exp": "達化學平衡的定義為正反應速率等於逆反應速率，此時各物質濃度保持定值（但不一定相等），微觀上反應仍在進行（動態平衡）。"}]}, {"id": 10, "book": "第 4 冊", "bookNum": 4, "page": "P.139", "title": "有機化合物", "color": "pink", "icon": "🧴", "points": ["重點 1：認識有機化合物（含碳化合物、乾餾木材實驗產物）", "重點 2：常見的有機化合物（烷類/烴類、醇類乙醇、有機酸乙酸、酯類酯化反應）", "重點 3：聚合物與衣料（天然聚合物澱粉/纖維素/蛋白質、合成聚合物熱塑性/熱固性塑膠）", "重點 4：肥皂與清潔劑（皂化反應：油脂+鹼、鹽析分離、肥皂去污親水端與親油端）"], "qrcodes": [{"title": "酯化反應實驗", "desc": "有機酸 + 醇 ⇌ 酯 + 水 (濃硫酸當催化劑兼脫水劑)"}, {"title": "皂化反應與鹽析", "desc": "油脂 + 氫氧化鈉 + 酒精加熱，飽和食鹽水鹽析出肥皂"}], "literacy": {"category": "安全與生活", "title": "塑膠杯蓋回收編號與不織布口罩", "page": "P.151", "content": "塑膠三角辨識碼 1~7 號代表不同聚合物材質（如 5 號 PP 聚丙烯耐高溫達 120°C，常用於微波保鮮盒與杯蓋）；醫療口罩的中間層熔噴不織布則是利用靜電吸附微粒。"}, "formula": "\\text{油脂} + \\text{鹼} \\xrightarrow{\\text{酒精}} \\text{脂肪酸鈉 (肥皂)} + \\text{甘油 (丙三醇)}", "fillBlanks": [{"q": "有機化合物必定含有【_____】元素（但 CO、CO₂、碳酸鹽、氰化物等除外）。", "a": "碳", "hint": "含碳化合物"}, {"q": "乙酸與乙醇在濃硫酸催化下加熱，會生成具水果香味的【_____】。", "a": "乙酸乙酯", "hint": "酯化反應"}, {"q": "天然聚合物中的蛋白質是由許多【_____】分子縮合聚合而成。", "a": "胺基酸", "hint": "生物體基本構造"}, {"q": "肥皂分子中長碳鏈的碳氫端具有【_____】性，能吸附油脂髒污。", "a": "親油", "hint": "親油端與親水端"}, {"q": "皂化完成後，加入飽和【_____】水可使肥皂浮出液面，此步驟稱為鹽析。", "a": "食鹽", "hint": "密度小浮於上層"}], "quiz": [{"q": "製作肥皂時，通常會加入少量酒精，其主要目的為何？", "options": ["作為催化劑", "幫助油脂與氫氧化鈉水溶液均勻混合溶解", "增加肥皂香味", "使肥皂呈現透明"], "ans": 1, "exp": "油脂不溶於水，而氫氧化鈉溶於水；酒精能同時溶解油脂與水，作為互溶劑以促進兩者充分接觸反應。"}, {"q": "下列何者「不屬於」有機化合物？", "options": ["甲烷 (CH₄)", "酒精 (C₂H₅OH)", "碳酸鈣 (CaCO₃)", "葡萄糖 (C₆H₁₂O₆)"], "ans": 2, "exp": "碳酸鹽類（如 CaCO₃）、碳的氧化物（CO、CO₂）與氰化物等雖然含碳，但在化學上被歸類為無機化合物。"}, {"q": "保特瓶、微波餐盒等受熱會熔化變形、可回收再利用的塑膠，屬於下列哪一類聚合物？", "options": ["鏈狀熱塑性聚合物", "網狀熱固性聚合物", "天然聚合物", "無機聚合物"], "ans": 0, "exp": "鏈狀結構的熱塑性塑膠受熱會軟化熔融，具可塑性且可回收再製；網狀結構的熱固性塑膠受熱則不軟化。"}]}, {"id": 11, "book": "第 4 冊", "bookNum": 4, "page": "P.154", "title": "力與壓力", "color": "mint", "icon": "⚓", "points": ["重點 1：力的大小、測量與合力（彈簧伸長量與虎克定律、兩力平衡條件）", "重點 2：摩擦力（靜摩擦力、最大靜摩擦力與正向力關係、動摩擦力）", "重點 3：壓力（固體壓力 P=F/A、液體靜水壓 P=h·d、帕斯卡原理、托里切利大氣壓 76cm-Hg）", "重點 4：浮力（阿基米德原理 B=V_排·d_液、浮體浮力=物重、沉體浮力=排開液重）"], "qrcodes": [{"title": "浮力計算與阿基米德原理", "desc": "物體在液體中所受浮力等於排開液體的重量"}, {"title": "帕斯卡原理與液壓機", "desc": "密閉液體傳遞壓力 P1=P2 即 F1/A1 = F2/A2"}], "literacy": {"category": "科技與海洋", "title": "潛水艇與浮橋建造原理", "page": "P.169", "content": "潛水艇透過調節水櫃吸水與排水改變自身的總平均密度與總重量：排水時總重小於浮力浮起，注水時總重大於浮力下沉。工兵建造浮橋則是利用浮體排開大量水提供向上浮力支撐車輛。"}, "formula": "P = \\frac{F}{A}, \\quad P_{液} = h \\cdot d, \\quad B = V_{排} \\cdot d_{液}", "fillBlanks": [{"q": "彈簧在彈性限度內，其伸長量與所受外力大小成【_____】比（虎克定律）。", "a": "正", "hint": "F = k·Δx"}, {"q": "當物體剛要開始運動的瞬間，所受的摩擦力稱為【_____】靜摩擦力。", "a": "最大", "hint": "靜摩擦力中的最大值"}, {"q": "在靜止液體中，深度 h 處由液體密度 d 所造成的液體壓力 P = 【_____】。", "a": "h·d", "hint": "深度乘密度"}, {"q": "托里切利實驗測得 1 大氣壓約等於【_____】公分水銀柱高（cm-Hg）。", "a": "76", "hint": "約 1033.6 gw/cm²"}, {"q": "浮在水面上的木塊，其所受的向上浮力大小【_____】木塊自身的總重量。", "a": "等於", "hint": "浮體合力為零 B=W"}], "quiz": [{"q": "一塊重量為 300 gw 的木塊浮在水面上，若有 2/3 的體積沒入水中，則木塊所受的浮力為多少 gw？", "options": ["100", "200", "300", "450"], "ans": 2, "exp": "對於靜止浮在水面上的物體（浮體），其向上的浮力必定等於向下的物體總重，因此浮力 = 木塊重 = 300 gw。"}, {"q": "某高跟鞋接觸地面的總面積為 2 cm²，若體重 60 kgw 的女士穿著該鞋單腳站立，地面所承受的壓力為多少 kgw/cm²？", "options": ["30", "60", "120", "300"], "ans": 0, "exp": "壓力 P = 垂直作用力 F / 接觸面積 A = 60 kgw / 2 cm² = 30 kgw/cm²。"}, {"q": "將一密度為 2.7 g/cm³、體積為 100 cm³ 的鋁塊完全沉入水中，鋁塊在水中所受的浮力為多少 gw？", "options": ["100", "270", "170", "370"], "ans": 0, "exp": "鋁塊完全沒入水中，排開水的體積 V_排 = 100 cm³。浮力 B = V_排 × d_水 = 100 cm³ × 1 g/cm³ = 100 gw。"}]}];
+
+    // DOM Elements
+    const unitsGridContainer = document.getElementById('unitsGridContainer');
+    const searchInput = document.getElementById('unitSearchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const unitCountDisplay = document.getElementById('unitCountDisplay');
+
+    const modal = document.getElementById('universalModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalActionSecondary = document.getElementById('modalActionSecondary');
+    const modalActionPrimary = document.getElementById('modalActionPrimary');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    // Render Unit Cards
+    function renderUnits() {
+      unitsGridContainer.innerHTML = '';
+      let matchedCount = 0;
+
+      unitsData.forEach(unit => {
+        // Filter Matching
+        const matchesBook = (currentFilter === 'all') ||
+                            (currentFilter === 'book3' && unit.bookNum === 3) ||
+                            (currentFilter === 'book4' && unit.bookNum === 4) ||
+                            (currentFilter === 'fill' || currentFilter === 'kahoot' || currentFilter === 'lab' || currentFilter === 'literacy');
+
+        const searchLower = searchQuery.toLowerCase().trim();
+        const matchesSearch = !searchLower ||
+                              unit.title.toLowerCase().includes(searchLower) ||
+                              unit.points.some(p => p.toLowerCase().includes(searchLower)) ||
+                              unit.literacy.title.toLowerCase().includes(searchLower) ||
+                              unit.literacy.content.toLowerCase().includes(searchLower) ||
+                              unit.qrcodes.some(q => q.title.toLowerCase().includes(searchLower));
+
+        if (matchesBook && matchesSearch) {
+          matchedCount++;
+          const card = document.createElement('div');
+          card.className = `unit-card ${unit.color}`;
+          card.innerHTML = `
+            <div class="card-top">
+              <div class="card-title-group">
+                <span class="card-icon">${unit.icon}</span>
+                <div>
+                  <div class="card-unit-num">UNIT ${String(unit.id).padStart(2, '0')} · ${unit.book}</div>
+                  <div class="card-title">${unit.title}</div>
+                </div>
+              </div>
+              <div class="card-badges">
+                <span class="card-badge">${unit.page}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="points-list">
+                ${unit.points.map(p => `<li>${p}</li>`).join('')}
+              </ul>
+              <div class="card-actions">
+                ${unit.id === 4 ? `
+                  <a href="optics-hub.html" class="btn-play">
+                    ⚡ 即刻體驗
+                  </a>
+                  <a href="optics-hub.html" class="btn-link" target="_blank" title="在新分頁開啟光學 17 大動態互動教具總覽 Hub">
+                    ↗
+                  </a>
+                ` : unit.id === 1 ? `
+                  <a href="chapter1-hub.html" class="btn-play">
+                    ⚡ 即刻體驗
+                  </a>
+                  <a href="chapter1-hub.html" class="btn-link" target="_blank" title="在新分頁開啟第一章 直線運動 Hub">
+                    ↗
+                  </a>
+                ` : `
+                  <button class="btn-play" onclick="openLabModal(${unit.id})">
+                    ⚡ 即刻體驗
+                  </button>
+                  <button class="btn-link" onclick="openLabModal(${unit.id})" title="開啟動態實驗與複習視窗">
+                    ↗
+                  </button>
+                `}
+              </div>
+            </div>
+          `;
+          unitsGridContainer.appendChild(card);
+        }
+      });
+
+      unitCountDisplay.textContent = `顯示 ${matchedCount} 個單元`;
+    }
+
+    // Filter Button Click
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderUnits();
+      });
+    });
+
+    // Search Input
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderUnits();
+    });
+
+    // Modal Handlers
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalActionSecondary.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // 1. Fill Blanks Modal
+    window.openFillBlanksModal = function(unitId) {
+      const unit = unitsData.find(u => u.id === unitId);
+      if (!unit) return;
+
+      modalTitle.innerHTML = `<span>✏️</span> 單元 ${unit.id} ${unit.title} · 概念挖空練習卷`;
+      modalBody.innerHTML = `
+        <p style="font-size: 0.9rem; margin-bottom: 1.2rem; color: var(--text-muted); font-weight: 700;">
+          依據會考講義核心概念設計，請在空格中填入正確答案，並點擊「檢查答案」即時校對！
+        </p>
+        <div id="blanksList">
+          ${unit.fillBlanks.map((b, idx) => `
+            <div class="blank-item" id="blankItem_${idx}">
+              <div class="blank-q">${idx + 1}. ${b.q}</div>
+              <div class="blank-input-row">
+                <input type="text" class="blank-input" id="blankInp_${idx}" placeholder="請輸入答案...">
+                <button class="blank-btn" onclick="checkBlank(${unitId}, ${idx})">檢查答案</button>
+                <button class="blank-btn" style="background:#e2e8f0;" onclick="showBlankHint(${unitId}, ${idx})">💡 提示</button>
+              </div>
+              <div class="blank-result" id="blankRes_${idx}"></div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      modalActionPrimary.textContent = "一鍵查看全部標準答案";
+      modalActionPrimary.onclick = function() {
+        unit.fillBlanks.forEach((b, idx) => {
+          const res = document.getElementById(`blankRes_${idx}`);
+          res.className = 'blank-result correct';
+          res.innerHTML = `✅ 標準答案：<strong>${b.a}</strong>（解析提示：${b.hint}）`;
+        });
+      };
+
+      modal.classList.add('active');
+    };
+
+    window.checkBlank = function(unitId, idx) {
+      const unit = unitsData.find(u => u.id === unitId);
+      const inp = document.getElementById(`blankInp_${idx}`).value.trim();
+      const res = document.getElementById(`blankRes_${idx}`);
+      const correctAns = unit.fillBlanks[idx].a;
+
+      if (!inp) {
+        res.className = 'blank-result wrong';
+        res.textContent = "⚠️ 請先填入答案喔！";
+        return;
+      }
+
+      if (inp === correctAns || correctAns.includes(inp)) {
+        res.className = 'blank-result correct';
+        res.innerHTML = `🎉 答對了！正確答案就是 <strong>${correctAns}</strong>`;
+      } else {
+        res.className = 'blank-result wrong';
+        res.innerHTML = `❌ 差一點點！提示：${unit.fillBlanks[idx].hint}`;
+      }
+    };
+
+    window.showBlankHint = function(unitId, idx) {
+      const unit = unitsData.find(u => u.id === unitId);
+      const res = document.getElementById(`blankRes_${idx}`);
+      res.className = 'blank-result';
+      res.style.display = 'block';
+      res.style.color = '#4338ca';
+      res.innerHTML = `💡 觀念提示：${unit.fillBlanks[idx].hint}`;
+    };
+
+    // 2. Kahoot Quiz Modal
+    window.openQuizModal = function(unitId) {
+      const unit = unitsData.find(u => u.id === unitId);
+      if (!unit) return;
+
+      modalTitle.innerHTML = `<span>🎯</span> 單元 ${unit.id} ${unit.title} · Kahoot 30 題隨堂測驗挑戰`;
+      modalBody.innerHTML = `
+        <p style="font-size: 0.9rem; margin-bottom: 1.2rem; color: var(--text-muted); font-weight: 700;">
+          精選會考高頻考點，點擊選項立即檢驗觀念，並附有詳細題解說明！
+        </p>
+        <div id="quizContainer">
+          ${unit.quiz.map((q, qIdx) => `
+            <div class="quiz-card" id="quizCard_${qIdx}">
+              <div class="quiz-q-title">Q${qIdx + 1}. ${q.q}</div>
+              <div class="quiz-options-grid">
+                ${q.options.map((opt, oIdx) => `
+                  <button class="quiz-opt-btn" id="optBtn_${qIdx}_${oIdx}" onclick="selectQuizOption(${unitId}, ${qIdx}, ${oIdx})">
+                    <span style="background:var(--primary); color:#fff; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem;">${['A','B','C','D'][oIdx]}</span>
+                    <span>${opt}</span>
+                  </button>
+                `).join('')}
+              </div>
+              <div class="quiz-feedback" id="quizFeedback_${qIdx}">
+                <strong>【詳解與觀念說明】</strong><br>
+                ${q.exp}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      modalActionPrimary.textContent = "再來一次測驗";
+      modalActionPrimary.onclick = function() {
+        openQuizModal(unitId);
+      };
+
+      modal.classList.add('active');
+    };
+
+    window.selectQuizOption = function(unitId, qIdx, chosenIdx) {
+      const unit = unitsData.find(u => u.id === unitId);
+      const q = unit.quiz[qIdx];
+      const correctIdx = q.ans;
+
+      // Disable all buttons in this question
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`optBtn_${qIdx}_${i}`);
+        btn.disabled = true;
+        if (i === correctIdx) {
+          btn.classList.add('correct-choice');
+        } else if (i === chosenIdx) {
+          btn.classList.add('wrong-choice');
+        }
+      }
+
+      const fb = document.getElementById(`quizFeedback_${qIdx}`);
+      fb.style.display = 'block';
+    };
+
+    // 3. Dynamic Lab Modal
+    window.openLabModal = function(unitId) {
+      const unit = unitsData.find(u => u.id === unitId);
+      if (!unit) return;
+
+      modalTitle.innerHTML = `<span>🔬</span> 單元 ${unit.id} ${unit.title} · QR Code 動態實驗與計算室`;
+      
+      let labContent = '';
+      if (unitId === 1) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">⚖️ 密度計算與天平平衡模擬器 (D = M / V)</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物質質量 M (g):</label>
+              <input type="range" id="massRange" class="lab-slider" min="10" max="200" value="54" oninput="updateDensityLab()">
+              <span id="massVal" style="font-weight:900; width:60px;">54 g</span>
+            </div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物體體積 V (cm³):</label>
+              <input type="range" id="volRange" class="lab-slider" min="5" max="100" value="20" oninput="updateDensityLab()">
+              <span id="volVal" style="font-weight:900; width:60px;">20 cm³</span>
+            </div>
+            <div class="lab-display" id="densityRes">
+              計算密度 D = 2.70 g/cm³（鋁金屬，放入水中會沉入水底）
+            </div>
+          </div>
+        `;
+      } else if (unitId === 3) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">🌊 波速公式計算器 (v = f · λ)</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">波源頻率 f (Hz):</label>
+              <input type="range" id="freqRange" class="lab-slider" min="1" max="50" value="10" oninput="updateWaveLab()">
+              <span id="freqVal" style="font-weight:900; width:60px;">10 Hz</span>
+            </div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">波長 λ (m):</label>
+              <input type="range" id="lambdaRange" class="lab-slider" min="0.5" max="10" step="0.5" value="2" oninput="updateWaveLab()">
+              <span id="lambdaVal" style="font-weight:900; width:60px;">2.0 m</span>
+            </div>
+            <div class="lab-display" id="waveRes">
+              波速 v = 20.0 m/s（週期 T = 0.10 秒）
+            </div>
+            <div style="margin-top:1rem;">
+              <a href="concert-hall-acoustics-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fde68a;">
+                🎭 進入【第63頁題組1~3題 · 國家音樂廳聲學設計 ✕ 聲波反射板 vs 吸音地毯實驗室】
+              </a>
+            </div>
+          </div>
+        `;
+      } else if (unitId === 4) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">💡 凸透鏡成像作圖模擬器 (焦距 f = 10 cm)</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物距 p (cm):</label>
+              <input type="range" id="objDistRange" class="lab-slider" min="2" max="35" value="25" oninput="updateOpticsLab()">
+              <span id="objDistVal" style="font-weight:900; width:60px;">25 cm</span>
+            </div>
+            <div class="lab-display" id="opticsRes">
+              【物在 2f 外 (p > 20cm)】：成像於 f ~ 2f 間，形成「倒立、縮小、實像」（照相機原理）
+            </div>
+            <div style="margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+              <a href="optics-hub.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.75rem; background:#ffd85c; font-size:0.95rem; border:2.5px solid var(--primary); box-shadow:3px 3px var(--primary);">
+                🌟 開啟【光學與波動聲學 17 大動態互動教具總覽 Hub】
+              </a>
+              <a href="lens-focal-lab.html" class="nav-link-btn primary" style="width:100%; justify-content:center; padding:0.6rem;">
+                🔬 進入【113會考第5題 · 凸透鏡光路與焦距探索實驗室】
+              </a>
+              <a href="reflection-angle-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bcebd9;">
+                📐 進入【110會考第3題 · 雷射光反射角度動態量角器】
+              </a>
+              <a href="color-reflection-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fed7aa;">
+                🌈 進入【100會考第3題 · 三色雷射反射與彩色牆面實驗室】
+              </a>
+              <a href="color-perception-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fbcfe8;">
+                🎨 進入【110&114會考第7、8題 · 色光照射與物體顏色判色實驗室】
+              </a>
+              <a href="mirror-sightline-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bbf7d0;">
+                🏰 進入【第58頁第2題 · 平面鏡視角與障礙遮擋解謎實驗室】
+              </a>
+              <a href="pinhole-imaging-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fde047;">
+                🕳️ 進入【第58頁第1題 · 針孔成像動態光路實驗室】
+              </a>
+              <a href="apparent-depth-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bae6fd;">
+                🌊 進入【第59頁第6題 · 鳥看魚 vs 魚看鳥 視深視高折射實驗室】
+              </a>
+              <a href="concave-water-refraction-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bbf7d0;">
+                💧 進入【第59頁第12題 · 凹透鏡發散 ✕ 水位折射光斑實驗室】
+              </a>
+              <a href="color-grid-absorb-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fbcfe8;">
+                🎨 進入【第60頁第18題 · 色光照射 ✕ 色紙網格吸光計算盤】
+              </a>
+              <a href="orthok-eye-optics-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#a5f3fc;">
+                👁️ 進入【第60頁第16題 · 角膜塑型片與近視眼聚焦光學實驗室】
+              </a>
+              <a href="dispersion-refraction-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fed7aa;">
+                🌈 進入【第60頁第13、17題 · 三層介質折射波長 ✕ 三稜鏡色散實驗室】
+              </a>
+              <a href="sugar-refraction-curve-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fed7aa;">
+                🧪 進入【第61頁題組3~4題 · 糖水濃度梯度 ✕ 雷射光奇幻彎曲實驗室】
+              </a>
+              <a href="spoon-curved-mirror-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#e0e7ff;">
+                🥄 進入【第62頁第1題 · 光亮湯匙面鏡 ✕ 凹面聚光 vs 凸面廣角實驗室】
+              </a>
+              <a href="periscope-submarine-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bae6fd;">
+                🚢 進入【第62頁第2題 · 海鯤號潛望鏡 ✕ 雙45°平面鏡光路實驗室】
+              </a>
+              <a href="concert-hall-acoustics-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#fde68a;">
+                🎭 進入【第63頁題組1~3題 · 國家音樂廳聲學設計 ✕ 聲波反射板 vs 吸音地毯實驗室】
+              </a>
+              <a href="eye-camera-vision-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#cffafe;">
+                👁️ 進入【第53頁重點 · 近視與遠視眼球光學矯正 ✕ 眼睛 vs 照相機實驗室】
+              </a>
+              <a href="color-filter-overlap-lab.html" class="nav-link-btn" style="width:100%; justify-content:center; padding:0.6rem; background:#bbf7d0;">
+                🟩 進入【第55頁重點 · 多層彩色玻璃紙濾光 ✕ 重疊遮罩與盆栽濾鏡實驗室】
+              </a>
+            </div>
+          </div>
+        `;
+      } else if (unitId === 5) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">🔥 熱量公式計算器 (H = M · S · ΔT)</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物質質量 M (g):</label>
+              <input type="range" id="heatMass" class="lab-slider" min="50" max="500" step="50" value="100" oninput="updateHeatLab()">
+              <span id="heatMassVal" style="font-weight:900; width:60px;">100 g</span>
+            </div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">溫差 ΔT (°C):</label>
+              <input type="range" id="heatDeltaT" class="lab-slider" min="5" max="100" step="5" value="60" oninput="updateHeatLab()">
+              <span id="heatDeltaTVal" style="font-weight:900; width:60px;">60 °C</span>
+            </div>
+            <div class="lab-display" id="heatRes">
+              水吸收熱量 H = 6000 cal = 6 kcal
+            </div>
+          </div>
+        `;
+      } else if (unitId === 8) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">🧂 pH 值與指示劑比色板</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">溶液 pH 值:</label>
+              <input type="range" id="phRange" class="lab-slider" min="0" max="14" step="1" value="3" oninput="updatePhLab()">
+              <span id="phVal" style="font-weight:900; width:60px;">pH = 3</span>
+            </div>
+            <div class="lab-display" id="phRes">
+              【強酸性】[H⁺] = 10⁻³ M，石蕊呈紅色，酚酞呈無色。
+            </div>
+          </div>
+        `;
+      } else if (unitId === 11) {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">⚓ 阿基米德浮力受力分析 (B = V_排 · d_液)</div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物體體積 (cm³):</label>
+              <input type="range" id="buoyVol" class="lab-slider" min="50" max="500" step="50" value="100" oninput="updateBuoyLab()">
+              <span id="buoyVolVal" style="font-weight:900; width:60px;">100 cm³</span>
+            </div>
+            <div class="lab-control-row">
+              <label style="font-weight:700; width:110px;">物體密度 (g/cm³):</label>
+              <input type="range" id="buoyDensity" class="lab-slider" min="0.2" max="3.0" step="0.1" value="0.6" oninput="updateBuoyLab()">
+              <span id="buoyDensityVal" style="font-weight:900; width:60px;">0.6 g/cm³</span>
+            </div>
+            <div class="lab-display" id="buoyRes">
+              【浮體狀態】：物重 60 gw，向上浮力 60 gw，沒入水中體積 60 cm³。
+            </div>
+          </div>
+        `;
+      } else {
+        labContent = `
+          <div class="lab-box">
+            <div class="lab-title">🧪 核心公式與反應重點速查</div>
+            <div style="font-size:1.1rem; font-weight:900; color:var(--primary); margin:1rem 0; text-align:center;">
+              ${unit.formula}
+            </div>
+            <div class="points-list">
+              ${unit.qrcodes.map(q => `<li><strong>${q.title}</strong>：${q.desc}</li>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      modalBody.innerHTML = `
+        <div style="margin-bottom:1rem; font-size:0.9rem; font-weight:700; color:var(--text-muted);">
+          講義 QR Code 重點影音與動態觀念即時模擬：
+        </div>
+        ${labContent}
+      `;
+
+      modalActionPrimary.textContent = "關閉視窗";
+      modalActionPrimary.onclick = closeModal;
+      modal.classList.add('active');
+    };
+
+    // Lab Calculation Callbacks
+    window.updateDensityLab = function() {
+      const m = parseFloat(document.getElementById('massRange').value);
+      const v = parseFloat(document.getElementById('volRange').value);
+      document.getElementById('massVal').textContent = m + ' g';
+      document.getElementById('volVal').textContent = v + ' cm³';
+      const d = (m / v).toFixed(2);
+      const floatText = d < 1.0 ? '浮於水面' : (d == 1.0 ? '懸浮於水中' : '沉入水底');
+      document.getElementById('densityRes').innerHTML = `計算密度 D = <strong>${d} g/cm³</strong>（放入純水中會 <strong>${floatText}</strong>）`;
+    };
+
+    window.updateWaveLab = function() {
+      const f = parseFloat(document.getElementById('freqRange').value);
+      const lam = parseFloat(document.getElementById('lambdaRange').value);
+      document.getElementById('freqVal').textContent = f + ' Hz';
+      document.getElementById('lambdaVal').textContent = lam.toFixed(1) + ' m';
+      const v = (f * lam).toFixed(1);
+      const t = (1 / f).toFixed(3);
+      document.getElementById('waveRes').innerHTML = `波速 v = <strong>${v} m/s</strong>（週期 T = <strong>${t} 秒</strong>）`;
+    };
+
+    window.updateOpticsLab = function() {
+      const p = parseFloat(document.getElementById('objDistRange').value);
+      document.getElementById('objDistVal').textContent = p + ' cm';
+      let text = '';
+      if (p > 20) {
+        text = '【物在 2f 外 (p > 20cm)】：成「倒立、縮小、實像」（照相機原理）';
+      } else if (p === 20) {
+        text = '【物在 2f 上 (p = 20cm)】：成「倒立、等大、實像」（等大複製）';
+      } else if (p > 10 && p < 20) {
+        text = '【物在 f ~ 2f 間 (10cm < p < 20cm)】：成「倒立、放大、實像」（投影機原理）';
+      } else if (p === 10) {
+        text = '【物在焦點上 (p = 10cm)】：光線平行射出，不成像（探照燈原理）';
+      } else {
+        text = '【物在焦點內 (p < 10cm)】：成「正立、放大、虛像」（放大鏡原理）';
+      }
+      document.getElementById('opticsRes').innerHTML = text;
+    };
+
+    window.updateHeatLab = function() {
+      const m = parseFloat(document.getElementById('heatMass').value);
+      const dt = parseFloat(document.getElementById('heatDeltaT').value);
+      document.getElementById('heatMassVal').textContent = m + ' g';
+      document.getElementById('heatDeltaTVal').textContent = dt + ' °C';
+      const h = m * 1 * dt;
+      document.getElementById('heatRes').innerHTML = `水吸收熱量 H = <strong>${h} cal</strong> (${(h/1000).toFixed(1)} kcal)`;
+    };
+
+    window.updatePhLab = function() {
+      const ph = parseInt(document.getElementById('phRange').value);
+      document.getElementById('phVal').textContent = 'pH = ' + ph;
+      let state = ph < 7 ? '酸性' : (ph === 7 ? '中性' : '鹼性');
+      let litmus = ph < 7 ? '紅色' : (ph === 7 ? '紫色' : '藍色');
+      let phen = ph >= 8 ? '紅色/粉紅色' : '無色';
+      document.getElementById('phRes').innerHTML = `【${state}】[H⁺] = 10⁻${ph} M，石蕊試紙呈 <strong>${litmus}</strong>，酚酞指示劑呈 <strong>${phen}</strong>。`;
+    };
+
+    window.updateBuoyLab = function() {
+      const v = parseFloat(document.getElementById('buoyVol').value);
+      const d = parseFloat(document.getElementById('buoyDensity').value);
+      document.getElementById('buoyVolVal').textContent = v + ' cm³';
+      document.getElementById('buoyDensityVal').textContent = d.toFixed(1) + ' g/cm³';
+      const w = v * d;
+      if (d < 1.0) {
+        const v_in = (w / 1.0).toFixed(0);
+        document.getElementById('buoyRes').innerHTML = `【浮體狀態】：物重 <strong>${w.toFixed(0)} gw</strong>，浮力 B = <strong>${w.toFixed(0)} gw</strong>（沒入水中體積 ${v_in} cm³）。`;
+      } else {
+        const b = v * 1.0;
+        document.getElementById('buoyRes').innerHTML = `【沉體狀態】：物重 <strong>${w.toFixed(0)} gw</strong>，浮力 B = <strong>${b} gw</strong>，視重 = ${(w - b).toFixed(0)} gw。`;
+      }
+    };
+
+    // 4. Literacy Modal
+    window.openLiteracyModal = function(unitId) {
+      const unit = unitsData.find(u => u.id === unitId);
+      if (!unit) return;
+
+      modalTitle.innerHTML = `<span>💡</span> 【${unit.literacy.category}】${unit.literacy.title}`;
+      modalBody.innerHTML = `
+        <div style="background:#fffbeb; border:2px solid #f59e0b; border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem;">
+          <h4 style="font-size:1.15rem; font-weight:900; color:#92400e; margin-bottom:0.6rem;">
+            📰 生活情境與素養專題 (${unit.literacy.page})
+          </h4>
+          <p style="font-size:0.95rem; line-height:1.7; color:#78350f; font-weight:500;">
+            ${unit.literacy.content}
+          </p>
+        </div>
+        <div style="background:#f8fafc; border:2px solid var(--primary); border-radius:var(--radius-md); padding:1.25rem;">
+          <h5 style="font-size:1rem; font-weight:900; color:var(--primary); margin-bottom:0.6rem;">
+            🎯 會考素養思考挑戰：
+          </h5>
+          <p style="font-size:0.9rem; color:var(--text); line-height:1.6;">
+            本專題所涉及的核心理化原理為：<strong>${unit.title}（${unit.points[0]}）</strong>。在日常生活中，我們如何運用此觀念解決問題或避免安全危險？
+          </p>
+        </div>
+      `;
+
+      modalActionPrimary.textContent = "閱讀完畢";
+      modalActionPrimary.onclick = closeModal;
+      modal.classList.add('active');
+    };
+
+    // Initial render
+    renderUnits();
+  </script>
+</body>
+</html>

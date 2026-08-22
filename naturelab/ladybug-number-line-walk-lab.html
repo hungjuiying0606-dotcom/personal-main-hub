@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 數線瓢蟲爬行大賽：4 條路徑起訖點位移 vs 累積路徑長 (單元卷第1頁第23題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e11d48;       /* Ladybug Crimson */
+      --primary-dark: #be123c;
+      --disp-red: #ef4444;      /* Red for Displacement */
+      --path-purple: #8b5cf6;   /* Purple for Path */
+      --node-gold: #f59e0b;
+      --bg: #fff1f2;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #fecdd3;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(225, 29, 72, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffe4e6;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Stage Canvas Box */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    /* Path Selector Buttons */
+    .path-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .path-btn {
+      padding: 0.6rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .path-btn:hover { background: #ffe4e6; }
+    .path-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Dual Telemetry Cards */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .t-card {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .t-card.disp { border-color: #fecdd3; background: #fff1f2; }
+    .t-card.path { border-color: #ddd6fe; background: #faf5ff; }
+
+    .t-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .t-card.disp h4 { color: #e11d48; }
+    .t-card.path h4 { color: #7e22ce; }
+
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    .t-card.disp .t-val { color: #e11d48; }
+    .t-card.path .t-val { color: #7e22ce; }
+
+    .t-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Comparison Table Box */
+    .table-box {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: white;
+    }
+
+    table.compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+
+    table.compare-table th {
+      background: #ffe4e6;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    table.compare-table td {
+      padding: 0.45rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.compare-table tr.active-row {
+      background: #fff1f2;
+      font-weight: 800;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #fff1f2;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🐞 數線瓢蟲爬行大賽：4 條路徑起訖點位移 vs 累積路徑長</span>
+          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第23題</span>
+        </h1>
+        <p>位移只看起訖點（Δx = x末 - x初）！C(-4)➔B(+3) 之直線淨位移達 ＋7 奪冠；來回折返路徑長再大，位移依然很小！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Number Line Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🐞 數線賽道（C: -4 · A: -2 · O: 0 · B: +3）</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnCrawl" onclick="toggleCrawl()">▶ 瓢蟲出發爬行</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>🎯 當前路徑：<strong id="hudPathName" style="color: #38bdf8; font-family: 'Outfit';">(A) C ➔ A ➔ O ➔ B</strong></span>
+            <span>🔴 淨位移 \( \Delta x \)：<strong id="hudDisp" style="color: #f87171; font-family: 'Outfit';">＋7 (冠軍)</strong></span>
+            <span>🟣 累計路徑長 \( S \)：<strong id="hudPath" style="color: #c084fc; font-family: 'Outfit';">7</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        </div>
+
+        <!-- Path Selector Buttons -->
+        <div class="control-panel">
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
+            🎯 點選切換考卷 4 大選項爬行路徑：
+          </div>
+          <div class="path-bar">
+            <button class="path-btn active" onclick="selectPath('A', this)">
+              🏆 (A) C ➔ A ➔ O ➔ B<br>
+              <small style="color: #059669; font-weight: bold;">起點-4 ➔ 終點+3 · 位移 ＋7 (最大！)</small>
+            </button>
+            <button class="path-btn" onclick="selectPath('B', this)">
+              (B) A ➔ O ➔ B ➔ O ➔ A ➔ C<br>
+              <small style="color: #dc2626;">來回走折返多 · 路徑長12 · 位移只有 -2</small>
+            </button>
+            <button class="path-btn" onclick="selectPath('C', this)">
+              (C) O ➔ A ➔ C<br>
+              <small style="color: #64748b;">起點0 ➔ 終點-4 · 位移 -4 · 路徑長4</small>
+            </button>
+            <button class="path-btn" onclick="selectPath('D', this)">
+              (D) A ➔ C ➔ A ➔ O ➔ B<br>
+              <small style="color: #64748b;">起點-2 ➔ 終點+3 · 位移 ＋5 · 路徑長9</small>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Telemetry & Comparison Table & Quiz -->
+      <div>
+        
+        <!-- Dual Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Displacement -->
+          <div class="t-card disp">
+            <h4>🔴 起訖點淨位移 \( \Delta x \)</h4>
+            <div class="t-val" id="valDisp">＋7</div>
+            <div class="t-sub" id="subDisp">\( (+3) - (-4) = \mathbf{+7} \) (位移最大)</div>
+          </div>
+
+          <!-- Path Length -->
+          <div class="t-card path">
+            <h4>🟣 總累積路徑長 \( S \)</h4>
+            <div class="t-val" id="valPath">7</div>
+            <div class="t-sub" id="subPath">沿途走過總距離</div>
+          </div>
+        </div>
+
+        <!-- 4 Paths Comparison Table -->
+        <div class="table-box">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>選項路徑</th>
+                <th>起點 ➔ 終點</th>
+                <th>淨位移 \( \Delta x \)</th>
+                <th>路徑長 \( S \)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="rowA" class="active-row">
+                <td><strong>(A) C➔A➔O➔B</strong></td>
+                <td>-4 ➔ +3</td>
+                <td><strong style="color: #16a34a;">＋7 (🏆 最大)</strong></td>
+                <td>7</td>
+              </tr>
+              <tr id="rowB">
+                <td><strong>(B) A➔O➔B➔O➔A➔C</strong></td>
+                <td>-2 ➔ -4</td>
+                <td>-2</td>
+                <td><strong style="color: #7e22ce;">12 (最長)</strong></td>
+              </tr>
+              <tr id="rowC">
+                <td><strong>(C) O➔A➔C</strong></td>
+                <td>0 ➔ -4</td>
+                <td>-4</td>
+                <td>4</td>
+              </tr>
+              <tr id="rowD">
+                <td><strong>(D) A➔C➔A➔O➔B</strong></td>
+                <td>-2 ➔ +3</td>
+                <td>＋5</td>
+                <td>9</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 單元課次卷第 1 頁第 23 題秒殺心法：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>位移（Displacement）：</strong>\( \Delta x = x_{\text{末}} - x_{\text{初}} \)，<strong>只取決於最初與最終位置</strong>，完全不理會中途折返幾次！</li>
+            <li><strong>快速比較：</strong>
+              <ul>
+                <li>(A) 初 \(-4\) 末 \(+3 \implies \Delta x = \mathbf{+7}\)（冠軍）。</li>
+                <li>(B) 初 \(-2\) 末 \(-4 \implies \Delta x = -2\)。</li>
+                <li>(C) 初 \(0\) 末 \(-4 \implies \Delta x = -4\)。</li>
+                <li>(D) 初 \(-2\) 末 \(+3 \implies \Delta x = +5\)。</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 單元卷第 23 題原題測驗</div>
+
+          <div class="quiz-item">
+            <p>數線上標記 C(-4)、A(-2)、O(0)、B(+3)，瓢蟲沿哪一條路徑爬行時「位移最大」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(23, 'A', this)">(A) C ➔ A ➔ O ➔ B（起點 -4 到終點 +3，位移 ＋7 最大）</button>
+              <button class="quiz-btn" onclick="checkQuiz(23, 'B', this)">(B) A ➔ O ➔ B ➔ O ➔ A ➔ C（誤把路徑長最長當成位移最大）</button>
+              <button class="quiz-btn" onclick="checkQuiz(23, 'D', this)">(D) A ➔ C ➔ A ➔ O ➔ B</button>
+            </div>
+            <div class="quiz-feedback" id="fb23"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+  </footer>
+
+  <script>
+    const pathsData = {
+      'A': {
+        name: '(A) C ➔ A ➔ O ➔ B',
+        nodes: [-4, -2, 0, 3],
+        start: -4, end: 3,
+        disp: 7, path: 7
+      },
+      'B': {
+        name: '(B) A ➔ O ➔ B ➔ O ➔ A ➔ C',
+        nodes: [-2, 0, 3, 0, -2, -4],
+        start: -2, end: -4,
+        disp: -2, path: 12
+      },
+      'C': {
+        name: '(C) O ➔ A ➔ C',
+        nodes: [0, -2, -4],
+        start: 0, end: -4,
+        disp: -4, path: 4
+      },
+      'D': {
+        name: '(D) A ➔ C ➔ A ➔ O ➔ B',
+        nodes: [-2, -4, -2, 0, 3],
+        start: -2, end: 3,
+        disp: 5, path: 9
+      }
+    };
+
+    let curKey = 'A';
+    let isRunning = false;
+    let animProgress = 1.0; // 0 to 1 along path nodes
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function selectPath(key, el) {
+      curKey = key;
+      document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      ['A', 'B', 'C', 'D'].forEach(k => {
+        const r = document.getElementById('row' + k);
+        if (k === key) r.classList.add('active-row');
+        else r.classList.remove('active-row');
+      });
+
+      animProgress = 1.0;
+      isRunning = false;
+      document.getElementById('btnCrawl').innerText = '▶ 瓢蟲出發爬行';
+      document.getElementById('btnCrawl').style.background = 'var(--primary)';
+      if (animId) cancelAnimationFrame(animId);
+
+      updateUI();
+    }
+
+    function toggleCrawl() {
+      const btn = document.getElementById('btnCrawl');
+      if (!isRunning) {
+        if (animProgress >= 1.0) animProgress = 0;
+        isRunning = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        loop();
+      } else {
+        isRunning = false;
+        btn.innerText = '▶ 繼續爬行';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isRunning = false;
+      animProgress = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnCrawl').innerText = '▶ 瓢蟲出發爬行';
+      document.getElementById('btnCrawl').style.background = 'var(--primary)';
+      updateUI();
+    }
+
+    function loop() {
+      if (!isRunning) return;
+      animProgress += 0.008;
+      if (animProgress >= 1.0) {
+        animProgress = 1.0;
+        isRunning = false;
+        document.getElementById('btnCrawl').innerText = '🔄 重新爬行';
+        document.getElementById('btnCrawl').style.background = 'var(--primary)';
+      }
+      updateUI();
+      if (isRunning) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const p = pathsData[curKey];
+      const strDisp = (p.disp > 0) ? `＋${p.disp}` : `${p.disp}`;
+
+      document.getElementById('hudPathName').innerText = p.name;
+      document.getElementById('hudDisp').innerText = strDisp;
+      document.getElementById('hudPath').innerText = p.path;
+
+      document.getElementById('valDisp').innerText = strDisp;
+      document.getElementById('valPath').innerText = p.path;
+
+      document.getElementById('subDisp').innerHTML = `\\( (${p.end > 0 ? '+' : ''}${p.end}) - (${p.start > 0 ? '+' : ''}${p.start}) = \\mathbf{${strDisp}} \\)`;
+      document.getElementById('subPath').innerText = `實際爬行總長度：${p.path}`;
+
+      draw();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+
+      const p = pathsData[curKey];
+      const originPxX = cw / 2;
+      const lineY = 250;
+      const scale = 50; // 1 unit = 50px
+
+      function toPx(x) { return originPxX + x * scale; }
+
+      // ==========================================
+      // 1. Draw Number Line (-6 to +5)
+      // ==========================================
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(40, lineY); ctx.lineTo(cw - 40, lineY); ctx.stroke();
+
+      // Tick marks
+      for (let x = -5; x <= 4; x++) {
+        const px = toPx(x);
+        const isNamed = (x === -4 || x === -2 || x === 0 || x === 3);
+        ctx.beginPath();
+        ctx.moveTo(px, lineY - (isNamed ? 10 : 5));
+        ctx.lineTo(px, lineY + (isNamed ? 10 : 5));
+        ctx.stroke();
+
+        ctx.fillStyle = (x === 0) ? '#fde047' : '#94a3b8';
+        ctx.font = isNamed ? 'bold 13px Outfit' : '10px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText((x > 0 ? `+${x}` : `${x}`), px, lineY + 26);
+      }
+
+      // Point Names: C(-4), A(-2), O(0), B(+3)
+      const namedNodes = [
+        { label: 'C (-4)', x: -4, color: '#f87171' },
+        { label: 'A (-2)', x: -2, color: '#38bdf8' },
+        { label: 'O (0)',  x: 0,  color: '#fde047' },
+        { label: 'B (+3)', x: 3,  color: '#34d399' }
+      ];
+
+      namedNodes.forEach(n => {
+        const px = toPx(n.x);
+        ctx.fillStyle = n.color;
+        ctx.beginPath(); ctx.arc(px, lineY, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.font = 'bold 13px Noto Sans TC';
+        ctx.fillText(n.label, px, lineY + 48);
+      });
+
+      // ==========================================
+      // 2. Draw Multi-Segment Trail Lines
+      // ==========================================
+      const nodes = p.nodes;
+      const totalSegs = nodes.length - 1;
+
+      // Current exact position
+      const curFloatIdx = animProgress * totalSegs;
+      const curSegIdx = Math.min(totalSegs - 1, Math.floor(curFloatIdx));
+      const segT = curFloatIdx - curSegIdx;
+
+      for (let i = 0; i < totalSegs; i++) {
+        const x1 = toPx(nodes[i]);
+        const x2 = toPx(nodes[i + 1]);
+        const layerY = lineY - 30 - i * 16;
+
+        ctx.strokeStyle = (i <= curSegIdx) ? '#a855f7' : 'rgba(168, 85, 247, 0.2)';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.moveTo(x1, layerY); ctx.lineTo(x2, layerY); ctx.stroke();
+
+        // Direction Arrow on segment
+        const midPx = (x1 + x2) / 2;
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.beginPath();
+        if (x2 > x1) {
+          ctx.moveTo(midPx + 6, layerY);
+          ctx.lineTo(midPx - 4, layerY - 4);
+          ctx.lineTo(midPx - 4, layerY + 4);
+        } else {
+          ctx.moveTo(midPx - 6, layerY);
+          ctx.lineTo(midPx + 4, layerY - 4);
+          ctx.lineTo(midPx + 4, layerY + 4);
+        }
+        ctx.fill();
+
+        // Step number label
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '10px Outfit';
+        ctx.fillText(`第${i + 1}段`, (x1 + x2) / 2, layerY - 6);
+      }
+
+      // ==========================================
+      // 3. Draw Red Net Displacement Arrow (Bottom)
+      // ==========================================
+      const startPx = toPx(p.start);
+      const endPx = toPx(p.end);
+      const dispY = lineY + 80;
+
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(startPx, dispY); ctx.lineTo(endPx, dispY); ctx.stroke();
+
+      // Arrowhead
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      if (p.end > p.start) {
+        ctx.moveTo(endPx, dispY);
+        ctx.lineTo(endPx - 10, dispY - 6);
+        ctx.lineTo(endPx - 10, dispY + 6);
+      } else {
+        ctx.moveTo(endPx, dispY);
+        ctx.lineTo(endPx + 10, dispY - 6);
+        ctx.lineTo(endPx + 10, dispY + 6);
+      }
+      ctx.fill();
+
+      // Dotted Drop Lines
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(startPx, lineY); ctx.lineTo(startPx, dispY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(endPx, lineY); ctx.lineTo(endPx, dispY); ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText(`🔴 淨位移 Δx = ${p.disp > 0 ? '+' : ''}${p.disp}`, (startPx + endPx) / 2, dispY + 22);
+
+      // ==========================================
+      // 4. Draw Ladybug Avatar 🐞
+      // ==========================================
+      const curCoord = (curSegIdx < totalSegs) 
+        ? nodes[curSegIdx] + (nodes[curSegIdx + 1] - nodes[curSegIdx]) * segT 
+        : p.end;
+      const curPx = toPx(curCoord);
+      const curY = lineY - 30 - curSegIdx * 16;
+
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🐞', curPx, curY - 4);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'A') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>位移 ＝ 末位置 － 初位置：<br>(A) 的初位置在 -4，末位置在 +3 ➔ 位移為 \( (+3) - (-4) = \mathbf{+7} \) 最大！故選 (A)！';
+        selectPath('A', document.querySelectorAll('.path-btn')[0]);
+      } else if (ans === 'B') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>小心陷阱！</strong> (B) 選項是「路徑長最長（12）」，但它起點在 -2、終點在 -4，位移只有 -2！請選 (A)！';
+      } else {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 請以起訖點相減計算位移大小，正解為 (A)！';
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      selectPath('A', document.querySelectorAll('.path-btn')[0]);
+    });
+  </script>
+</body>
+</html>

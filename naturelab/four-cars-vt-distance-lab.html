@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 四車 v-t 圖與實體跑道車距變化實驗室 (習作 P.5 第13題 會考類題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;       /* Blue */
+      --primary-dark: #0369a1;
+      --car-a: #3b82f6;         /* Car A (Blue) */
+      --car-b: #64748b;         /* Car B (Gray / Stop) */
+      --car-c: #a855f7;         /* Car C (Purple / Reverse) */
+      --car-d: #ea580c;         /* Car D (Orange / Accelerate) */
+      --bg: #f0f9ff;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #bae6fd;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Dual Canvas Stage */
+    .stage-box {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    canvas.stage-canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Pair Selector Tabs */
+    .pair-selector {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .pair-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pair-btn:hover {
+      background: #f0f9ff;
+      border-color: var(--primary);
+    }
+
+    .pair-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    /* 4 Cars Cards Matrix */
+    .car-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .car-card {
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      font-size: 0.8rem;
+    }
+
+    .car-card.a { border-color: #93c5fd; background: #eff6ff; }
+    .car-card.b { border-color: #cbd5e1; background: #f8fafc; }
+    .car-card.c { border-color: #d8b4fe; background: #faf5ff; }
+    .car-card.d { border-color: #fed7aa; background: #fff7ed; }
+
+    .car-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .car-card.a h4 { color: #1d4ed8; }
+    .car-card.b h4 { color: #475569; }
+    .car-card.c h4 { color: #7e22ce; }
+    .car-card.d h4 { color: #c2410c; }
+
+    .car-pos {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    /* Distance Radar Banner */
+    .distance-banner {
+      background: #ffffff;
+      border: 2px solid #ef4444;
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .distance-banner strong {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      color: #ef4444;
+    }
+
+    /* Core Concept Callout */
+    .concept-box {
+      background: #f0f9ff;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-box strong {
+      color: var(--primary-dark);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item {
+      background: white;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
+    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏎️ 四車 v-t 圖與實體跑道車距變化實驗室</span>
+          <span class="badge">國中自然 3上 · 習作 P.5 第13題 (會考類題)</span>
+        </h1>
+        <p>同起點出發：甲正等速、乙靜止、丙反向、丁正加速；丙丁背道而馳車距越來越遠！</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Left Column: Dual View Canvas Stage -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏁 4 車實體跑道競速 ＋ v-t 圖實時連動</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnDrive" onclick="toggleDrive()">▶ 四車同步出發</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-hud">
+            <span>⏱️ 時間：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">0.00 秒</strong></span>
+            <span>📡 雷達鎖定：<strong id="hudPairName" style="color: #fde047;">丙車 vs 丁車</strong></span>
+          </div>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        </div>
+
+        <!-- Controls: Time Scrubber & Pair Selector -->
+        <div class="control-panel">
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
+            🎯 點選欲測量車距的兩車組合（雷射測距雷達）：
+          </div>
+          <div class="pair-selector">
+            <button class="pair-btn active" onclick="selectPair('CD', this)">🚙 丙車 vs 🏎️ 丁車 (習作B選項)</button>
+            <button class="pair-btn" onclick="selectPair('AB', this)">🚗 甲車 vs 🛑 乙車 (A選項)</button>
+            <button class="pair-btn" onclick="selectPair('AC', this)">🚗 甲車 vs 🚙 丙車 (C選項)</button>
+            <button class="pair-btn" onclick="selectPair('BD', this)">🛑 乙車 vs 🏎️ 丁車 (D選項)</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; margin-top: 0.4rem;">
+            <span>手動拖曳時間軸 (0～4秒)：</span>
+            <span id="sliderVal">t = 0.00 秒</span>
+          </div>
+          <input type="range" id="timeSlider" min="0" max="4" step="0.05" value="0" style="width: 100%; accent-color: var(--primary);" oninput="onSliderChange(this.value)">
+        </div>
+      </div>
+
+      <!-- Right Column: Live Telemetry & Quiz -->
+      <div>
+        
+        <!-- Live Laser Distance Banner -->
+        <div class="distance-banner">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">📡 兩車即時直線車距：</div>
+            <div id="pairDesc" style="font-weight: 800; font-size: 0.95rem; color: var(--primary-dark);">
+              丙車 (-向) 與 丁車 (+向)
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <strong id="liveDistance">0.0 m</strong>
+            <div style="font-size: 0.75rem; color: #dc2626; font-weight: 800;">越來越遠 📈</div>
+          </div>
+        </div>
+
+        <!-- 4 Cars Telemetry Grid -->
+        <div class="car-cards-grid">
+          <!-- Car A -->
+          <div class="car-card a">
+            <h4>
+              <span>🚗 甲車 (正等速)</span>
+              <span>v = +10 m/s</span>
+            </h4>
+            <div class="car-pos" id="posA">x = 0.0 m</div>
+            <div style="color: var(--text-muted);">向正向等速前進</div>
+          </div>
+
+          <!-- Car B -->
+          <div class="car-card b">
+            <h4>
+              <span>🛑 乙車 (靜止)</span>
+              <span>v = 0 m/s</span>
+            </h4>
+            <div class="car-pos" id="posB">x = 0.0 m</div>
+            <div style="color: var(--text-muted);">原地靜止不動</div>
+          </div>
+
+          <!-- Car C -->
+          <div class="car-card c">
+            <h4>
+              <span>🚙 丙車 (反向等速)</span>
+              <span>v = -10 m/s</span>
+            </h4>
+            <div class="car-pos" id="posC">x = 0.0 m</div>
+            <div style="color: var(--text-muted);">向負向反向行駛</div>
+          </div>
+
+          <!-- Car D -->
+          <div class="car-card d">
+            <h4>
+              <span>🏎️ 丁車 (正等加速)</span>
+              <span>a = +5 m/s²</span>
+            </h4>
+            <div class="car-pos" id="posD">x = 0.0 m</div>
+            <div style="color: var(--text-muted);">向正向噴射加速</div>
+          </div>
+        </div>
+
+        <!-- Core Concept Callout -->
+        <div class="concept-box">
+          <strong>📖 習作 P.5 第 13 題會考解析：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
+            <li><strong>(B) 正確：</strong>丙車向負方向移動、丁車向正方向加速，兩者<strong>背道而馳，距離越來越遠</strong>。</li>
+            <li><strong>(A) 錯誤：</strong>甲等速前進、乙靜止不動，兩車距離越來越遠（非不變）。</li>
+            <li><strong>(C) 錯誤：</strong>甲朝正向、丙朝反向，兩車距離越來越遠（非不變）。</li>
+            <li><strong>(D) 錯誤：</strong>乙靜止不動、丁朝正向加速，兩車距離越來越遠（非越來越近）。</li>
+          </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-card">
+          <div class="quiz-title">📝 習作第 13 題會考原題測驗</div>
+
+          <div class="quiz-item">
+            <p>若 t = 0s 時四車位於同一位置，則有關 t ＞ 0s 車輛間距離的敘述，下列何者正確？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">
+                (B) 丙、丁兩車的距離越來越遠
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">
+                (A) 甲、乙兩車的距離保持不變
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">
+                (C) 甲、丙兩車的距離保持不變
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">
+                (D) 乙、丁兩車的距離越來越近
+              </button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
+  </footer>
+
+  <script>
+    let isDriving = false;
+    let animId = null;
+    let lastTime = 0;
+    let simSeconds = 0; // 0 to 4s
+    let selectedPair = 'CD'; // 'CD', 'AB', 'AC', 'BD'
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Physics equations (t in s, pos in m):
+    // Car A: v = +10 -> x(t) = 10 * t
+    // Car B: v = 0   -> x(t) = 0
+    // Car C: v = -10 -> x(t) = -10 * t
+    // Car D: v = 5t  -> x(t) = 0.5 * 5 * t^2 = 2.5 * t^2
+    function getCarPositions(t) {
+      return {
+        a: 10.0 * t,
+        b: 0.0,
+        c: -10.0 * t,
+        d: 2.5 * t * t
+      };
+    }
+
+    function selectPair(pair, el) {
+      selectedPair = pair;
+      document.querySelectorAll('.pair-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      updateUI();
+    }
+
+    function toggleDrive() {
+      const btn = document.getElementById('btnDrive');
+      if (!isDriving) {
+        if (simSeconds >= 4.0) simSeconds = 0;
+        isDriving = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        lastTime = performance.now();
+        loop();
+      } else {
+        isDriving = false;
+        btn.innerText = '▶ 繼續出發';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isDriving = false;
+      simSeconds = 0;
+      if (animId) cancelAnimationFrame(animId);
+      document.getElementById('btnDrive').innerText = '▶ 四車同步出發';
+      document.getElementById('btnDrive').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      updateUI();
+    }
+
+    function onSliderChange(val) {
+      simSeconds = parseFloat(val);
+      updateUI();
+    }
+
+    function loop(now) {
+      if (!isDriving) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // 4 seconds in 8 seconds real time
+      simSeconds += dt * 0.5;
+
+      if (simSeconds >= 4.0) {
+        simSeconds = 4.0;
+        isDriving = false;
+        document.getElementById('btnDrive').innerText = '🔄 重新出發';
+        document.getElementById('btnDrive').style.background = 'var(--primary)';
+      }
+
+      document.getElementById('timeSlider').value = simSeconds;
+      updateUI();
+
+      if (isDriving) animId = requestAnimationFrame(loop);
+    }
+
+    function updateUI() {
+      const pos = getCarPositions(simSeconds);
+
+      document.getElementById('hudTime').innerText = `${simSeconds.toFixed(2)} 秒`;
+      document.getElementById('sliderVal').innerText = `t = ${simSeconds.toFixed(2)} 秒`;
+
+      document.getElementById('posA').innerText = `x = ${pos.a > 0 ? '+' : ''}${pos.a.toFixed(1)} m`;
+      document.getElementById('posB').innerText = `x = 0.0 m`;
+      document.getElementById('posC').innerText = `x = ${pos.c.toFixed(1)} m`;
+      document.getElementById('posD').innerText = `x = +${pos.d.toFixed(1)} m`;
+
+      // Calculate pair distance
+      let dist = 0;
+      let pName = '';
+      if (selectedPair === 'CD') {
+        dist = Math.abs(pos.d - pos.c);
+        pName = '🚙 丙車 vs 🏎️ 丁車';
+        document.getElementById('pairDesc').innerText = `丙車 (${pos.c.toFixed(1)}m) 與 丁車 (+${pos.d.toFixed(1)}m)`;
+      } else if (selectedPair === 'AB') {
+        dist = Math.abs(pos.a - pos.b);
+        pName = '🚗 甲車 vs 🛑 乙車';
+        document.getElementById('pairDesc').innerText = `甲車 (+${pos.a.toFixed(1)}m) 與 乙車 (0m)`;
+      } else if (selectedPair === 'AC') {
+        dist = Math.abs(pos.a - pos.c);
+        pName = '🚗 甲車 vs 🚙 丙車';
+        document.getElementById('pairDesc').innerText = `甲車 (+${pos.a.toFixed(1)}m) 與 丙車 (${pos.c.toFixed(1)}m)`;
+      } else if (selectedPair === 'BD') {
+        dist = Math.abs(pos.d - pos.b);
+        pName = '🛑 乙車 vs 🏎️ 丁車';
+        document.getElementById('pairDesc').innerText = `乙車 (0m) 與 丁車 (+${pos.d.toFixed(1)}m)`;
+      }
+
+      document.getElementById('hudPairName').innerText = pName;
+      document.getElementById('liveDistance').innerText = `${dist.toFixed(1)} m`;
+
+      draw(pos);
+    }
+
+    function draw(pos) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width;
+
+      // ==========================================
+      // SECTION 1: TOP 4-LANE TRACK (y: 20 to 180)
+      // ==========================================
+      const trackMinM = -45, trackMaxM = +45;
+      const trackX1 = 70, trackX2 = cw - 70;
+      const toTrackPx = (m) => trackX1 + ((m - trackMinM) / (trackMaxM - trackMinM)) * (trackX2 - trackX1);
+
+      // Track Lanes (4 lanes for Car A, B, C, D)
+      const laneY = [55, 85, 115, 145];
+      const carEmojis = ['🚗 甲', '🛑 乙', '🚙 丙', '🏎️ 丁'];
+      const carColors = ['#3b82f6', '#64748b', '#a855f7', '#ea580c'];
+      const carXs = [pos.a, pos.b, pos.c, pos.d];
+
+      // Draw Lanes
+      for (let i = 0; i < 4; i++) {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(trackX1, laneY[i] - 10, trackX2 - trackX1, 20);
+
+        // Lane label
+        ctx.fillStyle = carColors[i];
+        ctx.font = 'bold 10px Noto Sans TC';
+        ctx.textAlign = 'right';
+        ctx.fillText(carEmojis[i], trackX1 - 8, laneY[i] + 4);
+      }
+
+      // Start Line (0m)
+      const startPx = toTrackPx(0);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 2]);
+      ctx.beginPath(); ctx.moveTo(startPx, 40); ctx.lineTo(startPx, 160); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 10px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText('🏁 起點 (x=0)', startPx, 35);
+
+      // Draw 4 Cars
+      for (let i = 0; i < 4; i++) {
+        const cPx = toTrackPx(carXs[i]);
+        ctx.font = '20px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(carEmojis[i].split(' ')[0], cPx, laneY[i] + 6);
+      }
+
+      // Draw Laser Rangefinder between selected pair
+      let idx1 = 2, idx2 = 3;
+      if (selectedPair === 'AB') { idx1 = 0; idx2 = 1; }
+      else if (selectedPair === 'AC') { idx1 = 0; idx2 = 2; }
+      else if (selectedPair === 'BD') { idx1 = 1; idx2 = 3; }
+
+      const px1 = toTrackPx(carXs[idx1]);
+      const px2 = toTrackPx(carXs[idx2]);
+      const midY = (laneY[idx1] + laneY[idx2]) / 2;
+
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(px1, midY); ctx.lineTo(px2, midY); ctx.stroke();
+
+      // Laser bounds
+      ctx.beginPath(); ctx.moveTo(px1, midY - 6); ctx.lineTo(px1, midY + 6); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px2, midY - 6); ctx.lineTo(px2, midY + 6); ctx.stroke();
+
+      // Divider
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(20, 185); ctx.lineTo(cw - 20, 185); ctx.stroke();
+
+      // ==========================================
+      // SECTION 2: BOTTOM v-t GRAPH (y: 200 to 420)
+      // ==========================================
+      const gx1 = 70, gx2 = cw - 60;
+      const gyZero = 310; // v=0 px
+      const gyTop = 220;  // v=+20 px
+      const gyBot = 400;  // v=-20 px
+      const maxT = 4.0;
+
+      const toGraphX = (t) => gx1 + (t / maxT) * (gx2 - gx1);
+      const toGraphY = (v) => gyZero - (v / 20.0) * (gyZero - gyTop);
+
+      // Axes
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // Y-axis (v)
+      ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyBot + 10);
+      // X-axis (t at v=0)
+      ctx.moveTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero);
+      ctx.stroke();
+
+      // Y-Labels
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right';
+      ctx.fillText('速度 v (m/s)', gx1 - 10, gyTop - 10);
+      ctx.fillText('+20', gx1 - 8, toGraphY(20) + 4);
+      ctx.fillText('+10', gx1 - 8, toGraphY(10) + 4);
+      ctx.fillText('0', gx1 - 8, toGraphY(0) + 4);
+      ctx.fillText('-10', gx1 - 8, toGraphY(-10) + 4);
+
+      // X-Labels
+      ctx.textAlign = 'center';
+      for (let t = 0; t <= 4; t++) {
+        const tx = toGraphX(t);
+        ctx.fillText(`${t}`, tx, gyZero + 16);
+        ctx.beginPath(); ctx.moveTo(tx, gyZero - 3); ctx.lineTo(tx, gyZero + 3); ctx.stroke();
+      }
+      ctx.fillText('時間 t (s)', gx2 + 10, gyZero + 28);
+
+      // Draw Car A (v = +10, Blue Horizontal)
+      ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(10)); ctx.lineTo(toGraphX(4), toGraphY(10)); ctx.stroke();
+      ctx.fillStyle = '#3b82f6'; ctx.textAlign = 'left';
+      ctx.fillText('甲 (v = +10)', toGraphX(4) + 6, toGraphY(10) + 4);
+
+      // Draw Car B (v = 0, Gray Horizontal on Axis)
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(0)); ctx.lineTo(toGraphX(4), toGraphY(0)); ctx.stroke();
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('乙 (v = 0)', toGraphX(4) + 6, toGraphY(0) - 8);
+
+      // Draw Car C (v = -10, Purple Horizontal)
+      ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(-10)); ctx.lineTo(toGraphX(4), toGraphY(-10)); ctx.stroke();
+      ctx.fillStyle = '#a855f7';
+      ctx.fillText('丙 (v = -10)', toGraphX(4) + 6, toGraphY(-10) + 4);
+
+      // Draw Car D (v = 5t, Orange Sloped Line: (0,0) to (4, 20))
+      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(0)); ctx.lineTo(toGraphX(4), toGraphY(20)); ctx.stroke();
+      ctx.fillStyle = '#ea580c';
+      ctx.fillText('丁 (v = 5t 加速)', toGraphX(4) + 6, toGraphY(20) + 4);
+
+      // Dynamic Time Scrubber Line
+      const scanX = toGraphX(simSeconds);
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(scanX, gyTop - 10); ctx.lineTo(scanX, gyBot + 10); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb1');
+      fb.className = 'quiz-feedback show';
+
+      if (ans === 'B') {
+        el.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.innerHTML = '✅ <strong>完全正確！會考高頻核心題！</strong><br>丙車朝負方向等速開走（\( x_{\text{丙}} < 0 \)），丁車朝正方向加速衝刺（\( x_{\text{丁}} > 0 \)），兩車背道而馳，<strong>距離越來越遠</strong>，故 (B) 正確！';
+        selectPair('CD', document.querySelectorAll('.pair-btn')[0]);
+      } else if (ans === 'A') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車朝正向等速前進、乙車靜止在原地，甲車不斷遠離乙車，因此兩車距離<strong>越來越遠</strong>（非保持不變）！';
+        selectPair('AB', document.querySelectorAll('.pair-btn')[1]);
+      } else if (ans === 'C') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車向右開、丙車向左開，兩車反向遠離，距離<strong>越來越遠</strong>（非保持不變）！';
+        selectPair('AC', document.querySelectorAll('.pair-btn')[2]);
+      } else if (ans === 'D') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 乙車停在起點、丁車向右加速衝刺，丁車不斷遠離乙車，因此兩車距離<strong>越來越遠</strong>（非越來越近）！';
+        selectPair('BD', document.querySelectorAll('.pair-btn')[3]);
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+</body>
+</html>

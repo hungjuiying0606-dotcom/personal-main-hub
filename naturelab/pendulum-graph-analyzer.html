@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 單擺圖表斜率解析器 (P.8 例題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f4c81;
+      --primary-light: #2b70c9;
+      --color-a: #1e88e5;    /* Pendulum A (Blue) */
+      --color-b: #e53935;    /* Pendulum B (Red) */
+      --bg: #f4f7fb;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #2e7d32;
+      --warn: #c62828;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 76, 129, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Layout Grid */
+    .analyzer-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .analyzer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Dual Animation Stage */
+    .dual-stage-box {
+      background: #f8fbfe;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #dbe5ef;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stage-headers {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .header-a { color: var(--color-a); }
+    .header-b { color: var(--color-b); }
+
+    canvas.pendulum-canvas {
+      display: block;
+      width: 100%;
+      height: 200px;
+    }
+
+    /* Canvas Graph */
+    .graph-box {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #dbe5ef;
+      position: relative;
+      overflow: hidden;
+    }
+
+    canvas.chart-canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+    }
+
+    /* Toolbars and Mode Switches */
+    .mode-bar {
+      display: flex;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 0.5rem 0.8rem;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .mode-btn:hover {
+      color: var(--text);
+    }
+
+    .mode-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .control-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #093359;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    /* Ray Scan Sliders */
+    .scanner-panel {
+      background: #f8fbfe;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .scanner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Analysis Summary Cards */
+    .compare-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .summary-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      background: #ffffff;
+    }
+
+    .summary-card.card-a { border-color: #90caf9; background: #f4f9ff; }
+    .summary-card.card-b { border-color: #ef9a9a; background: #fff5f5; }
+
+    .summary-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .summary-card .data-row {
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Interactive Quiz Section */
+    .quiz-card {
+      background: #fff8e6;
+      border: 1.5px solid #ffd166;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .quiz-card h3 {
+      font-size: 1rem;
+      color: #b7791f;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .quiz-item {
+      background: white;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #f0e2b6;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .quiz-item p {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 0.45rem 0.9rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover {
+      background: #eef2f6;
+      border-color: var(--primary);
+    }
+
+    .quiz-btn.correct {
+      background: #2e7d32;
+      color: white;
+      border-color: #1b5e20;
+    }
+
+    .quiz-btn.wrong {
+      background: #c62828;
+      color: white;
+      border-color: #8e0000;
+    }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .quiz-feedback.show {
+      display: block;
+    }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>📈 單擺圖表斜率解析器</span>
+          <span class="badge">國中自然 3上 · 課本 P.8 例題 1-1</span>
+        </h1>
+        <p>掌握「擺動時間 vs. 擺動次數」圖形意義、固定次數比時間、固定時間比次數與斜率物理本質</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="analyzer-grid">
+      
+      <!-- Left Column: Graph Visualizer -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📊 坐標圖形動態觀測板</span>
+          </div>
+          <div class="control-row" style="margin-top: 0;">
+            <button class="btn btn-primary" id="btnPlay" onclick="toggleSim()">▶ 同步擺動與動態打點</button>
+            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+          </div>
+        </div>
+
+        <!-- Mode Selector: Standard vs Inverted Axes -->
+        <div class="mode-bar">
+          <button class="mode-btn active" id="btnModeStandard" onclick="setGraphMode('standard')">
+            📌 課本標準模式：縱軸為時間 \( t \)、橫軸為次數 \( N \)
+          </button>
+          <button class="mode-btn" id="btnModeInverted" onclick="setGraphMode('inverted')">
+            ⚠️ 考題翻轉陷阱：縱軸為次數 \( N \)、橫軸為時間 \( t \)
+          </button>
+        </div>
+
+        <!-- Interactive Chart Canvas -->
+        <div class="graph-box">
+          <canvas id="chartCanvas" class="chart-canvas" width="600" height="380"></canvas>
+        </div>
+
+        <!-- Interactive Ray Scanners -->
+        <div class="scanner-panel">
+          <div class="scanner-header">
+            <span id="scanLabel">🔍 分析工具：【固定擺動 20 次】（垂直掃描輔助線）</span>
+            <span id="scanValDisplay" style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary);">20 次</span>
+          </div>
+          <input type="range" id="scanRange" min="5" max="60" value="20" step="5" oninput="onScanChange()">
+          
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="setScanValue(10)">設為 10</button>
+            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="setScanValue(20)">設為 20 (課本)</button>
+            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="setScanValue(40)">設為 40</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual Stage, Summary & Quiz -->
+      <div>
+        
+        <!-- Live Dual Pendulums Stage -->
+        <div class="card" style="padding: 1.25rem;">
+          <div class="card-header" style="margin-bottom: 0.75rem;">
+            <div class="card-title" style="font-size: 1rem;">
+              <span>🎭 甲、乙單擺實體運動同步比對</span>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);" id="liveTimeText">時間：0.0 秒</span>
+          </div>
+
+          <div class="dual-stage-box">
+            <div class="stage-headers">
+              <span class="header-a">🔵 甲單擺 (擺長較長)</span>
+              <span class="header-b">🔴 乙單擺 (擺長較短)</span>
+            </div>
+            <canvas id="pendulumCanvas" class="pendulum-canvas" width="480" height="200"></canvas>
+          </div>
+
+          <!-- Summary Metric Cards -->
+          <div class="compare-summary">
+            <div class="summary-card card-a">
+              <h4 class="header-a">
+                <span>甲單擺</span>
+                <span id="metricPeriodA">T = 1.0 秒</span>
+              </h4>
+              <div class="data-row"><span>目前擺動次數：</span><strong id="liveCountA">0 次</strong></div>
+              <div class="data-row"><span>擺動 20 次耗時：</span><strong>20.0 秒</strong></div>
+              <div class="data-row"><span>斜率物理意義：</span><strong>週期 \( T \)（較陡）</strong></div>
+            </div>
+
+            <div class="summary-card card-b">
+              <h4 class="header-b">
+                <span>乙單擺</span>
+                <span id="metricPeriodB">T = 0.5 秒</span>
+              </h4>
+              <div class="data-row"><span>目前擺動次數：</span><strong id="liveCountB">0 次</strong></div>
+              <div class="data-row"><span>擺動 20 次耗時：</span><strong>10.0 秒</strong></div>
+              <div class="data-row"><span>斜率物理意義：</span><strong>週期 \( T \)（較平緩）</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Questioning & Concept Verification -->
+        <div class="card" style="padding: 1.25rem;">
+          <div class="card-title" style="font-size: 1rem; margin-bottom: 0.75rem;">
+            <span>🧠 課本例題 1-1 隨堂診斷</span>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q1. 觀察圖中直線，甲單擺每擺動 20 次需 20 秒，其「週期」為多少？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkAnswer(1, '0.5', this)">0.5 秒</button>
+              <button class="quiz-btn" onclick="checkAnswer(1, '1.0', this)">1.0 秒</button>
+              <button class="quiz-btn" onclick="checkAnswer(1, '2.0', this)">2.0 秒</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q2. 乙單擺擺動 20 次需 10 秒（週期 0.5 秒），請問甲、乙何者的「擺長」較長？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkAnswer(2, 'A', this)">甲單擺較長</button>
+              <button class="quiz-btn" onclick="checkAnswer(2, 'B', this)">乙單擺較長</button>
+              <button class="quiz-btn" onclick="checkAnswer(2, 'equal', this)">一樣長</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p>Q3. 【段考陷阱】若坐標軸對調（縱軸為次數、橫軸為時間），哪一條直線的斜率代表甲？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkAnswer(3, 'gentle', this)">較平緩的直線</button>
+              <button class="quiz-btn" onclick="checkAnswer(3, 'steep', this)">較陡峭的直線</button>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // Physics & State
+    // Pendulum A: Period Ta = 1.0s (Length La ~ 25cm in real physics, scale factor for drawing)
+    // Pendulum B: Period Tb = 0.5s (Length Lb ~ 6.25cm, 1/4 of A)
+    const Ta = 1.0;
+    const Tb = 0.5;
+    let graphMode = 'standard'; // 'standard' (y=time, x=count) or 'inverted' (y=count, x=time)
+    let scanValue = 20; // scan count (or scan time in inverted)
+    let isPlaying = false;
+    let simTime = 0;
+    let animId = null;
+
+    // Canvas Elements
+    const chartCanvas = document.getElementById('chartCanvas');
+    const chartCtx = chartCanvas.getContext('2d');
+    const pendCanvas = document.getElementById('pendulumCanvas');
+    const pendCtx = pendCanvas.getContext('2d');
+
+    function setGraphMode(mode) {
+      graphMode = mode;
+      document.getElementById('btnModeStandard').classList.toggle('active', mode === 'standard');
+      document.getElementById('btnModeInverted').classList.toggle('active', mode === 'inverted');
+      
+      const scanLabel = document.getElementById('scanLabel');
+      if (mode === 'standard') {
+        scanLabel.innerText = '🔍 分析工具：【固定擺動次數】（垂直掃描輔助線）';
+      } else {
+        scanLabel.innerText = '⚠️ 分析工具：【固定時間】（垂直掃描輔助線）';
+      }
+      onScanChange();
+    }
+
+    function onScanChange() {
+      scanValue = parseFloat(document.getElementById('scanRange').value);
+      document.getElementById('scanValDisplay').innerText = scanValue + (graphMode === 'standard' ? ' 次' : ' 秒');
+      drawGraph();
+    }
+
+    function setScanValue(v) {
+      document.getElementById('scanRange').value = v;
+      onScanChange();
+    }
+
+    function toggleSim() {
+      const btn = document.getElementById('btnPlay');
+      if (!isPlaying) {
+        isPlaying = true;
+        btn.innerText = '⏸ 暫停擺動';
+        btn.style.background = '#e53935';
+        lastTimestamp = performance.now();
+        animLoop();
+      } else {
+        isPlaying = false;
+        btn.innerText = '▶ 繼續擺動';
+        btn.style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
+    }
+
+    function resetSim() {
+      isPlaying = false;
+      simTime = 0;
+      document.getElementById('btnPlay').innerText = '▶ 同步擺動與動態打點';
+      document.getElementById('btnPlay').style.background = 'var(--primary)';
+      document.getElementById('liveTimeText').innerText = '時間：0.0 秒';
+      document.getElementById('liveCountA').innerText = '0 次';
+      document.getElementById('liveCountB').innerText = '0 次';
+      if (animId) cancelAnimationFrame(animId);
+      drawPendulums();
+      drawGraph();
+    }
+
+    let lastTimestamp = 0;
+    function animLoop(now) {
+      if (!isPlaying) return;
+      if (!now) now = performance.now();
+      const dt = (now - lastTimestamp) / 1000;
+      lastTimestamp = now;
+
+      simTime += dt;
+      if (simTime > 30) simTime = 30; // Cap at 30s
+
+      const countA = Math.floor(simTime / Ta);
+      const countB = Math.floor(simTime / Tb);
+
+      document.getElementById('liveTimeText').innerText = `時間：${simTime.toFixed(1)} 秒`;
+      document.getElementById('liveCountA').innerText = `${countA} 次`;
+      document.getElementById('liveCountB').innerText = `${countB} 次`;
+
+      drawPendulums();
+      drawGraph();
+
+      if (simTime < 30) {
+        animId = requestAnimationFrame(animLoop);
+      } else {
+        toggleSim();
+      }
+    }
+
+    // Draw Dual Pendulum Stage
+    function drawPendulums() {
+      pendCtx.clearRect(0, 0, pendCanvas.width, pendCanvas.height);
+      const cw = pendCanvas.width;
+      const cy = 25;
+
+      // Draw Pendulum A (Left: cx = 120, Length = 130px)
+      const cxA = cw * 0.25;
+      const lenA = 130;
+      const angleA = Math.sin((simTime * 2 * Math.PI) / Ta) * 0.3; // rad
+      const bxA = cxA + Math.sin(angleA) * lenA;
+      const byA = cy + Math.cos(angleA) * lenA;
+
+      // Draw Pendulum B (Right: cx = 360, Length = 65px)
+      const cxB = cw * 0.75;
+      const lenB = 65;
+      const angleB = Math.sin((simTime * 2 * Math.PI) / Tb) * 0.3; // rad
+      const bxB = cxB + Math.sin(angleB) * lenB;
+      const byB = cy + Math.cos(angleB) * lenB;
+
+      // Beam
+      pendCtx.fillStyle = '#0f4c81';
+      pendCtx.fillRect(20, cy - 8, cw - 40, 8);
+
+      // Support pivots
+      pendCtx.fillStyle = '#ff7082';
+      pendCtx.beginPath(); pendCtx.arc(cxA, cy, 5, 0, Math.PI * 2); pendCtx.fill();
+      pendCtx.beginPath(); pendCtx.arc(cxB, cy, 5, 0, Math.PI * 2); pendCtx.fill();
+
+      // String A
+      pendCtx.beginPath(); pendCtx.moveTo(cxA, cy); pendCtx.lineTo(bxA, byA);
+      pendCtx.strokeStyle = '#1e88e5'; pendCtx.lineWidth = 3; pendCtx.stroke();
+      // Bob A
+      pendCtx.beginPath(); pendCtx.arc(bxA, byA, 14, 0, Math.PI * 2);
+      pendCtx.fillStyle = '#1e88e5'; pendCtx.fill();
+      pendCtx.strokeStyle = '#0d47a1'; pendCtx.lineWidth = 2; pendCtx.stroke();
+
+      // String B
+      pendCtx.beginPath(); pendCtx.moveTo(cxB, cy); pendCtx.lineTo(bxB, byB);
+      pendCtx.strokeStyle = '#e53935'; pendCtx.lineWidth = 3; pendCtx.stroke();
+      // Bob B
+      pendCtx.beginPath(); pendCtx.arc(bxB, byB, 14, 0, Math.PI * 2);
+      pendCtx.fillStyle = '#e53935'; pendCtx.fill();
+      pendCtx.strokeStyle = '#b71c1c'; pendCtx.lineWidth = 2; pendCtx.stroke();
+    }
+
+    // Draw Main Chart
+    function drawGraph() {
+      chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+      const ox = 70, oy = 320, w = 480, h = 260;
+
+      // Background Grid
+      chartCtx.strokeStyle = '#f1f5f9';
+      chartCtx.lineWidth = 1;
+
+      const maxX = 60, maxY = 30;
+
+      // Axes
+      chartCtx.beginPath();
+      chartCtx.moveTo(ox, oy - h);
+      chartCtx.lineTo(ox, oy);
+      chartCtx.lineTo(ox + w, oy);
+      chartCtx.strokeStyle = '#0f4c81';
+      chartCtx.lineWidth = 2.5;
+      chartCtx.stroke();
+
+      // Labels based on mode
+      chartCtx.font = 'bold 13px Noto Sans TC';
+      chartCtx.fillStyle = '#0f4c81';
+      chartCtx.textAlign = 'center';
+
+      if (graphMode === 'standard') {
+        chartCtx.fillText('擺動次數 (次)', ox + w / 2, oy + 42);
+        chartCtx.save();
+        chartCtx.translate(ox - 45, oy - h / 2);
+        chartCtx.rotate(-Math.PI / 2);
+        chartCtx.fillText('擺動時間 (秒)', 0, 0);
+        chartCtx.restore();
+      } else {
+        chartCtx.fillText('擺動時間 (秒)', ox + w / 2, oy + 42);
+        chartCtx.save();
+        chartCtx.translate(ox - 45, oy - h / 2);
+        chartCtx.rotate(-Math.PI / 2);
+        chartCtx.fillText('擺動次數 (次)', 0, 0);
+        chartCtx.restore();
+      }
+
+      // Ticks & Grid Lines
+      for (let i = 0; i <= 6; i++) {
+        const valX = (i / 6) * maxX;
+        const gx = ox + (i / 6) * w;
+        chartCtx.beginPath(); chartCtx.moveTo(gx, oy); chartCtx.lineTo(gx, oy - h); chartCtx.strokeStyle = '#e2e8f0'; chartCtx.stroke();
+        chartCtx.fillStyle = '#64748b'; chartCtx.font = '12px Outfit';
+        chartCtx.fillText(valX, gx, oy + 18);
+      }
+      for (let j = 0; j <= 6; j++) {
+        const valY = (j / 6) * maxY;
+        const gy = oy - (j / 6) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, gy); chartCtx.lineTo(ox + w, gy); chartCtx.strokeStyle = '#e2e8f0'; chartCtx.stroke();
+        chartCtx.fillStyle = '#64748b'; chartCtx.font = '12px Outfit'; chartCtx.textAlign = 'right';
+        chartCtx.fillText(valY, ox - 10, gy + 4);
+      }
+
+      // Draw Lines
+      if (graphMode === 'standard') {
+        // Standard: y = time (t), x = count (N)
+        // Line A: Ta = 1.0 (t = N * 1.0) -> at N=30, t=30
+        const endAx = ox + (30 / maxX) * w;
+        const endAy = oy - (30 / maxY) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(endAx, endAy);
+        chartCtx.strokeStyle = '#1e88e5'; chartCtx.lineWidth = 4; chartCtx.stroke();
+        chartCtx.fillStyle = '#1e88e5'; chartCtx.font = 'bold 15px Noto Sans TC'; chartCtx.textAlign = 'left';
+        chartCtx.fillText('甲 (斜率 = 1.0 s/次 = 週期 T)', endAx + 10, endAy + 5);
+
+        // Line B: Tb = 0.5 (t = N * 0.5) -> at N=60, t=30
+        const endBx = ox + (60 / maxX) * w;
+        const endBy = oy - (30 / maxY) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(endBx, endBy);
+        chartCtx.strokeStyle = '#e53935'; chartCtx.lineWidth = 4; chartCtx.stroke();
+        chartCtx.fillStyle = '#e53935';
+        chartCtx.fillText('乙 (斜率 = 0.5 s/次 = 週期 T)', endBx - 160, endBy - 10);
+
+        // Scanner Ray (Vertical line at scanValue count)
+        const sx = ox + (scanValue / maxX) * w;
+        const timeA = scanValue * Ta;
+        const timeB = scanValue * Tb;
+        const syA = oy - (Math.min(maxY, timeA) / maxY) * h;
+        const syB = oy - (Math.min(maxY, timeB) / maxY) * h;
+
+        chartCtx.beginPath(); chartCtx.moveTo(sx, oy); chartCtx.lineTo(sx, oy - h);
+        chartCtx.strokeStyle = '#9333ea'; chartCtx.lineWidth = 2; chartCtx.setLineDash([4, 4]); chartCtx.stroke(); chartCtx.setLineDash([]);
+
+        // Intersection dots
+        if (timeA <= maxY) {
+          chartCtx.beginPath(); chartCtx.arc(sx, syA, 6, 0, Math.PI * 2); chartCtx.fillStyle = '#1e88e5'; chartCtx.fill();
+          chartCtx.fillStyle = '#1e88e5'; chartCtx.font = 'bold 12px Outfit';
+          chartCtx.fillText(`甲: ${timeA.toFixed(1)}s`, sx + 10, syA - 8);
+        }
+        if (timeB <= maxY) {
+          chartCtx.beginPath(); chartCtx.arc(sx, syB, 6, 0, Math.PI * 2); chartCtx.fillStyle = '#e53935'; chartCtx.fill();
+          chartCtx.fillStyle = '#e53935'; chartCtx.font = 'bold 12px Outfit';
+          chartCtx.fillText(`乙: ${timeB.toFixed(1)}s`, sx + 10, syB + 16);
+        }
+
+      } else {
+        // Inverted: y = count (N), x = time (t)
+        // Line A: N = t / Ta = t * 1.0 -> at t=30, N=30
+        const endAx = ox + (30 / maxX) * w;
+        const endAy = oy - (30 / maxY) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(endAx, endAy);
+        chartCtx.strokeStyle = '#1e88e5'; chartCtx.lineWidth = 4; chartCtx.stroke();
+        chartCtx.fillStyle = '#1e88e5'; chartCtx.font = 'bold 15px Noto Sans TC'; chartCtx.textAlign = 'left';
+        chartCtx.fillText('甲 (斜率 = 頻率 f = 1 次/s)', endAx + 10, endAy + 5);
+
+        // Line B: N = t / Tb = t * 2.0 -> at t=15, N=30
+        const endBx = ox + (15 / maxX) * w;
+        const endBy = oy - (30 / maxY) * h;
+        chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(endBx, endBy);
+        chartCtx.strokeStyle = '#e53935'; chartCtx.lineWidth = 4; chartCtx.stroke();
+        chartCtx.fillStyle = '#e53935';
+        chartCtx.fillText('乙 (斜率 = 頻率 f = 2 次/s，較陡)', endBx - 20, endBy - 15);
+      }
+    }
+
+    // Quiz Check Logic
+    function checkAnswer(qNum, ans, el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('fb' + qNum);
+      fb.className = 'quiz-feedback show';
+
+      if (qNum === 1) {
+        if (ans === '1.0') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 週期 \( T = \text{時間} \div \text{次數} = 20\text{ 秒} \div 20\text{ 次} = 1.0\text{ 秒} \)。';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 週期是「每擺動 1 次所需的時間」，請用 20 秒除以 20 次。';
+        }
+      } else if (qNum === 2) {
+        if (ans === 'A') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 甲的週期（1.0 秒）> 乙的週期（0.5 秒）。由課本結論「擺長越長，週期越長」，因此甲的擺長較長！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 週期越長代表擺動一次花的時間越多（擺動越慢），對應的擺長越長！';
+        }
+      } else if (qNum === 3) {
+        if (ans === 'gentle') {
+          el.classList.add('correct');
+          fb.style.color = 'var(--success)';
+          fb.innerHTML = '✅ <strong>太厲害了！完全掌握！</strong> 軸對調後，斜率變成「次數/時間 = 頻率」。甲擺動較慢（頻率小），因此直線會變得較為平緩！';
+        } else {
+          el.classList.add('wrong');
+          fb.style.color = 'var(--warn)';
+          fb.innerHTML = '❌ <strong>小心陷阱！</strong> 縱軸改為次數時，斜率越大代表「相同時間內次數越多（擺動越快）」，所以較陡的會是乙，較平緩的才是甲！';
+        }
+      }
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      drawPendulums();
+      drawGraph();
+    });
+  </script>
+</body>
+</html>
