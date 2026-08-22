@@ -15,7 +15,8 @@
       --area-pos-bg: rgba(37, 99, 235, 0.18);
       --area-neg: #dc2626;       /* Negative Area (Red) */
       --area-neg-bg: rgba(220, 38, 38, 0.18);
-      --bg: #f8fafc;
+      --bg: #f0f7ff;
+      --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #fdf4ff 45%, #f0fdf4 100%);
       --card-bg: #ffffff;
       --text: #1e293b;
       --text-muted: #64748b;
@@ -37,7 +38,7 @@
 
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg);
+      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
