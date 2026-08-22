@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>諾貝爾傳奇 · 課堂教學與互動學習殿堂 - 世界名人堂</title>
-  <meta name="description" content="世界名人堂系列第 1 位科學家：阿爾弗雷德·諾貝爾（Alfred Bernhard Nobel）生平、炸藥發明、諾貝爾獎與五大課堂數位互動教具。" />
+  <meta name="description" content="世界名人堂系列第 1 位科學家：阿爾弗雷德·諾貝爾（Alfred Bernhard Nobel）生平、炸藥發明、諾貝爾獎、課堂精選影片與 23 張珍貴歷史圖輯。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -545,6 +545,142 @@
       box-shadow: 0 4px 12px rgba(226, 27, 112, 0.3);
     }
 
+    /* Video Section */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 960px) {
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .video-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent-red);
+    }
+
+    .video-embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background-color: #000000;
+    }
+
+    .video-embed-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-content {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .video-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .video-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 980px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .gallery-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .gallery-img-wrap {
+      width: 100%;
+      height: 160px;
+      background-color: var(--bg-surface-muted);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .gallery-caption {
+      padding: 0.75rem 0.85rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: #ffffff;
+      text-align: center;
+      border-top: 1px solid var(--border-muted);
+      line-height: 1.35;
+    }
+
     /* Knowledge Grid & Timeline */
     .knowledge-grid {
       display: grid;
@@ -832,7 +968,7 @@
     .modal-content {
       background-color: #ffffff;
       border-radius: var(--radius-xl);
-      max-width: 540px;
+      max-width: 560px;
       width: 100%;
       padding: 2.25rem;
       text-align: center;
@@ -870,25 +1006,28 @@
       color: var(--accent-red);
     }
 
-    .modal-qr-img {
-      width: 260px;
-      height: 260px;
+    .modal-main-img {
+      max-width: 100%;
+      max-height: 360px;
       margin: 1.25rem auto;
       border-radius: var(--radius-md);
       border: 3px solid #e2e8f0;
       padding: 0.5rem;
       background: #ffffff;
       box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .modal-qr-img img {
-      width: 100%;
-      height: 100%;
+    .modal-main-img img {
+      max-width: 100%;
+      max-height: 340px;
       object-fit: contain;
     }
 
     .modal-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 900;
       color: var(--text-main);
       margin-bottom: 0.5rem;
@@ -897,7 +1036,7 @@
     .modal-desc {
       font-size: 0.95rem;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .modal-pin {
@@ -946,6 +1085,8 @@
 
       <nav class="nav-links">
         <a href="#activities" class="nav-link-item">⚡ 課堂互動教具</a>
+        <a href="#videos" class="nav-link-item">🎬 精選課堂影片</a>
+        <a href="#gallery" class="nav-link-item">🖼️ 歷史影像圖輯</a>
         <a href="#biography" class="nav-link-item">🧑 生平傳奇</a>
         <a href="#dynamite" class="nav-link-item">💥 炸藥與發明</a>
         <a href="#nobel-prize" class="nav-link-item">🏆 諾貝爾獎</a>
@@ -996,7 +1137,7 @@
 
         <div class="hero-card-side">
           <div class="hero-avatar-wrap">
-            <img src="./assets/nobel/image1.png" alt="諾貝爾肖像" onerror="this.src='./assets/nobel/slide_8_img_2.jpg'" />
+            <img src="./assets/nobel/gallery/諾貝爾畫像.jpg" alt="諾貝爾畫像" onerror="this.src='./assets/nobel/image1.png'" />
           </div>
           <h2 class="hero-card-name">諾貝爾</h2>
           <p class="hero-card-latin">Alfred Bernhard Nobel</p>
@@ -1203,6 +1344,198 @@
           <button class="tool-btn" onclick="startTimer(10)">⏳ 10 分鐘測驗</button>
           <button class="tool-btn" onclick="pickRandomStudent()">🎲 隨機抽籤號碼</button>
           <span id="timerDisplay" style="font-family: monospace; font-size: 1.2rem; font-weight: bold; color: #38bdf8; min-width: 80px; text-align: center;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Featured Videos (NEW) -->
+  <section id="videos" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🎬 精選課堂影片</div>
+        <h2 class="section-title">諾貝爾傳奇與科學故事影音欣賞</h2>
+        <p class="section-desc">課堂直接點擊即可播放，帶領同學直觀感受諾貝爾的傳奇人生、炸藥研發震撼與諾貝爾獎故事。</p>
+      </div>
+
+      <div class="videos-grid">
+        <!-- Video 1 -->
+        <article class="video-card">
+          <div class="video-embed-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/QCSs5LNKZ6Y" title="諾貝爾生平與科學傳奇 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <div>
+              <h3 class="video-title">諾貝爾生平與炸藥發明傳奇 (影片一)</h3>
+              <p class="video-desc">深入認識阿爾弗雷德·諾貝爾的成長歷程、在俄羅斯的家庭事業與震撼世界的炸藥改良研究。</p>
+            </div>
+            <a href="https://www.youtube.com/watch?v=QCSs5LNKZ6Y" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary" style="font-size: 0.85rem; padding: 0.55rem 0.85rem;">
+              在 YouTube 開啟影片 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Video 2 -->
+        <article class="video-card">
+          <div class="video-embed-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/HsFsDdRgRBs" title="諾貝爾生平與科學傳奇 02" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <div>
+              <h3 class="video-title">起爆原理與諾貝爾獎創立歷程 (影片二)</h3>
+              <p class="video-desc">探討雷管發明、矽藻土黃色炸藥固態化效益，以及晚年設立五大諾貝爾獎的感人遺願。</p>
+            </div>
+            <a href="https://www.youtube.com/watch?v=HsFsDdRgRBs" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary" style="font-size: 0.85rem; padding: 0.55rem 0.85rem;">
+              在 YouTube 開啟影片 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Video 3 -->
+        <article class="video-card">
+          <div class="video-embed-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/3FfO6gF-CeQ" title="諾貝爾生平與科學傳奇 03" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <div>
+              <h3 class="video-title">諾貝爾傳記深度解析 (影片三)</h3>
+              <p class="video-desc">由陽光唐略劇場帶來的諾貝爾生平精彩劇集與傳記故事，生動呈現科學巨擘的心路歷程。</p>
+            </div>
+            <a href="https://www.youtube.com/watch?v=3FfO6gF-CeQ&ab_channel=%E9%AA%84%E9%98%B3%E5%94%90%E7%95%A5%E5%89%A7%E5%9C%BASunshineTanglueChannel" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary" style="font-size: 0.85rem; padding: 0.55rem 0.85rem;">
+              在 YouTube 開啟影片 ↗
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Photo Gallery (23 Images) (NEW) -->
+  <section id="gallery" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🖼️ 珍貴歷史影像圖輯</div>
+        <h2 class="section-title">諾貝爾歷史文獻與珍貴照片 (共 23 幅)</h2>
+        <p class="section-desc">點擊任一照片即可全螢幕燈箱放大觀賞！所有圖片皆依檔名清楚標註說明。</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- 23 Gallery Items Generated Dynamically / Pre-rendered -->
+                <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎', './assets/nobel/gallery/搞笑諾貝爾獎.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎.jpg" alt="搞笑諾貝爾獎" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎02', './assets/nobel/gallery/搞笑諾貝爾獎02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎02.jpg" alt="搞笑諾貝爾獎02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎02</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('搞笑諾貝爾獎03', './assets/nobel/gallery/搞笑諾貝爾獎03.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/搞笑諾貝爾獎03.jpg" alt="搞笑諾貝爾獎03" loading="lazy" />
+          </div>
+          <div class="gallery-caption">搞笑諾貝爾獎03</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('數學家米泰萊弗勒', './assets/nobel/gallery/數學家米泰萊弗勒.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/數學家米泰萊弗勒.jpg" alt="數學家米泰萊弗勒" loading="lazy" />
+          </div>
+          <div class="gallery-caption">數學家米泰萊弗勒</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('歐魯夫˙魯德貝克', './assets/nobel/gallery/歐魯夫˙魯德貝克.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/歐魯夫˙魯德貝克.jpg" alt="歐魯夫˙魯德貝克" loading="lazy" />
+          </div>
+          <div class="gallery-caption">歐魯夫˙魯德貝克</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('炸藥', './assets/nobel/gallery/炸藥.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/炸藥.jpg" alt="炸藥" loading="lazy" />
+          </div>
+          <div class="gallery-caption">炸藥</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('聖彼得堡', './assets/nobel/gallery/聖彼得堡.png')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/聖彼得堡.png" alt="聖彼得堡" loading="lazy" />
+          </div>
+          <div class="gallery-caption">聖彼得堡</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('英國詩人拜倫', './assets/nobel/gallery/英國詩人拜倫.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/英國詩人拜倫.jpg" alt="英國詩人拜倫" loading="lazy" />
+          </div>
+          <div class="gallery-caption">英國詩人拜倫</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('英國詩人雪萊', './assets/nobel/gallery/英國詩人雪萊.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/英國詩人雪萊.jpg" alt="英國詩人雪萊" loading="lazy" />
+          </div>
+          <div class="gallery-caption">英國詩人雪萊</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('菲爾茲獎（Fields medals）', './assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg" alt="菲爾茲獎（Fields medals）" loading="lazy" />
+          </div>
+          <div class="gallery-caption">菲爾茲獎（Fields medals）</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾03', './assets/nobel/gallery/諾貝爾03.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾03.jpg" alt="諾貝爾03" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾03</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾04', './assets/nobel/gallery/諾貝爾04.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾04.jpg" alt="諾貝爾04" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾04</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾家族老宅01', './assets/nobel/gallery/諾貝爾家族老宅01.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾家族老宅01.jpg" alt="諾貝爾家族老宅01" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾家族老宅01</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室舊照', './assets/nobel/gallery/諾貝爾實驗室舊照.png')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾實驗室舊照.png" alt="諾貝爾實驗室舊照" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾實驗室舊照</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾實驗室近代照片', './assets/nobel/gallery/諾貝爾實驗室近代照片.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾實驗室近代照片.jpg" alt="諾貝爾實驗室近代照片" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾實驗室近代照片</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾年輕畫像', './assets/nobel/gallery/諾貝爾年輕畫像.png')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾年輕畫像.png" alt="諾貝爾年輕畫像" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾年輕畫像</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾父親畫像', './assets/nobel/gallery/諾貝爾父親畫像.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾父親畫像.jpg" alt="諾貝爾父親畫像" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾父親畫像</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾獎01', './assets/nobel/gallery/諾貝爾獎01.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾獎01.jpg" alt="諾貝爾獎01" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾獎01</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾獎02', './assets/nobel/gallery/諾貝爾獎02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾獎02.jpg" alt="諾貝爾獎02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾獎02</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像', './assets/nobel/gallery/諾貝爾畫像.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾畫像.jpg" alt="諾貝爾畫像" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾畫像</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('諾貝爾畫像02', './assets/nobel/gallery/諾貝爾畫像02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/諾貝爾畫像02.jpg" alt="諾貝爾畫像02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">諾貝爾畫像02</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('雷管', './assets/nobel/gallery/雷管.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/雷管.jpg" alt="雷管" loading="lazy" />
+          </div>
+          <div class="gallery-caption">雷管</div>
+        </div>\n        <div class="gallery-card" onclick="openImageModal('雷管02', './assets/nobel/gallery/雷管02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/nobel/gallery/雷管02.jpg" alt="雷管02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">雷管02</div>
         </div>
       </div>
     </div>
@@ -1488,22 +1821,22 @@
     </div>
   </section>
 
-  <!-- QR Code Lightbox Modal -->
-  <div id="qrModal" class="modal-backdrop" onclick="closeQrModal(event)">
+  <!-- Photo / Lightbox Modal -->
+  <div id="mediaModal" class="modal-backdrop" onclick="closeMediaModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closeQrModal()">✕</button>
-      <h3 id="modalTitle" class="modal-title">活動 QR Code</h3>
-      <p id="modalDesc" class="modal-desc">掃描 QR Code 立即參與課堂活動</p>
+      <button class="modal-close-btn" onclick="closeMediaModal()">✕</button>
+      <h3 id="modalTitle" class="modal-title">活動資訊</h3>
+      <p id="modalDesc" class="modal-desc">說明內容</p>
       
       <div id="modalPinWrap" style="display: none;">
         <span class="modal-pin" id="modalPinText">PIN: ---</span>
       </div>
 
-      <div class="modal-qr-img">
-        <img id="modalQrImg" src="" alt="活動 QR Code" />
+      <div class="modal-main-img">
+        <img id="modalImg" src="" alt="預覽影像" />
       </div>
 
-      <div style="margin-top: 1rem;">
+      <div id="modalBtnWrap" style="margin-top: 1rem;">
         <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
           前往活動連結 ↗
         </a>
@@ -1520,13 +1853,14 @@
     </div>
   </footer>
 
-  <!-- Scripts for Modal, Timer and Tools -->
+  <!-- Scripts for Modals, Timer, Tools -->
   <script>
-    // QR Code Lightbox Modal
+    // QR Code Modal
     function openQrModal(title, qrSrc, linkUrl, desc, pin) {
       document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalQrImg').src = qrSrc;
+      document.getElementById('modalImg').src = qrSrc;
       document.getElementById('modalLink').href = linkUrl;
+      document.getElementById('modalLink').style.display = 'inline-flex';
       document.getElementById('modalDesc').textContent = desc || '請使用手機相機或平板掃描 QR Code 加入！';
       
       const pinWrap = document.getElementById('modalPinWrap');
@@ -1538,11 +1872,21 @@
         pinWrap.style.display = 'none';
       }
 
-      document.getElementById('qrModal').classList.add('active');
+      document.getElementById('mediaModal').classList.add('active');
     }
 
-    function closeQrModal(e) {
-      document.getElementById('qrModal').classList.remove('active');
+    // Photo Lightbox Modal
+    function openImageModal(title, imgSrc) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('modalDesc').textContent = '歷史文獻與珍貴照片檔案';
+      document.getElementById('modalPinWrap').style.display = 'none';
+      document.getElementById('modalLink').style.display = 'none';
+      document.getElementById('mediaModal').classList.add('active');
+    }
+
+    function closeMediaModal(e) {
+      document.getElementById('mediaModal').classList.remove('active');
     }
 
     // Classroom Timer
@@ -1576,7 +1920,7 @@
     // Escape key closes modal
     window.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        closeQrModal();
+        closeMediaModal();
       }
     });
   </script>
