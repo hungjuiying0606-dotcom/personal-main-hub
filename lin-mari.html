@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>林媽利 醫師 - 世界名人堂課堂教學旗艦網頁</title>
+  <meta name="description" content="林媽利 醫師 - 探索先驅科學家生平傳奇、核心發明理論、精選課堂影音、數位互動教具與閱讀理解密室逃脫。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #faf8f5;
+      --bg-surface: #ffffff;
+      --bg-surface-muted: #f8fafc;
+      --text-main: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-muted: #cbd5e1;
+      --primary: #9f1239;
+      --primary-hover: #881337;
+      --primary-light: #ffe4e6;
+      --primary-light-text: #9f1239;
+      --gold: #b45309;
+      --gold-light: #fef3c7;
+      --gold-dark: #92400e;
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --accent-red: #ef4444;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header & Nav */
+    .site-header {
+      background-color: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .nav-left-btns {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.85rem;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background-color: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .nav-link-item {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-link-item:hover {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #fff1f2 0%, #ffffff 50%, #ffe4e6 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 3rem 0;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+    .hero-badge-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+    .hero-tag-sub {
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .hero-quote-box {
+      padding: 0.85rem 1.1rem;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    @media (max-width: 600px) {
+      .hero-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat-pill {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-num {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Hero Card & 3D Card Stack */
+    .hero-card-side {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card-stack-wrapper {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+      user-select: none;
+      cursor: grab;
+      margin-bottom: 0.75rem;
+    }
+    .card-stack-scene {
+      position: relative;
+      width: 250px;
+      height: 290px;
+      transform-style: preserve-3d;
+    }
+    .stack-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease, z-index 0.45s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .stack-img-wrap {
+      width: 100%;
+      height: 235px;
+      background-color: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+    .stack-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.3s ease;
+    }
+    .stack-card-caption {
+      padding: 0.5rem 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+      background-color: #ffffff;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stack-controls-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      background-color: var(--bg-surface-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      margin-top: 0.35rem;
+    }
+    .stack-ctrl-btn {
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .stack-ctrl-btn:hover {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+    .stack-counter-pill {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      font-family: monospace;
+      padding: 0 0.3rem;
+    }
+    .hero-card-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+    .hero-card-latin {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .hero-card-tags {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .hero-mini-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+    }
+
+    /* Section Styles */
+    .section-wrap {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .section-wrap:nth-child(even) {
+      background-color: #ffffff;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto 2.25rem;
+    }
+    .section-pill {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      margin-bottom: 0.65rem;
+    }
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Knowledge Grid & Timeline Cards */
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 800px) {
+      .knowledge-grid { grid-template-columns: 1fr; }
+    }
+    .info-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .info-card-icon {
+      font-size: 1.5rem;
+    }
+    .info-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .timeline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 1.35rem;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--primary);
+    }
+    .timeline-year {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      border-radius: 9999px;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-heading {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Prizes Grid */
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) {
+      .prizes-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .prizes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .prize-badge-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 0.75rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .prize-badge-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    .prize-icon { font-size: 1.75rem; margin-bottom: 0.35rem; }
+    .prize-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.25rem; }
+    .prize-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 0.75rem 0.85rem;
+      border: 1px solid var(--border-color);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .comparison-table th {
+      background-color: var(--bg-surface-muted);
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .badge-myth {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      background-color: #fee2e2;
+      color: #991b1b;
+      border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+    .badge-fact {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      background-color: #dcfce7;
+      color: #15803d;
+      border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Videos Grid */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+    @media (max-width: 800px) {
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+    .video-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .video-embed-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background-color: #000000;
+    }
+    .video-embed-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .video-content {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .video-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+    .video-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    /* Activities Grid */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 960px) {
+      .activities-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .activities-grid { grid-template-columns: 1fr; }
+    }
+    .activity-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+    .card-top-type {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .activity-icon { font-size: 1.75rem; }
+    .act-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+    }
+    .act-tag-ai { background-color: #f3e8ff; color: #6b21a8; }
+    .act-tag-match { background-color: #e0f2fe; color: #0369a1; }
+    .act-tag-kahoot { background-color: #fae8ff; color: #86198f; }
+    .act-tag-quiz { background-color: #dcfce7; color: #15803d; }
+    .act-tag-wayground { background-color: #fce7f3; color: #9d174d; }
+    .act-tag-escape { background-color: #fef3c7; color: #b45309; }
+    .activity-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+    .activity-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .qr-preview-box {
+      background-color: var(--bg-surface-muted);
+      border: 1px dashed var(--border-muted);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 0.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .qr-preview-box:hover {
+      background-color: var(--primary-light);
+      border-color: var(--primary);
+    }
+    .qr-img-wrap {
+      width: 105px;
+      height: 105px;
+      margin: 0 auto 0.4rem;
+      background-color: #ffffff;
+      padding: 4px;
+      border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+    .qr-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .qr-hint {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .pin-code-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      background-color: #1e293b;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.35rem;
+      letter-spacing: 1px;
+    }
+    .activity-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-act-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+    .btn-act-primary:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .btn-act-kahoot {
+      background-color: #46178f;
+      color: #ffffff;
+    }
+    .btn-act-kahoot:hover {
+      background-color: #381372;
+      box-shadow: 0 4px 12px rgba(70, 23, 143, 0.3);
+    }
+    .btn-act-wayground {
+      background-color: #e21b70;
+      color: #ffffff;
+    }
+    .btn-act-wayground:hover {
+      background-color: #be125a;
+      box-shadow: 0 4px 12px rgba(226, 27, 112, 0.3);
+    }
+
+    /* Classroom Bar Toolkit */
+    .classroom-bar {
+      margin-top: 2rem;
+      background-color: #1e293b;
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.5rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .classroom-bar-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .classroom-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    .tool-btn {
+      background-color: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      padding: 0.4rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tool-btn:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 980px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .gallery-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .gallery-img-wrap {
+      width: 100%;
+      height: 180px;
+      background-color: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.3s ease;
+    }
+    .gallery-card:hover .gallery-img-wrap img {
+      transform: scale(1.05);
+    }
+    .gallery-caption {
+      padding: 0.75rem 0.85rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: #ffffff;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      line-height: 1.35;
+    }
+
+    /* Lightbox Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal-content {
+      background-color: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 540px;
+      width: 100%;
+      padding: 1.75rem;
+      position: relative;
+      box-shadow: var(--shadow-xl);
+      text-align: center;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-close-btn:hover {
+      background-color: #f1f5f9;
+      color: #000000;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .modal-desc { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .modal-main-img {
+      width: 100%;
+      max-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8fafc;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .modal-main-img img {
+      max-width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #ffffff;
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="nav-left-btns">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-btn">
+          🏠 回首頁
+        </a>
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html" class="nav-btn">
+          🏛️ 回世界名人堂
+        </a>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#biography" class="nav-link-item">🧑 生平傳奇</a>
+        <a href="#inventions" class="nav-link-item">💥 突破理論</a>
+        <a href="#legacy" class="nav-link-item">🏆 榮譽與影響</a>
+        <a href="#mythbusters" class="nav-link-item">💡 史實闢謠</a>
+        <a href="#quotes" class="nav-link-item">💭 名言思辨</a>
+        <a href="#videos" class="nav-link-item">🎬 精選課堂影片</a>
+        <a href="#activities" class="nav-link-item">⚡ 課堂互動教具</a>
+        <a href="#gallery" class="nav-link-item">🖼️ 珍貴歷史圖輯</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-main-text">
+          <div class="hero-badge-row">
+            <span class="hero-tag">🌟 世界名人堂 · 第 7 位科學家</span>
+            <span class="hero-tag hero-tag-sub">國二自然 · 醫學與人體血液基因</span>
+          </div>
+          <h1 class="hero-title">林媽利 醫師</h1>
+          <p class="hero-subtitle">Marie Lin, M.D. (1938 – ) · 台灣輸血醫學之母與族群血緣基因</p>
+          <p class="hero-desc">
+            高雄人，長期從事輸血醫學與分子人類學研究。主導建立台灣健全現代化醫院血庫與無償捐血安全體系，發明適合亞洲人的 MP 血液檢驗法，發現米田堡等罕見血型抗原，深入研究台灣族群 HLA 基因與血緣起源，獲第 27 屆醫療奉獻獎。
+          </p>
+
+          <div class="hero-quote-box">
+            「每一滴血都關乎一個生命的安全。醫學研究的終極目的，是守護這片土地上的每一個人。」
+          </div>
+
+          <div class="hero-stats-grid">
+            
+            <div class="stat-pill">
+              <span class="stat-num">第27屆</span>
+              <span class="stat-label">醫療奉獻獎殊榮</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">100%</span>
+              <span class="stat-label">安全無償捐血體系</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">MP法</span>
+              <span class="stat-label">亞洲專用檢驗法</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">Miltenberger</span>
+              <span class="stat-label">稀有血型突破</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-side">
+          <!-- 3D Card Stack Carousel -->
+          <div class="card-stack-wrapper" id="cardStackWrapper" title="可滑動切換或點擊放大觀賞">
+            <div class="card-stack-scene" id="cardStackScene">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+
+          <div class="stack-controls-bar">
+            <button class="stack-ctrl-btn" id="stackPrevBtn" title="上一張照片" aria-label="上一張">◀</button>
+            <span class="stack-counter-pill" id="stackCounter">01 / 02</span>
+            <button class="stack-ctrl-btn" id="stackPlayBtn" title="暫停 / 繼續自動輪播" aria-label="播放暫停">⏸</button>
+            <button class="stack-ctrl-btn" id="stackNextBtn" title="下一張照片" aria-label="下一張">▶</button>
+          </div>
+
+          <h2 class="hero-card-name" style="margin-top: 0.85rem;">林媽利 醫師</h2>
+          <p class="hero-card-latin">Marie Lin, M.D.</p>
+          <div class="hero-card-tags">
+            <span class="hero-mini-badge">台灣血液之母</span><span class="hero-mini-badge">輸血安全準則</span><span class="hero-mini-badge">米田堡罕見血型</span><span class="hero-mini-badge">醫療奉獻獎</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Biography -->
+  <section id="biography" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🧑 篇章一 · 生平傳奇</div>
+        <h2 class="section-title">南台灣求學、赴美深造與扎根馬偕醫院</h2>
+        <p class="section-desc">湖內國小、中山女中、高醫到台大病理所，一生奉獻台灣輸血安全。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <!-- Card 1 -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🏥</div>
+            <h3 class="info-card-title">醫學求索與赴美病理研究</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">醫學之路</span>
+              <h4 class="timeline-heading">高雄醫學院與台大病理所</h4>
+              <p class="timeline-text">
+                自幼聰慧堅毅，畢業於高雄醫學院與台大病理研究所，後赴美國德州大學醫學分院深造臨床病理與輸血學。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">扎根馬偕</span>
+              <h4 class="timeline-heading">成立輸血醫學研究室</h4>
+              <p class="timeline-text">
+                回台後長期任職馬偕醫院，成立輸血醫學暨分子人類學研究室，培育無數台灣血液醫學專業人才。
+              </p>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">💉</div>
+            <h3 class="info-card-title">國家血液政策與終結買血亂象</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">歷史改革</span>
+              <h4 class="timeline-heading">推動全台無償捐血體系</h4>
+              <p class="timeline-text">
+                早年台灣充斥「血牛」買賣血液亂象，容易傳染肝炎與愛滋。林媽利主導建立國家血液安全標準，推動 100% 無償自願捐血！
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">安全準則</span>
+              <h4 class="timeline-heading">建立醫院現代化血庫規範</h4>
+              <p class="timeline-text">
+                訂定全台醫院嚴格的血庫交叉配血、冷藏保存與抗體篩檢作業準則，守護數百萬病患生命。
+              </p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Inventions & Theories -->
+  <section id="inventions" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💥 篇章二 · 突破性科學發明與理論</div>
+        <h2 class="section-title">MP 檢驗法、米田堡血型與族群基因</h2>
+        <p class="section-desc">打破西方標準限制，專門為亞洲人與台灣人量身打造的血液科學突破。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🧪</div>
+            <h3 class="info-card-title">更適合亞洲人的 MP 檢驗法</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">技術突破</span>
+              <h4 class="timeline-heading">微量盤凝集檢驗法 (MP 法)</h4>
+              <p class="timeline-text">
+                針對亞洲人抗體特性發明 MP 檢驗法，檢驗時間更短、靈敏度更高且成本更低，大幅降低溶血反應風險。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">稀有血型</span>
+              <h4 class="timeline-heading">米田堡血型 (Miltenberger) 權威</h4>
+              <p class="timeline-text">
+                發現米田堡血型在台灣原住民（如阿美族、卑南族）盛行率高達 5%~10%，為台灣急救輸血備血提供關鍵指引。
+              </p>
+            </li>
+          </ul>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🧬</div>
+            <h3 class="info-card-title">族群 HLA 基因與血緣尋根</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">分子人類學</span>
+              <h4 class="timeline-heading">台灣族群血緣基因地圖</h4>
+              <p class="timeline-text">
+                分析台灣閩南、客家、原住民與平埔族之組織抗原 (HLA) 與粒線體 DNA，出版《我們流著不同的血液》著作。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">南島語族源起</span>
+              <h4 class="timeline-heading">南島語族出台灣假說佐證</h4>
+              <p class="timeline-text">
+                透過基因遺傳標記，為「台灣為南島語族發源地」之語言學與考古學假說提供重要生物學分子證據！
+              </p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Legacy & Impact -->
+  <section id="legacy" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🏆 篇章三 · 跨時代影響與榮譽遺產</div>
+        <h2 class="section-title">醫療奉獻獎與台灣血液之母的遺產</h2>
+        <p class="section-desc">「守護台灣四十載，讓每一位需要輸血的病患都能安全回家。」</p>
+      </div>
+
+      <div class="info-card" style="margin-bottom: 1.5rem;">
+        <div class="info-card-header">
+          <div class="info-card-icon">📜</div>
+          <div>
+            <h3 class="info-card-title">林媽利 醫師 的世界榮譽與深遠貢獻</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted);">1938 – 至今</p>
+          </div>
+        </div>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;">
+          林媽利教授榮獲第二十七屆醫療奉獻獎。她不僅讓台灣的輸血醫學躍上國際頂尖舞台，更協助法務部建立早期親子鑑定與無名屍身分比對系統。她用一生嚴謹的科學實驗，守護全台病患的輸血安全，並以基因科學為台灣多元族群尋根。
+        </p>
+      </div>
+
+      <div class="prizes-grid">
+        
+        <div class="prize-badge-card">
+          <div class="prize-icon">🏅</div>
+          <h4 class="prize-name">第 27 屆醫療奉獻獎</h4>
+          <p class="prize-desc">國家最高醫學榮譽肯定</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">💉</div>
+          <h4 class="prize-name">台灣血液之母</h4>
+          <p class="prize-desc">建立全台現代輸血安全網</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🧬</div>
+          <h4 class="prize-name">HLA 組織抗原庫</h4>
+          <p class="prize-desc">骨髓移植與器官配對關鍵</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🌏</div>
+          <h4 class="prize-name">南島尋根研究</h4>
+          <p class="prize-desc">以基因解碼台灣族群歷史</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🔬</div>
+          <h4 class="prize-name">馬偕醫學研究室</h4>
+          <p class="prize-desc">深耕分子人類學與輸血學</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Mythbusters -->
+  <section id="mythbusters" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💡 篇章四 · 史實闢謠與科學探秘</div>
+        <h2 class="section-title">血液醫學大闢謠 ✕ 認識你的血型</h2>
+        <p class="section-desc">破解血型迷思，認識稀有血型的輸血常識。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🔍</div>
+            <h3 class="info-card-title">世界上只有 A、B、O、AB 四種血型？</h3>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width: 45%;">民間謠傳 (Myth)</th>
+                <th style="width: 55%;">歷史真相 (Fact)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="badge-myth">❌ 常見誤解</span><br>
+                  一般人以為人類血型系統只有 ABO 系統，只要 ABO 相同就能隨意輸血。
+                </td>
+                <td>
+                  <span class="badge-fact">✔️ 歷史史實</span><br>
+                  1. 國際輸血學會目前確認人類有超過 40 種血型系統、數百種血型抗原（如 Rh、米田堡、Diego、Duffy 等）！<br>2. 若體內具有稀有抗體，即使 ABO 相同也可能產生致命溶血反應，因此輸血前必須進行嚴格的抗體篩檢與交叉試驗。
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">✨</div>
+            <h3 class="info-card-title">林媽利醫師的輸血小百科</h3>
+          </div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem; color: var(--text-secondary);">
+            <li>🩸 <strong>全台第一座安全血庫</strong>：林媽利醫師在馬偕醫院建立台灣第一個符合國際 AABB 標準的血庫。</li><li>🔍 <strong>親子鑑定先驅</strong>：在 DNA 技術普及前，林媽利教授利用紅血球抗原與 HLA 系統，協助法務部建立最早的高精確度親子血緣鑑定法。</li><li>🌲 <strong>打樹成布與南島文化</strong>：林醫師跨界研究發現台灣構樹與原住民敲打樹皮布文化，與大洋洲南島民族基因高度吻合！</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Quotes & Discussion -->
+  <section id="quotes" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💭 篇章五 · 名言與課堂思辨</div>
+        <h2 class="section-title">大師智慧與探究思辨</h2>
+        <p class="section-desc">反思科學探索精神與人文關懷的永恆對話。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">📖</div>
+            <h3 class="info-card-title">林媽利 醫師 經典名言</h3>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            
+            <blockquote style="border-left: 3px solid var(--primary); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「每一滴血都關乎一個生命的安全。醫學研究的終極目的，是守護這片土地上的每一個人。」
+            </blockquote>
+            <blockquote style="border-left: 3px solid var(--primary); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「科學研究要有熱情與堅持，更要有良心與社會責任。」
+            </blockquote>
+            <blockquote style="border-left: 3px solid var(--primary); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「台灣的多元族群就像大自然繁複美麗的基因圖譜，值得我們每一個人珍惜與包容。」
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🧠</div>
+            <h3 class="info-card-title">課堂思辨與探究題目</h3>
+          </div>
+          <ol style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.92rem; color: var(--text-secondary);">
+            <li><strong>輸血安全常識</strong>：為什麼在現代醫學中，輸血前除了驗 ABO 與 Rh 血型外，還必須進行「抗體篩檢」與「交叉配血」？</li><li><strong>米田堡血型意義</strong>：米田堡 (Miltenberger) 稀有血型在台灣原住民群體中盛行率偏高，這對台灣捐血中心的備血策略與臨床急救有何重要意義？</li><li><strong>醫學奉獻精神</strong>：林媽利醫師放棄在美國的優渥生活回台建立安全輸血體系，這展現了醫療工作者什麼樣的利他情懷與使命感？</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Featured Videos -->
+  <section id="videos" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🎬 精選課堂影片</div>
+        <h2 class="section-title">林媽利 醫師 傳奇與科學故事影音欣賞</h2>
+        <p class="section-desc">課堂直接點擊即可播放，帶領同學直觀感受大師的傳奇人生與劃時代科學突破。</p>
+      </div>
+
+      <div class="videos-grid">
+        
+        <article class="video-card">
+          <div class="video-embed-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/nX3R1ldc4Sk" title="台灣血液之母林媽利醫師生平與醫療奉獻 (影片一)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <div>
+              <h3 class="video-title">台灣血液之母林媽利醫師生平與醫療奉獻 (影片一)</h3>
+              <p class="video-desc">紀錄林媽利醫師如何建立台灣現代化安全血庫與無償捐血體系。</p>
+            </div>
+            <a href="https://www.youtube.com/watch?v=nX3R1ldc4Sk" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary" style="font-size: 0.85rem; padding: 0.55rem 0.85rem;">
+              在 YouTube 開啟影片 ↗
+            </a>
+          </div>
+        </article>
+        <article class="video-card">
+          <div class="video-embed-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/p21h8s0wEhM" title="台灣多元族群與南島語族血緣基因尋根解析 (影片二)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <div>
+              <h3 class="video-title">台灣多元族群與南島語族血緣基因尋根解析 (影片二)</h3>
+              <p class="video-desc">解析林媽利教授透過 HLA 組織抗原與分子人類學探索台灣族群起源。</p>
+            </div>
+            <a href="https://www.youtube.com/watch?v=p21h8s0wEhM" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary" style="font-size: 0.85rem; padding: 0.55rem 0.85rem;">
+              在 YouTube 開啟影片 ↗
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Interactive Activities -->
+  <section id="activities" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">⚡ 課堂數位互動教具</div>
+        <h2 class="section-title">5 大線上活動與 AI 互動專區</h2>
+        <p class="section-desc">
+          老師可於課堂直接投影，點擊 QR Code 可全螢幕放大讓全班學生一秒掃描加入！
+        </p>
+      </div>
+
+      <div class="activities-grid">
+        <!-- 1. Edcafe AI Chatbot -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🤖</div>
+              <span class="act-tag act-tag-ai">AI 角色訪談</span>
+            </div>
+            <h3 class="activity-title">Edcafe AI 林媽利 醫師 訪談</h3>
+            <p class="activity-desc">
+              與 AI 林媽利 醫師 跨時空對話！親自向大師詢問求學歷程、科學突破與人生哲學。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Edcafe AI 林媽利 醫師 訪談', './assets/qr/edcafe_chatbot_qr.png', 'https://app.edcafe.ai/chatbots/6a86f1c1fe58ea3e55edddca', '手機掃描 QR Code 即可向 AI 林媽利 醫師 提問！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/edcafe_chatbot_qr.png" alt="Edcafe Chatbot QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://app.edcafe.ai/chatbots/6a86f1c1fe58ea3e55edddca" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 AI 林媽利 醫師 對話 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 2. Wordwall Match -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🧩</div>
+              <span class="act-tag act-tag-match">課堂配對連連看</span>
+            </div>
+            <h3 class="activity-title">Wordwall 知識配對遊戲</h3>
+            <p class="activity-desc">
+              將 林媽利 醫師 的生平、關鍵突破、定律公式與歷史重要名詞快速進行概念配對！
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Wordwall 知識配對遊戲', './assets/qr/wordwall_match_qr.png', 'https://wordwall.net/resource/117738453', '手機掃描 QR Code 即刻加入配對挑戰！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/wordwall_match_qr.png" alt="Wordwall QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://wordwall.net/resource/117738453" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 Wordwall 配對 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 3. Kahoot! Challenge -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🎯</div>
+              <span class="act-tag act-tag-kahoot">即時競賽搶答</span>
+            </div>
+            <h3 class="activity-title">Kahoot! 5 題搶答挑戰</h3>
+            <p class="activity-desc">
+              5 題核心觀念搶答（生平考證、核心科學原理與史實闢謠），刺激課堂即時挑戰！
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Kahoot! 課堂挑戰賽', './assets/qr/kahoot_quiz_qr.png', 'https://kahoot.it?pin=194441', '輸入遊戲 PIN 碼即可加入即時搶答！', '194 441')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/kahoot_quiz_qr.png" alt="Kahoot Quiz QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+              <div><span class="pin-code-badge">PIN: 194 441</span></div>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://kahoot.it?pin=194441" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-kahoot">
+              進入 Kahoot! 搶答 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 4. Edcafe Quiz -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">📝</div>
+              <span class="act-tag act-tag-quiz">線上任務學習單</span>
+            </div>
+            <h3 class="activity-title">Edcafe 課堂評量測驗</h3>
+            <p class="activity-desc">
+              包含核心問答、觀念辨析與科學史思辨等任務，系統化檢核掌握學習成效。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Edcafe 課堂線上測驗', './assets/qr/edcafe_quiz_qr.png', 'https://app.edcafe.ai/quizzes/6a86eef0d895b8a8e304daf7', '手機掃描 QR Code 進入評量作答！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/edcafe_quiz_qr.png" alt="Edcafe Quiz QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://app.edcafe.ai/quizzes/6a86eef0d895b8a8e304daf7" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 Edcafe 測驗 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 5. Wayground (Quizizz) -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">⚡</div>
+              <span class="act-tag act-tag-wayground">自主節奏測驗</span>
+            </div>
+            <h3 class="activity-title">Wayground 基礎理解 10 題</h3>
+            <p class="activity-desc">
+              提供學生個人化答題節奏與即時回饋，完整檢核國二自然與科學史基礎概念。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Wayground (Quizizz) 測驗', './assets/qr/wayground_qr.png', 'https://wayground.com/join?gc=512296', '輸入加入代碼即可開始測驗！', '512 296')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/wayground_qr.png" alt="Wayground QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+              <div><span class="pin-code-badge">代碼: 512 296</span></div>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://wayground.com/join?gc=512296" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-wayground">
+              開啟 Wayground 測驗 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 6. Escape Room -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🏰</div>
+              <span class="act-tag act-tag-escape">閱讀理解密室</span>
+            </div>
+            <h3 class="activity-title">〈林媽利 醫師 傳奇〉密室逃脫</h3>
+            <p class="activity-desc">
+              沈浸式解謎遊戲！挑戰 6 大主題關卡與密碼防猜機制，通關即時頒發個人專屬榮譽證書！
+            </p>
+
+            <div class="qr-preview-box" onclick="window.open('https://hungjuiying0606-dotcom.github.io/personal-main-hub/escape-rooms/lin-mari/', '_blank')">
+              <div class="qr-img-wrap" style="background: linear-gradient(135deg, #fef3c7, #fde68a); display: flex; align-items: center; justify-content: center; font-size: 2.2rem;">
+                🔑✨
+              </div>
+              <span class="qr-hint">🔍 點擊直接開啟密室逃脫</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/escape-rooms/lin-mari/" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              挑戰密室逃脫 ↗
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Classroom Bar Toolkit -->
+      <div class="classroom-bar">
+        <div class="classroom-bar-title">
+          <span>⏱️ 課堂互動工具箱</span>
+        </div>
+        <div class="classroom-tools">
+          <button class="tool-btn" onclick="startTimer(3)">⏳ 3 分鐘搶答</button>
+          <button class="tool-btn" onclick="startTimer(5)">⏳ 5 分鐘討論</button>
+          <button class="tool-btn" onclick="startTimer(10)">⏳ 10 分鐘測驗</button>
+          <button class="tool-btn" onclick="pickRandomStudent()">🎲 隨機抽籤號碼</button>
+          <span id="timerDisplay" style="font-family: monospace; font-size: 1.2rem; font-weight: bold; color: #38bdf8; min-width: 80px; text-align: center;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Photo Gallery -->
+  <section id="gallery" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🖼️ 珍貴歷史影像圖輯</div>
+        <h2 class="section-title">林媽利 醫師 歷史文獻與珍貴照片 (共 2 幅)</h2>
+        <p class="section-desc">點擊任一照片即可全螢幕燈箱放大觀賞！所有圖片皆依檔名清楚標註說明。</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        
+        <div class="gallery-card" onclick="openImageModal('林媽利 醫師_圖輯_01', './assets/lin-mari/gallery/林媽利 醫師_圖輯_01.jpeg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/lin-mari/gallery/林媽利 醫師_圖輯_01.jpeg" alt="林媽利 醫師_圖輯_01" loading="lazy" />
+          </div>
+          <div class="gallery-caption">林媽利 醫師_圖輯_01</div>
+        </div>
+        <div class="gallery-card" onclick="openImageModal('林媽利 醫師_圖輯_02', './assets/lin-mari/gallery/林媽利 醫師_圖輯_02.jpg')">
+          <div class="gallery-img-wrap">
+            <img src="./assets/lin-mari/gallery/林媽利 醫師_圖輯_02.jpg" alt="林媽利 醫師_圖輯_02" loading="lazy" />
+          </div>
+          <div class="gallery-caption">林媽利 醫師_圖輯_02</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo / Lightbox Modal -->
+  <div id="mediaModal" class="modal-backdrop" onclick="closeMediaModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeMediaModal()">✕</button>
+      <h3 id="modalTitle" class="modal-title">活動資訊</h3>
+      <p id="modalDesc" class="modal-desc">說明內容</p>
+      
+      <div id="modalPinWrap" style="display: none;">
+        <span class="modal-pin" id="modalPinText">PIN: ---</span>
+      </div>
+
+      <div class="modal-main-img">
+        <img id="modalImg" src="" alt="預覽影像" />
+      </div>
+
+      <div id="modalBtnWrap" style="margin-top: 1rem;">
+        <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+          前往活動連結 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>世界名人堂 · 林媽利 醫師 課堂教學網頁</strong></p>
+      <p>國二自然與理化 · 科學發展史數位互動教學模組</p>
+      <p>&copy; 2026 個人主網頁. 保留所有權利。</p>
+    </div>
+  </footer>
+
+  <!-- Scripts for 3D Card Stack, Modals, Timer, Tools -->
+  <script>
+    const SCIENTIST_PHOTOS = [{"id": 1, "title": "林媽利 醫師_圖輯_01", "file": "林媽利 醫師_圖輯_01.jpeg", "path": "./assets/lin-mari/gallery/林媽利 醫師_圖輯_01.jpeg"}, {"id": 2, "title": "林媽利 醫師_圖輯_02", "file": "林媽利 醫師_圖輯_02.jpg", "path": "./assets/lin-mari/gallery/林媽利 醫師_圖輯_02.jpg"}];
+    let currentStackIndex = 0;
+    let stackAutoPlay = true;
+    let stackTimer = null;
+
+    function initCardStack() {
+      const scene = document.getElementById('cardStackScene');
+      if (!scene) return;
+      scene.innerHTML = '';
+      const total = SCIENTIST_PHOTOS.length;
+      if (total === 0) return;
+
+      const renderCount = Math.min(4, total);
+
+      for (let i = 0; i < renderCount; i++) {
+        const photoIdx = (currentStackIndex + i) % total;
+        const photo = SCIENTIST_PHOTOS[photoIdx];
+
+        const card = document.createElement('div');
+        card.className = 'stack-card';
+        card.dataset.index = photoIdx;
+
+        const depth = i;
+        const translateY = depth * 14;
+        const translateZ = -depth * 35;
+        const scale = 1 - depth * 0.06;
+        const rotateZ = (depth === 1) ? 2.5 : (depth === 2) ? -2.5 : (depth === 3) ? 1.5 : 0;
+        const opacity = depth === 3 ? 0.35 : (1 - depth * 0.18);
+        const zIndex = 10 - depth;
+
+        card.style.transform = `translate3d(0, ${translateY}px, ${translateZ}px) scale(${scale}) rotateZ(${rotateZ}deg)`;
+        card.style.opacity = opacity;
+        card.style.zIndex = zIndex;
+
+        card.innerHTML = `
+          <div class="stack-img-wrap">
+            <img src="${photo.path}" alt="${photo.title}" loading="lazy" />
+          </div>
+          <div class="stack-card-caption">${photo.title}</div>
+        `;
+
+        if (i === 0) {
+          card.onclick = () => openImageModal(photo.title, photo.path);
+        } else {
+          card.onclick = () => nextStackCard();
+        }
+
+        scene.appendChild(card);
+      }
+
+      const counter = document.getElementById('stackCounter');
+      if (counter) {
+        const curNum = String(currentStackIndex + 1).padStart(2, '0');
+        const totNum = String(total).padStart(2, '0');
+        counter.textContent = `${curNum} / ${totNum}`;
+      }
+    }
+
+    function nextStackCard() {
+      if (SCIENTIST_PHOTOS.length === 0) return;
+      currentStackIndex = (currentStackIndex + 1) % SCIENTIST_PHOTOS.length;
+      initCardStack();
+    }
+
+    function prevStackCard() {
+      if (SCIENTIST_PHOTOS.length === 0) return;
+      currentStackIndex = (currentStackIndex - 1 + SCIENTIST_PHOTOS.length) % SCIENTIST_PHOTOS.length;
+      initCardStack();
+    }
+
+    function toggleAutoPlay() {
+      stackAutoPlay = !stackAutoPlay;
+      const playBtn = document.getElementById('stackPlayBtn');
+      if (stackAutoPlay) {
+        if (playBtn) playBtn.textContent = '⏸';
+        startAutoPlayTimer();
+      } else {
+        if (playBtn) playBtn.textContent = '▶';
+        clearInterval(stackTimer);
+      }
+    }
+
+    function startAutoPlayTimer() {
+      clearInterval(stackTimer);
+      stackTimer = setInterval(() => {
+        if (stackAutoPlay && SCIENTIST_PHOTOS.length > 1) {
+          nextStackCard();
+        }
+      }, 4500);
+    }
+
+    // Touch & Swipe Support
+    let touchStartX = 0;
+    const stackWrap = document.getElementById('cardStackWrapper');
+    if (stackWrap) {
+      stackWrap.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      stackWrap.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 40) nextStackCard();
+        if (touchEndX > touchStartX + 40) prevStackCard();
+      }, { passive: true });
+
+      stackWrap.addEventListener('mouseenter', () => {
+        if (stackAutoPlay) clearInterval(stackTimer);
+      });
+      stackWrap.addEventListener('mouseleave', () => {
+        if (stackAutoPlay) startAutoPlayTimer();
+      });
+    }
+
+    document.getElementById('stackNextBtn')?.addEventListener('click', nextStackCard);
+    document.getElementById('stackPrevBtn')?.addEventListener('click', prevStackCard);
+    document.getElementById('stackPlayBtn')?.addEventListener('click', toggleAutoPlay);
+
+    // Modal Helpers
+    function openImageModal(title, imgSrc) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = '歷史文獻影像檢視';
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('modalImg').style.display = 'block';
+      document.getElementById('modalPinWrap').style.display = 'none';
+      document.getElementById('modalBtnWrap').style.display = 'none';
+      document.getElementById('mediaModal').classList.add('active');
+    }
+
+    function openQrModal(title, qrSrc, linkUrl, desc, pin = '') {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalImg').src = qrSrc;
+      document.getElementById('modalImg').style.display = 'block';
+      if (pin) {
+        document.getElementById('modalPinWrap').style.display = 'block';
+        document.getElementById('modalPinText').textContent = 'PIN: ' + pin;
+      } else {
+        document.getElementById('modalPinWrap').style.display = 'none';
+      }
+      document.getElementById('modalBtnWrap').style.display = 'block';
+      document.getElementById('modalLink').href = linkUrl;
+      document.getElementById('mediaModal').classList.add('active');
+    }
+
+    function closeMediaModal(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('mediaModal').classList.remove('active');
+    }
+
+    // Classroom Timer
+    let countdownInterval = null;
+    function startTimer(minutes) {
+      clearInterval(countdownInterval);
+      let seconds = minutes * 60;
+      const display = document.getElementById('timerDisplay');
+      
+      countdownInterval = setInterval(() => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          display.textContent = '🔔 時間到！';
+          alert('🔔 時間到！請同學完成作答或討論！');
+        }
+        seconds--;
+      }, 1000);
+    }
+
+    function pickRandomStudent() {
+      const totalStudents = 35;
+      const lucky = Math.floor(Math.random() * totalStudents) + 1;
+      const display = document.getElementById('timerDisplay');
+      display.textContent = `🎯 抽中 ${lucky} 號！`;
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initCardStack();
+      startAutoPlayTimer();
+    });
+  </script>
+</body>
+</html>

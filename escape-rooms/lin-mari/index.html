@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>輸血醫學安全防線 ─ 血液基因密室逃脫</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0915;
+      --card-bg: rgba(18, 16, 38, 0.9);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --theme-color: #f43f5e;
+      --accent: #fb7185;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+      background-color: #030712;
+      background-image: linear-gradient(135deg, #4c0519 0%, #881337 50%, #1e1b4b 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 860px;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .back-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      color: #ffffff;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+    .back-nav:hover {
+      background-color: var(--theme-color);
+      color: #000000;
+    }
+    .lab-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 0 25px #f43f5e;
+      margin-bottom: 6px;
+    }
+    .lab-subtitle {
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .top-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      margin-bottom: 25px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    .status-item i { color: var(--theme-color); }
+
+    /* Stage Steps Map */
+    .stages-map {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .stage-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+    .stage-pill.active {
+      background: var(--theme-color);
+      color: #000000;
+      border-color: var(--theme-color);
+      box-shadow: 0 0 15px var(--theme-color);
+    }
+    .stage-pill.solved {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+      color: #4ade80;
+    }
+
+    /* Question Panel */
+    .quest-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .quest-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .quest-clue {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      margin-bottom: 15px;
+    }
+    .quest-prompt {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .answer-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-weight: 700;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .answer-input:focus {
+      border-color: var(--theme-color);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+    .btn-submit {
+      background: var(--theme-color);
+      color: #000000;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 24px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-submit:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 20px var(--theme-color);
+    }
+
+    .feedback-msg {
+      font-size: 0.9rem;
+      font-weight: 700;
+      min-height: 24px;
+      margin-bottom: 10px;
+    }
+    .msg-error { color: #ef4444; }
+    .msg-success { color: #22c55e; }
+
+    .hint-box {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: none;
+    }
+
+    /* Certificate Screen */
+    .cert-box {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    .cert-card {
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+      border: 3px solid #f59e0b;
+      border-radius: var(--radius-lg);
+      padding: 35px;
+      margin: 20px auto;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.3);
+      max-width: 600px;
+    }
+    .cert-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #f59e0b;
+      margin-bottom: 10px;
+    }
+    .cert-name {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      border-bottom: 2px solid #f59e0b;
+      display: inline-block;
+      padding: 0 20px 4px;
+      margin: 15px 0;
+    }
+    .cert-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="../../lin-mari.html" class="back-nav">
+        <i class="fa-solid fa-arrow-left"></i> 回到 林媽利 醫師 課堂教學網頁
+      </a>
+      <h1 class="lab-title"><i class="fa-solid fa-key"></i> 輸血醫學安全防線 ─ 血液基因密室逃脫</h1>
+      <p class="lab-subtitle">MARIE LIN BLOOD BANK ESCAPE</p>
+    </header>
+
+    <div class="card" id="gameCard">
+      <!-- Status Bar -->
+      <div class="top-status-bar">
+        <div class="status-item">
+          <i class="fa-solid fa-clock"></i>
+          <span>時間：<strong id="timerVal">00:00</strong></span>
+        </div>
+        <div class="status-item">
+          <i class="fa-solid fa-trophy"></i>
+          <span>關卡進度：<strong id="progressText">1 / 5</strong></span>
+        </div>
+      </div>
+
+      <!-- Stages Map -->
+      <div class="stages-map" id="stagesMap">
+        <div class="stage-pill active" id="pill-0">關卡 1</div>
+        <div class="stage-pill" id="pill-1">關卡 2</div>
+        <div class="stage-pill" id="pill-2">關卡 3</div>
+        <div class="stage-pill" id="pill-3">關卡 4</div>
+        <div class="stage-pill" id="pill-4">關卡 5</div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="quest-box" id="questBox">
+        <h3 class="quest-title" id="stageTitle">關卡載入中...</h3>
+        <p class="quest-clue" id="stageClue">線索載入中...</p>
+        <p class="quest-prompt" id="stagePrompt">題目載入中...</p>
+
+        <div class="input-row">
+          <input type="text" id="ansInput" class="answer-input" placeholder="請在此輸入答案..." autocomplete="off" />
+          <button class="btn-submit" onclick="submitAnswer()">解鎖通關 ➔</button>
+        </div>
+
+        <div class="feedback-msg" id="feedbackMsg"></div>
+
+        <div class="hint-box" id="hintBox">
+          <i class="fa-solid fa-lightbulb"></i> <span id="hintText"></span>
+        </div>
+      </div>
+
+      <!-- Certificate Box -->
+      <div class="cert-box" id="certBox">
+        <div class="cert-card">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🏆✨</div>
+          <h2 class="cert-title">世界名人堂 · 榮譽通關證書</h2>
+          <p style="color: #94a3b8; font-size: 0.85rem;">OFFICIAL CERTIFICATE OF COMPLETION</p>
+          
+          <div class="cert-name" id="certStudentName">傑出科學探索者</div>
+          <p class="cert-desc">
+            恭喜你成功破解<strong>【輸血醫學安全防線 ─ 血液基因密室逃脫】</strong>全部五大閱讀理解關卡！展現了卓越的科學探究思維與嚴謹的解謎精神！
+          </p>
+          <div style="font-size: 0.85rem; color: #f59e0b; font-family: monospace;">
+            通關時間：<span id="finalTime"></span> · 國二科學發展史認證
+          </div>
+        </div>
+
+        <button class="btn-submit" onclick="location.reload()" style="padding: 12px 30px; border-radius: 9999px;">
+          <i class="fa-solid fa-rotate-right"></i> 重新挑戰
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STAGES = [{"id": "1", "title": "第 1 關：台灣血液之母與無償捐血", "clue": "林媽利醫師主導改革台灣早期血牛買賣血液亂象，建立國家血液政策，推動 100% 安全無償自願捐血體系，贏得「台灣____之母」尊稱。", "question": "林媽利教授被譽為「台灣____之母」？（請輸入兩個中文字，如：血液/生化/遺傳）", "answer": "血液", "hint": "提示：專門研究紅血球與輸血，被譽為「台灣血液之母」！"}, {"id": "2", "title": "第 2 關：亞洲專用 MP 檢驗法", "clue": "林媽利醫師針對亞洲人抗體特性發明了微量盤凝集檢驗法（Microplate method, MP法），大幅縮短檢驗時間並提高靈敏度。", "question": "這項適合亞洲人血液檢驗的微量盤方法簡稱為「____法」？（請輸入兩個英文大寫字母）", "answer": "MP", "hint": "提示：Microplate 的縮寫，輸入 MP！"}, {"id": "3", "title": "第 3 關：米田堡 (Miltenberger) 罕見血型", "clue": "白種人極罕見的米田堡血型（Miltenberger），在台灣原住民（如阿美族、卑南族）盛行率高達 5%~10%。輸血前必須精確篩檢以防溶血反應。", "question": "在台灣盛行率偏高的此一特殊血型抗原名稱為「____堡血型」？（請輸入兩個中文字）", "answer": "米田", "hint": "提示：米田堡血型，請輸入「米田」！"}, {"id": "4", "title": "第 4 關：HLA 組織抗原與骨髓配對", "clue": "人類白血球抗原（HLA）系統是決定器官移植與骨髓配對成功與否的關鍵基因系統，林媽利醫師建立了台灣第一套 HLA 組織抗原資料庫。", "question": "決定器官移植排斥反應與骨髓配對的白血球組織抗原縮寫為「____」？（請輸入三個英文大寫字母）", "answer": "HLA", "hint": "提示：Human Leukocyte Antigen，輸入 HLA！"}, {"id": "5", "title": "第 5 關：醫療奉獻獎殊榮", "clue": "林媽利教授一生守護台灣輸血安全與多元族群尋根，榮獲國家級最高醫學肯定「醫療奉獻獎」。", "question": "林媽利教授榮獲第幾屆「醫療奉獻獎」？（請輸入阿拉伯數字）", "answer": "27", "hint": "提示：第二十七屆，輸入數字 27！"}];
+    let currentStageIndex = 0;
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let studentName = '';
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+        const s = String(timerSeconds % 60).padStart(2, '0');
+        document.getElementById('timerVal').textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    function loadStage(index) {
+      if (index >= STAGES.length) {
+        finishGame();
+        return;
+      }
+      currentStageIndex = index;
+      const stage = STAGES[index];
+      document.getElementById('stageTitle').textContent = stage.title;
+      document.getElementById('stageClue').innerHTML = stage.clue;
+      document.getElementById('stagePrompt').innerHTML = stage.question;
+      document.getElementById('progressText').textContent = `${index + 1} / ${STAGES.length}`;
+      document.getElementById('ansInput').value = '';
+      document.getElementById('feedbackMsg').textContent = '';
+      document.getElementById('hintBox').style.display = 'none';
+      document.getElementById('ansInput').focus();
+
+      for (let i = 0; i < STAGES.length; i++) {
+        const pill = document.getElementById(`pill-${i}`);
+        if (pill) {
+          pill.className = 'stage-pill';
+          if (i < index) pill.classList.add('solved');
+          if (i === index) pill.classList.add('active');
+        }
+      }
+    }
+
+    function submitAnswer() {
+      const userAns = document.getElementById('ansInput').value.trim().toUpperCase();
+      const stage = STAGES[currentStageIndex];
+      const correctAns = stage.answer.trim().toUpperCase();
+
+      const msg = document.getElementById('feedbackMsg');
+      if (userAns === correctAns) {
+        msg.className = 'feedback-msg msg-success';
+        msg.innerHTML = '<i class="fa-solid fa-circle-check"></i> 密碼正確！正在前往下一關...';
+        setTimeout(() => {
+          loadStage(currentStageIndex + 1);
+        }, 800);
+      } else {
+        msg.className = 'feedback-msg msg-error';
+        msg.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 密碼錯誤，請重新閱讀線索！';
+        document.getElementById('hintBox').style.display = 'block';
+        document.getElementById('hintText').textContent = stage.hint;
+      }
+    }
+
+    document.getElementById('ansInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') submitAnswer();
+    });
+
+    function finishGame() {
+      clearInterval(timerInterval);
+      document.getElementById('questBox').style.display = 'none';
+      document.getElementById('stagesMap').style.display = 'none';
+      document.getElementById('certBox').style.display = 'block';
+
+      studentName = prompt('恭喜通關！請輸入您的姓名以生成專屬榮譽證書：') || '傑出探索者';
+      document.getElementById('certStudentName').textContent = studentName;
+      
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const s = String(timerSeconds % 60).padStart(2, '0');
+      document.getElementById('finalTime').textContent = `${m}分${s}秒`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      startTimer();
+      loadStage(0);
+    });
+  </script>
+</body>
+</html>

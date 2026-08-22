@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東漢皇家天文台 ─ 地動儀與渾天星圖密室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0915;
+      --card-bg: rgba(18, 16, 38, 0.9);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --theme-color: #ea580c;
+      --accent: #fb923c;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+      background-color: #030712;
+      background-image: linear-gradient(135deg, #450a0a 0%, #7f1d1d 50%, #18181b 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 860px;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .back-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      color: #ffffff;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+    .back-nav:hover {
+      background-color: var(--theme-color);
+      color: #000000;
+    }
+    .lab-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 0 25px #ea580c;
+      margin-bottom: 6px;
+    }
+    .lab-subtitle {
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .top-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      margin-bottom: 25px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    .status-item i { color: var(--theme-color); }
+
+    /* Stage Steps Map */
+    .stages-map {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .stage-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+    .stage-pill.active {
+      background: var(--theme-color);
+      color: #000000;
+      border-color: var(--theme-color);
+      box-shadow: 0 0 15px var(--theme-color);
+    }
+    .stage-pill.solved {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+      color: #4ade80;
+    }
+
+    /* Question Panel */
+    .quest-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .quest-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .quest-clue {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      margin-bottom: 15px;
+    }
+    .quest-prompt {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .answer-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-weight: 700;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .answer-input:focus {
+      border-color: var(--theme-color);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+    .btn-submit {
+      background: var(--theme-color);
+      color: #000000;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 24px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-submit:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 20px var(--theme-color);
+    }
+
+    .feedback-msg {
+      font-size: 0.9rem;
+      font-weight: 700;
+      min-height: 24px;
+      margin-bottom: 10px;
+    }
+    .msg-error { color: #ef4444; }
+    .msg-success { color: #22c55e; }
+
+    .hint-box {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: none;
+    }
+
+    /* Certificate Screen */
+    .cert-box {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    .cert-card {
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+      border: 3px solid #f59e0b;
+      border-radius: var(--radius-lg);
+      padding: 35px;
+      margin: 20px auto;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.3);
+      max-width: 600px;
+    }
+    .cert-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #f59e0b;
+      margin-bottom: 10px;
+    }
+    .cert-name {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      border-bottom: 2px solid #f59e0b;
+      display: inline-block;
+      padding: 0 20px 4px;
+      margin: 15px 0;
+    }
+    .cert-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="../../zhang-heng.html" class="back-nav">
+        <i class="fa-solid fa-arrow-left"></i> 回到 張衡 課堂教學網頁
+      </a>
+      <h1 class="lab-title"><i class="fa-solid fa-key"></i> 東漢皇家天文台 ─ 地動儀與渾天星圖密室</h1>
+      <p class="lab-subtitle">ZHANG HENG SEISMOGRAPH ESCAPE</p>
+    </header>
+
+    <div class="card" id="gameCard">
+      <!-- Status Bar -->
+      <div class="top-status-bar">
+        <div class="status-item">
+          <i class="fa-solid fa-clock"></i>
+          <span>時間：<strong id="timerVal">00:00</strong></span>
+        </div>
+        <div class="status-item">
+          <i class="fa-solid fa-trophy"></i>
+          <span>關卡進度：<strong id="progressText">1 / 5</strong></span>
+        </div>
+      </div>
+
+      <!-- Stages Map -->
+      <div class="stages-map" id="stagesMap">
+        <div class="stage-pill active" id="pill-0">關卡 1</div>
+        <div class="stage-pill" id="pill-1">關卡 2</div>
+        <div class="stage-pill" id="pill-2">關卡 3</div>
+        <div class="stage-pill" id="pill-3">關卡 4</div>
+        <div class="stage-pill" id="pill-4">關卡 5</div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="quest-box" id="questBox">
+        <h3 class="quest-title" id="stageTitle">關卡載入中...</h3>
+        <p class="quest-clue" id="stageClue">線索載入中...</p>
+        <p class="quest-prompt" id="stagePrompt">題目載入中...</p>
+
+        <div class="input-row">
+          <input type="text" id="ansInput" class="answer-input" placeholder="請在此輸入答案..." autocomplete="off" />
+          <button class="btn-submit" onclick="submitAnswer()">解鎖通關 ➔</button>
+        </div>
+
+        <div class="feedback-msg" id="feedbackMsg"></div>
+
+        <div class="hint-box" id="hintBox">
+          <i class="fa-solid fa-lightbulb"></i> <span id="hintText"></span>
+        </div>
+      </div>
+
+      <!-- Certificate Box -->
+      <div class="cert-box" id="certBox">
+        <div class="cert-card">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🏆✨</div>
+          <h2 class="cert-title">世界名人堂 · 榮譽通關證書</h2>
+          <p style="color: #94a3b8; font-size: 0.85rem;">OFFICIAL CERTIFICATE OF COMPLETION</p>
+          
+          <div class="cert-name" id="certStudentName">傑出科學探索者</div>
+          <p class="cert-desc">
+            恭喜你成功破解<strong>【東漢皇家天文台 ─ 地動儀與渾天星圖密室】</strong>全部五大閱讀理解關卡！展現了卓越的科學探究思維與嚴謹的解謎精神！
+          </p>
+          <div style="font-size: 0.85rem; color: #f59e0b; font-family: monospace;">
+            通關時間：<span id="finalTime"></span> · 國二科學發展史認證
+          </div>
+        </div>
+
+        <button class="btn-submit" onclick="location.reload()" style="padding: 12px 30px; border-radius: 9999px;">
+          <i class="fa-solid fa-rotate-right"></i> 重新挑戰
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STAGES = [{"id": "1", "title": "第 1 關：候風地動儀都柱慣性", "clue": "西元 132 年，張衡發明了世界上第一台地震測報儀「候風地動儀」。儀器中央設有一根粗大的銅柱稱為「都柱」，利用慣性力學原理感應地震震波。", "question": "地動儀內部用來感應地震震波的核心銅柱稱為「____」？（請輸入兩個中文字）", "answer": "都柱", "hint": "提示：都市的都，柱子的柱 ➔「都柱」！"}, {"id": "2", "title": "第 2 關：八龍吐珠與八卦方位", "clue": "地動儀外圍鑄有八條銅龍，口中各銜一顆銅丸，分別朝向東、南、西、北、東北、東南、西北、西南八個方位。龍口下方各蹲伏一隻張口的蟾蜍接收銅丸。", "question": "地動儀外表鑄有幾條面向不同方位的銅龍？（請輸入阿拉伯數字）", "answer": "8", "hint": "提示：對應八個方位，共有 8 條龍！"}, {"id": "3", "title": "第 3 關：水運渾天儀自動旋轉", "clue": "張衡創製了「水運渾天儀」，利用滴水漏壺的水力推動齒輪系統，使渾天儀每天恆速旋轉一週，與室外天空中的星辰運行完全同步！", "question": "水運渾天儀是利用哪一種天然動力驅動齒輪旋轉？（請輸入兩個中文字，如：風力/水力/人力）", "answer": "水力", "hint": "提示：利用漏壺滴水的「水力」！"}, {"id": "4", "title": "第 4 關：隴西地震歷史實測驗證", "clue": "西元 138 年，洛陽的地動儀西方龍口吐出銅丸，洛陽人無震感。數日後驛馬飛報甘肅隴西發生大地震，證實地動儀靈驗無比！", "question": "這場歷史名垂青史、相距一千餘里被地動儀準確測出的地震發生在何地？（請輸入兩個中文字：隴西/長安/洛陽）", "answer": "隴西", "hint": "提示：甘肅古稱「隴西」！"}, {"id": "5", "title": "第 5 關：漢賦四大家文學泰斗", "clue": "張衡不僅是科學家，更是文學家，耗費十年寫作描繪漢代都城的《二京賦》，被列為漢賦四大家之一。", "question": "張衡創作的《東京賦》與《西京賦》合稱為《____賦》？（請輸入兩個中文字）", "answer": "二京", "hint": "提示：兩個京城，合稱「二京」賦！"}];
+    let currentStageIndex = 0;
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let studentName = '';
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+        const s = String(timerSeconds % 60).padStart(2, '0');
+        document.getElementById('timerVal').textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    function loadStage(index) {
+      if (index >= STAGES.length) {
+        finishGame();
+        return;
+      }
+      currentStageIndex = index;
+      const stage = STAGES[index];
+      document.getElementById('stageTitle').textContent = stage.title;
+      document.getElementById('stageClue').innerHTML = stage.clue;
+      document.getElementById('stagePrompt').innerHTML = stage.question;
+      document.getElementById('progressText').textContent = `${index + 1} / ${STAGES.length}`;
+      document.getElementById('ansInput').value = '';
+      document.getElementById('feedbackMsg').textContent = '';
+      document.getElementById('hintBox').style.display = 'none';
+      document.getElementById('ansInput').focus();
+
+      for (let i = 0; i < STAGES.length; i++) {
+        const pill = document.getElementById(`pill-${i}`);
+        if (pill) {
+          pill.className = 'stage-pill';
+          if (i < index) pill.classList.add('solved');
+          if (i === index) pill.classList.add('active');
+        }
+      }
+    }
+
+    function submitAnswer() {
+      const userAns = document.getElementById('ansInput').value.trim().toUpperCase();
+      const stage = STAGES[currentStageIndex];
+      const correctAns = stage.answer.trim().toUpperCase();
+
+      const msg = document.getElementById('feedbackMsg');
+      if (userAns === correctAns) {
+        msg.className = 'feedback-msg msg-success';
+        msg.innerHTML = '<i class="fa-solid fa-circle-check"></i> 密碼正確！正在前往下一關...';
+        setTimeout(() => {
+          loadStage(currentStageIndex + 1);
+        }, 800);
+      } else {
+        msg.className = 'feedback-msg msg-error';
+        msg.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 密碼錯誤，請重新閱讀線索！';
+        document.getElementById('hintBox').style.display = 'block';
+        document.getElementById('hintText').textContent = stage.hint;
+      }
+    }
+
+    document.getElementById('ansInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') submitAnswer();
+    });
+
+    function finishGame() {
+      clearInterval(timerInterval);
+      document.getElementById('questBox').style.display = 'none';
+      document.getElementById('stagesMap').style.display = 'none';
+      document.getElementById('certBox').style.display = 'block';
+
+      studentName = prompt('恭喜通關！請輸入您的姓名以生成專屬榮譽證書：') || '傑出探索者';
+      document.getElementById('certStudentName').textContent = studentName;
+      
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const s = String(timerSeconds % 60).padStart(2, '0');
+      document.getElementById('finalTime').textContent = `${m}分${s}秒`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      startTimer();
+      loadStage(0);
+    });
+  </script>
+</body>
+</html>
