@@ -43,15 +43,6 @@
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
         },
         {
-          "id": "classroom-arcade-hall-of-fame",
-          "title": "Classroom Arcade 教室遊樂場",
-          "description": "世界名人堂課程使用的教室互動遊戲與答題競賽平台",
-          "status": "active",
-          "homepageState": "linked",
-          "order": 50,
-          "url": "https://hungjuiying0606-dotcom.github.io/classroom-arcade-hall-of-fame/"
-        },
-        {
           "id": "naturelab",
           "title": "教師派發任務",
           "description": "開始進行課程管理，查看學生學習紀錄",
@@ -87,17 +78,7 @@
       "id": "travel",
       "title": "旅遊",
       "order": 40,
-      "sites": [
-        {
-          "id": "osaka-20260705",
-          "title": "20260705大阪",
-          "description": "2026 大阪購物與在庫查詢手冊，整理臨空城、Montbell 與市區商店資訊",
-          "status": "active",
-          "homepageState": "linked",
-          "order": 10,
-          "url": "https://hungjuiying0606-dotcom.github.io/osaka-20260705/"
-        }
-      ]
+      "sites": []
     },
     {
       "id": "computer",
