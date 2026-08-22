@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>諾貝爾傳奇 · 課堂教學與互動學習殿堂 - 世界名人堂</title>
+  <meta name="description" content="世界名人堂系列第 1 位科學家：阿爾弗雷德·諾貝爾（Alfred Bernhard Nobel）生平、炸藥發明、諾貝爾獎與五大課堂數位互動教具。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #faf8f5;
+      --bg-surface: #ffffff;
+      --bg-surface-muted: #f4f2ee;
+      --bg-card-hover: #ffffff;
+      --text-main: #1f2937;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --border-muted: #e2e0dc;
+      --primary: #0f766e;
+      --primary-hover: #115e59;
+      --primary-light: #ccfbf1;
+      --primary-light-text: #134e4a;
+      --gold: #b45309;
+      --gold-light: #fef3c7;
+      --gold-dark: #92400e;
+      --accent-red: #dc2626;
+      --accent-red-light: #fee2e2;
+      --accent-blue: #2563eb;
+      --accent-blue-light: #dbeafe;
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #f3e8ff;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    /* Sticky Navigation */
+    .site-header {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-left-btns {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.2rem 0;
+    }
+
+    .nav-link-item {
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background-color: var(--bg-surface-muted);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link-item:hover {
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #fefce8 0%, #ffffff 50%, #f0fdfa 100%);
+      border-bottom: 1px solid var(--border-muted);
+      padding: 3rem 0 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.8rem;
+      background-color: var(--gold-light);
+      color: var(--gold-dark);
+      font-size: 0.8125rem;
+      font-weight: 800;
+      border-radius: 9999px;
+      border: 1px solid #fde68a;
+    }
+
+    .hero-tag-sub {
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      border-color: #a7f3d0;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-quote-box {
+      background-color: #ffffff;
+      border-left: 4px solid var(--gold);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-style: italic;
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 580px) {
+      .hero-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-pill {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .hero-card-side {
+      background-color: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-avatar-wrap {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.25rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--gold-light);
+      box-shadow: var(--shadow-md);
+      background-color: var(--bg-surface-muted);
+    }
+
+    .hero-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-card-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card-latin {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .hero-mini-badge {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      background-color: var(--bg-surface-muted);
+      color: var(--text-secondary);
+    }
+
+    /* Section Styling */
+    .section-wrap {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-wrap:nth-child(even) {
+      background-color: var(--bg-surface);
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+      font-size: 0.8125rem;
+      font-weight: 800;
+      border-radius: 9999px;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 800px;
+    }
+
+    /* Interactive QR Activities Grid */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .activities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .activity-card {
+      background-color: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .card-top-type {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .activity-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-surface-muted);
+    }
+
+    .act-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .act-tag-ai { background-color: #f3e8ff; color: #6b21a8; }
+    .act-tag-wordwall { background-color: #dbeafe; color: #1e40af; }
+    .act-tag-kahoot { background-color: #fee2e2; color: #991b1b; }
+    .act-tag-quiz { background-color: #dcfce7; color: #166534; }
+    .act-tag-wayground { background-color: #fce7f3; color: #9d174d; }
+    .act-tag-escape { background-color: #fef3c7; color: #92400e; }
+
+    .activity-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.35;
+    }
+
+    .activity-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .qr-preview-box {
+      background-color: #ffffff;
+      border: 1.5px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .qr-preview-box:hover {
+      border-color: var(--primary);
+      background-color: #f0fdfa;
+    }
+
+    .qr-img-wrap {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 0.5rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .qr-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-hint {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .pin-code-badge {
+      display: inline-block;
+      margin-top: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      background-color: #1f2937;
+      color: #f9fafb;
+      font-family: monospace;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      border-radius: var(--radius-sm);
+    }
+
+    .activity-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-act-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-act-primary:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+    }
+
+    .btn-act-kahoot {
+      background-color: #46178f;
+      color: #ffffff;
+    }
+
+    .btn-act-kahoot:hover {
+      background-color: #381372;
+      box-shadow: 0 4px 12px rgba(70, 23, 143, 0.3);
+    }
+
+    .btn-act-wayground {
+      background-color: #e21b70;
+      color: #ffffff;
+    }
+
+    .btn-act-wayground:hover {
+      background-color: #be125a;
+      box-shadow: 0 4px 12px rgba(226, 27, 112, 0.3);
+    }
+
+    /* Knowledge Grid & Timeline */
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .knowledge-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-card {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1.5px solid var(--border-muted);
+    }
+
+    .info-card-icon {
+      font-size: 1.5rem;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-light);
+      color: var(--primary-light-text);
+    }
+
+    .info-card-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .timeline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-list::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background-color: var(--border-color);
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.5rem;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      border: 3px solid #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-year {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--gold-dark);
+      background-color: var(--gold-light);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-heading {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Prize Cards */
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .prizes-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .prizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .prize-badge-card {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 0.75rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .prize-badge-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--gold);
+    }
+
+    .prize-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .prize-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .prize-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Mythbusters Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 1.25rem;
+    }
+
+    .comparison-table th {
+      background-color: var(--bg-surface-muted);
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-align: left;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+
+    .comparison-table td {
+      padding: 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-myth {
+      background-color: var(--accent-red-light);
+      color: var(--accent-red);
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+
+    .badge-fact {
+      background-color: #dcfce7;
+      color: #166534;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Classroom Toolkit Float Bar */
+    .classroom-bar {
+      background: #1e293b;
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .classroom-bar-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .classroom-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background-color: #334155;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tool-btn:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Lightbox Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: #ffffff;
+      border-radius: var(--radius-xl);
+      max-width: 540px;
+      width: 100%;
+      padding: 2.25rem;
+      text-align: center;
+      position: relative;
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    @keyframes modalPop {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--bg-surface-muted);
+      border: none;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background-color: #fee2e2;
+      color: var(--accent-red);
+    }
+
+    .modal-qr-img {
+      width: 260px;
+      height: 260px;
+      margin: 1.25rem auto;
+      border-radius: var(--radius-md);
+      border: 3px solid #e2e8f0;
+      padding: 0.5rem;
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .modal-qr-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .modal-pin {
+      display: inline-block;
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 1.75rem;
+      font-weight: 900;
+      padding: 0.4rem 1.2rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="nav-left-btns">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-btn">
+          🏠 回首頁
+        </a>
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html" class="nav-btn">
+          🏛️ 回世界名人堂
+        </a>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#activities" class="nav-link-item">⚡ 課堂互動教具</a>
+        <a href="#biography" class="nav-link-item">🧑 生平傳奇</a>
+        <a href="#dynamite" class="nav-link-item">💥 炸藥與發明</a>
+        <a href="#nobel-prize" class="nav-link-item">🏆 諾貝爾獎</a>
+        <a href="#mythbusters" class="nav-link-item">💡 史實闢謠與搞笑獎</a>
+        <a href="#quotes" class="nav-link-item">💭 名言思考</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-main-text">
+          <div class="hero-badge-row">
+            <span class="hero-tag">🌟 世界名人堂 · 第 1 位科學家</span>
+            <span class="hero-tag hero-tag-sub">國二理化 · 科學發展史</span>
+          </div>
+          <h1 class="hero-title">阿爾弗雷德·諾貝爾</h1>
+          <p class="hero-subtitle">Alfred Bernhard Nobel (1833 – 1896) · 炸藥之父與和平遺產</p>
+          <p class="hero-desc">
+            出生於瑞典斯德哥爾摩，畢生取得全球 350 多項專利。他發明雷管導出「起爆原理」，開創「矽藻土黃色炸藥」大幅降低傷亡並加速世界工業建設。晚年以信託基金創立諾貝爾獎，將畢生財富獻給推動人類文明進步與世界和平的卓越心靈。
+          </p>
+
+          <div class="hero-quote-box">
+            「只要我一千個想法中有一個證明是很好的，我就滿意了。有錢不能使人幸福，幸福的泉源只有一個——使別人得到幸福。」
+          </div>
+
+          <div class="hero-stats-grid">
+            <div class="stat-pill">
+              <span class="stat-num">350+</span>
+              <span class="stat-label">世界發明專利</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">5 大</span>
+              <span class="stat-label">創始諾貝爾獎</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">52 億</span>
+              <span class="stat-label">遺產基金(現值)</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num">20 國</span>
+              <span class="stat-label">93 座跨國工廠</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-side">
+          <div class="hero-avatar-wrap">
+            <img src="./assets/nobel/image1.png" alt="諾貝爾肖像" onerror="this.src='./assets/nobel/slide_8_img_2.jpg'" />
+          </div>
+          <h2 class="hero-card-name">諾貝爾</h2>
+          <p class="hero-card-latin">Alfred Bernhard Nobel</p>
+          <div class="hero-card-tags">
+            <span class="hero-mini-badge">炸藥之父</span>
+            <span class="hero-mini-badge">語言天才</span>
+            <span class="hero-mini-badge">化學家</span>
+            <span class="hero-mini-badge">和平主義者</span>
+          </div>
+
+          <div style="margin-top: 1.25rem;">
+            <a href="#activities" class="activity-btn btn-act-primary" style="font-size: 0.9rem; padding: 0.65rem 1rem;">
+              🚀 啟動課堂互動教具
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Interactive Activities -->
+  <section id="activities" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">⚡ 課堂數位互動教具</div>
+        <h2 class="section-title">5 大線上活動與 AI 互動專區</h2>
+        <p class="section-desc">
+          老師可於課堂直接投影，點擊 QR Code 可全螢幕放大讓全班學生一秒掃描加入！
+        </p>
+      </div>
+
+      <div class="activities-grid">
+        <!-- 1. Edcafe AI Chatbot -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🤖</div>
+              <span class="act-tag act-tag-ai">AI 角色訪談</span>
+            </div>
+            <h3 class="activity-title">Edcafe AI 諾貝爾訪談</h3>
+            <p class="activity-desc">
+              與 AI 諾貝爾跨時空對話！親自向諾貝爾詢問 1864 年工廠爆炸、發明雷管與矽藻土炸藥的心路歷程，以及設立和平獎的初心。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Edcafe AI 諾貝爾聊天機器人', './assets/qr/edcafe_chatbot_qr.png', 'https://app.edcafe.ai/chatbots/6a86f1c1fe58ea3e55edddca', '手機掃描 QR Code 即可向 AI 諾貝爾提問！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/edcafe_chatbot_qr.png" alt="Edcafe Chatbot QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://app.edcafe.ai/chatbots/6a86f1c1fe58ea3e55edddca" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 AI 諾貝爾對話 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 2. Wordwall Match -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🧩</div>
+              <span class="act-tag act-tag-wordwall">課堂配對連連看</span>
+            </div>
+            <h3 class="activity-title">Wordwall 知識配對遊戲</h3>
+            <p class="activity-desc">
+              將「雷管、矽藻土炸藥、350 項專利、五大獎、菲爾茲獎、搞笑諾貝爾獎」快速進行概念配對，強化課堂知識記憶！
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Wordwall 課堂配對遊戲', './assets/qr/wordwall_qr.png', 'https://wordwall.net/resource/117738453', '手機掃描 QR Code 即可進入配對挑戰！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/wordwall_qr.png" alt="Wordwall QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://wordwall.net/resource/117738453" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 Wordwall 配對 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 3. Kahoot! 5-Questions Quiz -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🎯</div>
+              <span class="act-tag act-tag-kahoot">即時競賽搶答</span>
+            </div>
+            <h3 class="activity-title">Kahoot! 5 題搶答挑戰</h3>
+            <p class="activity-desc">
+              5 題核心觀念搶答（起爆原理、固態化效益、和平主義反思、頒獎規定與海姆搞笑諾貝爾案例），刺激課堂即時反饋！
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Kahoot! 5 題單元搶答', './assets/qr/kahoot_qr.png', 'https://kahoot.it/?pin=194441', '輸入遊戲 PIN 碼即可加入全班搶答！', '194 441')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/kahoot_qr.png" alt="Kahoot QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+              <div><span class="pin-code-badge">PIN: 194 441</span></div>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://kahoot.it/?pin=194441" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-kahoot">
+              進入 Kahoot! 搶答 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 4. Edcafe Quiz / Worksheet -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">📝</div>
+              <span class="act-tag act-tag-quiz">線上任務學習單</span>
+            </div>
+            <h3 class="activity-title">Edcafe 課堂評量測驗</h3>
+            <p class="activity-desc">
+              包含發明歷程、起爆原理、350 項多元專利、遺囑五大獎項與史實闢謠等 7 大核心問答任務，系統化掌握學習成效。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Edcafe 課堂線上測驗', './assets/qr/edcafe_quiz_qr.png', 'https://app.edcafe.ai/quizzes/6a86eef0d895b8a8e304daf7', '手機掃描 QR Code 進入評量作答！')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/edcafe_quiz_qr.png" alt="Edcafe Quiz QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://app.edcafe.ai/quizzes/6a86eef0d895b8a8e304daf7" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              開啟 Edcafe 測驗 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 5. Wayground (Quizizz) -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">⚡</div>
+              <span class="act-tag act-tag-wayground">自主節奏測驗</span>
+            </div>
+            <h3 class="activity-title">Wayground 基礎理解 10 題</h3>
+            <p class="activity-desc">
+              提供學生個人化答題節奏與即時回饋，完整檢核國二自然與科學史基礎概念理解。
+            </p>
+
+            <div class="qr-preview-box" onclick="openQrModal('Wayground (Quizizz) 測驗', './assets/qr/wayground_qr.png', 'https://wayground.com/join?gc=512296', '輸入加入代碼即可開始測驗！', '512 296')">
+              <div class="qr-img-wrap">
+                <img src="./assets/qr/wayground_qr.png" alt="Wayground QR" />
+              </div>
+              <span class="qr-hint">🔍 點擊放大投影 QR Code</span>
+              <div><span class="pin-code-badge">代碼: 512 296</span></div>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://wayground.com/join?gc=512296" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-wayground">
+              開啟 Wayground 測驗 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 6. Escape Room -->
+        <article class="activity-card">
+          <div>
+            <div class="card-top-type">
+              <div class="activity-icon">🏰</div>
+              <span class="act-tag act-tag-escape">閱讀理解密室</span>
+            </div>
+            <h3 class="activity-title">〈諾貝爾傳奇〉密室逃脫</h3>
+            <p class="activity-desc">
+              沈浸式解謎遊戲！挑戰 6 大關卡與密碼鎖防猜機制，通關即時獲得個人專屬榮譽證書！
+            </p>
+
+            <div class="qr-preview-box" style="padding: 1.75rem 1rem;" onclick="window.open('https://hungjuiying0606-dotcom.github.io/nobel-reading-escape-room/', '_blank')">
+              <div style="font-size: 3rem; margin-bottom: 0.5rem;">🗝️✨</div>
+              <span class="qr-hint">🎮 點擊直接開啟密室逃脫</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/nobel-reading-escape-room/" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+              挑戰密室逃脫 ↗
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Classroom Bar Toolkit -->
+      <div class="classroom-bar">
+        <div class="classroom-bar-title">
+          <span>⏱️ 課堂互動工具箱</span>
+        </div>
+        <div class="classroom-tools">
+          <button class="tool-btn" onclick="startTimer(3)">⏳ 3 分鐘搶答</button>
+          <button class="tool-btn" onclick="startTimer(5)">⏳ 5 分鐘討論</button>
+          <button class="tool-btn" onclick="startTimer(10)">⏳ 10 分鐘測驗</button>
+          <button class="tool-btn" onclick="pickRandomStudent()">🎲 隨機抽籤號碼</button>
+          <span id="timerDisplay" style="font-family: monospace; font-size: 1.2rem; font-weight: bold; color: #38bdf8; min-width: 80px; text-align: center;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Biography -->
+  <section id="biography" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🧑 篇章一 · 生平傳奇</div>
+        <h2 class="section-title">家學淵源、俄國成長與博愛啟蒙</h2>
+        <p class="section-desc">從斯德哥爾摩到聖彼得堡，探索造就這位科學巨擘與和平使者的成長軌跡。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <!-- Card 1 -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🏛️</div>
+            <h3 class="info-card-title">家族血統與才華薰陶</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">祖先傳承</span>
+              <h4 class="timeline-heading">家學淵源與醫學世家</h4>
+              <p class="timeline-text">
+                諾貝爾祖先多位名列瑞典文化史，其中最著名的是 17 世紀北歐博物學家<strong>歐魯夫·魯德貝克（Olof Rudbeck）</strong>，為世界首位發現人體「淋巴組織」的權威學者。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">父母啟迪</span>
+              <h4 class="timeline-heading">工程師父親與聰慧樂觀母親</h4>
+              <p class="timeline-text">
+                父親伊曼紐爾是建築師兼機械工程師，曾研製蒸汽引擎與水雷，是早期軍火與爆破石頭技術先驅；母親安得麗塔性格堅毅樂觀，悉心照顧自幼體弱多病的諾貝爾。
+              </p>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">📚</div>
+            <h3 class="info-card-title">名師家教與語言文學底蘊</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">全人教育</span>
+              <h4 class="timeline-heading">未進高等學校的大學級家教</h4>
+              <p class="timeline-text">
+                父親事業有成後聘請教授級家教，傳授物理、化學、數學、文學與哲學。諾貝爾精通<strong>瑞典文、俄文、法文、英文、德文</strong>五國語言，更是極具造詣的青年學者。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">心靈啟發</span>
+              <h4 class="timeline-heading">雪萊詩作與和平博愛主義</h4>
+              <p class="timeline-text">
+                諾貝爾深愛文學且曾想成為作家，深深為英國詩人<strong>雪萊（P. B. Shelley）</strong>的博愛與追求世界和平思想所折服，奠定了他日後反戰與設立和平獎的深層動機。
+              </p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Dynamite & Inventions -->
+  <section id="dynamite" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💥 篇章二 · 炸藥發明與科技突破</div>
+        <h2 class="section-title">起爆原理、矽藻土炸藥與 350+ 項專利</h2>
+        <p class="section-desc">從實驗室爆炸悲劇中堅毅不屈，開創現代爆破工程與跨領域工業技術。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <!-- Dynamite Invention Card -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">💣</div>
+            <h3 class="info-card-title">炸藥研究歷程與起爆原理</h3>
+          </div>
+          <ul class="timeline-list">
+            <li class="timeline-item">
+              <span class="timeline-year">1864 年悲劇</span>
+              <h4 class="timeline-heading">工廠大爆炸與弟弟埃米爾喪生</h4>
+              <p class="timeline-text">
+                研究液態硝化甘油時工廠不幸大爆炸，幼弟埃米爾（Emil）與數名工人罹難。面對劇痛與社會反對，諾貝爾在水上駁船堅持研究。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">1865 年突破</span>
+              <h4 class="timeline-heading">發明「雷管」導出起爆原理</h4>
+              <p class="timeline-text">
+                發明以雷汞為主的「雷管」，能使火藥完全爆發，確立了爆破技術的<strong>「起爆原理」</strong>，奠定現代爆破基礎。
+              </p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year">1867 年經典</span>
+              <h4 class="timeline-heading">矽藻土炸藥 (Dynamite) 固態化</h4>
+              <p class="timeline-text">
+                將極易震爆的液態硝化甘油混合多孔「矽藻土」，製成穩定可塑的<strong>黃色炸藥 (Dynamite)</strong>。從此以固態使用，爆炸傷亡大大減少，開鑿山洞、運河與鐵路成本大幅降低！
+              </p>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Diverse 350+ Patents Card -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">⚙️</div>
+            <h3 class="info-card-title">350+ 專利與非炸藥領域卓越成就</h3>
+          </div>
+          <p class="timeline-text" style="margin-bottom: 1rem;">
+            諾貝爾絕非僅是「炸藥商人」，他在眾多科技領域展現了驚人的跨界發明：
+          </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.9rem; color: var(--text-secondary);">
+            <li style="display: flex; gap: 0.5rem;"><span>🔹</span> <strong>軍工與安全裝備</strong>：硝化甘油導火線、無聲鎗砲、子彈飛行安定技術。</li>
+            <li style="display: flex; gap: 0.5rem;"><span>🔹</span> <strong>冶金與機械工程</strong>：金屬硬化處理技術、特種銲接與熔接工法。</li>
+            <li style="display: flex; gap: 0.5rem;"><span>🔹</span> <strong>海洋與救難科技</strong>：使用瓦斯的海底作業安全裝備、海難救助用發射火箭。</li>
+            <li style="display: flex; gap: 0.5rem;"><span>🔹</span> <strong>化學材料先驅</strong>：人造橡膠、人造皮革、真漆染料與人造寶石早期實驗，為後世高分子與材料科學奠定基礎。</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Nobel Prize -->
+  <section id="nobel-prize" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">🏆 篇章三 · 永恆的遺產</div>
+        <h2 class="section-title">世界最高榮譽：諾貝爾獎的創立</h2>
+        <p class="section-desc">「將每一年所得的利息，授予前一個年度對人類社會有最大貢獻的人。」</p>
+      </div>
+
+      <div class="info-card" style="margin-bottom: 1.5rem;">
+        <div class="info-card-header">
+          <div class="info-card-icon">📜</div>
+          <div>
+            <h3 class="info-card-title">和平主義者的遺囑與 52 億信託基金</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted);">1896 年病逝於義大利聖雷莫，留下約 400 萬美元遺產（現值約 52 億台幣）</p>
+          </div>
+        </div>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;">
+          諾貝爾一生反對戰爭，但見發明的炸藥被大量投入戰場奪走無數生命，內心極度痛苦。他在遺囑中指定將財產成立基金，由利息平分五等分獎勵五大領域卓越貢獻者，並於每年 <strong>12 月 10 日（諾貝爾逝世紀念日）</strong> 在瑞典舉行隆重頒獎典禮。
+        </p>
+      </div>
+
+      <div class="prizes-grid">
+        <div class="prize-badge-card">
+          <div class="prize-icon">⚛️</div>
+          <h4 class="prize-name">物理學獎</h4>
+          <p class="prize-desc">物質、能量與宇宙物理重大發現</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🧪</div>
+          <h4 class="prize-name">化學獎</h4>
+          <p class="prize-desc">分子化學反應與元素合成突破</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🧬</div>
+          <h4 class="prize-name">生理或醫學獎</h4>
+          <p class="prize-desc">生命科學、疾病治療與人體醫學</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">✍️</div>
+          <h4 class="prize-name">文學獎</h4>
+          <p class="prize-desc">具理想主義傾向之最優良文學著作</p>
+        </div>
+        <div class="prize-badge-card">
+          <div class="prize-icon">🕊️</div>
+          <h4 class="prize-name">和平獎</h4>
+          <p class="prize-desc">促進民族和睦、裁軍與和平努力</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+        💡 補充說明：一般所稱「諾貝爾經濟學獎」係瑞典中央銀行於 1968 年出資創設，全稱為「紀念諾貝爾經濟學獎」。
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Mythbusters & Ig Nobel -->
+  <section id="mythbusters" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💡 篇章四 · 史實闢謠與趣味科學</div>
+        <h2 class="section-title">科學史大闢謠 ✕ 搞笑諾貝爾獎 (Ig Nobel)</h2>
+        <p class="section-desc">澄清數學獎爭議真相，認識「乍看好笑，後又引人深思」的趣味科學殿堂。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <!-- Mythbuster 1: Math Prize -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">📐</div>
+            <h3 class="info-card-title">為何沒有「諾貝爾數學獎」？</h3>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width: 45%;">民間謠傳 (Myth)</th>
+                <th style="width: 55%;">歷史真相 (Fact)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="badge-myth">❌ 不實八卦</span><br>
+                  謠傳當時瑞典著名數學家米泰·萊弗勒搶走了諾貝爾的妻子，諾貝爾懷恨在心故拒設數學獎。
+                </td>
+                <td>
+                  <span class="badge-fact">✔️ 歷史史實</span><br>
+                  1. 諾貝爾<strong>終生未娶且無子嗣</strong>，根本沒有妻子！<br>
+                  2. 當時已有聲望極高的數學頂級榮譽<strong>「菲爾茲獎 (Fields Medals)」</strong>存在，無須重複設立。
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <!-- Ig Nobel Card -->
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🐸</div>
+            <h3 class="info-card-title">搞笑諾貝爾獎 (Ig Nobel Prizes)</h3>
+          </div>
+          <p class="timeline-text" style="margin-bottom: 0.75rem;">
+            由馬克·亞伯拉罕於 1991 年創立，每年 9 月在哈佛大學舉行，由<strong>真正的諾貝爾得主親自頒獎</strong>！
+          </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; color: var(--text-secondary);">
+            <li>🏷️ <strong>名稱字源</strong>：源自英文 <code>ignoble</code>（不光彩的、令人羞恥的），為諾貝爾獎的幽默模仿。</li>
+            <li>🎯 <strong>評選宗旨</strong>：授予<strong>「乍看好笑，後又引人深思」</strong>的科學成就，無高額獎金卻寓意深遠。</li>
+            <li>🏆 <strong>傳奇得主</strong>：<strong>安德烈·海姆（Andre Geim）</strong> 2000 年以「磁懸浮技術讓活青蛙飄浮」獲搞笑獎，2010 年又以發現「石墨烯」奪得真正諾貝爾物理學獎，成為史上首位雙料得主！</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Quotes & Discussion -->
+  <section id="quotes" class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">💭 篇章五 · 名言與思考探究</div>
+        <h2 class="section-title">大師智慧與課堂探究思辨</h2>
+        <p class="section-desc">反思科學發展與人文關懷的永恆對話。</p>
+      </div>
+
+      <div class="knowledge-grid">
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">📖</div>
+            <h3 class="info-card-title">諾貝爾經典名言</h3>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <blockquote style="border-left: 3px solid var(--primary); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「有錢不能使人幸福，幸福的泉源只有一個——使別人得到幸福。」
+            </blockquote>
+            <blockquote style="border-left: 3px solid var(--gold); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「只要我一千個想法中有一個證明是很好的，我就滿意了。」
+            </blockquote>
+            <blockquote style="border-left: 3px solid var(--accent-red); padding-left: 1rem; font-size: 0.95rem; color: var(--text-main);">
+              「我真想發明一種具有那麼可怕的大規模破壞力的機器，以至於戰爭將會因此變為永遠不可能的事情。」
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">🧠</div>
+            <h3 class="info-card-title">課堂思辨與探究題目</h3>
+          </div>
+          <ol style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.92rem; color: var(--text-secondary);">
+            <li><strong>科技雙面刃</strong>：諾貝爾發明炸藥初衷為促進工礦建設，卻遭用於戰爭。科學家應對其發明的後續應用負起什麼樣的社會責任？</li>
+            <li><strong>失敗與堅持</strong>：面對 1864 年工廠爆炸失去至親與工廠被封閉，諾貝爾如何展現科學家面對挫折的堅毅精神？</li>
+            <li><strong>搞笑與嚴肅</strong>：搞笑諾貝爾獎頒給看似無厘頭的研究（如懸浮青蛙），這對培養好奇心與科學創新有何啟發？</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QR Code Lightbox Modal -->
+  <div id="qrModal" class="modal-backdrop" onclick="closeQrModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeQrModal()">✕</button>
+      <h3 id="modalTitle" class="modal-title">活動 QR Code</h3>
+      <p id="modalDesc" class="modal-desc">掃描 QR Code 立即參與課堂活動</p>
+      
+      <div id="modalPinWrap" style="display: none;">
+        <span class="modal-pin" id="modalPinText">PIN: ---</span>
+      </div>
+
+      <div class="modal-qr-img">
+        <img id="modalQrImg" src="" alt="活動 QR Code" />
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="activity-btn btn-act-primary">
+          前往活動連結 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>世界名人堂 · 阿爾弗雷德·諾貝爾課堂教學網頁</strong></p>
+      <p>國二理化 · 科學發展史數位互動教學模組</p>
+      <p>&copy; 2026 個人主網頁. 保留所有權利。</p>
+    </div>
+  </footer>
+
+  <!-- Scripts for Modal, Timer and Tools -->
+  <script>
+    // QR Code Lightbox Modal
+    function openQrModal(title, qrSrc, linkUrl, desc, pin) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalQrImg').src = qrSrc;
+      document.getElementById('modalLink').href = linkUrl;
+      document.getElementById('modalDesc').textContent = desc || '請使用手機相機或平板掃描 QR Code 加入！';
+      
+      const pinWrap = document.getElementById('modalPinWrap');
+      const pinText = document.getElementById('modalPinText');
+      if (pin) {
+        pinWrap.style.display = 'block';
+        pinText.textContent = '加入代碼 / PIN: ' + pin;
+      } else {
+        pinWrap.style.display = 'none';
+      }
+
+      document.getElementById('qrModal').classList.add('active');
+    }
+
+    function closeQrModal(e) {
+      document.getElementById('qrModal').classList.remove('active');
+    }
+
+    // Classroom Timer
+    let timerInterval = null;
+    function startTimer(minutes) {
+      clearInterval(timerInterval);
+      let totalSec = minutes * 60;
+      const display = document.getElementById('timerDisplay');
+      
+      function update() {
+        const m = Math.floor(totalSec / 60);
+        const s = totalSec % 60;
+        display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        if (totalSec <= 0) {
+          clearInterval(timerInterval);
+          display.textContent = "⏰ 時間到！";
+          alert(`⏰ ${minutes} 分鐘倒數結束！請同學準備分享！`);
+        }
+        totalSec--;
+      }
+      update();
+      timerInterval = setInterval(update, 1000);
+    }
+
+    // Student Number Picker
+    function pickRandomStudent() {
+      const num = Math.floor(Math.random() * 35) + 1;
+      alert(`🎉 幸運號碼抽籤結果：請【 ${num} 號 】同學回答問題！`);
+    }
+
+    // Escape key closes modal
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeQrModal();
+      }
+    });
+  </script>
+</body>
+</html>
