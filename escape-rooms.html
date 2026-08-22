@@ -10,26 +10,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #faf8f5;
+      --bg-main: #f0fdf4;
+      --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #fdf4ff 100%);
       --bg-surface: #ffffff;
       --bg-surface-muted: #f4f2ee;
       --text-main: #1f2937;
       --text-secondary: #4b5563;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
-      --border-muted: #e2e0dc;
-      --primary: #0f766e;
-      --primary-hover: #115e59;
-      --primary-light: #ccfbf1;
-      --primary-light-text: #134e4a;
+      --border-muted: #cbd5e1;
+      --border-cute: #ddd6fe;
+      --primary: #7c3aed;
+      --primary-hover: #6d28d9;
+      --primary-light: #ede9fe;
+      --primary-light-text: #6d28d9;
       --accent-amber: #d97706;
       --accent-amber-light: #fef3c7;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --shadow-sm: 0 2px 6px rgba(124, 58, 237, 0.06);
+      --shadow-md: 0 10px 22px -4px rgba(124, 58, 237, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 18px 32px -6px rgba(124, 58, 237, 0.14), 0 8px 12px -4px rgba(0, 0, 0, 0.04);
       --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
@@ -41,7 +43,7 @@
 
     body {
       font-family: var(--font-stack);
-      background-color: var(--bg-main);
+      background: var(--bg-gradient); background-attachment: fixed;
       color: var(--text-main);
       line-height: 1.6;
       min-height: 100vh;
@@ -115,7 +117,7 @@
     .hero {
       padding: 3.5rem 0 2.5rem;
       border-bottom: 1px solid var(--border-muted);
-      background: linear-gradient(180deg, #ffffff 0%, var(--bg-main) 100%);
+      background: transparent;
     }
 
     .hero-inner {
@@ -398,7 +400,10 @@
     <div class="container header-inner">
       <div class="nav-buttons">
         <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-btn">
-          🏠 回首頁
+          🏠 回主首頁
+        </a>
+        <a href="hall-of-fame.html" class="nav-btn">
+          🏛️ 世界名人堂
         </a>
         <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html" class="nav-btn">
           🏛️ 回世界名人堂
