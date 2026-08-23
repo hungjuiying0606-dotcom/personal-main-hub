@@ -34,6 +34,96 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hall-of-fame.html"
         },
         {
+          "id": "nobel-hub",
+          "title": "阿爾弗雷德·諾貝爾",
+          "description": "炸藥之父與和平遺產。發明雷管與矽藻土黃色炸藥，設立諾貝爾獎。含 5 大線上互動教具與闢謠特輯。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 31,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/nobel.html"
+        },
+        {
+          "id": "einstein-hub",
+          "title": "阿爾伯特·愛因斯坦",
+          "description": "現代物理學之父。提出狹義與廣義相對論、質能互換公式 E=mc²、解釋光電效應與布朗運動。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 32,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/einstein.html"
+        },
+        {
+          "id": "hubble-hub",
+          "title": "愛德溫·哈伯",
+          "description": "星系天文學之父與觀測宇宙學開創者。發現河外星系，確立哈伯定律證明宇宙正在膨脹。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 33,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hubble.html"
+        },
+        {
+          "id": "darwin-hub",
+          "title": "查爾斯·達爾文",
+          "description": "演化論之父。搭乘小獵犬號環球科學考察，發表《物種起源》提出天擇說與適者生存。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 34,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/darwin.html"
+        },
+        {
+          "id": "wegener-hub",
+          "title": "阿爾弗雷德·韋格納",
+          "description": "大陸漂移學說創始者。提出古生代「盤古大陸」假說，為現代板塊構造學說奠定先驅基石。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 35,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/wegener.html"
+        },
+        {
+          "id": "watson-crick-hub",
+          "title": "華生與克里克 (DNA)",
+          "description": "DNA 雙螺旋結構解密者。結合 X 射線晶體繞射 Photo 51 與鹼基互補配對模型，揭開遺傳物質複製奧秘。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 36,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/dna.html"
+        },
+        {
+          "id": "lin-mari-hub",
+          "title": "林媽利 醫師",
+          "description": "台灣輸血醫學之母與血型基因研究權威。建立台灣現代化醫院血庫與安全輸血作業準則，深耕台灣族群 HLA 基因與血緣研究。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 37,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/lin-mari.html"
+        },
+        {
+          "id": "zhang-heng-hub",
+          "title": "張衡",
+          "description": "東漢通才科學大師。發明世界首台地震觀測儀「候風地動儀」，創製以水力運轉之「水運渾天儀」，著有《靈憲》。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 38,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/zhang-heng.html"
+        },
+        {
+          "id": "hooke-hub",
+          "title": "羅伯特·虎克",
+          "description": "顯微鏡之眼與物理力學大師。改良複合顯微鏡觀察軟木塞命名「細胞 (Cell)」，出版《微觀圖誌》，提出虎克定律。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 39,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hooke.html"
+        },
+        {
+          "id": "archimedes-hub",
+          "title": "阿基米德",
+          "description": "古希臘物理力學與數學之神。在浴缸中悟出阿基米德浮力原理 (Eureka!)，建立槓桿原理與螺旋抽水機。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 40,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/archimedes.html"
+        },
+        {
           "id": "classbuddy-classroom-toolbox",
           "title": "班級互動工具箱",
           "description": "提供班級抽籤、小組積分榜、倒數與秒錶、趣味泡泡噪音監測、隨機分組、線上點名與名單智慧同步的班級教學工具箱。",
@@ -41,6 +131,24 @@
           "homepageState": "linked",
           "order": 40,
           "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
+        },
+        {
+          "id": "galileo-hub",
+          "title": "伽利略·伽利萊",
+          "description": "近代科學與實驗物理學之父。首創以望遠鏡觀測天體支持日心說，提出單擺等時性與落體實驗。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 41,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/galileo.html"
+        },
+        {
+          "id": "curie-hub",
+          "title": "瑪麗·居禮 (居禮夫人)",
+          "description": "放射性研究傳奇先驅。史上首位女性諾貝爾獎得主、唯一獲物理與化學雙諾貝爾獎之科學家，發現元素釙與鐳。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 42,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/curie.html"
         },
         {
           "id": "naturelab",
