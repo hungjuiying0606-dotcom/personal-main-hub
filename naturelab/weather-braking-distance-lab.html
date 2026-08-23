@@ -110,6 +110,8 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 0.75rem;
+ flex-wrap: wrap;
+      gap: 0.75rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #dbeafe;
@@ -356,10 +358,33 @@
       margin-top: auto;
     }
   </style>
+  
+  
+  
+  
   <!-- KaTeX for formula rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+  <script>
+    window.triggerMathRender = function() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    };
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(triggerMathRender, 100);
+      setTimeout(triggerMathRender, 500);
+      setTimeout(triggerMathRender, 1200);
+    });
+  </script>
 </head>
 <body>
 
@@ -791,29 +816,7 @@
     });
   </script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      function renderMath() {
-        if (typeof renderMathInElement === 'function') {
-          renderMathInElement(document.body, {
-            delimiters: [
-              {left: '$', right: '$', display: true},
-              {left: '\\(', right: '\\)', display: false},
-              {left: '
-</html>
-, right: '
-</html>
-, display: false}
-            ],
-            throwOnError: false
-          });
-        } else {
-          setTimeout(renderMath, 100);
-        }
-      }
-      renderMath();
-    });
-  </script>
+  
 
 </body>
 </html>
