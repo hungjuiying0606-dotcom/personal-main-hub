@@ -735,7 +735,8 @@
 
       <!-- Filter Buttons -->
       <div class="filter-tabs">
-        <button class="filter-btn" onclick="filterCategory('book', this)">📖 課本配套 (14)</button>
+        <button class="filter-btn active" onclick="filterCategory('all', this)">✨ 全部教具 (66)</button>
+        <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (14)</button>
         <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (17)</button>
         <button class="filter-btn" onclick="filterCategory('unit1', this)">📄 單元卷 01 (12)</button>
         <button class="filter-btn" onclick="filterCategory('unit2', this)">📄 單元卷 02 (11)</button>
@@ -1782,8 +1783,11 @@
       '1-2': { title: '📍 1-2 位置與位移', desc: '座標軸設定、路程 vs 位移與方向性作圖' },
       '1-3': { title: '🚗 1-3 速度與速率', desc: '平均速度、瞬時速度、x-t 圖與 v-t 圖轉換規律' },
       '1-4': { title: '⚡ 1-4 加速度與等加速度運動', desc: '加速度定義、打點計時器紙帶分析、自由落體與三大等加速公式' },
+      'textbook': { title: '📖 課本配套互動教具', desc: '搭配康軒自然 3 上第 1 章課本重點探索與例題之互動教具' },
+      'workbook': { title: '✏️ 習作題型互動教具', desc: '配套習作進階計算與觀念判讀之互動教具' },
       'unit1': { title: '📄 單元卷 01 專屬互動教具', desc: '配套單元卷 01 重點難題動態視覺化題庫' },
       'unit2': { title: '📄 單元卷 02 專屬互動教具', desc: '配套單元卷 02 重點難題動態視覺化題庫' },
+      'unit3': { title: '📊 綜合卷 03 專屬互動教具', desc: '配套全章考卷 03 綜合大題動態視覺化題庫' },
       'past': { title: '🎯 會考與基測歷屆試題突破', desc: '歷屆大考經典運動學試題動態解構' }
     };
 
@@ -1801,7 +1805,9 @@
         const matchesCategory = (currentCategory === 'all') ||
                                 (currentCategory === t.sec) ||
                                 (currentCategory === t.category) ||
-                                (currentCategory === t.group);
+                                (currentCategory === t.group) ||
+                                (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
+                                (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
 
         const matchesSearch = !query ||
                               t.title.toLowerCase().includes(query) ||
