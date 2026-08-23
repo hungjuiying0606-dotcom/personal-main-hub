@@ -42,7 +42,7 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-B3YNbnIg.js"></script>
+    <script type="module" crossorigin src="./assets/index-CZsI5kQY.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BL-4eOhS.css">
   </head>
   <body class="bg-gradient-to-br from-slate-50 via-sky-50/30 to-slate-100 text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white">
@@ -296,6 +296,49 @@
             >
               重設所有篩選
             </button>
+          </div>
+
+          <!-- 內嵌專屬網頁檢視器 (Embed Viewer) -->
+          <div id="embed-viewer-container" class="hidden space-y-3.5 animate-fade-in">
+            <!-- 內嵌工具列 -->
+            <div class="flex items-center justify-between bg-white p-3 sm:p-4 px-4 sm:px-5 rounded-2xl border border-slate-200/90 shadow-soft">
+              <div class="flex items-center gap-3 truncate">
+                <button
+                  id="embed-back-btn"
+                  type="button"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all flex-shrink-0"
+                >
+                  <span>←</span>
+                  <span>返回清單</span>
+                </button>
+                <span class="text-slate-300">|</span>
+                <div class="flex items-center gap-2 truncate">
+                  <span id="embed-item-icon" class="text-xl sm:text-2xl flex-shrink-0">🏛️</span>
+                  <h3 id="embed-item-title" class="font-bold text-slate-900 text-sm sm:text-base truncate">科學家課堂旗艦網頁</h3>
+                </div>
+              </div>
+              <a
+                id="embed-external-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all flex-shrink-0"
+                title="在新分頁全螢幕開啟"
+              >
+                <span>全螢幕開啟</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+            <!-- 內嵌 iframe 容器 -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-soft overflow-hidden relative">
+              <iframe
+                id="embed-iframe"
+                class="w-full h-[78vh] min-h-[680px] border-0"
+                title="科學家個人網頁"
+                loading="lazy"
+                allow="fullscreen; clipboard-read; clipboard-write;"
+              ></iframe>
+            </div>
           </div>
 
           <!-- 底部更新時間資訊 -->
