@@ -1,61 +1,279 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的數位基地 - 個人主網頁</title>
-    <meta name="description" content="個人主網頁 - 整合教學、理財、健康、旅遊、電腦與更多主題獨立網站的中央入口。" />
+    <title>我的數位基地 Central Hub - 個人主網頁</title>
+    <meta name="description" content="我的數位基地 Central Hub - 整合國中自然實驗室、世界名人堂、密室逃脫解謎與智慧課堂工具的中央入口。" />
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-BvQENxLD.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DSaj45dD.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+              display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              }
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(14, 165, 233, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
+              'hover': '0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+            }
+          }
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-NjADNVz-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-IedEhRuG.css">
   </head>
-  <body>
-    <a href="#main-content" class="skip-link">跳到主要內容</a>
+  <body class="bg-gradient-to-br from-slate-50 via-sky-50/30 to-slate-100 text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-sky-600 focus:text-white focus:rounded-xl focus:shadow-lg focus:outline-none">
+      跳至主要內容
+    </a>
 
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="#" class="brand">
-          <div class="brand-icon">🚀</div>
-          <div class="brand-text">
-            <span class="brand-title">我的數位基地</span>
-            <span class="brand-subtitle">教學、理財、健康、旅遊、電腦與更多工具的中央入口</span>
+    <!-- 主容器：最大寬度 max-w-7xl 居中 -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        
+        <!-- ========================================== -->
+        <!-- 左側欄：Sticky 儀表板 (Desktop 25% / Mobile Top Hero) -->
+        <!-- ========================================== -->
+        <aside class="lg:col-span-3 xl:col-span-3 lg:sticky lg:top-8 z-20">
+          <div class="bg-white/85 backdrop-blur-md rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-soft space-y-6">
+            
+            <!-- 網站標題與 Logo -->
+            <div class="flex items-center gap-3.5 pb-5 border-b border-slate-100">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-2xl shadow-md shadow-sky-500/20 flex-shrink-0">
+                🚀
+              </div>
+              <div>
+                <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-semibold tracking-wide">
+                  <span>✨ Central Hub</span>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-display">
+                  我的數位基地
+                </h1>
+              </div>
+            </div>
+
+            <!-- 個人定位與簡介 -->
+            <div class="text-slate-600 text-sm leading-relaxed">
+              <p>
+                歡迎來到個人學習與教學創作基地！整合國中自然實驗室、世界名人堂、沉浸式密室逃脫解謎及智慧教學工具。
+              </p>
+            </div>
+
+            <!-- 關鍵字搜尋輸入框 -->
+            <div class="relative">
+              <label for="search-input" class="sr-only">搜尋專案</label>
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="搜尋專案名稱或功能..."
+                class="w-full pl-10 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-all"
+              />
+              <button
+                id="clear-search-btn"
+                type="button"
+                class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 text-sm focus:outline-none"
+                aria-label="清除搜尋"
+              >
+                ✕
+              </button>
+            </div>
+
+            <!-- 分類篩選標籤區 -->
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <span>專案分類篩選</span>
+                <span id="filter-active-count" class="text-sky-600 font-semibold lowercase">全部</span>
+              </div>
+
+              <!-- 手機端：水平滑動標籤列 (overflow-x-auto, 隱藏滾動條) -->
+              <!-- 電腦端：垂直排列按鈕組 -->
+              <nav id="category-filter-nav" class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar gap-2 pb-1 lg:pb-0" aria-label="分類切換">
+                <button
+                  type="button"
+                  data-filter="all"
+                  class="filter-btn active flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap lg:whitespace-normal"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="text-base">🌟</span>
+                    <span>全部專案</span>
+                  </span>
+                  <span class="filter-badge ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600" data-count-for="all">0</span>
+                </button>
+
+                <button
+                  type="button"
+                  data-filter="nature"
+                  class="filter-btn flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap lg:whitespace-normal text-slate-600 hover:bg-slate-100"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="text-base">🧪</span>
+                    <span>國中自然與實驗</span>
+                  </span>
+                  <span class="filter-badge ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600" data-count-for="nature">0</span>
+                </button>
+
+                <button
+                  type="button"
+                  data-filter="fame-escape"
+                  class="filter-btn flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap lg:whitespace-normal text-slate-600 hover:bg-slate-100"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="text-base">🏛️</span>
+                    <span>名人堂與解謎</span>
+                  </span>
+                  <span class="filter-badge ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600" data-count-for="fame-escape">0</span>
+                </button>
+
+                <button
+                  type="button"
+                  data-filter="tools"
+                  class="filter-btn flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap lg:whitespace-normal text-slate-600 hover:bg-slate-100"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="text-base">🛠️</span>
+                    <span>實用工具箱</span>
+                  </span>
+                  <span class="filter-badge ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600" data-count-for="tools">0</span>
+                </button>
+
+                <button
+                  type="button"
+                  data-filter="other"
+                  class="filter-btn flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap lg:whitespace-normal text-slate-600 hover:bg-slate-100"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="text-base">💡</span>
+                    <span>其他</span>
+                  </span>
+                  <span class="filter-badge ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600" data-count-for="other">0</span>
+                </button>
+              </nav>
+            </div>
+
+            <!-- 專案數據摘要徽章 -->
+            <div id="hero-stats" class="pt-4 border-t border-slate-100 flex flex-wrap gap-2 text-xs font-medium text-slate-500">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700 border border-sky-100">
+                <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                <span id="stat-total">載入中...</span>
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="stat-active">-- 可開啟</span>
+              </span>
+            </div>
+
+            <!-- 底部社群/GitHub 連結 -->
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1">
+                <span>© 2026 Central Hub</span>
+              </span>
+              <div class="flex items-center gap-3 text-slate-500">
+                <a
+                  href="https://github.com/hungjuiying0606-dotcom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="p-1.5 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                  aria-label="GitHub 檔案庫"
+                >
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                </a>
+                <span class="text-slate-300">|</span>
+                <span class="text-[11px] text-slate-400">GitHub Pages 發布</span>
+              </div>
+            </div>
+
           </div>
-        </a>
-      </div>
-    </header>
+        </aside>
 
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="hero-tag">✨ 國中自然與多領域探索樂園 ✨</div>
-        <h1 class="hero-title">我的數位基地 Central Hub</h1>
-        <p class="hero-description">
-          歡迎來到學習與數位創作天地！這裡彙整了互動實驗室、世界名人堂、密室逃脫解謎與各類實用工具。
-        </p>
-        <div id="hero-stats" class="hero-stats" aria-live="polite">
-          <span class="stats-placeholder">正在載入專案資料...</span>
-        </div>
-      </div>
-    </section>
-
-    <main id="main-content" class="main-content">
-      <div class="container">
-        <div id="categories-container" class="categories-container" aria-live="polite">
-          <div class="loading-state">
-            <div class="spinner"></div>
-            <p>正在載入網站索引...</p>
+        <!-- ========================================== -->
+        <!-- 右側內容區：專案展示卡片區 (Desktop 75%) -->
+        <!-- ========================================== -->
+        <main id="main-content" class="lg:col-span-9 xl:col-span-9 space-y-6">
+          
+          <!-- 右側頂部控制列：顯示目前分類與即時比數 -->
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200/80">
+            <div>
+              <h2 id="current-category-heading" class="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <span>🌟</span>
+                <span>全部專案展示</span>
+              </h2>
+              <p id="current-category-desc" class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                點選左側分類標籤或搜尋關鍵字即時篩選。
+              </p>
+            </div>
+            <div class="text-xs font-semibold text-slate-500 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm flex-shrink-0">
+              顯示 <span id="displayed-cards-count" class="text-sky-600 font-bold">0</span> 個專案
+            </div>
           </div>
-        </div>
-      </div>
-    </main>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>中央索引最後更新日期：<time id="last-updated">--</time></p>
-        <p class="footer-copyright">&copy; 2026 我的數位基地 · 個人主網頁. 保留所有權利。</p>
-      </div>
-    </footer>
+          <!-- 專案卡片 Grid (grid-cols-1 md:grid-cols-2) -->
+          <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-5" aria-live="polite">
+            <!-- 骨架載入動畫 -->
+            <div class="col-span-full py-16 flex flex-col items-center justify-center text-slate-400 space-y-3">
+              <div class="w-8 h-8 border-3 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
+              <p class="text-sm">正在載入專案資料...</p>
+            </div>
+          </div>
 
+          <!-- 無符合結果空狀態 (Empty State) -->
+          <div id="empty-state" class="hidden py-16 px-6 text-center bg-white/70 backdrop-blur-sm rounded-2xl border border-dashed border-slate-300">
+            <div class="w-14 h-14 mx-auto mb-3 bg-slate-100 rounded-full flex items-center justify-center text-2xl">
+              🔍
+            </div>
+            <h3 class="text-base font-bold text-slate-800">找不到相符的專案</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto">
+              請嘗試切換其他分類或更換搜尋關鍵字。
+            </p>
+            <button
+              id="reset-filter-btn"
+              type="button"
+              class="mt-4 px-4 py-1.5 text-xs font-semibold text-sky-600 bg-sky-50 hover:bg-sky-100 rounded-lg transition-colors"
+            >
+              重設所有篩選
+            </button>
+          </div>
+
+          <!-- 底部更新時間資訊 -->
+          <div class="pt-4 text-center sm:text-right text-xs text-slate-400">
+            <span>索引資料最後更新日期：</span>
+            <time id="last-updated" class="font-mono text-slate-500">--</time>
+          </div>
+
+        </main>
+
+      </div>
+    </div>
+
+    <!-- 腳本 -->
   </body>
 </html>
