@@ -1050,6 +1050,7 @@
           matchedCount++;
           const card = document.createElement('div');
           card.className = `unit-card ${unit.color}`;
+          card.id = `unit-card-${unit.id}`;
           card.innerHTML = `
             <div class="card-top">
               <div class="card-title-group">
@@ -1107,6 +1108,37 @@
         btn.classList.add('active');
         currentFilter = btn.dataset.filter;
         renderUnits();
+
+    function handleReviewHash() {
+      const hash = window.location.hash;
+      if (!hash) return;
+      if (hash.startsWith('#unit-')) {
+        const uId = parseInt(hash.replace('#unit-', ''));
+        const card = document.getElementById('unit-card-' + uId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.outline = '3px solid #0284c7';
+          card.style.transform = 'scale(1.02)';
+          setTimeout(() => {
+            card.style.outline = '';
+            card.style.transform = '';
+          }, 3000);
+        }
+      } else if (hash === '#fill-blanks' || hash === '#blank') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'blank\'"]');
+        if (btn) btn.click();
+      } else if (hash === '#kahoot-quiz' || hash === '#kahoot') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'kahoot\'"]');
+        if (btn) btn.click();
+      } else if (hash === '#literacy-all' || hash === '#literacy') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'literacy\'"]');
+        if (btn) btn.click();
+      }
+    }
+    window.addEventListener('DOMContentLoaded', handleReviewHash);
+    window.addEventListener('hashchange', handleReviewHash);
+    setTimeout(handleReviewHash, 300);
+  
       });
     });
 
