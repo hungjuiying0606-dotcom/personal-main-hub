@@ -109,6 +109,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #e0f2fe;
@@ -384,6 +386,10 @@
       margin-top: auto;
     }
   </style>
+  <!-- KaTeX for formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
 
@@ -796,5 +802,30 @@
       updateUI();
     });
   </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              {left: '$', right: '$', display: true},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '
+</html>
+, right: '
+</html>
+, display: false}
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 100);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
 </body>
 </html>
