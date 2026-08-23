@@ -1802,12 +1802,21 @@
       const query = searchQuery.toLowerCase().trim();
 
       const filtered = tools.filter(t => {
-        const matchesCategory = (currentCategory === 'all') ||
-                                (currentCategory === t.sec) ||
-                                (currentCategory === t.category) ||
-                                (currentCategory === t.group) ||
-                                (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
-                                (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
+        let matchesCategory = false;
+        if (currentCategory === 'all') {
+          matchesCategory = true;
+        } else if (currentCategory.includes(':')) {
+          const [c, s] = currentCategory.split(':');
+          const matchC = (t.category === c || t.group === c || (c === 'textbook' && (t.category === 'textbook' || t.group === 'textbook')));
+          const matchS = (t.sec === s);
+          matchesCategory = matchC && matchS;
+        } else {
+          matchesCategory = (currentCategory === t.sec) ||
+                            (currentCategory === t.category) ||
+                            (currentCategory === t.group) ||
+                            (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
+                            (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
+        }
 
         const matchesSearch = !query ||
                               t.title.toLowerCase().includes(query) ||
@@ -1913,7 +1922,31 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      renderTools('all');
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCat = urlParams.get('cat');
+      const urlSec = urlParams.get('sec');
+
+      let targetCat = 'all';
+      if (urlCat && urlSec) {
+        targetCat = `${urlCat}:${urlSec}`;
+      } else if (urlCat) {
+        targetCat = urlCat;
+      } else if (urlSec) {
+        targetCat = urlSec;
+      }
+
+      // 嘗試高亮對應按鈕
+      if (urlCat) {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          const onclickAttr = btn.getAttribute('onclick') || '';
+          if (onclickAttr.includes(`'${urlCat}'`)) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          }
+        });
+      }
+
+      renderTools(targetCat);
 
       const searchInput = document.getElementById('toolSearchInput');
       if (searchInput) {
