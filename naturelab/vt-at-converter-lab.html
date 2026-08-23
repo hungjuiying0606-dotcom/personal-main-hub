@@ -511,7 +511,7 @@
     function loadCarMode(key) {
       activeCar = key;
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       const conf = carConfigs[key];
       document.getElementById('strobeTitle').innerText = `📸 ${conf.title}`;

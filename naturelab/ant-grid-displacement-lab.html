@@ -545,7 +545,7 @@
     function loadMode(mode) {
       curMode = mode;
       document.querySelectorAll('.nav-tabs .nav-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       if (mode === 'textbook') {
         currentWaypoints = [...textbookPath];

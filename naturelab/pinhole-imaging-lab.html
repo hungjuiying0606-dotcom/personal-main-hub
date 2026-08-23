@@ -1008,7 +1008,7 @@
       }
       sliderP.value = pDist;
       sliderQ.value = qDist;
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
       draw();
     };
 

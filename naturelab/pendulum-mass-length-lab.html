@@ -493,7 +493,7 @@
     function switchMode(newMode) {
       mode = newMode;
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       if (mode === 'mass') {
         document.getElementById('stageTitle').innerText = '👧 琪珍(30g) vs 品潔(40g) vs 家華(50g) 三球並排同步擺動 (T₁=T₂=T₃)';

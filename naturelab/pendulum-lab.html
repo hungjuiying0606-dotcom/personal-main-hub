@@ -948,7 +948,7 @@
       document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
       document.getElementById('tab-' + tabId).classList.add('active');
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       if (tabId === 'compare') initDualPendulum();
       if (tabId === 'graph') drawGraph();
@@ -958,13 +958,13 @@
     function setSpeed(sp) {
       currentSpeed = sp;
       document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
     }
 
     // Tab 1: Lab Logic
     function applyPreset(num) {
       document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
       const p = presets[num];
       labParams.length = p.length;
       labParams.mass = p.mass;
@@ -1222,11 +1222,11 @@
       if (ans === q.correct) {
         fb.style.color = 'var(--success)';
         fb.innerHTML = '🎉 <strong>答對了！</strong>' + q.desc;
-        event.target.classList.add('correct');
+        if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('correct'); }
       } else {
         fb.style.color = 'var(--warn)';
         fb.innerHTML = '❌ <strong>再想想看！</strong>觀察上方兩組單擺擺動快慢，' + (q.correct === 'equal' ? '兩者來回節奏是完全相同的！' : '擺長較長的那組來回一次花比較多時間！');
-        event.target.classList.add('wrong');
+        if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('wrong'); }
       }
     }
 

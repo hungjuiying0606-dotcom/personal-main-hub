@@ -885,7 +885,7 @@
     window.selectBrush = function(b) {
       activeBrush = b;
       document.querySelectorAll('.color-swatch-btn').forEach(btn => btn.classList.remove('selected'));
-      event.target.classList.add('selected');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('selected'); }
     };
 
     // Paint on Grid

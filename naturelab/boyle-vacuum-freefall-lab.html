@@ -589,7 +589,7 @@
     function switchMode(newMode) {
       mode = newMode;
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       if (mode === 'boyle') {
         document.getElementById('stageTitle').innerText = '🧪 波以耳雙玻璃管落體模擬（大氣管 vs 真空管）';

@@ -639,7 +639,7 @@
     function loadCase(key) {
       activeCase = key;
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       const conf = cases[key];
       document.getElementById('timeSlider').max = conf.maxT;

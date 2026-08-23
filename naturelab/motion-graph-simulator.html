@@ -636,7 +636,7 @@
     function loadPreset(key) {
       currentPreset = key;
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       const customEd = document.getElementById('customEditor');
       customEd.style.display = (key === 'custom') ? 'block' : 'none';
@@ -733,7 +733,7 @@
     function setSpeed(sp) {
       playSpeed = sp;
       document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
     }
 
     function onScrubTime() {
