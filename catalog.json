@@ -25,6 +25,15 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/review-hub.html"
         },
         {
+          "id": "spark-pendulum-lab",
+          "title": "單擺實驗 AI 探究教學平台",
+          "description": "結合 Spark 語音辨識、Antigravity 2 與 Google Apps Script 的單擺實驗自動化探究教學平台，支援學生免登入掃碼、LoiLoNote 任務卡與雙圖表生成。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 25,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
+        },
+        {
           "id": "nobel-hub",
           "title": "阿爾弗雷德·諾貝爾",
           "description": "炸藥之父與和平遺產。發明雷管與矽藻土黃色炸藥，設立諾貝爾獎。含 5 大線上互動教具與闢謠特輯。",

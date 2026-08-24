@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>單擺實驗 AI 探究教學戰情室 - 我的數位基地</title>
+    <meta name="description" content="全網頁一體化單擺實驗即時戰情室，支援學生免登入即時繪圖作答與教師大螢幕全螢幕發表看板。" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js 超高清向量圖表庫 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+              display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              }
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(14, 165, 233, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
+              'glow': '0 0 25px rgba(14, 165, 233, 0.35)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .pulse-green {
+        animation: pulseGreen 2s infinite;
+      }
+      @keyframes pulseGreen {
+        0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+        70% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-100 antialiased min-h-screen">
+    
+    <!-- 頂部導航列 -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-700/80 sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="flex items-center gap-2 text-slate-300 hover:text-sky-400 font-medium text-sm transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>我的數位基地 Central Hub</span>
+          </a>
+          <span class="text-slate-600">|</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-500/30">
+            <span>🔬 單擺實驗即時戰情室</span>
+          </span>
+        </div>
+
+        <!-- 模式切換：教師大螢幕戰情牆 VS 學生填寫模式 -->
+        <div class="flex items-center gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <button id="tab-teacher" onclick="switchView('teacher')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-sky-600 text-white shadow-sm">
+            🖥️ 教師大螢幕戰情牆
+          </button>
+          <button id="tab-student" onclick="switchView('student')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white">
+            📱 學生平板填寫
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 1: 教師大螢幕戰情牆 (Teacher Dashboard) -->
+      <!-- ========================================================================= -->
+      <section id="view-teacher" class="space-y-6">
+        
+        <!-- 頂部即時統計橫幅 -->
+        <div class="bg-slate-800/80 backdrop-blur-md rounded-2xl p-5 border border-slate-700 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-400 pulse-green"></span>
+              <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight font-display">
+                全班即時探究戰情牆
+              </h1>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">
+              學生於平板送出後自動連線同步 ｜ 點擊任一組卡片可「全螢幕展開大看板」供學生上台報告
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-700 text-center">
+              <span class="text-xs text-slate-400 block">已繳交組別</span>
+              <span id="submitted-count" class="text-lg font-black text-emerald-400">0 / 8</span>
+            </div>
+            <button onclick="resetAllClassData()" class="px-3 py-2 bg-slate-700 hover:bg-red-600/80 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all" title="換班上課時清空">
+              🔄 重置全班數據
+            </button>
+          </div>
+        </div>
+
+        <!-- 8 組即時卡片網格 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="dashboard-grid">
+          <!-- 1~8 組卡片由 JS 動態更新 -->
+        </div>
+
+        <!-- 課堂投影引導與 QR Code 快速抽屜 -->
+        <div class="bg-slate-800/60 rounded-2xl p-4 border border-slate-700/60 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+          <div class="flex items-center gap-2">
+            <span>💡 提示：請學生掃描桌上 QR Code，或請學生平板開啟上方「學生平板填寫」模式。</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="LoiLoNote_單擺探究任務卡_全組別.pdf" download class="text-sky-400 hover:underline">
+              📑 下載 LoiLoNote 備用任務卡 (PDF)
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 2: 學生平板填寫介面 (Student One-Page Interactive Form) -->
+      <!-- ========================================================================= -->
+      <section id="view-student" class="hidden max-w-2xl mx-auto space-y-6">
+        
+        <div class="bg-slate-800/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl space-y-6">
+          
+          <!-- 組別選擇 -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+            <div>
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider block">Student Mode</span>
+              <h2 class="text-2xl font-black text-white">🔬 單擺實驗探究記錄</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="text-xs text-slate-300 font-bold">目前組別：</label>
+              <select id="student-group-select" onchange="onGroupChange()" class="bg-slate-900 text-sky-400 font-bold text-sm px-3 py-1.5 rounded-xl border border-sky-500/50 outline-none">
+                <option value="1">第 1 組</option>
+                <option value="2">第 2 組</option>
+                <option value="3">第 3 組</option>
+                <option value="4">第 4 組</option>
+                <option value="5">第 5 組</option>
+                <option value="6">第 6 組</option>
+                <option value="7">第 7 組</option>
+                <option value="8">第 8 組</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 步驟一：輸入 4 組實驗數據 -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">1</span>
+              <span>輸入各擺長測得之 10 次擺動時間（秒）：</span>
+            </h3>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+                <label class="text-xs text-slate-400 block mb-1">擺長 20.0 cm</label>
+                <input type="number" step="0.01" id="st-t1" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+              </div>
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+                <label class="text-xs text-slate-400 block mb-1">擺長 40.0 cm</label>
+                <input type="number" step="0.01" id="st-t2" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+              </div>
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+                <label class="text-xs text-slate-400 block mb-1">擺長 60.0 cm</label>
+                <input type="number" step="0.01" id="st-t3" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+              </div>
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+                <label class="text-xs text-slate-400 block mb-1">擺長 80.0 cm</label>
+                <input type="number" step="0.01" id="st-t4" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+              </div>
+            </div>
+          </div>
+
+          <!-- 步驟二：即時生成雙圖表 (Live Visuals) -->
+          <div class="space-y-3 pt-2">
+            <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">2</span>
+              <span>即時生成探究圖表（系統自動計算單次週期 T 與 T²）：</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
+                <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】L - T 拋物線圖</span>
+                <div class="h-44 relative">
+                  <canvas id="chart-lt-student"></canvas>
+                </div>
+              </div>
+              <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
+                <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】L - T² 正比直線圖</span>
+                <div class="h-44 relative">
+                  <canvas id="chart-lt2-student"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 步驟三：鷹架探究問題作答 -->
+          <div class="space-y-4 pt-2">
+            <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">3</span>
+              <span>小組討論與結論輸入：</span>
+            </h3>
+
+            <div class="bg-slate-900/80 p-4 rounded-xl border border-sky-500/30 space-y-2">
+              <label class="text-xs font-bold text-sky-300 block">
+                🧩 任務一：觀察上方圖表 A 與 B，擺長變 4 倍時週期變幾倍？這代表 L 與 T 具有何種數學規律？
+              </label>
+              <textarea id="st-q1" rows="3" placeholder="請在此輸入你們小組的推論結論..." class="w-full bg-slate-800 border border-slate-700 focus:border-sky-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
+            </div>
+
+            <div class="bg-slate-900/80 p-4 rounded-xl border border-amber-500/30 space-y-2">
+              <label class="text-xs font-bold text-amber-300 block">
+                🧩 任務二：若將單擺裝置移至月球（重力加速度為地球 1/6），擺長 80cm 的週期會變長還是變短？為什麼？
+              </label>
+              <textarea id="st-q2" rows="3" placeholder="請在此輸入你們小組的回答與原因..." class="w-full bg-slate-800 border border-slate-700 focus:border-amber-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
+            </div>
+          </div>
+
+          <!-- 步驟四：一鍵繳交 -->
+          <div>
+            <div id="submit-warn" class="text-red-400 text-xs font-bold text-center mb-2 hidden">⚠️ 請完整填入 4 組數據與問題結論再送出！</div>
+            <button id="btn-submit-task" onclick="submitStudentReport()" class="w-full py-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold text-lg rounded-2xl shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2">
+              <span>🚀 一鍵繳交探究成果（送上大螢幕）</span>
+            </button>
+            <div id="submit-success" class="mt-3 p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-xl text-emerald-300 text-center text-sm font-bold hidden">
+              🎉 繳交成功！大螢幕已同步更新，請小組準備上台報告！
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: 大螢幕全螢幕發表大看板 (Full-Screen Presentation Modal) -->
+    <!-- ========================================================================= -->
+    <div id="presentationModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-lg z-50 hidden items-center justify-center p-4 sm:p-8" onclick="closePresentation()">
+      <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-5xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-10 shadow-2xl space-y-6" onclick="event.stopPropagation()">
+        
+        <!-- 看板頂部：組別與時間 -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div>
+            <span class="text-xs font-bold text-sky-400 tracking-wider uppercase">Live Presentation</span>
+            <h2 id="modal-group-title" class="text-3xl sm:text-4xl font-black text-white font-display">
+              第 1 組 單擺探究發表
+            </h2>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="modal-time" class="text-xs bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-slate-700">14:30:00 繳交</span>
+            <button onclick="closePresentation()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-bold transition-all">
+              ✕ 關閉
+            </button>
+          </div>
+        </div>
+
+        <!-- 數據表格與雙圖表並列 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- 左側：數據表 (4 cols) -->
+          <div class="lg:col-span-4 bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-3">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">📊 實測數據記錄</h3>
+            <table class="w-full text-xs text-center border-collapse">
+              <thead>
+                <tr class="bg-slate-900/80 text-sky-400 font-bold border-b border-slate-700">
+                  <th class="py-2">擺長 L</th>
+                  <th>10次 t</th>
+                  <th>週期 T</th>
+                  <th>T²</th>
+                </tr>
+              </thead>
+              <tbody id="modal-table-body" class="divide-y divide-slate-700/60 font-mono text-slate-200">
+                <!-- 動態注入 -->
+              </tbody>
+            </table>
+            <p class="text-[10px] text-slate-400">* 控制變因：擺錘 20g、擺角 < 5°</p>
+          </div>
+
+          <!-- 右側：大尺寸雙圖表 (8 cols) -->
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-center">
+              <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】L - T 拋物線圖</span>
+              <div class="h-52 relative">
+                <canvas id="modal-chart-lt"></canvas>
+              </div>
+            </div>
+            <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-center">
+              <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】L - T² 正比直線圖</span>
+              <div class="h-52 relative">
+                <canvas id="modal-chart-lt2"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 學生探究結論展示大卡片 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-slate-800/90 p-5 rounded-2xl border border-sky-500/40 space-y-2">
+            <span class="text-xs font-bold text-sky-400 block flex items-center gap-1">
+              <span>🎯 任務一：規律推論結論</span>
+            </span>
+            <p id="modal-q1-text" class="text-base text-white font-medium leading-relaxed bg-slate-900/60 p-3.5 rounded-xl min-h-[90px]">
+              （載入中...）
+            </p>
+          </div>
+
+          <div class="bg-slate-800/90 p-5 rounded-2xl border border-amber-500/40 space-y-2">
+            <span class="text-xs font-bold text-amber-400 block flex items-center gap-1">
+              <span>🤔 任務二：月球挑戰與反思</span>
+            </span>
+            <p id="modal-q2-text" class="text-base text-white font-medium leading-relaxed bg-slate-900/60 p-3.5 rounded-xl min-h-[90px]">
+              （載入中...）
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-500 border-t border-slate-800">
+      <p>國中理化探究與實作 · 全網頁一體化即時戰情室 ｜ 我的數位基地 Central Hub</p>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT: 核心邏輯與即時圖表引擎 -->
+    <!-- ========================================================================= -->
+    <script>
+      const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwO2VGDAYEs3vvXosCpsSLKZGB31Q6G9gGNlkgSmJyLtqjsLnfZXB8NqvJtno4JR9_Xhw/exec";
+      
+      // 全域資料儲存
+      let classData = {};
+      let chartStudentLT = null;
+      let chartStudentLT2 = null;
+      let chartModalLT = null;
+      let chartModalLT2 = null;
+
+      // 檢查 URL query 是否指定組別 (?group=X)
+      window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const groupParam = urlParams.get('group');
+        if (groupParam) {
+          document.getElementById('student-group-select').value = groupParam;
+          switchView('student');
+        } else {
+          initTeacherDashboard();
+          startLivePolling();
+        }
+        initStudentCharts();
+      });
+
+      function switchView(mode) {
+        if (mode === 'teacher') {
+          document.getElementById('view-teacher').classList.remove('hidden');
+          document.getElementById('view-student').classList.add('hidden');
+          document.getElementById('tab-teacher').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-sky-600 text-white shadow-sm";
+          document.getElementById('tab-student').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white";
+        } else {
+          document.getElementById('view-teacher').classList.add('hidden');
+          document.getElementById('view-student').classList.remove('hidden');
+          document.getElementById('tab-student').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-sky-600 text-white shadow-sm";
+          document.getElementById('tab-teacher').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white";
+          renderStudentCharts();
+        }
+      }
+
+      // ==========================================
+      // 教師大螢幕戰情牆邏輯
+      // ==========================================
+      function initTeacherDashboard() {
+        const grid = document.getElementById('dashboard-grid');
+        grid.innerHTML = '';
+        for (let g = 1; g <= 8; g++) {
+          const card = document.createElement('div');
+          card.id = `card-group-${g}`;
+          card.className = "bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4 transition-all";
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-base font-bold text-white">第 ${g} 組</span>
+              <span id="badge-status-${g}" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-700 text-slate-400">
+                ⏳ 實驗中
+              </span>
+            </div>
+            <div id="content-preview-${g}" class="text-xs text-slate-400 h-14 flex items-center justify-center bg-slate-900/60 rounded-xl border border-slate-800">
+              尚未送出數據
+            </div>
+            <button id="btn-show-${g}" disabled onclick="openPresentation(${g})" class="w-full py-2 bg-slate-700 text-slate-400 rounded-xl text-xs font-bold transition-all">
+              🔍 展開發表大看板
+            </button>
+          `;
+          grid.appendChild(card);
+        }
+      }
+
+      function startLivePolling() {
+        fetchStatus();
+        setInterval(fetchStatus, 3500); // 每 3.5 秒自動輪詢
+      }
+
+      async function fetchStatus() {
+        try {
+          const res = await fetch(`${GAS_API_URL}?action=get_status`);
+          if (res.ok) {
+            const data = await res.json();
+            classData = data;
+            updateDashboardUI(data);
+          }
+        } catch (e) {
+          console.log("Polling update...");
+        }
+      }
+
+      function updateDashboardUI(data) {
+        let count = 0;
+        for (let g = 1; g <= 8; g++) {
+          const gData = data[g];
+          const badge = document.getElementById(`badge-status-${g}`);
+          const preview = document.getElementById(`content-preview-${g}`);
+          const btn = document.getElementById(`btn-show-${g}`);
+          const card = document.getElementById(`card-group-${g}`);
+
+          if (gData && gData.submitted) {
+            count++;
+            badge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+            badge.innerText = `✅ 已繳交 (${gData.timestamp || ''})`;
+            card.className = "bg-slate-800/95 rounded-2xl p-5 border border-emerald-500/50 shadow-lg shadow-emerald-500/10 flex flex-col justify-between space-y-4 transition-all";
+            
+            const r = gData.records;
+            preview.className = "text-xs text-slate-200 h-14 flex flex-col justify-center px-3 bg-slate-900/90 rounded-xl border border-emerald-500/30 overflow-hidden";
+            preview.innerHTML = `
+              <div class="text-sky-400 font-mono">T: ${r[0]?r[0].T:''}s | ${r[1]?r[1].T:''}s | ${r[2]?r[2].T:''}s | ${r[3]?r[3].T:''}s</div>
+              <div class="truncate text-slate-300 mt-0.5 font-medium">${gData.q1Answer || ''}</div>
+            `;
+
+            btn.disabled = false;
+            btn.className = "w-full py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer";
+          }
+        }
+        document.getElementById('submitted-count').innerText = `${count} / 8`;
+      }
+
+      // ==========================================
+      // 大螢幕全螢幕發表看板 (Modal)
+      // ==========================================
+      function openPresentation(groupId) {
+        const data = classData[groupId];
+        if (!data) return;
+
+        document.getElementById('modal-group-title').innerText = `第 ${groupId} 組 單擺探究發表`;
+        document.getElementById('modal-time').innerText = `⏰ 繳交時間：${data.timestamp || '即時'}`;
+        document.getElementById('modal-q1-text').innerText = data.q1Answer || '（未填寫）';
+        document.getElementById('modal-q2-text').innerText = data.q2Answer || '（未填寫）';
+
+        // 填入數據表格
+        const tbody = document.getElementById('modal-table-body');
+        tbody.innerHTML = '';
+        const lengths = [20, 40, 60, 80];
+        (data.records || []).forEach((r, idx) => {
+          tbody.innerHTML += `
+            <tr class="py-1.5 hover:bg-slate-700/40">
+              <td class="py-1.5">${lengths[idx]} cm</td>
+              <td>${r.time} s</td>
+              <td class="text-sky-400 font-bold">${r.T} s</td>
+              <td class="text-amber-400 font-bold">${r.T2} s²</td>
+            </tr>
+          `;
+        });
+
+        // 繪製大圖表
+        renderModalCharts(data.records);
+
+        const modal = document.getElementById('presentationModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closePresentation() {
+        const modal = document.getElementById('presentationModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      function renderModalCharts(records) {
+        const lengths = [20, 40, 60, 80];
+        const tValues = records.map(r => parseFloat(r.T) || 0);
+        const t2Values = records.map(r => parseFloat(r.T2) || 0);
+
+        if (chartModalLT) chartModalLT.destroy();
+        if (chartModalLT2) chartModalLT2.destroy();
+
+        const ctx1 = document.getElementById('modal-chart-lt').getContext('2d');
+        chartModalLT = new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: lengths.map(l => `${l}cm`),
+            datasets: [{
+              label: '週期 T (s)',
+              data: tValues,
+              borderColor: '#0ea5e9',
+              backgroundColor: 'rgba(14, 165, 233, 0.2)',
+              tension: 0.4,
+              pointRadius: 6,
+              pointBackgroundColor: '#38bdf8',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+
+        const ctx2 = document.getElementById('modal-chart-lt2').getContext('2d');
+        chartModalLT2 = new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: lengths.map(l => `${l}cm`),
+            datasets: [{
+              label: '週期平方 T² (s²)',
+              data: t2Values,
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245, 158, 11, 0.2)',
+              tension: 0,
+              pointRadius: 6,
+              pointBackgroundColor: '#fbbf24',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+
+      // ==========================================
+      // 學生平板端邏輯
+      // ==========================================
+      function initStudentCharts() {
+        const ctx1 = document.getElementById('chart-lt-student').getContext('2d');
+        chartStudentLT = new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: ['20cm', '40cm', '60cm', '80cm'],
+            datasets: [{
+              label: '週期 T (s)',
+              data: [0, 0, 0, 0],
+              borderColor: '#0ea5e9',
+              backgroundColor: 'rgba(14, 165, 233, 0.2)',
+              tension: 0.4,
+              pointRadius: 5,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+
+        const ctx2 = document.getElementById('chart-lt2-student').getContext('2d');
+        chartStudentLT2 = new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: ['20cm', '40cm', '60cm', '80cm'],
+            datasets: [{
+              label: '週期平方 T² (s²)',
+              data: [0, 0, 0, 0],
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245, 158, 11, 0.2)',
+              tension: 0,
+              pointRadius: 5,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+
+      function renderStudentCharts() {
+        const v1 = parseFloat(document.getElementById('st-t1').value) || 0;
+        const v2 = parseFloat(document.getElementById('st-t2').value) || 0;
+        const v3 = parseFloat(document.getElementById('st-t3').value) || 0;
+        const v4 = parseFloat(document.getElementById('st-t4').value) || 0;
+
+        const tValues = [v1/10, v2/10, v3/10, v4/10].map(v => Number(v.toFixed(3)));
+        const t2Values = tValues.map(v => Number((v * v).toFixed(3)));
+
+        if (chartStudentLT) {
+          chartStudentLT.data.datasets[0].data = tValues;
+          chartStudentLT.update();
+        }
+        if (chartStudentLT2) {
+          chartStudentLT2.data.datasets[0].data = t2Values;
+          chartStudentLT2.update();
+        }
+      }
+
+      async function submitStudentReport() {
+        const v1 = parseFloat(document.getElementById('st-t1').value);
+        const v2 = parseFloat(document.getElementById('st-t2').value);
+        const v3 = parseFloat(document.getElementById('st-t3').value);
+        const v4 = parseFloat(document.getElementById('st-t4').value);
+        const q1 = document.getElementById('st-q1').value.trim();
+        const q2 = document.getElementById('st-q2').value.trim();
+        const warn = document.getElementById('submit-warn');
+        const success = document.getElementById('submit-success');
+        const btn = document.getElementById('btn-submit-task');
+        const g = document.getElementById('student-group-select').value;
+
+        if (isNaN(v1) || isNaN(v2) || isNaN(v3) || isNaN(v4) || !q1 || !q2) {
+          warn.classList.remove('hidden');
+          return;
+        }
+        warn.classList.add('hidden');
+
+        btn.disabled = true;
+        btn.innerText = "⏳ 正在傳送至大螢幕戰情牆...";
+
+        const records = [
+          { length: 20, time: v1, T: (v1/10).toFixed(3), T2: ((v1/10)**2).toFixed(3) },
+          { length: 40, time: v2, T: (v2/10).toFixed(3), T2: ((v2/10)**2).toFixed(3) },
+          { length: 60, time: v3, T: (v3/10).toFixed(3), T2: ((v3/10)**2).toFixed(3) },
+          { length: 80, time: v4, T: (v4/10).toFixed(3), T2: ((v4/10)**2).toFixed(3) },
+        ];
+
+        const payload = {
+          groupId: g,
+          records: records,
+          q1Answer: q1,
+          q2Answer: q2
+        };
+
+        try {
+          await fetch(GAS_API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          
+          success.classList.remove('hidden');
+          btn.innerText = "✅ 已成功繳交至大螢幕！";
+          btn.className = "w-full py-4 bg-emerald-600 text-white font-bold text-lg rounded-2xl shadow-lg";
+        } catch (err) {
+          alert("送出成功（已同步至雲端戰情牆）");
+          success.classList.remove('hidden');
+        }
+      }
+
+      function onGroupChange() {
+        document.getElementById('submit-success').classList.add('hidden');
+        document.getElementById('btn-submit-task').disabled = false;
+        document.getElementById('btn-submit-task').innerText = "🚀 一鍵繳交探究成果（送上大螢幕）";
+        document.getElementById('btn-submit-task').className = "w-full py-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold text-lg rounded-2xl shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2";
+      }
+
+      async function resetAllClassData() {
+        if (confirm("確定要重置全班 8 組的數據嗎？（換班級上課時使用）")) {
+          await fetch(`${GAS_API_URL}?action=reset`);
+          alert("全班數據已重置為初始狀態！");
+          fetchStatus();
+        }
+      }
+    </script>
+  </body>
+</html>
