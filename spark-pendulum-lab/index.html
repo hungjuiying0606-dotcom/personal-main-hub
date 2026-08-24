@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>單擺實驗 AI 探究教學戰情室 - 我的數位基地</title>
-    <meta name="description" content="全網頁一體化單擺實驗即時戰情室，支援學生免登入即時繪圖作答與教師大螢幕全螢幕發表看板。" />
+    <title>影響單擺週期的因素探究戰情室（課本第7頁探索活動）- 我的數位基地</title>
+    <meta name="description" content="依據 115 國中自然 3 上第 1 章課本第 7 頁探索活動設計，支援學生免登入即時對照實驗數據、即時三變因圖表生成與教師大螢幕全螢幕發表看板。" />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +35,6 @@
                 800: '#075985',
                 900: '#0c4a6e',
               }
-            },
-            boxShadow: {
-              'soft': '0 4px 20px -2px rgba(14, 165, 233, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
-              'glow': '0 0 25px rgba(14, 165, 233, 0.35)',
             }
           }
         }
@@ -67,7 +63,7 @@
           </a>
           <span class="text-slate-600">|</span>
           <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-500/30">
-            <span>🔬 單擺實驗即時戰情室</span>
+            <span>🔬 國中自然 3 上第 1 章 · 課本第 7 頁探索活動</span>
           </span>
         </div>
 
@@ -96,11 +92,11 @@
             <div class="flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-emerald-400 pulse-green"></span>
               <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight font-display">
-                全班即時探究戰情牆
+                影響單擺擺動週期的因素 · 班級即時探究戰情牆
               </h1>
             </div>
             <p class="text-slate-400 text-xs sm:text-sm mt-1">
-              學生於平板送出後自動連線同步 ｜ 點擊任一組卡片可「全螢幕展開大看板」供學生上台報告
+              依據課本第 7 頁探索活動設計 ｜ 點擊任一組卡片可「全螢幕展開發表大看板」供學生上台報告
             </p>
           </div>
 
@@ -120,32 +116,21 @@
           <!-- 1~8 組卡片由 JS 動態更新 -->
         </div>
 
-        <!-- 課堂投影引導與 QR Code 快速抽屜 -->
-        <div class="bg-slate-800/60 rounded-2xl p-4 border border-slate-700/60 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
-          <div class="flex items-center gap-2">
-            <span>💡 提示：請學生掃描桌上 QR Code，或請學生平板開啟上方「學生平板填寫」模式。</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <a href="LoiLoNote_單擺探究任務卡_全組別.pdf" download class="text-sky-400 hover:underline">
-              📑 下載 LoiLoNote 備用任務卡 (PDF)
-            </a>
-          </div>
-        </div>
       </section>
 
 
       <!-- ========================================================================= -->
-      <!-- VIEW 2: 學生平板填寫介面 (Student One-Page Interactive Form) -->
+      <!-- VIEW 2: 學生平板填寫介面 (Student Interactive Form - 課本第7頁對照實驗) -->
       <!-- ========================================================================= -->
       <section id="view-student" class="hidden max-w-2xl mx-auto space-y-6">
         
         <div class="bg-slate-800/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl space-y-6">
           
-          <!-- 組別選擇 -->
+          <!-- 組別選擇與標題 -->
           <div class="flex items-center justify-between pb-4 border-b border-slate-700">
             <div>
-              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider block">Student Mode</span>
-              <h2 class="text-2xl font-black text-white">🔬 單擺實驗探究記錄</h2>
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider block">課本第 7 頁探索活動</span>
+              <h2 class="text-2xl font-black text-white">🔬 單擺週期影響因素探究</h2>
             </div>
             <div class="flex items-center gap-2">
               <label class="text-xs text-slate-300 font-bold">目前組別：</label>
@@ -162,49 +147,76 @@
             </div>
           </div>
 
-          <!-- 步驟一：輸入 4 組實驗數據 -->
+          <!-- 步驟一：輸入課本 4 組實驗數據 (完全匹配課本第 7 頁表格) -->
           <div class="space-y-3">
             <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">1</span>
-              <span>輸入各擺長測得之 10 次擺動時間（秒）：</span>
+              <span>依序輸入 4 次對照實驗測得之 10 次擺動時間（秒）：</span>
             </h3>
             
-            <div class="grid grid-cols-2 gap-3">
-              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-                <label class="text-xs text-slate-400 block mb-1">擺長 20.0 cm</label>
-                <input type="number" step="0.01" id="st-t1" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+            <div class="space-y-2.5">
+              <!-- 實驗 1: 基準組 -->
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                <div class="text-xs">
+                  <span class="font-bold text-sky-400 block">① 基準對照組</span>
+                  <span class="text-slate-400">擺長 100cm · 擺錘 20g · 擺角 10°</span>
+                </div>
+                <div class="w-36">
+                  <input type="number" step="0.01" id="st-t1" oninput="renderStudentCharts()" placeholder="10次時間(s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+                </div>
               </div>
-              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-                <label class="text-xs text-slate-400 block mb-1">擺長 40.0 cm</label>
-                <input type="number" step="0.01" id="st-t2" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+
+              <!-- 實驗 2: 改變擺角 -->
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                <div class="text-xs">
+                  <span class="font-bold text-amber-400 block">② 探討擺角影響（改變擺角）</span>
+                  <span class="text-slate-400">擺長 100cm · 擺錘 20g · <b class="text-amber-300">擺角 5°</b></span>
+                </div>
+                <div class="w-36">
+                  <input type="number" step="0.01" id="st-t2" oninput="renderStudentCharts()" placeholder="10次時間(s)" class="w-full bg-slate-800 border border-slate-600 focus:border-amber-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+                </div>
               </div>
-              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-                <label class="text-xs text-slate-400 block mb-1">擺長 60.0 cm</label>
-                <input type="number" step="0.01" id="st-t3" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+
+              <!-- 實驗 3: 改變質量 -->
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                <div class="text-xs">
+                  <span class="font-bold text-emerald-400 block">③ 探討質量影響（改變質量）</span>
+                  <span class="text-slate-400">擺長 100cm · <b class="text-emerald-300">擺錘 40g</b> · 擺角 10°</span>
+                </div>
+                <div class="w-36">
+                  <input type="number" step="0.01" id="st-t3" oninput="renderStudentCharts()" placeholder="10次時間(s)" class="w-full bg-slate-800 border border-slate-600 focus:border-emerald-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+                </div>
               </div>
-              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-                <label class="text-xs text-slate-400 block mb-1">擺長 80.0 cm</label>
-                <input type="number" step="0.01" id="st-t4" oninput="renderStudentCharts()" placeholder="填入時間 (s)" class="w-full bg-slate-800 border border-slate-600 focus:border-sky-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+
+              <!-- 實驗 4: 改變擺長 -->
+              <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                <div class="text-xs">
+                  <span class="font-bold text-rose-400 block">④ 探討擺長影響（改變擺長）</span>
+                  <span class="text-slate-400"><b class="text-rose-300">擺長 25cm</b> · 擺錘 20g · 擺角 10°</span>
+                </div>
+                <div class="w-36">
+                  <input type="number" step="0.01" id="st-t4" oninput="renderStudentCharts()" placeholder="10次時間(s)" class="w-full bg-slate-800 border border-slate-600 focus:border-rose-500 rounded-lg p-2 text-white font-mono text-center outline-none">
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- 步驟二：即時生成雙圖表 (Live Visuals) -->
+          <!-- 步驟二：即時生成對比圖表 (Live Charts) -->
           <div class="space-y-3 pt-2">
             <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">2</span>
-              <span>即時生成探究圖表（系統自動計算單次週期 T 與 T²）：</span>
+              <span>即時生成對照圖表（自動計算單次週期 T = 10次時間 ÷ 10）：</span>
             </h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
-                <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】L - T 拋物線圖</span>
+                <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】4 組實驗單次週期對比</span>
                 <div class="h-44 relative">
                   <canvas id="chart-lt-student"></canvas>
                 </div>
               </div>
               <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
-                <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】L - T² 正比直線圖</span>
+                <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】擺長對週期的影響 (25cm vs 100cm)</span>
                 <div class="h-44 relative">
                   <canvas id="chart-lt2-student"></canvas>
                 </div>
@@ -212,31 +224,31 @@
             </div>
           </div>
 
-          <!-- 步驟三：鷹架探究問題作答 -->
+          <!-- 步驟三：課本第 7 頁討論題作答 -->
           <div class="space-y-4 pt-2">
             <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center">3</span>
-              <span>小組討論與結論輸入：</span>
+              <span>課本討論題小組填寫：</span>
             </h3>
 
             <div class="bg-slate-900/80 p-4 rounded-xl border border-sky-500/30 space-y-2">
               <label class="text-xs font-bold text-sky-300 block">
-                🧩 任務一：觀察上方圖表 A 與 B，擺長變 4 倍時週期變幾倍？這代表 L 與 T 具有何種數學規律？
+                🧩 討論 1：比較實驗 ①、②、③ 的測量結果，當擺角由 10° 變為 5°，或擺錘由 20g 變為 40g 時，單擺週期是否有明顯改變？這代表什麼結論？
               </label>
-              <textarea id="st-q1" rows="3" placeholder="請在此輸入你們小組的推論結論..." class="w-full bg-slate-800 border border-slate-700 focus:border-sky-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
+              <textarea id="st-q1" rows="3" placeholder="請在此輸入你們小組的分析與結論..." class="w-full bg-slate-800 border border-slate-700 focus:border-sky-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
             </div>
 
             <div class="bg-slate-900/80 p-4 rounded-xl border border-amber-500/30 space-y-2">
               <label class="text-xs font-bold text-amber-300 block">
-                🧩 任務二：若將單擺裝置移至月球（重力加速度為地球 1/6），擺長 80cm 的週期會變長還是變短？為什麼？
+                🧩 討論 2：比較實驗 ① (100cm) 與 ④ (25cm)，擺長縮短為 1/4 倍時，週期變為幾倍？哪些因素會影響單擺擺動週期？
               </label>
-              <textarea id="st-q2" rows="3" placeholder="請在此輸入你們小組的回答與原因..." class="w-full bg-slate-800 border border-slate-700 focus:border-amber-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
+              <textarea id="st-q2" rows="3" placeholder="請在此輸入你們小組的回答與規律總結..." class="w-full bg-slate-800 border border-slate-700 focus:border-amber-500 rounded-lg p-2.5 text-sm text-white outline-none"></textarea>
             </div>
           </div>
 
           <!-- 步驟四：一鍵繳交 -->
           <div>
-            <div id="submit-warn" class="text-red-400 text-xs font-bold text-center mb-2 hidden">⚠️ 請完整填入 4 組數據與問題結論再送出！</div>
+            <div id="submit-warn" class="text-red-400 text-xs font-bold text-center mb-2 hidden">⚠️ 請完整填入 4 組實驗數據與討論題再送出！</div>
             <button id="btn-submit-task" onclick="submitStudentReport()" class="w-full py-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold text-lg rounded-2xl shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2">
               <span>🚀 一鍵繳交探究成果（送上大螢幕）</span>
             </button>
@@ -259,7 +271,7 @@
         <!-- 看板頂部：組別與時間 -->
         <div class="flex items-center justify-between pb-4 border-b border-slate-700">
           <div>
-            <span class="text-xs font-bold text-sky-400 tracking-wider uppercase">Live Presentation</span>
+            <span class="text-xs font-bold text-sky-400 tracking-wider uppercase">課本第 7 頁探索活動 · 成果發表</span>
             <h2 id="modal-group-title" class="text-3xl sm:text-4xl font-black text-white font-display">
               第 1 組 單擺探究發表
             </h2>
@@ -275,35 +287,36 @@
         <!-- 數據表格與雙圖表並列 -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          <!-- 左側：數據表 (4 cols) -->
-          <div class="lg:col-span-4 bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-3">
-            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">📊 實測數據記錄</h3>
+          <!-- 左側：數據表 (5 cols) -->
+          <div class="lg:col-span-5 bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-3">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">📊 課本 4 組實驗實測記錄</h3>
             <table class="w-full text-xs text-center border-collapse">
               <thead>
                 <tr class="bg-slate-900/80 text-sky-400 font-bold border-b border-slate-700">
-                  <th class="py-2">擺長 L</th>
-                  <th>10次 t</th>
-                  <th>週期 T</th>
-                  <th>T²</th>
+                  <th class="py-2">實驗</th>
+                  <th>擺長</th>
+                  <th>質量</th>
+                  <th>擺角</th>
+                  <th>10次t</th>
+                  <th>週期T</th>
                 </tr>
               </thead>
               <tbody id="modal-table-body" class="divide-y divide-slate-700/60 font-mono text-slate-200">
                 <!-- 動態注入 -->
               </tbody>
             </table>
-            <p class="text-[10px] text-slate-400">* 控制變因：擺錘 20g、擺角 < 5°</p>
           </div>
 
-          <!-- 右側：大尺寸雙圖表 (8 cols) -->
-          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 右側：大尺寸雙圖表 (7 cols) -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-center">
-              <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】L - T 拋物線圖</span>
+              <span class="text-xs font-bold text-sky-400 block mb-1">【圖表 A】4 組週期對比長條圖</span>
               <div class="h-52 relative">
                 <canvas id="modal-chart-lt"></canvas>
               </div>
             </div>
             <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-center">
-              <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】L - T² 正比直線圖</span>
+              <span class="text-xs font-bold text-amber-400 block mb-1">【圖表 B】擺長與週期關係 (25 vs 100cm)</span>
               <div class="h-52 relative">
                 <canvas id="modal-chart-lt2"></canvas>
               </div>
@@ -316,7 +329,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="bg-slate-800/90 p-5 rounded-2xl border border-sky-500/40 space-y-2">
             <span class="text-xs font-bold text-sky-400 block flex items-center gap-1">
-              <span>🎯 任務一：規律推論結論</span>
+              <span>🎯 討論 1：擺角與質量的影響結論</span>
             </span>
             <p id="modal-q1-text" class="text-base text-white font-medium leading-relaxed bg-slate-900/60 p-3.5 rounded-xl min-h-[90px]">
               （載入中...）
@@ -325,7 +338,7 @@
 
           <div class="bg-slate-800/90 p-5 rounded-2xl border border-amber-500/40 space-y-2">
             <span class="text-xs font-bold text-amber-400 block flex items-center gap-1">
-              <span>🤔 任務二：月球挑戰與反思</span>
+              <span>🎯 討論 2：擺長的影響與因素總結</span>
             </span>
             <p id="modal-q2-text" class="text-base text-white font-medium leading-relaxed bg-slate-900/60 p-3.5 rounded-xl min-h-[90px]">
               （載入中...）
@@ -338,23 +351,28 @@
 
     <!-- 頁尾 -->
     <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-500 border-t border-slate-800">
-      <p>國中理化探究與實作 · 全網頁一體化即時戰情室 ｜ 我的數位基地 Central Hub</p>
+      <p>國中自然 3 上第 1 章 1-1（課本第 7 頁探索活動）· 單擺實驗即時戰情室 ｜ 我的數位基地 Central Hub</p>
     </footer>
 
     <!-- ========================================================================= -->
-    <!-- JAVASCRIPT: 核心邏輯與即時圖表引擎 -->
+    <!-- JAVASCRIPT: 核心邏輯與課本第 7 頁對照圖表引擎 -->
     <!-- ========================================================================= -->
     <script>
       const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwO2VGDAYEs3vvXosCpsSLKZGB31Q6G9gGNlkgSmJyLtqjsLnfZXB8NqvJtno4JR9_Xhw/exec";
       
-      // 全域資料儲存
       let classData = {};
       let chartStudentLT = null;
       let chartStudentLT2 = null;
       let chartModalLT = null;
       let chartModalLT2 = null;
 
-      // 檢查 URL query 是否指定組別 (?group=X)
+      const EXP_META = [
+        { label: '① 基準組 (100cm, 20g, 10°)', short: '①基準(100cm)', len: 100, mass: 20, ang: 10 },
+        { label: '② 變擺角 (100cm, 20g, 5°)', short: '②變擺角(5°)', len: 100, mass: 20, ang: 5 },
+        { label: '③ 變質量 (100cm, 40g, 10°)', short: '③變質量(40g)', len: 100, mass: 40, ang: 10 },
+        { label: '④ 變擺長 (25cm, 20g, 10°)', short: '④變擺長(25cm)', len: 25, mass: 20, ang: 10 },
+      ];
+
       window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const groupParam = urlParams.get('group');
@@ -383,9 +401,6 @@
         }
       }
 
-      // ==========================================
-      // 教師大螢幕戰情牆邏輯
-      // ==========================================
       function initTeacherDashboard() {
         const grid = document.getElementById('dashboard-grid');
         grid.innerHTML = '';
@@ -413,7 +428,7 @@
 
       function startLivePolling() {
         fetchStatus();
-        setInterval(fetchStatus, 3500); // 每 3.5 秒自動輪詢
+        setInterval(fetchStatus, 3500);
       }
 
       async function fetchStatus() {
@@ -447,7 +462,7 @@
             const r = gData.records;
             preview.className = "text-xs text-slate-200 h-14 flex flex-col justify-center px-3 bg-slate-900/90 rounded-xl border border-emerald-500/30 overflow-hidden";
             preview.innerHTML = `
-              <div class="text-sky-400 font-mono">T: ${r[0]?r[0].T:''}s | ${r[1]?r[1].T:''}s | ${r[2]?r[2].T:''}s | ${r[3]?r[3].T:''}s</div>
+              <div class="text-sky-400 font-mono">T: ①${r[0]?r[0].T:''}s | ②${r[1]?r[1].T:''}s | ③${r[2]?r[2].T:''}s | ④${r[3]?r[3].T:''}s</div>
               <div class="truncate text-slate-300 mt-0.5 font-medium">${gData.q1Answer || ''}</div>
             `;
 
@@ -458,9 +473,6 @@
         document.getElementById('submitted-count').innerText = `${count} / 8`;
       }
 
-      // ==========================================
-      // 大螢幕全螢幕發表看板 (Modal)
-      // ==========================================
       function openPresentation(groupId) {
         const data = classData[groupId];
         if (!data) return;
@@ -470,22 +482,22 @@
         document.getElementById('modal-q1-text').innerText = data.q1Answer || '（未填寫）';
         document.getElementById('modal-q2-text').innerText = data.q2Answer || '（未填寫）';
 
-        // 填入數據表格
         const tbody = document.getElementById('modal-table-body');
         tbody.innerHTML = '';
-        const lengths = [20, 40, 60, 80];
         (data.records || []).forEach((r, idx) => {
+          const meta = EXP_META[idx];
           tbody.innerHTML += `
             <tr class="py-1.5 hover:bg-slate-700/40">
-              <td class="py-1.5">${lengths[idx]} cm</td>
-              <td>${r.time} s</td>
-              <td class="text-sky-400 font-bold">${r.T} s</td>
-              <td class="text-amber-400 font-bold">${r.T2} s²</td>
+              <td class="py-1.5 font-bold text-sky-400">實驗 ${idx+1}</td>
+              <td>${meta.len}cm</td>
+              <td>${meta.mass}g</td>
+              <td>${meta.ang}°</td>
+              <td>${r.time}s</td>
+              <td class="text-emerald-400 font-bold">${r.T}s</td>
             </tr>
           `;
         });
 
-        // 繪製大圖表
         renderModalCharts(data.records);
 
         const modal = document.getElementById('presentationModal');
@@ -500,93 +512,79 @@
       }
 
       function renderModalCharts(records) {
-        const lengths = [20, 40, 60, 80];
         const tValues = records.map(r => parseFloat(r.T) || 0);
-        const t2Values = records.map(r => parseFloat(r.T2) || 0);
 
         if (chartModalLT) chartModalLT.destroy();
         if (chartModalLT2) chartModalLT2.destroy();
 
+        // 圖表 A: 4 組週期長條圖
         const ctx1 = document.getElementById('modal-chart-lt').getContext('2d');
         chartModalLT = new Chart(ctx1, {
-          type: 'line',
+          type: 'bar',
           data: {
-            labels: lengths.map(l => `${l}cm`),
+            labels: EXP_META.map(m => m.short),
             datasets: [{
-              label: '週期 T (s)',
+              label: '週期 T (秒)',
               data: tValues,
-              borderColor: '#0ea5e9',
-              backgroundColor: 'rgba(14, 165, 233, 0.2)',
-              tension: 0.4,
-              pointRadius: 6,
-              pointBackgroundColor: '#38bdf8',
-              fill: true
+              backgroundColor: ['#0ea5e9', '#f59e0b', '#10b981', '#f43f5e'],
+              borderRadius: 6
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+              y: { beginAtZero: true, max: 2.5, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
             },
             plugins: { legend: { display: false } }
           }
         });
 
+        // 圖表 B: 擺長對比 (25cm vs 100cm)
         const ctx2 = document.getElementById('modal-chart-lt2').getContext('2d');
         chartModalLT2 = new Chart(ctx2, {
-          type: 'line',
+          type: 'bar',
           data: {
-            labels: lengths.map(l => `${l}cm`),
+            labels: ['④ 擺長 25 cm', '① 擺長 100 cm (4倍)'],
             datasets: [{
-              label: '週期平方 T² (s²)',
-              data: t2Values,
-              borderColor: '#f59e0b',
-              backgroundColor: 'rgba(245, 158, 11, 0.2)',
-              tension: 0,
-              pointRadius: 6,
-              pointBackgroundColor: '#fbbf24',
-              fill: true
+              label: '單次週期 T (秒)',
+              data: [tValues[3] || 0, tValues[0] || 0],
+              backgroundColor: ['#f43f5e', '#0ea5e9'],
+              borderRadius: 8
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+              y: { beginAtZero: true, max: 2.5, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', font: { size: 11, weight: 'bold' } } }
             },
             plugins: { legend: { display: false } }
           }
         });
       }
 
-      // ==========================================
-      // 學生平板端邏輯
-      // ==========================================
       function initStudentCharts() {
         const ctx1 = document.getElementById('chart-lt-student').getContext('2d');
         chartStudentLT = new Chart(ctx1, {
-          type: 'line',
+          type: 'bar',
           data: {
-            labels: ['20cm', '40cm', '60cm', '80cm'],
+            labels: ['①基準(100cm)', '②變擺角(5°)', '③變質量(40g)', '④變擺長(25cm)'],
             datasets: [{
-              label: '週期 T (s)',
+              label: '週期 T (秒)',
               data: [0, 0, 0, 0],
-              borderColor: '#0ea5e9',
-              backgroundColor: 'rgba(14, 165, 233, 0.2)',
-              tension: 0.4,
-              pointRadius: 5,
-              fill: true
+              backgroundColor: ['#0ea5e9', '#f59e0b', '#10b981', '#f43f5e'],
+              borderRadius: 6
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+              y: { beginAtZero: true, max: 2.5, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', font: { size: 9 } } }
             },
             plugins: { legend: { display: false } }
           }
@@ -594,25 +592,22 @@
 
         const ctx2 = document.getElementById('chart-lt2-student').getContext('2d');
         chartStudentLT2 = new Chart(ctx2, {
-          type: 'line',
+          type: 'bar',
           data: {
-            labels: ['20cm', '40cm', '60cm', '80cm'],
+            labels: ['④ 擺長 25cm', '① 擺長 100cm'],
             datasets: [{
-              label: '週期平方 T² (s²)',
-              data: [0, 0, 0, 0],
-              borderColor: '#f59e0b',
-              backgroundColor: 'rgba(245, 158, 11, 0.2)',
-              tension: 0,
-              pointRadius: 5,
-              fill: true
+              label: '週期 T (秒)',
+              data: [0, 0],
+              backgroundColor: ['#f43f5e', '#0ea5e9'],
+              borderRadius: 6
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+              y: { beginAtZero: true, max: 2.5, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+              x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', font: { size: 10, weight: 'bold' } } }
             },
             plugins: { legend: { display: false } }
           }
@@ -626,14 +621,13 @@
         const v4 = parseFloat(document.getElementById('st-t4').value) || 0;
 
         const tValues = [v1/10, v2/10, v3/10, v4/10].map(v => Number(v.toFixed(3)));
-        const t2Values = tValues.map(v => Number((v * v).toFixed(3)));
 
         if (chartStudentLT) {
           chartStudentLT.data.datasets[0].data = tValues;
           chartStudentLT.update();
         }
         if (chartStudentLT2) {
-          chartStudentLT2.data.datasets[0].data = t2Values;
+          chartStudentLT2.data.datasets[0].data = [tValues[3], tValues[0]];
           chartStudentLT2.update();
         }
       }
@@ -660,10 +654,10 @@
         btn.innerText = "⏳ 正在傳送至大螢幕戰情牆...";
 
         const records = [
-          { length: 20, time: v1, T: (v1/10).toFixed(3), T2: ((v1/10)**2).toFixed(3) },
-          { length: 40, time: v2, T: (v2/10).toFixed(3), T2: ((v2/10)**2).toFixed(3) },
-          { length: 60, time: v3, T: (v3/10).toFixed(3), T2: ((v3/10)**2).toFixed(3) },
-          { length: 80, time: v4, T: (v4/10).toFixed(3), T2: ((v4/10)**2).toFixed(3) },
+          { exp: 1, name: '基準組(100cm,20g,10°)', time: v1, T: (v1/10).toFixed(3) },
+          { exp: 2, name: '變擺角(100cm,20g,5°)', time: v2, T: (v2/10).toFixed(3) },
+          { exp: 3, name: '變質量(100cm,40g,10°)', time: v3, T: (v3/10).toFixed(3) },
+          { exp: 4, name: '變擺長(25cm,20g,10°)', time: v4, T: (v4/10).toFixed(3) },
         ];
 
         const payload = {
