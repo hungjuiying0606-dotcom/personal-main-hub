@@ -207,24 +207,6 @@
           "homepageState": "linked",
           "order": 10,
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/master-teachers-hub.html"
-        },
-        {
-          "id": "agang-digital-teaching-hub",
-          "title": "剛好整合所｜阿剛老師",
-          "description": "阿剛老師數位教學與行政資源入口網：四大數位宇宙（教學魔法整合箱、剛好備課所、工具所、行政所）。",
-          "status": "active",
-          "homepageState": "linked",
-          "order": 20,
-          "url": "https://filedn.com/laMtL9jmKf7JrDEQG0A6OPy/html/00-%E5%89%9B%E5%A5%BD%E6%95%B4%E5%90%88%E9%A0%81%E5%85%A5%E5%8F%A3%E7%B6%B2/index-GAS-share.html#home"
-        },
-        {
-          "id": "ijun-ai-classroom",
-          "title": "奕鈞老師數位教學備課室｜IJUN AI",
-          "description": "專注於 AI教學、國文教學與國文 AI 教學創新！提供各科 AI 備課神器、AI Agent 實戰教材與研習邀約。",
-          "status": "active",
-          "homepageState": "linked",
-          "order": 30,
-          "url": "https://www.ijun-ai.com/"
         }
       ]
     }
