@@ -152,19 +152,7 @@
       overflow: hidden;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    @media (max-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-    }
+    
 
     .hero-badge-row {
       display: flex;
@@ -1316,7 +1304,187 @@
       flex-direction: column;
       gap: 0.75rem;
     }
-  </style>
+  
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .hero-card-side {
+      background-color: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl, 22px);
+      padding: 1.5rem 1.25rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+    }
+
+    /* 3D Card Stack Carousel Styles */
+    .card-stack-wrapper {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      margin-bottom: 0.85rem;
+    }
+
+    .card-stack-scene {
+      position: relative;
+      width: 250px;
+      height: 290px;
+      transform-style: preserve-3d;
+    }
+
+    .stack-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-lg, 16px);
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.22), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
+      border: 3px solid #ffffff;
+      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      will-change: transform, opacity;
+    }
+
+    .stack-card .stack-img-wrap {
+      width: 100%;
+      height: 235px;
+      background-color: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stack-card .stack-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .stack-card:hover .stack-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .stack-card-caption {
+      padding: 0.55rem 0.6rem;
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: #1e293b;
+      background: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-top: 1px solid #e2e8f0;
+      line-height: 1.35;
+    }
+
+    /* 3D Stack Layer Positions */
+    .stack-card.pos-front {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+      z-index: 10;
+      pointer-events: auto;
+      border-color: #f59e0b;
+      box-shadow: 0 18px 32px -6px rgba(180, 83, 9, 0.3), 0 8px 16px -2px rgba(0, 0, 0, 0.12);
+    }
+
+    .stack-card.pos-right-1 {
+      transform: translate3d(28px, 12px, -40px) scale(0.92) rotate(4deg);
+      opacity: 0.85;
+      z-index: 8;
+      pointer-events: auto;
+    }
+
+    .stack-card.pos-right-2 {
+      transform: translate3d(52px, 24px, -80px) scale(0.84) rotate(8deg);
+      opacity: 0.58;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .stack-card.pos-left-1 {
+      transform: translate3d(-28px, 12px, -40px) scale(0.92) rotate(-4deg);
+      opacity: 0.85;
+      z-index: 8;
+      pointer-events: auto;
+    }
+
+    .stack-card.pos-hidden {
+      transform: translate3d(0, 35px, -120px) scale(0.75);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Stack Nav Controls */
+    .stack-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 250px;
+      margin: 0.5rem auto 0;
+      gap: 0.5rem;
+    }
+
+    .stack-ctrl-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-color);
+      background-color: var(--bg-surface, #ffffff);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .stack-ctrl-btn:hover {
+      background-color: var(--primary, #4338ca);
+      color: #ffffff;
+      border-color: var(--primary, #4338ca);
+      transform: scale(1.08);
+    }
+
+    .stack-counter-pill {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #92400e;
+      background-color: #fef3c7;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid #fde68a;
+      letter-spacing: 0.05em;
+    }
+</style>
 </head>
 <body>
   <!-- Sticky Header -->
@@ -1383,7 +1551,7 @@
           </div>
         </div>
 
-        <div class="hero-card-side">
+                <div class="hero-card-side">
           <!-- 3D Card Stack Carousel -->
           <div class="card-stack-wrapper" id="cardStackWrapper" title="可滑動切換或點擊放大觀賞">
             <div class="card-stack-scene" id="cardStackScene">
@@ -1406,8 +1574,6 @@
             <span class="hero-mini-badge">化學家</span>
             <span class="hero-mini-badge">和平主義者</span>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -1936,7 +2102,7 @@
     <div class="container">
       <div class="section-header">
         <div class="section-pill">🖼️ 珍貴歷史影像圖輯</div>
-        <h2 class="section-title">諾貝爾歷史文獻與珍貴照片 (共 23 幅)</h2>
+        <h2 class="section-title">諾貝爾 歷史文獻與珍貴照片 (共 23 幅)</h2>
         <p class="section-desc">點擊任一照片即可全螢幕燈箱放大觀賞！所有圖片皆依檔名清楚標註說明。</p>
       </div>
 
@@ -2133,89 +2299,42 @@
 
   <!-- Scripts for 3D Card Stack, Modals, Timer, Tools -->
   <script>
-    // 23 Historical Photos Data
-    const NOBEL_PHOTOS = [
-      { id: 1, title: '諾貝爾年輕畫像', file: '諾貝爾年輕畫像.png' },
-      { id: 2, title: '諾貝爾畫像', file: '諾貝爾畫像.jpg' },
-      { id: 3, title: '諾貝爾畫像02', file: '諾貝爾畫像02.jpg' },
-      { id: 4, title: '諾貝爾03', file: '諾貝爾03.jpg' },
-      { id: 5, title: '諾貝爾04', file: '諾貝爾04.jpg' },
-      { id: 6, title: '諾貝爾父親畫像', file: '諾貝爾父親畫像.jpg' },
-      { id: 7, title: '諾貝爾家族老宅01', file: '諾貝爾家族老宅01.jpg' },
-      { id: 8, title: '聖彼得堡', file: '聖彼得堡.png' },
-      { id: 9, title: '英國詩人雪萊', file: '英國詩人雪萊.jpg' },
-      { id: 10, title: '英國詩人拜倫', file: '英國詩人拜倫.jpg' },
-      { id: 11, title: '歐魯夫˙魯德貝克', file: '歐魯夫˙魯德貝克.jpg' },
-      { id: 12, title: '炸藥', file: '炸藥.jpg' },
-      { id: 13, title: '雷管', file: '雷管.jpg' },
-      { id: 14, title: '雷管02', file: '雷管02.jpg' },
-      { id: 15, title: '諾貝爾實驗室舊照', file: '諾貝爾實驗室舊照.png' },
-      { id: 16, title: '諾貝爾實驗室近代照片', file: '諾貝爾實驗室近代照片.jpg' },
-      { id: 17, title: '諾貝爾獎01', file: '諾貝爾獎01.jpg' },
-      { id: 18, title: '諾貝爾獎02', file: '諾貝爾獎02.jpg' },
-      { id: 19, title: '菲爾茲獎（Fields medals）', file: '菲爾茲獎（Fields medals）.jpg' },
-      { id: 20, title: '數學家米泰萊弗勒', file: '數學家米泰萊弗勒.jpg' },
-      { id: 21, title: '搞笑諾貝爾獎', file: '搞笑諾貝爾獎.jpg' },
-      { id: 22, title: '搞笑諾貝爾獎02', file: '搞笑諾貝爾獎02.jpg' },
-      { id: 23, title: '搞笑諾貝爾獎03', file: '搞笑諾貝爾獎03.jpg' }
-    ];
-
+    const PHOTOS_DATA = [{"id":1,"title":"炸藥","file":"炸藥.jpg","path":"./assets/nobel/gallery/炸藥.jpg"},{"id":2,"title":"英國詩人拜倫","file":"英國詩人拜倫.jpg","path":"./assets/nobel/gallery/英國詩人拜倫.jpg"},{"id":3,"title":"英國詩人雪萊","file":"英國詩人雪萊.jpg","path":"./assets/nobel/gallery/英國詩人雪萊.jpg"},{"id":4,"title":"菲爾茲獎（Fields medals）","file":"菲爾茲獎（Fields medals）.jpg","path":"./assets/nobel/gallery/菲爾茲獎（Fields medals）.jpg"},{"id":5,"title":"搞笑諾貝爾獎","file":"搞笑諾貝爾獎.jpg","path":"./assets/nobel/gallery/搞笑諾貝爾獎.jpg"},{"id":6,"title":"聖彼得堡","file":"聖彼得堡.png","path":"./assets/nobel/gallery/聖彼得堡.png"},{"id":7,"title":"雷管","file":"雷管.jpg","path":"./assets/nobel/gallery/雷管.jpg"},{"id":8,"title":"數學家米泰萊弗勒","file":"數學家米泰萊弗勒.jpg","path":"./assets/nobel/gallery/數學家米泰萊弗勒.jpg"},{"id":9,"title":"歐魯夫˙魯德貝克","file":"歐魯夫˙魯德貝克.jpg","path":"./assets/nobel/gallery/歐魯夫˙魯德貝克.jpg"},{"id":10,"title":"諾貝爾父親畫像","file":"諾貝爾父親畫像.jpg","path":"./assets/nobel/gallery/諾貝爾父親畫像.jpg"},{"id":11,"title":"諾貝爾年輕畫像","file":"諾貝爾年輕畫像.png","path":"./assets/nobel/gallery/諾貝爾年輕畫像.png"},{"id":12,"title":"諾貝爾畫像","file":"諾貝爾畫像.jpg","path":"./assets/nobel/gallery/諾貝爾畫像.jpg"},{"id":13,"title":"諾貝爾實驗室近代照片","file":"諾貝爾實驗室近代照片.jpg","path":"./assets/nobel/gallery/諾貝爾實驗室近代照片.jpg"},{"id":14,"title":"諾貝爾實驗室舊照","file":"諾貝爾實驗室舊照.png","path":"./assets/nobel/gallery/諾貝爾實驗室舊照.png"},{"id":15,"title":"諾貝爾家族老宅01","file":"諾貝爾家族老宅01.jpg","path":"./assets/nobel/gallery/諾貝爾家族老宅01.jpg"},{"id":16,"title":"諾貝爾獎01","file":"諾貝爾獎01.jpg","path":"./assets/nobel/gallery/諾貝爾獎01.jpg"},{"id":17,"title":"搞笑諾貝爾獎02","file":"搞笑諾貝爾獎02.jpg","path":"./assets/nobel/gallery/搞笑諾貝爾獎02.jpg"},{"id":18,"title":"雷管02","file":"雷管02.jpg","path":"./assets/nobel/gallery/雷管02.jpg"},{"id":19,"title":"諾貝爾畫像02","file":"諾貝爾畫像02.jpg","path":"./assets/nobel/gallery/諾貝爾畫像02.jpg"},{"id":20,"title":"諾貝爾獎02","file":"諾貝爾獎02.jpg","path":"./assets/nobel/gallery/諾貝爾獎02.jpg"},{"id":21,"title":"搞笑諾貝爾獎03","file":"搞笑諾貝爾獎03.jpg","path":"./assets/nobel/gallery/搞笑諾貝爾獎03.jpg"},{"id":22,"title":"諾貝爾03","file":"諾貝爾03.jpg","path":"./assets/nobel/gallery/諾貝爾03.jpg"},{"id":23,"title":"諾貝爾04","file":"諾貝爾04.jpg","path":"./assets/nobel/gallery/諾貝爾04.jpg"}];
     let currentStackIndex = 0;
-    let stackAutoplayTimer = null;
     let isStackPlaying = true;
+    let stackAutoplayTimer = null;
 
-    // Initialize 3D Card Stack
     function initCardStack() {
       const scene = document.getElementById('cardStackScene');
       if (!scene) return;
       scene.innerHTML = '';
+      const total = PHOTOS_DATA.length;
+      if (total === 0) return;
 
-      NOBEL_PHOTOS.forEach((photo, idx) => {
+      PHOTOS_DATA.forEach((photo, idx) => {
         const card = document.createElement('div');
         card.className = 'stack-card';
-        card.id = `stackCard-${idx}`;
+        card.id = 'stackCard-' + idx;
         card.innerHTML = `
           <div class="stack-img-wrap">
-            <img src="./assets/nobel/gallery/${encodeURIComponent(photo.file)}" alt="${photo.title}" loading="lazy" />
+            <img src="${photo.path}" alt="${photo.title}" loading="lazy" />
           </div>
-          <div class="stack-card-caption" title="${photo.title}">${photo.title}</div>
+          <div class="stack-card-caption">${photo.title}</div>
         `;
         card.onclick = () => handleCardClick(idx);
         scene.appendChild(card);
       });
 
       updateStackPositions();
-      startStackAutoplay();
-      initDrawerGrid();
-
-      // Controls Binding
-      document.getElementById('stackPrevBtn').onclick = prevStackCard;
-      document.getElementById('stackNextBtn').onclick = nextStackCard;
-      document.getElementById('stackPlayBtn').onclick = toggleStackAutoplay;
-
-      // Mouse Hover Pause
-      const wrapper = document.getElementById('cardStackWrapper');
-      wrapper.addEventListener('mouseenter', stopStackAutoplay);
-      wrapper.addEventListener('mouseleave', () => {
-        if (isStackPlaying) startStackAutoplay();
-      });
-
-      // Touch swipe support
-      let touchStartX = 0;
-      wrapper.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-      wrapper.addEventListener('touchend', (e) => {
-        const touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 40) nextStackCard();
-        else if (touchEndX - touchStartX > 40) prevStackCard();
-      }, { passive: true });
+      setupStackEvents();
     }
 
     function updateStackPositions() {
-      const total = NOBEL_PHOTOS.length;
-      NOBEL_PHOTOS.forEach((_, idx) => {
-        const card = document.getElementById(`stackCard-${idx}`);
+      const total = PHOTOS_DATA.length;
+      if (total === 0) return;
+
+      PHOTOS_DATA.forEach((_, idx) => {
+        const card = document.getElementById('stackCard-' + idx);
         if (!card) return;
 
         card.className = 'stack-card';
@@ -2244,9 +2363,8 @@
 
     function handleCardClick(idx) {
       if (idx === currentStackIndex) {
-        // Open lightbox modal for current front card
-        const photo = NOBEL_PHOTOS[idx];
-        openImageModal(photo.title, `./assets/nobel/gallery/${encodeURIComponent(photo.file)}`);
+        const photo = PHOTOS_DATA[idx];
+        openImageModal(photo.title, photo.path);
       } else {
         currentStackIndex = idx;
         updateStackPositions();
@@ -2254,12 +2372,14 @@
     }
 
     function nextStackCard() {
-      currentStackIndex = (currentStackIndex + 1) % NOBEL_PHOTOS.length;
+      if (PHOTOS_DATA.length === 0) return;
+      currentStackIndex = (currentStackIndex + 1) % PHOTOS_DATA.length;
       updateStackPositions();
     }
 
     function prevStackCard() {
-      currentStackIndex = (currentStackIndex - 1 + NOBEL_PHOTOS.length) % NOBEL_PHOTOS.length;
+      if (PHOTOS_DATA.length === 0) return;
+      currentStackIndex = (currentStackIndex - 1 + PHOTOS_DATA.length) % PHOTOS_DATA.length;
       updateStackPositions();
     }
 
@@ -2282,125 +2402,112 @@
       if (isStackPlaying) {
         stopStackAutoplay();
         isStackPlaying = false;
-        playBtn.textContent = '▶';
-        playBtn.title = '繼續自動輪播';
+        if (playBtn) { playBtn.textContent = '▶'; playBtn.title = '繼續自動輪播'; }
       } else {
         isStackPlaying = true;
         startStackAutoplay();
-        playBtn.textContent = '⏸';
-        playBtn.title = '暫停自動輪播';
+        if (playBtn) { playBtn.textContent = '⏸'; playBtn.title = '暫停自動輪播'; }
       }
     }
 
-    // Photo Drawer Grid
-    function initDrawerGrid() {
-      const grid = document.getElementById('drawerGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
+    function setupStackEvents() {
+      const wrapper = document.getElementById('cardStackWrapper');
+      if (!wrapper || wrapper.dataset.bound) return;
+      wrapper.dataset.bound = 'true';
 
-      NOBEL_PHOTOS.forEach((photo, idx) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-card';
-        item.innerHTML = `
-          <div class="gallery-img-wrap">
-            <img src="./assets/nobel/gallery/${encodeURIComponent(photo.file)}" alt="${photo.title}" loading="lazy" />
-          </div>
-          <div class="gallery-caption">${photo.title}</div>
-        `;
-        item.onclick = () => {
-          closePhotoDrawer();
-          currentStackIndex = idx;
-          updateStackPositions();
-          openImageModal(photo.title, `./assets/nobel/gallery/${encodeURIComponent(photo.file)}`);
-        };
-        grid.appendChild(item);
+      wrapper.addEventListener('mouseenter', () => {
+        if (isStackPlaying) stopStackAutoplay();
       });
+      wrapper.addEventListener('mouseleave', () => {
+        if (isStackPlaying) startStackAutoplay();
+      });
+
+      let touchStartX = 0;
+      wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      wrapper.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 40) nextStackCard();
+        else if (touchEndX - touchStartX > 40) prevStackCard();
+      }, { passive: true });
+
+      document.getElementById('stackNextBtn')?.addEventListener('click', nextStackCard);
+      document.getElementById('stackPrevBtn')?.addEventListener('click', prevStackCard);
+      document.getElementById('stackPlayBtn')?.addEventListener('click', toggleStackAutoplay);
     }
 
-    function openPhotoDrawer() {
-      const drawer = document.getElementById('photoDrawer');
-      if (drawer) drawer.classList.add('active');
-    }
-
-    function closePhotoDrawer(e) {
-      const drawer = document.getElementById('photoDrawer');
-      if (drawer) drawer.classList.remove('active');
-    }
-
-    // QR Code Modal
-    function openQrModal(title, qrSrc, linkUrl, desc, pin) {
+    // Modal Helpers
+    function openImageModal(title, imgSrc) {
       document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalImg').src = qrSrc;
-      document.getElementById('modalLink').href = linkUrl;
-      document.getElementById('modalLink').style.display = 'inline-flex';
-      document.getElementById('modalDesc').textContent = desc || '請使用手機相機或平板掃描 QR Code 加入！';
-      
+      document.getElementById('modalDesc').textContent = '歷史文獻影像檢視';
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('modalImg').style.display = 'block';
       const pinWrap = document.getElementById('modalPinWrap');
-      const pinText = document.getElementById('modalPinText');
-      if (pin) {
-        pinWrap.style.display = 'block';
-        pinText.textContent = '加入代碼 / PIN: ' + pin;
-      } else {
-        pinWrap.style.display = 'none';
-      }
-
+      if (pinWrap) pinWrap.style.display = 'none';
+      const btnWrap = document.getElementById('modalBtnWrap');
+      if (btnWrap) btnWrap.style.display = 'none';
       document.getElementById('mediaModal').classList.add('active');
     }
 
-    // Photo Lightbox Modal
-    function openImageModal(title, imgSrc) {
+    function openQrModal(title, qrSrc, linkUrl, desc, pin = '') {
       document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalImg').src = imgSrc;
-      document.getElementById('modalDesc').textContent = '歷史珍貴檔案文獻（檔名即為說明檔）';
-      document.getElementById('modalPinWrap').style.display = 'none';
-      document.getElementById('modalLink').style.display = 'none';
+      document.getElementById('modalDesc').textContent = desc || '請使用手機相機或平板掃描 QR Code 加入！';
+      document.getElementById('modalImg').src = qrSrc;
+      document.getElementById('modalImg').style.display = 'block';
+      const pinWrap = document.getElementById('modalPinWrap');
+      if (pin) {
+        if (pinWrap) pinWrap.style.display = 'block';
+        const pinText = document.getElementById('modalPinText');
+        if (pinText) pinText.textContent = '加入代碼 / PIN: ' + pin;
+      } else {
+        if (pinWrap) pinWrap.style.display = 'none';
+      }
+      const btnWrap = document.getElementById('modalBtnWrap');
+      if (btnWrap) btnWrap.style.display = 'block';
+      const linkEl = document.getElementById('modalLink');
+      if (linkEl) linkEl.href = linkUrl;
       document.getElementById('mediaModal').classList.add('active');
     }
 
     function closeMediaModal(e) {
+      if (e) e.stopPropagation();
       document.getElementById('mediaModal').classList.remove('active');
     }
 
     // Classroom Timer
-    let timerInterval = null;
+    let countdownInterval = null;
     function startTimer(minutes) {
-      clearInterval(timerInterval);
-      let totalSec = minutes * 60;
+      clearInterval(countdownInterval);
+      let seconds = minutes * 60;
       const display = document.getElementById('timerDisplay');
       
-      function update() {
-        const m = Math.floor(totalSec / 60);
-        const s = totalSec % 60;
-        display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        if (totalSec <= 0) {
-          clearInterval(timerInterval);
-          display.textContent = "⏰ 時間到！";
-          alert(`⏰ ${minutes} 分鐘倒數結束！請同學準備分享！`);
+      countdownInterval = setInterval(() => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        if (display) display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          if (display) display.textContent = '🔔 時間到！';
+          alert('🔔 時間到！請同學完成作答或討論！');
         }
-        totalSec--;
-      }
-      update();
-      timerInterval = setInterval(update, 1000);
+        seconds--;
+      }, 1000);
     }
 
-    // Student Number Picker
     function pickRandomStudent() {
-      const num = Math.floor(Math.random() * 35) + 1;
-      alert(`🎉 幸運號碼抽籤結果：請【 ${num} 號 】同學回答問題！`);
+      const totalStudents = 35;
+      const lucky = Math.floor(Math.random() * totalStudents) + 1;
+      const display = document.getElementById('timerDisplay');
+      if (display) display.textContent = '🎯 抽中 ' + lucky + ' 號！';
     }
 
-    // Escape key closes modals
-    window.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeMediaModal();
-        closePhotoDrawer();
-      }
-    });
-
-    // Boot on DOM ready
+    // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
       initCardStack();
+      startStackAutoplay();
     });
+
   </script>
 </body>
 </html>
