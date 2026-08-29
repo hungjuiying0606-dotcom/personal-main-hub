@@ -34,6 +34,15 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
         },
         {
+          "id": "life-master-show-hub",
+          "title": "生活達人秀show",
+          "description": "國三科學探索校定課程「生活達人秀show」：收錄牛頓、焦耳、霍金三大科學巨擘生平傳奇、核心定律、講義教材、學習單與精選影音。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html"
+        },
+        {
           "id": "hall-of-fame-course-intro",
           "title": "課程介紹",
           "description": "世界名人堂課程介紹與上課規矩：課堂時間流程、平時成績與學習單計分方式、平板使用須知與加扣分規範。",

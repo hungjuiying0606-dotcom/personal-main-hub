@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生活達人秀show - 國三科學探索校定課程</title>
+  <meta name="description" content="國三校定科學探索課程「生活達人秀show」：收錄牛頓、焦耳、霍金三大科學巨擘生平傳奇、核心定律、課堂講義、學習單與精選影音。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 背景與卡片色彩 */
+      --bg-main: #f0f7ff;
+      --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #fdf4ff 45%, #f0fdf4 100%);
+      --bg-surface: #ffffff;
+      --bg-surface-muted: #f8fafc;
+      --bg-card-muted: #f1f5f9;
+      
+      /* 文字色彩 */
+      --text-main: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      
+      /* 邊框與分割線 */
+      --border-color: #e2e8f0;
+      --border-cute: #bae6fd;
+      --border-muted: #cbd5e1;
+      
+      /* 活潑色彩系統 */
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --primary-light-text: #0369a1;
+      
+      --gold: #b45309;
+      --gold-light: #fef3c7;
+      --gold-dark: #92400e;
+      
+      --accent-blue: #2563eb;
+      --accent-blue-light: #dbeafe;
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #f3e8ff;
+      --accent-red: #ef4444;
+      --accent-red-light: #fee2e2;
+      --accent-green: #10b981;
+      --accent-green-light: #d1fae5;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fef3c7;
+      --accent-teal: #0d9488;
+      --accent-teal-light: #ccfbf1;
+      
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 2px 6px rgba(14, 165, 233, 0.06);
+      --shadow-md: 0 10px 22px -4px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 18px 32px -6px rgba(14, 165, 233, 0.14), 0 8px 12px -4px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      
+      --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Site Header */
+    .site-header {
+      background-color: rgba(255, 255, 255, 0.92);
+      border-bottom: 1.5px solid var(--border-color);
+      padding: 0.85rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 1rem;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-cute);
+      border-radius: var(--radius-full);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-home-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin: 1.5rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 2.25rem 0 1.75rem;
+      position: relative;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.95rem;
+      background-color: #ffffff;
+      color: var(--primary);
+      border: 1.5px solid var(--border-cute);
+      font-size: 0.875rem;
+      font-weight: 800;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(135deg, #0284c7 0%, #0d9488 45%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      max-width: 780px;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.1rem;
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-cute);
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-stat-badge .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+      margin: 1.75rem 0 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3.1rem;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-light);
+    }
+
+    /* Filter Controls */
+    .filter-tabs {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border-color);
+      background-color: #ffffff;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--border-cute);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 1rem 0 5rem;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid rgba(2, 132, 199, 0.15);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-count {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: #ffffff;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border-cute);
+    }
+
+    /* Cards Grid (3 Columns) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 980px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+    }
+
+    .resource-card {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .resource-card.card-newton::before {
+      background: var(--accent-amber);
+      opacity: 1;
+    }
+
+    .resource-card.card-joule::before {
+      background: var(--accent-teal);
+      opacity: 1;
+    }
+
+    .resource-card.card-hawking::before {
+      background: var(--accent-purple);
+      opacity: 1;
+    }
+
+    .resource-card.card-handout::before {
+      background: var(--accent-green);
+      opacity: 1;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-cute);
+    }
+
+    .card-order-tag {
+      font-family: 'Outfit', monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      background-color: var(--bg-surface-muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-wrap {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      background: var(--bg-surface-muted);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .icon-amber { background: #fffbeb; border-color: #fde68a; }
+    .icon-teal { background: #f0fdfa; border-color: #99f6e4; }
+    .icon-purple { background: #faf5ff; border-color: #e9d5ff; }
+    .icon-green { background: #f0fdf4; border-color: #bbf7d0; }
+
+    .badge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .badge-online {
+      background-color: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-pdf {
+      background-color: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-latin {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-description {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-highlights {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .card-highlights li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .card-highlights li span {
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .card-actions-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.25);
+    }
+    .btn-amber:hover {
+      background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-teal {
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(13, 148, 136, 0.25);
+    }
+    .btn-teal:hover {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(124, 58, 237, 0.25);
+    }
+    .btn-purple:hover {
+      background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+    }
+    .btn-green:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-color);
+    }
+    .btn-outline:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--border-cute);
+      transform: translateY(-1px);
+    }
+
+    /* Modal Styling */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      border-radius: 24px;
+      box-shadow: var(--shadow-xl);
+      border: 1.5px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-backdrop.active .modal-container {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 1.5rem 1.75rem;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-bottom: 1.5px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .modal-header-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: #fee2e2;
+      color: #ef4444;
+      border-color: #fca5a5;
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .modal-section {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+
+    .modal-section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .qa-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .qa-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .qa-question {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    .qa-answer {
+      font-size: 0.9rem;
+      color: #0369a1;
+      background: #f0f9ff;
+      border-left: 3px solid #0284c7;
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      display: none;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .qa-toggle-btn {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: none;
+      border: 1px dashed var(--primary);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .qa-toggle-btn:hover {
+      background: var(--primary-light);
+    }
+
+    .video-item-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      margin-bottom: 0.5rem;
+    }
+
+    .video-item-link:last-child {
+      margin-bottom: 0;
+    }
+
+    .video-item-link:hover {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #e11d48;
+      transform: translateX(3px);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--bg-surface);
+      border-top: 1.5px solid var(--border-color);
+      padding: 2rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
+        <span>🏠</span>
+        <span>回數位基地首頁 ↗</span>
+      </a>
+      <div class="header-brand">
+        <span style="background: #ecfeff; color: #0891b2; border: 1px solid #a5f3fc; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 700;">🌟 生活達人秀show</span>
+        <span>國三校定課程 · 科學探索學習殿堂</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="路徑導覽">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/">首頁</a>
+      <span>›</span>
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/">教學專區</a>
+      <span>›</span>
+      <span>生活達人秀show</span>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag">🌟 國三校定課程 · 生活達人秀show 科學探索</div>
+      <h1 class="hero-title">生活達人秀show 探索殿堂</h1>
+      <p class="hero-description">
+        收錄國三科學探索校定課程 3 大核心主題巨擘（牛頓、焦耳、霍金）之生平傳奇、突破性定律、熱功當量與黑洞時空探索，完整整合課堂講義、互動教具、精選影音與素養學習單！
+      </p>
+      <div class="hero-stats-row">
+        <div class="hero-stat-badge">
+          <span class="stat-num">3</span>
+          <span class="stat-label">位科學巨擘</span>
+        </div>
+        <div class="hero-stat-badge">
+          <span class="stat-num">4</span>
+          <span class="stat-label">大核心講義與教材</span>
+        </div>
+        <div class="hero-stat-badge">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">精選影音與力學教具</span>
+        </div>
+        <div class="hero-stat-badge">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">互動自學即刻上線</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controls Bar -->
+  <div class="container">
+    <div class="controls-bar">
+      <!-- Search Box -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="scientistSearchInput" class="search-box" placeholder="搜尋科學家姓名、定律、熱功當量、黑洞、微積分、學習單或關鍵字（如：牛頓、焦耳、霍金、時間簡史、F=ma）...">
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-cat="all">🌟 全部單元 (4)</button>
+        <button class="filter-btn" data-cat="online">🟢 已上線 (4)</button>
+        <button class="filter-btn" data-cat="newton">🍎 牛頓·力學與重力 (1)</button>
+        <button class="filter-btn" data-cat="joule">☕ 焦耳·熱功當量 (1)</button>
+        <button class="filter-btn" data-cat="hawking">🌌 霍金·黑洞與宇宙 (1)</button>
+        <button class="filter-btn" data-cat="handout">📑 全冊講義與學習單 (1)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="section-title-wrap">
+        <h2 class="section-title"><span>✨</span> 生活達人秀主題單元與學習卡片</h2>
+        <span class="section-count" id="scientistCountDisplay">顯示 4 項單元資源</span>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid">
+        
+        <!-- Card 1: 艾薩克·牛頓 -->
+        <article class="resource-card card-newton" data-category="newton online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap icon-amber">🍎</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">01 · 單元一</span>
+                <span class="status-badge badge-online">已上線 · 講義影音</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">艾薩克·牛頓</h3>
+            <p class="card-latin">Isaac Newton (1643–1727) · 物理力學與萬有引力</p>
+            <p class="card-description">
+              古典物理力學之父與萬有引力發現者。提出三大運動定律、萬有引力定律、發明微積分與反射望遠鏡、發現白光光譜色散。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 古典力學三大運動定律（慣性、加速度 F=ma、作用與反作用力）</li>
+              <li><span>✓</span> 1665 避疫奇蹟年：萬有引力、微積分與光學稜鏡色散實驗</li>
+              <li><span>✓</span> 劍橋三一學院蘋果樹軼聞、名言「站在巨人的肩上」</li>
+            </ul>
+          </div>
+
+          <div class="card-actions-group">
+            <button type="button" class="card-action-btn btn-amber" onclick="openModal('newton')">
+              探索人物傳奇與問答 <span>→</span>
+            </button>
+            <a href="assets/life-master-show/newton-slides.pdf" target="_blank" class="card-action-btn btn-outline">
+              📑 查看牛頓講義與簡報 (PDF) ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: 詹姆斯·焦耳 -->
+        <article class="resource-card card-joule" data-category="joule online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap icon-teal">☕</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">02 · 單元二</span>
+                <span class="status-badge badge-online">已上線 · 學習單影音</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">詹姆斯·焦耳</h3>
+            <p class="card-latin">James Prescott Joule (1818–1889) · 能量守恆與熱功當量</p>
+            <p class="card-description">
+              能量守恆大師與熱功當量奠基者。打破傳統熱質說，證實熱是能量形式，經過數千次精密實驗測定熱功當量 (1 cal ≈ 4.184 J)。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 釀酒師之子自學逆襲，師承道爾頓 (John Dalton)</li>
+              <li><span>✓</span> 突破「熱質說」框架，確立機械能與熱能轉換守恆</li>
+              <li><span>✓</span> 精密測定熱功當量與焦耳定律（電熱效應 Q=I²Rt）</li>
+            </ul>
+          </div>
+
+          <div class="card-actions-group">
+            <button type="button" class="card-action-btn btn-teal" onclick="openModal('joule')">
+              探索人物傳奇與學習單 <span>→</span>
+            </button>
+            <a href="assets/life-master-show/joule-worksheet.pdf" target="_blank" class="card-action-btn btn-outline">
+              📝 查看焦耳學習單 (PDF) ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: 史蒂芬·霍金 -->
+        <article class="resource-card card-hawking" data-category="hawking online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap icon-purple">🌌</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">03 · 單元三</span>
+                <span class="status-badge badge-online">已上線 · 講義學習單</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">史蒂芬·霍金</h3>
+            <p class="card-latin">Stephen Hawking (1942–2018) · 宇宙學與黑洞理論</p>
+            <p class="card-description">
+              當代傳奇宇宙學家與《時間簡史》作者。提出黑洞奇異點定理、黑洞熱力學與霍金輻射，在輪椅上對抗漸凍症半世紀，啟發全人類仰望星空。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 與彭羅斯共同發表黑洞奇異點定理、霍金輻射假說</li>
+              <li><span>✓</span> 全球熱銷科普經典《時間簡史》、《新時間簡史》</li>
+              <li><span>✓</span> 克服 ALS 漸凍症限制，2012 倫敦帕運開幕發表「仰望星空」演說</li>
+            </ul>
+          </div>
+
+          <div class="card-actions-group">
+            <button type="button" class="card-action-btn btn-purple" onclick="openModal('hawking')">
+              探索人物傳奇與觀後感 <span>→</span>
+            </button>
+            <a href="assets/life-master-show/hawking-slides.pdf" target="_blank" class="card-action-btn btn-outline">
+              📑 查看霍金簡報與學習單 (PDF) ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4: 國三科學探索全冊講義與學習單 -->
+        <article class="resource-card card-handout" data-category="handout online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap icon-green">📑</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">04 · 全冊講義</span>
+                <span class="status-badge badge-pdf">全冊教材上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">國三科學探索講義 (全) ＆ 學習單</h3>
+            <p class="card-latin">Science Exploration Full Handout & Worksheets</p>
+            <p class="card-description">
+              完整收納國三生活達人秀 show 校定課程全冊講義、牛頓簡報、焦耳學習單、霍金簡報與學習單，支援大螢幕原生全螢幕預覽與列印。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 國三科學探索全冊完整講義 PDF 原生直接閱讀</li>
+              <li><span>✓</span> 焦耳熱功當量 5 大探究問答學習單</li>
+              <li><span>✓</span> 霍金宇宙探索觀後感與生平學習單</li>
+            </ul>
+          </div>
+
+          <div class="card-actions-group">
+            <a href="assets/life-master-show/science-explore-all.pdf" target="_blank" class="card-action-btn btn-green">
+              📑 原生全螢幕開啟全冊講義 (PDF) ↗
+            </a>
+            <button type="button" class="card-action-btn btn-outline" onclick="openModal('handouts')">
+              ⚡ 一鍵瀏覽各單元教材清單 <span>→</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Modal -->
+  <div class="modal-backdrop" id="infoModal" onclick="handleBackdropClick(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-header-title" id="modalTitle">
+          <span>🌟</span> 單元詳細資訊
+        </h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal()" aria-label="關閉">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic Content Injected Here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>國中自然科 · 生活達人秀show 國三科學探索校定課程教學專區 | 正式發布於 GitHub Pages</p>
+      <p class="footer-copyright">&copy; 2026 我的數位基地 · 個人主網頁. 保留所有權利。</p>
+    </div>
+  </footer>
+
+  <!-- Script for Filtering, Search & Modal -->
+  <script>
+    const modalData = {
+      newton: {
+        title: '🍎 艾薩克·牛頓 · 人物傳奇與課堂問答',
+        content: `
+          <div class="modal-section">
+            <h4 class="modal-section-title">📜 牛頓生平與重大科學突破</h4>
+            <p style="font-size: 0.93rem; color: #334155; line-height: 1.7;">
+              艾薩克·牛頓（1643－1727）誕生於英國。1665 年因英國鼠疫蔓延學校停課，牛頓返鄉自習，在兩年內完成了微積分的發明、白光色散光譜實驗與萬有引力定律的構想，被後世稱為「奇蹟年」。後出版《自然哲學的數學原理》與《光學》，奠定了古典力學與物理學的基石。
+            </p>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">💬 牛頓經典名言金句</h4>
+            <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: #475569;">
+              <li>✨ <strong>「如果說我看得比別人更遠，那是因為我站在巨人的肩膀上。」</strong></li>
+              <li>✨ <strong>「聰明人之所以不會成功，是由於他們缺乏堅韌的毅力。」</strong></li>
+              <li>✨ <strong>「天才就是長期勞動的結果。」</strong></li>
+              <li>✨ <strong>「我並沒有什麼方法，只是對一件事情很長時間、很熱心地去考慮罷了。」</strong></li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">💡 課堂學習單核心問答檢測</h4>
+            <div class="qa-card">
+              <div class="qa-question">Q1: 牛頓三大運動定律分別為何？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-n1')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-n1"><strong>解答：</strong> 第一定律：慣性定律；第二定律：加速度定律（F=ma）；第三定律：作用力與反作用力定律。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q2: 牛頓在 1665 年避疫返鄉期間有何重大突破？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-n2')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-n2"><strong>解答：</strong> 發現二項式定理、發明微積分、利用稜鏡色散證實白光由光譜色光組成，並構想出萬有引力定律。</div>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">🎬 精選課堂教具與教學影音</h4>
+            <a href="https://www.youtube.com/results?search_query=%E7%89%9B%E9%A0%93%E8%80%81%E5%B8%AB%E7%9A%84%E8%98%87%E6%9E%9C%E6%95%99%E5%AE%A4" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>🍎 【力學01】牛頓老師的蘋果教室（速度與加速度）</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=%E4%BC%BD%E5%88%A9%E7%95%A5%E8%88%87%E6%85%A3%E6%80%A7+%E5%8E%9F%E4%BE%86%E6%98%AF%E7%BF%92%E6%85%A3%E7%9A%84%E9%83%A8%E5%88%86%E9%98%BF" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>🛹 【力學02】伽利略與慣性：原來是習慣的部分阿</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=F%3Dma+%E5%A4%A9%E4%B8%8B%E7%AC%AC%E4%B8%80%E5%8A%9B%E9%87%8F%E5%A4%A7%E6%9C%83" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>⚡ 【力學03】F=ma 天下第一力量大會</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=%E5%8F%8D%E4%BD%9C%E7%94%A8%E5%8A%9B+%E4%BD%A0%E6%89%93%E6%88%91%E5%B0%B1%E6%98%AF%E6%88%91%E6%89%93%E4%BD%A0" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>🥊 【力學04】反作用力：你打我就是我打你</span>
+              <span>觀看 ↗</span>
+            </a>
+          </div>
+        `
+      },
+      joule: {
+        title: '☕ 詹姆斯·焦耳 · 熱功當量與學習單探究',
+        content: `
+          <div class="modal-section">
+            <h4 class="modal-section-title">📜 焦耳生平與熱功當量之謎</h4>
+            <p style="font-size: 0.93rem; color: #334155; line-height: 1.7;">
+              詹姆斯·焦耳（1818－1889）出生於英國曼徹斯特的釀酒世家。他自幼體弱但熱愛實驗，師承原子說大師約翰·道爾頓。19 世紀以前，科學界普遍相信「熱質說」（認為熱是一種無質量的流體）。焦耳透過著名的重錘落下帶動葉片旋轉攪拌水桶實驗，經過數千次極致精密的重複測量，證明機械功可精準轉化為熱能，確立了能量守恆定律！
+            </p>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">📝 國三校定課程焦耳學習單題庫與答案</h4>
+            <div class="qa-card">
+              <div class="qa-question">Q1: 焦耳父親的家業為何？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-j1')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-j1"><strong>解答：</strong> 經營釀酒廠（啤酒釀造家族企業）。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q2: 焦耳學習主要為自學，他若遇到不會的問題可向哪位科學家請教？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-j2')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-j2"><strong>解答：</strong> 原子說提出者、化學與物理大師 <strong>約翰·道爾頓 (John Dalton)</strong>。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q3: 19 世紀前人類對於熱的解釋假說為何？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-j3')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-j3"><strong>解答：</strong> <strong>熱質說 (Caloric theory)</strong>，認為熱是一種流動且守恆的無質量物質。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q4: 熱功當量換算關係？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-j4')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-j4"><strong>解答：</strong> 1 卡路里 (cal) ≈ 4.184 焦耳 (J)（或約 4.2 焦耳、0.427 千克重·米）。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q5: 焦耳重複了大約多少次數的實驗才求得精準熱功當量？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-j5')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-j5"><strong>解答：</strong> 重複進行了 <strong>數千次</strong> 嚴謹且精確的實驗測量。</div>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">🎬 精選焦耳影音教學</h4>
+            <a href="https://www.youtube.com/results?search_query=%E4%BD%9B%E7%B3%BB%E7%A7%91%E5%AD%B8%E5%AE%B6+%E7%84%A6%E8%80%B3" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>☕ 【自然系列-物理 | 能量】(熱功當量) 佛系科學家 焦耳 Part1 & Part2</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="assets/life-master-show/joule-worksheet.pdf" target="_blank" class="video-item-link">
+              <span>📑 焦耳學習單 (PDF 原檔下載與大螢幕預覽)</span>
+              <span>開啟 PDF ↗</span>
+            </a>
+          </div>
+        `
+      },
+      hawking: {
+        title: '🌌 史蒂芬·霍金 · 黑洞時空與生命奇蹟',
+        content: `
+          <div class="modal-section">
+            <h4 class="modal-section-title">📜 霍金生平與宇宙學傳奇</h4>
+            <p style="font-size: 0.93rem; color: #334155; line-height: 1.7;">
+              史蒂芬·霍金（1942－2018）誕生於英國牛津。21 歲在劍橋就讀博士時被診斷出漸凍人症（ALS），醫生預估僅剩兩年壽命。然而他以非凡的毅力持續深造，與彭羅斯合作證明廣義相對論中的奇異點定理，提出黑洞熱力學與著名的「霍金輻射」，並出版暢銷全球三千五百萬冊的《時間簡史》，成為人類探索宇宙的最強象徵。
+            </p>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">💬 霍金留給世人的名言啟發</h4>
+            <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: #475569;">
+              <li>🌟 <strong>「記得時常仰望星空，而不是低頭看著自己的腳步。要保持好奇心！」</strong></li>
+              <li>🌟 <strong>「即使被束縛在輪椅上，在我的心靈深處，我依舊自由地遨遊於宇宙之間。」</strong></li>
+              <li>🌟 <strong>「活著就有希望，只要你還活著，就沒有什麼不可能的事。」</strong></li>
+            </ul>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">📝 國三校定課程霍金學習單核心檢測</h4>
+            <div class="qa-card">
+              <div class="qa-question">Q1: 霍金如何克服身體障礙進行科學研究與演講？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-h1')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-h1"><strong>解答：</strong> 霍金在腦中建立高度直覺的幾何助思圖形，並透過安裝在輪椅上的「平等者」電腦程式、語音合成器與臉頰肌肉感測開關，實現自主選字演講與撰寫論文。</div>
+            </div>
+            <div class="qa-card">
+              <div class="qa-question">Q2: 霍金在 2012 倫敦帕運開幕典禮表演中傳達了什麼精神？</div>
+              <button class="qa-toggle-btn" onclick="toggleAns('q-h2')">點擊查看參考解答</button>
+              <div class="qa-answer" id="q-h2"><strong>解答：</strong> 主題為「啟蒙運動」，霍金引領全球群眾進行一場科學發現之旅，鼓勵身障朋友與全人類永遠保持好奇心，仰望星空探索宇宙意義！</div>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-section-title">🎬 精選霍金專題影音</h4>
+            <a href="https://www.youtube.com/watch?v=Oc5pjMOf9qc" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>🎥 來自宇宙的大師殞落：你該知道霍金四件事</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="https://www.youtube.com/watch?v=JQ_qnhCPLxo" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>✨ 我們的宇宙如何開始？Stephen Hawking 宇宙學探索</span>
+              <span>觀看 ↗</span>
+            </a>
+            <a href="https://www.youtube.com/watch?v=LyVeJrHYoqs" target="_blank" rel="noopener noreferrer" class="video-item-link">
+              <span>🌟 霍金留給世人的 5 句話（啟發與生命力量）</span>
+              <span>觀看 ↗</span>
+            </a>
+          </div>
+        `
+      },
+      handouts: {
+        title: '📑 國三科學探索全冊教材與學習單清單',
+        content: `
+          <div class="modal-section">
+            <h4 class="modal-section-title">📦 全冊教材檔案快速直達</h4>
+            <p style="font-size: 0.93rem; color: #334155; line-height: 1.7; margin-bottom: 1rem;">
+              點擊下方任一教材即可由瀏覽器原生 PDF 檢視器全螢幕開啟，支援課堂大螢幕觸控縮放與手寫筆標註：
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <a href="assets/life-master-show/science-explore-all.pdf" target="_blank" class="video-item-link" style="background: #f0fdf4; border-color: #bbf7d0;">
+                <span>📘 國三科學探索講義 (全冊完整版 PDF)</span>
+                <span>全螢幕開啟 ↗</span>
+              </a>
+              <a href="assets/life-master-show/newton-slides.pdf" target="_blank" class="video-item-link">
+                <span>🍎 艾薩克·牛頓 單元講義與簡報 PDF</span>
+                <span>全螢幕開啟 ↗</span>
+              </a>
+              <a href="assets/life-master-show/joule-worksheet.pdf" target="_blank" class="video-item-link">
+                <span>☕ 詹姆斯·焦耳 熱功當量學習單 PDF</span>
+                <span>全螢幕開啟 ↗</span>
+              </a>
+              <a href="assets/life-master-show/hawking-slides.pdf" target="_blank" class="video-item-link">
+                <span>🌌 史蒂芬·霍金 宇宙學講義簡報 PDF</span>
+                <span>全螢幕開啟 ↗</span>
+              </a>
+              <a href="assets/life-master-show/hawking-worksheet.pdf" target="_blank" class="video-item-link">
+                <span>📝 史蒂芬·霍金 觀後感學習單 PDF</span>
+                <span>全螢幕開啟 ↗</span>
+              </a>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    function applyFilter() {
+      const cards = document.querySelectorAll('.resource-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const itemCats = card.getAttribute('data-category') || '';
+        const cardText = card.innerText.toLowerCase();
+        
+        const matchesCategory = (currentCategory === 'all' || itemCats.includes(currentCategory));
+        const matchesSearch = (!currentSearch || cardText.includes(currentSearch));
+
+        if (matchesCategory && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countDisplay = document.getElementById('scientistCountDisplay');
+      if (countDisplay) {
+        countDisplay.innerText = `顯示 ${visibleCount} 項單元資源`;
+      }
+    }
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-cat') || 'all';
+        applyFilter();
+      });
+    });
+
+    const searchInput = document.getElementById('scientistSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        applyFilter();
+      });
+    }
+
+    function openModal(key) {
+      const data = modalData[key];
+      if (!data) return;
+      document.getElementById('modalTitle').innerHTML = data.title;
+      document.getElementById('modalBody').innerHTML = data.content;
+      const modal = document.getElementById('infoModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('infoModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('infoModal')) {
+        closeModal();
+      }
+    }
+
+    function toggleAns(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (el.style.display === 'block') {
+          el.style.display = 'none';
+        } else {
+          el.style.display = 'block';
+        }
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Initialize
+    applyFilter();
+  </script>
+</body>
+</html>
