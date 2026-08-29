@@ -118,7 +118,7 @@
           <span>📅</span> 模考與段考精準進度
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
-          <span>📊</span> 段考 + 平時加扣分評量
+          <span>📊</span> 定期 40% ＋ 平時 60% 評量
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold shadow-xs">
           <span>📱</span> 平板推車與愛護設備
@@ -513,42 +513,92 @@
           計分方式與成績評定
         </h3>
         <p class="text-slate-600 text-xs sm:text-sm">
-          結合定期評量（段考）與平時成績（作業＋態度），全面肯定你的每分努力！
+          學期總成績結合定期評量（40%）與平時成績（60%），兼顧階段實力與日常學習歷程！
         </p>
       </div>
 
-      <!-- 兩大評量核心：段考成績 vs 平時成績 (Grid) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+      <!-- 學期總成績權重總覽條 (Weight Overview Banner) -->
+      <div class="bg-gradient-to-r from-indigo-900 via-slate-900 to-sky-900 rounded-3xl p-5 sm:p-6 text-white shadow-soft">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-xl">
+              🎯
+            </div>
+            <div>
+              <div class="text-xs font-bold text-sky-300 uppercase tracking-wider">總成績計算公式</div>
+              <div class="text-base sm:text-lg font-black text-white">學期總成績 ＝ 定期評量 (40%) ＋ 平時成績 (60%)</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-white/10 px-3 py-1.5 rounded-full border border-white/15">
+            <span>✨ 全方位多元評量</span>
+          </div>
+        </div>
+
+        <!-- 比例進度視覺條 -->
+        <div class="space-y-2">
+          <div class="h-4 w-full bg-slate-800/80 rounded-full overflow-hidden p-0.5 flex gap-1 border border-white/10">
+            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-l-full flex items-center justify-center text-[10px] font-black text-white" style="width: 40%;">
+              定期評量 40%
+            </div>
+            <div class="h-full bg-gradient-to-r from-sky-500 to-emerald-400 rounded-r-full flex items-center justify-center text-[10px] font-black text-slate-950" style="width: 60%;">
+              平時多元評量 60%
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-between text-[11px] text-slate-300 font-medium px-1 gap-1">
+            <span>📝 定期評量（一學期三次段考）: <strong class="text-indigo-300">40%</strong></span>
+            <span>🌟 平時成績（紙筆 30% + 作業 30% + 上課表現 40%）: <strong class="text-sky-300">60%</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 兩大評量核心：定期評量 (40%) vs 平時成績 (60%) (Grid) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        <!-- 左側：段考成績與日常作業 -->
-        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
+        <!-- 左側：定期評量 (40%) -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
           <div class="space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                📝
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                  📝
+                </div>
+                <div>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">評定指標一</span>
+                  <h4 class="text-xl font-black text-slate-900 mt-0.5">定期評量（段考成績）</h4>
+                </div>
               </div>
-              <div>
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">評定指標一</span>
-                <h4 class="text-xl font-black text-slate-900 mt-0.5">段考成績 ＆ 日常作業</h4>
-              </div>
+              <span class="px-3 py-1 rounded-full text-sm font-black bg-indigo-600 text-white shadow-sm">
+                40%
+              </span>
             </div>
 
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              依學校規定舉行三次段考，檢測階段性觀念掌握度：
+            </p>
+
             <div class="space-y-3 pt-1">
-              <!-- 段考成績 -->
-              <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-3">
-                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">1</span>
-                <div class="space-y-0.5 text-xs sm:text-sm">
-                  <div class="font-bold text-indigo-950">定期評量（段考成績）</div>
-                  <div class="text-indigo-900/80 leading-relaxed">一學期共三次段考，依學校定期評量比例計入學期總成績。</div>
+              <!-- 段考架構 -->
+              <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-indigo-950">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                    全學期共三次段考
+                  </span>
+                  <span class="text-indigo-600 font-extrabold">占總成績 40%</span>
+                </div>
+                <div class="text-xs text-indigo-900/80 leading-relaxed">
+                  平均每次段考約占學期總成績 <strong>13.3%</strong>，確實複習理化與地科核心概念。
                 </div>
               </div>
 
-              <!-- 日常作業 -->
-              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-start gap-3">
-                <span class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">2</span>
-                <div class="space-y-0.5 text-xs sm:text-sm">
-                  <div class="font-bold text-slate-900">日常作業與習作評分</div>
-                  <div class="text-slate-600 leading-relaxed">課堂作業、隨堂學習單與習作均須<strong>準時完成及繳交</strong>。</div>
+              <!-- 段考準備策略 -->
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-1.5">
+                <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+                  題型與測驗重點
+                </div>
+                <div class="text-xs text-slate-600 leading-relaxed">
+                  包含基礎觀念題、實驗探究與圖表判讀、生活應用整合情境題。
                 </div>
               </div>
             </div>
@@ -556,74 +606,134 @@
 
           <div class="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 text-[11px] text-indigo-800 flex items-center gap-2">
             <span>💡</span>
-            <span>按部就班完成每次作業，段考自然水到渠成！</span>
+            <span>按部就班完成平時每次任務，段考高分自然水到渠成！</span>
           </div>
         </div>
 
-        <!-- 右側：學習態度（加分與扣分機制） -->
-        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
+        <!-- 右側：平時成績 (60%) 包含紙筆30% + 作業30% + 上課表現40% -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
           <div class="space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                ⭐
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                  🌟
+                </div>
+                <div>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">評定指標二</span>
+                  <h4 class="text-xl font-black text-slate-900 mt-0.5">平時多元評量</h4>
+                </div>
               </div>
-              <div>
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">評定指標二</span>
-                <h4 class="text-xl font-black text-slate-900 mt-0.5">學習態度加扣分機制</h4>
-              </div>
+              <span class="px-3 py-1 rounded-full text-sm font-black bg-sky-600 text-white shadow-sm">
+                60%
+              </span>
             </div>
 
-            <!-- 加分與扣分對照 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              平時成績滿分為 100 分，由三大向度綜合評定（最後以 60% 計入學期總分）：
+            </p>
+
+            <!-- 平時成績三大支柱 (3 Cards Grid) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               
-              <!-- 🟢 加分機制 (+1) -->
-              <div class="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2.5">
-                <div class="flex items-center justify-between pb-1.5 border-b border-emerald-200/80">
-                  <span class="font-black text-emerald-900 text-sm flex items-center gap-1">
-                    <span>🟢</span> 加分項目
-                  </span>
-                  <span class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-200 text-emerald-900">+1 分</span>
+              <!-- 1. 紙筆測驗 30% -->
+              <div class="p-3.5 rounded-2xl bg-violet-50/70 border border-violet-100 flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-lg">✍️</span>
+                    <span class="px-2 py-0.5 rounded-full text-xs font-black bg-violet-200/80 text-violet-900">30%</span>
+                  </div>
+                  <div class="font-black text-slate-900 text-sm">紙筆測驗</div>
+                  <div class="text-[11px] text-slate-600 leading-relaxed mt-1">
+                    隨堂小考、各章節重點單元測驗與課前複習卷，即時掌握觀念盲點。
+                  </div>
                 </div>
-                <ul class="space-y-1.5 text-xs text-emerald-950 font-medium">
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-emerald-600 font-bold">＋</span> 準時交作業加 1 分
-                  </li>
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-emerald-600 font-bold">＋</span> 上課準時加 1 分
-                  </li>
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-emerald-600 font-bold">＋</span> 其他優良表現加 1 分
-                  </li>
-                </ul>
               </div>
 
-              <!-- 🔴 扣分機制 (-1) -->
-              <div class="p-4 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-2.5">
-                <div class="flex items-center justify-between pb-1.5 border-b border-rose-200/80">
-                  <span class="font-black text-rose-900 text-sm flex items-center gap-1">
-                    <span>🔴</span> 扣分項目
-                  </span>
-                  <span class="px-2 py-0.5 rounded-full text-xs font-black bg-rose-200 text-rose-900">-1 分</span>
+              <!-- 2. 作業與習作 30% -->
+              <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-100 flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-lg">📚</span>
+                    <span class="px-2 py-0.5 rounded-full text-xs font-black bg-amber-200/80 text-amber-900">30%</span>
+                  </div>
+                  <div class="font-black text-slate-900 text-sm">作業與習作</div>
+                  <div class="text-[11px] text-slate-600 leading-relaxed mt-1">
+                    課堂作業、隨堂學習單與自然習作，均須<strong>準時完成及繳交</strong>。
+                  </div>
                 </div>
-                <ul class="space-y-1.5 text-xs text-rose-950 font-medium">
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-rose-600 font-bold">－</span> 無故遲到扣 1 分
-                  </li>
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-rose-600 font-bold">－</span> 課堂違規扣 1 分
-                  </li>
-                  <li class="flex items-center gap-1.5">
-                    <span class="text-rose-600 font-bold">－</span> 其他不當行為扣 1 分
-                  </li>
-                </ul>
               </div>
 
+              <!-- 3. 上課表現 40% -->
+              <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100 flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-lg">🙋‍♂️</span>
+                    <span class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-200/80 text-emerald-900">40%</span>
+                  </div>
+                  <div class="font-black text-slate-900 text-sm">上課表現</div>
+                  <div class="text-[11px] text-slate-600 leading-relaxed mt-1">
+                    課堂專注度、主動提問互動、實驗團隊合作與常規遵守。
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 上課表現加扣分機制 (+1 / -1) -->
+            <div class="space-y-2 pt-1">
+              <div class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <span>⚡</span>
+                <span>上課表現與學習態度 · 加扣分即時機制</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- 🟢 加分機制 (+1) -->
+                <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2">
+                  <div class="flex items-center justify-between pb-1 border-b border-emerald-200/80">
+                    <span class="font-black text-emerald-900 text-xs flex items-center gap-1">
+                      <span>🟢</span> 加分項目
+                    </span>
+                    <span class="px-2 py-0.2 rounded-full text-[11px] font-black bg-emerald-200 text-emerald-900">+1 分</span>
+                  </div>
+                  <ul class="space-y-1 text-[11px] text-emerald-950 font-medium">
+                    <li class="flex items-center gap-1">
+                      <span class="text-emerald-600 font-bold">＋</span> 準時交作業與習作
+                    </li>
+                    <li class="flex items-center gap-1">
+                      <span class="text-emerald-600 font-bold">＋</span> 上課準時不遲到
+                    </li>
+                    <li class="flex items-center gap-1">
+                      <span class="text-emerald-600 font-bold">＋</span> 課堂積極互動與優良表現
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- 🔴 扣分機制 (-1) -->
+                <div class="p-3.5 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-2">
+                  <div class="flex items-center justify-between pb-1 border-b border-rose-200/80">
+                    <span class="font-black text-rose-900 text-xs flex items-center gap-1">
+                      <span>🔴</span> 扣分項目
+                    </span>
+                    <span class="px-2 py-0.2 rounded-full text-[11px] font-black bg-rose-200 text-rose-900">-1 分</span>
+                  </div>
+                  <ul class="space-y-1 text-[11px] text-rose-950 font-medium">
+                    <li class="flex items-center gap-1">
+                      <span class="text-rose-600 font-bold">－</span> 無故遲到或未進教室
+                    </li>
+                    <li class="flex items-center gap-1">
+                      <span class="text-rose-600 font-bold">－</span> 課堂違規與影響他人
+                    </li>
+                    <li class="flex items-center gap-1">
+                      <span class="text-rose-600 font-bold">－</span> 作業欠交或其他不當行為
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="p-3 bg-sky-50/60 rounded-xl border border-sky-100 text-[11px] text-sky-800 flex items-center gap-2">
             <span>🛡️</span>
-            <span>自律與守時是學習的第一步，態度端正成績自然卓越！</span>
+            <span>自律與守時是學習的第一步，課堂積極累積，平時成績穩拿滿分！</span>
           </div>
         </div>
 
