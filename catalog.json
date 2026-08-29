@@ -34,13 +34,31 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
         },
         {
-          "id": "life-master-show-hub",
-          "title": "生活達人秀show",
-          "description": "國三科學探索校定課程「生活達人秀show」：收錄牛頓、焦耳、霍金三大科學巨擘生平傳奇、核心定律、講義教材、學習單與精選影音。",
+          "id": "life-master-newton",
+          "title": "艾薩克·牛頓",
+          "description": "古典物理力學之父。三大運動定律、萬有引力、微積分發明、白光色散光譜實驗與探究學習單。",
           "status": "active",
           "homepageState": "linked",
           "order": 28,
-          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html"
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#newton"
+        },
+        {
+          "id": "life-master-joule",
+          "title": "詹姆斯·焦耳",
+          "description": "能量守恆大師。打破熱質說、精密測定熱功當量、焦耳定律與熱功當量探究學習單。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#joule"
+        },
+        {
+          "id": "life-master-hawking",
+          "title": "史蒂芬·霍金",
+          "description": "當代傳奇宇宙學家。黑洞奇異點、霍金輻射、《時間簡史》、對抗漸凍症生命奇蹟與學習單。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#hawking"
         },
         {
           "id": "hall-of-fame-course-intro",
