@@ -34,6 +34,15 @@
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
         },
         {
+          "id": "hall-of-fame-course-intro",
+          "title": "課程介紹",
+          "description": "世界名人堂課程介紹與上課規矩：課堂時間流程、平時成績與學習單計分方式、平板使用須知與加扣分規範。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 29,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/course-intro.html"
+        },
+        {
           "id": "nobel-hub",
           "title": "阿爾弗雷德·諾貝爾",
           "description": "炸藥之父與和平遺產。發明雷管與矽藻土黃色炸藥，設立諾貝爾獎。含 5 大線上互動教具與闢謠特輯。",

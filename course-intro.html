@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>課程介紹及上課規矩 - 世界名人堂 | 我的數位基地</title>
+  <meta name="description" content="國中二年級世界名人堂課程介紹：上課方式、45分鐘時間分配流程、平時成績計分與加扣分機制、平板設備規範與上課規矩。" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(14, 165, 233, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
+            'hover': '0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: "Noto Sans TC", system-ui, -apple-system, sans-serif;
+    }
+    .gradient-hero {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(14, 165, 233, 0.12) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(248, 250, 252, 0) 100%);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-sky-50/30 to-slate-100 text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- 頂部導覽列 (Sticky Header) -->
+  <!-- ========================================== -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-soft">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-600 border border-slate-200 text-xs sm:text-sm font-bold transition-all"
+        >
+          <span>🏠</span>
+          <span>返回數位基地首頁</span>
+        </a>
+        <span class="text-slate-300 hidden sm:inline">|</span>
+        <div class="flex items-center gap-2 truncate">
+          <span class="text-lg">🏛️</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-600 hidden md:inline">世界名人堂 ·</span>
+          <h1 class="text-xs sm:text-sm font-black text-slate-900 truncate">
+            課程介紹及上課規矩
+          </h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a
+          href="hall-of-fame.html"
+          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-xs font-bold transition-colors"
+        >
+          <span>🌟</span>
+          <span class="hidden sm:inline">名人堂全覽</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 主要內容區 -->
+  <!-- ========================================== -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+
+    <!-- 1. Hero 標題旗艦區 -->
+    <section class="text-center space-y-4 max-w-3xl mx-auto gradient-hero pt-4 pb-2">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-sky-200 text-sky-700 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
+        <span>🏛️ 115 學年度 國中二年級</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+        <span>校訂彈性課程</span>
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-display">
+        《世界名人堂》<br class="sm:hidden" /><span class="bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 bg-clip-text text-transparent">課程介紹及上課規矩</span>
+      </h2>
+
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        走進 12 位先驅科學家的傳奇人生與劃時代發現，結合數位平板互動教具、密室逃脫解謎與探究思考，開啟多元科學素養之旅！
+      </p>
+
+      <!-- 快速關鍵標籤 -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
+          <span>🎯</span> 段考及會考不考
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-xs">
+          <span>📱</span> 堂堂使用平板學習
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold shadow-xs">
+          <span>🧩</span> 密室解謎與互動教具
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold shadow-xs">
+          <span>⭐</span> 平時態度與作業累積
+        </span>
+      </div>
+    </section>
+
+    <!-- 2. 教師資訊與數位基地導航卡片 -->
+    <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      
+      <!-- 任課教師卡片 (md:col-span-5) -->
+      <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-sky-50 rounded-full pointer-events-none"></div>
+        <div class="space-y-4 relative z-10">
+          <div class="flex items-center gap-3.5">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-3xl shadow-md shadow-sky-500/20 flex-shrink-0">
+              👩‍🏫
+            </div>
+            <div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                任課教師
+              </span>
+              <h3 class="text-2xl font-black text-slate-900 mt-1 tracking-tight">
+                洪瑞英 老師
+              </h3>
+            </div>
+          </div>
+
+          <div class="space-y-2.5 pt-2 border-t border-slate-100 text-sm">
+            <div class="flex items-center gap-2.5 text-slate-700">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-base flex-shrink-0">🏢</span>
+              <span><strong>辦公室位置：</strong>二棟一樓</span>
+            </div>
+            <div class="flex items-center gap-2.5 text-slate-700">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-base flex-shrink-0">💬</span>
+              <span><strong>課後提問：</strong>歡迎於下課時間或至辦公室討論交流</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-4 border-t border-slate-100 relative z-10">
+          <div class="text-xs text-slate-500 flex items-center gap-1.5">
+            <span class="text-sky-500">✨</span>
+            <span>用心陪伴每位同學探索科學家故事與探究歷程</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 個人數位基地與 QR Code 卡片 (md:col-span-7) -->
+      <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between relative overflow-hidden">
+        <div class="space-y-4">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span>🌐</span> 官方課堂數位入口
+              </span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+                我的數位基地 Central Hub
+              </h3>
+              <p class="text-slate-600 text-xs sm:text-sm mt-1">
+                所有世界名人堂互動教具、科學家傳記、密室逃脫與學習單資源皆整合於此。
+              </p>
+            </div>
+          </div>
+
+          <!-- 網址與 QR Code 預覽 -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center pt-2">
+            <!-- 網址與快捷操作 (sm:col-span-7) -->
+            <div class="sm:col-span-7 space-y-3">
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs break-all font-mono text-slate-700">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 font-sans">網址連結</div>
+                https://hungjuiying0606-dotcom.github.io/personal-main-hub/
+              </div>
+              <div class="flex items-center gap-2">
+                <a
+                  href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-all flex-1"
+                >
+                  <span>🚀 直接開啟基地</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- QR Code 圖片 (sm:col-span-5) -->
+            <div class="sm:col-span-5 flex flex-col items-center justify-center bg-sky-50/50 p-3 rounded-2xl border border-sky-100">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdoAAAKVCAYAAABoAiqLAABYyklEQVR4nO3dC5wcVZnw/6dnJveJCcM1EEwGI25AVwT9ryLIRZbXC8ofDAuLyBIX5FVXVzcEXy66LstFjSy+rJeXxdcgCuomwIsLwrJgQJBXXa5iYO0JDCEJ4RImCZlc59Lv51RPT3p6eqaru/rUc86p39dPy2R6qurUqap+us45T51cYcemglQoFEb9qurvAABw0eDgoGzZskV6t/bKwMBAU9aZy+WktbVV2qe1y/Tp06WlpSX6Xc3lSoG2MpCW/j38+1xuxN/UXjUAAPp6e7fK9h3bZPuOHXUtVx4Vp06ZLFMmTZX29mnDwbUyyI4VdHOD2zcWqgVX81NLLhd9Kyh/nztbAICPCgWRHTt3yq5dO6W/f5f09Q3I4KB5DUaxzQRKc5fa0tIqEya0SlvbRJk4cZJMmTwp+n2J+XnQ/H1ZcC0PsqMCsAm0pQBaHlzNvwcHi4F3sDAgA/27pGAKVDCBl2ZkAEA25Mz/ci2Sa22TCW0TTaSUlpbccGAuD7rVAm9bFFRLTcGFgvT1m2BakIF+E/F3yED/DpHCoORaJkhLboK0tLYRZgEAmTI4MCADfdtl52CfSK5F2tomS9uEKdLWNklaW1ui7tUo4A7dGZdEwXdgW0/BBNuBgeJdbF//TunbuSW6e22bOE0mTe2QyZNnqu4gAACu2Lljk+zctlF27eqV1tY2mTipPQq8JuCaO9xSM/Tw3e3O118pDAyaZuJ+2bXjdRkc6JNJU/aU9hn7a+8LAABO2/r6etmxbYO0tk2USVNmSGtLa7E/1zQrDwXb3LaNLxV29W2X/p1bpHXCVJm555u0yw0AgFde7+mO7nAnTX6DTJw4dbg52dzTtu3c0SsD/b0yuX2WTGvfR7usAAB45w0dnbKt9xXZ3rs+6notNie3miHK0tbft1Xa9+iUyZPfoF1OAAC8NbV9H2ltmyy9m1YXU2EnT5e2NpHcji2bC+ZWFwAAJLdzx+vSu6lb2ibNkEkTp0qu0MezFQEAaKZiM/LLMnnangRaAABs2PTas1IY7JPdz5QCAABNY7J4zFMVCbQAAFhinktBHy0AABZxRwsAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABYRaAEAsIhACwCARQRaAAAsItACAGARgRYAAIsItAAAWESgBQDAIgItAAAWEWgBALCIQAsAgEUEWgAAwgu098rn5+4ln7/X3hZW/N1eMufvqm9gzXVHypwTvytrYv4eAIBGtYkzTPA9Q26P8ZfzLnpU7jt/TgplgjX3ni9zzr1F5NSfyup/OoGKBhAsh5qOT5Brn98gq8d9PSqXHiweKN6xz6n2GuMue9Sd9VjLz91L3n/d6lT2AgBc0PPaBll8wadl7dp4n33m7/7H//icbNq0UVzgUKC1K2pKHgpUR12VF8l/RY4qBT5zd1X5++h1pFy/upEAO86d+a1nJA6Wq646QubMPV9WNLwGAPDHN7/5j/LMM3+QCy/8rKxd90LNIGv+7g9PPSFLvvFVcYEjTcer5foTj5DL8zH/3ASaq0Y3IZtges6t5X94hsyJ/v0xucHcEf/T7jvGo245Sx665zNyYPSbE2T189dV+X3jTd/Vm7d376cJlu+X8ZvAT/7+Brm2slV19Xfl/cd8RVbJLXLOiW9vsKwA4I+//eJF8qXFn5ENG16Vi770OfnGku/IrFmzR/3d+vVr5aL/8Xl5ffNm2WuvveXzX7hIMnZHa4JM6U6xGJBuP7f478/fO0fOu6dWs/HupmMTxMy/K4PUcf+0+29vOFWK/X/Rv6+T46zv21CQPfgyeahK2YqG9vOBy2Te0J1p3QPC5nxG7htaXvI/lrtpRQYQuH332U++vuS7ssceHbJxY49cuPiz8vIrL434G/Nv83vzvvk78/dmuYwF2vJg+lM5eeiOzfx71F2bb+69cuhu/GNyQ5w7TBMsv/+x6Mfbv9HAKOc5H5YzvOirBoDmMEHT3MmWgq25wy0FW/Nf8+9SkDV/50qQdayPdpwBRMOvOpqXx3Hg+Q/L6ioBcazfj2+1XP+NW6KfTv5+HXfOJ1xcHNjV0F1plzyVpB6G+qTLX+PdWVcfnBWnj7i8FaOBfu8q5WQgGJBds2bNjoLojBkzo2ZkE1z/679WDjcrl4JstWZlTY700e4edXytA+lDRaZfN07gLAW9j8kpdd2Zz5EPfOxgufyqvPz07tVyXj3pSvcuG2qmPks+MKc5dWCa8aWyT3i4P7iaW+ScubeMnWpVSt8ZJS+XH7OXPHVq8Y6+3j77aCDYLZfRNw1k1KxZs+Xr3/i2fOnCv4mC6wWL/nv0exN8XQyyjt3RpqPUXF29L3foNdSsG8vqvKw0/z31tLr7gQ9809ui/676Y1fsZaK7y6EAdvKF9dx9lwfZocFhlfUgYwTZoX7n8r9/6KJi23XVfmazbCnIjlq22G1w+63VgnBFkB1jWTMy/BxSnIDMmj17jvz3T39xxO8+89kLnAyy6oE2Ggz1d/fWzBttPJ80P9R0aTEVpuvJMe74kisNFit/RSlIcrBc+kB9fdtrrvtKMchGXypG36mbgWTl61vxP4eCrPn7sZrZx+hnHn9Z03IxFDDH6++useyqq64kvQnIqLVrV8v/+t41I3733e98M3aebfiB1tztlN9ZlZ4KVOWuqTg6txhU4j+4otjXG6X53PoVufyt1QOLt6JA+bCcV2eT8ZJSgP7bONH5XrmtlBY13lObqvYzx1n2BFk8dEdcacUvbqlRzhPklOju+ylZ5eY1BcCi9evXRs3GmzdvilJ4rvratdF/zb/N7837rkk/vcc0Rx58cJSeUtfgobjrN0H84Mvk0lKTsO3H+7357cVUG+vN3ENfLswDL+p9HnOpeTtun+7w39fatzky763mv3l5qqu+ZUvN5hUbllV/2N2PO1ZLRjFXumybADJh/fq1UQpPKciaFJ63ve0dw6k/5vfmfdeCrU56zz2XyaGJRvsW1zVyEE75+j8z5od8ZXNs8c63+LSm4VfVQTw13Lqs7qbMNc8+Ff133lveHOOvzf4NBdtG+yjfenB9I6pj/P28txzcnG0BwDjGy5OtTP2plmeryZ3BUFGTcsXdSzQYp9rdTb2PRrQ4GGo4p/UWue3exppzz4g9dHiOnHd96WEXf1l/HfwhX9+dcIy/X/XHJuRbjTJ6sFa1l/f51wBiiZMnW576U5lnq82dQBup6I+t1kdbeiqSM4ppOvU+fGJ4cFK9KTpzPiM3RP2bebn8vJjbm3NwsQUhH3PgVuy/LzX1Hixve3N9d/ilu/nqTdH1fmkBELL/ec1VUSrPG2bMkKu+/s9jji4upf6YvzN/f+23rhIXOBZo/XTg+T8ZbtI9Kk7/6b3nD40erjdFp7S9y4bTXJbECkilAUS3yDkxZg+K/felEcLlXxbK7vAvH6t5e/V35Zyh/R+rKbqhJ2YBCNIFF3xZ5s9/q3zjG9+R2Qe8sWbqj/m7t7zlEFm06MviAgJtU+xu0i3N/lP9SUtDT78a6gM2D3torPnzBLm2lFpzbrzUpeP+dqh8VQdTFQeSlZd5/L8vz+c9WC69vvzLwhw578KP7X64RGWgNg+yGPMhGCO/RBw1RlqWmTyCJ0QB2dGx516y5Jvfi4JoHObvrv6n66LlXODQk6E8Z55f/PzBww+FMIOuxnsKVdWZeepxwnVyw6m3yDm3mrvO02qPro6er/xkMThGQewro8tU598X96NKqtFw2YYC9YgZlYyPyQ3fFzmn6qCzE+TaBy6TlaUZiuZWH5g2z41JOQAgoDva0nNvo/Sgeh89mMKo4/LJ68fpR27mRArld52xZgE64boxcpDHeABG9PdVnholuweQjbUf0UxK1ephjAdmjP7SMsZ2h+pwvOkFAcAluUJfoZDa1kY8/zbGs4SjxwD+WM54IOYDGkas3wSP8uWKjyAc9TzfMdcjMZ91XFs0z23UJxn3+ckAgFCkG2gzjGALANnkT9Ox58xDOYpNoabf0eKzlwEATuGONmVmxGzxEYJNGBAFAHAegRYAAItoOgYAwCICLQAAFhFoAQCwiEALAIAzgZaMWwBAVhXSCLS5xjYCAID3cs0KtCZic+cKAEA8NeLm6Nl7uGsFACC+GnGTwVAAAFhUDLQ0FQMA0ByFaoGW5mIAAJqjIqbSdAwAgEUEWgAAbCkQaAEAsIo7WgAAbMkRaAEAsIo7WgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABY1CYZ0NffL1u2bpVtO3ZIX3+fDAwMSqFQ0C4WAGRCLpeT1tYWmdA2QaZOnizTp02TCW2ZCD+RXKEv3IhjAuxrmzZFQRYA4I7p06bJnjNnZiLgBhtoN/f2yqs9Pdy5AoDDd7p7d3TIjPZ2CVmQgbZn8+boTrbctKlTpL19mkydMklaW1ujAwwAsK9QKMjAwIBs275Tenu3ytZt20e8b+5sO2bMCPZQBBdozZ3sK6+9NvzvyZMmyl577iFTpkxWLRcAoGj79h2y4bWNsmPnrqHfiOyz557B3tm2hNYna5qLy+9iZx+wH0EWABwyZcrk6LPZfEaXmM9u8xkeoqACrWkuLo0mNneys/bbmyZiAHBQLpeLPqPNZ7VhPrsru/xC0RJaCk+JaS6mHxYA3JXL5aLP6hLzGR7iXW0wgbY8yJrmCPpkAcB9U6ZMHtGEHGI6ZjCB1jyMosSMLgYA+KG97DO7/LM8FMEEWvPEpxKTwgMA8MPUss/s8s/yUAQTaM1jFUtMniwAwA+tZZ/Z5Z/loQgm0JY/u5hBUADgj1zZA4RCfA59MIEWAAAXEWgBALCIQAsAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABYRaAEAsIhACwCARQRaAAAsItACAGARgRYAAIsItAAAWESgBQDAIgItAAAWtdlcOUZ7/vnnZfny5bJ48WKvqmfJkiWyYMECmTt3bkPLb9iwQXp7e6Of29vbZa+99nJq+aTrt7192+V3vX61l8/69YuECn2FQgiv/Krnh1+uWrZsWcFUuc8vsw/16urqKhx11FHD6zA/m9+5snzS9dvevu3yu16/2stn/fpNS778M9yBmNLMF4E2Jddff32hvb1d/UJL+jL7YPYlrldffXXEh1z5h515T3v5pOu3vX3b5Xe9frWXz/r1m6Y8gVb/G4HPd7TmW2QIF2n5xRr3m3F3d/eY6zHvaS+fdP22t2+7/K7Xr/byWb9+05QPONAyGMoy06dz2mmnDfcPhcDsi9kns29AyLh+0QwEWsvMwIks75sZeHLUUUeN+r35nXlPe/mk67e9fdvld71+tZfP+vWLJtG+pQ696Vi7mcj2y4fBLAyG8rt+NZfXvr5cuH7Tkg+46Thn/k8C0LV69fDPb37THHFFLpeTkBU/i9xPzyC9x+/61Vqe6zc9Xc+WfYbPceczvBnIo3WMyXMz+W4m7y1NJi/QNCVp9bvazmOtxWwvyTaTlr/W9pO+X6t8tpdPun7t4xtXVq9f1KB9S03T8e5mnAULFmi33kRlSLvp2PWmR9v7Zxv117h6roVQr9+05ANuOibQWhb3hD/33HMLW7ZsKWgzZTBladaF6nueqO39s436Sybr12+a8gRa918+D4Yy30JduEhLTFnifjOuxfc8Udv7Zxv1l0zWr9805QMOtKT3KDN9OsuWLWtKKkmzmLKYMvFcVGB8XL+Ig0CrzAycCLlsvueJJl2/7e0nLZ/t5X2vv6xfv2gS7VvqrDcdu64Z5WcwFIOhbJ4fNnH9picfcNMxebSW1crDi5uH6nv5fZ8GLun6tdOXqL/GcP2mp4s8Wrii0fkwXZ+PUjsPM/RAGfr6Xd9+6NcvatC+pabpON35MOudtSONpmPf53t1PQ/Y9fJrbz+tpmNfr9+05ANuOibQWtasE71Z82HWOx9l0vK7nseq/b7t+nO9/NrbryXr12+a8gRa918hD4Zq9nyY9cxHmbT8ruexar9vu/5cL7/29mvJ+vWbpnzAgZb0ngzOh8l8skA6uH5hEGgzPGdkGvNRup6Hqf1+0v1Lurx2+bW3b5vv1y+aRPuWmqbj8TWruanRpqNmND0xGIrBUFkdDBXC9ZuWfMBNx+TROp6HZ3s+zKTbT2s+2qTrd/39pPuXdHnt8mtvfyxcv+npIo8WSMb3+UiT5vnWoj1frCvzudravnb5kXHat9Q0HY8vC01PrueZJuVy02gzlvd9vt7x0HScnnzATccEWsu4UMennSfpep4v+6+L6zc9+YADLX20ltHHUzv9obOzs+p73d3dNR85p718LbXWb7D/9uo/Ka7f9HQF3EdLeg8AABYRaKFKO0/S9TzfpOu3vXzS9WvnuQKp0G67btYr1EcwMhiqtqwPBtJePun6GQzl92DGZsnTR+u+rtVl7ftvcqd9nz6eeFzPM03K1TzRZi2fdP2uTGNXies3PV0B99G2aRcA2eB6ILDNdp5tUrbzTLX33/fzB57TbvKl6Tj8puPQ53tNSnv/tbl8fF3u+lmwYIH18qcpH3DTMYHWsqQn+pIlS6xdqGbdtssf+nyvSWnvvzbXj6/L129a0/ylJR9woCWP1vE+nvHyMJOKk6dos/xx8kiTvq+dR1uL7frRzkP1Pc8469dvmroC7qMlvcdx5kJatmxZU1MdzLrMOl3/EAZ8x/ULg0DrgQULFsg111zTtLxGsy6zzjSEPt9rUtr7ry304+v79Ysm0W67btYr1DzacsuWLUvcr2PWkXb5GQylWz+uC3kwVAjXb1ry9NG6L9Q82mp9PsuXL5fFixfXtdySJUuib8H1NhenNR+tr/OVNov2/mtz9fhy/aanK+A+WgZD2a5gjwYjaJbf1Q/atNavvf/a9evqFwmu3/R0BRxoaTq2zKemm0aaukJvOkxj/dr7r12/LjeNc/2mJx9w0zGBVvlCveCCCwqumjt3rvUPGtfzKG2vX3v/tevX9Txhrt/05AMOtDQdKzc9mT7TUr6ga0z+n+kTttl07HoeZS2258M1fF6/dvmS4vpNT1fATcek9ygzHzSnnXbacP+TC0xZTJlqBVkg67h+EQeB1gFmFPEXv/hFJ4KtKYMpiylTGnzPo7RdPt/Xr12+NGT5+kVM2m3XWc+jrfch4baZMtRT5mZwfbCO7fVr7792/fo8GIrrt3ny9NG6z9c82kqmz8nku5q81zSZvFzzLbje5mLSe/xIb9Fev3b5GsX1m56ugPtoGQzlWKD1TbMeWMHy1J+L5w/Xb3q6Ag60NB071PTk2ytuU7frTZMsT/2NRfsas/1yST7gpmMCrWU256PUfsWZD9P1PE2Wp/6yev3GmY86TXkCrf43Al8HQ5lglOVAO97+szz15/P54/srzv6nKR9woCW9x8P5KLUxny2ygusXzUCg9Ww+Sm31zofpep4my1N/tWT5+kWTaN9Sh9503Oz5KLVf9c6HaTAYicFYPg9Gy/r1m5Z8wE3HpPekrNH5ZLU1Op9tCek9pDf5nN6V9es3DV0Bp/cQaBEE1yeWt833/dPePvSFHGjpo4X3Vq1aJaeccko0y4t5mZ/N79J6X5vv+6e9fcA67bbrLPXRovmSzmfq+nyo2vuvXX5kR54+Wve5+qxj2JV0PtOk72v3ednef9v7Z3u+YPiji6ZjAADQCPpo4bWk85n6Ph+q7/unvX0gFdp9q/TRIqmk85m6PB9qHL7vn/b24YY8fbTuo48220jvIb0HfusKuI+2TbsAWWE7T1A70Liex2nWp5mbafuBC67vn3aerHb5bB9/7f1DDdpNvlloOrbdNKbddKrddGl7edfL5/r+aTddu7592+X3pWk+H3DTMYHW8zxB7TxS7TxO28u7Xj7X9087j9f17dsuv095ynkCrf43Al/vaJPOh5l0/b6/b7t+fS+f6/tne/va+590+7bLb3v/mikfcKAlvQcAAIsItJ7nCWrnkWrncdpe3vXyJV1ee/2uXx+2t590ee39Q0zat9ShNx27MNjC9/eT7r/t+tMun+v7pz1Yx/Xt2y4/g6EK6vGJafJSop0+4Pv7Sfc/6fKuly/p8trrd/36sL39pMtr718zdJFHC21J8yi13/c9DzXp/tVa3vc8Wdv1lzSQaJdPm/b5k3nat9Q0HdtvetKm3fTsev1pN11q15/r5bNdfu31uyIf8KhjAq1l2nmU2rTzcF2vP+08Tu36c718tsuvvX6X5AMOtPTRWpZ0vk3f5+vUni+21vva9Wf7+Lo+X63r5bNd/qTXf9L1u6Qr4D5a0nsAALCIQGuZdh6lNu08XNfrTzuPU7v+XC+f73nKcIR223WzXiHn0fo+2EF7sJPr9Zf1wUaul892+bXX74o8fbTuc30+Wu08Sm3aebiu1592Hqd2/blePt/zlH3QFXAfLfPRpiT0PErtPF/b9a/9QZZ0+67nQWtvX/v4JpX0/IZl2k2+WWg6rsX1ph/Xm658b5rT3n7S8mkvr930rL1+28unJR9w0zGBVpnreXCu5/H5nqeovf2k5dNeXjsPV3v9tpdPU55Aq/+NINQ7Wtfni3R9vkvt+T5tlz/0+k26vPZ8rdrrt718mvIBB1rSewAAsIhAq8z1PDjX8/h8z1PU3n7S8mkvr52Hq71+28ujSbRvqbPedOzDYIWsD9ZhMJTbg3kYDGW3/tOSD7jpmGcdO8L14feup0f4nqeovf2k5dNeXjsPV3v9tpdPQxd5tLDN9TxP7flEXf+gcL18SdnOY07K9/lmsxBIM037lpqmY/ebNm2Xz/emP+3th871pnvf33dFPuCmYwKt43zPs9R+X7v8trcfOtfzmH1/3yX5gAMtfbSOc30+St/nm9WeD9X146vN9/l6XX/fpfOnK+A+WtJ7AACwiEDrON/zLLXf1y6/7e2HzvU8Zt/fR0q0266b9fI5j7YW1wc7aA/m0B6MpL390DEYisFQBQdiDH20HsxHm5Tr6S/aeY7aeZDa2w+ddnpN6O+7oCvgPlrmo3WE7flGk7I932wt2uvXXt71PGvt89v2fMlJaZ8fUKZ9S03TsftNh9pNd9p8L1/Wzx/Xm/a168cV+YDTewi0ylzPg9POY9Tme/myfv64nuesXT8uyQccaMmjVeZ6HqV2HqN2np/v5cv6+eN6nrN2/Wifv1npoyW9BwAAiwi0ylzPg9POY9Tme/myfv64nuesXT9IiXbbdbNePufRMpjF7cEarg8m4fxhMFSS88MVefpo3ed7Hm3o6Rna6896+bJ+/rie56xdPy7oCriPljzalLieR6idZ1iL9gel9v67nmfpe6CwnSfuevlhmXaTbxaajrXz8HxvWtSuH/h9/LSPv3b9+CIfcNMxgdYy7Tw83/MstesHfh8/7eOvXT8+yQccaMmjtUw7D6/W+pNuP/T6cSnP0EWuH7+k7/ue5+vT+dsVcB8t6T0AAFhEoLVMOw/P9zxL7fqB38dP+/hr1w8cod123awXg6HcHQzi+mAR7f33nevHT/v4a9ePL/L00brP9Txa7Tw83/MstesHfh8/7eOvXT8+6Aq4j5Y82pRoz6eqPd+p9ny2tfiYZ7h27Vrp7++3uo22tjaZPXu29/Xneh5sLQRiz2k3+Wah6dh3rjfNJS2/r+bOnTsqraPZL7ONpLSbjn0vv+/XX1whNx0TaDEu1/MUa9HeftYDrXYebVLa5ff9+qtHPuBASx4tMp2n61OeYSWzX2b/bDL1UzqOGvWvnQetXX7b77t0/nfRRwvABblcLtXtmUBRvs1CwdwQAagHebQYl+t5irVobz/rtPNofS+/79cfhmi3XTfrxWAoe3wfjKG9/Way3Sdb6+XjYKKktMvv+/UXF320HnA9j9Z3rucp1qK9fdtNx0uWLJEFCxZEPy9fvlwWL15sZfuNNh1r59EmpV1+36+/OOijRWLaF5Lt+XBtL19L0jxdHz6IxmPKWxrYolF27fpPen7ZDqTaeeCu5zkHT7vJNwtNx9pNQ643rWlvX7v89RirSXfp0qXDf2N+TrPpWLtpNSnt60t7/12RDzi9h0BrmXaenOt5htrb1y5/vcYKgKa855xzTvSqtj+2Aq12nmlS2teX9v67JB9woCWP1rLQ8+i081Rt5zm6lGeokd5Tq49WO89Ue77YpOXT3n+XdAWcR0t6DwAAFhFoLdPOk3M9z1B7+9rl9512nmlS2teX9v4jJdpt1816MRjK3cEktjEYyk5/bJw+2jTqX/v8ZTBUOvL00brP9Txa7fQd1/MMtbevXX5f+2hdyTNNSvv60t5/F3QF3EfLfLQp0c6j8z2QZeGDJsu050vWzhO3nQfM9aNMu8k3C03HtWg3Tdkun/b2k67fJSE2HScV+vmhff2lJR9w0zGBVpl2np7t8mlv33b9ZD3Qatdf6OeH9vWXpnzAgZY8WmW28+i08xxtl9/2+l3LU3Stj1a7/kI/P7SvvzR10UcLIATMJwukjzxaZdp5erbLp739pOuH2/UX+vmhff2hSbTbrpv1YjDU2LQHI2lvP+n6XdLsPtZm0K6/0M8P7esvLXn6aN3neh5tLdp5erbLp739pOsPpY82Tp+cmdfWzG/rU/2Ffn5oX39p6KKPFrZpzyeZNM9Qez5Q7TxGX5jBNXGORbNpB4Kkebi259O1ff1l5fx2lnaTL03H9mk3LWWl6SsNaaTwmKn2fDq+WV8+FHmajt3ne9OxLeab8imnnCIPPfTQqMEQt912W/TzeO8n/RacdPu2y1evhQsXDv9smldtb9/U3+LFi4f/fcMNN9S1vClfvc3A8+bNqzqAxsXjW2v7oS8fkq6Am47Jow2c9nyXoeUBlveRaudRxmHKV6pHG7SPr/Z8xNrLh6Qr4EBLeg8AABYRaAOnnWdHHmA8punQNAtXvpYvXy4u0z6+WV8entAexMRgKPu0BxtpD5ZppvJBQ93d3U1brxmAZGNg09y5cwu2aR/frC8fijyDodzHYCi30ytCyQO01UdrBlnVO9DJhT5aV45v1pcPQVfAfbTMR5sS7Q+ipFwvn4a1a9cO/2z2t96mPrN8f39/9HOp7prNrH+s3NnZs2dLW1s6HwHaeZ6282RtL59UFq9Pp2g3+Wah6dj1pjXf30/TWE20S5curXtdplk3jbzYsV7NavrWPj7a14/t5ZPS3n5cITcdE2gDn0/S9va1308bgba+88s27evH9vJJaW+/HvmAAy15tJa5nmeYdPva72vm0ZZbunSpnHPOOXWty+xXnEci2pJGnrTr87WGniervf16dAXcR0t6D9CkwUwmCJtX+dOjKpX+xrzSCLLmg9TciJdeANJHoM14nqHv70OX9vHRvn5sL5+U9vYxRLvtulkvBkONTXuwUhYGQ8V9KH+ag52q5dGWv8dgqHgYDJWOPH207nM9j1Y7vcf29rXfd2k+2PHKl3afbGUebfn2m5neo318tK8f28snpb39rPfRkkebEtvzpdrO03N9eZc+SEw5bOXFJmVr8EvS45P0/aR5uq7PhwvPaTf5ZqHp2PWmqawvX4+0m36b3XSswfWuA9e37/r6myUfcNMxgVaZdp5e1pevl3bg9C3Qup5H7fr2XV9/M+UDDrTk0SrTztPL+vI2+mhdktazjl3NI7ddPtfzkMmjdQPpPQAAWESgVaadp5f15etlnv5Uermahzhv3rzhMi5YsEC1LK7nUbu+fdfXj5i0266b9WIwlL+DkbSXb5T2pACN5PFqYDBUsvqxXf+uyNNH6z7X82hdz9PL+vKN0H5W8VjMnax59rJLXM+jdn37rq+/GbrIo0VS2vNZai9fi3b5G/kgMg98qLY86j++tudjtU07UNfie/16T7vJNwtNx9pNo9rLJ6U9H28cprlWu8nY1aZj35tWtd/PinzATccEWsu080S1l09Kez7euAi0dmjnmWq/nyX5gAMto44tM81FDz300Kjfm9/FaWr0ffmkbJdfe/8wPtvHJ+n5Yft9hIFACzSBGXxUmvNVYyCS9vYBjI1Aa5l2nqj28klpz8cLXdp5ptrvIxDabdfNejEYamwMhkp3MMrSpUtTHwBlthkqBkNlQz7gPlqedZwS7TxR7eWT0p6Ptx5mPWZ9xtq1a+Xoo48WGx588MHhFCNT3pDvgLTzTLXfz4Iu8mgROtt5skk/SHzKAyw1Cdpmgqyt+WXrpR1IbJ9ftvOANfLAkSLtW2qajsPII7VZftvbt1m+7u5ua83FZt0usF2/2udvUlnf/7hCbjom0FqmnceqncennSeovf9btmyJ+k9LrzgB1Gy79PdLlixxOtDarl/t45dU1ve/HnkCrfsvVwdDjXdHE+eD0vbySddvu/y2t592+ep9spN2/WnXr2vHr15Z3/965AMOtKT3AABgEYHWMu08Vu08Pu08Qe39j8tsrzSH7Hvf+97h35sylM+B6xrb9evL8RtL1vcfQ7RvqUNvOnYhj1V7MIX2YA3t/S+XNA/WxaZBBkMlqx/t+nVFPuCmY/JoU6Kdx6qdHqCdfqC9/yW5XK7q781jE+PcsZYv393dnZn0HleOX6Oyvv9xkEcL7y9E1/NgbX9QuJiHa/Jg29raop9p5sv29Zd0ee3rCzVo31LTdKw/n6V205R205dW03EjTb80Had//ru+vPb6myUfcNMxgdYy1+ez1M7T084DTHv7oQVa389P35fXXn8z5Qm07r9cHQyVNA8u9DxF7TxAzTzaEAKt7+en78trr7+Z8gEHWtJ7ACWdnZ3R4CbzuuGGG1JfHkA6CLSWuT6fpXaennYeoPb2fef7+en78trrR0zat9ShNx2nMdiJwVB2j08zNTOPtpHlbfD9/PR9ee31N0s+4KZj8mhT4vp8ltp5etrpB2lt//nnn6/6+7jzySZd3hbfz0/fl9defzN0MR8tbNOez9L2+l3/IEkrzzbpAyZceUCFb2znuSbdvu3loUz7lpqm49p8b3rT3j7s0j6+vm9fu/yuyAfcdEygtUw7z047D1F7+7BL+/j6vn3t8rskH3CgpY/WMtOnZtIwqonzrFrbyxua67e9fZpa7cr6+ZV0+9rld+n66Aq4j5b0HgAALCLQWqadZ6edh6i9fdilfXx93752+ZES7bbrZr18zqPVXl57/dr1g2S0j6/v29cuvyvy9NG6r2t1Wfv+m9xr39ce3q+dh6i9fdilfXx93752+V3QFXAfbXEyTFinPR+q7fksk65fu35s0/6gTVo+23zJg24U10fGaTf5ZqHpOCntph/t7YdePt/nAw696VT7+CTlevmy0HRMoHWcdh6c9vZDL5/v8wGHnkeqfXyScr18WQm05NE6TjsPTnv7oZfPdh5l0vK5nmfqex561q+PrPTRkt4DAIBFBFrHaefBaW8/9PL5Ph9w6Hmk2scnKdfLlxnabdfNejEYKruDKXwvn/ZgG+3BQgyGyvb1UUIfrQdcz6PNevqFbb6Xz/f0ntDzSLWPT1Kuly/0PlryaFPi+3ywrucp+s52nnPSPGjb5U+6ftuBJGn5tb9ocP0q027yzULTsXbTny9NR41yff84/nbrR/v8d73p3Bf5gNN7CLSWaedB+pRH1wjX94/jb7d+tM9/1/OIfZIPONCSR+t5HpvveX6h5wly/O3Wj/b573oesU+6Au6jJb0HAACLCLSWaedBhp5H5/r+cfzt1o/2+e96HjEcod123awXg6GyO5jC9f1zfTCONgZD+X38miVPH637XM+j1c6D9CGPLgnX94/jb7d+tM9/1/OIfdAVcB8tebSO0M6T035ggO08UNc/yEIvn+3jF3oeru/nd+ZpN/nSdOx+06J205729n3Ps9SuP+3tJ12/78v70vScD7jpmEBrmXaenHYen+/bd73+Xa8/7e0nXb/vy/uUh5sn0Op/I/B1MFR3d/eok7z0Mu/Vel97+0nL5/v2Xa9/1+tPe/tJ1+/78rbP72bKBxxoSe8BAMAiAq1l2nly2nl8vm/f9zxL7frT3n7S9fu+PHm4jtC+pQ696diFwQq+D2bR3n5S2oOdtOtPe/tJ1+/78gyGKqjHJ551nBLt4ffaeXy+b9/3PEvt+tPeftL1+768D+k9XQHn0RJoU6J9IWkHktC5Xr+ul893oV/faegKONDSdJwC7aYh7abR0Llev66Xz3ehX99pyQc86phAa5l2npx2nmjoXK9f18vnu9Cv7zTlAw60NB0HPt+m9nycIc2X6eJ8s0nPH+3y+S706ztNXQE3HZPeAwCARQRay7Tz5LTzREPnev26Xj7fhX59o0m0266b9fI5j9b3wRKhDMZolOv163r5fBf69Z2WPH207gt9PlrXh/+HkF6QhOv163r5fBf69Z2GroD7aJmPNiO057PU/iCxvf6k8426Lul8sknXr338Xf+iA8dpN/nSdOz+I+hcf1+7/mzTbjrWbnrWPv6+v++LfMBNxwTawPPsbK9f+33t+rNNO49WOw9X+/j7/r5P8gEHWvJoA8+z087js/2+dv3Zpp1Hq52Hm/XzO+n72udvPboC7qMlvQcAAIsItIHn2dlev/b7tvdPm3YerXYervbx9/19OEK77bpZL/JosztYxPb+adMezMRgKLfPf9fP37joo/UAebRupz+4nl7hevqFdnqJdh6u9vH3/X0fdAXcR0sebUqS5hnWWl57/ba3X4t2Hqz2B53tPNektOsn9PMfjtNu8s1C03HWaTf9ajd92l6/9vZtl9/1pm/b29c+/mnJB5zeQ6CFVa7nQWrvn+39z/rx084z1a4/n+QDDrTk0SLoPOJa77s+H6t2HrDvx097vlzt+iOP1g2k9wAAYBGBFla5ngeZlPb6tbefdHntPFrbtOsPjtBuu27Wi8FQ7tIeDOL6YKGk69fevu3yMxiKwVAFB2IMfbQe5NFmnet5kElpr197+0mX186jtU27/nzQRR4tmsUMbli+fLksXrzYq0pdsmSJLFiwwNrgCu08UNc/qFzff9t5zNp5ptrnR9L60S5/5mnfUmep6XjZsmWjhuH79jL7UC/tpkHt7dvmev2FXj+2l09Ke/txhZzeQ6BNyfXXX19ob29XD5RJX2YfzL7EpZ0nqb1921yvv9Drx/bySWlvvx55Aq3+NwKf72jNXWAIQbY82Ma9s+3u7h5zPea9Wu/bXr/t7dvmev2FXj+2l09Ke/v1yAccaEnvSaFP9rTTThvuHwmB2RezT2bfAADjI9BaZgY+ZXnftPMktbdvm+v1F3r92F4+Ke3tY4j2LXXoTcfazby2X3FoD0bS3r5trtdf6PVje/mktLcfV8hNxzzr2LJcLichK36XqE07T1J7+7a5Xn+h14/t5ZPS3n4c5NEiNSZP1eSrmrzVNJm8XtMUrNXvmjQPUHs+UNvz2dr+oLSdp0r9INO0b6lpOt7dDLtgwYKCNlOGtJuOXV/eNtebZn3fvvbxz/r24wq56ZhAa1ncgHXuuecWtmzZUtBmymDK0qxAq52H6Hoeoet5qr5vX/v4Z3379cgHHGjpo3Wgj9Y0FS9dutSZUYCmiXLhwoWxRhXX6qO1PR+n6/OR1qI9X6vt8mlv33b5atE+/7S3X4+ugJ91THqPMnOiL1u2zJkga5iymDK5dBECgK8ItMrM3WzIZdPOQ3Q9j9D1PFXft699/LO+fQzRbrvOeh6t6xgMZZ/rg3183772YKCsbz8u+mg94Gsfbdw8VN/Lr52H6Hoeoet5qr5vX/v4Z337We+jbdMuANKZz9b2fLJJ2Q6krs/XmXS+Udt5qrVobz/rgRyO027ypek43fls651PNo2mY+2mQV+a1mzRbnrVPj+037dNe/txhdx0TKD1pI+2WfPZ1jufbNLyuz7fqU95hjZo56Fqnx/a79umvf165AMOtOTRetDHaZqKTV5rs6baM01bJm83zqjipOW3nQdZ633f82xtCz1P1vX3yaPNRh8t6T0ZnM+W+WQBID0E2gzPZ5vGXLmuz3ea9TxD7TxU7fND+33btLePIdpt1816hZpHm7RP1vb243B9sIkvg0Vs0R7Mo31+aL9vm/b246KP1gOh5tHans826fbTmo829PlktWmnr2ifH9rv26a9/az30ZJHCydozwdrm+8f1LbzZF2fDzfp+rXn43X9+giedpMvTcfjy0LTse3lXV+/dtOj6+vX7jrQbnp1vXzNkg84vYdAa1nWA63rea7a69fOw3R9/dp51Np5qK6Xr5nyAQda8mgty3ofrevzyWqv33A5j1V7/bbzfLXziGtxvXzN1BVwHy3pPQAAWESghVWu57lqr187D9P19WvnUWvnobpePsSk3XbdrBd5tG720RoMhmIwlMuDlVwfbOR6+ZolTx+t+8ij9TuP1vbyrq9fO73H9fVr51Frp1e5Xr5m6Aq4j5Y8WqRCez5Y23mGtudzTVp/tufr1c7jdH39WZ/vN/O0m3xpOh5fCE3HrjcNul5+7e27vn+sP4ym5XzATccEWsuSBqolS5ZYC7Jm3bbL73qepOvl196+6/vH+sPJs80HHGjJo7XMZh5qUnHy7JrVR+tqnqR2nqzr23d9/1h/OHm2XQH30ZLe4zhzISxbtqypQ/XNusw6XbrIACBUBFoPLFiwQK655pqm5TWadZl1ukA7T9L3PEft+tPeP9ZPnq0XtNuum/UKNY+23LJlyxL3y5p1aJXf1cE8rpdfe/uu7x/rZzBUwYEYRB+tomb3cZo+q+XLl8vixYvrWm7JkiXRXWy9zcW2+2hdyZP0Pc9Ru/6094/1+59n2xVwHy15tJ4xgfKCCy6IXiHRzhPUzhPVDmSuHx/X82STcv34IyHtW2qajt0Vp6k6Dbbnc3W96VW7/Lb3L3Tax9eX+s8HnN5DoLWsVqC64IILCq6aO3eueqC1PZ+r63mo2uW3vX+h0z6+PtV/PuBASx6tZbX6OE1TcCnfzTUm/870CafRR6s1n2vS923noWqXvxbtPFvXhX78m6kr4D5a0nscuBBPO+204f4XF5iymDLVCrIAgNoItA4wo4i/+MUvOhFsTRlMWUyZXGB7PlfX81C1y1+L9vZdp318s17/ztBuu856Hm35a8GCBdrFjcpQT5nToD1YhMFQdo9P6LTPT1/qP08frft8nY+2kukzMfmuJu81TSYv19zF1ttcbLuPNq35XF3PQ9Uuv+39C5328fWh/rsC7qNlMJRjgdY3zZr4XTuQJaW9/aTl83392oFIe3nt9TdDV8CBlqZjy+pphvXtFbep2/Wm2aS0t5+0fL6vX7tpVXt57fU3Sz7gpmMCrWU255PVfnV3d9fcf9fzVJPS3n7S8vm+fu08U+3ltdffTPmAAy1Nx5bZnE9WmwvzmWrncWpvP+vzubqeJ+36fMnk0aaD9B4P55PVxny2ABAfgdaz+WS11Tufret5qklpbz9p+Xxfv3aeqfby2utHTNpt16Hn0TZ7PlntV73z2bowGEV7sIn2YBTt/be9fgZD6R6fZsnTR+s+V/NomzWfrLZG57N1Jb1CO31CO71Ce/9tr5/0Ht3j0wxdAaf3MBgKAKCuK+BASx8tAAAWEWgBALCIQAsAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABYRaAEAsIhACwCARQRaAAAsItACAGARgRYAAIsItAAAWESgBQDAIgItAAAWBRNoc7nc8M+FQkG1LACA+Apln9nln+WhCCbQtrbu3pWBgQHVsgAA4hso+8wu/ywPRTB7NKFtwvDP27bvVC0LACC+bWWf2eWf5aEIJtBOnTx5+Ofe3q2qZQEAxNdb9pld/lkeimAC7fRp04Z/3rptu2zfvkO1PACA2sxntfnMrvZZHopgAu2EtrYRB2jDaxsZFAUAjg+C2vDaxuF/m89w81kemmACrbHnzJnDI9Z27Nwl6196lWALAI4G2fUvvRp9Vhvms9t8hocoqEBrvgnt3dEx/G/THLF23Us0IwOAY83Fa9e9NKLJ2Hx2h3g3a+QKfeElnfZs3iyvbdo04nfTpk6R9vZpMnXKJGltbQ0yVwsAXL17HRgYiEYXm4FP5QHWMHeyHTNmSKiCDLTG5t5eebWnh6ZjAHBULpeL7mRntLdLyIINtEZff390Z7tlK+k+AOCS6dOmRXeyoTYXZybQlgdcE2y37dghff19MjAwyJ0uAKR459ra2hI9jMLkyYY6ujjTgRYAAC1BjToGAMA1BFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABYRaAEAsIhACwCARQRaAAAsItACAGARgRYAAIsItAAAWESgBQDAIgItAAAWEWgBALCIQAsAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwKI2ccC2rT3y5CPLZdUzv5QXVz8hm3rWyK5d27SLBQDwxMSJU2Vmx4Gy/5zDZN784+Xt71wgU6d1iAtyhb5CQWvjmzeuk/vuuFJ+/cvvahUBABCo9x7/GXn/SRfLjD0OyGag/b8P/Iv8/OYvcucKALB6p/vRM6+R9xzzKclUoP23ny2W++/+5ojfHdj5Ljn8PWfKmw5+n+y175tl0uTpaRcLAOCpnTu2yIaXu+SpJ+6Upx65RV5a++SI94/9wAXykdOXZCPQVgbZfWYdIh89/Rsy/+0fTrMYAICA/fZXP5T/+PllsvG159SDbaqB1jQXL7/h/OF/H/b/nSGf+PRP0to8ACBDtvZukh9+93R59pl7hn+34JzrUm9Gbklz4JPpky0hyAIAbJrWPlP+6jM/k4PecsLw70wcMvEoyEBrRheXUnZMczF3sgCANILt6X+9VPbY86Do3yYOmXgUXKA1ebLlKTymTxYAgDTstfdsefdxnxv+t4lHJi4FFWjNwyjKRxcz8AkAkKYj3nOG7D3r0KpxKYhAa574VGJSeAAASNMeHfvJnHnvqxqXggi05rGKJSZPFgCAtHXOO6pqXAoi0JpnF5eYh1EAAJC2ffZ/S9W4FESgLZ8ggCc+AQA0TJk6c/jnNCeuYZo8AAAsItACABD6fLQ1rftH7RIAAFxwwJfFN9zRAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFmUg0PbK9efdKJ3HlV53yPXjTEW44qryv31QVlT7o3Ur5aThv7lROs9bKeM9YyTWOhvx8IM19wflxyBm3Uf12sTjNGTNT++oea6MaeicO+mnvc0tj4X9DOlzo5n13Txr5Qvms+SqtXZW7+L5L36fr4EHWnNC3ipXHnS8dK84O3r96nyRK8+qFpyKJ+8nZfffdq/olNsrTwxzEp71qMy7ovQ3p8rF8qi8r+oJFHOdalz+MLEv6YXvt165+74eOfT8d8hx2kUBAj9fgw60a376hNw+7wj51UWzh3934BnHysXzeuTKG0d+G1xx1S/l9hOPl+6yvxWZLd+6/lA5cPjfvXL90m459PxT5VtHln7XLud99Qg5dNWjcvXD0sA6kYbjLjJfco728iKNHHCo3LHibLnjjPbmrO/hx+XKVR1y8tFNWh9SNFu+Zb60j/hcCdzDfp+vLcF/A3r/nIqg1i7nLewUuad7dxPEupVy9T0dcvHZNU7cdavl9moH+4BDZdGJIrc/UBa8464TULDigW6REw+T8w6g+uG+FZ6fr348GaqSab69pHv3v81d68Ieed8lm+XiH59UPBhRUBSZt7DKN6A5HXKodMuqdSLHHSCy5sFuWTmvU75X4yBGfyczZFGVv5vX2SFy32ZZI7OjwB53nQ3vs7lTPmasPzZN1r+U28t/VXFnbZpN33ddT/Efq26VzuvMD53yg/K7PtMveNajsnJ4J4+QX1XcjY9YT6Rj9zEY0UR9q9z+/lPljjc+PmI/Tr7i7GLrQMX+mVaDWHdvcc6FoT7aTz43VP4R+9Uj7zvu0ZFlKRMtd89Y+1bcr6hrovLuIirXyDJU1seVq3b/ptq2Rxgq87wqfxfvGIxc19X3mG1WnA/3dcqvrp8jd8ctW7W6r2wBGjru35P7h8pYdo5VnF/Vj3ntc3n88lec02PWWfW/q0tUHyI/WPEOWVVehuF6qTzujZatWCerRtRX8XdijpU0eC1VMf75X3FdxTxfpd7zv8r56hvvAm3xJBS5+MdnDx/w6HeXmBOzY/cfru6RldIhJ88Za009snK1uRsVWdXdI3LQYXJgtWBWdkFHfzevU+aNtcpVPWLOHXPCxV1nkn3urNxnY2h75uLqrrgIO8suiAPPOEm6zygLgBUXYuliNxfAHaUL4OEHo/7c4t+WLhbzIXDS8IdAtNxZN8rKahfOffdL50GHRU24w397yR0ipjXguU751YqjixdrtA+3yhfeOH7wiX0uVG2GPbTsw7laU/5mufq8G2XeQtNEV/ahctaDMi/RB3KPXH3eoyJmvUeWl/nG4ofkeMF2lAaOgdmPGx+VlfOOkO8d2XjZRtd9sSzvO09G12f34/JpMcd9dpUvImfLHcNfhszYibIP8pjnctmG5NPHdcvJPz5busvK9MnzOkb+7cMPyqflWOleUVrnGH/XEHPe3C8nf7VUhmJ533dVj5x8T3dUj8W6tVO2VUvvGHGNxb2WxOHzf8WY56s//Go6XrdSPh19+I/8VmWCxg9OrGM9B8woC5a9suo5kUOfe2Lo22hp0NLxcvI9v4w9WObAN84o+1dz1ln/Pq+VLwx9MI0MnLPlWz8u9iN/Os7Ap+FtVpz4Rx49vN41P71/6AN+5EVXKtftl4weHbhSOiv6yw+Tk6VHbr9nhvyg/EPkyHfIxfMqmuIT1UsjekTeX94XL3Lc2UdELSFXJxk8tqo7+pApX+9wnS2tb2BWI8fAnCO3m7uDhVU+tOOWLap7E2TL637ssQor7xFZVPHlMmoKnNcpHyg7dsddVL6+Bs7lVT0yb8T5MNRNtKpb7l5X/Twe9+8a0iPzFpaXYbYsOr8j6qpaVTm2w0LZKq+xWNeS0+f/2rHPV494EWhLlV9sjj1CFlX5ZnPcMZ0Nrn2TrFwlsnLVjIoPrN0XdOUHR5rrrGufH+6W26VTFlVrJhrqR17ZvSneNqVTTj6ysRGAxQtyc9Q0P8JBMyoulplyqPnGM6+jopWgXeYdJCLPmab4ccrY9HOhXLW++Dly8pjNGXFVr9eozHV90Dd2DKIBgmMe23hlK3WLlAfJ8vpZ9ULFB/GJnaPKGHW1jHcdNHQuVyn/kZ3Rl7mo9Wo8UXdSjL+rqUMOnVP9S/i8N7Y3ts06ylZtTMoH3t8x7rXk8vm/Ztzz1R9eNR0PN8cmXdG6zVET77waHwalO9/og+PI8fs41rywWUTK72pjrrOyabmir6uefY7KME7TdmU/8liibZ542DjNQ8UvElX7v4f3cXfTfMmhnbsnXR4/AKd4LoxphsyzMfBi1JeKkeMGKutMmnoMSsH52OrHNmbZorpftbtve5SDTABsH/e4R3cx3TfKJy+5sdj/WjmGoJFzeazyx+p/HFrFeAvUuFbHP29GB+Cmlq30N5XBvOn7keb53zv++eoRrwJtXaIDZ4LfWEonfvGuasRgi2HF91aVX9zPxTmJ4q/TNBUN96cg4+r7MG40ReLir7YnL1sDYw2qplxdVOrv/aV03lNjEFeTlIJY1Pdb6gsdGrwzrhSu1YbLVg9nP3M6Rp5jic5Xt3jRdDxC3CaQoW/0tz9YpT8hGihV+sY2XjNl8a5hRBPQGM17xTus0p1Z/HXGUk+zz9CArKpvjShj8m2OaiIc0WJgOWgYdTeHOWCs4zPinKxjdbGPQTEHfNwUiXrK1sS6jwbmmfELlddrs87lqiNYm5iT3Cwul61ZVsU9x2Kcrx7xKtCO3Y81dFBGmC0nm36c+1ZXfCCUDuDuZt0x1xv1E5X1VQz194wK3qUL5Jjd3/Bjr7OJ+1wcXDTGYIUqZRx/m+P1IxcHeKy87vGqj0MrjhKs0oendi7YMvYXqmiwT1Xdcvuoeh19TtZW5zEYygEfP687Xtlqnx+NKLb0lPpdm3UujzKUjVD5JbA4LkGZy2UbQ7GvfXTwHLvM3fHO/1jnqz+8CrTFEXQ9cuVZI0dTrrjq1ih4VR0QUjE6cXik5oiReUfLD06sXG9p1OOxo0YQrrzu/rJHOPbK9V99VFaeePyoEbrx1tnMfS6V79aKxyqulS+cVaWMQ4Fi1JeRqOxm1GrFoyqH0nvKPwg/WfHsUdMM+EnTBPjV5o4SLD7n9Eb5wsONnQvVjNdCEVf1c8zUwdjLVNarKfOVFR8qo/a3WvnrOAZxv/zEKduY50eUihLvWbTFVJ6yXwzlve8OnvWeyzENfVke8WS4hx+syFtV4nLZap2DV8Uv8+0xzrE0vqynybM+2nY57/qzZZ7pxziuIiH7GPMghM1V8iVnRM87Lj6QYajTf8XoIGD6i34gI9c7Ioe0vJnrjeZ5xzfKlWXb353nV/86m7nPUfmONn06Zfs8tN1S3trIMh4vJ5s8v2hgy+5Ukaj/7JiR+1nsl2sf8Ri4kyvKNVb9qp8L1UQBw+QGFvex5kMjqjHn2BU9Ua7icH2berqiu3oZTP18VeTT5fXa8MMS4h6DoRSJK2oclzrKZs6PX3UW83V3/22xjzXOfhx30WFyu3kw/ohld+dDN3Iux1Mc+b/qLNMnXLbfP+6QTzezHzS4sjWpzPPinGMxz1eP5Ap9hYLtjSxamBv++eqlDWxu3T/W8VQWj59ni+bgXBihONioMtWsyt+M+fAOwKHz9YAvN7zu9S8+K9+8ZF6yeBR80/GYGunjQpg4F0ZaK1df5++sJ8iatUGer541HZvHmT0hh4563ubQY+iuD6PjHHFwLtTTvAz4YXaQ52ubfwdBipMel//a9ImVP0cVGcC5AMAPfvTRAgCQEH20AAAEKJDBUAAAuIlACwDIhIH+vnAD7cSJU4d/3rljSxqbBABghC2vb6gal4IItDM7dqfAb3i5K41NAgAwwvq1f6gal4IItPvPOWz456eeuDONTQIAMGxjz0vy0ronq8alIALtvPnHD//81CO3pLFJAACGvfrKGlnb/XDVuBREoH37OxcM//zS2iflt7/6YRqbBQBANry6VvJ/+Hd5ed3vq8alIALt1Gkd8t7jPzP87//4+WWytbc47yQAALaYWPPC80/LU4/8aPh3Jh6ZuBRces/7T7p4eJTXxteekx9+93SCLQDAapB9dtUT8tv7r5ENL+ej35k4ZOJRmlILtDP2OEA+euY1w/9+9pl75IZvnxbd0gMA0Ewmtvzxmd/Jr//j67Lq6buHf2/ikIlHwT3ruNy//Wyx3H/3N4f/vceeB8m7j/ucHPGeM2SPjv3SLAoAIMDRxa++sibqkzXNxaU7WePYD1wgHzl9SeplSj3QVgu2xt6zDpU5894nnfOOkn32f4tMmToz7WIBADx94tOW1zdEebImhceMLi4f+KQZZNUCrfF/H/gX+fnNX5Rdu7ZpbB4AkAETJ06Nmovfc8yn1MqgFmiNzRvXyX13XCm//uV3tYoAAAjUe4//TDTwKe0+WacCbcm2rT3y5CPLZdUzv5QXVz8hm3rWcKcLAKjrztU8VtE88ck8jMLkyaaZwuN8oAUAIFRMkwcAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABYRaAEAsIhACwCARQRaAAAsItACAGARgRYAAIsItAAAWESgBQCAQAsAgJ+4owUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYBGBFgAAiwi0AABYRKAFAMAiAi0AABa12Vw5AD/t6n0uevVtWyP9O1+S/p09Mti3VQqDu0SkIH7ISa5lorRMmCZtkzqkbdJ+MmHqgTKx/aDoFRKOl9tyhb6CL1cNAIt2bHpKtvc8Its3PiGD/b3R71on7iETpuwnLRM6pHVCexS4JOdJQ1hhMPpiMNDXK4N9PdK3/SUZ2LUxequlrV2m7HGYTOl4p0ye+TbxEcfLHwRaION6X7pXtr5yv/RtXy8tbVNl8sx3yOQZh8qkNxwcBdqQmEC78/W87Ni8UnZselwG+7fJhCmzZNo+x0r7fieIDzhes7w6XgaBFsio3lcekC0v3iEDO3tk8oz5MnWvo2XqXn8mWbJtw29l24YHZcfmZ6R1UodM3/8kad/nGHERx0u8Ol7lCLRAxvRtXyubVv9Mdm5+Ogqw0/f/kEx6wyGSZTtff1q2vPiL6AN80oxDZOac02XClNniAo6XX8erGgItkCHmrmhT94+kpW2KzHjjX8i0vY/WLpJTtr76oGx+4V9lsH+7zOz8hPrdEsfLr+M1FgItkBGbX1gmW9bfLZNnvl326PxEcP2vzezH3dj9I9mx6UmZPusDMuONp6mUg+Pl1/EaD4EWyICNzy2Vra8+JNNn/bfoTha1mTulLev/XabtfZTscdDCVKuM4+XX8aqFPFogcKUP7RkHLpDp+39QuzjeMF9IWtqmy+Y1y6N/p/XhzfHy63jFQaAFAmaaHwmyjSt9MTEf3ib31nazJMfLr+MVF4EWCFSUDrL+7qi5mDvZxpm6G+zfEtVl6+R9rA244Xj5dbzq4ckjXgDUnRLS/aNo4BN9ssmZOjR1aerU1G2zcbz8Ol71ItACATJ5siaFx4wuRnOYujR1auq22Thefh2vehFogcCYJkjzMArzrZ4UnuYxdWnq1NStqeNm4Xj5dbwaQaAFAmMeq2ie+MTDKJrP1KmpW1PHzcLx8ut4NYJACwTEPHDePLvYPFYRdpi6NXVs6jopjpdfx6tRBFogIGYWHvMNPuvPLrbJ1K2pY1PXSXG8/DpejSLQAoEw85Oaqe7MLDywy9SxqWtT543iePl1vILNo928eZM8/PD98vvfPyEvrO6WV199Ofr93nvvK3Pmdsqf/unh8t4jj5Hpb5ihXVRAnZm03cwnm/ZUdy///BD5vtwpl3y0c/Sbj35cFj3ycbn6/LCask0db1r946jOG504Xut4ZdHUJhyv4ALtwMCA3LL8ZvnXZT+SHdu3j3p/9ernotevHrhPli79nnz8zE/KRz76McnluEFHdm3f+EQ0aXva9v3o0/LB63Ly/UcLcu4RI9977JGbZf47b6prfY9dl5O7Zj1XDNwmUN92uFx4+SLZd9yluuWuSw+SdaeMLoMtpq5Nne/hy/Faf7VccfEF0pNwNfP/Zuw6Hu9L12PX5eSxdxbkI+sOkW/87q9jHFO3jldQgXbTpo1y5ZWXytMrfx/9e9as2XLssSfIO97xLpkz56DodybIPvbY72TFinvk5ZfXy7/8y7Xyu989LBdd9I8yrb1deQ+A9O3qfU4G+3tl8oxDVar/8PPvlMcuvVpePqLsw3P91XLXb0R6fpOTRWMueaZ8fOlNcnjlMnKQLLqt9Mub5RsLL6iyzC/k+wtvksPLl0+RqettG34d1f3E9uJnk9PHa9YiuWTponG+qHxY5LNPywdnxV1h8cvNvesqf19+7Iz5csKVTw+fF+aL2dXvulquWPhx+WCKxy7J8Qoq0Pb398tXvrxInnuuSyZNmiznfepzcuKJJ0lLy8g71UMO/dPo9ZdnLpQ777xNfvC/vytPPPGI/MNlX5Kvf/2fubNF5pgPD2PSGw5WKsGH5NzLRzYPP/bzC2TfvynIJbHvMH8h37+4YpnYd7TpK9V1o4G2fB1+6pQPXl6QD8a9o5XKoC/eHK+gAu3//v63oyD7hhkz5Kqrrh2+gx1La2urfPSjC2T+/LfKJRd/IboL/slPfihnnunOrA1AGvq2rYkS9NN9QEX1O5qOU56TSw64VG6SO+XqOppxX/75BfKM+eHblXfAlXe0InLAN+XCy+eLplJ9m7r343g1lwmq37gtOmI17mjLVLZuRMcxnS9RSY5XMIG2u3uV/Nu/3RIFz6985WujguyunTvlK39fvNgu+4dvysRJk4bfe/Ob/0QuvPDv5atfvVD+9Wc/kj8/4UOy9z6uff8F7Onf+ZJMmLKf8h3NUD/pASJ33Sby8cvny12X5qo0LY5sUiw1VUZNih+t+JNx72h/IdpMnZu69+N4NVfV4zWOx4b6aNPqQ2/m8Qom0P7oxuuj/55wwgflT/7kraPeHxwclD889cTwz5Xe+a73yJ+9+yj57W8ekp/+9Ab53Oe/lEKpATf07+yRSdN17/Bk/a3y2Loz5YNHdMrhR5gBUN1yV0Uw3c30r14Q8y6p4o42xbugWlomdMjOLdXu6jw4XmmPQPf4eAURaLdu3SqPPvrb6OfT/qL6Q9DNHexVX7t2+OdqPnbqX0aB9qFf3y+f/ZvFo/p2gVAN9m2V1gm6AwFNn6yc8lzF4JZn5N6Lc1L9mTzz5YAqv42anksf1JV3tNG/S3/5ITl3qW7akKlzU/c+Hq/RisfqsfL6H485Ft++OVbT8fy/KchHZs2Xu9Z1ixxRz2hyN45XEIH2yScfiVJ63vSmN8t+++1f9W9M0Hzb28YfCj//kLfJjBkzo/zbfP4Z+ZM/0RmBCaStMLhLci0T9Sr+0Y/LTb8xo4E7y+5qzBv13dHGSk1598eduJs1TJ2buvfueFVVPFaH/+chsmjhM+Om8USOuEmuXnpT7Dval8u6EF5e97jIgekfx0aPVxCBdsOrr0T/3X//A8f8m/7+vqj/1fiL0z8hbW0TRv1NLpeTuZ1vkiefeFReXLeGQIsMKZhPEZ1NmyA4dGfz2HUiN60xOZLmg7a77jta0+93SezUlMrBWGfKx9Pu/4vqvODX8YrV92rqNieLbhu/md70u970mxp3tO++c9QDS9atf0bmv1OhNaLh4xVAoN2+o/hQismTp4z5N/19/XLzzcXx4Kee+pdVA62xZ8de0X97Nr5mpayAm3LmNin9zZY1H3a8+0x5+Tc3S8cplw99MJcGSxXvXg+oemdbg7lrOqL8rvaxstzL0eklqYvqPOfP8YptqG7N8V2YG/futrypv/KONupzX1/8u30PeIf0PGL6R5+Rx35zphx+vnh0vAIItKa519jS+/qYf1OI+S2kt3dL9N/p03ksI7JDp0nsF/L9bz8uJ1xZkH1/bp7mdLlcsvTy6MEHd73rTpHvXCr7Xn65vHzph+XlU56Tc2sE2ep3R6PdtPBmGfNZUykPlGq0CVirCbNuUfPwx+X7Cw+Ru8b4otRzW2WfbOUdrRTtf7h0mP8+epM88+6Py7mSPq0meycCbalfdt3aF8b8m1zMbyGrny8mgu+/f7VhFkCYWiZMk4G+3pS3unsw0mMj7oSeLv54isiihUNpeqM+jEf33x5+fqH6Xc5Q/6wZaOXaaFZT56bu/ThejRp/0FncO9rImmfkLqn/sZzaxyuIQHvooW+XiRMnypo1q2Xt2tUye/achtbz7LNd8vIrL8nkKVNk/vz0HxwNaGmb1CGDfUmfYtvsu91ik3K1ZsfoA/h3fy2Hj3uXW+qDNYOsCsOjmYsf3t8c2e9ngvF3RM5NeRSrqXNT9/4fr8bFvqOdNV/2XfdhuVe+KRdqNBsnOF5BBNoJEybIu99zdDRJwPJlN8sXvnhRQ+tZvuzH0X/f+95jpa3NiV0DUtE2aT/ZsXmlG7Ud9dsWm5TPnVUcVHPFut13PcUmYhM8xwqKpk/3w8WnRFU+CzkarHOnnHDpQbLoOjPIRop/q5Rb27f9pYaeV+zU8UqgshVi/Dza+XKAaWg8pTxVK90Un0aPV1LORCPz2MQHf7VC7rvvLvlvH/hI9FjFyvSet77tsOGfKz3++H/Kgw/+Mhok9YmzNFr/AT0Tph4oW199SAZ2bdR/rF/UrzdyUM2+1+Vk0cKyUajVmiKHB1YV72DPHRr8NJpZ53MiJtguHPpbSZ+pa/Myde/18bL9CMZ3F0cdP3bd0AjxR34hcsSHUk/xSXK8ggm0prn4lFNOl1tv/Ylc/o8Xyde+/m058MDdTcjmIRVf+9o/V1121ao/yteu+nL08+lnnC177b1PauUGXFB6SPrO1/POzW86PMjpgDNlvtwsz/zmw7IouqOtmLmlSl7m6DvcUr/uyFGxN1VJIbHN1LXRyAPqXT5eSR7BONYd7WPmHDDPvl5qHsv5Yblr/XyR3z0j80/5kBfHK5hAa/zVOefLk08+Ks8+m5cv/O258qnzPy8nnvjhMWfjMbP9/OIX/yeavcfk2b71rW+XM844O/VyA9rMh0dLW3vUHKn+wV0x76npozVNvEU37f4bEyDHfKCFiLz4mPTIzXLTwlIzdJW/KQXnKOB+uGrOpi2mrk2dNxponTlelr3880Oi+YWvHgq+H/zsX8sVFx8kPaa5P8W85yTHK6lcoa+QfvbuOF7fvFmuuOISWbnyyejfsw94oxx73J/LYe94lxx44FwZ6O+PBkz95yO/kQfu/w955ZXiA6KPOOLP5MIv/YNMm5b+iDLABRufWyrbNz4m+x9RveUHzfXio5+TKXscLnsc1NhsYRwvv45XUIG2NGnALbfcLD/9yQ9l584d4/6tmej9rLPOlZNOOjV6MhSQVTs2PSUb/vgt6XjTp4K/S9K2bcNvpefZf5G93vIFmTyzsQwHjpdfxyuYpuMSM9jptNPOkj//8w/Lww8/IE/9/nFZvbpbXn315SiY7rPPvtJ50Lzo2cfvPfLYKNgCWWc+QCZMmSXbNjxIoLXM1LGp6yQf2hwvv45XcIG2ZObMPeRDH/r/oxeA2qbtc6xsWv0T2fn60zLpDYdQZRaYut2x+RmZOecvE6+L4+XX8WqUm0+1BtCQ9v1OkNZJHbLlRf1J0UNl6tbUsanrpDhefh2vRhFogcBM3/+k6Bv81lcf1C5KcEydmro1ddwsHC+/jlcjCLRAYNr3OUYmzThENr/wr1GCPprD1KWpU1O3po6bhePl1/FqBIEWCNDMOafLYP922dhdnMMZyZm6NHVq6rbZOF5+Ha96EWiBAE2YMltmdn5Cdmx6MvpWj2RMHZq6NHVq6rbZOF5+Ha+gRh0DaJxpLhvY8YpsWX+3tLRNl+n7q06R7q0tL94lW9b/u0yf9QGrTZAcL7+OVz0ItEDAZrzxNBns75XNa5ZH/ybY1v+hbepu2t5HRXVpG8fLr+MVF4EWCFzpkXPmA2iwf4vMeONfaBfJm+ZHc2dkPrTTfGwfx8uv4xUHgRbIAPPBYx6obpqRzZyce3R+wtvp2dIYrWoG0pg+PtP8qHFnxPHy63h5+axjAHb0vvKAbOr+kbS0TYnubKftfTRVXZF3ae6MotGqnZ9Q7+PjePl1vMZCoAUypm/7Wtm0+meyc/PTMnnGfJm+/4cy/7hG85g+8wQh83ADk3dpUkJcGK1qcLz8Ol7VEGiBjDJ3S1tevEMGdvZEAXfqXkdnbjICM6uLeeC8+cA2j+kzTxBy9a6I4yVeHa9yBFog43pfule2vnK/9G1fLy1tU2XyzHfI5BmHyqQ3HBxcP67pz9v5ej6aBHzHpsdlsH9bNKuLebi/5rNw68HxmuXV8TIItACG50fd3vOIbN/4RJQSZJhAO2HKftIyoUNaJ7RLrmWiSM6T59wUBqUwuEsG+nplsK8nGgRWeiSlGRg2ZY/DZErHO9WmTkuK4+UPAi2AUXb1Phe9+ratkf6dL0n/zh4Z7NsaBS4RX8ZP5qIvBi0TpknbpA5pm7SfTJh6oExsPyh6hYTj5TYCLQAAFnnSBgQAgJ8ItAAAWESgBQDAIgItAAAWEWgBALCIQAsAgEUEWgAALCLQAgBgEYEWAACLCLQAAFhEoAUAwCICLQAAFhFoAQCwiEALAIBFBFoAACwi0AIAYMmOndsJtAAA2PLQqhcItAAA2LBx86ty3l2rpaV3V5+VDQAAkFU7dvbKX/2fp2TDDpGWF1/6L9ne169dJgAAgumX/ft/f1JWvNAnhZY2abn299vktVf/KJt37tQuGwAA3t/J/v3dj8n3fr9FCq2tMigt0rbsBZFXdm2Vr77jadk0Y47M6ejQLicAAF72yZ5zyxOyYt2ADLa0SqFlgkiuRXL7fOfxgvTvlD0nDMjiP50ox8/ZU/aceYC0T56oXWYAAJy3Y8c2eWjVavnUnc/Jhl0tUsi1ymDrBCnkWmSgZYLk9vpfTxVaBvtF+vskN9gv79k7J2e/uU3+7IC9Zcq0vWWPaVO19wEAAHHNth298sy6l+TLK7rl1+t2SqF1ggzmWqXQ2iYFyclgiwm2Ofl/z0Mu3KsKys4AAAAASUVORK5CYII="
+                alt="我的數位基地 QR Code"
+                class="w-32 h-auto max-h-44 object-contain rounded-xl bg-white p-1 shadow-sm border border-slate-200"
+              />
+              <span class="text-[11px] font-bold text-sky-800 mt-1.5">📱 平板掃碼直達</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-400 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span>支援手機、平板、電腦全裝置無縫開啟</span>
+          <span class="text-sky-600 font-bold">免安裝 · 即開即用</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 3. 上課方式與 45 分鐘課堂時間軸 -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-soft space-y-6">
+      
+      <!-- 區塊標題 -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-bold flex-shrink-0">
+            ⏱️
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900">
+              上課方式與 45 分鐘課堂時間節奏
+            </h3>
+            <p class="text-slate-500 text-xs sm:text-sm">
+              每一堂課都是精準高效的互動學習，掌握節奏才能充分享受探究樂趣！
+            </p>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-sky-50 text-sky-700 border border-sky-200 self-start sm:self-auto">
+          每堂課 45 分鐘
+        </span>
+      </div>
+
+      <!-- 平板車推車提醒卡片 (重點提示) -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border border-amber-200 text-amber-950 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div class="w-12 h-12 rounded-2xl bg-amber-200/80 text-amber-900 flex items-center justify-center text-2xl flex-shrink-0">
+          🚐
+        </div>
+        <div class="space-y-1 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-black bg-amber-200 text-amber-900">小老師任務</span>
+            <h4 class="text-sm sm:text-base font-bold text-amber-900">
+              平板推車出動與歸位
+            </h4>
+          </div>
+          <p class="text-xs sm:text-sm text-amber-800/90 leading-relaxed">
+            每次上課都要用平板，所以要麻煩<strong>小老師</strong>及<strong>資訊小老師</strong>幫老師去推平板車。
+          </p>
+        </div>
+      </div>
+
+      <!-- 5 大流程時間分配橫向 / 垂直卡片 Grid (總計 45 分鐘) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
+        
+        <!-- 階段 1：5 分鐘 -->
+        <div class="bg-slate-50/80 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-sky-300 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 font-black text-sm flex items-center justify-center">1</span>
+              <span class="px-2 py-0.5 rounded-full text-xs font-black bg-sky-100 text-sky-800">5 分鐘</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl">📦</div>
+              <h4 class="text-sm font-black text-slate-900 group-hover:text-sky-600 transition-colors">
+                發平板及前置作業
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                領取指定號碼平板、開機連線、就座並備妥學習單與文具。
+              </p>
+            </div>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-200/60 text-[11px] font-mono text-slate-400">
+            00:00 ~ 05:00
+          </div>
+        </div>
+
+        <!-- 階段 2：10 分鐘 -->
+        <div class="bg-slate-50/80 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-indigo-300 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-black text-sm flex items-center justify-center">2</span>
+              <span class="px-2 py-0.5 rounded-full text-xs font-black bg-indigo-100 text-indigo-800">10 分鐘</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl">👩‍🏫</div>
+              <h4 class="text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
+                老師上課講解
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                先驅科學家傳奇背景引導、劃時代突破故事、核心觀念點撥。
+              </p>
+            </div>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-200/60 text-[11px] font-mono text-slate-400">
+            05:00 ~ 15:00
+          </div>
+        </div>
+
+        <!-- 階段 3：15 分鐘 -->
+        <div class="bg-slate-50/80 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-emerald-300 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-black text-sm flex items-center justify-center">3</span>
+              <span class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800">15 分鐘</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl">📝</div>
+              <h4 class="text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors">
+                完成學習單
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                專心研讀文本與問題，深入思考並親手完成當堂學習單問題。
+              </p>
+            </div>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-200/60 text-[11px] font-mono text-slate-400">
+            15:00 ~ 30:00
+          </div>
+        </div>
+
+        <!-- 階段 4：10 分鐘 -->
+        <div class="bg-slate-50/80 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-purple-300 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-black text-sm flex items-center justify-center">4</span>
+              <span class="px-2 py-0.5 rounded-full text-xs font-black bg-purple-100 text-purple-800">10 分鐘</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl">🎮</div>
+              <h4 class="text-sm font-black text-slate-900 group-hover:text-purple-600 transition-colors">
+                完成互動式課程
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                開啟數位基地，挑戰科學家密室逃脫解謎與動態虛擬實驗。
+              </p>
+            </div>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-200/60 text-[11px] font-mono text-slate-400">
+            30:00 ~ 40:00
+          </div>
+        </div>
+
+        <!-- 階段 5：5 分鐘 -->
+        <div class="bg-slate-50/80 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-cyan-300 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group sm:col-span-2 lg:col-span-1">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 font-black text-sm flex items-center justify-center">5</span>
+              <span class="px-2 py-0.5 rounded-full text-xs font-black bg-cyan-100 text-cyan-800">5 分鐘</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl">🔄</div>
+              <h4 class="text-sm font-black text-slate-900 group-hover:text-cyan-600 transition-colors">
+                收平板及收尾作業
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                準時繳交當堂學習單、平板關機依序放入推車、整理桌面。
+              </p>
+            </div>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-200/60 text-[11px] font-mono text-slate-400">
+            40:00 ~ 45:00
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 4. 計分方式與成績評量 (Grading Policy) -->
+    <section class="space-y-6">
+      
+      <!-- 區塊標題 -->
+      <div class="text-center space-y-2 max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
+          <span>📊</span>
+          <span>評量與加扣分機制</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          計分方式與成績評定
+        </h3>
+        <p class="text-slate-600 text-xs sm:text-sm">
+          重視平時參與、探究歷程與學習態度，每一次的用心都將化為成長積分！
+        </p>
+      </div>
+
+      <!-- 重點大宣告卡片：段考及會考 不 考！ -->
+      <div class="bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 rounded-3xl p-6 sm:p-8 text-white shadow-hover relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 relative z-10">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-black uppercase tracking-wider text-white border border-white/30">
+            <span>✨ 評量核心方針</span>
+          </div>
+          <h4 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
+            段考及會考 <span class="text-amber-300 underline decoration-wavy decoration-amber-300 underline-offset-4">不 考</span>！
+          </h4>
+          <p class="text-sky-100 text-xs sm:text-sm max-w-xl leading-relaxed">
+            免除死背與紙筆考試壓力！本課程所有學期成績皆由<strong>「平時成績」</strong>全面評定，包含<strong>「日常作業」</strong>與<strong>「學習態度」</strong>兩大支柱。
+          </p>
+        </div>
+        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-4xl sm:text-5xl flex-shrink-0 shadow-lg">
+          🎉
+        </div>
+      </div>
+
+      <!-- 兩大評量核心：日常作業 vs 學習態度 (Grid) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        
+        <!-- 左側：日常作業卡片 -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                📄
+              </div>
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">平時成績項目一</span>
+                <h4 class="text-xl font-black text-slate-900 mt-0.5">日常作業評分</h4>
+              </div>
+            </div>
+
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              作業是深化思考與紀錄科學家故事精華的重要依據，請確實依要求準時繳交：
+            </p>
+
+            <div class="space-y-3 pt-1">
+              <!-- 規範 1 -->
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">✓</span>
+                <div class="space-y-0.5 text-xs sm:text-sm">
+                  <div class="font-bold text-slate-900">每次上課學習單</div>
+                  <div class="text-slate-600 leading-relaxed">每次上課的課堂學習單均須<strong>準時完成及繳交</strong>。</div>
+                </div>
+              </div>
+
+              <!-- 規範 2 (期末第 13、26 頁) -->
+              <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">★</span>
+                <div class="space-y-0.5 text-xs sm:text-sm">
+                  <div class="font-bold text-amber-950 flex items-center gap-1.5">
+                    <span>學期末重點學習單</span>
+                    <span class="px-1.5 py-0.2 rounded bg-amber-200 text-amber-900 text-[10px] font-extrabold">必備重點</span>
+                  </div>
+                  <div class="text-amber-900/90 leading-relaxed">
+                    學期末（<strong>第 13 頁</strong>、<strong>第 26 頁</strong>）的學習單須<strong>準時完成及繳交</strong>，作為學期整合代表作。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100 text-[11px] text-emerald-800 flex items-center gap-2">
+            <span>💡</span>
+            <span>認真撰寫、筆跡工整、觀點深刻者將給予額外嘉獎與加分！</span>
+          </div>
+        </div>
+
+        <!-- 右側：學習態度（加分與扣分機制） -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-soft flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                ⭐
+              </div>
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">平時成績項目二</span>
+                <h4 class="text-xl font-black text-slate-900 mt-0.5">學習態度與加扣分機制</h4>
+              </div>
+            </div>
+
+            <!-- 加分與扣分對照 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+              
+              <!-- 🟢 加分機制 (+1) -->
+              <div class="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2.5">
+                <div class="flex items-center justify-between pb-1.5 border-b border-emerald-200/80">
+                  <span class="font-black text-emerald-900 text-sm flex items-center gap-1">
+                    <span>🟢</span> 加分項目
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-200 text-emerald-900">+1 分</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-emerald-950 font-medium">
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-emerald-600 font-bold">＋</span> 準時交作業加 1 分
+                  </li>
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-emerald-600 font-bold">＋</span> 上課準時加 1 分
+                  </li>
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-emerald-600 font-bold">＋</span> 其他優良表現加 1 分
+                  </li>
+                </ul>
+              </div>
+
+              <!-- 🔴 扣分機制 (-1) -->
+              <div class="p-4 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-2.5">
+                <div class="flex items-center justify-between pb-1.5 border-b border-rose-200/80">
+                  <span class="font-black text-rose-900 text-sm flex items-center gap-1">
+                    <span>🔴</span> 扣分項目
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-black bg-rose-200 text-rose-900">-1 分</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-rose-950 font-medium">
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-rose-600 font-bold">－</span> 無故遲到扣 1 分
+                  </li>
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-rose-600 font-bold">－</span> 課堂違規扣 1 分
+                  </li>
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-rose-600 font-bold">－</span> 其他不當行為扣 1 分
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="p-3 bg-sky-50/60 rounded-xl border border-sky-100 text-[11px] text-sky-800 flex items-center gap-2">
+            <span>🛡️</span>
+            <span>課堂紀律是共同學習的基石，良好態度累積好成績！</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 5. 上課規矩三大公約 (Classroom Rules) -->
+    <section class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-10 text-white shadow-soft space-y-8">
+      <div class="text-center space-y-2 max-w-2xl mx-auto">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-sky-500/20 text-sky-300 border border-sky-400/30">
+          <span>📜</span> 生活常規與生活公約
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          世界名人堂 · 核心上課規矩
+        </h3>
+        <p class="text-slate-300 text-xs sm:text-sm">
+          遵守兩大核心守則與數位設備愛護公約，打造優質探究課堂！
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- 規矩 1：準時上課 -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-sky-400/50 transition-all flex flex-col justify-between space-y-4 group">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-2xl text-sky-300">
+              ⏰
+            </div>
+            <h4 class="text-lg font-black text-white group-hover:text-sky-300 transition-colors">
+              準時上課
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              鐘響迅速進教室並就座完畢，不無故遲到、不浪費大家寶貴的上課時間。
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/10 text-[11px] font-bold text-sky-400 flex items-center gap-1">
+            <span>✓</span> 準時就座每次 +1 分
+          </div>
+        </div>
+
+        <!-- 規矩 2：準時繳交作業 -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-emerald-400/50 transition-all flex flex-col justify-between space-y-4 group">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-2xl text-emerald-300">
+              📥
+            </div>
+            <h4 class="text-lg font-black text-white group-hover:text-emerald-300 transition-colors">
+              準時繳交作業
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              當堂完成學習單並於下課前交齊；學期末第 13、26 頁學習單如期送達。
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/10 text-[11px] font-bold text-emerald-400 flex items-center gap-1">
+            <span>✓</span> 準時繳交每次 +1 分
+          </div>
+        </div>
+
+        <!-- 規矩 3：愛惜平板設備 -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-purple-400/50 transition-all flex flex-col justify-between space-y-4 group">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-2xl text-purple-300">
+              💻
+            </div>
+            <h4 class="text-lg font-black text-white group-hover:text-purple-300 transition-colors">
+              愛惜數位設備
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              雙手拿穩平板、妥善保管個人帳號、不擅自變更設定、推車慢行避免碰撞。
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/10 text-[11px] font-bold text-purple-400 flex items-center gap-1">
+            <span>✓</span> 課堂設備良好維護
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. 世界名人堂先驅科學家快速導覽 (12 位科學家入口) -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-soft space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold flex-shrink-0">
+            🏛️
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900">
+              世界名人堂 · 12 位先驅科學家
+            </h3>
+            <p class="text-slate-500 text-xs sm:text-sm">
+              本學期即將探索的 12 位傳奇大師，點選卡片即可進入專屬旗艦網頁與密室逃脫！
+            </p>
+          </div>
+        </div>
+        <a
+          href="hall-of-fame.html"
+          class="inline-flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700 hover:underline self-start sm:self-auto"
+        >
+          <span>查看全部 12 位科學家完整專區 →</span>
+        </a>
+      </div>
+
+      <!-- 科學家快速卡片網格 (Grid) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        
+        <a href="nobel.html" class="p-3 bg-slate-50 hover:bg-sky-50 rounded-2xl border border-slate-200/80 hover:border-sky-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">💥</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-sky-600 truncate">諾貝爾</div>
+          <div class="text-[10px] text-slate-400 truncate">炸藥之父與和平遺產</div>
+        </a>
+
+        <a href="einstein.html" class="p-3 bg-slate-50 hover:bg-indigo-50 rounded-2xl border border-slate-200/80 hover:border-indigo-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">⚛️</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-indigo-600 truncate">愛因斯坦</div>
+          <div class="text-[10px] text-slate-400 truncate">現代物理學之父</div>
+        </a>
+
+        <a href="curie.html" class="p-3 bg-slate-50 hover:bg-pink-50 rounded-2xl border border-slate-200/80 hover:border-pink-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">✨</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-pink-600 truncate">居禮夫人</div>
+          <div class="text-[10px] text-slate-400 truncate">雙諾貝爾獎傳奇</div>
+        </a>
+
+        <a href="archimedes.html" class="p-3 bg-slate-50 hover:bg-amber-50 rounded-2xl border border-slate-200/80 hover:border-amber-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">👑</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-amber-600 truncate">阿基米德</div>
+          <div class="text-[10px] text-slate-400 truncate">浮力與力學之神</div>
+        </a>
+
+        <a href="galileo.html" class="p-3 bg-slate-50 hover:bg-cyan-50 rounded-2xl border border-slate-200/80 hover:border-cyan-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🔭</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-cyan-600 truncate">伽利略</div>
+          <div class="text-[10px] text-slate-400 truncate">近代實驗物理之父</div>
+        </a>
+
+        <a href="hooke.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-2xl border border-slate-200/80 hover:border-emerald-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🔬</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-emerald-600 truncate">羅伯特·虎克</div>
+          <div class="text-[10px] text-slate-400 truncate">顯微鏡之眼與細胞</div>
+        </a>
+
+        <a href="darwin.html" class="p-3 bg-slate-50 hover:bg-lime-50 rounded-2xl border border-slate-200/80 hover:border-lime-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🐢</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-lime-600 truncate">達爾文</div>
+          <div class="text-[10px] text-slate-400 truncate">物種起源天擇說</div>
+        </a>
+
+        <a href="dna.html" class="p-3 bg-slate-50 hover:bg-teal-50 rounded-2xl border border-slate-200/80 hover:border-teal-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🧬</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-teal-600 truncate">華生與克里克</div>
+          <div class="text-[10px] text-slate-400 truncate">DNA雙螺旋結構</div>
+        </a>
+
+        <a href="wegener.html" class="p-3 bg-slate-50 hover:bg-blue-50 rounded-2xl border border-slate-200/80 hover:border-blue-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🧩</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-blue-600 truncate">韋格納</div>
+          <div class="text-[10px] text-slate-400 truncate">大陸漂移學說</div>
+        </a>
+
+        <a href="hubble.html" class="p-3 bg-slate-50 hover:bg-purple-50 rounded-2xl border border-slate-200/80 hover:border-purple-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🔭</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-purple-600 truncate">哈伯</div>
+          <div class="text-[10px] text-slate-400 truncate">觀測宇宙學之父</div>
+        </a>
+
+        <a href="lin-mari.html" class="p-3 bg-slate-50 hover:bg-rose-50 rounded-2xl border border-slate-200/80 hover:border-rose-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">💉</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-rose-600 truncate">林媽利 醫師</div>
+          <div class="text-[10px] text-slate-400 truncate">台灣輸血醫學之母</div>
+        </a>
+
+        <a href="zhang-heng.html" class="p-3 bg-slate-50 hover:bg-amber-50 rounded-2xl border border-slate-200/80 hover:border-amber-300 text-center space-y-1.5 transition-all group shadow-2xs">
+          <div class="text-2xl">🐲</div>
+          <div class="text-xs font-black text-slate-900 group-hover:text-amber-600 truncate">張衡</div>
+          <div class="text-[10px] text-slate-400 truncate">東漢通才科學大師</div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 頁尾 (Footer) -->
+  <!-- ========================================== -->
+  <footer class="bg-white border-t border-slate-200/80 py-8 mt-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🚀</span>
+        <span>© 2026 我的數位基地 Central Hub · 國中二年級 世界名人堂</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="hover:text-sky-600 transition-colors">基地首頁</a>
+        <span>·</span>
+        <a href="hall-of-fame.html" class="hover:text-sky-600 transition-colors">世界名人堂專區</a>
+        <span>·</span>
+        <a href="https://github.com/hungjuiying0606-dotcom" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 transition-colors">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
