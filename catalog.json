@@ -201,7 +201,26 @@
       "id": "computer",
       "title": "電腦",
       "order": 50,
-      "sites": []
+      "sites": [
+        {
+          "id": "tool-knsh-ebook",
+          "title": "康軒電子書網頁版",
+          "description": "康軒國中自然與各科教師 Web 電子書教學平台（需教師帳號登入）。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 1,
+          "url": "https://webetextbook.knsh.com.tw/"
+        },
+        {
+          "id": "tool-loilonote",
+          "title": "LoiLoNote 數位教學平台",
+          "description": "LoiLoNote 課堂數位互動、任務卡派發、作業繳交與全班發表平台。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 2,
+          "url": "https://loilonote.app/"
+        }
+      ]
     },
     {
       "id": "workshop",
