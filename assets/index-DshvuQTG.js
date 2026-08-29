@@ -68,6 +68,22 @@
           </button>
           
           <div id="grade9-progress-sub" class="nested-subnav is-open space-y-1.5 pl-1 pt-1">
+            <!-- 九年級進度 · 課程介紹直接入口按鈕 -->
+            <button
+              type="button"
+              class="nested-item-btn mb-1.5 bg-amber-50/80 hover:bg-amber-100/90 border border-amber-200 text-amber-950 font-bold"
+              data-embed-title="九年級進度 · 課程介紹及上課規矩"
+              data-embed-icon="📋"
+              data-embed-url="https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/course-intro.html"
+              data-embed-desc="國中三年級自然科課程介紹：45分鐘時間節奏、重要模擬考與段考日程表、段考與平時成績評定與上課生活常規。"
+              title="點擊在右側開啟「九年級進度 · 課程介紹及上課規矩」"
+            >
+              <span class="flex items-center gap-1.5 truncate">
+                <span class="text-[10px] text-amber-800 font-black bg-amber-200/90 border border-amber-300 px-1.5 py-0.5 rounded flex-shrink-0">導引</span>
+                <span class="truncate text-[11.5px] font-bold text-slate-800">📋 課程介紹及上課規矩</span>
+              </span>
+              <span class="text-[10px] text-amber-600 font-mono font-bold flex-shrink-0">→</span>
+            </button>
       `;Object.keys(E).forEach((a,l)=>{const o=E[a],u=l===0;s+=`
           <div class="nested-sub-group">
             <button
