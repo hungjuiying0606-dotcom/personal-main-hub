@@ -192,16 +192,7 @@
       "id": "computer",
       "title": "電腦",
       "order": 50,
-      "sites": [
-        {
-          "id": "voice-cloner-agent",
-          "title": "Agent 代理複製你的聲音",
-          "description": "使用 VoxCPM2 在本機錄製參考聲音並生成語音的 AI Agent 工具包",
-          "status": "source-only",
-          "homepageState": "coming-soon",
-          "order": 10
-        }
-      ]
+      "sites": []
     },
     {
       "id": "workshop",
