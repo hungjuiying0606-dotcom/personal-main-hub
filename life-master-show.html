@@ -1316,6 +1316,9 @@
       const modal = document.getElementById('infoModal');
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname + window.location.search);
+      }
     }
 
     function handleBackdropClick(e) {
@@ -1335,12 +1338,36 @@
       }
     }
 
+    function checkUrlModal() {
+      const hash = (window.location.hash || '').replace('#', '').trim().toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      const unit = (params.get('unit') || hash).toLowerCase();
+      
+      if (unit && modalData[unit]) {
+        openModal(unit);
+      }
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
 
+    // 監聽載入、Hash 變更與父視窗 postMessage
+    window.addEventListener('DOMContentLoaded', checkUrlModal);
+    window.addEventListener('load', checkUrlModal);
+    window.addEventListener('hashchange', checkUrlModal);
+    window.addEventListener('message', (event) => {
+      if (event.data && typeof event.data === 'object') {
+        const key = (event.data.unit || event.data.key || '').toLowerCase();
+        if (key && modalData[key]) {
+          openModal(key);
+        }
+      }
+    });
+
     // Initialize
     applyFilter();
+    checkUrlModal();
   </script>
 </body>
 </html>
