@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-22",
+  "lastUpdated": "2026-08-29",
   "categories": [
     {
       "id": "teaching",
@@ -200,6 +200,40 @@
           "status": "source-only",
           "homepageState": "coming-soon",
           "order": 10
+        }
+      ]
+    },
+    {
+      "id": "workshop",
+      "title": "研習",
+      "order": 80,
+      "sites": [
+        {
+          "id": "workshop-20260829-jian-padlet",
+          "title": "20260829簡子惠 · Padlet 互動討論牆",
+          "description": "簡子惠老師 20260829 AI 融入教學研習 Padlet 互動討論牆與即時共作區。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://padlet.com/azt156/20260829-ai-z14amg9xmuz0p1mj"
+        },
+        {
+          "id": "workshop-20260829-jian-notion",
+          "title": "20260829簡子惠 · Notion 研習講義筆記",
+          "description": "簡子惠老師 20260829 AI 融入教學研習 Notion 課程講義、實戰教材與重點整理。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 20,
+          "url": "https://azt156.notion.site/20260829-AI-3ca9ae758af38008bca0fd341bb26685"
+        },
+        {
+          "id": "workshop-20260829-sanshiba-padlet",
+          "title": "20260829三師爸 · Padlet 互動討論牆",
+          "description": "三師爸 20260829 AI Agent 課堂應用與實戰研習 Padlet 互動討論牆。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 30,
+          "url": "https://padlet.com/mathruffian/20260829-ai-agent-xowg4eol37wu4jml"
         }
       ]
     },
