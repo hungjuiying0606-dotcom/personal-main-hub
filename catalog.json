@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-29",
+  "lastUpdated": "2026-08-31",
   "categories": [
     {
       "id": "teaching",
@@ -288,6 +288,15 @@
       "title": "其他",
       "order": 90,
       "sites": [
+        {
+          "id": "laboratory",
+          "title": "實驗室",
+          "description": "化學器材知識對決遊戲：透過看圖辨識、器材功能與實驗安全判斷進行對戰，支援同機雙人與單人挑戰電腦。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 5,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/laboratory/"
+        },
         {
           "id": "master-teachers-hub",
           "title": "教育名師數位教學資源導航",
