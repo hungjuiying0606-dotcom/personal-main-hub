@@ -669,9 +669,15 @@
       const startPx = 90, endPx = cw - 90;
       const runnerPx = startPx + progress * (endPx - startPx);
 
-      // Runner Avatar 🏃
-      ctx.font = '40px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🏃', runnerPx, trackY + 14);
+      // Runner Avatar 🏃 facing forward/right
+      ctx.save();
+      ctx.translate(runnerPx, trackY + 14);
+      ctx.scale(-1, 1); // Flip to face right towards movement direction
+      ctx.font = '40px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('🏃', 0, 0);
+      ctx.restore();
 
       // ==========================================
       // 2. Vector Arrows HUD Floating Above Runner (y: 20 to 60)

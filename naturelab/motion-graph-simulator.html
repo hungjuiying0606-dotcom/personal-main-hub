@@ -936,10 +936,18 @@
         trackCtx.fillStyle = '#dc2626';
         trackCtx.fillText(`小軒 (+4m/s)`, pxX - 20, cy - 42);
       } else {
-        // Draw Single Runner
+        // Draw Single Runner facing movement direction
         const px = toTrackPx(m.x);
+        trackCtx.save();
+        trackCtx.translate(px, cy - 10);
+        if (m.v >= 0) {
+          trackCtx.scale(-1, 1); // Flip to face right
+        }
         trackCtx.font = '30px sans-serif';
-        trackCtx.fillText(m.v < 0 ? '🏃‍♂️' : '🏃', px - 15, cy - 10);
+        trackCtx.textAlign = 'center';
+        trackCtx.textBaseline = 'alphabetic';
+        trackCtx.fillText('🏃', 0, 0);
+        trackCtx.restore();
 
         // Position bubble
         trackCtx.fillStyle = '#1e3a8a';

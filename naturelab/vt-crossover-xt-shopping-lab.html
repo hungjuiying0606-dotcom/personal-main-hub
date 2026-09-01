@@ -745,9 +745,18 @@
       else if (curT <= 12) runnerPosPx = 140 + ((curT - 8) / 4.0) * (cw - 240);
       else runnerPosPx = (cw - 100) - ((curT - 12) / 4.0) * (cw - 200);
 
-      // Runner Avatar 🏃
-      ctx.font = '32px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🏃', runnerPosPx, trackY + 8);
+      // Runner Avatar 🏃 facing movement direction
+      const movingRight = (curT <= 4) || (curT > 8 && curT <= 12);
+      ctx.save();
+      ctx.translate(runnerPosPx, trackY + 8);
+      if (movingRight) {
+        ctx.scale(-1, 1); // Flip to face right
+      }
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('🏃', 0, 0);
+      ctx.restore();
 
       // Bottom v-t Graph (y: 180 to 410)
       const gx1 = 80, gx2 = cw - 70;

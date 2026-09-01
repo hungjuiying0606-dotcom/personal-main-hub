@@ -728,8 +728,24 @@
     let startPos = 0;
     let currentPos = 0;
     let pathLength = 0;
+    let runnerFacing = 1; // 1: facing right (positive direction), -1: facing left (negative direction)
     let historySteps = [];
     let pathHistory = [{ pos: 0, level: 0 }];
+
+    function drawRunnerAvatar(ctx, x, y, facing) {
+      ctx.save();
+      ctx.translate(x, y);
+      // Unicode 🏃 emoji naturally faces left in standard fonts.
+      // When moving right (1), flip horizontally using scale(-1, 1).
+      if (facing === 1 || facing === undefined) {
+        ctx.scale(-1, 1);
+      }
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('🏃', 0, 0);
+      ctx.restore();
+    }
 
     // Tab Switching
     function switchTab(tabId) {
@@ -764,6 +780,12 @@
       const stepDist = Math.abs(target - prev);
       const stepDisp = target - prev;
       
+      if (target > prev) {
+        runnerFacing = 1;
+      } else if (target < prev) {
+        runnerFacing = -1;
+      }
+
       currentPos = target;
       pathLength += stepDist;
 
@@ -789,6 +811,7 @@
       startPos = 0;
       currentPos = 0;
       pathLength = 0;
+      runnerFacing = 1;
       historySteps = [];
       pathHistory = [{ pos: 0, level: 0 }];
       updateDashboard();
@@ -946,9 +969,8 @@
       sCtx.font = 'bold 12px Noto Sans TC';
       sCtx.fillText('起點', startX - 12, cy - 14);
 
-      // 5. Draw Runner Avatar at Current Pos
-      sCtx.font = '32px sans-serif';
-      sCtx.fillText('🏃', endX - 16, cy - 10);
+      // 5. Draw Runner Avatar at Current Pos facing direction of motion
+      drawRunnerAvatar(sCtx, endX, cy - 10, runnerFacing);
     }
 
     // Click on canvas to move
@@ -1066,11 +1088,13 @@
     let currentQuestId = 1;
     let questPos = 0;
     let questPath = 0;
+    let questFacing = 1;
 
     function loadQuest(id) {
       currentQuestId = id;
       questPos = 0;
       questPath = 0;
+      questFacing = 1;
       const q = quests[id];
       document.getElementById('questTitle').innerText = q.title;
       document.getElementById('questDesc').innerText = q.desc;
@@ -1082,6 +1106,8 @@
     }
 
     function questMove(delta) {
+      if (delta > 0) questFacing = 1;
+      else if (delta < 0) questFacing = -1;
       questPos = Math.max(-10, Math.min(10, questPos + delta));
       questPath += Math.abs(delta);
       checkQuestProgress();
@@ -1129,8 +1155,7 @@
       }
 
       const qx = posToX(questPos, cw);
-      ctx.font = '30px sans-serif';
-      ctx.fillText('🏃', qx - 15, cy - 8);
+      drawRunnerAvatar(ctx, qx, cy - 8, questFacing);
     }
 
     // Startup

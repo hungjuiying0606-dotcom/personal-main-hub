@@ -718,12 +718,20 @@
       ctx.textAlign = 'left'; ctx.fillText('⬅️ 南方', 20, 88);
       ctx.textAlign = 'right'; ctx.fillText('北方 (正向) ➡️', cw - 15, 88);
 
-      // Draw Jordan Runner Avatar
+      // Draw Jordan Runner Avatar facing movement direction
       const curX = getPosAtT(simMinutes);
       const runnerPx = toTrackPx(curX);
+      const { dir } = getDirAndTurns(simMinutes);
+      ctx.save();
+      ctx.translate(runnerPx, trackY - 12);
+      if (dir === '向北 (正向)') {
+        ctx.scale(-1, 1); // Flip to face north/right
+      }
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('🏃', runnerPx, trackY - 12);
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('🏃', 0, 0);
+      ctx.restore();
 
       // Draw Turn Indicator Spotlight above runner when turning
       if (Math.abs(simMinutes - 2) < 0.1 || Math.abs(simMinutes - 4) < 0.1 || Math.abs(simMinutes - 5) < 0.1) {

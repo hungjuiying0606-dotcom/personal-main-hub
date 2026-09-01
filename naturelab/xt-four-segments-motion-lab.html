@@ -712,11 +712,18 @@
         ctx.fillText(`${xM}m`, px, trackY + 26);
       });
 
-      // Runner Avatar
+      // Runner Avatar facing movement direction
       const curPx = toTrackPx(m.x);
+      ctx.save();
+      ctx.translate(curPx, trackY - 14);
+      if (m.v > 0) {
+        ctx.scale(-1, 1); // Flip to face positive/right
+      }
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(m.v === 0 ? '🧍‍♂️' : (m.v < 0 ? '🏃' : '🏃‍♂️'), curPx, trackY - 14);
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(m.v === 0 ? '🧍‍♂️' : '🏃', 0, 0);
+      ctx.restore();
 
       // Status tag above runner
       ctx.fillStyle = m.v > 0 ? '#10b981' : (m.v === 0 ? '#fde047' : '#ef4444');
