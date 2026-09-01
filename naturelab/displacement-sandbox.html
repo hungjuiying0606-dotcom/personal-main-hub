@@ -611,7 +611,7 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title">
-            <span>📖 課本 P.11 例題 1-2：數線折返跑逐步解析</span>
+            <span>📖 課本 P.11 例題 1-2：位置、位移與路徑長</span>
           </div>
           <button class="btn btn-primary" onclick="playExampleAnimation()">
             ▶ 逐步播放例題動畫
@@ -619,22 +619,22 @@
         </div>
 
         <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem;">
-          <strong>情境題目：</strong>如右圖所示，阿康在數線上運動，由原點 \( 0 \) 出發，先向右走到 \( +2\text{ m} \)，再折返向左走到 \( -2\text{ m} \)，最後向右走到 \( +2\text{ m} \)。
+          <strong>情境題目：</strong>阿康上體育課時要測驗折返跑，跑步路線如下圖所示，他沿一直線從起點跑至大樹下，再折返回到起點，總共來回兩次，請問：
         </p>
 
         <!-- Animation Canvas for Example 1-2 -->
         <div class="stage-box">
-          <canvas id="exampleCanvas" width="900" height="240"></canvas>
+          <canvas id="exampleCanvas" width="900" height="280"></canvas>
         </div>
 
         <!-- 3 Questions of Example 1-2 -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
           <div style="background: #f8fbfe; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 1.2rem;">
             <div style="font-size: 0.8rem; font-weight: 800; color: var(--primary-light); margin-bottom: 0.3rem;">第 (1) 小題</div>
-            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程的起點與終點位置？</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">起點：\( x_1 = 0\text{ m} \)<br>終點：\( x_2 = +2\text{ m} \)</p>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">大樹的位置坐標為何？</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">起點：\( 0\text{ m} \)<br>大樹：\( +10\text{ m} \)</p>
             <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--success-dark);">
-              ✅ 終點位置坐標為 +2 m
+              ✅ 大樹的位置坐標為 +10 m
             </div>
           </div>
 
@@ -642,10 +642,10 @@
             <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-disp); margin-bottom: 0.3rem;">第 (2) 小題</div>
             <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程的總位移 \( \Delta x \)？</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-              \( \Delta x = x_2 - x_1 = (+2) - 0 = +2\text{ m} \)
+              \( \Delta x = x_2 - x_1 = 0 - 0 = 0\text{ m} \)
             </p>
             <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--accent-disp);">
-              ✅ 全程位移為 +2 m（向右 2 公尺）
+              ✅ 全程位移為 0 m（回到起點）
             </div>
           </div>
 
@@ -653,11 +653,11 @@
             <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-path-dark); margin-bottom: 0.3rem;">第 (3) 小題</div>
             <h4 style="color: var(--primary); margin-bottom: 0.5rem;">全程所走過的路徑長 \( S \)？</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-              \( S = |0 \rightarrow 2| + |2 \rightarrow -2| + |-2 \rightarrow 2| \)<br>
-              \( S = 2 + 4 + 4 = 10\text{ m} \)
+              \( S = |0 \rightarrow 10| + |10 \rightarrow 0| + |0 \rightarrow 10| + |10 \rightarrow 0| \)<br>
+              \( S = 10 + 10 + 10 + 10 = 40\text{ m} \)
             </p>
             <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: var(--accent-path-dark);">
-              ✅ 全程路徑長為 10 m
+              ✅ 全程路徑長為 40 m
             </div>
           </div>
         </div>
@@ -962,87 +962,95 @@
     // Tab 2: Example 1-2 Animation Loop
     const exCanvas = document.getElementById('exampleCanvas');
     const exCtx = exCanvas.getContext('2d');
-    let exStep = 0;
     const exStages = [
-      { from: 0, to: 2, label: '第 1 階段：從 0 向右走到 +2m' },
-      { from: 2, to: -2, label: '第 2 階段：從 +2 向左折返走到 -2m' },
-      { from: -2, to: 2, label: '第 3 階段：從 -2 再次向右走到 +2m' }
+      { from: 0, to: 10, label: '① 從起點跑到大樹：+10 m', color: '#3b82f6' },
+      { from: 10, to: 0, label: '② 從大樹折返回起點：-10 m', color: '#f59e0b' },
+      { from: 0, to: 10, label: '③ 再從起點跑到大樹：+10 m', color: '#10b981' },
+      { from: 10, to: 0, label: '④ 再從大樹折返回起點：-10 m', color: '#8b5cf6' }
     ];
 
     function drawExampleScene() {
       exCtx.clearRect(0, 0, exCanvas.width, exCanvas.height);
       const cw = exCanvas.width;
-      const cy = 130;
+      const cy = 95;
+      const axisLeft = 70;
+      const axisRight = cw - 70;
+      const toExampleX = (position) => axisLeft + ((position + 2) / 12) * (axisRight - axisLeft);
 
-      // Draw axis from -4 to +4
+      // Number line from -2 m to +10 m, matching the textbook figure.
       exCtx.beginPath();
-      exCtx.moveTo(60, cy);
-      exCtx.lineTo(cw - 60, cy);
+      exCtx.moveTo(axisLeft, cy);
+      exCtx.lineTo(axisRight + 18, cy);
       exCtx.strokeStyle = '#1d3557';
       exCtx.lineWidth = 3;
       exCtx.stroke();
+      exCtx.beginPath();
+      exCtx.moveTo(axisRight + 18, cy);
+      exCtx.lineTo(axisRight + 7, cy - 6);
+      exCtx.lineTo(axisRight + 7, cy + 6);
+      exCtx.closePath();
+      exCtx.fillStyle = '#1d3557';
+      exCtx.fill();
 
-      for (let p = -4; p <= 4; p++) {
-        const x = 100 + ((p + 4) / 8) * (cw - 200);
+      [-2, 0, 2, 4, 6, 8, 10].forEach((position) => {
+        const x = toExampleX(position);
         exCtx.beginPath();
         exCtx.moveTo(x, cy - 8);
         exCtx.lineTo(x, cy + 8);
-        exCtx.strokeStyle = p === 0 ? '#e63946' : '#94a3b8';
-        exCtx.lineWidth = p === 0 ? 3 : 1.5;
+        exCtx.strokeStyle = position === 0 ? '#e63946' : '#94a3b8';
+        exCtx.lineWidth = position === 0 ? 3 : 1.5;
         exCtx.stroke();
         exCtx.font = 'bold 14px Outfit';
-        exCtx.fillStyle = p === 0 ? '#e63946' : '#64748b';
-        exCtx.fillText(p > 0 ? '+' + p : '' + p, x - 8, cy + 28);
+        exCtx.fillStyle = position === 0 ? '#e63946' : '#64748b';
+        const tickLabel = position > 0 ? `+${position}` : `${position}`;
+        exCtx.fillText(tickLabel, x - 9, cy + 27);
+      });
+
+      const x0 = toExampleX(0);
+      const xTree = toExampleX(10);
+
+      exCtx.font = 'bold 14px Noto Sans TC';
+      exCtx.fillStyle = '#e63946';
+      exCtx.fillText('起點 0 m', x0 - 28, cy - 48);
+      exCtx.font = '30px sans-serif';
+      exCtx.fillText('🚩', x0 - 15, cy - 12);
+      exCtx.font = 'bold 14px Noto Sans TC';
+      exCtx.fillStyle = '#166534';
+      exCtx.fillText('大樹 +10 m', xTree - 48, cy - 48);
+      exCtx.font = '34px sans-serif';
+      exCtx.fillText('🌳', xTree - 20, cy - 10);
+
+      function drawRouteArrow(stage, y) {
+        const fromX = toExampleX(stage.from);
+        const toX = toExampleX(stage.to);
+        const direction = Math.sign(toX - fromX);
+
+        exCtx.beginPath();
+        exCtx.moveTo(fromX, y);
+        exCtx.lineTo(toX, y);
+        exCtx.strokeStyle = stage.color;
+        exCtx.lineWidth = 3;
+        exCtx.stroke();
+
+        exCtx.beginPath();
+        exCtx.moveTo(toX, y);
+        exCtx.lineTo(toX - direction * 10, y - 6);
+        exCtx.lineTo(toX - direction * 10, y + 6);
+        exCtx.closePath();
+        exCtx.fillStyle = stage.color;
+        exCtx.fill();
+
+        exCtx.font = 'bold 12px Noto Sans TC';
+        exCtx.textAlign = 'center';
+        exCtx.fillText(stage.label, (fromX + toX) / 2, y - 7);
       }
 
-      // Draw Trajectories for Example 1-2
-      const x0 = 100 + (4 / 8) * (cw - 200);
-      const xP2 = 100 + (6 / 8) * (cw - 200);
-      const xN2 = 100 + (2 / 8) * (cw - 200);
-
-      // Track 1: 0 -> +2
-      exCtx.beginPath();
-      exCtx.moveTo(x0, cy - 10);
-      exCtx.lineTo(xP2, cy - 10);
-      exCtx.strokeStyle = '#3b82f6';
-      exCtx.lineWidth = 3;
-      exCtx.stroke();
-      exCtx.fillStyle = '#3b82f6';
-      exCtx.font = 'bold 12px Noto Sans TC';
-      exCtx.fillText('① +2m', (x0 + xP2) / 2 - 15, cy - 18);
-
-      // Track 2: +2 -> -2
-      exCtx.beginPath();
-      exCtx.moveTo(xP2, cy - 35);
-      exCtx.lineTo(xN2, cy - 35);
-      exCtx.strokeStyle = '#f59e0b';
-      exCtx.lineWidth = 3;
-      exCtx.stroke();
-      exCtx.fillStyle = '#f59e0b';
-      exCtx.fillText('② -4m', (xP2 + xN2) / 2 - 15, cy - 42);
-
-      // Track 3: -2 -> +2
-      exCtx.beginPath();
-      exCtx.moveTo(xN2, cy - 60);
-      exCtx.lineTo(xP2, cy - 60);
-      exCtx.strokeStyle = '#10b981';
-      exCtx.lineWidth = 3;
-      exCtx.stroke();
-      exCtx.fillStyle = '#10b981';
-      exCtx.fillText('③ +4m', (xP2 + xN2) / 2 - 15, cy - 68);
-
-      // Overall Displacement Arrow (0 -> +2)
-      exCtx.beginPath();
-      exCtx.moveTo(x0, cy + 60);
-      exCtx.lineTo(xP2, cy + 60);
-      exCtx.strokeStyle = '#e63946';
-      exCtx.lineWidth = 4;
-      exCtx.stroke();
+      exStages.forEach((stage, index) => drawRouteArrow(stage, cy + 50 + index * 31));
+      exCtx.textAlign = 'center';
+      exCtx.font = 'bold 15px Noto Sans TC';
       exCtx.fillStyle = '#e63946';
-      exCtx.beginPath();
-      exCtx.moveTo(xP2, cy + 60); exCtx.lineTo(xP2 - 10, cy + 54); exCtx.lineTo(xP2 - 10, cy + 66); exCtx.fill();
-      exCtx.font = 'bold 14px Noto Sans TC';
-      exCtx.fillText('全程總位移 Δx = +2 m (向右 2m)', (x0 + xP2) / 2 - 80, cy + 85);
+      exCtx.fillText('全程總位移 Δx = 0 m（終點回到起點）', cw / 2, cy + 174);
+      exCtx.textAlign = 'start';
     }
 
     function playExampleAnimation() {
