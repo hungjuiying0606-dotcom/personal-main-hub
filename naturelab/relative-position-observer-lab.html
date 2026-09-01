@@ -1,759 +1,654 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 三人數線：觀測者（基準點）動態切換器 (習作 P.3 第4題)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <title>三人數線：位置敘述判讀器｜課本配套第 4 題</title>
   <style>
     :root {
-      --primary: #0284c7;       /* Ocean Blue */
-      --primary-dark: #0369a1;
-      --shuo: #f59e0b;          /* Xiao Shuo (Orange) */
-      --xiong: #10b981;         /* Xiao Xiong (Green) */
-      --li: #ec4899;            /* Xiao Li (Pink) */
-      --bg: #f0f7ff;
-      --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #fdf4ff 45%, #f0fdf4 100%);
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+      --blue-900: #0f3f64;
+      --blue-700: #087eb8;
+      --blue-100: #e9f6ff;
+      --ink: #14213d;
+      --muted: #61728a;
+      --line: #d7e4ed;
+      --paper: #ffffff;
+      --bg: #f4f8fb;
+      --correct: #168255;
+      --correct-bg: #eaf8f1;
+      --wrong: #c8465b;
+      --wrong-bg: #fff0f2;
+      --shadow: 0 14px 38px rgba(32, 77, 105, 0.12);
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(82, 190, 223, 0.16), transparent 26rem),
+        var(--bg);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.65;
     }
 
-    header {
-      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
-      color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
+    button {
+      font: inherit;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
+    .hero {
+      padding: 26px clamp(20px, 4vw, 52px);
+      color: #fff;
+      background: linear-gradient(135deg, #087eb8, #0b92c8);
+    }
+
+    .source-tag {
+      display: inline-flex;
+      gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      padding: 5px 12px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.88rem;
+      font-weight: 800;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      letter-spacing: 0.02em;
     }
 
-    .badge {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
-      border-radius: 99px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .hero p {
+      max-width: 880px;
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 650;
     }
 
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
+      width: min(1180px, calc(100% - 30px));
+      margin: 24px auto 38px;
     }
 
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--bg);
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+    .layout {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+      gap: 22px;
+      align-items: start;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Number Line Canvas Container */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
+    .card {
       overflow: hidden;
-      margin-bottom: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
     }
 
-    .stage-hud {
-      background: rgba(15, 23, 42, 0.85);
-      border-bottom: 1px solid #334155;
-      padding: 0.45rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .question-card {
+      padding: clamp(20px, 3vw, 32px);
     }
 
-    canvas.stage-canvas {
+    .question-card h2 {
+      margin: 0;
+      font-size: clamp(1.12rem, 2.2vw, 1.45rem);
+      line-height: 1.75;
+    }
+
+    .question-number {
+      color: var(--blue-700);
+      font-size: 1.25em;
+      font-weight: 900;
+    }
+
+    .number-line-wrap {
+      margin: 22px 0 16px;
+      padding: 8px;
+      border: 1px solid #cfe1ec;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fbfdff, #eef7fc);
+    }
+
+    .number-line {
       display: block;
       width: 100%;
-      height: 240px;
+      height: auto;
+      min-height: 210px;
     }
 
-    /* Observer Selector Bar */
-    .observer-bar {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
+    .axis {
+      stroke: #29394d;
+      stroke-width: 3;
     }
 
-    .observer-btn {
-      padding: 0.5rem 1rem;
-      border-radius: 99px;
-      border: 1.5px solid var(--border);
-      background: #f8fafc;
-      font-size: 0.85rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s ease;
-      font-family: inherit;
+    .tick {
+      stroke: #29394d;
+      stroke-width: 2;
     }
 
-    .observer-btn:hover {
-      background: #eff6ff;
-      border-color: var(--primary);
+    .point {
+      fill: var(--blue-700);
+      stroke: #fff;
+      stroke-width: 5;
     }
 
-    .observer-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary-dark);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Person Position Adjusters */
-    .slider-box {
-      background: #f8fafc;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .slider-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .slider-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
+    .person-label {
+      fill: var(--ink);
+      font-size: 23px;
       font-weight: 800;
     }
 
-    .slider-head.shuo { color: #d97706; }
-    .slider-head.xiong { color: #059669; }
-    .slider-head.li { color: #db2777; }
-
-    input[type="range"] {
-      width: 100%;
-      height: 6px;
-      border-radius: 4px;
-      background: #cbd5e1;
-      outline: none;
-      cursor: pointer;
-    }
-
-    input[type="range"].shuo { accent-color: var(--shuo); }
-    input[type="range"].xiong { accent-color: var(--xiong); }
-    input[type="range"].li { accent-color: var(--li); }
-
-    /* Right Column: Three Elements Cards */
-    .elements-card {
-      background: #eff6ff;
-      border: 1.5px solid #bfdbfe;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .elements-title {
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: #1e40af;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .element-item {
-      background: white;
-      border: 1px solid #dbeafe;
-      border-radius: var(--radius-sm);
-      padding: 0.6rem 0.8rem;
-      font-size: 0.85rem;
-      margin-bottom: 0.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .element-item strong {
-      color: #1e3a8a;
-    }
-
-    .statement-banner {
-      background: #ffffff;
-      border: 2px solid var(--primary);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      font-size: 1.05rem;
-      font-weight: 900;
-      color: var(--primary-dark);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.5rem;
-    }
-
-    .quiz-btn {
-      padding: 0.5rem 0.8rem;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+    .coord-label,
+    .direction-label {
+      fill: #40546d;
+      font-size: 20px;
       font-weight: 700;
+    }
+
+    .relation-line {
+      stroke-width: 7;
+      stroke-linecap: round;
+      transition: all 180ms ease;
+    }
+
+    .relation-label {
+      font-size: 18px;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .fact {
+      padding: 10px 8px;
+      border-radius: 13px;
+      background: var(--blue-100);
+      color: var(--blue-900);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .fact strong {
+      display: block;
+      color: var(--blue-700);
+      font-size: 1.2rem;
+    }
+
+    .answer-card {
+      padding: clamp(20px, 3vw, 28px);
+    }
+
+    .answer-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+    }
+
+    .answers {
+      display: grid;
+      gap: 10px;
+    }
+
+    .answer {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid #d8e4ec;
+      border-radius: 15px;
+      color: var(--ink);
+      background: #fff;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
     }
 
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .answer:hover,
+    .answer:focus-visible {
+      border-color: var(--blue-700);
+      outline: none;
+      transform: translateY(-1px);
+    }
 
-    .quiz-feedback {
-      font-size: 0.85rem;
+    .answer .letter {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 11px;
+      background: #eef5f9;
+      color: var(--blue-900);
+      font-weight: 900;
+    }
+
+    .answer.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+
+    .answer.correct .letter {
+      color: #fff;
+      background: var(--correct);
+    }
+
+    .answer.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+
+    .answer.wrong .letter {
+      color: #fff;
+      background: var(--wrong);
+    }
+
+    .feedback {
+      min-height: 136px;
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 2px dashed #b9ceda;
+      border-radius: 16px;
+      background: #f8fbfd;
+    }
+
+    .feedback.correct {
+      border-color: #69b996;
+      background: var(--correct-bg);
+    }
+
+    .feedback.wrong {
+      border-color: #e8a6b2;
+      background: var(--wrong-bg);
+    }
+
+    .feedback h3 {
+      margin: 0 0 5px;
+      font-size: 1.08rem;
+    }
+
+    .feedback p {
+      margin: 0;
+      color: #3c4e64;
+    }
+
+    .reasoning {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .reasoning div {
+      padding: 9px 7px;
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.74);
+      text-align: center;
+    }
+
+    .reasoning span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
       font-weight: 700;
-      margin-top: 0.5rem;
-      display: none;
     }
 
-    .quiz-feedback.show { display: block; }
+    .reasoning strong {
+      display: block;
+      color: var(--blue-900);
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+
+    .reset {
+      padding: 9px 16px;
+      border: 1px solid #b9ccd8;
+      border-radius: 999px;
+      color: var(--blue-900);
+      background: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .reset:hover,
+    .reset:focus-visible {
+      border-color: var(--blue-700);
+      outline: 3px solid rgba(8, 126, 184, 0.18);
+    }
+
+    .source-answer {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 5px solid var(--blue-700);
+      border-radius: 14px;
+      color: #263d53;
+      background: #eef7fc;
+    }
+
+    .source-answer strong {
+      color: var(--blue-900);
+    }
 
     footer {
-      background: #e2e8f0;
+      padding: 0 16px 28px;
+      color: #66788a;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .number-line {
+        min-height: 180px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding: 22px 18px;
+      }
+
+      main {
+        width: min(100% - 20px, 1180px);
+        margin-top: 14px;
+      }
+
+      .question-card,
+      .answer-card {
+        padding: 17px;
+      }
+
+      .number-line-wrap {
+        margin-top: 16px;
+        padding: 0;
+      }
+
+      .number-line {
+        min-height: 150px;
+      }
+
+      .person-label {
+        font-size: 20px;
+      }
+
+      .coord-label,
+      .direction-label {
+        font-size: 18px;
+      }
+
+      .facts,
+      .reasoning {
+        grid-template-columns: 1fr;
+      }
+
+      .fact strong {
+        display: inline;
+        margin-left: 6px;
+      }
+
+      .answer {
+        grid-template-columns: 40px 1fr;
+        padding: 11px 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
-  <script>
-    window.triggerMathRender = function() {
-      if (typeof renderMathInElement === 'function') {
-        renderMathInElement(document.body, {
-          delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '\\(', right: '\\)', display: false},
-            {left: '$', right: '$', display: false}
-          ],
-          throwOnError: false
-        });
-      }
-    };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
 </head>
 <body>
-
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🎯 三人數線：觀測者（基準點）動態切換器</span>
-          <span class="badge">國中自然 3上 · 習作 P.3 第4題</span>
-        </h1>
-        <p>位置描述三要素（基準點、方向、距離）；一鍵切換視角，破解「誰在誰的哪一方」語意混淆</p>
-      </div>
-    </div>
+  <header class="hero">
+    <div class="source-tag">📖 課本配套 · 第 4 題</div>
+    <h1>三人數線：位置敘述判讀器</h1>
+    <p>固定小碩 -2 m、小雄 0 m、小麗 +3 m，依數線判讀東、西方向；沒有面向資訊時，不能判定前、後方。</p>
   </header>
 
-  <!-- Main Content -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Number Line & Observers -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>📏 一維數線座標（向東為正、向西為負）</span>
-          </div>
-          <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="resetTextbookPositions()">
-            📖 恢復習作原題座標 (-2, +1, +3)
+    <div class="layout">
+      <section class="card question-card" aria-labelledby="question-title">
+        <h2 id="question-title">
+          <span class="question-number">4.</span>
+          小麗、小碩、小雄三個人的位置，如右圖所示。關於他們位置的敘述，下列何者正確？
+        </h2>
+
+        <div class="number-line-wrap">
+          <svg class="number-line" viewBox="0 0 720 260" role="img" aria-labelledby="line-title line-desc">
+            <title id="line-title">小碩、小雄與小麗的位置數線</title>
+            <desc id="line-desc">數線向右為東方。小碩在負二公尺，小雄在零公尺，小麗在正三公尺。</desc>
+            <defs>
+              <marker id="axis-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#29394d"></path>
+              </marker>
+              <marker id="arrow-correct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#168255"></path>
+              </marker>
+              <marker id="arrow-wrong" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8465b"></path>
+              </marker>
+            </defs>
+
+            <text x="48" y="42" class="direction-label" text-anchor="middle">北</text>
+            <line x1="48" y1="106" x2="48" y2="55" class="axis" marker-end="url(#axis-arrow)"></line>
+            <line x1="70" y1="166" x2="670" y2="166" class="axis" marker-end="url(#axis-arrow)"></line>
+            <text x="52" y="173" class="direction-label" text-anchor="end">西</text>
+            <text x="690" y="173" class="direction-label">東</text>
+
+            <g aria-hidden="true">
+              <line x1="90" y1="153" x2="90" y2="179" class="tick"></line>
+              <line x1="180" y1="153" x2="180" y2="179" class="tick"></line>
+              <line x1="270" y1="153" x2="270" y2="179" class="tick"></line>
+              <line x1="360" y1="153" x2="360" y2="179" class="tick"></line>
+              <line x1="450" y1="153" x2="450" y2="179" class="tick"></line>
+              <line x1="540" y1="153" x2="540" y2="179" class="tick"></line>
+              <line x1="630" y1="153" x2="630" y2="179" class="tick"></line>
+
+              <text x="90" y="207" class="coord-label" text-anchor="middle">-3</text>
+              <text x="180" y="207" class="coord-label" text-anchor="middle">-2</text>
+              <text x="270" y="207" class="coord-label" text-anchor="middle">-1</text>
+              <text x="360" y="207" class="coord-label" text-anchor="middle">0</text>
+              <text x="450" y="207" class="coord-label" text-anchor="middle">+1</text>
+              <text x="540" y="207" class="coord-label" text-anchor="middle">+2</text>
+              <text x="630" y="207" class="coord-label" text-anchor="middle">+3</text>
+              <text x="688" y="207" class="coord-label">(m)</text>
+            </g>
+
+            <text x="180" y="138" class="person-label" text-anchor="middle">小碩</text>
+            <text x="360" y="138" class="person-label" text-anchor="middle">小雄</text>
+            <text x="630" y="138" class="person-label" text-anchor="middle">小麗</text>
+            <circle cx="180" cy="166" r="8" class="point"></circle>
+            <circle cx="360" cy="166" r="8" class="point"></circle>
+            <circle cx="630" cy="166" r="8" class="point"></circle>
+
+            <line id="relation-line" x1="180" y1="82" x2="630" y2="82" class="relation-line" visibility="hidden"></line>
+            <text id="relation-label" x="405" y="62" class="relation-label" visibility="hidden"></text>
+          </svg>
+        </div>
+
+        <div class="facts" aria-label="三人的固定位置">
+          <div class="fact">小碩<strong>-2 m</strong></div>
+          <div class="fact">小雄<strong>0 m</strong></div>
+          <div class="fact">小麗<strong>+3 m</strong></div>
+        </div>
+      </section>
+
+      <section class="card answer-card" aria-labelledby="answer-title">
+        <h2 id="answer-title">請選出正確敘述</h2>
+        <div class="answers">
+          <button class="answer" type="button" data-choice="A" aria-pressed="false">
+            <span class="letter">(A)</span>
+            <span>小麗在小雄西方3公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="B" aria-pressed="false">
+            <span class="letter">(B)</span>
+            <span>小麗在小雄前方3公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="C" aria-pressed="false">
+            <span class="letter">(C)</span>
+            <span>小麗在小碩東方5公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="D" aria-pressed="false">
+            <span class="letter">(D)</span>
+            <span>小雄在小麗後方3公尺處。</span>
           </button>
         </div>
 
-        <!-- Observer Buttons -->
-        <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 0.4rem;">
-          🎯 請選擇「觀測者（基準點）」：
-        </div>
-        <div class="observer-bar">
-          <button class="observer-btn" onclick="setObserver('origin', this)">
-            🏛️ 以「原點 0」為基準
-          </button>
-          <button class="observer-btn active" onclick="setObserver('shuo', this)">
-            🎯 以「小碩 (-2m)」為基準（習作C選項）
-          </button>
-          <button class="observer-btn" onclick="setObserver('xiong', this)">
-            🎯 以「小雄 (+1m)」為基準
-          </button>
-          <button class="observer-btn" onclick="setObserver('li', this)">
-            🎯 以「小麗 (+3m)」為基準
-          </button>
-        </div>
-
-        <!-- Canvas -->
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>目前觀測基準點：<strong id="hudObserverName" style="color: #38bdf8;">小碩 (x = -2m)</strong></span>
-            <span>數線方向：<strong style="color: #fbbf24;">向東為正 (+) · 向西為負 (-)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="680" height="240"></canvas>
-        </div>
-
-        <!-- Drag/Slider Coordinate Adjuster -->
-        <div class="slider-box">
-          <div class="slider-row">
-            <div class="slider-head shuo">
-              <span>👦 小碩位置座標</span>
-              <span id="labelShuo">-2.0 m</span>
-            </div>
-            <input type="range" class="shuo" id="sliderShuo" min="-5" max="5" step="0.5" value="-2" oninput="onCoordChange()">
-          </div>
-
-          <div class="slider-row">
-            <div class="slider-head xiong">
-              <span>🧒 小雄位置座標</span>
-              <span id="labelXiong">+1.0 m</span>
-            </div>
-            <input type="range" class="xiong" id="sliderXiong" min="-5" max="5" step="0.5" value="1" oninput="onCoordChange()">
-          </div>
-
-          <div class="slider-row">
-            <div class="slider-head li">
-              <span>👧 小麗位置座標</span>
-              <span id="labelLi">+3.0 m</span>
-            </div>
-            <input type="range" class="li" id="sliderLi" min="-5" max="5" step="0.5" value="3" oninput="onCoordChange()">
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Relative Position Breakdowns & Quiz -->
-      <div>
-        
-        <!-- Statement Banner -->
-        <div class="statement-banner" id="statementBanner">
-          小麗 在 小碩 的 東方 5 公尺 處
-        </div>
-
-        <!-- 3 Elements Breakdown -->
-        <div class="elements-card">
-          <div class="elements-title">
-            <span>📍 描述位置的三要素拆解：</span>
-          </div>
-
-          <div class="element-item">
-            <span>1. 基準點（參考點）：</span>
-            <strong id="elemRef">小碩 (原點西方 2 公尺)</strong>
-          </div>
-          <div class="element-item">
-            <span>2. 相對方向：</span>
-            <strong id="elemDir" style="color: #0284c7;">東方 (正方向)</strong>
-          </div>
-          <div class="element-item">
-            <span>3. 相對距離：</span>
-            <strong id="elemDist" style="color: #db2777;">5.0 公尺 (| (+3) - (-2) |)</strong>
+        <div id="feedback" class="feedback" role="status" aria-live="polite">
+          <h3 id="feedback-title">先讀數線，再選答案</h3>
+          <p id="feedback-text">向右是東方，向左是西方；題圖沒有提供任何人的面向。</p>
+          <div class="reasoning" aria-label="位置判讀">
+            <div><span>參考人物</span><strong id="reference-value">—</strong></div>
+            <div><span>相對方向</span><strong id="direction-value">—</strong></div>
+            <div><span>相對距離</span><strong id="distance-value">—</strong></div>
           </div>
         </div>
 
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 習作 P.3 第 4 題核心觀念總結：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>描述位置三要素：</strong>必須具備「<strong>基準點</strong>」、「<strong>方向</strong>」與「<strong>距離</strong>」。</li>
-            <li><strong>相對位置公式：</strong>物體相對於基準點的位置 ＝ <strong>目標座標 \( - \) 基準點座標</strong>。</li>
-            <li><strong>習作第 4 題詳解：</strong>小麗在小碩東方 \( (+3) - (-2) = \mathbf{+5\text{ m}} \)；小麗在小雄東方 \( (+3) - (+1) = \mathbf{+2\text{ m}} \)。</li>
-          </ul>
+        <div class="actions">
+          <button id="reset-button" class="reset" type="button">重新作答</button>
         </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 習作第 4 題逐項辨析挑戰</div>
-
-          <div class="quiz-item">
-            <p>關於小碩(-2)、小雄(+1)、小麗(+3)的位置敘述，下列何者正確？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">
-                (C) 小麗在小碩東方 5 公尺處
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">
-                (A) 小麗在小雄西方 3 公尺處
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">
-                (B) 小麗在小雄前方 3 公尺處
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">
-                (D) 小雄在小麗後方 3 公尺處
-              </button>
-            </div>
-            <div class="quiz-feedback" id="fb1"></div>
-          </div>
-        </div>
-
-      </div>
-
+      </section>
     </div>
+
+    <aside class="source-answer">
+      <strong>課本解析：</strong>
+      (A)(B)小麗在小雄東方3公尺處；(D)小雄在小麗西方3公尺處，前、後方則無法判斷。
+    </aside>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上習作第 1 章直線運動配套互動教具</p>
-  </footer>
+  <footer>115 國中自然 3 上｜第一章 直線運動｜課本配套第 4 題</footer>
 
   <script>
-    // State
-    let posShuo = -2.0;  // m
-    let posXiong = 1.0;   // m
-    let posLi = 3.0;      // m
-    let currentObserver = 'shuo'; // 'origin', 'shuo', 'xiong', 'li'
-
-    // Canvas
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resetTextbookPositions() {
-      posShuo = -2.0;
-      posXiong = 1.0;
-      posLi = 3.0;
-      document.getElementById('sliderShuo').value = posShuo;
-      document.getElementById('sliderXiong').value = posXiong;
-      document.getElementById('sliderLi').value = posLi;
-      onCoordChange();
-    }
-
-    function setObserver(obs, el) {
-      currentObserver = obs;
-      document.querySelectorAll('.observer-btn').forEach(b => b.classList.remove('active'));
-      if (el) el.classList.add('active');
-      updateUI();
-    }
-
-    function onCoordChange() {
-      posShuo = parseFloat(document.getElementById('sliderShuo').value);
-      posXiong = parseFloat(document.getElementById('sliderXiong').value);
-      posLi = parseFloat(document.getElementById('sliderLi').value);
-
-      document.getElementById('labelShuo').innerText = `${posShuo > 0 ? '+' : ''}${posShuo.toFixed(1)} m`;
-      document.getElementById('labelXiong').innerText = `${posXiong > 0 ? '+' : ''}${posXiong.toFixed(1)} m`;
-      document.getElementById('labelLi').innerText = `${posLi > 0 ? '+' : ''}${posLi.toFixed(1)} m`;
-
-      updateUI();
-    }
-
-    function updateUI() {
-      // Calculate relative descriptions
-      let refName = '原點 (0m)';
-      let refX = 0;
-
-      if (currentObserver === 'shuo') {
-        refName = '小碩'; refX = posShuo;
-      } else if (currentObserver === 'xiong') {
-        refName = '小雄'; refX = posXiong;
-      } else if (currentObserver === 'li') {
-        refName = '小麗'; refX = posLi;
+    const answerData = {
+      A: {
+        correct: false,
+        start: 360,
+        end: 630,
+        relation: "小麗在小雄東方 3 公尺",
+        reference: "小雄（0 m）",
+        direction: "東方",
+        distance: "3 公尺",
+        title: "A 不正確",
+        detail: "小雄在 0 m，小麗在 +3 m；從小雄的位置看，小麗位於東方 3 公尺，不是西方。"
+      },
+      B: {
+        correct: false,
+        start: 360,
+        end: 630,
+        relation: "小麗在小雄東方 3 公尺",
+        reference: "小雄（0 m）",
+        direction: "東方",
+        distance: "3 公尺",
+        title: "B 不正確",
+        detail: "數線只能判斷東、西方向；題目沒有提供人物面向，因此不能判定小麗在小雄的「前方」。"
+      },
+      C: {
+        correct: true,
+        start: 180,
+        end: 630,
+        relation: "小麗在小碩東方 5 公尺",
+        reference: "小碩（-2 m）",
+        direction: "東方",
+        distance: "5 公尺",
+        title: "C 正確",
+        detail: "小麗在 +3 m，小碩在 -2 m，兩人相距 5 公尺；小麗位於小碩的右側，也就是東方。"
+      },
+      D: {
+        correct: false,
+        start: 630,
+        end: 360,
+        relation: "小雄在小麗西方 3 公尺",
+        reference: "小麗（+3 m）",
+        direction: "西方",
+        distance: "3 公尺",
+        title: "D 不正確",
+        detail: "小雄在小麗西方 3 公尺；題目沒有提供人物面向，因此不能判定小雄在小麗的「後方」。"
       }
+    };
 
-      document.getElementById('hudObserverName').innerText = `${refName} (x = ${refX > 0 ? '+' : ''}${refX.toFixed(1)}m)`;
+    const answerButtons = [...document.querySelectorAll(".answer")];
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedback-title");
+    const feedbackText = document.getElementById("feedback-text");
+    const referenceValue = document.getElementById("reference-value");
+    const directionValue = document.getElementById("direction-value");
+    const distanceValue = document.getElementById("distance-value");
+    const relationLine = document.getElementById("relation-line");
+    const relationLabel = document.getElementById("relation-label");
 
-      // Target to describe relative to ref
-      // If observer is shuo, describe Li
-      // If observer is xiong, describe Li & Shuo
-      // If observer is li, describe Shuo & Xiong
-      let targetName = '小麗';
-      let targetX = posLi;
-      if (currentObserver === 'li') {
-        targetName = '小碩';
-        targetX = posShuo;
-      }
+    function showAnswer(choice) {
+      const selected = answerData[choice];
 
-      const relDisp = targetX - refX;
-      const relDist = Math.abs(relDisp);
-      const relDir = relDisp >= 0 ? '東方' : '西方';
+      answerButtons.forEach((button) => {
+        button.classList.remove("correct", "wrong");
+        button.setAttribute("aria-pressed", "false");
+      });
 
-      document.getElementById('statementBanner').innerText = `${targetName} 在 ${refName} 的 ${relDir} ${relDist.toFixed(1)} 公尺 處`;
-      document.getElementById('elemRef').innerText = `${refName} (座標 ${refX > 0 ? '+' : ''}${refX.toFixed(1)} m)`;
-      document.getElementById('elemDir').innerText = `${relDir} (${relDisp >= 0 ? '正向' : '負向'})`;
-      document.getElementById('elemDist').innerText = `${relDist.toFixed(1)} 公尺 (| (${targetX}) - (${refX}) |)`;
+      const selectedButton = answerButtons.find((button) => button.dataset.choice === choice);
+      selectedButton.classList.add(selected.correct ? "correct" : "wrong");
+      selectedButton.setAttribute("aria-pressed", "true");
 
-      drawStage(refX);
+      feedback.className = `feedback ${selected.correct ? "correct" : "wrong"}`;
+      feedbackTitle.textContent = selected.title;
+      feedbackText.textContent = selected.detail;
+      referenceValue.textContent = selected.reference;
+      directionValue.textContent = selected.direction;
+      distanceValue.textContent = selected.distance;
+
+      relationLine.setAttribute("x1", selected.start);
+      relationLine.setAttribute("x2", selected.end);
+      relationLine.setAttribute("stroke", selected.correct ? "#168255" : "#c8465b");
+      relationLine.setAttribute("marker-end", selected.correct ? "url(#arrow-correct)" : "url(#arrow-wrong)");
+      relationLine.setAttribute("visibility", "visible");
+
+      relationLabel.setAttribute("x", (selected.start + selected.end) / 2);
+      relationLabel.setAttribute("fill", selected.correct ? "#168255" : "#c8465b");
+      relationLabel.setAttribute("visibility", "visible");
+      relationLabel.textContent = selected.relation;
     }
 
-    function drawStage(refX) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width;
-      const cy = 140;
-
-      const minM = -6, maxM = 6;
-      const toPx = (m) => 60 + ((m - minM) / (maxM - minM)) * (cw - 120);
-
-      // East / West Compass Guide
-      ctx.fillStyle = '#64748b';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'left';
-      ctx.fillText('⬅️ 西方 (負向)', 20, 30);
-      ctx.textAlign = 'right';
-      ctx.fillText('東方 (正向) ➡️', cw - 20, 30);
-
-      // Number Line Track
-      ctx.fillStyle = '#1e293b';
-      ctx.fillRect(40, cy + 15, cw - 80, 8);
-
-      // Ticks (-5 to +5)
-      for (let m = -5; m <= 5; m++) {
-        const px = toPx(m);
-        ctx.beginPath(); ctx.moveTo(px, cy + 10); ctx.lineTo(px, cy + 20);
-        ctx.strokeStyle = (m === 0) ? '#ef4444' : '#64748b';
-        ctx.lineWidth = (m === 0) ? 2.5 : 1;
-        ctx.stroke();
-
-        ctx.fillStyle = (m === 0) ? '#ef4444' : '#94a3b8';
-        ctx.font = (m === 0) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(m === 0 ? '原點 0' : (m > 0 ? '+' : '') + m, px, cy + 35);
-      }
-
-      // Draw Highlight Reference Spotlight on Observer
-      const refPx = toPx(refX);
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.2)';
-      ctx.beginPath();
-      ctx.arc(refPx, cy - 10, 45, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'center';
-      ctx.fillText('🎯 基準點', refPx, cy - 65);
-
-      // Draw Relative Distance Dimension Line from Observer to Target
-      let targetX = (currentObserver === 'li') ? posShuo : posLi;
-      const targetPx = toPx(targetX);
-
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(refPx, cy - 35);
-      ctx.lineTo(targetPx, cy - 35);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      const dist = Math.abs(targetX - refX);
-      const dirText = targetX >= refX ? '向東' : '向西';
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.fillText(`${dirText} ${dist.toFixed(1)}m`, (refPx + targetPx) / 2, cy - 42);
-
-      // Draw 3 People Avatars
-      // 1. Shuo
-      drawPerson(toPx(posShuo), cy, '👦', '小碩', `${posShuo > 0 ? '+' : ''}${posShuo.toFixed(1)}m`, '#f59e0b');
-      // 2. Xiong
-      drawPerson(toPx(posXiong), cy, '🧒', '小雄', `${posXiong > 0 ? '+' : ''}${posXiong.toFixed(1)}m`, '#10b981');
-      // 3. Li
-      drawPerson(toPx(posLi), cy, '👧', '小麗', `${posLi > 0 ? '+' : ''}${posLi.toFixed(1)}m`, '#ec4899');
+    function resetAnswer() {
+      answerButtons.forEach((button) => {
+        button.classList.remove("correct", "wrong");
+        button.setAttribute("aria-pressed", "false");
+      });
+      feedback.className = "feedback";
+      feedbackTitle.textContent = "先讀數線，再選答案";
+      feedbackText.textContent = "向右是東方，向左是西方；題圖沒有提供任何人的面向。";
+      referenceValue.textContent = "—";
+      directionValue.textContent = "—";
+      distanceValue.textContent = "—";
+      relationLine.setAttribute("visibility", "hidden");
+      relationLabel.setAttribute("visibility", "hidden");
+      relationLabel.textContent = "";
     }
 
-    function drawPerson(px, cy, emoji, name, coordLabel, color) {
-      ctx.font = '32px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(emoji, px, cy + 8);
-
-      ctx.fillStyle = color;
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.fillText(name, px, cy - 18);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 10px Outfit';
-      ctx.fillText(coordLabel, px, cy + 22);
-    }
-
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb1');
-      fb.className = 'quiz-feedback show';
-
-      if (ans === 'C') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong> 以小碩（\(-2\text{m}\)）為基準點，小麗（\(+3\text{m}\)）在小碩的東方：\( (+3) - (-2) = \mathbf{+5\text{ 公尺}} \)，故 (C) 正確！';
-        setObserver('shuo', document.querySelectorAll('.observer-btn')[1]);
-      } else if (ans === 'A') {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 小麗在 \(+3\)、小雄在 \(+1\)，小麗是在小雄的「<strong>東方 2 公尺處</strong>」（\( 3 - 1 = +2 \)），不是西方 3 公尺。';
-        setObserver('xiong', document.querySelectorAll('.observer-btn')[2]);
-      } else if (ans === 'B' || ans === 'D') {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 題目未說明三人的面朝方向（視角），因此無法使用「前方/後方」來描述，必須使用「東方/西方」！';
-      }
-    }
-
-    // Startup
-    window.addEventListener('DOMContentLoaded', () => {
-      onCoordChange();
+    answerButtons.forEach((button) => {
+      button.addEventListener("click", () => showAnswer(button.dataset.choice));
     });
+    document.getElementById("reset-button").addEventListener("click", resetAnswer);
   </script>
-
-  
-
 </body>
 </html>
