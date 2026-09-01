@@ -737,10 +737,7 @@
       <div class="filter-tabs">
         <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (15)</button>
         <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (16)</button>
-        <button class="filter-btn" onclick="filterCategory('unit1', this)">📄 單元卷 01 (12)</button>
-        <button class="filter-btn" onclick="filterCategory('unit2', this)">📄 單元卷 02 (11)</button>
-        <button class="filter-btn" onclick="filterCategory('unit3', this)">📊 綜合卷 03 (12)</button>
-        <button class="filter-btn active" onclick="filterCategory('all', this)">✨ 全部教具 (66)</button>
+        <button class="filter-btn" onclick="filterCategory('exams', this)">📄 考卷檢討</button>
       </div>
     </div>
 
@@ -1814,6 +1811,7 @@
           matchesCategory = (currentCategory === t.sec) ||
                             (currentCategory === t.category) ||
                             (currentCategory === t.group) ||
+                            (currentCategory === 'exams' && ['unit1', 'unit2', 'unit3'].includes(t.category)) ||
                             (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
                             (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
         }
@@ -1937,9 +1935,10 @@
 
       // 嘗試高亮對應按鈕
       if (urlCat) {
+        const buttonCategory = ['unit1', 'unit2', 'unit3'].includes(urlCat) ? 'exams' : urlCat;
         document.querySelectorAll('.filter-btn').forEach(btn => {
           const onclickAttr = btn.getAttribute('onclick') || '';
-          if (onclickAttr.includes(`'${urlCat}'`)) {
+          if (onclickAttr.includes(`'${buttonCategory}'`)) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
           }
