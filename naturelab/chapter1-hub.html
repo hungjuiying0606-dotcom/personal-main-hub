@@ -735,7 +735,7 @@
 
       <!-- Filter Buttons -->
       <div class="filter-tabs">
-        <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (15)</button>
+        <button class="filter-btn active" onclick="filterCategory('textbook', this)">📖 課本配套 (15)</button>
         <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (16)</button>
         <button class="filter-btn" onclick="filterCategory('exams', this)">📄 考卷檢討</button>
       </div>
@@ -1788,7 +1788,7 @@
       'past': { title: '🎯 會考與基測歷屆試題突破', desc: '歷屆大考經典運動學試題動態解構' }
     };
 
-    let currentCategory = 'all';
+    let currentCategory = 'textbook';
     let searchQuery = '';
 
     function renderTools(cat) {
@@ -1924,7 +1924,7 @@
       const urlCat = urlParams.get('cat');
       const urlSec = urlParams.get('sec');
 
-      let targetCat = 'all';
+      let targetCat = 'textbook';
       if (urlCat && urlSec) {
         targetCat = `${urlCat}:${urlSec}`;
       } else if (urlCat) {
