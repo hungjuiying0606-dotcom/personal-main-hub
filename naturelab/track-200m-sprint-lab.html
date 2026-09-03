@@ -783,9 +783,17 @@
       document.getElementById('valDisp').innerText = `${curDispM.toFixed(1)} m`;
 
       // 5. Draw Runner Avatar (Usain Bolt)
+      ctx.save();
+      ctx.translate(runnerX, runnerY + 10);
+      // Runner emoji faces left by default. When moving rightward (tangent dx > 0, i.e., runnerProg > 0.25), flip horizontally.
+      if (runnerProg > 0.25) {
+        ctx.scale(-1, 1);
+      }
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('🏃', runnerX, runnerY + 10);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🏃', 0, 0);
+      ctx.restore();
 
       // Peak Speed Halo (if in 50~100m)
       if (sp.splitIdx === 2) {

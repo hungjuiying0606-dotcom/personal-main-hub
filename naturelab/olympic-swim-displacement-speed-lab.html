@@ -780,13 +780,22 @@
       ctx.stroke();
 
       // 4. Draw Swimmer Avatar
+      const isForward = (simSeconds <= splitTime);
+      ctx.save();
+      ctx.translate(curPx, swimmerY + 8);
+      // Unicode swimmer emoji faces left by default. Flip horizontally to face right when swimming forward.
+      if (isForward) {
+        ctx.scale(-1, 1);
+      }
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
-      const swimmerEmoji = (simSeconds <= splitTime) ? '🏊‍♂️' : '🏊‍♂️';
-      ctx.fillText(swimmerEmoji, curPx, swimmerY + 8);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🏊‍♂️', 0, 0);
+      ctx.restore();
 
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'center';
       ctx.fillText('德萊賽爾', curPx, swimmerY + 28);
     }
 

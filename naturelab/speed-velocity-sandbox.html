@@ -933,17 +933,54 @@
       drawTunnel();
     }
 
+    let tunnelAnimId = null;
     function simulateDrive() {
+      if (tunnelAnimId) cancelAnimationFrame(tunnelAnimId);
       const flash = document.getElementById('flashLight');
       const v1 = parseFloat(document.getElementById('seg1Speed').value);
-      if (v1 > 90) {
-        flash.classList.add('flash');
-        setTimeout(() => flash.classList.remove('flash'), 150);
-      }
+      const v2 = parseFloat(document.getElementById('seg2Speed').value);
+      const v3 = parseFloat(document.getElementById('seg3Speed').value);
       onSpeedChange();
+
+      const cw = tunnelCanvas.width;
+      const startX = 60;
+      const endX = cw - 70;
+      const segWidth = (endX - startX) / 3;
+      let curX = startX;
+      let flashed = false;
+      let lastT = performance.now();
+
+      function step(now) {
+        const dt = Math.min((now - lastT) / 1000, 0.1);
+        lastT = now;
+
+        // Speed in px/s proportional to selected km/h
+        let curV = v1;
+        if (curX > startX + segWidth) curV = v2;
+        if (curX > startX + segWidth * 2) curV = v3;
+
+        const pxSpeed = (curV / 90) * 450;
+        curX += pxSpeed * dt;
+
+        // Flash camera in seg 1 if speeding (>90 km/h)
+        if (!flashed && curX >= 80 && v1 > 90) {
+          flashed = true;
+          flash.classList.add('flash');
+          setTimeout(() => flash.classList.remove('flash'), 150);
+        }
+
+        if (curX < endX) {
+          drawTunnel(curX);
+          tunnelAnimId = requestAnimationFrame(step);
+        } else {
+          drawTunnel(cw / 2);
+          tunnelAnimId = null;
+        }
+      }
+      tunnelAnimId = requestAnimationFrame(step);
     }
 
-    function drawTunnel() {
+    function drawTunnel(carX) {
       tunnelCtx.clearRect(0, 0, tunnelCanvas.width, tunnelCanvas.height);
       const cw = tunnelCanvas.width;
       const cy = 70;
@@ -972,9 +1009,17 @@
       tunnelCtx.fillText('📷', 80, 45); // Fixed camera in Seg 1
       tunnelCtx.fillText('🏁', cw - 80, 45); // Interval exit gate
 
-      // Car
+      // Car (facing right, in travel direction)
+      const px = (typeof carX === 'number') ? carX : cw / 2;
+      tunnelCtx.save();
+      tunnelCtx.translate(px, cy + 5);
+      // Unicode car emoji naturally faces left. Flip horizontally to face right (direction of travel).
+      tunnelCtx.scale(-1, 1);
       tunnelCtx.font = '32px sans-serif';
-      tunnelCtx.fillText('🚗', cw / 2 - 16, cy + 12);
+      tunnelCtx.textAlign = 'center';
+      tunnelCtx.textBaseline = 'middle';
+      tunnelCtx.fillText('🚗', 0, 0);
+      tunnelCtx.restore();
     }
 
     // Startup
