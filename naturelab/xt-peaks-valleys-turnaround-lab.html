@@ -723,8 +723,9 @@
       const { facing } = getDirAndTurns(simMinutes);
       ctx.save();
       ctx.translate(runnerPx, trackY - 12);
-      // Segoe UI's runner faces right by default; flip only when moving south/left.
-      if (facing === 'south') {
+      // Unicode 🏃 emoji naturally faces left in standard fonts (Segoe UI, Apple, Noto).
+      // When moving north/right, flip horizontally using scale(-1, 1) to face right (North).
+      if (facing === 'north') {
         ctx.scale(-1, 1);
       }
       ctx.font = '28px sans-serif';
