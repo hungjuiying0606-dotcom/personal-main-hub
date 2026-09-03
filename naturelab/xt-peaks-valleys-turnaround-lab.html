@@ -475,32 +475,32 @@
         <div class="timeline-box">
           <div class="timeline-head">📋 0～6 分鐘各區間運動與折返點清單</div>
           <div class="timeline-item" id="seg1">
-            <span>0～2 分：位置 0 ➔ 200m</span>
-            <span style="color: var(--north); font-weight: 800;">向北運動 (v = +100)</span>
+            <span>0～2 分：位置 0 ➔ 150m</span>
+            <span style="color: var(--north); font-weight: 800;">向北運動 (v = +75)</span>
           </div>
           <div class="timeline-item" id="segTurn1">
             <span>🚩 <strong>t = 2 分 (波峰頂點)</strong></span>
             <span class="tag-turn">第 1 次折返 🔄 (北➔南)</span>
           </div>
           <div class="timeline-item" id="seg2">
-            <span>2～4 分：位置 200 ➔ 0m</span>
-            <span style="color: var(--south); font-weight: 800;">向南運動 (v = -100)</span>
+            <span>2～3 分：位置 150 ➔ 100m</span>
+            <span style="color: var(--south); font-weight: 800;">向南運動 (v = -50)</span>
           </div>
           <div class="timeline-item" id="segTurn2">
-            <span>🚩 <strong>t = 4 分 (波谷底點)</strong></span>
+            <span>🚩 <strong>t = 3 分 (波谷底點)</strong></span>
             <span class="tag-turn">第 2 次折返 🔄 (南➔北)</span>
           </div>
           <div class="timeline-item" id="seg3">
-            <span>4～5 分：位置 0 ➔ 100m</span>
+            <span>3～4 分：位置 100 ➔ 200m</span>
             <span style="color: var(--north); font-weight: 800;">向北運動 (v = +100)</span>
           </div>
           <div class="timeline-item" id="segTurn3">
-            <span>🚩 <strong>t = 5 分 (波峰頂點)</strong></span>
+            <span>🚩 <strong>t = 4 分 (波峰頂點)</strong></span>
             <span class="tag-turn">第 3 次折返 🔄 (北➔南)</span>
           </div>
           <div class="timeline-item" id="seg4">
-            <span>5～6 分：位置 100 ➔ 0m</span>
-            <span style="color: var(--south); font-weight: 800;">向南運動 (v = -100)</span>
+            <span>4～6 分：位置 200 ➔ 100m</span>
+            <span style="color: var(--south); font-weight: 800;">向南運動 (v = -50)</span>
           </div>
         </div>
 
@@ -509,8 +509,8 @@
           <strong>📖 習作 P.4 第 6 題觀念總結：</strong>
           <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
             <li><strong>折返條件：</strong>在 \( x-t \) 圖中，斜率（速度）<strong>正負號改變</strong>的位置即為改變方向。</li>
-            <li><strong>山峰（波峰）：</strong>由遠離原點轉為接近原點（向北變向南，\( t=2\text{分} \)、\( t=5\text{分} \)）。</li>
-            <li><strong>山谷（波谷）：</strong>由接近原點轉為遠離原點（向南變向北，\( t=4\text{分} \)）。</li>
+            <li><strong>山峰（波峰）：</strong>由遠離原點轉為接近原點（向北變向南，\( t=2\text{分} \)、\( t=4\text{分} \)）。</li>
+            <li><strong>山谷（波谷）：</strong>由接近原點轉為遠離原點（向南變向北，\( t=3\text{分} \)）。</li>
             <li><strong>結論：</strong>在 0～6 分鐘內，共改變方向 <strong>3 次</strong>（選 D）。</li>
           </ul>
         </div>
@@ -522,10 +522,10 @@
           <div class="quiz-item">
             <p>喬丹自學校向北出發，其 x-t 關係如圖所示，請問圖形所示的期間內，喬丹共改變方向幾次？</p>
             <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 3 次</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 0 次</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 1 次</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 2 次</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 3 次</button>
             </div>
             <div class="quiz-feedback" id="fb1"></div>
           </div>
@@ -550,22 +550,20 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Keypoints in x-t graph
-    // t: [0, 1, 2, 3, 4, 5, 6]
-    // x: [0, 100, 200, 100, 0, 100, 0]
+    // Textbook x-t graph keypoints
+    // t: [0, 2, 3, 4, 6]
+    // x: [0, 150, 100, 200, 100]
     const keypoints = [
       { t: 0, x: 0 },
-      { t: 1, x: 100 },
-      { t: 2, x: 200 }, // Turn 1 (Peak)
-      { t: 3, x: 100 },
-      { t: 4, x: 0 },   // Turn 2 (Valley)
-      { t: 5, x: 100 }, // Turn 3 (Peak)
-      { t: 6, x: 0 }
+      { t: 2, x: 150 }, // Turn 1 (Peak)
+      { t: 3, x: 100 }, // Turn 2 (Valley)
+      { t: 4, x: 200 }, // Turn 3 (Peak)
+      { t: 6, x: 100 }
     ];
 
     function getPosAtT(t) {
       if (t <= 0) return 0;
-      if (t >= 6) return 0;
+      if (t >= 6) return keypoints[keypoints.length - 1].x;
 
       for (let i = 0; i < keypoints.length - 1; i++) {
         const p1 = keypoints[i];
@@ -582,24 +580,25 @@
       let dir = '向北前進 ⬆️';
       let dirColor = 'var(--north)';
       let turns = 0;
+      let facing = 'north';
 
       if (t < 2.0) {
-        dir = '向北前進 ⬆️'; dirColor = 'var(--north)'; turns = 0;
+        dir = '向北前進 ⬆️'; dirColor = 'var(--north)'; turns = 0; facing = 'north';
       } else if (t === 2.0) {
-        dir = '🔄 折返點 1 (t=2)'; dirColor = '#ca8a04'; turns = 1;
-      } else if (t > 2.0 && t < 4.0) {
-        dir = '向南折返 ⬇️'; dirColor = 'var(--south)'; turns = 1;
+        dir = '🔄 折返點 1 (t=2)'; dirColor = '#ca8a04'; turns = 1; facing = 'south';
+      } else if (t > 2.0 && t < 3.0) {
+        dir = '向南折返 ⬇️'; dirColor = 'var(--south)'; turns = 1; facing = 'south';
+      } else if (t === 3.0) {
+        dir = '🔄 折返點 2 (t=3)'; dirColor = '#ca8a04'; turns = 2; facing = 'north';
+      } else if (t > 3.0 && t < 4.0) {
+        dir = '向北前進 ⬆️'; dirColor = 'var(--north)'; turns = 2; facing = 'north';
       } else if (t === 4.0) {
-        dir = '🔄 折返點 2 (t=4)'; dirColor = '#ca8a04'; turns = 2;
-      } else if (t > 4.0 && t < 5.0) {
-        dir = '向北前進 ⬆️'; dirColor = 'var(--north)'; turns = 2;
-      } else if (t === 5.0) {
-        dir = '🔄 折返點 3 (t=5)'; dirColor = '#ca8a04'; turns = 3;
-      } else if (t > 5.0) {
-        dir = '向南折返 ⬇️'; dirColor = 'var(--south)'; turns = 3;
+        dir = '🔄 折返點 3 (t=4)'; dirColor = '#ca8a04'; turns = 3; facing = 'south';
+      } else if (t > 4.0) {
+        dir = '向南折返 ⬇️'; dirColor = 'var(--south)'; turns = 3; facing = 'south';
       }
 
-      return { dir, dirColor, turns };
+      return { dir, dirColor, turns, facing };
     }
 
     function toggleScan() {
@@ -674,10 +673,10 @@
       document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
       if (simMinutes < 2) document.getElementById('seg1').classList.add('active');
       else if (simMinutes === 2) document.getElementById('segTurn1').classList.add('active');
-      else if (simMinutes < 4) document.getElementById('seg2').classList.add('active');
-      else if (simMinutes === 4) document.getElementById('segTurn2').classList.add('active');
-      else if (simMinutes < 5) document.getElementById('seg3').classList.add('active');
-      else if (simMinutes === 5) document.getElementById('segTurn3').classList.add('active');
+      else if (simMinutes < 3) document.getElementById('seg2').classList.add('active');
+      else if (simMinutes === 3) document.getElementById('segTurn2').classList.add('active');
+      else if (simMinutes < 4) document.getElementById('seg3').classList.add('active');
+      else if (simMinutes === 4) document.getElementById('segTurn3').classList.add('active');
       else document.getElementById('seg4').classList.add('active');
 
       draw();
@@ -721,11 +720,12 @@
       // Draw Jordan Runner Avatar facing movement direction
       const curX = getPosAtT(simMinutes);
       const runnerPx = toTrackPx(curX);
-      const { dir } = getDirAndTurns(simMinutes);
+      const { facing } = getDirAndTurns(simMinutes);
       ctx.save();
       ctx.translate(runnerPx, trackY - 12);
-      if (dir === '向北 (正向)') {
-        ctx.scale(-1, 1); // Flip to face north/right
+      // Segoe UI's runner faces right by default; flip only when moving south/left.
+      if (facing === 'south') {
+        ctx.scale(-1, 1);
       }
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
@@ -734,7 +734,7 @@
       ctx.restore();
 
       // Draw Turn Indicator Spotlight above runner when turning
-      if (Math.abs(simMinutes - 2) < 0.1 || Math.abs(simMinutes - 4) < 0.1 || Math.abs(simMinutes - 5) < 0.1) {
+      if (Math.abs(simMinutes - 2) < 0.1 || Math.abs(simMinutes - 3) < 0.1 || Math.abs(simMinutes - 4) < 0.1) {
         ctx.fillStyle = '#fde047';
         ctx.font = 'bold 11px Noto Sans TC';
         ctx.fillText('🔄 改變方向！', runnerPx, trackY - 42);
@@ -799,8 +799,8 @@
       }
       ctx.stroke();
 
-      // Highlight the 3 Turn Points on Graph (t=2 Peak, t=4 Valley, t=5 Peak)
-      const turnIndices = [2, 4, 5];
+      // Highlight the 3 Turn Points on Graph (t=2 Peak, t=3 Valley, t=4 Peak)
+      const turnIndices = [1, 2, 3];
       turnIndices.forEach((idx, tNum) => {
         const pt = keypoints[idx];
         const px = toGraphX(pt.t);
@@ -813,7 +813,7 @@
         ctx.fillStyle = '#fde047';
         ctx.font = 'bold 10px Noto Sans TC';
         ctx.textAlign = 'center';
-        const labelY = (pt.x === 0) ? py + 18 : py - 10;
+        const labelY = (tNum === 1) ? py + 18 : py - 10;
         ctx.fillText(`折返點 ${tNum + 1}`, px, labelY);
       });
 
@@ -845,11 +845,11 @@
       if (ans === 'D') {
         el.classList.add('correct');
         fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong> 喬丹在 \( x-t \) 圖中共有 3 個折返轉折點：<br>① \( t=2\text{分} \)（波峰 \(200\text{m}\)）：向北 ➔ 向南<br>② \( t=4\text{分} \)（波谷 \(0\text{m}\) 回學校）：向南 ➔ 向北<br>③ \( t=5\text{分} \)（波峰 \(100\text{m}\)）：向北 ➔ 向南<br>故總共改變方向 <strong>3 次</strong>！';
+        fb.innerHTML = '✅ <strong>完全正確！</strong> 喬丹在 x-t 圖中共有 3 個折返轉折點：<br>① t=2 分（波峰 150m）：向北 ➔ 向南<br>② t=3 分（波谷 100m）：向南 ➔ 向北<br>③ t=4 分（波峰 200m）：向北 ➔ 向南<br>故總共改變方向 <strong>3 次</strong>！';
       } else {
         el.classList.add('wrong');
         fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 請注意：只要 \( x-t \) 圖的斜率正負號改變（山峰與山谷轉折處），就代表改變方向一次！圖中共有 2 個山峰與 1 個山谷，共 3 次！';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 請注意：只要 x-t 圖的斜率正負號改變（山峰與山谷轉折處），就代表改變方向一次！圖中共有 2 個山峰與 1 個山谷，共 3 次！';
       }
     }
 

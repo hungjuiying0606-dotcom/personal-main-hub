@@ -482,7 +482,7 @@
             </h4>
             <div class="metric-val" id="valPathA">路徑長 10.0 m</div>
             <div class="metric-detail">
-              位移大小：<strong>10.0 m</strong> 向右
+              位移大小：<strong>10.0 m</strong>，由 P 指向 Q
             </div>
           </div>
 
@@ -493,7 +493,7 @@
             </h4>
             <div class="metric-val" id="valPathB">路徑長 14.8 m</div>
             <div class="metric-detail">
-              位移大小：<strong>10.0 m</strong> 向右
+              位移大小：<strong>10.0 m</strong>，由 P 指向 Q
             </div>
           </div>
         </div>
@@ -543,8 +543,8 @@
           <div class="quiz-item">
             <p>小軒溜直排輪，實線表示直線甲路線，虛線表示S形乙路線。由 P 移到 Q，兩路線的位移與路徑長關係何者正確？</p>
             <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 路徑長 甲＜乙，位移 甲＝乙</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 路徑長 甲＝乙，位移 甲＝乙</button>
+              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 路徑長 甲＜乙，位移 甲＝乙</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 路徑長 甲＝乙，位移 甲＜乙</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 路徑長 甲＜乙，位移 甲＜乙</button>
             </div>
@@ -572,8 +572,9 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    const pP = { x: 80, y: 190 };
-    const pQ = { x: 570, y: 190 };
+    // Match the textbook figure: P is lower-left and Q is upper-right.
+    const pP = { x: 85, y: 285 };
+    const pQ = { x: 565, y: 85 };
     const straightDistM = 10.0; // 10 meters
 
     function onAmpChange(val) {
@@ -584,7 +585,7 @@
     }
 
     function calculateCurveLength(ampM) {
-      // S-curve: y(x) = amp * sin(2 * pi * x / L)
+      // Textbook route B makes two full waves around the straight P-Q route.
       // Arc length integral approximation
       const steps = 100;
       let total = 0;
@@ -593,7 +594,7 @@
 
       for (let i = 0; i <= steps; i++) {
         const x = (i / steps) * L;
-        const y = ampM * Math.sin((2 * Math.PI * x) / L);
+        const y = ampM * Math.sin((4 * Math.PI * x) / L);
         if (i > 0) {
           const dx = x - prevX;
           const dy = y - prevY;
@@ -663,6 +664,21 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const cw = canvas.width;
+      const routeDx = pQ.x - pP.x;
+      const routeDy = pQ.y - pP.y;
+      const routeLengthPx = Math.hypot(routeDx, routeDy);
+      const unitX = routeDx / routeLengthPx;
+      const unitY = routeDy / routeLengthPx;
+      const normalX = -unitY;
+      const normalY = unitX;
+      const pxScale = 30;
+      const pointOnCurve = (u) => {
+        const offset = -(sAmplitude * pxScale) * Math.sin(4 * Math.PI * u);
+        return {
+          x: pP.x + u * routeDx + normalX * offset,
+          y: pP.y + u * routeDy + normalY * offset
+        };
+      };
 
       // 1. Draw Arena Floor & Grid
       ctx.fillStyle = '#0f172a';
@@ -679,24 +695,37 @@
       drawFlag(pQ.x, pQ.y, '🏁 終點 Q', '#ef4444');
 
       // 3. Draw Red Displacement Vector Arrow from P to Q
+      const arrowOffset = 68;
+      const dispStart = {
+        x: pP.x + normalX * arrowOffset,
+        y: pP.y + normalY * arrowOffset
+      };
+      const dispEnd = {
+        x: pQ.x + normalX * arrowOffset,
+        y: pQ.y + normalY * arrowOffset
+      };
       ctx.strokeStyle = '#ef4444';
       ctx.fillStyle = '#ef4444';
       ctx.lineWidth = 2.5;
       ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(pP.x, pP.y + 40); ctx.lineTo(pQ.x, pQ.y + 40); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(dispStart.x, dispStart.y); ctx.lineTo(dispEnd.x, dispEnd.y); ctx.stroke();
       ctx.setLineDash([]);
 
       // Arrow head for displacement
       ctx.beginPath();
-      ctx.moveTo(pQ.x, pQ.y + 40);
-      ctx.lineTo(pQ.x - 10, pQ.y + 35);
-      ctx.lineTo(pQ.x - 10, pQ.y + 45);
+      ctx.moveTo(dispEnd.x, dispEnd.y);
+      ctx.lineTo(dispEnd.x - unitX * 12 + normalX * 6, dispEnd.y - unitY * 12 + normalY * 6);
+      ctx.lineTo(dispEnd.x - unitX * 12 - normalX * 6, dispEnd.y - unitY * 12 - normalY * 6);
       ctx.closePath();
       ctx.fill();
 
       ctx.font = 'bold 11px Noto Sans TC';
       ctx.textAlign = 'center';
-      ctx.fillText('🔴 直線位移向量 PQ：10.0m (甲＝乙)', (pP.x + pQ.x) / 2, pP.y + 58);
+      ctx.fillText(
+        '🔴 直線位移向量 PQ：10.0m (甲＝乙)',
+        (dispStart.x + dispEnd.x) / 2 + normalX * 16,
+        (dispStart.y + dispEnd.y) / 2 + normalY * 16
+      );
 
       // 4. Draw Route A (Solid Blue Line)
       ctx.strokeStyle = '#38bdf8';
@@ -708,33 +737,36 @@
 
       ctx.fillStyle = '#38bdf8';
       ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'left';
-      ctx.fillText('甲路線（直線 實線）', pP.x + 20, pP.y - 12);
+      ctx.textAlign = 'center';
+      ctx.fillText(
+        '甲路線（直線 實線）',
+        pP.x + routeDx * 0.5 - normalX * 20,
+        pP.y + routeDy * 0.5 - normalY * 20
+      );
 
       // 5. Draw Route B (Dashed Orange S-Curve)
-      const pxScale = 30; // 30 px per meter of amp
       ctx.strokeStyle = '#fb923c';
       ctx.lineWidth = 3.5;
       ctx.setLineDash([8, 6]);
       ctx.beginPath();
 
-      const spanPx = pQ.x - pP.x;
       for (let i = 0; i <= 100; i++) {
         const u = i / 100;
-        const curPx = pP.x + u * spanPx;
-        const curPy = pP.y + (sAmplitude * pxScale) * Math.sin(2 * Math.PI * u);
-        if (i === 0) ctx.moveTo(curPx, curPy);
-        else ctx.lineTo(curPx, curPy);
+        const point = pointOnCurve(u);
+        if (i === 0) ctx.moveTo(point.x, point.y);
+        else ctx.lineTo(point.x, point.y);
       }
       ctx.stroke();
       ctx.setLineDash([]);
 
+      const routeBLabelPoint = pointOnCurve(0.125);
       ctx.fillStyle = '#fb923c';
-      ctx.fillText('乙路線（S形 虛線）', pP.x + 20, pP.y - 50);
+      ctx.textAlign = 'left';
+      ctx.fillText('乙路線（S形 虛線）', routeBLabelPoint.x + 10, routeBLabelPoint.y - 12);
 
       // 6. Draw Skater A (Straight Line)
-      const skaterAPx = pP.x + progress * spanPx;
-      const skaterAPy = pP.y;
+      const skaterAPx = pP.x + progress * routeDx;
+      const skaterAPy = pP.y + progress * routeDy;
       ctx.font = '26px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('🛼', skaterAPx, skaterAPy + 8);
@@ -743,8 +775,9 @@
       ctx.fillText('甲', skaterAPx, skaterAPy - 14);
 
       // 7. Draw Skater B (S-Curve)
-      const skaterBPx = pP.x + progress * spanPx;
-      const skaterBPy = pP.y + (sAmplitude * pxScale) * Math.sin(2 * Math.PI * progress);
+      const skaterBPoint = pointOnCurve(progress);
+      const skaterBPx = skaterBPoint.x;
+      const skaterBPy = skaterBPoint.y;
       ctx.fillText('🛼', skaterBPx, skaterBPy + 8);
       ctx.fillStyle = '#fb923c';
       ctx.fillText('乙', skaterBPx, skaterBPy - 14);
