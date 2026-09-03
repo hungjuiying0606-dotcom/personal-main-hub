@@ -515,7 +515,7 @@
             <span>🏊 課本例題 1-3：25 公尺游泳池往返即時模擬</span>
           </div>
           <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-secondary" onclick="jumpPoolTime(20)">🎯 跳至第 20 秒 (抵達對岸)</button>
+            <button class="btn btn-secondary" onclick="jumpPoolTime(25)">🎯 跳至第 25 秒 (抵達對岸)</button>
             <button class="btn btn-secondary" onclick="jumpPoolTime(50)">🎯 跳至第 50 秒 (回到出發點)</button>
           </div>
         </div>
@@ -568,15 +568,15 @@
 
         <!-- Milestones Comparison -->
         <div class="milestone-grid">
-          <div class="milestone-card" id="card20s" onclick="jumpPoolTime(20)">
+          <div class="milestone-card" id="card25s" onclick="jumpPoolTime(25)">
             <h4>
-              <span>📍 第 20 秒：游到對岸 (25m 處)</span>
-              <span class="badge" style="background: #e0f2fe; color: #0369a1;">單向直游</span>
+              <span>📍 第 25 秒：游到對岸 (25m 處)</span>
+              <span class="badge" style="background: #e0f2fe; color: #0369a1;">去程（單向無折返）</span>
             </h4>
             <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.1rem;">
               <li>位移 \( \Delta x = +25\text{ m} \)；路徑長 \( S = 25\text{ m} \)</li>
-              <li>平均速度 \( \bar{v} = \frac{+25}{20} = \mathbf{+1.25\text{ m/s}} \)</li>
-              <li>平均速率 \( \bar{s} = \frac{25}{20} = \mathbf{1.25\text{ m/s}} \)</li>
+              <li>去程平均速度 \( \bar{v} = \frac{+25}{25} = \mathbf{+1.0\text{ m/s}} \)</li>
+              <li>去程平均速率 \( \bar{s} = \frac{25}{25} = \mathbf{1.0\text{ m/s}} \)</li>
               <li><strong>結論：單向無折返時，平均速度大小 ＝ 平均速率！</strong></li>
             </ul>
           </div>
@@ -589,8 +589,9 @@
             <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.1rem;">
               <li>總位移 \( \Delta x = 0 - 0 = \mathbf{0\text{ m}} \)（回到原點）</li>
               <li>總路徑長 \( S = 25 + 25 = \mathbf{50\text{ m}} \)</li>
-              <li>平均速度 \( \bar{v} = \frac{0}{50} = \mathbf{0\text{ m/s}} \) ⚠️</li>
-              <li>平均速率 \( \bar{s} = \frac{50}{50} = \mathbf{1.0\text{ m/s}} \)</li>
+              <li>全程平均速度 \( \bar{v} = \frac{0}{50} = \mathbf{0\text{ m/s}} \) ⚠️</li>
+              <li>全程平均速率 \( \bar{s} = \frac{50}{50} = \mathbf{1.0\text{ m/s}} \)</li>
+              <li><strong>例題延伸：去程與回程各費時 25 秒，平均速率相同 (皆 1.0 m/s)，但平均速度不相同 (方向相反)！</strong></li>
             </ul>
           </div>
         </div>
@@ -796,14 +797,14 @@
       
       // Calculate position, disp, path
       let x = 0, path = 0;
-      if (poolTime <= 20) {
-        // Forward: 0 to 25m in 20s (v = 1.25m/s)
-        x = (poolTime / 20) * 25;
+      if (poolTime <= 25) {
+        // Forward: 0 to 25m in 25s (v = 1.0m/s)
+        x = (poolTime / 25) * 25;
         path = x;
       } else {
-        // Return: 25 to 0m in 30s (20s to 50s, v = -0.833m/s)
-        const returnT = poolTime - 20;
-        x = 25 - (returnT / 30) * 25;
+        // Return: 25 to 0m in 25s (25s to 50s, v = -1.0m/s)
+        const returnT = poolTime - 25;
+        x = 25 - (returnT / 25) * 25;
         path = 25 + (25 - x);
       }
 
@@ -821,10 +822,11 @@
       document.getElementById('speedFormula').innerText = `s̄ = ${path.toFixed(1)}m ÷ ${t.toFixed(1)}s = ${avgS} m/s`;
 
       // Highlight cards
-      document.getElementById('card20s').classList.toggle('active', Math.abs(poolTime - 20) < 1.5);
+      const card25 = document.getElementById('card25s');
+      if (card25) card25.classList.toggle('active', Math.abs(poolTime - 25) < 1.5);
       document.getElementById('card50s').classList.toggle('active', Math.abs(poolTime - 50) < 0.5);
 
-      drawPool(x, poolTime > 20);
+      drawPool(x, poolTime > 25);
     }
 
     function drawPool(swimmerX = 0, isReturning = false) {
@@ -857,13 +859,23 @@
 
       // Swimmer Avatar
       const curPx = toPx(swimmerX);
+      poolCtx.save();
+      poolCtx.translate(curPx, cy + 5);
+      // Unicode swimmer emoji naturally faces left. When swimming forward to the right (!isReturning), flip horizontally.
+      if (!isReturning) {
+        poolCtx.scale(-1, 1);
+      }
       poolCtx.font = '36px sans-serif';
-      poolCtx.fillText(isReturning ? '🏊‍♂️' : '🏊', curPx - 18, cy + 12);
+      poolCtx.textAlign = 'center';
+      poolCtx.textBaseline = 'middle';
+      poolCtx.fillText('🏊', 0, 0);
+      poolCtx.restore();
 
       // Coordinate bubble
       poolCtx.fillStyle = '#0284c7';
       poolCtx.font = 'bold 12px Noto Sans TC';
-      poolCtx.fillText(`位置: ${swimmerX.toFixed(1)} m`, curPx - 25, cy - 25);
+      poolCtx.textAlign = 'center';
+      poolCtx.fillText(`位置: ${swimmerX.toFixed(1)} m`, curPx, cy - 25);
     }
 
     // Tab 2: Highway Interval Speed Enforcement Logic
