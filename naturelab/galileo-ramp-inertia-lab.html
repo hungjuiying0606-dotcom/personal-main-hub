@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>伽利略的實驗與推論 · 康軒自然3上 2-1 互動實驗室</title>
+  <meta name="description" content="依據康軒國中自然3上第2章力與運動2-1（課本第34-35頁圖2-1）設計之互動教學網頁。1:1忠實還原課本插圖與動態模擬：伽利略理想斜面實驗與推論、慣性定律。" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
+          },
+          colors: {
+            textbook: {
+              track: '#9dd8c3',       /* 課本淡青綠色軌道 */
+              trackDark: '#78beaa',
+              trackBg: '#fefcf7',      /* 課本米黃紙張底色 */
+              cardBorder: '#fcd34d',   /* 課本黃色框線 */
+              cardBg: '#fffdf5',
+              badgeBlue: '#3b82f6',    /* 課本藍色 ABC 標籤 */
+              orangeLine: '#f97316',   /* 橘紅虛線路徑 */
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 課本溫潤紙質底色 */
+    body {
+      background: radial-gradient(circle at 20% 10%, #fffdf8 0%, #f9f5ea 50%, #f0e9d6 100%);
+      min-height: 100vh;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 215, 185, 0.8);
+    }
+    /* 課本風格的對話氣泡指針 */
+    .bubble-arrow-down::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 24px;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 8px solid #fcd34d;
+    }
+    .bubble-arrow-down-center::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 8px solid #fcd34d;
+    }
+    /* 脈動高亮效果 */
+    @keyframes pulseTarget {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(59, 130, 246, 0)); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.7)); }
+    }
+    .active-badge {
+      animation: pulseTarget 1.5s infinite;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased selection:bg-amber-500 selection:text-white pb-20">
+
+  <!-- ========================================================================= -->
+  <!-- 頂部導航列 (Global Top Bar) -->
+  <!-- ========================================================================= -->
+  <header class="bg-amber-950/90 text-amber-50 backdrop-blur-md border-b border-amber-900/40 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- 左側：回到 Central Hub 與單元來源 -->
+      <div class="flex items-center gap-3">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" 
+           class="flex items-center gap-1.5 text-amber-200 hover:text-white transition-colors text-xs sm:text-sm font-semibold py-1 px-2.5 rounded-lg hover:bg-amber-900/50">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="hidden md:inline">我的數位基地</span>
+          <span class="md:hidden">回首頁</span>
+        </a>
+        <span class="text-amber-700 hidden sm:inline">|</span>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            康軒三年級 2-1
+          </span>
+          <span class="text-xs sm:text-sm font-medium text-amber-100/90 hidden lg:inline">
+            第 2 章 力與運動 · 課本第 34-35 頁（圖 2-1 伽利略的實驗與推論）
+          </span>
+        </div>
+      </div>
+
+      <!-- 右側：功能按鈕組 -->
+      <div class="flex items-center gap-2">
+        <button id="btn-tts" onclick="toggleVoiceSpeech()" 
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-800/60 hover:bg-amber-700 text-amber-200 hover:text-white border border-amber-700/60 transition-all shadow-sm"
+                title="語音朗讀本單元精華">
+          <span id="tts-icon">🔊</span>
+          <span id="tts-text" class="hidden sm:inline">語音導讀</span>
+        </button>
+
+        <a href="#section-galileo-sim" 
+           class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-amber-950 hover:bg-amber-400 transition-all shadow-sm">
+          <span>🔬 課本圖 2-1</span>
+        </a>
+
+        <button onclick="toggleFullScreen()" 
+                class="p-2 rounded-lg text-amber-300 hover:text-white hover:bg-amber-800/50 text-xs transition-colors"
+                title="切換投影全螢幕">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 主內容區 (Main Content) -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-10">
+
+    <!-- 頁頭橫幅 -->
+    <div class="text-center space-y-2 max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-200/70 border border-amber-300 text-amber-950 text-xs sm:text-sm font-bold shadow-sm">
+        <span>📖 課本第 34-35 頁同步教具</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+        <span>圖 2-1 伽利略的實驗與推論</span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight font-display">
+        伽利略的實驗與推論 · 理想光滑斜面
+      </h1>
+      <p class="text-amber-900/80 text-xs sm:text-sm leading-relaxed">
+        忠實對齊康軒課本圖 2-1：淡青綠色雙斜面軌道、等高基準虛線、ABC 三大情境與橘紅運動軌跡！
+      </p>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 核心互動區：課本圖 2-1 忠實重現與動態模擬器 -->
+    <!-- ========================================================================= -->
+    <section id="section-galileo-sim" class="glass-panel rounded-3xl p-5 sm:p-8 border-2 border-amber-300 shadow-2xl space-y-6">
+      
+      <!-- 控制列：快捷模式切換 -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-amber-200/80 pb-4">
+        
+        <!-- 左側：情境快捷鍵 -->
+        <div class="flex items-center gap-1.5 bg-amber-100/80 p-1.5 rounded-2xl border border-amber-200 flex-wrap">
+          <button id="btn-tab-overview" onclick="switchScenario('ALL')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-amber-600 text-white shadow-sm">
+            ✨ 課本全景對照 (圖2-1 原圖)
+          </button>
+          <button id="btn-tab-a" onclick="switchScenario('A')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-700 hover:bg-white/70">
+            🅰️ 實驗 A：球到達右端等高處
+          </button>
+          <button id="btn-tab-b" onclick="switchScenario('B')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-700 hover:bg-white/70">
+            🅱️ 實驗 B：降低斜度，球仍到等高處
+          </button>
+          <button id="btn-tab-c" onclick="switchScenario('C')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-700 hover:bg-white/70">
+            🅲 推論 C：若為水平，球不斷向前
+          </button>
+        </div>
+
+        <!-- 右側：動態操作按鈕 -->
+        <div class="flex items-center gap-2">
+          <button id="btn-play-action" onclick="playCurrentAnimation()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5">
+            <span id="play-icon">▶️</span>
+            <span id="play-text">動態釋放鐵球</span>
+          </button>
+          <button onclick="resetToInitialState()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-300 transition-all shadow-sm">
+            🔄 重設
+          </button>
+        </div>
+      </div>
+
+      <!-- 課本圖 2-1 舞台區 (純手繪向量 SVG 完美 1:1 還原課本插圖) -->
+      <div class="relative bg-[#fffdf8] rounded-3xl p-3 sm:p-6 border-2 border-[#e8dcb8] shadow-inner overflow-hidden">
+        
+        <!-- 頂部三個課本對話框 (完美對齊課本圖 2-1) -->
+        <div class="grid grid-cols-12 gap-2 sm:gap-4 mb-2">
+          
+          <!-- 1. 左側：「球由斜面自由滑下」 -->
+          <div class="col-span-3 sm:col-span-3 flex flex-col items-start relative">
+            <div class="relative bg-white border-2 border-[#fcd34d] text-amber-950 font-bold rounded-2xl px-3 py-2 text-xs sm:text-sm shadow-sm bubble-arrow-down w-full max-w-[170px] text-center">
+              <span>球由斜面<br class="hidden sm:inline"/>自由滑下</span>
+            </div>
+          </div>
+
+          <!-- 2. 中間：「實驗」A 與 B -->
+          <div class="col-span-6 sm:col-span-6 flex flex-col items-center relative">
+            <div class="relative bg-white border-2 border-[#fcd34d] text-amber-950 rounded-2xl px-4 py-2 text-xs sm:text-sm shadow-sm w-full max-w-[420px]">
+              <div class="text-center font-black text-amber-900 border-b border-amber-100 pb-1 mb-1.5 text-xs sm:text-sm">
+                —— 實驗 ——
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-left">
+                <!-- A 欄 -->
+                <div id="box-info-a" onclick="switchScenario('A')" class="cursor-pointer hover:bg-amber-50/70 p-1.5 rounded-xl transition-all">
+                  <div class="flex items-start gap-1.5">
+                    <span class="w-4 h-4 rounded bg-slate-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">A</span>
+                    <span class="text-xs sm:text-[13px] font-bold text-slate-800 leading-snug">球會到達右端等高處。</span>
+                  </div>
+                </div>
+                <!-- B 欄 -->
+                <div id="box-info-b" onclick="switchScenario('B')" class="cursor-pointer hover:bg-amber-50/70 p-1.5 rounded-xl transition-all border-l border-amber-200/80 pl-3">
+                  <div class="flex items-start gap-1.5">
+                    <span class="w-4 h-4 rounded bg-slate-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">B</span>
+                    <span class="text-xs sm:text-[13px] font-bold text-slate-800 leading-snug">降低右端斜度，球仍會到達等高處。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 右側：「推論」C -->
+          <div class="col-span-3 sm:col-span-3 flex flex-col items-end relative">
+            <div id="box-info-c" onclick="switchScenario('C')" class="cursor-pointer relative bg-white border-2 border-[#fcd34d] text-amber-950 rounded-2xl px-3 py-2 text-xs sm:text-sm shadow-sm bubble-arrow-down-center w-full max-w-[190px]">
+              <div class="text-center font-black text-amber-900 border-b border-amber-100 pb-1 mb-1.5 text-xs sm:text-sm">
+                —— 推論 ——
+              </div>
+              <div class="flex items-start gap-1.5 text-left">
+                <span class="w-4 h-4 rounded bg-slate-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">C</span>
+                <span class="text-xs sm:text-[13px] font-bold text-slate-800 leading-snug">若右端為水平，球應會不斷向前。</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 課本主圖向量 SVG (寬度自適應 viewBox 0 0 1000 320) -->
+        <div class="w-full overflow-x-auto">
+          <svg id="svg-textbook-2-1" viewBox="0 0 1000 320" class="w-full min-w-[760px] h-auto select-none">
+            <defs>
+              <!-- 橘紅色箭頭標記 -->
+              <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M 0 1 L 7 4 L 0 7 Z" fill="#ea580c" />
+              </marker>
+              <!-- 灰色箭頭標記 (高度線 h) -->
+              <marker id="arrow-gray" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M 0 0 L 6 3 L 0 6 Z" fill="#64748b" />
+              </marker>
+
+              <!-- 鐵球立體金屬球體漸層 -->
+              <radialGradient id="metal-ball-grad" cx="35%" cy="32%" r="65%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="30%" stop-color="#e2e8f0" />
+                <stop offset="65%" stop-color="#94a3b8" />
+                <stop offset="100%" stop-color="#334155" />
+              </radialGradient>
+
+              <!-- 軌道綠色平滑投影 -->
+              <filter id="track-shadow" x="-5%" y="-5%" width="110%" height="120%">
+                <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#73ab99" flood-opacity="0.3" />
+              </filter>
+            </defs>
+
+            <!-- 1. 起始高度基準虛線 (橫跨全景) -->
+            <line x1="80" y1="120" x2="880" y2="120" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4 4" />
+
+            <!-- 2. 中間高度標記 h 雙向箭頭與文字 -->
+            <g id="height-mark-group">
+              <line x1="280" y1="124" x2="280" y2="216" stroke="#64748b" stroke-width="1.5" marker-start="url(#arrow-gray)" marker-end="url(#arrow-gray)" />
+              <text x="280" y="174" fill="#334155" font-size="20" font-family="serif" font-style="italic" font-weight="bold" text-anchor="middle">h</text>
+            </g>
+
+            <!-- ======================================================= -->
+            <!-- 3. 課本淡青綠色雙斜面軌道本體 (Track Paths) -->
+            <!-- ======================================================= -->
+            <!-- 軌道 C：底端貫穿整場的淡綠色水平軌道 (帶有左端弧形斜面向上彎) -->
+            <!-- 左端起點 (70, 120) -> 弧形下降到 (160, 240) -> 水平向右延伸至 (980, 240) -->
+            <path id="track-main-c" 
+                  d="M 68 116 C 68 180, 110 240, 175 240 L 980 240" 
+                  fill="none" stroke="#9dd8c3" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" filter="url(#track-shadow)" />
+
+            <!-- 軌道 A：從水平段 (460, 240) 分支出去，以較陡的角度弧形彎起到 (560, 120) -->
+            <path id="track-branch-a" 
+                  d="M 460 240 C 490 236, 525 200, 558 116" 
+                  fill="none" stroke="#9dd8c3" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" filter="url(#track-shadow)" />
+
+            <!-- 軌道 B：從水平段 (490, 240) 分支出去，以較平緩的角度弧形彎起到 (725, 120) -->
+            <path id="track-branch-b" 
+                  d="M 490 240 C 560 238, 640 200, 725 116" 
+                  fill="none" stroke="#9dd8c3" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" filter="url(#track-shadow)" />
+
+            <!-- ======================================================= -->
+            <!-- 4. 橘紅色運動虛線與箭頭 (Orange Trajectory Paths) -->
+            <!-- ======================================================= -->
+            <!-- (1) 左斜面下滑軌跡與箭頭 -->
+            <path d="M 112 140 C 125 170, 150 205, 195 212" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow-orange)" />
+
+            <!-- (2) 底部水平段運動軌跡與箭頭 -->
+            <path d="M 315 212 L 480 212" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow-orange)" />
+
+            <!-- (3) A 分支爬升軌跡與箭頭 -->
+            <path id="orange-path-a" d="M 470 212 C 490 208, 510 185, 532 142" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow-orange)" />
+
+            <!-- (4) B 分支爬升軌跡與箭頭 -->
+            <path id="orange-path-b" d="M 545 212 C 600 208, 645 180, 680 142" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow-orange)" />
+
+            <!-- (5) C 水平持續運動軌跡與箭頭 -->
+            <path id="orange-path-c" d="M 720 212 L 920 212" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow-orange)" />
+
+            <!-- ======================================================= -->
+            <!-- 5. 藍色圓形字母標記 A、B、C (與課本完全相同) -->
+            <!-- ======================================================= -->
+            <!-- 標籤 A -->
+            <g id="badge-group-a" onclick="switchScenario('A')" class="cursor-pointer group">
+              <circle cx="538" cy="78" r="13" fill="#3b82f6" class="transition-transform group-hover:scale-110" />
+              <text x="538" y="83" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">A</text>
+            </g>
+
+            <!-- 標籤 B -->
+            <g id="badge-group-b" onclick="switchScenario('B')" class="cursor-pointer group">
+              <circle cx="682" cy="78" r="13" fill="#3b82f6" class="transition-transform group-hover:scale-110" />
+              <text x="682" y="83" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">B</text>
+            </g>
+
+            <!-- 標籤 C -->
+            <g id="badge-group-c" onclick="switchScenario('C')" class="cursor-pointer group">
+              <circle cx="868" cy="155" r="13" fill="#3b82f6" class="transition-transform group-hover:scale-110" />
+              <text x="868" y="160" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">C</text>
+            </g>
+
+            <!-- ======================================================= -->
+            <!-- 6. 課本各位置靜態展示球 (在全景模式下顯示) -->
+            <!-- ======================================================= -->
+            <g id="static-balls-group">
+              <!-- 左側起始球 (108, 120) -->
+              <g id="ball-start">
+                <circle cx="108" cy="120" r="18" fill="url(#metal-ball-grad)" stroke="#334155" stroke-width="1.5" />
+              </g>
+
+              <!-- 中間滾動球 (280, 212) 帶水平殘影線 -->
+              <g id="ball-middle">
+                <!-- 速度殘影線 -->
+                <line x1="240" y1="205" x2="256" y2="205" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="234" y1="212" x2="254" y2="212" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="242" y1="219" x2="256" y2="219" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <circle cx="280" cy="212" r="18" fill="url(#metal-ball-grad)" stroke="#334155" stroke-width="1.5" />
+              </g>
+
+              <!-- A 點球 (538, 120) -->
+              <g id="ball-pos-a">
+                <circle cx="538" cy="120" r="18" fill="url(#metal-ball-grad)" stroke="#334155" stroke-width="1.5" />
+              </g>
+
+              <!-- B 點球 (682, 120) -->
+              <g id="ball-pos-b">
+                <circle cx="682" cy="120" r="18" fill="url(#metal-ball-grad)" stroke="#334155" stroke-width="1.5" />
+              </g>
+
+              <!-- C 點球 (868, 212) 帶水平殘影線 -->
+              <g id="ball-pos-c">
+                <line x1="828" y1="205" x2="844" y2="205" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="822" y1="212" x2="842" y2="212" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="830" y1="219" x2="844" y2="219" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <circle cx="868" cy="212" r="18" fill="url(#metal-ball-grad)" stroke="#334155" stroke-width="1.5" />
+              </g>
+            </g>
+
+            <!-- ======================================================= -->
+            <!-- 7. 動態運行的鐵球 (動畫專用) -->
+            <!-- ======================================================= -->
+            <g id="dynamic-anim-ball" style="display: none;">
+              <!-- 動態速度線 -->
+              <g id="anim-speed-lines" opacity="0">
+                <line x1="-38" y1="-7" x2="-22" y2="-7" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="-44" y1="0" x2="-24" y2="0" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+                <line x1="-36" y1="7" x2="-22" y2="7" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+              </g>
+              <circle cx="0" cy="0" r="18" fill="url(#metal-ball-grad)" stroke="#1e293b" stroke-width="1.8" />
+            </g>
+
+          </svg>
+        </div>
+
+        <!-- 底部圖名標籤 (對齊課本圖 2-1 伽利略的實驗與推論) -->
+        <div class="flex items-center justify-start gap-2 pt-2 border-t border-amber-100 mt-2">
+          <div class="inline-flex items-center rounded-lg border border-slate-400 overflow-hidden text-xs sm:text-sm font-bold shadow-sm">
+            <span class="bg-slate-700 text-white px-2 py-0.5 flex items-center gap-1">
+              <span>▲</span> <span>圖2-1</span>
+            </span>
+            <span class="bg-white text-slate-800 px-3 py-0.5 underline decoration-slate-400">
+              伽利略的實驗與推論
+            </span>
+          </div>
+          <span id="current-scenario-indicator" class="text-xs font-semibold text-amber-800 bg-amber-100/70 px-2.5 py-0.5 rounded-full">
+            目前狀態：課本全景原圖對照
+          </span>
+        </div>
+
+      </div>
+
+      <!-- 動態解析提示卡片 -->
+      <div id="scenario-explanation-card" class="bg-amber-50/90 rounded-2xl p-4 border border-amber-200 text-xs sm:text-sm text-slate-700 leading-relaxed flex items-start gap-3">
+        <span class="text-2xl flex-shrink-0">💡</span>
+        <div>
+          <strong id="exp-title" class="text-amber-950 font-black text-sm sm:text-base block mb-1">
+            課本核心探究概念：
+          </strong>
+          <p id="exp-desc">
+            伽利略描述：在完全光滑斜面上，鐵球由左斜面上端自由滑下，不論右斜面的斜度為何，鐵球到達右端最高位置時的高度，都會與原來的起始高度幾乎相等（圖 2-1 A）；若降低右斜面的斜度，鐵球到達相同高度前所行的距離會增加（圖 2-1 B）；由此推論，若放平右斜面，鐵球應可不停的向前運動（圖 2-1 C）！
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 第二幕：亞里斯多德 VS 伽利略 跨時空思辨對決（課本 P.34 vs P.35） -->
+    <!-- ========================================================================= -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+      
+      <!-- 亞里斯多德觀點卡片 (課本 P.34) -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-amber-200/90 shadow-xl relative overflow-hidden">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-lg">
+              西元前四世紀 · 直覺經驗觀
+            </span>
+            <span class="text-xs font-bold text-slate-500">課本 P.34</span>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-amber-100 border-2 border-amber-300 flex-shrink-0 flex items-center justify-center text-3xl sm:text-4xl shadow-inner">
+              🏛️
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-black text-slate-900">
+                古希臘哲學家 · 亞里斯多德
+              </h2>
+              <p class="text-xs text-slate-500 font-mono">Aristotle (西元前 384 ~ 前 322 年)</p>
+            </div>
+          </div>
+
+          <!-- 對話氣泡（課本原句） -->
+          <div class="bg-amber-50/90 border-l-4 border-amber-500 p-4 rounded-r-2xl space-y-2">
+            <p class="text-xs text-amber-800 font-bold">💬 大師觀點主張：</p>
+            <blockquote class="text-slate-800 font-bold text-sm sm:text-base leading-snug">
+              「我認為物體若不受力作用，最後會停止運動。」
+            </blockquote>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              若物體受力持續作用，可維持不斷的運動；若不受力作用，則最後必將停止。此觀念一直延續至十七世紀。
+            </p>
+          </div>
+
+          <!-- 摩擦力對照迷你實驗 -->
+          <div class="bg-white rounded-2xl p-4 border border-amber-200 space-y-2.5">
+            <span class="text-xs font-bold text-slate-700 block">
+              🧪 破除直覺盲點：水平推球受阻力模擬
+            </span>
+            <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
+              <button onclick="simulateFriction('carpet')" class="btn-fric px-2 py-1.5 rounded-lg border border-slate-300 font-semibold hover:bg-amber-100 transition-all text-slate-600">
+                🧶 厚毛毯
+              </button>
+              <button onclick="simulateFriction('wood')" class="btn-fric px-2 py-1.5 rounded-lg border border-amber-500 bg-amber-100 font-bold text-amber-900 transition-all">
+                🪵 木地板
+              </button>
+              <button onclick="simulateFriction('ice')" class="btn-fric px-2 py-1.5 rounded-lg border border-slate-300 font-semibold hover:bg-amber-100 transition-all text-slate-600">
+                🧊 冰面
+              </button>
+              <button onclick="simulateFriction('ideal')" class="btn-fric px-2 py-1.5 rounded-lg border border-sky-400 font-bold hover:bg-sky-100 transition-all text-sky-700">
+                ✨ 零摩擦
+              </button>
+            </div>
+            <p id="fric-msg" class="text-xs text-amber-800 font-medium bg-amber-50 p-2 rounded-lg">
+              木地板有阻力：球滾動一小段後停下。亞里斯多德因此誤以為「需要力才能維持運動」。
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-amber-200/80 text-xs text-amber-900/80 flex items-center gap-2">
+          <span class="text-base">💡</span>
+          <span>盲點剖析：日常生活中物體停下，是因為<b>摩擦阻力</b>在作怪！</span>
+        </div>
+      </div>
+
+      <!-- 伽利略觀點卡片 (課本 P.35) -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-sky-200/90 shadow-xl relative overflow-hidden bg-gradient-to-br from-white/95 to-sky-50/40">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-100 px-3 py-1 rounded-lg">
+              十七世紀 · 理想實驗與科學革命
+            </span>
+            <span class="text-xs font-bold text-slate-500">課本 P.35</span>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-sky-100 border-2 border-sky-300 flex-shrink-0 flex items-center justify-center text-3xl sm:text-4xl shadow-inner">
+              🔭
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-black text-slate-900">
+                近代科學之父 · 伽利略
+              </h2>
+              <p class="text-xs text-slate-500 font-mono">Galileo Galilei (1564 ~ 1642 年)</p>
+            </div>
+          </div>
+
+          <!-- 對話氣泡（課本原句） -->
+          <div class="bg-sky-50/90 border-l-4 border-sky-500 p-4 rounded-r-2xl space-y-2">
+            <p class="text-xs text-sky-800 font-bold">💬 伽利略的科學大推論：</p>
+            <blockquote class="text-slate-800 font-bold text-sm sm:text-base leading-snug">
+              「物體如果不受外力作用，或所受外力的合力為零時，會保持原來的運動狀態。」
+            </blockquote>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              物體這種維持原來運動狀態的性質，稱為<b>「慣性」</b>（Inertia）。
+            </p>
+          </div>
+
+          <!-- 課本金句總結框 -->
+          <div class="bg-amber-100/70 border border-amber-300 rounded-2xl p-3.5 space-y-1 text-xs sm:text-sm">
+            <span class="font-extrabold text-amber-900">🎯 慣性的兩種運動表現：</span>
+            <ul class="list-disc list-inside text-amber-950 font-semibold space-y-0.5">
+              <li><b>靜者恆靜</b>：原本靜止的物體，在不受外力時保持靜止。</li>
+              <li><b>動者恆作等速度直線運動</b>：原本運動的物體，在不受外力時永遠保持相同速度與方向向前運動。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-sky-200/80 text-xs text-sky-900/90 flex items-center justify-between">
+          <span class="font-semibold">牛頓後來繼承此推論，正式確立「牛頓第一運動定律」。</span>
+          <a href="#section-quiz" class="text-sky-600 font-bold hover:underline">觀念小檢核 →</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 第三幕：課堂即時概念檢核（3 題互動評量） -->
+    <!-- ========================================================================= -->
+    <section id="section-quiz" class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-amber-300 shadow-xl space-y-6">
+      <div class="flex items-center justify-between border-b border-amber-200 pb-3">
+        <div>
+          <span class="text-xs font-bold text-amber-700 bg-amber-100 px-3 py-1 rounded-lg">
+            形成性評量
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2 font-display">
+            康軒 2-1 課本圖 2-1 概念闖關
+          </h2>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-500">進度</span>
+          <p id="quiz-progress-text" class="text-sm font-black text-amber-700 font-mono">1 / 3 題</p>
+        </div>
+      </div>
+
+      <!-- 測驗內容容器 -->
+      <div id="quiz-container" class="space-y-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-4">
+          <h3 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-900">
+            題目載入中...
+          </h3>
+          <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <!-- 選項動態生成 -->
+          </div>
+          <div id="quiz-feedback" class="hidden p-4 rounded-xl text-xs sm:text-sm font-semibold">
+            <!-- 回饋解析 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 完賽通關榮譽卡 -->
+      <div id="certificate-box" class="hidden bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-100 rounded-3xl p-6 border-2 border-amber-400 text-center space-y-3 shadow-lg">
+        <div class="text-4xl">🏆</div>
+        <h3 class="text-xl sm:text-2xl font-black text-amber-950">
+          太棒了！已完整掌握康軒 2-1 伽利略實驗與慣性！
+        </h3>
+        <p class="text-xs sm:text-sm text-amber-900/80 max-w-lg mx-auto">
+          你已經能夠清楚說明：在光滑斜面上，鐵球會回到等高處（A）；斜度變平時路程增加（B）；右端放平時將永遠等速前進（C）！
+        </p>
+        <button onclick="resetQuiz()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow">
+          🔁 重新作答測驗
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 頁尾 (Footer) -->
+  <!-- ========================================================================= -->
+  <footer class="mt-20 border-t border-amber-900/20 bg-amber-950/10 py-8 text-center text-xs text-amber-900/70 space-y-2">
+    <p class="font-medium">
+      教材依據：康軒國中自然 3 上 · 第 2 章 力與運動 · 2-1 慣性與牛頓第一運動定律（課本第 34-35 頁 圖 2-1）
+    </p>
+    <p>
+    </p>
+    <p>
+      正式發布：<a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="text-amber-800 underline hover:text-amber-950 font-bold">我的數位基地 Central Hub</a> · 洪瑞英老師自然科學互動教材
+    </p>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JavaScript 核心邏輯 -->
+  <!-- ========================================================================= -->
+  <script>
+    let activeScenario = 'ALL'; // 'ALL', 'A', 'B', 'C'
+    let isAnimating = false;
+    let animRequest = null;
+
+    // SVG 軌道幾何座標點
+    // 左端球 (108, 120), 底端 (280, 212), A點 (538, 120), B點 (682, 120), C點 (868, 212)
+    const pointsMap = {
+      start: { x: 108, y: 120 },
+      bottom: { x: 280, y: 212 },
+      endA: { x: 538, y: 120 },
+      endB: { x: 682, y: 120 },
+      endC: { x: 920, y: 212 }
+    };
+
+    function switchScenario(mode) {
+      if (isAnimating) stopAnimation();
+      activeScenario = mode;
+
+      // 更新按鈕外觀
+      const tabs = {
+        'ALL': document.getElementById('btn-tab-overview'),
+        'A': document.getElementById('btn-tab-a'),
+        'B': document.getElementById('btn-tab-b'),
+        'C': document.getElementById('btn-tab-c')
+      };
+      Object.keys(tabs).forEach(k => {
+        if (k === mode) {
+          tabs[k].className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-amber-600 text-white shadow-sm";
+        } else {
+          tabs[k].className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-700 hover:bg-white/70";
+        }
+      });
+
+      // 更新說明與指示
+      const indicator = document.getElementById('current-scenario-indicator');
+      const expTitle = document.getElementById('exp-title');
+      const expDesc = document.getElementById('exp-desc');
+      const badgeA = document.getElementById('badge-group-a');
+      const badgeB = document.getElementById('badge-group-b');
+      const badgeC = document.getElementById('badge-group-c');
+
+      badgeA.classList.remove('active-badge');
+      badgeB.classList.remove('active-badge');
+      badgeC.classList.remove('active-badge');
+
+      if (mode === 'ALL') {
+        indicator.textContent = '目前狀態：課本全景原圖對照';
+        expTitle.textContent = '課本圖 2-1 伽利略實驗與推論全景：';
+        expDesc.textContent = '左側鐵球由斜面自由滑下，若右斜面較陡（A），球回到等高處；降低右端斜度（B），球仍會到達等高處但路程更長；若右端完全放平為水平面（C），鐵球將永遠向前運動！點擊下方「動態釋放鐵球」可觀看連續動態演示。';
+        document.getElementById('static-balls-group').style.display = 'inline';
+        document.getElementById('dynamic-anim-ball').style.display = 'none';
+      } else if (mode === 'A') {
+        badgeA.classList.add('active-badge');
+        indicator.textContent = '目前聚焦：實驗 A · 右端斜面較陡';
+        expTitle.textContent = '【實驗 A】球會到達右端等高處：';
+        expDesc.textContent = '在光滑斜面上，鐵球由左斜面上端自由滑下，不論右斜面的斜度為何，鐵球到達右端最高位置時的高度，都會與原來的起始高度幾乎相等（回到高度基準線 h）。';
+        playCurrentAnimation();
+      } else if (mode === 'B') {
+        badgeB.classList.add('active-badge');
+        indicator.textContent = '目前聚焦：實驗 B · 降低右端斜度';
+        expTitle.textContent = '【實驗 B】降低右端斜度，球仍會到達等高處：';
+        expDesc.textContent = '若降低右斜面的斜度（坡度變緩），鐵球到達右端相同高度 h 之前，在右斜面上所行的距離會明顯增加（路程變長）。';
+        playCurrentAnimation();
+      } else if (mode === 'C') {
+        badgeC.classList.add('active-badge');
+        indicator.textContent = '目前聚焦：推論 C · 右端為水平';
+        expTitle.textContent = '【推論 C】若右端為水平，球應會不斷向前：';
+        expDesc.textContent = '由此推論：若放平右斜面，鐵球在水平面上永遠無法到達起始高度 h。在理想無摩擦阻力的狀態下，鐵球將不停地向前作等速度直線運動！';
+        playCurrentAnimation();
+      }
+    }
+
+    function playCurrentAnimation() {
+      if (isAnimating) {
+        stopAnimation();
+        return;
+      }
+
+      // 若在全景模式點擊播放，預設展示 A->B->C 循環或當前模式
+      const targetMode = activeScenario === 'ALL' ? 'A' : activeScenario;
+      startBallAnimation(targetMode);
+    }
+
+    function stopAnimation() {
+      if (animRequest) cancelAnimationFrame(animRequest);
+      isAnimating = false;
+      document.getElementById('play-icon').textContent = '▶️';
+      document.getElementById('play-text').textContent = '動態釋放鐵球';
+      document.getElementById('anim-speed-lines').setAttribute('opacity', '0');
+    }
+
+    function resetToInitialState() {
+      stopAnimation();
+      switchScenario('ALL');
+    }
+
+    function startBallAnimation(mode) {
+      stopAnimation();
+      isAnimating = true;
+      document.getElementById('play-icon').textContent = '⏸️';
+      document.getElementById('play-text').textContent = '暫停演示';
+
+      // 隱藏靜態球，顯示動態球
+      document.getElementById('static-balls-group').style.display = 'none';
+      const animBall = document.getElementById('dynamic-anim-ball');
+      animBall.style.display = 'inline';
+
+      let startTime = performance.now();
+      const speedLines = document.getElementById('anim-speed-lines');
+
+      function animate(now) {
+        const elapsed = (now - startTime) / 1000; // 秒
+
+        // 動畫總時長分配
+        // 0 ~ 1.0s: 從左端 (108, 120) 下滑到 (280, 212)
+        // 1.0s ~ 2.2s: 上衝至目標端點 (A, B, 或 C)
+        // 2.2s ~ 3.2s: 停留在頂點，若為 C 則持續向前
+
+        let curX = 108;
+        let curY = 120;
+
+        if (elapsed < 1.0) {
+          // 下滑階段 (平滑貝茲曲線插值)
+          const t = elapsed / 1.0;
+          const u = 1 - t;
+          // 曲線控制點
+          curX = u * u * 108 + 2 * u * t * 160 + t * t * 280;
+          curY = u * u * 120 + 2 * u * t * 212 + t * t * 212;
+          speedLines.setAttribute('opacity', t > 0.4 ? '1' : '0');
+        } else if (elapsed < 2.3) {
+          // 衝刺階段
+          const t = Math.min((elapsed - 1.0) / 1.3, 1.0);
+          const u = 1 - t;
+
+          if (mode === 'A') {
+            // 往 A 彎曲衝刺到 (538, 120)
+            curX = u * u * 280 + 2 * u * t * 470 + t * t * 538;
+            curY = u * u * 212 + 2 * u * t * 205 + t * t * 120;
+            speedLines.setAttribute('opacity', t < 0.7 ? '1' : '0');
+          } else if (mode === 'B') {
+            // 往 B 緩坡衝刺到 (682, 120)
+            curX = u * u * 280 + 2 * u * t * 530 + t * t * 682;
+            curY = u * u * 212 + 2 * u * t * 208 + t * t * 120;
+            speedLines.setAttribute('opacity', t < 0.7 ? '1' : '0');
+          } else {
+            // 模式 C：水平等速直線衝刺
+            curX = 280 + (960 - 280) * t;
+            curY = 212;
+            speedLines.setAttribute('opacity', '1');
+          }
+        } else {
+          // 到達終點停留或循環
+          if (mode === 'C') {
+            // 水平繼續等速前進並循環
+            const extT = (elapsed - 2.3) % 2.0;
+            curX = 280 + (980 - 280) * (extT / 2.0);
+            curY = 212;
+            speedLines.setAttribute('opacity', '1');
+          } else {
+            // 停在最高等高點
+            curX = mode === 'A' ? 538 : 682;
+            curY = 120;
+            speedLines.setAttribute('opacity', '0');
+
+            if (elapsed > 3.5) {
+              // 演示完畢，若原本是 ALL 模式，可以自動輪流
+              if (activeScenario === 'ALL') {
+                startTime = now;
+              } else {
+                stopAnimation();
+                return;
+              }
+            }
+          }
+        }
+
+        animBall.setAttribute('transform', 'translate(' + curX + ', ' + curY + ')');
+
+        if (isAnimating) {
+          animRequest = requestAnimationFrame(animate);
+        }
+      }
+
+      animRequest = requestAnimationFrame(animate);
+    }
+
+    /* 亞里斯多德水平摩擦力小模擬 */
+    function simulateFriction(type) {
+      const msg = document.getElementById('fric-msg');
+      const btns = document.querySelectorAll('.btn-fric');
+      btns.forEach(b => b.className = "btn-fric px-2 py-1.5 rounded-lg border border-slate-300 font-semibold hover:bg-amber-100 transition-all text-slate-600");
+
+      if (type === 'carpet') {
+        msg.textContent = '🧶 厚毛毯阻力極大：球滾不到 30 公分立刻停下。生活經驗讓人誤以為「沒推就不會動」。';
+      } else if (type === 'wood') {
+        msg.textContent = '🪵 木地板阻力中等：球滾動一小段後停下。亞里斯多德因此誤判「需要力才能維持運動」。';
+      } else if (type === 'ice') {
+        msg.textContent = '🧊 光滑冰面阻力極小：球滑行很長一段距離才緩慢停下，顯示阻力越小，能滑得越遠！';
+      } else if (type === 'ideal') {
+        msg.textContent = '✨ 理想零摩擦光滑面：完全不受摩擦阻力影響，球以恆定速度永遠向前滑行，永不停歇！（伽利略的慣性真理）';
+      }
+    }
+
+    /* 觀念評量題目 */
+    const quizData = [
+      {
+        q: "1. 課本圖 2-1 伽利略斜面實驗中，降低右斜面的斜度（如情境 B）時，鐵球在右斜面上的運動有何特徵？",
+        options: [
+          "到達的高度會大幅降低",
+          "到達相同高度前，所行的距離會增加",
+          "到達相同高度前，所行的距離會減少",
+          "鐵球無法再往上爬"
+        ],
+        answer: 1,
+        explain: "課本第 35 頁明確指出：若降低右斜面的斜度，則鐵球到達右端相同高度前，在右斜面上所行的距離會增加（圖 2-1 B）！"
+      },
+      {
+        q: "2. 依據課本圖 2-1 C 的推論，若將右端放平為水平面且完全光滑，鐵球將會如何？",
+        options: [
+          "因沒有推力，滾動一段距離後自動停止",
+          "因無法回到起始高度 h，鐵球應可不停地向前運動",
+          "速度會越來越快無限加速",
+          "立刻靜止在底部"
+        ],
+        answer: 1,
+        explain: "課本原話推論：若放平右斜面，鐵球永遠達不到原高度 h，則鐵球應可不停的向前運動（圖 2-1 C）！"
+      },
+      {
+        q: "3. 伽利略透過此實驗推論出「慣性」的定義，下列敘述何者完全正確？",
+        options: [
+          "物體受力越大，慣性就越大",
+          "只有靜止的物體才有維持原狀的性質",
+          "物體不受外力或合力為零時，會保持原來的運動狀態",
+          "物體運動必須依靠持續施力才能維持"
+        ],
+        answer: 2,
+        explain: "正確！由伽利略的實驗可知，物體如果不受外力作用，或所受外力的合力為零時，會保持原來的運動狀態。這種性質稱為「慣性」。"
+      }
+    ];
+
+    let quizIdx = 0;
+    let quizDone = false;
+
+    function renderQuiz() {
+      const item = quizData[quizIdx];
+      document.getElementById('quiz-progress-text').textContent = (quizIdx + 1) + ' / ' + quizData.length + ' 題';
+      document.getElementById('quiz-question').textContent = item.q;
+
+      const optsBox = document.getElementById('quiz-options');
+      optsBox.innerHTML = '';
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.className = "hidden p-4 rounded-xl text-xs sm:text-sm font-semibold";
+      feedback.innerHTML = '';
+      quizDone = false;
+
+      item.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "text-left p-3.5 rounded-xl border border-slate-300 bg-white hover:bg-amber-50 hover:border-amber-400 font-medium text-xs sm:text-sm text-slate-800 transition-all flex items-start gap-2.5";
+        btn.innerHTML = '<span class="w-5 h-5 rounded-full bg-slate-100 border border-slate-300 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">' + ['A','B','C','D'][idx] + '</span> <span>' + opt + '</span>';
+        btn.onclick = () => checkQuiz(idx, btn);
+        optsBox.appendChild(btn);
+      });
+    }
+
+    function checkQuiz(sel, btn) {
+      if (quizDone) return;
+      quizDone = true;
+      const item = quizData[quizIdx];
+      const fb = document.getElementById('quiz-feedback');
+      fb.classList.remove('hidden');
+
+      if (sel === item.answer) {
+        btn.className = "text-left p-3.5 rounded-xl border border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs sm:text-sm transition-all flex items-start gap-2.5";
+        fb.className = "p-4 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-100 text-emerald-900 border border-emerald-300";
+        fb.innerHTML = '🎉 <b>答對了！</b> ' + item.explain;
+
+        setTimeout(() => {
+          if (quizIdx < quizData.length - 1) {
+            quizIdx++;
+            renderQuiz();
+          } else {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('certificate-box').classList.remove('hidden');
+          }
+        }, 1800);
+      } else {
+        btn.className = "text-left p-3.5 rounded-xl border border-rose-400 bg-rose-50 text-rose-900 text-xs sm:text-sm transition-all flex items-start gap-2.5";
+        fb.className = "p-4 rounded-xl text-xs sm:text-sm font-semibold bg-rose-100 text-rose-900 border border-rose-300";
+        fb.innerHTML = '❌ <b>再想想看：</b> ' + item.explain + ' 請點選正確答案繼續！';
+        quizDone = false;
+      }
+    }
+
+    function resetQuiz() {
+      quizIdx = 0;
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('certificate-box').classList.add('hidden');
+      renderQuiz();
+    }
+
+    /* 語音導讀 */
+    let isSpeaking = false;
+    function toggleVoiceSpeech() {
+      if (!('speechSynthesis' in window)) {
+        alert('您的瀏覽器不支援語音合成功能。');
+        return;
+      }
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        document.getElementById('tts-text').textContent = '語音導讀';
+        document.getElementById('tts-icon').textContent = '🔊';
+        return;
+      }
+
+      const script = "各位同學好！請看課本圖二之一，伽利略的實驗與推論。在光滑斜面上，鐵球由左端自由滑下。情境Ａ：不論右斜面斜度如何，球都會到達右端等高處。情境Ｂ：降低右端斜度，球為了到達相同高度，所走的路程會增加。情境Ｃ推論：若右端放平為水平面，球永遠達不到原高度，在無阻力下應可不停向前運動！這證明了物體維持原來運動狀態的性質，稱為慣性。";
+      const utter = new SpeechSynthesisUtterance(script);
+      utter.lang = 'zh-TW';
+      utter.rate = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const twVoice = voices.find(v => v.lang === 'zh-TW' || v.name.includes('YunJhe') || v.name.includes('HsiaoChen') || v.name.includes('Taiwan'));
+      if (twVoice) utter.voice = twVoice;
+
+      utter.onstart = () => {
+        isSpeaking = true;
+        document.getElementById('tts-text').textContent = '停止播放';
+        document.getElementById('tts-icon').textContent = '⏹️';
+      };
+      utter.onend = () => {
+        isSpeaking = false;
+        document.getElementById('tts-text').textContent = '語音導讀';
+        document.getElementById('tts-icon').textContent = '🔊';
+      };
+      utter.onerror = () => {
+        isSpeaking = false;
+        document.getElementById('tts-text').textContent = '語音導讀';
+        document.getElementById('tts-icon').textContent = '🔊';
+      };
+      window.speechSynthesis.speak(utter);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    window.addEventListener('load', () => {
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>

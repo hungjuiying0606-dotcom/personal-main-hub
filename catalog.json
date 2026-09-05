@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-31",
+  "lastUpdated": "2026-09-05",
   "categories": [
     {
       "id": "teaching",
@@ -32,6 +32,15 @@
           "homepageState": "linked",
           "order": 25,
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
+        },
+        {
+          "id": "galileo-ramp-lab",
+          "title": "伽利略斜面實驗與慣性探究",
+          "description": "依據康軒國中自然3上第2章力與運動2-1（課本第34-35頁）設計之互動探究實驗室。包含亞里斯多德直覺觀與伽利略理想斜面思想推論對決、光滑雙斜面Canvas動態物理模擬（情境A、B、C與無段角度調節）、摩擦力直觀對比、POE預測驗證流程及即時概念闖關評量。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 26,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/galileo-ramp-lab/"
         },
         {
           "id": "life-master-newton",
