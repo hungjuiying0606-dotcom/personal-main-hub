@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>牛頓第二運動定律與加速度探究 · 康軒自然3上 2-2 互動實驗室</title>
+  <meta name="description" content="依據康軒國中自然3上第2章力與運動2-2（課本第38頁圖2-4）設計之互動教學網頁。1:1忠實還原課本插圖與動態模擬：推力相同時質量與加速度反比、質量相同時推力與加速度正比、F=ma公式互動沙盒與即時評量。" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            textbook: {
+              paperBg: '#fdfbf7',
+              paperCard: '#fffefb',
+              trackLine: '#94a3b8',
+              trackBg: '#f8fafc',
+              blueArrow: '#0284c7',
+              blueLight: '#e0f2fe',
+              blueBorder: '#38bdf8',
+              accentOrange: '#f97316',
+              accentAmber: '#f59e0b',
+              cardBorder: '#e2d7ba',
+              formulaCyan: '#0891b2',
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(14, 165, 233, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
+            'hover': '0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+            'paper': '0 10px 30px -5px rgba(180, 160, 120, 0.15), 0 4px 10px -2px rgba(0,0,0,0.03)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 15% 15%, #ffffff 0%, #faf6ec 45%, #f2ebd9 100%);
+      min-height: 100vh;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 215, 185, 0.85);
+    }
+    .paper-card {
+      background: #fffdf9;
+      border: 1.5px solid #ebdcb9;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(2, 132, 199, 0.4)); }
+      50% { filter: drop-shadow(0 0 8px rgba(2, 132, 199, 0.85)) drop-shadow(0 0 4px rgba(249, 115, 22, 0.6)); }
+    }
+    .glow-active {
+      animation: pulseGlow 1.6s ease-in-out infinite;
+    }
+    input[type=range] {
+      accent-color: #0284c7;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased selection:bg-sky-500 selection:text-white pb-24">
+
+  <!-- ========================================================================= -->
+  <!-- 頂部導航列 (Global Top Bar) -->
+  <!-- ========================================================================= -->
+  <header class="bg-slate-900/90 text-sky-50 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- 左側：回到 Central Hub 與單元來源 -->
+      <div class="flex items-center gap-3">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" 
+           class="flex items-center gap-1.5 text-sky-200 hover:text-white transition-colors text-xs sm:text-sm font-semibold py-1 px-2.5 rounded-lg hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="hidden md:inline">我的數位基地</span>
+          <span class="md:hidden">回首頁</span>
+        </a>
+        <span class="text-slate-700 hidden sm:inline">|</span>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+            康軒三年級 2-2
+          </span>
+          <span class="text-xs sm:text-sm font-medium text-slate-200 hidden lg:inline">
+            第 2 章 力與運動 · 課本第 38 頁（圖 2-4 影響加速度的因素）
+          </span>
+        </div>
+      </div>
+
+      <!-- 右側：功能快捷按鈕 -->
+      <div class="flex items-center gap-2">
+        <button id="btn-tts" onclick="toggleVoiceSpeech()" 
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-900/60 hover:bg-sky-800 text-sky-200 hover:text-white border border-sky-700/60 transition-all shadow-sm"
+                title="語音導讀本單元課本精華">
+          <span id="tts-icon">🔊</span>
+          <span id="tts-text" class="hidden sm:inline">語音導讀</span>
+        </button>
+
+        <a href="#section-figure-2-4" 
+           class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500 text-white hover:bg-sky-400 transition-all shadow-sm">
+          <span>🛒 課本圖 2-4 購物車</span>
+        </a>
+
+        <a href="#section-formula-sandbox" 
+           class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-slate-900 hover:bg-amber-300 transition-all shadow-sm">
+          <span>⚖️ F = ma 實驗盤</span>
+        </a>
+
+        <a href="#section-concept-quiz" 
+           class="hidden lg:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-white hover:bg-emerald-400 transition-all shadow-sm">
+          <span>🎯 即時概念評量</span>
+        </a>
+
+        <button onclick="toggleFullScreen()" 
+                class="p-2 rounded-lg text-sky-300 hover:text-white hover:bg-slate-800 text-xs transition-colors"
+                title="切換投影全螢幕模式">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 主內容區 (Main Content) -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-10">
+
+    <!-- 頁頭橫幅 -->
+    <div class="text-center space-y-2 max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 border border-sky-300 text-sky-900 text-xs sm:text-sm font-bold shadow-sm">
+        <span>📖 課本第 38 頁同步互動教具</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+        <span>圖 2-4 車速變化的情況，與總質量及施力大小有關</span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+        牛頓第二運動定律 · 影響加速度的因素
+      </h1>
+      <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+        1:1 忠實重現康軒課本插圖推車小精靈！探索 <b class="text-sky-700">「推力相同時質量對加速度的影響」</b> 與 <b class="text-amber-700">「質量相同時推力對加速度的影響」</b>。
+      </p>
+    </div>
+
+    <!-- 課本原文引言卡片 -->
+    <section class="glass-panel rounded-3xl p-5 sm:p-7 border-2 border-amber-200/90 shadow-paper relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
+        <div class="flex items-start gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-2xl flex-shrink-0 shadow-md">
+            🛒
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-sky-600 text-white text-xs font-black">1</span>
+              <h2 class="text-base sm:text-lg font-black text-slate-900">影響加速度的因素（課本第 38 頁）</h2>
+            </div>
+            <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+              以同樣的施力推動購物車，會發現<b>車內的東西越重時，購物車就越難加速前進</b>（圖 2-4 <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-800 font-bold text-xs">A</span>），若想以相同的加速度前進，就必須施以更大的推力。此外，<b>若推同一車的力量越大，則購物車就越容易加速前進</b>（圖 2-4 <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-800 font-bold text-xs">B</span>）。
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 flex-shrink-0 w-full md:w-auto justify-end">
+          <button onclick="playAudioTextbookIntro()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs shadow-sm flex items-center gap-1.5 transition-all">
+            <span>🔊</span>
+            <span>聆聽課本導讀</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心第一幕：課本圖 2-4 忠實重現與動態模擬器 -->
+    <section id="section-figure-2-4" class="glass-panel rounded-3xl p-5 sm:p-8 border-2 border-sky-300 shadow-2xl space-y-6">
+      
+      <!-- 控制列 -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+        
+        <!-- A / B 情境切換 -->
+        <div class="flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 flex-wrap">
+          <button id="tab-btn-a" onclick="switchMode('A')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-sky-600 text-white shadow-sm flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-md bg-white text-sky-700 font-black text-xs flex items-center justify-center">A</span>
+            <span>推力 (F) 相同時 · 質量越大加速度越小</span>
+          </button>
+          <button id="tab-btn-b" onclick="switchMode('B')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-700 hover:bg-white/80 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-md bg-slate-600 text-white font-black text-xs flex items-center justify-center">B</span>
+            <span>質量 (m) 相同時 · 推力越大加速度越大</span>
+          </button>
+        </div>
+
+        <!-- 播放控制鍵 -->
+        <div class="flex items-center gap-2">
+          <button id="btn-play-sim" onclick="toggleSimulation()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5">
+            <span id="play-sim-icon">▶️</span>
+            <span id="play-sim-text">同時起跑推車</span>
+          </button>
+
+          <button onclick="stepSimulation(0.5)" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-300 transition-all shadow-sm" title="前進 0.5 秒">
+            ⏱️ +0.5s 逐格
+          </button>
+
+          <button onclick="resetSimulation()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-300 transition-all shadow-sm">
+            🔄 重設
+          </button>
+        </div>
+      </div>
+
+      <!-- 說明副標題標籤 -->
+      <div id="scenario-banner" class="bg-sky-50 border border-sky-200 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <span id="scenario-badge" class="px-2.5 py-1 rounded-lg bg-slate-700 text-white font-black text-xs tracking-wider">A</span>
+          <span id="scenario-title" class="text-sm sm:text-base font-extrabold text-slate-900">
+            推力（F）相同時：空車（質量較小）vs 載重車（質量較大）
+          </span>
+        </div>
+        <div class="text-xs text-sky-800 font-semibold bg-white/80 px-3 py-1 rounded-xl border border-sky-100 shadow-sm flex items-center gap-1.5">
+          <span>⏱️ 目前時間：</span>
+          <span id="timer-display" class="font-mono font-bold text-sky-600 text-sm">0.00 秒</span>
+        </div>
+      </div>
+
+      <!-- 課本 1:1 向量繪圖主舞台 (SVG 物理動態畫布) -->
+      <div class="relative bg-[#fffefc] rounded-3xl p-3 sm:p-6 border-2 border-[#ebdcb9] shadow-inner overflow-hidden">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          <!-- 左側 9 欄：SVG 雙軌道動態視覺化 -->
+          <div class="lg:col-span-9 space-y-6">
+            
+            <svg id="stage-svg" viewBox="0 0 880 430" class="w-full h-auto select-none overflow-visible">
+              <defs>
+                <linearGradient id="blueArrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#0284c7" />
+                </linearGradient>
+                <linearGradient id="hugeArrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#60a5fa" />
+                  <stop offset="100%" stop-color="#1d4ed8" />
+                </linearGradient>
+                <linearGradient id="cartMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#94a3b8" />
+                  <stop offset="100%" stop-color="#475569" />
+                </linearGradient>
+                <linearGradient id="cargoBoxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ea580c" />
+                  <stop offset="100%" stop-color="#c2410c" />
+                </linearGradient>
+              </defs>
+
+              <!-- 上軌道水平地面線 (Y = 175) -->
+              <line x1="20" y1="175" x2="860" y2="175" stroke="#94a3b8" stroke-width="2" />
+              <!-- 下軌道水平地面線 (Y = 370) -->
+              <line x1="20" y1="370" x2="860" y2="370" stroke="#94a3b8" stroke-width="2" />
+
+              <!-- 上軌道時間基準線 -->
+              <!-- 0秒基準線: X = 170 -->
+              <g id="grid-top-0s">
+                <line x1="170" y1="50" x2="170" y2="185" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+                <g transform="translate(170, 42)">
+                  <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+                  <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">0</text>
+                  <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+                </g>
+              </g>
+
+              <!-- 1秒基準線: X = 330 (0.5m) -->
+              <g id="grid-top-1s">
+                <line x1="330" y1="50" x2="330" y2="185" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+                <g transform="translate(330, 42)">
+                  <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+                  <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">1</text>
+                  <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+                </g>
+                <path d="M 170 185 C 240 196, 260 196, 330 185" fill="none" stroke="#475569" stroke-width="1.2" />
+                <text x="250" y="200" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">0.5 m</text>
+              </g>
+
+              <!-- 2秒基準線: X = 650 (1.5m) -->
+              <g id="grid-top-2s">
+                <line x1="650" y1="50" x2="650" y2="185" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+                <g transform="translate(650, 42)">
+                  <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+                  <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">2</text>
+                  <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+                </g>
+                <path d="M 330 185 C 480 196, 500 196, 650 185" fill="none" stroke="#475569" stroke-width="1.2" />
+                <text x="490" y="200" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">1 m</text>
+              </g>
+
+              <!-- 下軌道時間基準線 0秒 -->
+              <g id="grid-bot-0s">
+                <line x1="170" y1="245" x2="170" y2="380" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+                <g transform="translate(170, 237)">
+                  <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+                  <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">0</text>
+                  <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+                </g>
+              </g>
+
+              <!-- 下軌道動態標線組 -->
+              <g id="grid-bot-dynamic-markers"></g>
+
+              <!-- 課本靜態殘影 -->
+              <g id="ghost-characters-top" opacity="0.45">
+                <g id="ghost-top-0s" transform="translate(70, 75)"></g>
+                <g id="ghost-top-1s" transform="translate(230, 75)"></g>
+                <g id="ghost-top-2s" transform="translate(550, 75)"></g>
+              </g>
+
+              <g id="ghost-characters-bot" opacity="0.45"></g>
+
+              <!-- 動態實體主角推車 -->
+              <g id="hero-top-group" transform="translate(70, 75)"></g>
+              <g id="hero-bot-group" transform="translate(70, 270)"></g>
+            </svg>
+
+          </div>
+
+          <!-- 右側 3 欄：公式結論卡片 -->
+          <div class="lg:col-span-3 flex flex-col justify-center">
+            
+            <div id="formula-result-card" class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-[#38bdf8] shadow-lg relative space-y-4">
+              
+              <!-- 頂部公式 -->
+              <div class="text-center pb-2 border-b border-sky-100">
+                <div class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-2xl bg-sky-50 border border-sky-200 w-full">
+                  <div class="flex flex-col items-center">
+                    <span id="formula-f-arrow" class="text-sky-600 font-extrabold text-xs">大 ⬆️</span>
+                    <span class="font-display font-black text-2xl sm:text-3xl text-sky-600 tracking-wider">F</span>
+                  </div>
+                  <span class="font-display font-black text-xl text-slate-400">=</span>
+                  <div class="flex flex-col items-center">
+                    <span id="formula-m-arrow" class="text-amber-600 font-extrabold text-xs">大 ⬆️</span>
+                    <span class="font-display font-black text-2xl sm:text-3xl text-amber-600 tracking-wider">m</span>
+                  </div>
+                  <span class="font-display font-black text-xl text-slate-400">×</span>
+                  <div class="flex flex-col items-center">
+                    <span id="formula-a-arrow" class="text-emerald-600 font-extrabold text-xs">小 ⬇️</span>
+                    <span class="font-display font-black text-2xl sm:text-3xl text-emerald-600 tracking-wider">a</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 結論說明 -->
+              <div id="formula-desc-content" class="space-y-2 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <p class="font-extrabold text-slate-900" id="card-desc-title">
+                  推力 <span class="text-sky-600 font-mono font-black">F</span> 相同時：
+                </p>
+                <p id="card-desc-body" class="text-slate-700 bg-sky-50/70 p-3 rounded-xl border border-sky-200">
+                  若質量 <span class="text-amber-600 font-mono font-black">m</span> 越大，<br/>
+                  則加速度 <span class="text-emerald-600 font-mono font-black">a</span> 越小。
+                </p>
+              </div>
+
+              <!-- 即時數值儀表 -->
+              <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                  <span class="font-bold">上軌道加速度 a₁：</span>
+                  <span id="metric-a1" class="font-mono font-black text-sky-600">1.00 m/s²</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                  <span class="font-bold">下軌道加速度 a₂：</span>
+                  <span id="metric-a2" class="font-mono font-black text-amber-600">0.80 m/s²</span>
+                </div>
+                <div class="pt-2 border-t border-slate-200 flex justify-between items-center font-bold text-slate-800">
+                  <span>加速度比 a₁ : a₂</span>
+                  <span id="metric-ratio" class="font-mono text-emerald-600 font-black">5 : 4</span>
+                </div>
+              </div>
+
+              <button onclick="speakFormulaConclusion()" class="w-full py-2 px-3 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors">
+                <span>🔊 朗讀定律結論</span>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 第二幕：牛頓第二定律沙盒實驗室 -->
+    <section id="section-formula-sandbox" class="glass-panel rounded-3xl p-5 sm:p-8 border-2 border-amber-300 shadow-2xl space-y-6">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-amber-200 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-1 border border-amber-300">
+            <span>🔬 物理沙盒探究</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+            <span>自訂外力 F 與質量 m 自由實驗</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 font-display">
+            牛頓第二定律實驗盤 · 參數自由調節
+          </h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-amber-900 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200 font-semibold">
+            公式核心：<span class="font-mono font-black text-sm text-sky-700">a = F / m</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- 左側控制面板 -->
+        <div class="lg:col-span-5 space-y-5 bg-[#fffdf9] p-5 rounded-2xl border-2 border-[#e8dcb8]">
+          
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label for="slider-f" class="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-sky-500"></span>
+                <span>推力 (外力合力) F：</span>
+              </label>
+              <span class="font-mono font-black text-sky-700 text-base bg-sky-50 px-2.5 py-0.5 rounded-lg border border-sky-200">
+                <span id="val-f">10</span> N (牛頓)
+              </span>
+            </div>
+            <input type="range" id="slider-f" min="2" max="50" step="2" value="10" oninput="updateSandboxParams()" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer"/>
+            <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+              <span>2 N (微弱推力)</span>
+              <span>25 N</span>
+              <span>50 N (超強推力)</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label for="slider-m" class="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                <span>購物車總質量 m：</span>
+              </label>
+              <span class="font-mono font-black text-amber-700 text-base bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">
+                <span id="val-m">5</span> kg (公斤)
+              </span>
+            </div>
+            <input type="range" id="slider-m" min="1" max="20" step="1" value="5" oninput="updateSandboxParams()" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer"/>
+            
+            <div class="grid grid-cols-4 gap-1.5 pt-1">
+              <button onclick="setSandboxMass(2)" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 text-xs font-bold transition-all border border-slate-200">
+                🛒 空車 2kg
+              </button>
+              <button onclick="setSandboxMass(5)" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 text-xs font-bold transition-all border border-slate-200">
+                📦 輕載 5kg
+              </button>
+              <button onclick="setSandboxMass(10)" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 text-xs font-bold transition-all border border-slate-200">
+                🧱 重載 10kg
+              </button>
+              <button onclick="setSandboxMass(20)" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 text-xs font-bold transition-all border border-slate-200">
+                🚚 超重 20kg
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-emerald-50 to-teal-50/80 p-4 rounded-2xl border border-emerald-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-emerald-900 uppercase">即時產生的加速度 a：</span>
+              <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-md">a = F / m</span>
+            </div>
+            <div class="text-center py-2 bg-white/90 rounded-xl border border-emerald-200 shadow-sm">
+              <span id="val-a" class="font-mono text-3xl sm:text-4xl font-black text-emerald-700">2.00</span>
+              <span class="text-slate-500 font-mono text-sm ml-1">m/s²</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs text-slate-700">
+              <div class="bg-white/80 p-2 rounded-lg border border-emerald-100">
+                <span class="text-slate-500 block">第 1 秒末速度：</span>
+                <span id="val-v1" class="font-mono font-bold text-slate-900 text-sm">2.00 m/s</span>
+              </div>
+              <div class="bg-white/80 p-2 rounded-lg border border-emerald-100">
+                <span class="text-slate-500 block">第 2 秒末位移：</span>
+                <span id="val-x2" class="font-mono font-bold text-slate-900 text-sm">4.00 m</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 右側動態圖表 -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <div class="bg-[#fffdf9] p-4 rounded-2xl border-2 border-[#e8dcb8] space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-700">🛒 即時運動軌道推演</span>
+              <button id="btn-sandbox-run" onclick="runSandboxAnimation()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm transition-all flex items-center gap-1">
+                <span>🚀 發動推車</span>
+              </button>
+            </div>
+
+            <svg id="sandbox-svg" viewBox="0 0 600 120" class="w-full h-auto bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+              <line x1="10" y1="95" x2="590" y2="95" stroke="#94a3b8" stroke-width="2" />
+              <line x1="50" y1="95" x2="50" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="50" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">0m</text>
+              <line x1="150" y1="95" x2="150" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="150" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">2.5m</text>
+              <line x1="250" y1="95" x2="250" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="250" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">5m</text>
+              <line x1="350" y1="95" x2="350" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="350" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">7.5m</text>
+              <line x1="450" y1="95" x2="450" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="450" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">10m</text>
+              <line x1="550" y1="95" x2="550" y2="105" stroke="#64748b" stroke-width="1.5" />
+              <text x="550" y="115" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b" text-anchor="middle">12.5m</text>
+
+              <g id="sandbox-cart-group" transform="translate(10, 25)"></g>
+            </svg>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-slate-800">📈 v - t 圖（速度-時間）</span>
+                <span class="text-[10px] font-mono text-sky-600 font-bold">斜率 = a</span>
+              </div>
+              <canvas id="chart-vt" width="280" height="150" class="w-full h-auto bg-slate-50/70 rounded-xl border border-slate-100"></canvas>
+              <p class="text-[11px] text-slate-500 leading-tight">
+                等加速度運動中，<span class="font-mono text-slate-800">v-t</span> 圖為斜直線，斜率即代表加速度 <span class="font-mono text-sky-600 font-bold">a</span>。
+              </p>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-slate-800">📈 x - t 圖（位置-時間）</span>
+                <span class="text-[10px] font-mono text-amber-600 font-bold">x = ½at²</span>
+              </div>
+              <canvas id="chart-xt" width="280" height="150" class="w-full h-auto bg-slate-50/70 rounded-xl border border-slate-100"></canvas>
+              <p class="text-[11px] text-slate-500 leading-tight">
+                由靜止出發，位移與時間平方成正比（<span class="font-mono text-slate-800">x ∝ t²</span>），圖形為向上彎曲之拋物線。
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 第三幕：重點知識卡與單位解析 -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      
+      <div class="glass-panel rounded-3xl p-6 border-2 border-sky-200 shadow-md flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-black text-sm">1</span>
+            <h3 class="text-base font-black text-slate-900">定律核心定義</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            當物體受外力作用時，必沿<b>外力的方向</b>產生加速度。此加速度大小與物體所受的<b>合力成正比</b>，與物體的<b>質量成反比</b>。
+          </p>
+          <div class="bg-sky-50 p-3 rounded-xl border border-sky-200 text-xs font-mono font-bold text-sky-900">
+            F = m × a &nbsp;或&nbsp; a = F / m
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-400 border-t border-slate-100 pt-2">
+          💡 加速度方向與合力方向必定同向！
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-3xl p-6 border-2 border-amber-200 shadow-md flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-black text-sm">2</span>
+            <h3 class="text-base font-black text-slate-900">力的單位：牛頓 (N)</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            使質量 <b>1 公斤 (kg)</b> 的物體，產生 <b>1 公尺/秒² (m/s²)</b> 的加速度所需的力量，定義為 <b>1 牛頓 (N)</b>。
+          </p>
+          <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs font-mono font-bold text-amber-900">
+            1 N = 1 kg × 1 m/s²
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-400 border-t border-slate-100 pt-2">
+          💡 1 公斤重 (1 kgw) ≈ 9.8 牛頓 (N)
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-3xl p-6 border-2 border-emerald-200 shadow-md flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">3</span>
+            <h3 class="text-base font-black text-slate-900">會考常見陷阱釐清</h3>
+          </div>
+          <ul class="text-xs sm:text-sm text-slate-700 space-y-1.5 list-disc list-inside">
+            <li><b>合力為零時：</b><span class="font-mono">a = 0</span>，物體維持靜止或等速度運動（回到第一定律）。</li>
+            <li><b>煞車減速時：</b>外力向後，加速度向後，與前進速度方向相反。</li>
+          </ul>
+        </div>
+        <div class="text-[11px] text-slate-400 border-t border-slate-100 pt-2">
+          💡 合力決定加速度，不決定速度當下方向！
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 第四幕：即時概念評量 -->
+    <section id="section-concept-quiz" class="glass-panel rounded-3xl p-5 sm:p-8 border-2 border-emerald-300 shadow-2xl space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-emerald-200 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold mb-1 border border-emerald-300">
+            <span>🎯 學習成效即時檢核</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            <span>康軒 2-2 精選觀念 4 題</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 font-display">
+            牛頓第二定律 · 概念通關測驗
+          </h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="quiz-score-badge" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 shadow-sm">
+            目前得分：<span id="current-score" class="text-emerald-600 font-black font-mono text-sm">0 / 4</span> 題
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- 第 1 題 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3.5 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">第 1 題 · 課本圖 2-4 A</span>
+              <span id="q1-status" class="text-xs font-bold text-slate-400">尚未作答</span>
+            </div>
+            <p class="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+              以相同大小的推力 F 推動兩輛不同的購物車，空車的質量為 m，載滿貨物的車總質量為 2m。請問兩車產生的加速度大小關係為何？
+            </p>
+            <div class="space-y-1.5 pt-1">
+              <button onclick="answerQuiz(1, 'A')" id="q1-opt-A" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (A) 空車加速度為載重車的 2 倍（反比關係）
+              </button>
+              <button onclick="answerQuiz(1, 'B')" id="q1-opt-B" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (B) 載重車加速度為空車的 2 倍（正比關係）
+              </button>
+              <button onclick="answerQuiz(1, 'C')" id="q1-opt-C" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (C) 兩車加速度完全相同，因為推力一樣大
+              </button>
+            </div>
+          </div>
+          <div id="q1-explain" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed">
+            <b>✅ 解析：</b>依據 a = F / m，當外力 F 相同時，加速度 a 與質量 m 成反比。載重車質量為 2 倍，故加速度為空車的 1/2 倍（即空車為載重車的 2 倍）。
+          </div>
+        </div>
+
+        <!-- 第 2 題 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3.5 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">第 2 題 · 課本圖 2-4 B</span>
+              <span id="q2-status" class="text-xs font-bold text-slate-400">尚未作答</span>
+            </div>
+            <p class="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+              推動同一輛購物車（質量 m 不變），第一次施以推力 F，第二次施以推力 3F。請問兩次購物車的加速度比值為何？
+            </p>
+            <div class="space-y-1.5 pt-1">
+              <button onclick="answerQuiz(2, 'A')" id="q2-opt-A" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (A) 第二次加速度是第一次的 3 倍（正比關係）
+              </button>
+              <button onclick="answerQuiz(2, 'B')" id="q2-opt-B" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (B) 第二次加速度是第一次的 9 倍（平方正比）
+              </button>
+              <button onclick="answerQuiz(2, 'C')" id="q2-opt-C" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (C) 第二次加速度是第一次的 1/3 倍
+              </button>
+            </div>
+          </div>
+          <div id="q2-explain" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed">
+            <b>✅ 解析：</b>依據 F = m × a，當質量 m 相同時，加速度 a 與外力 F 成正比。推力增為 3 倍，加速度也隨之增為 3 倍。
+          </div>
+        </div>
+
+        <!-- 第 3 題 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3.5 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">第 3 題 · 雙重變數思考</span>
+              <span id="q3-status" class="text-xs font-bold text-slate-400">尚未作答</span>
+            </div>
+            <p class="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+              若購物車裝入貨物後總質量變為原來的 2 倍，但推車者的推力也同時加大為原來的 2 倍，則購物車前進的加速度會如何變化？
+            </p>
+            <div class="space-y-1.5 pt-1">
+              <button onclick="answerQuiz(3, 'A')" id="q3-opt-A" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (A) 保持不變
+              </button>
+              <button onclick="answerQuiz(3, 'B')" id="q3-opt-B" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (B) 變為原來的 2 倍
+              </button>
+              <button onclick="answerQuiz(3, 'C')" id="q3-opt-C" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (C) 變為原來的 4 倍
+              </button>
+            </div>
+          </div>
+          <div id="q3-explain" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed">
+            <b>✅ 解析：</b>新加速度 a' = 2F / 2m = F / m = a，故加速度完全保持不變！
+          </div>
+        </div>
+
+        <!-- 第 4 題 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3.5 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">第 4 題 · 單位定義</span>
+              <span id="q4-status" class="text-xs font-bold text-slate-400">尚未作答</span>
+            </div>
+            <p class="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+              科學上定義「1 牛頓 (N)」的力，是指能使多少質量的物體產生多少加速度的合力？
+            </p>
+            <div class="space-y-1.5 pt-1">
+              <button onclick="answerQuiz(4, 'A')" id="q4-opt-A" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (A) 使 1 公斤物體產生 1 公尺/秒² 加速度的力
+              </button>
+              <button onclick="answerQuiz(4, 'B')" id="q4-opt-B" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (B) 使 1 公克物體產生 1 公尺/秒² 加速度的力
+              </button>
+              <button onclick="answerQuiz(4, 'C')" id="q4-opt-C" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 text-xs text-slate-700 transition-all">
+                (C) 使 1 公斤物體產生 9.8 公尺/秒² 加速度的力
+              </button>
+            </div>
+          </div>
+          <div id="q4-explain" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed">
+            <b>✅ 解析：</b>依定義：1 N = 1 kg × 1 m/s²。使 1 公斤物體產生 9.8 m/s² 的力則是 1 公斤重 (1 kgw)。
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 頁尾宣告 -->
+  <footer class="mt-20 border-t border-slate-200 bg-white/60 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-semibold text-slate-700">
+        我的數位基地 Central Hub · 康軒國中自然 3 上第 2 章 2-2 牛頓第二運動定律互動實驗室
+      </p>
+      <p class="text-slate-400">
+        依據康軒 115 課本第 38 頁圖 2-4 設計 · 專為國中九年級力學教學打造 · 支援跨平台平板投影與觸控探索
+      </p>
+    </div>
+  </footer>
+
+  <!-- 核心 JavaScript 互動引擎 -->
+  <script>
+    let currentMode = 'A';
+    let isSimRunning = false;
+    let simTime = 0;
+    let animFrameReq = null;
+    let lastTimestamp = 0;
+
+    const PIXELS_PER_METER = 320;
+    const START_OFFSET_X = 70;
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'start') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'correct') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } else if (type === 'tick') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      }
+    }
+
+    function getCharacterSVG(options = {}) {
+      const isTired = options.isTired || false;
+      const isBurst = options.isBurst || false;
+      const hasCargo = options.hasCargo || false;
+      const forceText = options.forceText || 'F';
+      const arrowWidth = forceText === '2F' ? 170 : 110;
+
+      let faceSVG = '';
+      if (isBurst) {
+        faceSVG = `
+          <ellipse cx="40" cy="30" rx="22" ry="20" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" />
+          <path d="M 28 22 Q 33 26 38 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M 44 24 Q 49 26 54 22" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" />
+          <circle cx="34" cy="28" r="2.8" fill="#1e293b" />
+          <circle cx="48" cy="28" r="2.8" fill="#1e293b" />
+          <path d="M 32 38 Q 41 42 50 38" fill="#f87171" stroke="#1e293b" stroke-width="2" />
+          <ellipse cx="26" cy="34" rx="4" ry="2.5" fill="#fca5a5" />
+          <ellipse cx="56" cy="34" rx="4" ry="2.5" fill="#fca5a5" />
+          <path d="M 20 20 Q 18 14 23 15 Q 26 21 20 20" fill="#38bdf8" />
+          <path d="M 60 18 Q 63 12 58 13 Q 55 19 60 18" fill="#38bdf8" />
+          <path d="M 38 10 Q 32 2 44 2 Q 46 8 40 10" fill="#f43f5e" stroke="#1e293b" stroke-width="1.5" />
+        `;
+      } else if (isTired) {
+        faceSVG = `
+          <ellipse cx="40" cy="30" rx="22" ry="20" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" />
+          <path d="M 29 25 Q 34 22 38 26" fill="none" stroke="#1e293b" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M 44 26 Q 48 22 53 25" fill="none" stroke="#1e293b" stroke-width="2.2" stroke-linecap="round" />
+          <circle cx="33" cy="29" r="2.5" fill="#1e293b" />
+          <circle cx="49" cy="29" r="2.5" fill="#1e293b" />
+          <ellipse cx="41" cy="38" rx="4" ry="5" fill="#fda4af" stroke="#1e293b" stroke-width="1.8" />
+          <path d="M 21 24 Q 18 19 22 20 Q 25 25 21 24" fill="#38bdf8" />
+          <path d="M 38 10 Q 32 2 44 2 Q 46 8 40 10" fill="#a855f7" stroke="#1e293b" stroke-width="1.5" />
+        `;
+      } else {
+        faceSVG = `
+          <ellipse cx="40" cy="30" rx="22" ry="20" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" />
+          <path d="M 29 24 Q 34 20 38 24" fill="none" stroke="#1e293b" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M 44 24 Q 48 20 53 24" fill="none" stroke="#1e293b" stroke-width="2.2" stroke-linecap="round" />
+          <circle cx="34" cy="27" r="2.5" fill="#1e293b" />
+          <circle cx="48" cy="27" r="2.5" fill="#1e293b" />
+          <path d="M 34 35 Q 41 42 48 35" fill="#fda4af" stroke="#1e293b" stroke-width="2" />
+          <ellipse cx="27" cy="33" rx="4" ry="2.5" fill="#fca5a5" />
+          <ellipse cx="55" cy="33" rx="4" ry="2.5" fill="#fca5a5" />
+          <path d="M 38 10 Q 32 2 44 2 Q 46 8 40 10" fill="#38bdf8" stroke="#1e293b" stroke-width="1.5" />
+        `;
+      }
+
+      let cargoSVG = '';
+      if (hasCargo) {
+        cargoSVG = `
+          <rect x="74" y="32" width="34" height="24" rx="4" fill="url(#cargoBoxGrad)" stroke="#7c2d12" stroke-width="2" />
+          <line x1="74" y1="44" x2="108" y2="44" stroke="#fed7aa" stroke-width="1.5" stroke-dasharray="3,2" />
+          <line x1="91" y1="32" x2="91" y2="56" stroke="#fed7aa" stroke-width="1.5" />
+        `;
+      }
+
+      const arrowSVG = `
+        <g transform="translate(48, -4)">
+          <path d="M 0 10 L ${arrowWidth - 18} 10 L ${arrowWidth - 18} 4 L ${arrowWidth} 14 L ${arrowWidth - 18} 24 L ${arrowWidth - 18} 18 L 0 18 Z" 
+                fill="${forceText === '2F' ? 'url(#hugeArrowGrad)' : 'url(#blueArrowGrad)'}" 
+                filter="drop-shadow(0 2px 3px rgba(2,132,199,0.3))" />
+          <text x="${arrowWidth / 2 - 6}" y="2" font-family="'Outfit', sans-serif" font-size="${forceText === '2F' ? '18' : '16'}" font-weight="900" font-style="italic" fill="#0284c7" text-anchor="middle">
+            ${forceText}
+          </text>
+        </g>
+      `;
+
+      return `
+        ${arrowSVG}
+        <g transform="translate(0, 0)">
+          <path d="M 28 65 Q 22 78 14 80" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          <path d="M 44 65 Q 50 78 60 76" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          <path d="M 28 46 L 22 68 L 52 68 L 48 46 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" />
+          <path d="M 35 50 L 33 64" stroke="#f43f5e" stroke-width="2" />
+          <path d="M 42 48 Q 58 48 70 54" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          ${faceSVG}
+        </g>
+        <g transform="translate(70, 42)">
+          <line x1="0" y1="12" x2="6" y2="28" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+          <rect x="4" y="16" width="38" height="26" rx="3" fill="#f1f5f9" stroke="url(#cartMetal)" stroke-width="2.2" opacity="0.9" />
+          <line x1="4" y1="24" x2="42" y2="24" stroke="#94a3b8" stroke-width="1.2" />
+          <line x1="4" y1="32" x2="42" y2="32" stroke="#94a3b8" stroke-width="1.2" />
+          <line x1="16" y1="16" x2="16" y2="42" stroke="#94a3b8" stroke-width="1.2" />
+          <line x1="28" y1="16" x2="28" y2="42" stroke="#94a3b8" stroke-width="1.2" />
+          ${cargoSVG}
+          <line x1="8" y1="42" x2="38" y2="42" stroke="#334155" stroke-width="2.5" />
+          <circle cx="12" cy="48" r="4.5" fill="#334155" stroke="#cbd5e1" stroke-width="1.5" />
+          <circle cx="34" cy="48" r="4.5" fill="#334155" stroke="#cbd5e1" stroke-width="1.5" />
+        </g>
+      `;
+    }
+
+    function switchMode(mode) {
+      currentMode = mode;
+      resetSimulation();
+
+      const tabA = document.getElementById('tab-btn-a');
+      const tabB = document.getElementById('tab-btn-b');
+      const badge = document.getElementById('scenario-badge');
+      const title = document.getElementById('scenario-title');
+
+      const fArrow = document.getElementById('formula-f-arrow');
+      const mArrow = document.getElementById('formula-m-arrow');
+      const aArrow = document.getElementById('formula-a-arrow');
+      const cardTitle = document.getElementById('card-desc-title');
+      const cardBody = document.getElementById('card-desc-body');
+
+      const metricA1 = document.getElementById('metric-a1');
+      const metricA2 = document.getElementById('metric-a2');
+      const metricRatio = document.getElementById('metric-ratio');
+
+      if (mode === 'A') {
+        tabA.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-sky-600 text-white shadow-sm flex items-center gap-1.5";
+        tabB.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-700 hover:bg-white/80 flex items-center gap-1.5";
+        
+        badge.textContent = 'A';
+        title.innerHTML = '<b>推力（F）相同時</b>：空車（質量較小）vs 載重車（質量較大）';
+
+        fArrow.textContent = '同 ＝';
+        fArrow.className = 'text-slate-500 font-extrabold text-xs';
+        mArrow.textContent = '大 ⬆️';
+        mArrow.className = 'text-amber-600 font-extrabold text-xs';
+        aArrow.textContent = '小 ⬇️';
+        aArrow.className = 'text-emerald-600 font-extrabold text-xs';
+
+        cardTitle.innerHTML = '推力 <span class="text-sky-600 font-mono font-black">F</span> 相同時：';
+        cardBody.innerHTML = '若質量 <span class="text-amber-600 font-mono font-black">m</span> 越大，<br/>則加速度 <span class="text-emerald-600 font-mono font-black">a</span> 越小（反比關係）。';
+
+        metricA1.textContent = '1.00 m/s² (空車)';
+        metricA2.textContent = '0.80 m/s² (載重車)';
+        metricRatio.textContent = '5 : 4 (反比)';
+
+      } else {
+        tabB.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-sky-600 text-white shadow-sm flex items-center gap-1.5";
+        tabA.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-700 hover:bg-white/80 flex items-center gap-1.5";
+
+        badge.textContent = 'B';
+        title.innerHTML = '<b>質量（m）相同時</b>：推力 F vs 推力 2F（推力加倍，加速度加倍！）';
+
+        fArrow.textContent = '大 ⬆️';
+        fArrow.className = 'text-sky-600 font-extrabold text-xs';
+        mArrow.textContent = '同 ＝';
+        mArrow.className = 'text-slate-500 font-extrabold text-xs';
+        aArrow.textContent = '大 ⬆️';
+        aArrow.className = 'text-emerald-600 font-extrabold text-xs';
+
+        cardTitle.innerHTML = '質量 <span class="text-amber-600 font-mono font-black">m</span> 相同時：';
+        cardBody.innerHTML = '若推力 <span class="text-sky-600 font-mono font-black">F</span> 越大，<br/>則加速度 <span class="text-emerald-600 font-mono font-black">a</span> 越大（正比關係）。';
+
+        metricA1.textContent = '1.00 m/s² (推力 F)';
+        metricA2.textContent = '2.00 m/s² (推力 2F)';
+        metricRatio.textContent = '1 : 2 (正比)';
+      }
+
+      renderStageMarkers();
+      updateStageView(0);
+    }
+
+    function renderStageMarkers() {
+      const botMarkersGroup = document.getElementById('grid-bot-dynamic-markers');
+      const ghostBotGroup = document.getElementById('ghost-characters-bot');
+      const ghostTop0 = document.getElementById('ghost-top-0s');
+      const ghostTop1 = document.getElementById('ghost-top-1s');
+      const ghostTop2 = document.getElementById('ghost-top-2s');
+
+      ghostTop0.innerHTML = getCharacterSVG({ isTired: false, isBurst: false, hasCargo: false, forceText: 'F' });
+      ghostTop1.innerHTML = getCharacterSVG({ isTired: false, isBurst: false, hasCargo: false, forceText: 'F' });
+      ghostTop2.innerHTML = getCharacterSVG({ isTired: false, isBurst: false, hasCargo: false, forceText: 'F' });
+
+      if (currentMode === 'A') {
+        botMarkersGroup.innerHTML = `
+          <g>
+            <line x1="298" y1="245" x2="298" y2="380" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+            <g transform="translate(298, 237)">
+              <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+              <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">1</text>
+              <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+            </g>
+            <path d="M 170 380 C 220 390, 240 390, 298 380" fill="none" stroke="#475569" stroke-width="1.2" />
+            <text x="234" y="396" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">0.4 m</text>
+          </g>
+
+          <g>
+            <line x1="554" y1="245" x2="554" y2="380" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+            <g transform="translate(554, 237)">
+              <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+              <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">2</text>
+              <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+            </g>
+            <path d="M 298 380 C 410 390, 440 390, 554 380" fill="none" stroke="#475569" stroke-width="1.2" />
+            <text x="426" y="396" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">0.8 m</text>
+          </g>
+        `;
+
+        ghostBotGroup.innerHTML = `
+          <g transform="translate(70, 270)">${getCharacterSVG({ isTired: true, isBurst: false, hasCargo: true, forceText: 'F' })}</g>
+          <g transform="translate(198, 270)">${getCharacterSVG({ isTired: true, isBurst: false, hasCargo: true, forceText: 'F' })}</g>
+          <g transform="translate(454, 270)">${getCharacterSVG({ isTired: true, isBurst: false, hasCargo: true, forceText: 'F' })}</g>
+        `;
+
+      } else {
+        botMarkersGroup.innerHTML = `
+          <g>
+            <line x1="490" y1="245" x2="490" y2="380" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+            <g transform="translate(490, 237)">
+              <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+              <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">1</text>
+              <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+            </g>
+            <path d="M 170 380 C 310 390, 350 390, 490 380" fill="none" stroke="#475569" stroke-width="1.2" />
+            <text x="330" y="396" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">1 m</text>
+          </g>
+
+          <g>
+            <line x1="810" y1="245" x2="810" y2="380" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4,4" />
+            <g transform="translate(810, 237)">
+              <circle cx="0" cy="0" r="20" fill="#ffffff" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.1))" />
+              <text x="0" y="-3" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0f172a" text-anchor="middle">2</text>
+              <text x="0" y="11" font-family="'Noto Sans TC', sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">秒</text>
+            </g>
+            <path d="M 490 380 C 630 390, 670 390, 810 380" fill="none" stroke="#475569" stroke-width="1.2" />
+            <text x="650" y="396" font-family="'Outfit', sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">2 m</text>
+          </g>
+        `;
+
+        ghostBotGroup.innerHTML = `
+          <g transform="translate(70, 270)">${getCharacterSVG({ isTired: false, isBurst: true, hasCargo: false, forceText: '2F' })}</g>
+          <g transform="translate(390, 270)">${getCharacterSVG({ isTired: false, isBurst: true, hasCargo: false, forceText: '2F' })}</g>
+          <g transform="translate(710, 270)">${getCharacterSVG({ isTired: false, isBurst: true, hasCargo: false, forceText: '2F' })}</g>
+        `;
+      }
+    }
+
+    function updateStageView(t) {
+      simTime = Math.min(2.0, Math.max(0, t));
+      document.getElementById('timer-display').textContent = `${simTime.toFixed(2)} 秒`;
+
+      const topDisplacementPx = 80 * (simTime * simTime) + 80 * simTime;
+      const heroTop = document.getElementById('hero-top-group');
+      heroTop.setAttribute('transform', `translate(${START_OFFSET_X + topDisplacementPx}, 75)`);
+      heroTop.innerHTML = getCharacterSVG({ isTired: false, isBurst: false, hasCargo: false, forceText: 'F' });
+
+      const heroBot = document.getElementById('hero-bot-group');
+      let botDisplacementPx = 0;
+
+      if (currentMode === 'A') {
+        botDisplacementPx = 64 * (simTime * simTime) + 64 * simTime;
+        heroBot.setAttribute('transform', `translate(${START_OFFSET_X + botDisplacementPx}, 270)`);
+        heroBot.innerHTML = getCharacterSVG({ isTired: true, isBurst: false, hasCargo: true, forceText: 'F' });
+      } else {
+        botDisplacementPx = 160 * (simTime * simTime) + 160 * simTime;
+        heroBot.setAttribute('transform', `translate(${START_OFFSET_X + botDisplacementPx}, 270)`);
+        heroBot.innerHTML = getCharacterSVG({ isTired: false, isBurst: true, hasCargo: false, forceText: '2F' });
+      }
+    }
+
+    function toggleSimulation() {
+      if (isSimRunning) {
+        pauseSimulation();
+      } else {
+        startSimulation();
+      }
+    }
+
+    function startSimulation() {
+      if (simTime >= 2.0) {
+        simTime = 0;
+      }
+      isSimRunning = true;
+      document.getElementById('play-sim-icon').textContent = '⏸️';
+      document.getElementById('play-sim-text').textContent = '暫停推車';
+      playSound('start');
+
+      lastTimestamp = performance.now();
+
+      function step(now) {
+        if (!isSimRunning) return;
+        const delta = (now - lastTimestamp) / 1000;
+        lastTimestamp = now;
+
+        simTime += delta;
+
+        if (simTime >= 2.0) {
+          simTime = 2.0;
+          updateStageView(simTime);
+          pauseSimulation();
+          playSound('tick');
+          return;
+        }
+
+        updateStageView(simTime);
+        animFrameReq = requestAnimationFrame(step);
+      }
+
+      animFrameReq = requestAnimationFrame(step);
+    }
+
+    function pauseSimulation() {
+      isSimRunning = false;
+      if (animFrameReq) cancelAnimationFrame(animFrameReq);
+      document.getElementById('play-sim-icon').textContent = '▶️';
+      document.getElementById('play-sim-text').textContent = '同時起跑推車';
+    }
+
+    function stepSimulation(dt) {
+      pauseSimulation();
+      let nextT = simTime + dt;
+      if (nextT > 2.0) nextT = 0;
+      updateStageView(nextT);
+      playSound('tick');
+    }
+
+    function resetSimulation() {
+      pauseSimulation();
+      simTime = 0;
+      updateStageView(0);
+    }
+
+    let sandboxF = 10;
+    let sandboxM = 5;
+    let sandboxA = 2.0;
+    let isSandboxRunning = false;
+    let sandboxCartX = 10;
+    let sandboxReq = null;
+
+    function updateSandboxParams() {
+      sandboxF = parseFloat(document.getElementById('slider-f').value);
+      sandboxM = parseFloat(document.getElementById('slider-m').value);
+      sandboxA = sandboxF / sandboxM;
+
+      document.getElementById('val-f').textContent = sandboxF.toFixed(0);
+      document.getElementById('val-m').textContent = sandboxM.toFixed(0);
+      document.getElementById('val-a').textContent = sandboxA.toFixed(2);
+
+      const v1 = sandboxA * 1.0;
+      document.getElementById('val-v1').textContent = `${v1.toFixed(2)} m/s`;
+
+      const x2 = 0.5 * sandboxA * 4.0;
+      document.getElementById('val-x2').textContent = `${x2.toFixed(2)} m`;
+
+      drawSandboxCharts();
+      renderSandboxCart();
+    }
+
+    function setSandboxMass(m) {
+      document.getElementById('slider-m').value = m;
+      updateSandboxParams();
+      playSound('tick');
+    }
+
+    function renderSandboxCart() {
+      const cartGroup = document.getElementById('sandbox-cart-group');
+      const hasCargo = sandboxM >= 5;
+      const isHeavy = sandboxM >= 10;
+      const isStrong = sandboxF >= 20;
+
+      cartGroup.innerHTML = getCharacterSVG({
+        isTired: isHeavy,
+        isBurst: isStrong,
+        hasCargo: hasCargo,
+        forceText: `${sandboxF}N`
+      });
+    }
+
+    function runSandboxAnimation() {
+      if (isSandboxRunning) return;
+      isSandboxRunning = true;
+      playSound('start');
+      const cartGroup = document.getElementById('sandbox-cart-group');
+      
+      let start = performance.now();
+      const a = sandboxA;
+      const scale = 36;
+
+      function step(now) {
+        let t = (now - start) / 1000;
+        if (t > 2.2) {
+          isSandboxRunning = false;
+          cartGroup.setAttribute('transform', `translate(10, 25)`);
+          return;
+        }
+
+        let dispM = 0.5 * a * (t * t);
+        let px = 10 + dispM * scale;
+        if (px > 520) px = 520;
+
+        cartGroup.setAttribute('transform', `translate(${px}, 25)`);
+        sandboxReq = requestAnimationFrame(step);
+      }
+      sandboxReq = requestAnimationFrame(step);
+    }
+
+    function drawSandboxCharts() {
+      const cvt = document.getElementById('chart-vt');
+      const ctx1 = cvt.getContext('2d');
+      ctx1.clearRect(0, 0, cvt.width, cvt.height);
+
+      ctx1.strokeStyle = '#e2e8f0';
+      ctx1.lineWidth = 1;
+      for (let x = 40; x < 280; x += 40) {
+        ctx1.beginPath(); ctx1.moveTo(x, 10); ctx1.lineTo(x, 125); ctx1.stroke();
+      }
+      for (let y = 20; y < 130; y += 25) {
+        ctx1.beginPath(); ctx1.moveTo(40, y); ctx1.lineTo(260, y); ctx1.stroke();
+      }
+
+      ctx1.strokeStyle = '#475569';
+      ctx1.lineWidth = 2;
+      ctx1.beginPath();
+      ctx1.moveTo(40, 10); ctx1.lineTo(40, 125); ctx1.lineTo(260, 125);
+      ctx1.stroke();
+
+      ctx1.fillStyle = '#64748b';
+      ctx1.font = '10px "Noto Sans TC"';
+      ctx1.fillText('v (m/s)', 10, 20);
+      ctx1.fillText('t (s)', 245, 140);
+      ctx1.fillText('0', 30, 135);
+      ctx1.fillText('1s', 120, 140);
+      ctx1.fillText('2s', 200, 140);
+
+      const a = sandboxA;
+      const vMaxExpected = 15;
+      const v2 = a * 2;
+      const y2 = 125 - (v2 / vMaxExpected) * 105;
+
+      ctx1.strokeStyle = '#0284c7';
+      ctx1.lineWidth = 3;
+      ctx1.beginPath();
+      ctx1.moveTo(40, 125);
+      ctx1.lineTo(200, Math.max(15, y2));
+      ctx1.stroke();
+
+      ctx1.fillStyle = '#0284c7';
+      ctx1.beginPath();
+      ctx1.arc(200, Math.max(15, y2), 4.5, 0, Math.PI * 2);
+      ctx1.fill();
+
+      const cxt = document.getElementById('chart-xt');
+      const ctx2 = cxt.getContext('2d');
+      ctx2.clearRect(0, 0, cxt.width, cxt.height);
+
+      ctx2.strokeStyle = '#e2e8f0';
+      ctx2.lineWidth = 1;
+      for (let x = 40; x < 280; x += 40) {
+        ctx2.beginPath(); ctx2.moveTo(x, 10); ctx2.lineTo(x, 125); ctx2.stroke();
+      }
+      for (let y = 20; y < 130; y += 25) {
+        ctx2.beginPath(); ctx2.moveTo(40, y); ctx2.lineTo(260, y); ctx2.stroke();
+      }
+
+      ctx2.strokeStyle = '#475569';
+      ctx2.lineWidth = 2;
+      ctx2.beginPath();
+      ctx2.moveTo(40, 10); ctx2.lineTo(40, 125); ctx2.lineTo(260, 125);
+      ctx2.stroke();
+
+      ctx2.fillStyle = '#64748b';
+      ctx2.font = '10px "Noto Sans TC"';
+      ctx2.fillText('x (m)', 10, 20);
+      ctx2.fillText('t (s)', 245, 140);
+      ctx2.fillText('0', 30, 135);
+      ctx2.fillText('1s', 120, 140);
+      ctx2.fillText('2s', 200, 140);
+
+      ctx2.strokeStyle = '#f59e0b';
+      ctx2.lineWidth = 3;
+      ctx2.beginPath();
+      ctx2.moveTo(40, 125);
+      for (let t = 0; t <= 2.0; t += 0.05) {
+        let curX = 40 + (t / 2.0) * 160;
+        let disp = 0.5 * a * (t * t);
+        let curY = 125 - (disp / 20) * 105;
+        ctx2.lineTo(curX, Math.max(15, curY));
+      }
+      ctx2.stroke();
+    }
+
+    const quizAnswers = { 1: 'A', 2: 'A', 3: 'A', 4: 'A' };
+    const userScores = {};
+
+    function answerQuiz(qNum, selectedOpt) {
+      const correctOpt = quizAnswers[qNum];
+      const explainDiv = document.getElementById(`q${qNum}-explain`);
+      const statusSpan = document.getElementById(`q${qNum}-status`);
+
+      ['A', 'B', 'C'].forEach(opt => {
+        const btn = document.getElementById(`q${qNum}-opt-${opt}`);
+        btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'font-bold', 'bg-rose-100', 'border-rose-400');
+        if (opt === selectedOpt) {
+          if (selectedOpt === correctOpt) {
+            btn.classList.add('bg-emerald-100', 'border-emerald-500', 'font-bold', 'text-emerald-950');
+          } else {
+            btn.classList.add('bg-rose-100', 'border-rose-400', 'font-bold', 'text-rose-950');
+          }
+        }
+      });
+
+      explainDiv.classList.remove('hidden');
+
+      if (selectedOpt === correctOpt) {
+        statusSpan.innerHTML = '<span class="text-emerald-600 font-black">✅ 正確</span>';
+        userScores[qNum] = 1;
+        playSound('correct');
+      } else {
+        statusSpan.innerHTML = '<span class="text-rose-600 font-black">❌ 答錯了</span>';
+        userScores[qNum] = 0;
+        playSound('tick');
+      }
+
+      const totalScore = Object.values(userScores).reduce((a, b) => a + b, 0);
+      document.getElementById('current-score').textContent = `${totalScore} / 4`;
+    }
+
+    let isSpeaking = false;
+
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-TW';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+
+        const voices = window.speechSynthesis.getVoices();
+        const twVoice = voices.find(v => v.lang.includes('zh-TW') || v.name.includes('Yunjhe') || v.name.includes('HsiaoChen') || v.name.includes('Mei-Jia'));
+        if (twVoice) utterance.voice = twVoice;
+
+        utterance.onstart = () => {
+          isSpeaking = true;
+          document.getElementById('tts-icon').textContent = '🔊';
+          document.getElementById('tts-text').textContent = '朗讀中...';
+        };
+        utterance.onend = () => {
+          isSpeaking = false;
+          document.getElementById('tts-icon').textContent = '🔊';
+          document.getElementById('tts-text').textContent = '語音導讀';
+        };
+        utterance.onerror = () => {
+          isSpeaking = false;
+          document.getElementById('tts-icon').textContent = '🔊';
+          document.getElementById('tts-text').textContent = '語音導讀';
+        };
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('您的瀏覽器不支援語音合成朗讀功能。');
+      }
+    }
+
+    function toggleVoiceSpeech() {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        document.getElementById('tts-icon').textContent = '🔊';
+        document.getElementById('tts-text').textContent = '語音導讀';
+      } else {
+        const text = "歡迎來到牛頓第二運動定律互動實驗室。康軒自然三上第二章二之二：影響加速度的因素。以同樣的施力推動購物車，車內東西越重時，購物車越難加速前進，若想以相同加速度前進，必須施以更大的推力。此外，若推同一輛車的力量越大，購物車就越容易加速前進。公式為：F 等於 m 乘以 a。";
+        speakText(text);
+      }
+    }
+
+    function playAudioTextbookIntro() {
+      const text = "課本第三十八頁：以同樣的施力推動購物車，會發現車內的東西越重時，購物車就越難加速前進。若想以相同的加速度前進，就必須施以更大的推力。此外，若推同一車的力量越大，則購物車就越容易加速前進。";
+      speakText(text);
+    }
+
+    function speakFormulaConclusion() {
+      let text = "";
+      if (currentMode === 'A') {
+        text = "定律推論A：推力 F 相同時，若質量 m 越大，則加速度 a 越小，兩者成反比。";
+      } else {
+        text = "定律推論B：質量 m 相同時，若推力 F 越大，則加速度 a 越大，兩者成正比。";
+      }
+      speakText(text);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`全螢幕請求錯誤: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderStageMarkers();
+      updateStageView(0);
+      updateSandboxParams();
+    });
+  </script>
+</body>
+</html>

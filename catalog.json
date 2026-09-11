@@ -1,0 +1,321 @@
+{
+  "lastUpdated": "2026-09-09",
+  "categories": [
+    {
+      "id": "teaching",
+      "title": "教學",
+      "order": 10,
+      "sites": [
+        {
+          "id": "grade9-progress",
+          "title": "九年級進度",
+          "description": "國中三年級自然第一章直線運動互動教具總覽與各節實驗室。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/chapter1-hub.html"
+        },
+        {
+          "id": "naturelab-senior-review",
+          "title": "九年級複習",
+          "description": "理化 3-4 冊總複習互動題庫、概念挖空卷、Kahoot 挑戰與動態實驗室。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 20,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/review-hub.html"
+        },
+        {
+          "id": "spark-pendulum-lab",
+          "title": "單擺實驗 AI 探究教學平台",
+          "description": "結合 Spark 語音辨識、Antigravity 2 與 Google Apps Script 的單擺實驗自動化探究教學平台，支援學生免登入掃碼、LoiLoNote 任務卡與雙圖表生成。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 25,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/spark-pendulum-lab/"
+        },
+        {
+          "id": "grade9-mock-exam",
+          "title": "九年級模擬考",
+          "description": "國中三年級自然會考模擬測驗互動複習：收錄第一次至第四次模擬考精選試題、理化全26題互動光路波形動態分析與深度解題。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 25,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/mock-exam-1/index.html"
+        },
+        {
+          "id": "life-master-newton",
+          "title": "艾薩克·牛頓",
+          "description": "古典物理力學之父。三大運動定律、萬有引力、微積分發明、白光色散光譜實驗與探究學習單。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#newton"
+        },
+        {
+          "id": "life-master-joule",
+          "title": "詹姆斯·焦耳",
+          "description": "能量守恆大師。打破熱質說、精密測定熱功當量、焦耳定律與熱功當量探究學習單。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#joule"
+        },
+        {
+          "id": "life-master-hawking",
+          "title": "史蒂芬·霍金",
+          "description": "當代傳奇宇宙學家。黑洞奇異點、霍金輻射、《時間簡史》、對抗漸凍症生命奇蹟與學習單。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 28,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/life-master-show.html#hawking"
+        },
+        {
+          "id": "hall-of-fame-course-intro",
+          "title": "課程介紹",
+          "description": "世界名人堂課程介紹與上課規矩：課堂時間流程、平時成績與學習單計分方式、平板使用須知與加扣分規範。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 29,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/course-intro.html"
+        },
+        {
+          "id": "nobel-hub",
+          "title": "阿爾弗雷德·諾貝爾",
+          "description": "炸藥之父與和平遺產。發明雷管與矽藻土黃色炸藥，設立諾貝爾獎。含 5 大線上互動教具與闢謠特輯。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 31,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/nobel.html"
+        },
+        {
+          "id": "einstein-hub",
+          "title": "阿爾伯特·愛因斯坦",
+          "description": "現代物理學之父。提出狹義與廣義相對論、質能互換公式 E=mc²、解釋光電效應與布朗運動。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 32,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/einstein.html"
+        },
+        {
+          "id": "hubble-hub",
+          "title": "愛德溫·哈伯",
+          "description": "星系天文學之父與觀測宇宙學開創者。發現河外星系，確立哈伯定律證明宇宙正在膨脹。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 33,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hubble.html"
+        },
+        {
+          "id": "darwin-hub",
+          "title": "查爾斯·達爾文",
+          "description": "演化論之父。搭乘小獵犬號環球科學考察，發表《物種起源》提出天擇說與適者生存。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 34,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/darwin.html"
+        },
+        {
+          "id": "wegener-hub",
+          "title": "阿爾弗雷德·韋格納",
+          "description": "大陸漂移學說創始者。提出古生代「盤古大陸」假說，為現代板塊構造學說奠定先驅基石。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 35,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/wegener.html"
+        },
+        {
+          "id": "watson-crick-hub",
+          "title": "華生與克里克 (DNA)",
+          "description": "DNA 雙螺旋結構解密者。結合 X 射線晶體繞射 Photo 51 與鹼基互補配對模型，揭開遺傳物質複製奧秘。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 36,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/dna.html"
+        },
+        {
+          "id": "lin-mari-hub",
+          "title": "林媽利 醫師",
+          "description": "台灣輸血醫學之母與血型基因研究權威。建立台灣現代化醫院血庫與安全輸血作業準則，深耕台灣族群 HLA 基因與血緣研究。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 37,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/lin-mari.html"
+        },
+        {
+          "id": "zhang-heng-hub",
+          "title": "張衡",
+          "description": "東漢通才科學大師。發明世界首台地震觀測儀「候風地動儀」，創製以水力運轉之「水運渾天儀」，著有《靈憲》。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 38,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/zhang-heng.html"
+        },
+        {
+          "id": "hooke-hub",
+          "title": "羅伯特·虎克",
+          "description": "顯微鏡之眼與物理力學大師。改良複合顯微鏡觀察軟木塞命名「細胞 (Cell)」，出版《微觀圖誌》，提出虎克定律。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 39,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/hooke.html"
+        },
+        {
+          "id": "archimedes-hub",
+          "title": "阿基米德",
+          "description": "古希臘物理力學與數學之神。在浴缸中悟出阿基米德浮力原理 (Eureka!)，建立槓桿原理與螺旋抽水機。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 40,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/archimedes.html"
+        },
+        {
+          "id": "classbuddy-classroom-toolbox",
+          "title": "班級互動工具箱",
+          "description": "提供班級抽籤、小組積分榜、倒數與秒錶、趣味泡泡噪音監測、隨機分組、線上點名與名單智慧同步的班級教學工具箱。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 40,
+          "url": "https://hungjuiying0606-dotcom.github.io/classroom-agent-kit/"
+        },
+        {
+          "id": "galileo-hub",
+          "title": "伽利略·伽利萊",
+          "description": "近代科學與實驗物理學之父。首創以望遠鏡觀測天體支持日心說，提出單擺等時性與落體實驗。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 41,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/galileo.html"
+        },
+        {
+          "id": "curie-hub",
+          "title": "瑪麗·居禮 (居禮夫人)",
+          "description": "放射性研究傳奇先驅。史上首位女性諾貝爾獎得主、唯一獲物理與化學雙諾貝爾獎之科學家，發現元素釙與鐳。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 42,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/curie.html"
+        },
+        {
+          "id": "naturelab",
+          "title": "教師派發任務",
+          "description": "開始進行課程管理，查看學生學習紀錄",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 60,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#portal"
+        },
+        {
+          "id": "naturelab-book-selector",
+          "title": "舊版互動式網頁",
+          "description": "選擇冊別與章節，依照學校課本進度學習。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 70,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/#book-selector"
+        }
+      ]
+    },
+    {
+      "id": "investing",
+      "title": "理財",
+      "order": 20,
+      "sites": []
+    },
+    {
+      "id": "health",
+      "title": "健康",
+      "order": 30,
+      "sites": []
+    },
+    {
+      "id": "travel",
+      "title": "旅遊",
+      "order": 40,
+      "sites": []
+    },
+    {
+      "id": "computer",
+      "title": "電腦",
+      "order": 50,
+      "sites": [
+        {
+          "id": "tool-knsh-ebook",
+          "title": "康軒電子書網頁版",
+          "description": "康軒國中自然與各科教師 Web 電子書教學平台（需教師帳號登入）。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 1,
+          "url": "https://945cloud.knsh.com.tw/"
+        },
+        {
+          "id": "tool-loilonote",
+          "title": "LoiLoNote 數位教學平台",
+          "description": "LoiLoNote 課堂數位互動、任務卡派發、作業繳交與全班發表平台。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 2,
+          "url": "https://loilonote.app/"
+        }
+      ]
+    },
+    {
+      "id": "workshop",
+      "title": "研習",
+      "order": 80,
+      "sites": [
+        {
+          "id": "workshop-20260829-jian-padlet",
+          "title": "20260829簡子惠 · Padlet 互動討論牆",
+          "description": "簡子惠老師 20260829 AI 融入教學研習 Padlet 互動討論牆與即時共作區。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://padlet.com/azt156/20260829-ai-z14amg9xmuz0p1mj"
+        },
+        {
+          "id": "workshop-20260829-jian-notion",
+          "title": "20260829簡子惠 · Notion 研習講義筆記",
+          "description": "簡子惠老師 20260829 AI 融入教學研習 Notion 課程講義、實戰教材與重點整理。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 20,
+          "url": "https://azt156.notion.site/20260829-AI-3ca9ae758af38008bca0fd341bb26685"
+        },
+        {
+          "id": "workshop-20260829-sanshiba-padlet",
+          "title": "20260829三師爸 · Padlet 互動討論牆",
+          "description": "三師爸 20260829 AI Agent 課堂應用與實戰研習 Padlet 互動討論牆。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 30,
+          "url": "https://padlet.com/mathruffian/20260829-ai-agent-xowg4eol37wu4jml"
+        }
+      ]
+    },
+    {
+      "id": "other",
+      "title": "其他",
+      "order": 90,
+      "sites": [
+        {
+          "id": "laboratory",
+          "title": "實驗室",
+          "description": "化學器材知識對決遊戲：透過看圖辨識、器材功能與實驗安全判斷進行對戰，支援同機雙人與單人挑戰電腦。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 5,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/laboratory/"
+        },
+        {
+          "id": "master-teachers-hub",
+          "title": "教育名師數位教學資源導航",
+          "description": "精選全台教育先驅與數位教學大師資源：阿剛老師「剛好整合所」與奕鈞老師「IJUN AI 備課室」。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 10,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/master-teachers-hub.html"
+        }
+      ]
+    }
+  ]
+}

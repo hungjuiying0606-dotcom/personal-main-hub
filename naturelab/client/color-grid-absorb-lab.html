@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>色光照射 ✕ 色紙網格吸收與黑色面積計算盤 | 第60頁第18題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #fbcfe8;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .light-selector-bar {
+      display: flex;
+      gap: 0.4rem;
+      background: #ffffff;
+      padding: 0.3rem 0.5rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+    }
+
+    .light-btn {
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      border: 1.5px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: transparent;
+      color: var(--primary);
+      transition: all 0.15s;
+    }
+
+    .light-btn:hover {
+      background: #f1f5f9;
+    }
+
+    .light-btn.active {
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .light-btn.active.red { background: #ef4444; }
+    .light-btn.active.green { background: #10b981; }
+    .light-btn.active.blue { background: #3b82f6; }
+    .light-btn.active.white { background: #64748b; }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #1e293b;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#gridCanvas {
+      display: block;
+      cursor: pointer;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #fbcfe8;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fbcfe8;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Palette Bar */
+    .palette-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .color-swatch-btn {
+      flex: 1;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      transition: transform 0.15s;
+    }
+
+    .color-swatch-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .color-swatch-btn.selected {
+      outline: 3px solid #000000;
+      transform: scale(1.08);
+    }
+
+    /* Metrics Breakdown */
+    .color-count-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .color-count-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0.6rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #fee2e2;
+      border: 2px dashed #ef4444;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #991b1b;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #f43f5e;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+      <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>色光照射 ✕ 色紙網格吸收與黑色面積計算盤（第60頁第18題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎨</span> 8 × 8 色紙網格與色光照射模擬器
+          </div>
+          <div class="light-selector-bar">
+            <button class="light-btn active red" id="btnLightRed" onclick="setLight('red')">🔴 紅光照射</button>
+            <button class="light-btn green" id="btnLightGreen" onclick="setLight('green')">🟢 綠光照射</button>
+            <button class="light-btn blue" id="btnLightBlue" onclick="setLight('blue')">🔵 藍光照射</button>
+            <button class="light-btn white" id="btnLightWhite" onclick="setLight('white')">☀️ 白光(原色)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="gridCanvas" width="360" height="360"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：點擊上方按鈕切換「照射色光」，或點選色紙格子自訂塗色！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵還原：</span>
+          <button class="preset-btn active" onclick="resetToBookPattern()">📖 第60頁第18題原題色紙 (綠24, 紅16, 藍16, 白8)</button>
+          <button class="preset-btn" onclick="clearToWhite()">⚪ 全白色紙</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Paint Tools Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>🖌️</span> 網格塗色畫筆
+          </div>
+          <div class="palette-row">
+            <button class="color-swatch-btn selected" style="background:#22c55e; color:#fff;" onclick="selectBrush('green')">綠色</button>
+            <button class="color-swatch-btn" style="background:#ef4444; color:#fff;" onclick="selectBrush('red')">紅色</button>
+            <button class="color-swatch-btn" style="background:#3b82f6; color:#fff;" onclick="selectBrush('blue')">藍色</button>
+            <button class="color-swatch-btn" style="background:#ffffff; color:#000;" onclick="selectBrush('white')">白色</button>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">
+            選取顏色後，直接在左側網格上點擊或拖曳即可上色。
+          </div>
+        </div>
+
+        <!-- Area Metrics Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 照射後面積統計 (總 64 cm²)
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item" style="background:#fee2e2; border-color:#b91c1c;">
+              <div class="status-item-label" style="color:#991b1b;">呈現黑色面積</div>
+              <div class="status-item-val" id="dispBlackArea" style="color:#b91c1c;">40 cm²</div>
+            </div>
+            <div class="status-item" style="background:#dcfce7; border-color:#15803d;">
+              <div class="status-item-label" style="color:#14532d;">呈現亮色面積</div>
+              <div class="status-item-val" id="dispColorArea" style="color:#15803d;">24 cm²</div>
+            </div>
+          </div>
+
+          <div class="color-count-list" id="colorBreakdownList">
+            <!-- Dynamic breakdowns injected here -->
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🔴 <strong>【紅光照射時】</strong>：<br>
+            綠色 (24cm²) 與藍色 (16cm²) <strong>完全吸收紅光 ➔ 呈黑色 (40 cm²)</strong>！<br>
+            紅色 (16cm²) 與白色 (8cm²) 反射紅光 ➔ 呈紅色 (24 cm²)。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 60 頁 重點 5 第 18 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：一張 8cm × 8cm 正方形色紙，以紅光照射後呈現黑色的面積為多少 cm²？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#e11d48; background:#ffe4e6; border:1.5px solid #f43f5e; padding:0.3rem 0.7rem; border-radius:99px;">
+          色光吸收 ✕ 網格面積計算
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：一張 8 公分 × 8 公分的正方形色紙上，分別有四種不同的顏色，如右圖所示，若每一小格為 $1\text{ cm}^2$，則以紅光照射後，呈現黑色的面積為多少 $\text{cm}^2$？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ18('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">36 cm²</div>
+        </div>
+
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ18('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">38 cm²</div>
+        </div>
+
+        <!-- Option C (Correct) -->
+        <div class="option-card" onclick="testExamQ18('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">40 cm² (正確)</div>
+        </div>
+
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ18('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">44 cm²</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ18">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ18">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ18"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 色光反射與吸光特性教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    const ROWS = 8;
+    const COLS = 8;
+    let grid = []; // 8x8 array storing original color: 'green' | 'red' | 'blue' | 'white'
+    let currentLight = 'red'; // 'red' | 'green' | 'blue' | 'white'
+    let activeBrush = 'green';
+
+    const canvas = document.getElementById('gridCanvas');
+    const ctx = canvas.getContext('2d');
+    const dispBlackArea = document.getElementById('dispBlackArea');
+    const dispColorArea = document.getElementById('dispColorArea');
+    const natureBanner = document.getElementById('natureBanner');
+    const colorBreakdownList = document.getElementById('colorBreakdownList');
+
+    let isMouseDown = false;
+
+    // Initialize 8x8 Grid following Book Layout:
+    // Green: 24 cells, Red: 16 cells, Blue: 16 cells, White: 8 cells -> Total 64 cells
+    function resetToBookPattern() {
+      grid = [];
+      for (let r = 0; r < ROWS; r++) {
+        let rowArr = [];
+        for (let c = 0; c < COLS; c++) {
+          if (c < 4) {
+            // Left 4 columns (rows 0~5 = green, rows 6~7 = green/blue)
+            if (r < 6) rowArr.push('green'); // 4*6 = 24 green
+            else rowArr.push('green');       // We'll adjust below
+          } else {
+            // Right 4 columns
+            if (r < 4) rowArr.push('red');   // 4*4 = 16 red
+            else if (r < 6) rowArr.push('white'); // 4*2 = 8 white
+            else rowArr.push('blue');        // 4*2 = 8 blue
+          }
+        }
+        grid.push(rowArr);
+      }
+
+      // Adjust exact cell counts to: Green 24, Red 16, Blue 16, White 8
+      // Left 4 columns: r=0~5 (24 green), r=6~7 (8 blue)
+      // Right 4 columns: r=0~3 (16 red), r=4~5 (8 white), r=6~7 (8 blue) -> Total blue = 8 + 8 = 16!
+      for (let c = 0; c < 4; c++) {
+        grid[6][c] = 'blue';
+        grid[7][c] = 'blue';
+      }
+
+      draw();
+    }
+
+    function clearToWhite() {
+      grid = [];
+      for (let r = 0; r < ROWS; r++) {
+        let rowArr = [];
+        for (let c = 0; c < COLS; c++) {
+          rowArr.push('white');
+        }
+        grid.push(rowArr);
+      }
+      draw();
+    }
+
+    function getApparentColor(origColor, light) {
+      if (light === 'white') {
+        if (origColor === 'green') return { fill: '#22c55e', text: '綠', isBlack: false };
+        if (origColor === 'red') return { fill: '#ef4444', text: '紅', isBlack: false };
+        if (origColor === 'blue') return { fill: '#3b82f6', text: '藍', isBlack: false };
+        if (origColor === 'white') return { fill: '#ffffff', text: '白', isBlack: false };
+      } else if (light === 'red') {
+        // Red Light: Red & White reflect red; Green & Blue absorb -> Black
+        if (origColor === 'red' || origColor === 'white') {
+          return { fill: '#ef4444', text: '紅', isBlack: false };
+        } else {
+          return { fill: '#0f172a', text: '黑', isBlack: true };
+        }
+      } else if (light === 'green') {
+        // Green Light: Green & White reflect green; Red & Blue absorb -> Black
+        if (origColor === 'green' || origColor === 'white') {
+          return { fill: '#22c55e', text: '綠', isBlack: false };
+        } else {
+          return { fill: '#0f172a', text: '黑', isBlack: true };
+        }
+      } else if (light === 'blue') {
+        // Blue Light: Blue & White reflect blue; Red & Green absorb -> Black
+        if (origColor === 'blue' || origColor === 'white') {
+          return { fill: '#3b82f6', text: '藍', isBlack: false };
+        } else {
+          return { fill: '#0f172a', text: '黑', isBlack: true };
+        }
+      }
+      return { fill: '#ffffff', text: '', isBlack: false };
+    }
+
+    function draw() {
+      const size = 360;
+      canvas.width = size;
+      canvas.height = size;
+      ctx.clearRect(0, 0, size, size);
+
+      const cellSize = size / 8; // 45px per cell
+
+      let blackCount = 0;
+      let colorCount = 0;
+      let origCounts = { green: 0, red: 0, blue: 0, white: 0 };
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const orig = grid[r][c];
+          origCounts[orig]++;
+
+          const app = getApparentColor(orig, currentLight);
+          if (app.isBlack) blackCount++;
+          else colorCount++;
+
+          const x = c * cellSize;
+          const y = r * cellSize;
+
+          // Cell Fill
+          ctx.fillStyle = app.fill;
+          ctx.fillRect(x, y, cellSize, cellSize);
+
+          // Grid Border
+          ctx.strokeStyle = '#203a5b';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(x, y, cellSize, cellSize);
+
+          // Text Label
+          ctx.fillStyle = app.isBlack ? '#94a3b8' : (app.fill === '#ffffff' ? '#203a5b' : '#ffffff');
+          ctx.font = 'bold 13px Noto Sans TC, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(app.text, x + cellSize / 2, y + cellSize / 2);
+        }
+      }
+
+      // Outer Thick Border
+      ctx.strokeStyle = '#203a5b';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(0, 0, size, size);
+
+      updateStats(blackCount, colorCount, origCounts);
+    }
+
+    function updateStats(blackCount, colorCount, origCounts) {
+      dispBlackArea.textContent = `${blackCount} cm²`;
+      dispColorArea.textContent = `${colorCount} cm²`;
+
+      colorBreakdownList.innerHTML = `
+        <div class="color-count-item">
+          <span>🟩 原始綠色格數：</span>
+          <span style="font-family:'JetBrains Mono'; font-weight:900;">${origCounts.green} 格 (${origCounts.green} cm²)</span>
+        </div>
+        <div class="color-count-item">
+          <span>🟥 原始紅色格數：</span>
+          <span style="font-family:'JetBrains Mono'; font-weight:900;">${origCounts.red} 格 (${origCounts.red} cm²)</span>
+        </div>
+        <div class="color-count-item">
+          <span>🟦 原始藍色格數：</span>
+          <span style="font-family:'JetBrains Mono'; font-weight:900;">${origCounts.blue} 格 (${origCounts.blue} cm²)</span>
+        </div>
+        <div class="color-count-item">
+          <span>⬜ 原始白色格數：</span>
+          <span style="font-family:'JetBrains Mono'; font-weight:900;">${origCounts.white} 格 (${origCounts.white} cm²)</span>
+        </div>
+      `;
+
+      if (currentLight === 'red') {
+        natureBanner.innerHTML = `
+          🔴 <strong>【紅光照射（第18題）】</strong>：<br>
+          綠色 (${origCounts.green}cm²) ＋ 藍色 (${origCounts.blue}cm²) <strong>完全吸收紅光 ➔ 呈黑色 (總計 ${blackCount} cm²)</strong>！<br>
+          紅色 (${origCounts.red}cm²) ＋ 白色 (${origCounts.white}cm²) 反射紅光 ➔ 呈紅色 (${colorCount} cm²)。
+        `;
+      } else if (currentLight === 'green') {
+        natureBanner.innerHTML = `
+          🟢 <strong>【綠光照射】</strong>：<br>
+          紅色 (${origCounts.red}cm²) ＋ 藍色 (${origCounts.blue}cm²) <strong>完全吸收綠光 ➔ 呈黑色 (總計 ${blackCount} cm²)</strong>！<br>
+          綠色 (${origCounts.green}cm²) ＋ 白色 (${origCounts.white}cm²) 反射綠光 ➔ 呈綠色 (${colorCount} cm²)。
+        `;
+      } else if (currentLight === 'blue') {
+        natureBanner.innerHTML = `
+          🔵 <strong>【藍光照射】</strong>：<br>
+          綠色 (${origCounts.green}cm²) ＋ 狂色 (${origCounts.red}cm²) <strong>完全吸收藍光 ➔ 呈黑色 (總計 ${blackCount} cm²)</strong>！<br>
+          藍色 (${origCounts.blue}cm²) ＋ 白色 (${origCounts.white}cm²) 反射藍光 ➔ 呈藍色 (${colorCount} cm²)。
+        `;
+      } else {
+        natureBanner.innerHTML = `
+          ☀️ <strong>【白光照射（原色呈現）】</strong>：<br>
+          白光包含紅、綠、藍三原色，所有物體各自反射其固有顏色，無黑色區域。
+        `;
+      }
+    }
+
+    // Switch Light
+    window.setLight = function(l) {
+      currentLight = l;
+      ['btnLightRed', 'btnLightGreen', 'btnLightBlue', 'btnLightWhite'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      if (l === 'red') document.getElementById('btnLightRed').classList.add('active');
+      if (l === 'green') document.getElementById('btnLightGreen').classList.add('active');
+      if (l === 'blue') document.getElementById('btnLightBlue').classList.add('active');
+      if (l === 'white') document.getElementById('btnLightWhite').classList.add('active');
+      draw();
+    };
+
+    // Brush Selection
+    window.selectBrush = function(b) {
+      activeBrush = b;
+      document.querySelectorAll('.color-swatch-btn').forEach(btn => btn.classList.remove('selected'));
+      event.target.classList.add('selected');
+    };
+
+    // Paint on Grid
+    function paintCell(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      const cellSize = 360 / 8;
+      const c = Math.floor(x / cellSize);
+      const r = Math.floor(y / cellSize);
+
+      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+        grid[r][c] = activeBrush;
+        draw();
+      }
+    }
+
+    canvas.addEventListener('mousedown', (e) => { isMouseDown = true; paintCell(e); });
+    window.addEventListener('mousemove', (e) => { if (isMouseDown) paintCell(e); });
+    window.addEventListener('mouseup', () => isMouseDown = false);
+
+    canvas.addEventListener('touchstart', (e) => { isMouseDown = true; paintCell(e); }, { passive: false });
+    window.addEventListener('touchmove', (e) => { if (isMouseDown) paintCell(e); }, { passive: false });
+    window.addEventListener('touchend', () => isMouseDown = false);
+
+    // Exam Handler
+    window.testExamQ18 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ18');
+      const expTitle = document.getElementById('expTitleQ18');
+      const expContent = document.getElementById('expContentQ18');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'C') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(C) 40 cm²】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【色光照射 ✕ 物體吸光特性詳解】</strong><br>
+          1. <strong>各顏色色塊在紅光下的反射行為</strong>：<br>
+             - <strong>白色區域（8 格）</strong>：反射所有色光，在紅光照射下<strong>呈現紅色</strong>。<br>
+             - <strong>紅色區域（16 格）</strong>：反射紅光，在紅光照射下<strong>呈現紅色</strong>。<br>
+             - <strong>綠色區域（24 格）</strong>：只反射綠光，<strong>完全吸收紅光 ➔ 呈現黑色</strong>。<br>
+             - <strong>藍色區域（16 格）</strong>：只反射藍光，<strong>完全吸收紅光 ➔ 呈現黑色</strong>。<br>
+          2. <strong>呈現黑色的總面積計算</strong>：<br>
+             - 黑色面積 $=$ 綠色面積 $+$ 藍色面積 $= 24\\text{ cm}^2 + 16\\text{ cm}^2 = \\mathbf{40\\text{ cm}^2}$！<br>
+          3. 因此答案選 <strong>(C) 40</strong>！
+        `;
+        resetToBookPattern();
+        setLight('red');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【計算錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `
+          請注意：在紅光照射下，只有「綠色」與「藍色」色塊會吸收紅光變成黑色。綠色佔 24 格、藍色佔 16 格，總和為 $24 + 16 = 40\\text{ cm}^2$。
+        `;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    resetToBookPattern();
+    setLight('red');
+  </script>
+</body>
+</html>

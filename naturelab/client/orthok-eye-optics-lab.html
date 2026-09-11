@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>角膜塑型片與近視眼聚焦光學實驗室 | 第60頁第16題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #a5f3fc;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .shape-selector-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: #ffffff;
+      padding: 0.3rem 0.5rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+    }
+
+    .shape-tab {
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      border: 1.5px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      background: transparent;
+      color: var(--primary);
+      transition: all 0.15s;
+    }
+
+    .shape-tab:hover {
+      background: #f1f5f9;
+    }
+
+    .shape-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #0f172a;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#eyeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #38bdf8;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #38bdf8;
+      pointer-events: none;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Vision Simulator Box */
+    .vision-preview-box {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      height: 90px;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vision-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      transition: filter 0.3s ease;
+    }
+
+    .status-badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .status-item-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .status-item-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #dcfce7;
+      border: 2px dashed #15803d;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #14532d;
+      text-align: center;
+    }
+
+    /* Exam Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+      <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>角膜塑型片與近視眼聚焦光學實驗室（第60頁第16題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>👁️</span> 眼球光學剖面與角膜曲度聚焦追蹤
+          </div>
+          <div class="shape-selector-tabs">
+            <button class="shape-tab" id="tabJia" onclick="setCorneaShape('jia')">🔴 形狀 甲 (更凸·近視加深)</button>
+            <button class="shape-tab" id="tabYi" onclick="setCorneaShape('yi')">🟡 形狀 乙 (原本近視角膜)</button>
+            <button class="shape-tab active" id="tabBing" onclick="setCorneaShape('bing')">🟢 形狀 丙 (塑型平坦·清晰)</button>
+          </div>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="eyeCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：點擊上方切換「甲、乙、丙」角膜曲度，觀察光線焦點如何移動到視網膜上！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵狀態：</span>
+          <button class="preset-btn active" id="btnModeBing" onclick="setCorneaShape('bing')">✨ 晨起移除塑型片 (角膜重塑為丙 · 視力 1.0)</button>
+          <button class="preset-btn" id="btnModeWear" onclick="toggleWearingLens()">🌙 睡眠佩戴 Ortho-K 硬式隱形眼鏡</button>
+          <button class="preset-btn" id="btnModeYi" onclick="setCorneaShape('yi')">👓 未塑型近視眼 (原本角膜乙 · 焦點在視網膜前)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Vision Simulation Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>👁️</span> 視網膜成像清晰度模擬
+          </div>
+          <div class="vision-preview-box">
+            <span class="vision-text" id="visionText">國中自然 1.0</span>
+            <span style="position:absolute; bottom:4px; font-size:0.65rem; color:#64748b; font-weight:700;" id="visionStatus">視力清晰 (焦點在視網膜上)</span>
+          </div>
+        </div>
+
+        <!-- Optics Status Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>📊</span> 光學聚焦分析
+          </div>
+
+          <div class="status-badge-grid">
+            <div class="status-item">
+              <div class="status-item-label">角膜中央曲度</div>
+              <div class="status-item-val" id="dispCorneaType" style="color:#15803d;">丙 (平坦變薄)</div>
+            </div>
+            <div class="status-item">
+              <div class="status-item-label">光線焦點位置</div>
+              <div class="status-item-val" id="dispFocusPos" style="color:#15803d;">視網膜上 ✅</div>
+            </div>
+          </div>
+
+          <div class="nature-banner" id="natureBanner">
+            🎉 <strong>【形狀 丙 (加壓後角膜)】</strong>：<br>
+            角膜中央被壓平變薄，<strong>類似凹透鏡功能（減弱聚光力）</strong>，使光線焦點<strong>後移精準落在視網膜上</strong>，達到近視矯正！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 60 頁 重點 4 第 16 題 · 生活題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：經硬式隱形眼鏡「加壓後的角膜曲度」應改變成甲、乙、丙哪一種形狀？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#0369a1; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
+          角膜塑型 ✕ 近視眼凹透鏡原理
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：眼科醫學界有一種暫時矯正近視的方法：藉由睡眠時佩戴硬式隱形眼鏡，讓眼球前面的角膜（圖中藍色部分）曲度改變，可使患者隔天早上移除隱形眼鏡後，暫時恢復至無近視的狀態。試問經硬式隱形眼鏡「加壓後的角膜曲度」應改變成右圖中甲、乙、丙哪一種形狀，方可達到上述的功效？
+      </p>
+
+      <div class="options-grid">
+        <!-- Option A -->
+        <div class="option-card" onclick="testExamQ16('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">甲 (更凸)</div>
+        </div>
+
+        <!-- Option B -->
+        <div class="option-card" onclick="testExamQ16('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">乙 (原狀)</div>
+        </div>
+
+        <!-- Option C (Correct) -->
+        <div class="option-card" onclick="testExamQ16('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">丙 (平坦·正確)</div>
+        </div>
+
+        <!-- Option D -->
+        <div class="option-card" onclick="testExamQ16('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">甲、乙、丙都可以</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ16">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ16">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ16"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 視覺光學與近視矯正教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    let corneaShape = 'bing'; // 'jia' (更凸) | 'yi' (原本近視) | 'bing' (塑型平坦)
+    let isWearingLens = false;
+
+    const canvas = document.getElementById('eyeCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const visionText = document.getElementById('visionText');
+    const visionStatus = document.getElementById('visionStatus');
+    const dispCorneaType = document.getElementById('dispCorneaType');
+    const dispFocusPos = document.getElementById('dispFocusPos');
+    const natureBanner = document.getElementById('natureBanner');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const cy = h / 2;
+      const eyeCenterX = w * 0.62;
+      const eyeRadiusX = 140;
+      const eyeRadiusY = 110;
+
+      const corneaX = eyeCenterX - eyeRadiusX + 30; // Front of eye
+      const lensCenterX = corneaX + 45;
+      const retinaX = eyeCenterX + eyeRadiusX - 10; // Back of eye (Retina)
+
+      // 1. Draw Eyeball Sclera & Retina (Back arc)
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.ellipse(eyeCenterX, cy, eyeRadiusX, eyeRadiusY, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Retina Layer (Thick orange arc on the back inside)
+      ctx.strokeStyle = '#f97316';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(eyeCenterX, cy, eyeRadiusX - 4, -Math.PI * 0.42, Math.PI * 0.42);
+      ctx.stroke();
+
+      // Retina Label
+      ctx.fillStyle = '#f97316';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('視網膜 (Retina)', retinaX + 12, cy - 40);
+
+      // Yellow Macula Spot on Retina
+      ctx.fillStyle = '#eab308';
+      ctx.beginPath();
+      ctx.arc(retinaX - 2, cy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10px Noto Sans TC, sans-serif';
+      ctx.fillText('黃斑部中心', retinaX + 12, cy + 4);
+
+      // 2. Draw Crystalline Lens (Inside eye)
+      ctx.fillStyle = 'rgba(186, 230, 253, 0.6)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(lensCenterX, cy, 14, 45, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('水晶體', lensCenterX, cy + 62);
+
+      // 3. Draw Cornea (Front Blue Cap) according to Shape
+      let corneaBulge = 0; // Curve amount
+      if (corneaShape === 'jia') corneaBulge = 38;       // Super convex
+      else if (corneaShape === 'yi') corneaBulge = 28;  // Normal myopic convex
+      else if (corneaShape === 'bing') corneaBulge = 14;// Ortho-K Flattened center!
+
+      ctx.save();
+      ctx.strokeStyle = '#0284c7';
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(corneaX + 5, cy - 50);
+
+      if (corneaShape === 'bing') {
+        // Ortho-K Flattened Shape (Thinner in center, thicker at edges -> Concave lens profile)
+        ctx.bezierCurveTo(
+          corneaX - corneaBulge - 6, cy - 40,
+          corneaX - corneaBulge, cy - 10,
+          corneaX - corneaBulge, cy
+        );
+        ctx.bezierCurveTo(
+          corneaX - corneaBulge, cy + 10,
+          corneaX - corneaBulge - 6, cy + 40,
+          corneaX + 5, cy + 50
+        );
+      } else {
+        // Normal/Steep Convex Arc
+        ctx.quadraticCurveTo(corneaX - corneaBulge, cy, corneaX + 5, cy + 50);
+      }
+
+      ctx.quadraticCurveTo(corneaX + 15, cy, corneaX + 5, cy - 50);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Cornea Label
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      let shapeLabel = corneaShape === 'jia' ? '角膜 甲 (過凸)' : (corneaShape === 'yi' ? '角膜 乙 (近視原狀)' : '角膜 丙 (加壓平坦)');
+      ctx.fillText(shapeLabel, corneaX - 25, cy - 65);
+
+      // 4. Draw Ortho-K Contact Lens if Wearing
+      if (isWearingLens) {
+        ctx.strokeStyle = '#ec4899';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(corneaX + 5, cy - 52);
+        ctx.bezierCurveTo(corneaX - 18, cy - 35, corneaX - 16, cy, corneaX - 16, cy);
+        ctx.bezierCurveTo(corneaX - 16, cy, corneaX - 18, cy + 35, corneaX + 5, cy + 52);
+        ctx.stroke();
+
+        ctx.fillStyle = '#f472b6';
+        ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+        ctx.fillText('硬式塑型片', corneaX - 35, cy - 30);
+      }
+      ctx.restore();
+
+      // 5. Light Rays Tracing (Parallel Incident Rays)
+      const rayYOffsets = [-35, -18, 0, 18, 35];
+      let focusX = 0;
+
+      if (corneaShape === 'jia') {
+        focusX = retinaX - 70; // Focus way in front of retina
+      } else if (corneaShape === 'yi') {
+        focusX = retinaX - 42; // Focus in front of retina (Myopia)
+      } else if (corneaShape === 'bing') {
+        focusX = retinaX - 2;  // Perfect focus on Retina!
+      }
+
+      // Draw Incident Parallel Rays (from left x = 30 to Cornea)
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = '#4ade80';
+      ctx.shadowBlur = 6;
+
+      rayYOffsets.forEach(ry => {
+        ctx.beginPath();
+        ctx.moveTo(30, cy + ry);
+        ctx.lineTo(corneaX - 4, cy + ry * 0.95);
+        ctx.stroke();
+      });
+
+      // Draw Converging Rays inside eye (Cornea -> Lens -> Focus)
+      ctx.strokeStyle = '#4ade80';
+      rayYOffsets.forEach(ry => {
+        ctx.beginPath();
+        ctx.moveTo(corneaX - 4, cy + ry * 0.95);
+        ctx.lineTo(lensCenterX, cy + ry * 0.85);
+        ctx.lineTo(focusX, cy);
+        // If focus is in front of retina, rays continue and diverge to retina
+        if (focusX < retinaX - 5) {
+          const divergeY = (cy - cy) + ((retinaX - focusX) / (focusX - lensCenterX)) * (-ry * 0.85);
+          ctx.lineTo(retinaX, cy + divergeY);
+        }
+        ctx.stroke();
+      });
+      ctx.shadowBlur = 0;
+
+      // Draw Focus Point Spot
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(focusX, cy, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#ef4444';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('焦點 F', focusX, cy + 18);
+
+      updateUI();
+    }
+
+    function updateUI() {
+      ['tabJia', 'tabYi', 'tabBing'].forEach(id => document.getElementById(id).classList.remove('active'));
+      if (corneaShape === 'jia') document.getElementById('tabJia').classList.add('active');
+      if (corneaShape === 'yi') document.getElementById('tabYi').classList.add('active');
+      if (corneaShape === 'bing') document.getElementById('tabBing').classList.add('active');
+
+      if (corneaShape === 'bing') {
+        dispCorneaType.textContent = '丙 (中央平坦變薄)';
+        dispCorneaType.style.color = '#15803d';
+        dispFocusPos.textContent = '視網膜上 ✅';
+        dispFocusPos.style.color = '#15803d';
+
+        visionText.style.filter = 'blur(0px)';
+        visionStatus.textContent = '視力清晰 1.0 (焦點精準落在視網膜上)';
+        visionStatus.style.color = '#15803d';
+
+        natureBanner.innerHTML = `
+          🎉 <strong>【形狀 丙 (塑型後角膜 · 正確答案)】</strong>：<br>
+          角膜中央被硬式鏡片壓平變薄，<strong>具備凹透鏡發散效果（減弱聚光力）</strong>，使焦點<strong>後移精準落在視網膜上</strong>，白天裸眼視力清晰！
+        `;
+        natureBanner.style.background = '#dcfce7';
+        natureBanner.style.borderColor = '#15803d';
+        natureBanner.style.color = '#14532d';
+
+      } else if (corneaShape === 'yi') {
+        dispCorneaType.textContent = '乙 (原本近視角膜)';
+        dispCorneaType.style.color = '#ca8a04';
+        dispFocusPos.textContent = '視網膜前方 ❌';
+        dispFocusPos.style.color = '#ca8a04';
+
+        visionText.style.filter = 'blur(4px)';
+        visionStatus.textContent = '視力模糊 (近視：焦點落在視網膜前)';
+        visionStatus.style.color = '#ca8a04';
+
+        natureBanner.innerHTML = `
+          🟡 <strong>【形狀 乙 (原本近視角膜)】</strong>：<br>
+          角膜曲度過凸、聚光太強，<strong>焦點落在視網膜前方</strong>，視網膜上呈現模糊光斑。
+        `;
+        natureBanner.style.background = '#fef9c3';
+        natureBanner.style.borderColor = '#ca8a04';
+        natureBanner.style.color = '#854d0e';
+
+      } else if (corneaShape === 'jia') {
+        dispCorneaType.textContent = '甲 (中央更加凸起)';
+        dispCorneaType.style.color = '#b91c1c';
+        dispFocusPos.textContent = '視網膜極前方 ❌';
+        dispFocusPos.style.color = '#b91c1c';
+
+        visionText.style.filter = 'blur(8px)';
+        visionStatus.textContent = '視力極度模糊 (屈光力過強)';
+        visionStatus.style.color = '#b91c1c';
+
+        natureBanner.innerHTML = `
+          🔴 <strong>【形狀 甲 (更加凸起)】</strong>：<br>
+          中央曲度更凸，屈光力更強，焦點離視網膜更遠，近視度數反而加深！
+        `;
+        natureBanner.style.background = '#fee2e2';
+        natureBanner.style.borderColor = '#b91c1c';
+        natureBanner.style.color = '#991b1b';
+      }
+    }
+
+    window.setCorneaShape = function(s) {
+      corneaShape = s;
+      if (s !== 'bing') isWearingLens = false;
+      draw();
+    };
+
+    window.toggleWearingLens = function() {
+      isWearingLens = true;
+      corneaShape = 'bing';
+      draw();
+    };
+
+    // Exam Handler
+    window.testExamQ16 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ16');
+      const expTitle = document.getElementById('expTitleQ16');
+      const expContent = document.getElementById('expContentQ16');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'C') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(C) 丙】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【角膜塑型片（Ortho-K）醫學物理光學詳解】</strong><br>
+          1. <strong>近視眼的成因</strong>：眼軸過長或角膜曲度過大（聚光太強），使平行光線折射後<strong>聚焦於視網膜的前方</strong>。<br>
+          2. <strong>矯正近視的本質（凹透鏡原理）</strong>：需要<strong>發散光線</strong>或<strong>減弱角膜的聚光能力</strong>，使焦點向後移動至視網膜上。<br>
+          3. <strong>角膜形狀分析</strong>：<br>
+             - <strong>形狀 甲（中央更凸）</strong>：聚光能力更強，焦點更往前移，近視更嚴重 ❌。<br>
+             - <strong>形狀 乙（原本近視角膜）</strong>：未矯正狀態，焦點在視網膜前 ❌。<br>
+             - <strong>形狀 丙（中央平坦變薄、兩端相對較厚）</strong>：類似<strong>凹透鏡的形狀</strong>，能有效減弱角膜屈光力，使光線精準聚焦於視網膜上 ✅！<br>
+          4. 因此加壓後的角膜形狀應改變成<strong>【丙】（選項 C）</strong>！
+        `;
+        setCorneaShape('bing');
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        if (opt === 'A') {
+          expContent.innerHTML = `形狀甲中央更加凸起，聚光力更強，焦點會更往前移，造成近視更加惡化。`;
+          setCorneaShape('jia');
+        } else if (opt === 'B') {
+          expContent.innerHTML = `形狀乙為未矯正的原近視角膜曲度，焦點仍在視網膜前方。`;
+          setCorneaShape('yi');
+        } else {
+          expContent.innerHTML = `只有形狀丙（中央變平變薄）具有凹透鏡減弱屈光力的效果，能將焦點後移至視網膜。`;
+        }
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>

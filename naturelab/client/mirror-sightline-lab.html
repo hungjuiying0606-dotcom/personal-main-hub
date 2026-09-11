@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>平面鏡視角與障礙遮擋解謎實驗室 | 第58頁第2題互動解密 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.8rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout Grid */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Main Canvas Section */
+    .canvas-panel {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 1rem 1.25rem;
+      background: #bae6fd;
+      border-bottom: 2.5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .interactive-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #f8fafc;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas#sightlineCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+
+    canvas#sightlineCanvas:active {
+      cursor: grabbing;
+    }
+
+    .canvas-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      pointer-events: none;
+    }
+
+    /* Quick Preset Buttons Bar */
+    .preset-bar {
+      padding: 0.8rem 1.25rem;
+      background: #f8fafc;
+      border-top: 2.5px solid var(--primary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .preset-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sidebar Controls Panel */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-solid);
+      padding: 1.25rem;
+    }
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.8rem;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #f8fafc;
+      margin-bottom: 0.5rem;
+    }
+
+    .toggle-row:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Target Status List */
+    .target-status-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .target-status-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.8rem;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-weight: 900;
+      font-size: 0.85rem;
+    }
+
+    .target-status-item.success {
+      background: #dcfce7;
+      border-color: #15803d;
+      color: #14532d;
+    }
+
+    .target-status-item.blocked {
+      background: #fee2e2;
+      border-color: #b91c1c;
+      color: #7f1d1d;
+    }
+
+    .target-status-item.out {
+      background: #f1f5f9;
+      border-color: #64748b;
+      color: #334155;
+    }
+
+    .nature-banner {
+      margin-top: 0.8rem;
+      background: #dcfce7;
+      border: 2px dashed #15803d;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #14532d;
+      text-align: center;
+    }
+
+    /* 58 Exam Challenge Section */
+    .exam-section {
+      background: #ffffff;
+      border: 3px solid var(--primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-solid);
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 0.8rem;
+    }
+
+    .exam-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1rem;
+      background: #fafcfe;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 3px 3px var(--primary);
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 5px 5px var(--primary);
+      background: #f0f9ff;
+    }
+
+    .option-card.selected-correct {
+      background: #bbf7d0 !important;
+      border-color: #15803d !important;
+      box-shadow: 4px 4px #15803d;
+    }
+
+    .option-card.selected-wrong {
+      background: #fecaca !important;
+      border-color: #b91c1c !important;
+      box-shadow: 4px 4px #b91c1c;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .option-desc {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .exam-explanation-box {
+      background: #f8fafc;
+      border: 2.5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+      <!-- Top Navigation -->
+  <header class="optics-nav" style="justify-content: flex-start; padding: 0 max(22px, calc((100vw - 1160px) / 2));">
+    <a href="../index.html" class="nav-link-btn primary" style="font-size:0.9rem; padding:0.45rem 1.1rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">🏠 回首頁</a>
+  </header>
+
+  <main>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="../index.html">首頁</a>
+      <span>›</span>
+      <a href="review-hub.html">九年級理化複習</a>
+      <span>›</span>
+      <span>平面鏡視角與障礙遮擋解謎實驗室（第58頁第2題）</span>
+    </div>
+
+    <!-- Main Lab Layout -->
+    <div class="lab-layout">
+      <!-- Left: Interactive Canvas -->
+      <div class="canvas-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🏰</span> 屋內石柱遮擋與平面鏡視線模擬 (Raycasting)
+          </div>
+          <span style="font-size:0.75rem; font-weight:900; background:#fff; padding:0.2rem 0.6rem; border-radius:99px; border:1.5px solid var(--primary);">
+            即時碰撞計算
+          </span>
+        </div>
+
+        <div class="interactive-canvas-container" id="canvasContainer">
+          <canvas id="sightlineCanvas"></canvas>
+          <div class="canvas-hint-overlay">
+            💡 提示：可以用滑鼠／手指拖曳「甲 (觀察者)」、「乙、丙、丁」或石柱！
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="preset-bar">
+          <span class="preset-label">🎯 一鍵位置：</span>
+          <button class="preset-btn active" onclick="resetToBookQuestion()">📖 第58頁第2題原題位置 (甲只能看見丁)</button>
+          <button class="preset-btn" onclick="moveJiaToCenter()">🚶 將「甲」移到正中央</button>
+          <button class="preset-btn" onclick="removePillars()">✨ 移除石柱 (全部看得到)</button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar Controls -->
+      <div class="controls-panel">
+        <!-- Visualization Options Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>⚙️</span> 作圖法輔助顯示
+          </div>
+          <div class="toggle-row">
+            <span>顯示鏡後對稱虛像點 (乙' 丙' 丁')</span>
+            <input type="checkbox" id="chkVirtualImages" checked onchange="draw()">
+          </div>
+          <div class="toggle-row">
+            <span>顯示甲到虛像的直線視線</span>
+            <input type="checkbox" id="chkSightlines" checked onchange="draw()">
+          </div>
+          <div class="toggle-row">
+            <span>顯示光線真實反射路徑</span>
+            <input type="checkbox" id="chkReflectedRays" checked onchange="draw()">
+          </div>
+        </div>
+
+        <!-- Target Status Card -->
+        <div class="control-card">
+          <div class="card-heading">
+            <span>👀</span> 甲透過平面鏡的視野判定
+          </div>
+          <div class="target-status-list" id="targetStatusList">
+            <!-- Dynamic items injected here -->
+          </div>
+
+          <div class="nature-banner" id="sightBanner">
+            🎉 <strong>【甲唯一能看見的像：丁】</strong><br>
+            丙的虛像連線被大石柱擋住；乙超出鏡面範圍！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Section -->
+    <section class="exam-section">
+      <div class="exam-header">
+        <div>
+          <span class="exam-title-badge">第 58 頁 重點 2 第 2 題</span>
+          <h2 style="font-size:1.3rem; font-weight:900; color:var(--primary); margin-top:0.4rem;">
+            🎯 歷屆難題挑戰：藉由屋內牆上一平面鏡的反射，甲可以看見誰的像？
+          </h2>
+        </div>
+        <span style="font-size:0.85rem; font-weight:900; color:#0369a1; background:#e0f2fe; border:1.5px solid #0284c7; padding:0.3rem 0.7rem; border-radius:99px;">
+          空間幾何 ✕ 虛像作圖法
+        </span>
+      </div>
+
+      <p style="font-size:0.95rem; font-weight:700; color:var(--text); line-height:1.7;">
+        題目：如圖所示，甲、乙、丙、丁四人站在四面磚牆的屋內，屋內有三根由地面延伸到天花板的大石柱，藉由屋內牆上一平面鏡的反射，甲可以看見乙、丙、丁三人中何者的像？
+      </p>
+
+      <div class="options-grid">
+        <div class="option-card" onclick="testExamQ2('A', event)">
+          <div class="option-letter">A</div>
+          <div class="option-desc">乙</div>
+        </div>
+        <div class="option-card" onclick="testExamQ2('B', event)">
+          <div class="option-letter">B</div>
+          <div class="option-desc">丁</div>
+        </div>
+        <div class="option-card" onclick="testExamQ2('C', event)">
+          <div class="option-letter">C</div>
+          <div class="option-desc">乙、丙</div>
+        </div>
+        <div class="option-card" onclick="testExamQ2('D', event)">
+          <div class="option-letter">D</div>
+          <div class="option-desc">皆看不見</div>
+        </div>
+      </div>
+
+      <div class="exam-explanation-box" id="expBoxQ2">
+        <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:0.5rem;" id="expTitleQ2">題目詳解</h4>
+        <div style="font-size:0.9rem; line-height:1.7; color:var(--text);" id="expContentQ2"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 平面鏡成像與幾何光學教學系統 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    // Grid Setup (Room is 6x6 grid on the left, mirror on the right edge x=6)
+    // Virtual image grid extends to x=10
+    const gridSize = 45;
+    const gridCols = 10;
+    const gridRows = 7;
+    const originX = 50;
+    const originY = 50;
+    const mirrorCol = 5; // Column 5 is the East Wall where mirror sits (between row 1 and 6)
+
+    // Objects in Grid Coordinates (cols 0~5 inside room)
+    let people = {
+      jia:  { name: '甲 (我)', col: 3, row: 3.5, color: '#ef4444', isObserver: true },
+      yi:   { name: '乙', col: 4.5, row: 5.5, color: '#3b82f6', isObserver: false },
+      bing: { name: '丙', col: 2.5, row: 1.2, color: '#10b981', isObserver: false },
+      ding: { name: '丁', col: 1.5, row: 5.5, color: '#f59e0b', isObserver: false }
+    };
+
+    let pillars = [
+      { col: 3.2, row: 1.3, w: 0.8, h: 0.8 }, // Top right pillar
+      { col: 1.8, row: 2.8, w: 0.8, h: 0.8 }, // Middle left pillar
+      { col: 2.5, row: 5.2, w: 0.8, h: 0.8 }  // Bottom pillar
+    ];
+
+    let mirror = {
+      col: 5,
+      rowStart: 1.5,
+      rowEnd: 4.8
+    };
+
+    let draggedItem = null;
+
+    const canvas = document.getElementById('sightlineCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasContainer');
+
+    const chkVirtualImages = document.getElementById('chkVirtualImages');
+    const chkSightlines = document.getElementById('chkSightlines');
+    const chkReflectedRays = document.getElementById('chkReflectedRays');
+    const targetStatusList = document.getElementById('targetStatusList');
+    const sightBanner = document.getElementById('sightBanner');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function toScreenX(col) { return originX + col * gridSize; }
+    function toScreenY(row) { return originY + row * gridSize; }
+    function toGridCol(x) { return (x - originX) / gridSize; }
+    function toGridRow(y) { return (y - originY) / gridSize; }
+
+    function draw() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. Draw Grid Background
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let c = 0; c <= gridCols; c++) {
+        ctx.beginPath();
+        ctx.moveTo(toScreenX(c), toScreenY(0));
+        ctx.lineTo(toScreenX(c), toScreenY(gridRows));
+        ctx.stroke();
+      }
+      for (let r = 0; r <= gridRows; r++) {
+        ctx.beginPath();
+        ctx.moveTo(toScreenX(0), toScreenY(r));
+        ctx.lineTo(toScreenX(gridCols), toScreenY(r));
+        ctx.stroke();
+      }
+
+      // 2. Draw Room Brick Walls (Thick Brown Border around 0~mirrorCol, 0~gridRows)
+      ctx.strokeStyle = '#9a3412';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(toScreenX(0), toScreenY(0), mirrorCol * gridSize, gridRows * gridSize);
+
+      // Behind the mirror region (Light Pink / Gray tint)
+      ctx.fillStyle = 'rgba(254, 226, 226, 0.3)';
+      ctx.fillRect(toScreenX(mirrorCol), toScreenY(0), (gridCols - mirrorCol) * gridSize, gridRows * gridSize);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+      ctx.fillText('【鏡後虛像世界】', toScreenX(mirrorCol) + 20, toScreenY(0.6));
+
+      // 3. Draw Plane Mirror (Thick cyan line on East Wall)
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(toScreenX(mirror.col), toScreenY(mirror.rowStart));
+      ctx.lineTo(toScreenX(mirror.col), toScreenY(mirror.rowEnd));
+      ctx.stroke();
+
+      // Mirror Label
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '900 13px Noto Sans TC, sans-serif';
+      ctx.fillText('平面鏡', toScreenX(mirror.col) + 8, toScreenY((mirror.rowStart + mirror.rowEnd) / 2));
+
+      // 4. Draw Stone Pillars (Textured Blue/Gray Rectangles)
+      pillars.forEach(p => {
+        const px = toScreenX(p.col);
+        const py = toScreenY(p.row);
+        const pw = p.w * gridSize;
+        const ph = p.h * gridSize;
+
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(px, py, pw, ph);
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(px, py, pw, ph);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('石柱', px + pw / 2, py + ph / 2);
+      });
+
+      // 5. Calculate Sightlines & Sights
+      const jiaX = toScreenX(people.jia.col);
+      const jiaY = toScreenY(people.jia.row);
+
+      const targets = ['bing', 'ding', 'yi'];
+      const statusResults = [];
+
+      targets.forEach(tKey => {
+        const p = people[tKey];
+        // Calculate Symmetrical Virtual Image: dist from mirror = mirrorCol - p.col
+        const vCol = mirror.col + (mirror.col - p.col);
+        const vRow = p.row;
+        const vX = toScreenX(vCol);
+        const vY = toScreenY(vRow);
+
+        const realX = toScreenX(p.col);
+        const realY = toScreenY(p.row);
+
+        // Draw Virtual Image Point (Dashed outline circle)
+        if (chkVirtualImages.checked) {
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3, 3]);
+          // Symmetry guide line to mirror
+          ctx.beginPath();
+          ctx.moveTo(realX, realY);
+          ctx.lineTo(vX, vY);
+          ctx.stroke();
+
+          // Virtual Image Dot
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+          ctx.beginPath();
+          ctx.arc(vX, vY, 12, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          ctx.fillStyle = p.color;
+          ctx.font = '900 11px Noto Sans TC, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(p.name + "'", vX, vY);
+        }
+
+        // Raycasting Line from Jia (jiaX, jiaY) to Virtual Image (vX, vY)
+        // Find intersection with mirror line (x = toScreenX(mirrorCol))
+        const mirrorScreenX = toScreenX(mirror.col);
+        let intersectsMirror = false;
+        let intersectY = 0;
+
+        if (vX !== jiaX) {
+          const t = (mirrorScreenX - jiaX) / (vX - jiaX);
+          intersectY = jiaY + t * (vY - jiaY);
+          const mirrorTopY = toScreenY(mirror.rowStart);
+          const mirrorBotY = toScreenY(mirror.rowEnd);
+
+          if (intersectY >= mirrorTopY && intersectY <= mirrorBotY) {
+            intersectsMirror = true;
+          }
+        }
+
+        // Check Obstacle collision from Jia to Mirror Intersection Point
+        let isBlocked = false;
+        if (intersectsMirror) {
+          pillars.forEach(pil => {
+            const pBox = {
+              x1: toScreenX(pil.col),
+              y1: toScreenY(pil.row),
+              x2: toScreenX(pil.col + pil.w),
+              y2: toScreenY(pil.row + pil.h)
+            };
+            if (lineIntersectsBox(jiaX, jiaY, mirrorScreenX, intersectY, pBox)) {
+              isBlocked = true;
+            }
+          });
+        }
+
+        // Draw Sightlines
+        if (chkSightlines.checked) {
+          if (!intersectsMirror) {
+            // Out of mirror range (Gray dashed line)
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 1.8;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(jiaX, jiaY);
+            ctx.lineTo(vX, vY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          } else if (isBlocked) {
+            // Blocked by Pillar (Red line with cross)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(jiaX, jiaY);
+            ctx.lineTo(mirrorScreenX, intersectY);
+            ctx.stroke();
+
+            // Dash behind mirror
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(mirrorScreenX, intersectY);
+            ctx.lineTo(vX, vY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          } else {
+            // Visible! (Bright Green solid line)
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(jiaX, jiaY);
+            ctx.lineTo(mirrorScreenX, intersectY);
+            ctx.stroke();
+
+            // Behind mirror dashed
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)';
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(mirrorScreenX, intersectY);
+            ctx.lineTo(vX, vY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Reflected ray from object to mirror
+            if (chkReflectedRays.checked) {
+              ctx.strokeStyle = '#10b981';
+              ctx.lineWidth = 2.5;
+              ctx.beginPath();
+              ctx.moveTo(realX, realY);
+              ctx.lineTo(mirrorScreenX, intersectY);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Status description
+        let canSee = false;
+        let reason = '';
+        if (!intersectsMirror) {
+          reason = '未切過鏡面 (超出反射範圍)';
+        } else if (isBlocked) {
+          reason = '被石柱遮擋 ❌';
+        } else {
+          canSee = true;
+          reason = '視線通暢，清晰可見 ✅';
+        }
+        statusResults.push({ name: p.name, canSee, reason, isBlocked, notInMirror: !intersectsMirror });
+      });
+
+      // 6. Draw Real People Nodes
+      Object.keys(people).forEach(key => {
+        const p = people[key];
+        const px = toScreenX(p.col);
+        const py = toScreenY(p.row);
+
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(px, py, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 12px Noto Sans TC, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.name.charAt(0), px, py);
+      });
+
+      // Update UI Status Cards
+      updateStatusUI(statusResults);
+    }
+
+    function lineIntersectsBox(x1, y1, x2, y2, box) {
+      // Check 4 edges of box
+      return lineIntersectsLine(x1, y1, x2, y2, box.x1, box.y1, box.x2, box.y1) ||
+             lineIntersectsLine(x1, y1, x2, y2, box.x2, box.y1, box.x2, box.y2) ||
+             lineIntersectsLine(x1, y1, x2, y2, box.x2, box.y2, box.x1, box.y2) ||
+             lineIntersectsLine(x1, y1, x2, y2, box.x1, box.y2, box.x1, box.y1);
+    }
+
+    function lineIntersectsLine(x1, y1, x2, y2, x3, y3, x4, y4) {
+      const denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+      if (denom === 0) return false;
+      const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denom;
+      const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
+      return (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1);
+    }
+
+    function updateStatusUI(results) {
+      targetStatusList.innerHTML = '';
+      let visibleNames = [];
+
+      results.forEach(res => {
+        const item = document.createElement('div');
+        item.className = `target-status-item ${res.canSee ? 'success' : (res.isBlocked ? 'blocked' : 'out')}`;
+        item.innerHTML = `
+          <span>${res.name} 的像</span>
+          <span>${res.canSee ? '🟢 看得見' : (res.isBlocked ? '🔴 被擋住' : '⚪ 超出鏡面')}</span>
+        `;
+        targetStatusList.appendChild(item);
+        if (res.canSee) visibleNames.push(res.name);
+      });
+
+      if (visibleNames.length > 0) {
+        sightBanner.innerHTML = `🎉 <strong>【甲目前能看見的像：${visibleNames.join('、')}】</strong>`;
+        sightBanner.style.background = '#dcfce7';
+        sightBanner.style.borderColor = '#15803d';
+        sightBanner.style.color = '#14532d';
+      } else {
+        sightBanner.innerHTML = `❌ <strong>【甲目前看不到任何人的像】</strong>`;
+        sightBanner.style.background = '#fee2e2';
+        sightBanner.style.borderColor = '#b91c1c';
+        sightBanner.style.color = '#7f1d1d';
+      }
+    }
+
+    // Dragging Logic
+    function getPointerGridPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      return { col: toGridCol(x), row: toGridRow(y), x, y };
+    }
+
+    function findClickedEntity(pos) {
+      // Check People
+      for (const key of Object.keys(people)) {
+        const p = people[key];
+        const dist = Math.hypot(toScreenX(p.col) - pos.x, toScreenY(p.row) - pos.y);
+        if (dist <= 18) return { type: 'person', key };
+      }
+      // Check Pillars
+      for (let i = 0; i < pillars.length; i++) {
+        const p = pillars[i];
+        const px = toScreenX(p.col);
+        const py = toScreenY(p.row);
+        const pw = p.w * gridSize;
+        const ph = p.h * gridSize;
+        if (pos.x >= px && pos.x <= px + pw && pos.y >= py && pos.y <= py + ph) {
+          return { type: 'pillar', index: i };
+        }
+      }
+      return null;
+    }
+
+    container.addEventListener('mousedown', (e) => {
+      const pos = getPointerGridPos(e);
+      draggedItem = findClickedEntity(pos);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!draggedItem) return;
+      const pos = getPointerGridPos(e);
+      if (draggedItem.type === 'person') {
+        const p = people[draggedItem.key];
+        p.col = Math.max(0.2, Math.min(mirrorCol - 0.2, pos.col));
+        p.row = Math.max(0.2, Math.min(gridRows - 0.2, pos.row));
+      } else if (draggedItem.type === 'pillar') {
+        const pil = pillars[draggedItem.index];
+        pil.col = Math.max(0.2, Math.min(mirrorCol - 1, pos.col));
+        pil.row = Math.max(0.2, Math.min(gridRows - 1, pos.row));
+      }
+      draw();
+    });
+
+    window.addEventListener('mouseup', () => { draggedItem = null; });
+
+    container.addEventListener('touchstart', (e) => {
+      const pos = getPointerGridPos(e);
+      draggedItem = findClickedEntity(pos);
+    }, { passive: false });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!draggedItem) return;
+      const pos = getPointerGridPos(e);
+      if (draggedItem.type === 'person') {
+        const p = people[draggedItem.key];
+        p.col = Math.max(0.2, Math.min(mirrorCol - 0.2, pos.col));
+        p.row = Math.max(0.2, Math.min(gridRows - 0.2, pos.row));
+      }
+      draw();
+    }, { passive: false });
+
+    window.addEventListener('touchend', () => { draggedItem = null; });
+
+    // Presets
+    window.resetToBookQuestion = function() {
+      people.jia = { name: '甲 (我)', col: 3, row: 3.5, color: '#ef4444', isObserver: true };
+      people.yi = { name: '乙', col: 4.5, row: 5.5, color: '#3b82f6', isObserver: false };
+      people.bing = { name: '丙', col: 2.5, row: 1.2, color: '#10b981', isObserver: false };
+      people.ding = { name: '丁', col: 1.5, row: 5.5, color: '#f59e0b', isObserver: false };
+
+      pillars = [
+        { col: 3.2, row: 1.3, w: 0.8, h: 0.8 },
+        { col: 1.8, row: 2.8, w: 0.8, h: 0.8 },
+        { col: 2.5, row: 5.2, w: 0.8, h: 0.8 }
+      ];
+      draw();
+    };
+
+    window.moveJiaToCenter = function() {
+      people.jia.col = 2.5;
+      people.jia.row = 3.5;
+      draw();
+    };
+
+    window.removePillars = function() {
+      pillars = [];
+      draw();
+    };
+
+    // Exam Handler
+    window.testExamQ2 = function(opt, evt) {
+      const expBox = document.getElementById('expBoxQ2');
+      const expTitle = document.getElementById('expTitleQ2');
+      const expContent = document.getElementById('expContentQ2');
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (opt === 'B') {
+        evt.currentTarget.classList.add('selected-correct');
+        expTitle.innerHTML = '🎉 【正確答案：(B) 丁】 完美答對！';
+        expTitle.style.color = '#15803d';
+        expContent.innerHTML = `
+          <strong>【平面鏡對稱虛像作圖法步驟拆解】</strong><br>
+          1. <strong>找各人的對稱虛像</strong>：以鏡面為對稱軸，繪出乙'、丙'、丁'的虛像位置（物距＝像距）。<br>
+          2. <strong>連線檢查視野與遮擋</strong>：將甲的眼睛與各虛像連線：<br>
+             - <strong>丙' 的連線</strong>：被中間石柱擋住，光線無法進入甲眼 ➔ <strong>看不見丙 ❌</strong>。<br>
+             - <strong>乙' 的連線</strong>：連線完全落在鏡面下方，超出平面鏡反射範圍 ➔ <strong>看不見乙 ❌</strong>。<br>
+             - <strong>丁' 的連線</strong>：精準切過鏡面，且中途未被任何石柱擋住 ➔ <strong>甲能看見丁的像 ✅</strong>！<br>
+          3. 因此甲唯一能看見的像為<strong>【丁】</strong>！
+        `;
+        resetToBookQuestion();
+      } else {
+        evt.currentTarget.classList.add('selected-wrong');
+        expTitle.innerHTML = '❌ 【選項分析錯誤】';
+        expTitle.style.color = '#b91c1c';
+        expContent.innerHTML = `
+          丙的虛像連線恰好被中間大石柱擋住；乙的虛像與甲連線則超出鏡面範圍。只有丁能透過平面鏡反射被甲看見。
+        `;
+      }
+      expBox.style.display = 'block';
+    };
+
+    // Initialize
+    setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  </script>
+</body>
+</html>

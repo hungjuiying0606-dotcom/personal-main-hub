@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 泳池折返跑與區間測速互動沙盒 (P.12-14)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --speed-color: #f59e0b;    /* Speed (Scalar / Yellow-Orange) */
+      --velocity-color: #2563eb; /* Velocity (Vector / Blue) */
+      --bg: #f0f7ff;
+      --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #fdf4ff 45%, #f0fdf4 100%);
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warn: #dc2626;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+ flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Pool Animation Viewport */
+    .pool-stage {
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+      border: 2px solid #7dd3fc;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.pool-canvas {
+      display: block;
+      width: 100%;
+      height: 180px;
+    }
+
+    /* Metrics Dual Bar */
+    .metrics-dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 860px) {
+      .metrics-dual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-box {
+      padding: 1.2rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+    }
+
+    .metric-box.velocity {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    .metric-box.speed {
+      border-color: #fde68a;
+      background: #fffbeb;
+    }
+
+    .metric-box-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-box.velocity .metric-box-title { color: var(--velocity-color); }
+    .metric-box.speed .metric-box-title { color: #b45309; }
+
+    .big-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+
+    .metric-box.velocity .big-value { color: var(--velocity-color); }
+    .metric-box.speed .big-value { color: #d97706; }
+
+    .formula-line {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Controls & Scrubber */
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: #f8fafc;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      accent-color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Comparison Milestone Cards */
+    .milestone-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 960px) {
+      .milestone-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .milestone-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .milestone-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .milestone-card.active {
+      border-color: var(--primary);
+      background: #f0f9ff;
+    }
+
+    .milestone-card h4 {
+      font-size: 0.9rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Speed Camera & Highway Simulator */
+    .tunnel-stage {
+      background: #334155;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    canvas.tunnel-canvas {
+      display: block;
+      width: 100%;
+      height: 140px;
+    }
+
+    .camera-flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.85);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s;
+    }
+
+    .camera-flash.flash {
+      opacity: 1;
+    }
+
+    /* Speed Control Segments */
+    .highway-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 800px) {
+      .highway-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .segment-card {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    .segment-header {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.3rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Enforcement Results */
+    .enforcement-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .enforce-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .enforce-card.fine {
+      border-color: #fca5a5;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .enforce-card.safe {
+      border-color: #86efac;
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .enforce-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+    }
+
+    .enforce-status {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 0.2rem;
+    }
+
+    footer {
+      background: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+  
+  
+  
+  
+  <!-- KaTeX for formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+  <script>
+    window.triggerMathRender = function() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    };
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(triggerMathRender, 100);
+      setTimeout(triggerMathRender, 500);
+      setTimeout(triggerMathRender, 1200);
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="title-group">
+        <h1>
+          <span>🏊 泳池折返跑與區間測速互動沙盒</span>
+          <span class="badge">國中自然 3上 · 課本 P.12-14</span>
+        </h1>
+        <p>掌握平均速度（位移/時間）vs 平均速率（路徑長/時間）、瞬時測速 vs 區間測速執法本質</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('pool')">🏊 例題 1-3 泳池折返模擬</button>
+        <button class="nav-btn" onclick="switchTab('camera')">🚗 區間測速執法挑戰 (P.13)</button>
+        <button class="nav-btn" onclick="switchTab('cycling')">🚴 騎車通學快慢比一比 (P.12)</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tab 1: Swimming Pool Return (Example 1-3) -->
+    <section id="tab-pool" class="tab-section active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🏊 課本例題 1-3：25 公尺游泳池往返即時模擬</span>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="jumpPoolTime(25)">🎯 去程 25s (抵達對岸)</button>
+            <button class="btn btn-secondary" onclick="jumpPoolTime(37.5)">🎯 回程途中 37.5s</button>
+            <button class="btn btn-secondary" onclick="jumpPoolTime(50)">🎯 全程 50s (回到起點)</button>
+          </div>
+        </div>
+
+        <!-- Pool Canvas -->
+        <div class="pool-stage">
+          <canvas id="poolCanvas" class="pool-canvas" width="1280" height="180"></canvas>
+        </div>
+
+        <!-- Playback Controller -->
+        <div class="control-row">
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-primary" id="btnPoolPlay" onclick="togglePoolPlay()">▶ 播放游泳</button>
+            <button class="btn btn-secondary" onclick="resetPoolPlay()">🔄 重置</button>
+          </div>
+
+          <div style="font-family: 'Outfit'; font-size: 1.2rem; font-weight: 800; color: var(--primary-dark);" id="poolTimeText">
+            經過時間：t = 0.0 秒
+          </div>
+        </div>
+
+        <input type="range" id="poolSlider" min="0" max="50" step="0.1" value="0" oninput="onScrubPool()">
+
+        <!-- Metrics Dual Bar -->
+        <div class="metrics-dual-grid" style="margin-top: 1rem;">
+          <!-- Velocity Card -->
+          <div class="metric-box velocity">
+            <div class="metric-box-title">
+              <span id="velocityBoxTitle">🔵 向量平均速度 <i>v̄</i> <span class="badge" style="background:#e0f2fe;color:#0369a1;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">去程階段 (向右)</span></span>
+              <span id="dispValText">去程位移 Δx = +0.0 m</span>
+            </div>
+            <div class="big-value" id="avgVelocityVal">+0.00 m/s</div>
+            <div class="formula-line" id="velocityFormula">
+              v̄ = 位移 Δx ÷ 時間 t = 0.0m ÷ 0.0s = +0.00 m/s
+            </div>
+          </div>
+
+          <!-- Speed Card -->
+          <div class="metric-box speed">
+            <div class="metric-box-title">
+              <span id="speedBoxTitle">🟠 純量平均速率 <i>s̄</i> <span class="badge" style="background:#fef3c7;color:#b45309;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">去程階段</span></span>
+              <span id="pathValText">去程路徑長 S = 0.0 m</span>
+            </div>
+            <div class="big-value" id="avgSpeedVal">0.00 m/s</div>
+            <div class="formula-line" id="speedFormula">
+              s̄ = 路徑長 S ÷ 時間 t = 0.0m ÷ 0.0s = 0.00 m/s
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestones Comparison (3 大階段卡片完整對比) -->
+        <div class="milestone-grid">
+          <!-- 1. 去程卡片 -->
+          <div class="milestone-card" id="card25s" onclick="jumpPoolTime(25)">
+            <h4>
+              <span>📍 第 0～25 秒：去程 (游到對岸)</span>
+              <span class="badge" style="background: #e0f2fe; color: #0369a1;">去程（單向無折返）</span>
+            </h4>
+            <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.1rem; line-height: 1.6;">
+              <li>位移 \( \Delta x = 25 - 0 = \mathbf{+25\text{ m}} \)（向右）</li>
+              <li>路徑長 \( S = \mathbf{25\text{ m}} \)</li>
+              <li>去程平均速度 \( \bar{v} = \frac{+25}{25} = \mathbf{+1.0\text{ m/s}} \)</li>
+              <li>去程平均速率 \( \bar{s} = \frac{25}{25} = \mathbf{1.0\text{ m/s}} \)</li>
+              <li><strong>結論：單向無折返時，平均速度大小 ＝ 平均速率！</strong></li>
+            </ul>
+          </div>
+
+          <!-- 2. 回程卡片 (新增) -->
+          <div class="milestone-card" id="cardReturn" onclick="jumpPoolTime(37.5)">
+            <h4>
+              <span>↩️ 第 25～50 秒：回程 (游回起點)</span>
+              <span class="badge" style="background: #fef3c7; color: #b45309;">回程（單向反向）</span>
+            </h4>
+            <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.1rem; line-height: 1.6;">
+              <li>位移 \( \Delta x = 0 - 25 = \mathbf{-25\text{ m}} \)（向左/反向）</li>
+              <li>路徑長 \( S = \mathbf{25\text{ m}} \)</li>
+              <li>回程平均速度 \( \bar{v} = \frac{-25}{25} = \mathbf{-1.0\text{ m/s}} \) ⚠️</li>
+              <li>回程平均速率 \( \bar{s} = \frac{25}{25} = \mathbf{1.0\text{ m/s}} \)</li>
+              <li><strong>核心對比：去程與回程平均速率皆為 1.0 m/s，但平均速度一正一負 (方向相反)！</strong></li>
+            </ul>
+          </div>
+
+          <!-- 3. 全程卡片 -->
+          <div class="milestone-card" id="card50s" onclick="jumpPoolTime(50)">
+            <h4>
+              <span>🏁 第 0～50 秒：全程 (折返回到起點)</span>
+              <span class="badge" style="background: #fef2f2; color: #991b1b;">發生折返</span>
+            </h4>
+            <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.1rem; line-height: 1.6;">
+              <li>總位移 \( \Delta x = 0 - 0 = \mathbf{0\text{ m}} \)（回到原點）</li>
+              <li>總路徑長 \( S = 25 + 25 = \mathbf{50\text{ m}} \)</li>
+              <li>全程平均速度 \( \bar{v} = \frac{0}{50} = \mathbf{0\text{ m/s}} \) ⚠️</li>
+              <li>全程平均速率 \( \bar{s} = \frac{50}{50} = \mathbf{1.0\text{ m/s}} \)</li>
+              <li><strong>例題重點：折返回到原點總位移為零，全程平均速度必為 0 m/s！</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Highway Interval Speed Enforcement (P.13) -->
+    <section id="tab-camera" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🚗 國道區間測速 vs 定點測速執法挑戰（課本 P.13 動腦時間）</span>
+          </div>
+          <button class="btn btn-primary" onclick="simulateDrive()">
+            🚦 開始行駛測試
+          </button>
+        </div>
+
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <strong>執法路段條件：</strong>隧道長度 <strong>\( 8025\text{ 公尺} \)</strong>，速限 <strong>\( 90\text{ km/h} \)</strong>（安全通過最短時間為 \( 321\text{ 秒} \)）。請自訂 3 個路段的行車時速：
+        </p>
+
+        <!-- Highway Tunnel Canvas -->
+        <div class="tunnel-stage">
+          <canvas id="tunnelCanvas" class="tunnel-canvas" width="1280" height="140"></canvas>
+          <div class="camera-flash" id="flashLight"></div>
+        </div>
+
+        <!-- 3 Segments Throttle Controls -->
+        <div class="highway-controls">
+          <div class="segment-card">
+            <div class="segment-header">
+              <span>第 1 段 (前 2675m)</span>
+              <span id="speedVal1" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.1rem;">110 km/h</span>
+            </div>
+            <input type="range" id="seg1Speed" min="50" max="140" value="110" step="5" oninput="onSpeedChange()">
+            <div style="font-size: 0.75rem; color: #dc2626; margin-top: 0.2rem;">📷 設有定點測速相機</div>
+          </div>
+
+          <div class="segment-card">
+            <div class="segment-header">
+              <span>第 2 段 (中 2675m)</span>
+              <span id="speedVal2" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.1rem;">70 km/h</span>
+            </div>
+            <input type="range" id="seg2Speed" min="50" max="140" value="70" step="5" oninput="onSpeedChange()">
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">駕駛發現超速開始踩煞車減速</div>
+          </div>
+
+          <div class="segment-card">
+            <div class="segment-header">
+              <span>第 3 段 (後 2675m)</span>
+              <span id="speedVal3" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.1rem;">90 km/h</span>
+            </div>
+            <input type="range" id="seg3Speed" min="50" max="140" value="90" step="5" oninput="onSpeedChange()">
+            <div style="font-size: 0.75rem; color: #2563eb; margin-top: 0.2rem;">🏁 區間測速終點門架</div>
+          </div>
+        </div>
+
+        <!-- Enforcement Verdict -->
+        <div class="enforcement-grid">
+          <div class="enforce-card" id="cardFixedCamera">
+            <div class="enforce-title">📷 定點測速照相（測瞬時速率）</div>
+            <div class="enforce-status" id="fixedStatus">📸 被拍照開罰！</div>
+            <p style="font-size: 0.85rem;" id="fixedDetail">在第 1 段時速達 110 km/h > 速限 90 km/h</p>
+          </div>
+
+          <div class="enforce-card" id="cardIntervalCamera">
+            <div class="enforce-title">🏁 區間測速門架（測平均速率）</div>
+            <div class="enforce-status" id="intervalStatus">通過耗時：334 秒</div>
+            <p style="font-size: 0.85rem;" id="intervalDetail">全程平均時速：86.5 km/h（未超速合格）</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Cycling Comparison (P.12) -->
+    <section id="tab-cycling" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🚴 課本 P.12 自然暖身操：騎車通學快慢比一比</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.25rem;">
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <span class="badge" style="background: #e0f2fe; color: #0369a1; margin-bottom: 0.4rem;">趟次 A</span>
+            <h4>上學之路</h4>
+            <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-dark); margin: 0.3rem 0;">900 m / 4 分鐘</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">平均速率：\( 900 \div 240 = \mathbf{3.75\text{ m/s}} \)</div>
+          </div>
+
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <span class="badge" style="background: #fef3c7; color: #b45309; margin-bottom: 0.4rem;">趟次 B</span>
+            <h4>放學之路</h4>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #d97706; margin: 0.3rem 0;">900 m / 5 分鐘</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">平均速率：\( 900 \div 300 = \mathbf{3.00\text{ m/s}} \)</div>
+          </div>
+
+          <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+            <span class="badge" style="background: #f1f5f9; color: #64748b; margin-bottom: 0.4rem;">趟次 C</span>
+            <h4>去超商買東西</h4>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #475569; margin: 0.3rem 0;">240 m / 4 分鐘</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">平均速率：\( 240 \div 240 = \mathbf{1.00\text{ m/s}} \)</div>
+          </div>
+        </div>
+
+        <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: var(--radius-md); padding: 1.25rem;">
+          <h4 style="color: #166534; margin-bottom: 0.5rem;">💡 課本思考判斷邏輯：</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">
+            1. <strong>比較 A 與 B（固定距離比時間）：</strong>路徑長皆為 \( 900\text{ m} \)，A 只花 4 分鐘，B 花了 5 分鐘。花費時間越少者越快，故 <strong>A 比 B 快</strong>。
+          </p>
+          <p style="font-size: 0.9rem;">
+            2. <strong>比較 A 與 C（固定時間比距離）：</strong>時間皆為 4 分鐘，A 走了 \( 900\text{ m} \)，C 只走了 \( 240\text{ m} \)。相同時間內距離越長者越快，故 <strong>A 比 C 快</strong>。
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>NatureLab 國中自然科學數位基地 · 115 上學期第 1 章直線運動教材配套互動模組</p>
+  </footer>
+
+  <script>
+    // Tab 1: Swimming Pool Simulation
+    let poolTime = 0;
+    let poolPlaying = false;
+    let poolAnimId = null;
+    let poolLastTime = 0;
+
+    const poolCanvas = document.getElementById('poolCanvas');
+    const poolCtx = poolCanvas.getContext('2d');
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
+
+      if (tabId === 'pool') drawPool();
+      if (tabId === 'camera') onSpeedChange();
+    }
+
+    function togglePoolPlay() {
+      const btn = document.getElementById('btnPoolPlay');
+      if (!poolPlaying) {
+        if (poolTime >= 50) poolTime = 0;
+        poolPlaying = true;
+        btn.innerText = '⏸ 暫停';
+        btn.style.background = '#dc2626';
+        poolLastTime = performance.now();
+        poolLoop();
+      } else {
+        poolPlaying = false;
+        btn.innerText = '▶ 播放游泳';
+        btn.style.background = 'var(--primary)';
+        if (poolAnimId) cancelAnimationFrame(poolAnimId);
+      }
+    }
+
+    function resetPoolPlay() {
+      poolPlaying = false;
+      poolTime = 0;
+      document.getElementById('btnPoolPlay').innerText = '▶ 播放游泳';
+      document.getElementById('btnPoolPlay').style.background = 'var(--primary)';
+      document.getElementById('poolSlider').value = 0;
+      updatePoolUI();
+    }
+
+    function jumpPoolTime(t) {
+      poolTime = t;
+      document.getElementById('poolSlider').value = t;
+      updatePoolUI();
+    }
+
+    function onScrubPool() {
+      poolTime = parseFloat(document.getElementById('poolSlider').value);
+      updatePoolUI();
+    }
+
+    function poolLoop(now) {
+      if (!poolPlaying) return;
+      if (!now) now = performance.now();
+      const dt = (now - poolLastTime) / 1000;
+      poolLastTime = now;
+
+      poolTime += dt * 3; // Accelerated 3x
+      if (poolTime >= 50) {
+        poolTime = 50;
+        togglePoolPlay();
+      }
+      document.getElementById('poolSlider').value = poolTime;
+      updatePoolUI();
+
+      if (poolPlaying) poolAnimId = requestAnimationFrame(poolLoop);
+    }
+
+    function updatePoolUI() {
+      document.getElementById('poolTimeText').innerText = `經過時間：t = ${poolTime.toFixed(1)} 秒`;
+      
+      let x = 0;
+      let isReturning = (poolTime > 25);
+
+      if (poolTime <= 25) {
+        // 1. 去程 (0 ~ 25s)
+        const t = Math.max(0.1, poolTime);
+        x = (poolTime / 25) * 25;
+        const disp = x;
+        const path = x;
+        const avgV = (disp / t);
+        const avgS = (path / t);
+
+        const vBoxTitle = document.getElementById('velocityBoxTitle');
+        const sBoxTitle = document.getElementById('speedBoxTitle');
+        if (vBoxTitle) vBoxTitle.innerHTML = '🔵 向量平均速度 <i>v̄</i> <span class="badge" style="background:#e0f2fe;color:#0369a1;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">去程階段 (向右)</span>';
+        if (sBoxTitle) sBoxTitle.innerHTML = '🟠 純量平均速率 <i>s̄</i> <span class="badge" style="background:#fef3c7;color:#b45309;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">去程階段</span>';
+        
+        document.getElementById('dispValText').innerText = `去程位移 Δx = +${disp.toFixed(1)} m`;
+        document.getElementById('pathValText').innerText = `去程路徑長 S = ${path.toFixed(1)} m`;
+        document.getElementById('avgVelocityVal').innerText = `+${avgV.toFixed(2)} m/s`;
+        document.getElementById('avgSpeedVal').innerText = `${avgS.toFixed(2)} m/s`;
+
+        document.getElementById('velocityFormula').innerText = `v̄ = (+${disp.toFixed(1)}m) ÷ ${t.toFixed(1)}s = +${avgV.toFixed(2)} m/s (正向/向右)`;
+        document.getElementById('speedFormula').innerText = `s̄ = ${path.toFixed(1)}m ÷ ${t.toFixed(1)}s = ${avgS.toFixed(2)} m/s`;
+      } else if (poolTime < 50) {
+        // 2. 回程 (25 ~ 50s)
+        const dtReturn = poolTime - 25;
+        x = 25 - (dtReturn / 25) * 25;
+        const dispReturn = x - 25; // 負值！向左反向
+        const pathReturn = 25 - x; // 回程路徑長
+        const avgV = (dispReturn / dtReturn); // -1.00 m/s 負值
+        const avgS = (pathReturn / dtReturn); // 1.00 m/s
+
+        const vBoxTitle = document.getElementById('velocityBoxTitle');
+        const sBoxTitle = document.getElementById('speedBoxTitle');
+        if (vBoxTitle) vBoxTitle.innerHTML = '🔵 向量平均速度 <i>v̄</i> <span class="badge" style="background:#fee2e2;color:#991b1b;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">回程階段 (向左/反向)</span>';
+        if (sBoxTitle) sBoxTitle.innerHTML = '🟠 純量平均速率 <i>s̄</i> <span class="badge" style="background:#fef3c7;color:#b45309;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">回程階段</span>';
+
+        document.getElementById('dispValText').innerText = `回程位移 Δx = ${dispReturn.toFixed(1)} m (初位置 25m)`;
+        document.getElementById('pathValText').innerText = `回程路徑長 S = ${pathReturn.toFixed(1)} m`;
+        document.getElementById('avgVelocityVal').innerText = `${avgV.toFixed(2)} m/s`; // -1.00 m/s (負值)
+        document.getElementById('avgSpeedVal').innerText = `${avgS.toFixed(2)} m/s`;
+
+        document.getElementById('velocityFormula').innerText = `v̄ = (${x.toFixed(1)}m - 25m) ÷ ${dtReturn.toFixed(1)}s = ${dispReturn.toFixed(1)}m ÷ ${dtReturn.toFixed(1)}s = ${avgV.toFixed(2)} m/s (負號代表向左/反向)`;
+        document.getElementById('speedFormula').innerText = `s̄ = ${pathReturn.toFixed(1)}m ÷ ${dtReturn.toFixed(1)}s = ${avgS.toFixed(2)} m/s`;
+      } else {
+        // 3. 全程 (t = 50s)
+        x = 0;
+        const dispTotal = 0;
+        const pathTotal = 50;
+        const avgV = 0;
+        const avgS = 1.0;
+
+        const vBoxTitle = document.getElementById('velocityBoxTitle');
+        const sBoxTitle = document.getElementById('speedBoxTitle');
+        if (vBoxTitle) vBoxTitle.innerHTML = '🏁 全程向量平均速度 <i>v̄</i> <span class="badge" style="background:#f1f5f9;color:#475569;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">0~50s 全程總結</span>';
+        if (sBoxTitle) sBoxTitle.innerHTML = '🟠 全程純量平均速率 <i>s̄</i> <span class="badge" style="background:#fef3c7;color:#b45309;font-size:0.75rem;padding:2px 8px;border-radius:6px;margin-left:4px;">0~50s 全程總結</span>';
+
+        document.getElementById('dispValText').innerText = `總位移 Δx = 0.0 m (回到起點)`;
+        document.getElementById('pathValText').innerText = `總路徑長 S = 50.0 m (25m + 25m)`;
+        document.getElementById('avgVelocityVal').innerText = `0.00 m/s`;
+        document.getElementById('avgSpeedVal').innerText = `${avgS.toFixed(2)} m/s`;
+
+        document.getElementById('velocityFormula').innerText = `v̄ = (0.0m - 0.0m) ÷ 50.0s = 0.00 m/s (折返回到起點，位移為零)`;
+        document.getElementById('speedFormula').innerText = `s̄ = (25m + 25m) ÷ 50.0s = 50m ÷ 50s = 1.00 m/s`;
+      }
+
+      // Highlight cards
+      const card25 = document.getElementById('card25s');
+      const cardReturn = document.getElementById('cardReturn');
+      const card50 = document.getElementById('card50s');
+
+      if (card25) card25.classList.toggle('active', poolTime > 0 && poolTime <= 25);
+      if (cardReturn) cardReturn.classList.toggle('active', poolTime > 25 && poolTime < 50);
+      if (card50) card50.classList.toggle('active', Math.abs(poolTime - 50) < 0.2);
+
+      drawPool(x, isReturning);
+    }
+
+    function drawPool(swimmerX = 0, isReturning = false) {
+      poolCtx.clearRect(0, 0, poolCanvas.width, poolCanvas.height);
+      const cw = poolCanvas.width;
+      const cy = 90;
+
+      const p0 = 90;
+      const p25 = cw - 90;
+      const toPx = (m) => p0 + (m / 25) * (p25 - p0);
+
+      // Water Lanes
+      poolCtx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+      poolCtx.lineWidth = 2;
+      poolCtx.setLineDash([8, 8]);
+      poolCtx.beginPath(); poolCtx.moveTo(p0, 50); poolCtx.lineTo(p25, 50); poolCtx.stroke();
+      poolCtx.beginPath(); poolCtx.moveTo(p0, 130); poolCtx.lineTo(p25, 130); poolCtx.stroke();
+      poolCtx.setLineDash([]);
+
+      // Pool Edge Walls
+      poolCtx.fillStyle = '#0369a1';
+      poolCtx.fillRect(p0 - 15, 20, 15, 140);
+      poolCtx.fillRect(p25, 20, 15, 140);
+
+      // Wall labels (清晰置中不被裁切)
+      poolCtx.fillStyle = '#0c4a6e';
+      poolCtx.font = 'bold 13px Noto Sans TC';
+      poolCtx.textAlign = 'right';
+      poolCtx.fillText('起點 0m', p0 - 20, cy + 5);
+      poolCtx.textAlign = 'left';
+      poolCtx.fillText('對岸 25m', p25 + 20, cy + 5);
+
+      // Swimmer Avatar
+      const curPx = toPx(swimmerX);
+      poolCtx.save();
+      poolCtx.translate(curPx, cy + 5);
+      // Unicode swimmer emoji naturally faces left. When swimming forward to the right (!isReturning), flip horizontally.
+      if (!isReturning) {
+        poolCtx.scale(-1, 1);
+      }
+      poolCtx.font = '36px sans-serif';
+      poolCtx.textAlign = 'center';
+      poolCtx.textBaseline = 'middle';
+      poolCtx.fillText('🏊', 0, 0);
+      poolCtx.restore();
+
+      // Coordinate bubble
+      poolCtx.fillStyle = isReturning ? '#b45309' : '#0284c7';
+      poolCtx.font = 'bold 12px Noto Sans TC';
+      poolCtx.textAlign = 'center';
+      poolCtx.fillText(`位置: ${swimmerX.toFixed(1)} m ${isReturning ? '(回程向左 ⬅️)' : '(去程向右 ➡️)'}`, curPx, cy - 25);
+    }
+
+    // Tab 2: Highway Interval Speed Enforcement Logic
+    const tunnelCanvas = document.getElementById('tunnelCanvas');
+    const tunnelCtx = tunnelCanvas.getContext('2d');
+
+    function onSpeedChange() {
+      const v1 = parseFloat(document.getElementById('seg1Speed').value);
+      const v2 = parseFloat(document.getElementById('seg2Speed').value);
+      const v3 = parseFloat(document.getElementById('seg3Speed').value);
+
+      document.getElementById('speedVal1').innerText = v1 + ' km/h';
+      document.getElementById('speedVal2').innerText = v2 + ' km/h';
+      document.getElementById('speedVal3').innerText = v3 + ' km/h';
+
+      // Distance for each segment = 8025m / 3 = 2675m = 2.675 km
+      const d = 2.675; // km
+      const t1 = (d / v1) * 3600; // seconds
+      const t2 = (d / v2) * 3600;
+      const t3 = (d / v3) * 3600;
+      const totalSeconds = Math.round(t1 + t2 + t3);
+
+      const totalKm = 8.025;
+      const avgKmH = (totalKm / (totalSeconds / 3600)).toFixed(1);
+
+      // Check Fixed Speed Camera in Segment 1 (Speed limit 90)
+      const fixedCard = document.getElementById('cardFixedCamera');
+      const fixedStatus = document.getElementById('fixedStatus');
+      const fixedDetail = document.getElementById('fixedDetail');
+      if (v1 > 90) {
+        fixedCard.className = 'enforce-card fine';
+        fixedStatus.innerText = '📸 定點超速！拍照開罰';
+        fixedDetail.innerText = `在第 1 段時速達 ${v1} km/h (超速 ${v1 - 90} km/h)`;
+      } else {
+        fixedCard.className = 'enforce-card safe';
+        fixedStatus.innerText = '✅ 定點通過！未超速';
+        fixedDetail.innerText = `在第 1 段時速 ${v1} km/h ≤ 速限 90 km/h`;
+      }
+
+      // Check Interval Speed Camera
+      const intCard = document.getElementById('cardIntervalCamera');
+      const intStatus = document.getElementById('intervalStatus');
+      const intDetail = document.getElementById('intervalDetail');
+
+      if (avgKmH > 90) {
+        intCard.className = 'enforce-card fine';
+        intStatus.innerText = `⚠️ 區間超速！平均時速 ${avgKmH} km/h`;
+        intDetail.innerText = `總耗時 ${totalSeconds} 秒 < 最低安全時間 321 秒`;
+      } else {
+        intCard.className = 'enforce-card safe';
+        intStatus.innerText = `✅ 區間合格！平均時速 ${avgKmH} km/h`;
+        intDetail.innerText = `總耗時 ${totalSeconds} 秒 ≥ 最低安全時間 321 秒`;
+      }
+
+      drawTunnel();
+    }
+
+    let tunnelAnimId = null;
+    function simulateDrive() {
+      if (tunnelAnimId) cancelAnimationFrame(tunnelAnimId);
+      const flash = document.getElementById('flashLight');
+      const v1 = parseFloat(document.getElementById('seg1Speed').value);
+      const v2 = parseFloat(document.getElementById('seg2Speed').value);
+      const v3 = parseFloat(document.getElementById('seg3Speed').value);
+      onSpeedChange();
+
+      const cw = tunnelCanvas.width;
+      const startX = 60;
+      const endX = cw - 70;
+      const segWidth = (endX - startX) / 3;
+      let curX = startX;
+      let flashed = false;
+      let lastT = performance.now();
+
+      function step(now) {
+        const dt = Math.min((now - lastT) / 1000, 0.1);
+        lastT = now;
+
+        // Speed in px/s proportional to selected km/h
+        let curV = v1;
+        if (curX > startX + segWidth) curV = v2;
+        if (curX > startX + segWidth * 2) curV = v3;
+
+        const pxSpeed = (curV / 90) * 450;
+        curX += pxSpeed * dt;
+
+        // Flash camera in seg 1 if speeding (>90 km/h)
+        if (!flashed && curX >= 80 && v1 > 90) {
+          flashed = true;
+          flash.classList.add('flash');
+          setTimeout(() => flash.classList.remove('flash'), 150);
+        }
+
+        if (curX < endX) {
+          drawTunnel(curX);
+          tunnelAnimId = requestAnimationFrame(step);
+        } else {
+          drawTunnel(cw / 2);
+          tunnelAnimId = null;
+        }
+      }
+      tunnelAnimId = requestAnimationFrame(step);
+    }
+
+    function drawTunnel(carX) {
+      tunnelCtx.clearRect(0, 0, tunnelCanvas.width, tunnelCanvas.height);
+      const cw = tunnelCanvas.width;
+      const cy = 70;
+
+      // Tunnel Road
+      tunnelCtx.fillStyle = '#1e293b';
+      tunnelCtx.fillRect(40, 20, cw - 80, 100);
+
+      // Dashed lane line
+      tunnelCtx.strokeStyle = '#f8fafc';
+      tunnelCtx.lineWidth = 2;
+      tunnelCtx.setLineDash([12, 12]);
+      tunnelCtx.beginPath(); tunnelCtx.moveTo(40, cy); tunnelCtx.lineTo(cw - 40, cy); tunnelCtx.stroke();
+      tunnelCtx.setLineDash([]);
+
+      // Section borders (1/3, 2/3)
+      const x1 = 40 + (cw - 80) / 3;
+      const x2 = 40 + ((cw - 80) * 2) / 3;
+      tunnelCtx.strokeStyle = '#64748b';
+      tunnelCtx.lineWidth = 1.5;
+      tunnelCtx.beginPath(); tunnelCtx.moveTo(x1, 20); tunnelCtx.lineTo(x1, 120); tunnelCtx.stroke();
+      tunnelCtx.beginPath(); tunnelCtx.moveTo(x2, 20); tunnelCtx.lineTo(x2, 120); tunnelCtx.stroke();
+
+      // Camera Icons
+      tunnelCtx.font = '20px sans-serif';
+      tunnelCtx.fillText('📷', 80, 45); // Fixed camera in Seg 1
+      tunnelCtx.fillText('🏁', cw - 80, 45); // Interval exit gate
+
+      // Car (facing right, in travel direction)
+      const px = (typeof carX === 'number') ? carX : cw / 2;
+      tunnelCtx.save();
+      tunnelCtx.translate(px, cy + 5);
+      // Unicode car emoji naturally faces left. Flip horizontally to face right (direction of travel).
+      tunnelCtx.scale(-1, 1);
+      tunnelCtx.font = '32px sans-serif';
+      tunnelCtx.textAlign = 'center';
+      tunnelCtx.textBaseline = 'middle';
+      tunnelCtx.fillText('🚗', 0, 0);
+      tunnelCtx.restore();
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      updatePoolUI();
+      onSpeedChange();
+    });
+  </script>
+
+  
+
+</body>
+</html>

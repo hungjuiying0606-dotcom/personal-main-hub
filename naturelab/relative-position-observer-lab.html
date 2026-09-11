@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三人數線：位置敘述判讀器｜習作第 3 頁第 4 題</title>
+  <style>
+    :root {
+      --blue-900: #0f3f64;
+      --blue-700: #087eb8;
+      --blue-100: #e9f6ff;
+      --ink: #14213d;
+      --muted: #61728a;
+      --line: #d7e4ed;
+      --paper: #ffffff;
+      --bg: #f4f8fb;
+      --correct: #168255;
+      --correct-bg: #eaf8f1;
+      --wrong: #c8465b;
+      --wrong-bg: #fff0f2;
+      --shadow: 0 14px 38px rgba(32, 77, 105, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(82, 190, 223, 0.16), transparent 26rem),
+        var(--bg);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .hero {
+      padding: 26px clamp(20px, 4vw, 52px);
+      color: #fff;
+      background: linear-gradient(135deg, #087eb8, #0b92c8);
+    }
+
+    .source-tag {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 5px 12px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      letter-spacing: 0.02em;
+    }
+
+    .hero p {
+      max-width: 880px;
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 650;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 30px));
+      margin: 24px auto 38px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .question-card {
+      padding: clamp(20px, 3vw, 32px);
+    }
+
+    .question-card h2 {
+      margin: 0;
+      font-size: clamp(1.12rem, 2.2vw, 1.45rem);
+      line-height: 1.75;
+    }
+
+    .question-number {
+      color: var(--blue-700);
+      font-size: 1.25em;
+      font-weight: 900;
+    }
+
+    .number-line-wrap {
+      margin: 22px 0 16px;
+      padding: 8px;
+      border: 1px solid #cfe1ec;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fbfdff, #eef7fc);
+    }
+
+    .number-line {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 210px;
+    }
+
+    .axis {
+      stroke: #29394d;
+      stroke-width: 3;
+    }
+
+    .tick {
+      stroke: #29394d;
+      stroke-width: 2;
+    }
+
+    .point {
+      fill: var(--blue-700);
+      stroke: #fff;
+      stroke-width: 5;
+    }
+
+    .person-label {
+      fill: var(--ink);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .coord-label,
+    .direction-label {
+      fill: #40546d;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .relation-line {
+      stroke-width: 7;
+      stroke-linecap: round;
+      transition: all 180ms ease;
+    }
+
+    .relation-label {
+      font-size: 18px;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .fact {
+      padding: 10px 8px;
+      border-radius: 13px;
+      background: var(--blue-100);
+      color: var(--blue-900);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .fact strong {
+      display: block;
+      color: var(--blue-700);
+      font-size: 1.2rem;
+    }
+
+    .answer-card {
+      padding: clamp(20px, 3vw, 28px);
+    }
+
+    .answer-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+    }
+
+    .answers {
+      display: grid;
+      gap: 10px;
+    }
+
+    .answer {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid #d8e4ec;
+      border-radius: 15px;
+      color: var(--ink);
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .answer:hover,
+    .answer:focus-visible {
+      border-color: var(--blue-700);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .answer .letter {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 11px;
+      background: #eef5f9;
+      color: var(--blue-900);
+      font-weight: 900;
+    }
+
+    .answer.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+
+    .answer.correct .letter {
+      color: #fff;
+      background: var(--correct);
+    }
+
+    .answer.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+
+    .answer.wrong .letter {
+      color: #fff;
+      background: var(--wrong);
+    }
+
+    .feedback {
+      min-height: 136px;
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 2px dashed #b9ceda;
+      border-radius: 16px;
+      background: #f8fbfd;
+    }
+
+    .feedback.correct {
+      border-color: #69b996;
+      background: var(--correct-bg);
+    }
+
+    .feedback.wrong {
+      border-color: #e8a6b2;
+      background: var(--wrong-bg);
+    }
+
+    .feedback h3 {
+      margin: 0 0 5px;
+      font-size: 1.08rem;
+    }
+
+    .feedback p {
+      margin: 0;
+      color: #3c4e64;
+    }
+
+    .reasoning {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .reasoning div {
+      padding: 9px 7px;
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.74);
+      text-align: center;
+    }
+
+    .reasoning span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .reasoning strong {
+      display: block;
+      color: var(--blue-900);
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+
+    .reset {
+      padding: 9px 16px;
+      border: 1px solid #b9ccd8;
+      border-radius: 999px;
+      color: var(--blue-900);
+      background: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .reset:hover,
+    .reset:focus-visible {
+      border-color: var(--blue-700);
+      outline: 3px solid rgba(8, 126, 184, 0.18);
+    }
+
+    .source-answer {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 5px solid var(--blue-700);
+      border-radius: 14px;
+      color: #263d53;
+      background: #eef7fc;
+    }
+
+    .source-answer strong {
+      color: var(--blue-900);
+    }
+
+    footer {
+      padding: 0 16px 28px;
+      color: #66788a;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .number-line {
+        min-height: 180px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding: 22px 18px;
+      }
+
+      main {
+        width: min(100% - 20px, 1180px);
+        margin-top: 14px;
+      }
+
+      .question-card,
+      .answer-card {
+        padding: 17px;
+      }
+
+      .number-line-wrap {
+        margin-top: 16px;
+        padding: 0;
+      }
+
+      .number-line {
+        min-height: 150px;
+      }
+
+      .person-label {
+        font-size: 20px;
+      }
+
+      .coord-label,
+      .direction-label {
+        font-size: 18px;
+      }
+
+      .facts,
+      .reasoning {
+        grid-template-columns: 1fr;
+      }
+
+      .fact strong {
+        display: inline;
+        margin-left: 6px;
+      }
+
+      .answer {
+        grid-template-columns: 40px 1fr;
+        padding: 11px 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="source-tag">✏️ 習作第 3 頁 · 第 4 題</div>
+    <h1>三人數線：位置敘述判讀器</h1>
+    <p>固定小碩 -2 m、小雄 0 m、小麗 +3 m，依數線判讀東、西方向；沒有面向資訊時，不能判定前、後方。</p>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="card question-card" aria-labelledby="question-title">
+        <h2 id="question-title">
+          <span class="question-number">4.</span>
+          小麗、小碩、小雄三個人的位置，如右圖所示。關於他們位置的敘述，下列何者正確？
+        </h2>
+
+        <div class="number-line-wrap">
+          <svg class="number-line" viewBox="0 0 720 260" role="img" aria-labelledby="line-title line-desc">
+            <title id="line-title">小碩、小雄與小麗的位置數線</title>
+            <desc id="line-desc">數線向右為東方。小碩在負二公尺，小雄在零公尺，小麗在正三公尺。</desc>
+            <defs>
+              <marker id="axis-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#29394d"></path>
+              </marker>
+              <marker id="arrow-correct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#168255"></path>
+              </marker>
+              <marker id="arrow-wrong" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8465b"></path>
+              </marker>
+            </defs>
+
+            <text x="48" y="42" class="direction-label" text-anchor="middle">北</text>
+            <line x1="48" y1="106" x2="48" y2="55" class="axis" marker-end="url(#axis-arrow)"></line>
+            <line x1="70" y1="166" x2="670" y2="166" class="axis" marker-end="url(#axis-arrow)"></line>
+            <text x="52" y="173" class="direction-label" text-anchor="end">西</text>
+            <text x="690" y="173" class="direction-label">東</text>
+
+            <g aria-hidden="true">
+              <line x1="90" y1="153" x2="90" y2="179" class="tick"></line>
+              <line x1="180" y1="153" x2="180" y2="179" class="tick"></line>
+              <line x1="270" y1="153" x2="270" y2="179" class="tick"></line>
+              <line x1="360" y1="153" x2="360" y2="179" class="tick"></line>
+              <line x1="450" y1="153" x2="450" y2="179" class="tick"></line>
+              <line x1="540" y1="153" x2="540" y2="179" class="tick"></line>
+              <line x1="630" y1="153" x2="630" y2="179" class="tick"></line>
+
+              <text x="90" y="207" class="coord-label" text-anchor="middle">-3</text>
+              <text x="180" y="207" class="coord-label" text-anchor="middle">-2</text>
+              <text x="270" y="207" class="coord-label" text-anchor="middle">-1</text>
+              <text x="360" y="207" class="coord-label" text-anchor="middle">0</text>
+              <text x="450" y="207" class="coord-label" text-anchor="middle">+1</text>
+              <text x="540" y="207" class="coord-label" text-anchor="middle">+2</text>
+              <text x="630" y="207" class="coord-label" text-anchor="middle">+3</text>
+              <text x="688" y="207" class="coord-label">(m)</text>
+            </g>
+
+            <text x="180" y="138" class="person-label" text-anchor="middle">小碩</text>
+            <text x="360" y="138" class="person-label" text-anchor="middle">小雄</text>
+            <text x="630" y="138" class="person-label" text-anchor="middle">小麗</text>
+            <circle cx="180" cy="166" r="8" class="point"></circle>
+            <circle cx="360" cy="166" r="8" class="point"></circle>
+            <circle cx="630" cy="166" r="8" class="point"></circle>
+
+            <line id="relation-line" x1="180" y1="82" x2="630" y2="82" class="relation-line" visibility="hidden"></line>
+            <text id="relation-label" x="405" y="62" class="relation-label" visibility="hidden"></text>
+          </svg>
+        </div>
+
+        <div class="facts" aria-label="三人的固定位置">
+          <div class="fact">小碩<strong>-2 m</strong></div>
+          <div class="fact">小雄<strong>0 m</strong></div>
+          <div class="fact">小麗<strong>+3 m</strong></div>
+        </div>
+      </section>
+
+      <section class="card answer-card" aria-labelledby="answer-title">
+        <h2 id="answer-title">請選出正確敘述</h2>
+        <div class="answers">
+          <button class="answer" type="button" data-choice="A" aria-pressed="false">
+            <span class="letter">(A)</span>
+            <span>小麗在小雄西方3公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="B" aria-pressed="false">
+            <span class="letter">(B)</span>
+            <span>小麗在小雄前方3公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="C" aria-pressed="false">
+            <span class="letter">(C)</span>
+            <span>小麗在小碩東方5公尺處</span>
+          </button>
+          <button class="answer" type="button" data-choice="D" aria-pressed="false">
+            <span class="letter">(D)</span>
+            <span>小雄在小麗後方3公尺處。</span>
+          </button>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite">
+          <h3 id="feedback-title">先讀數線，再選答案</h3>
+          <p id="feedback-text">向右是東方，向左是西方；題圖沒有提供任何人的面向。</p>
+          <div class="reasoning" aria-label="位置判讀">
+            <div><span>參考人物</span><strong id="reference-value">—</strong></div>
+            <div><span>相對方向</span><strong id="direction-value">—</strong></div>
+            <div><span>相對距離</span><strong id="distance-value">—</strong></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="reset-button" class="reset" type="button">重新作答</button>
+        </div>
+      </section>
+    </div>
+
+    <aside class="source-answer">
+      <strong>課本解析：</strong>
+      (A)(B)小麗在小雄東方3公尺處；(D)小雄在小麗西方3公尺處，前、後方則無法判斷。
+    </aside>
+  </main>
+
+  <footer>115 國中自然 3 上｜第一章 直線運動｜課本配套第 4 題</footer>
+
+  <script>
+    const answerData = {
+      A: {
+        correct: false,
+        start: 360,
+        end: 630,
+        relation: "小麗在小雄東方 3 公尺",
+        reference: "小雄（0 m）",
+        direction: "東方",
+        distance: "3 公尺",
+        title: "A 不正確",
+        detail: "小雄在 0 m，小麗在 +3 m；從小雄的位置看，小麗位於東方 3 公尺，不是西方。"
+      },
+      B: {
+        correct: false,
+        start: 360,
+        end: 630,
+        relation: "小麗在小雄東方 3 公尺",
+        reference: "小雄（0 m）",
+        direction: "東方",
+        distance: "3 公尺",
+        title: "B 不正確",
+        detail: "數線只能判斷東、西方向；題目沒有提供人物面向，因此不能判定小麗在小雄的「前方」。"
+      },
+      C: {
+        correct: true,
+        start: 180,
+        end: 630,
+        relation: "小麗在小碩東方 5 公尺",
+        reference: "小碩（-2 m）",
+        direction: "東方",
+        distance: "5 公尺",
+        title: "C 正確",
+        detail: "小麗在 +3 m，小碩在 -2 m，兩人相距 5 公尺；小麗位於小碩的右側，也就是東方。"
+      },
+      D: {
+        correct: false,
+        start: 630,
+        end: 360,
+        relation: "小雄在小麗西方 3 公尺",
+        reference: "小麗（+3 m）",
+        direction: "西方",
+        distance: "3 公尺",
+        title: "D 不正確",
+        detail: "小雄在小麗西方 3 公尺；題目沒有提供人物面向，因此不能判定小雄在小麗的「後方」。"
+      }
+    };
+
+    const answerButtons = [...document.querySelectorAll(".answer")];
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedback-title");
+    const feedbackText = document.getElementById("feedback-text");
+    const referenceValue = document.getElementById("reference-value");
+    const directionValue = document.getElementById("direction-value");
+    const distanceValue = document.getElementById("distance-value");
+    const relationLine = document.getElementById("relation-line");
+    const relationLabel = document.getElementById("relation-label");
+
+    function showAnswer(choice) {
+      const selected = answerData[choice];
+
+      answerButtons.forEach((button) => {
+        button.classList.remove("correct", "wrong");
+        button.setAttribute("aria-pressed", "false");
+      });
+
+      const selectedButton = answerButtons.find((button) => button.dataset.choice === choice);
+      selectedButton.classList.add(selected.correct ? "correct" : "wrong");
+      selectedButton.setAttribute("aria-pressed", "true");
+
+      feedback.className = `feedback ${selected.correct ? "correct" : "wrong"}`;
+      feedbackTitle.textContent = selected.title;
+      feedbackText.textContent = selected.detail;
+      referenceValue.textContent = selected.reference;
+      directionValue.textContent = selected.direction;
+      distanceValue.textContent = selected.distance;
+
+      relationLine.setAttribute("x1", selected.start);
+      relationLine.setAttribute("x2", selected.end);
+      relationLine.setAttribute("stroke", selected.correct ? "#168255" : "#c8465b");
+      relationLine.setAttribute("marker-end", selected.correct ? "url(#arrow-correct)" : "url(#arrow-wrong)");
+      relationLine.setAttribute("visibility", "visible");
+
+      relationLabel.setAttribute("x", (selected.start + selected.end) / 2);
+      relationLabel.setAttribute("fill", selected.correct ? "#168255" : "#c8465b");
+      relationLabel.setAttribute("visibility", "visible");
+      relationLabel.textContent = selected.relation;
+    }
+
+    function resetAnswer() {
+      answerButtons.forEach((button) => {
+        button.classList.remove("correct", "wrong");
+        button.setAttribute("aria-pressed", "false");
+      });
+      feedback.className = "feedback";
+      feedbackTitle.textContent = "先讀數線，再選答案";
+      feedbackText.textContent = "向右是東方，向左是西方；題圖沒有提供任何人的面向。";
+      referenceValue.textContent = "—";
+      directionValue.textContent = "—";
+      distanceValue.textContent = "—";
+      relationLine.setAttribute("visibility", "hidden");
+      relationLabel.setAttribute("visibility", "hidden");
+      relationLabel.textContent = "";
+    }
+
+    answerButtons.forEach((button) => {
+      button.addEventListener("click", () => showAnswer(button.dataset.choice));
+    });
+    document.getElementById("reset-button").addEventListener("click", resetAnswer);
+  </script>
+</body>
+</html>

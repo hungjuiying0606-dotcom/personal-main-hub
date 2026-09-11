@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2-2 探索活動：自由落體運動的探討 | 康軒國中自然3上</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Formatting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .math-font { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .track-glow {
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.5)); }
+      50% { transform: scale(1.06); filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.85)); }
+    }
+    .ball-pulse { animation: pulseGlow 2.2s infinite ease-in-out; }
+    
+    /* 自訂輸入框動畫與樣式 */
+    .answer-input {
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-align: center;
+    }
+    .answer-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+      border-color: #0284c7;
+    }
+    .answer-input.correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+    }
+    .answer-input.incorrect {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-200 selection:text-sky-900">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all border border-slate-200">
+          <span>🏠</span>
+          <span>返回主網頁</span>
+        </a>
+        <div class="h-4 w-px bg-slate-300 hidden sm:block"></div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">康軒 3 上 2-2</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">課本 P.41</span>
+            <h1 class="text-sm sm:text-base font-black text-slate-900 truncate">探索活動：自由落體運動的探討</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="speechBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all">
+          <span id="speechIcon">🔊</span>
+          <span id="speechText" class="hidden sm:inline">語音解說</span>
+        </button>
+        <button id="soundToggle" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all">
+          <span id="soundIcon">🔔</span>
+        </button>
+        <button id="globalResetBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-all">
+          <span>🔄</span>
+          <span class="hidden sm:inline">重設</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 w-full">
+
+    <!-- 單元導言橫幅 -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-sky-900 via-sky-800 to-indigo-900 text-white p-5 sm:p-7 shadow-lg">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-sky-200 text-xs font-bold">
+            <span>🔍 課本核心探究</span>
+            <span>·</span>
+            <span>牛頓第二運動定律的生活應用 3</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>物體受地球重力落下的加速度與受力分析</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-sky-100 leading-relaxed">
+            物體在自由落下的過程中，速度會隨著掉落時間而穩定增加。依據牛頓第二定律 \(F = m 	imes a\)，分析質量 \(50	ext{ kg}\) 的物體在各時刻的<strong>速度變化、每秒加速度與所受重力 \(F\)</strong>！
+          </p>
+        </div>
+
+        <div class="flex flex-wrap md:flex-col gap-2 flex-shrink-0">
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[110px]">
+            <div class="text-[11px] text-sky-200">重力加速度 \(g\)</div>
+            <div class="text-lg font-black font-mono text-amber-300">9.8 m/s²</div>
+          </div>
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[110px]">
+            <div class="text-[11px] text-sky-200">探索物體質量 \(m\)</div>
+            <div class="text-lg font-black font-mono text-white">50 kg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要互動探究工作區：雙欄佈局 (左：1:1 課本活動填答卡與步驟；右：1:1 課本物理垂直圖表與動態物理落體儀) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- 左欄 (7/12)：課本活動探究填答區與概念解析 -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- 卡片 1：課本探索活動題目與即時互動填答 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-sky-100 text-sky-700 font-bold text-sm">📝</span>
+              <div>
+                <h3 class="text-base font-black text-slate-900">課本探索活動填答卡（P.41）</h3>
+                <p class="text-xs text-slate-500">請依已知資訊，在空格內填入數值或選取正確選項</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button id="checkAnswersBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-all flex items-center gap-1">
+                <span>✓</span>
+                <span>檢查答案</span>
+              </button>
+              <button id="revealAnswersBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">
+                <span>💡 完整解答</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 問題 1 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <div class="flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-full bg-sky-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                利用<strong>牛頓第二運動定律</strong>，分析質量 <span class="px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded font-bold font-mono">m = 50 kg</span> 的物體由靜止開始釋放（假設不受空氣阻力），在不同時刻，物體的速度、加速度與所受的重力大小：
+              </p>
+            </div>
+
+            <!-- 計算填空格清單 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-8 pt-1">
+              
+              <!-- 填空 1: a_0-1 -->
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span>0 ～ 1 秒加速度 \(a_{0-1}\)：</span>
+                  <span class="text-[10px] text-slate-400 font-normal">\(rac{v_1 - v_0}{1	ext{s}}\)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-slate-600 text-xs">\(a_{0-1} =\)</span>
+                  <input type="text" id="ans_a01" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-50 border border-slate-300 rounded-lg" placeholder="請輸入" data-correct="9.8">
+                  <span class="text-xs font-mono font-bold text-slate-600">m/s²</span>
+                </div>
+                <div id="feed_a01" class="text-[11px] text-slate-500 hidden"></div>
+              </div>
+
+              <!-- 填空 2: F_2 -->
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span>2 秒所受重力 \(F_2\)：</span>
+                  <span class="text-[10px] text-slate-400 font-normal">\(F = m 	imes a\)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-slate-600 text-xs">\(F_2 =\)</span>
+                  <input type="text" id="ans_f2" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-50 border border-slate-300 rounded-lg" placeholder="請輸入" data-correct="490">
+                  <span class="text-xs font-mono font-bold text-slate-600">N（牛頓）</span>
+                </div>
+                <div id="feed_f2" class="text-[11px] text-slate-500 hidden"></div>
+              </div>
+
+              <!-- 填空 3: v_3 -->
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span>3 秒末速度 \(v_3\)：</span>
+                  <span class="text-[10px] text-slate-400 font-normal">\(v_2 + 9.8\)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-slate-600 text-xs">\(v_3 =\)</span>
+                  <input type="text" id="ans_v3" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-50 border border-slate-300 rounded-lg" placeholder="請輸入" data-correct="29.4">
+                  <span class="text-xs font-mono font-bold text-slate-600">m/s</span>
+                </div>
+                <div id="feed_v3" class="text-[11px] text-slate-500 hidden"></div>
+              </div>
+
+              <!-- 填空 4: F_3 -->
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span>3 秒所受重力 \(F_3\)：</span>
+                  <span class="text-[10px] text-slate-400 font-normal">\(F = m 	imes a\)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-slate-600 text-xs">\(F_3 =\)</span>
+                  <input type="text" id="ans_f3" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-50 border border-slate-300 rounded-lg" placeholder="請輸入" data-correct="490">
+                  <span class="text-xs font-mono font-bold text-slate-600">N（牛頓）</span>
+                </div>
+                <div id="feed_f3" class="text-[11px] text-slate-500 hidden"></div>
+              </div>
+
+              <!-- 填空 5: a_3-4 -->
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5 sm:col-span-2">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span>3 ～ 4 秒加速度 \(a_{3-4}\)：</span>
+                  <span class="text-[10px] text-slate-400 font-normal">\(rac{v_4 - v_3}{1	ext{s}} = rac{39.2 - 29.4}{1}\)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-slate-600 text-xs">\(a_{3-4} =\)</span>
+                  <input type="text" id="ans_a34" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-50 border border-slate-300 rounded-lg" placeholder="請輸入" data-correct="9.8">
+                  <span class="text-xs font-mono font-bold text-slate-600">m/s²</span>
+                </div>
+                <div id="feed_a34" class="text-[11px] text-slate-500 hidden"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 問題 2 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <div class="flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-full bg-sky-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+              <div class="text-sm text-slate-800 font-medium leading-relaxed space-y-2">
+                <p>
+                  由圖中可知，自由落體在任何時刻的加速度 \(a\)：
+                </p>
+                
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white cursor-pointer hover:bg-sky-50 text-xs font-bold text-slate-700">
+                    <input type="radio" name="q2_same" value="same" id="opt_same" class="text-sky-600">
+                    <span>【皆相同】</span>
+                  </label>
+                  <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white cursor-pointer hover:bg-sky-50 text-xs font-bold text-slate-700">
+                    <input type="radio" name="q2_same" value="diff" id="opt_diff" class="text-sky-600">
+                    <span>【不同】</span>
+                  </label>
+                  <span class="text-xs font-bold text-slate-700">，即為</span>
+                  <input type="text" id="ans_q2_name" class="answer-input w-28 px-2 py-1 text-xs bg-white border border-slate-300 rounded-lg" placeholder="請輸入名詞" data-correct="重力">
+                  <span class="text-xs font-bold text-slate-700">加速度（g）。</span>
+                </div>
+                <div id="feed_q2" class="text-[11px] text-slate-500 hidden pt-1"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 成果回饋橫幅 -->
+          <div id="scoreBanner" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🎉</span>
+              <div>
+                <div class="text-sm font-black">太棒了！課本探索活動全部正確！</div>
+                <div class="text-xs text-emerald-700">自由落體為等加速度運動（a = 9.8 m/s²），物體所受重力固定為 F = mg = 490 N。</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-200 text-emerald-800 text-xs font-black font-mono">100分</span>
+          </div>
+
+        </div>
+
+        <!-- 卡片 2：會考核心觀念整理與公式解析卡 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span class="p-2 rounded-xl bg-amber-100 text-amber-700 font-bold text-sm">💡</span>
+            <h3 class="text-base font-black text-slate-900">會考核心考點與公式總結</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-xl bg-sky-50/70 border border-sky-100 space-y-1.5">
+              <div class="font-bold text-sky-900 flex items-center gap-1.5">
+                <span>📌</span>
+                <span>自由落體等加速度特性</span>
+              </div>
+              <p class="text-slate-700">
+                在地球表面附近，忽略空氣阻力時，任何自由落下之物體，其加速度大小恆為：
+              </p>
+              <div class="font-mono font-bold text-sky-800 bg-white px-2.5 py-1.5 rounded-lg border border-sky-200 text-center text-xs">
+                \(a = g pprox 9.8	ext{ m/s}^2\)（方向鉛直向下）
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-100 space-y-1.5">
+              <div class="font-bold text-amber-900 flex items-center gap-1.5">
+                <span>⚖️</span>
+                <span>地球重力（萬有引力）大小</span>
+              </div>
+              <p class="text-slate-700">
+                依據 \(F = m 	imes a\)，質量 \(m\) 之物體在地球表面所受的重力大小為：
+              </p>
+              <div class="font-mono font-bold text-amber-900 bg-white px-2.5 py-1.5 rounded-lg border border-amber-200 text-center text-xs">
+                \(F_{	ext{重力}} = m 	imes g = 50 	imes 9.8 = 490	ext{ N}\)
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-100 space-y-1.5">
+              <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+                <span>🪶</span>
+                <span>質量無關性（伽利略斜塔實驗）</span>
+              </div>
+              <p class="text-slate-700">
+                不論物體是 \(50	ext{ kg}\) 或 \(1	ext{ kg}\)，若同時同高度釋放，<strong>落下的加速度相同，著地時間亦完全相同</strong>！
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1.5">
+              <div class="font-bold text-purple-900 flex items-center gap-1.5">
+                <span>🔄</span>
+                <span>公斤重與牛頓的單位換算</span>
+              </div>
+              <p class="text-slate-700">
+                \(1	ext{ kgw}\) 即質量 \(1	ext{ kg}\) 所受地球引力：
+                <span class="block font-mono font-bold text-purple-900 mt-0.5">\(1	ext{ kgw} = 1	ext{ kg} 	imes 9.8	ext{ m/s}^2 = 9.8	ext{ N}\)</span>
+                故 \(50	ext{ kg}\) 物體重 \(50	ext{ kgw} = 490	ext{ N}\)。
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 右欄 (5/12)：1:1 課本標記圖表 + 即時物理動態落下模擬器 -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- 卡片 3：1:1 課本垂直落體圖表 (Textbook SVG Chart) -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-sky-100 text-sky-700 font-bold text-xs">📐</span>
+              <h3 class="text-sm font-black text-slate-900">課本 1:1 落下標記圖（P.41）</h3>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-mono font-bold">m = 50 kg</span>
+          </div>
+
+          <!-- 課本 1:1 向量繪製圖 -->
+          <div class="relative bg-gradient-to-b from-slate-100/90 via-sky-50/40 to-slate-100/90 rounded-xl p-4 border border-slate-200 overflow-hidden min-h-[460px] flex flex-col justify-between">
+            
+            <!-- 頂部質量標記 -->
+            <div class="text-center pb-2 border-b border-slate-200/60">
+              <span class="inline-block px-3 py-1 rounded-full bg-white shadow-xs border border-slate-200 text-xs font-mono font-black text-slate-800">
+                \(m = 50	ext{ kg}\)
+              </span>
+            </div>
+
+            <!-- 垂直落下軌道與各秒節點 -->
+            <div class="relative flex-grow py-3 flex flex-col justify-between items-center">
+              
+              <!-- 垂直中心導引虛線 -->
+              <div class="absolute top-2 bottom-2 left-1/2 -translate-x-1/2 w-0.5 border-l-2 border-dashed border-sky-300 z-0"></div>
+
+              <!-- 0秒 -->
+              <div class="relative z-10 w-full flex items-center justify-between px-2">
+                <div class="w-24 text-right">
+                  <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold font-mono">0秒</span>
+                  <span class="text-slate-400 text-xs mx-0.5">⋯</span>
+                </div>
+                
+                <!-- 球體 -->
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 shadow-md flex items-center justify-center text-[9px] text-white font-black font-mono border border-amber-300">
+                  0s
+                </div>
+
+                <div class="w-24 text-left pl-2">
+                  <span class="text-xs font-mono font-bold text-slate-700">\(v_0 = 0	ext{ m/s}\)</span>
+                </div>
+              </div>
+
+              <!-- 右側 0-1s 大括號加速度標記 -->
+              <div class="w-full flex items-center justify-end pr-3 py-0.5 text-xs font-mono">
+                <span class="text-slate-400 mr-2 text-sm">}</span>
+                <span class="font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                  \(a_{0-1} = \)<span id="svg_a01" class="text-amber-700 underline font-black">9.8</span>\(	ext{ m/s}^2\)
+                </span>
+              </div>
+
+              <!-- 1秒 -->
+              <div class="relative z-10 w-full flex items-center justify-between px-2">
+                <div class="w-24 text-right">
+                  <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold font-mono">1秒</span>
+                  <span class="text-slate-400 text-xs mx-0.5">⋯</span>
+                </div>
+                
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 shadow-md flex items-center justify-center text-[9px] text-white font-black font-mono border border-amber-300">
+                  1s
+                </div>
+
+                <div class="w-24 text-left pl-2">
+                  <span class="text-xs font-mono font-bold text-slate-700">\(v_1 = 9.8	ext{ m/s}\)</span>
+                </div>
+              </div>
+
+              <!-- 右側 1-2s 大括號加速度標記 -->
+              <div class="w-full flex items-center justify-end pr-3 py-0.5 text-xs font-mono">
+                <span class="text-slate-400 mr-2 text-sm">}</span>
+                <span class="font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                  \(a_{1-2} = 9.8	ext{ m/s}^2\)
+                </span>
+              </div>
+
+              <!-- 2秒 (含重力箭頭) -->
+              <div class="relative z-10 w-full flex flex-col items-center">
+                <div class="w-full flex items-center justify-between px-2">
+                  <div class="w-24 text-right">
+                    <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold font-mono">2秒</span>
+                    <span class="text-slate-400 text-xs mx-0.5">⋯</span>
+                  </div>
+                  
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 shadow-md flex items-center justify-center text-[9px] text-white font-black font-mono border border-amber-300">
+                    2s
+                  </div>
+
+                  <div class="w-24 text-left pl-2">
+                    <span class="text-xs font-mono font-bold text-slate-700">\(v_2 = 19.6	ext{ m/s}\)</span>
+                  </div>
+                </div>
+
+                <!-- 2s 所受重力向下箭頭標記 -->
+                <div class="flex flex-col items-center pt-1">
+                  <div class="text-xs text-sky-800 font-bold flex items-center gap-1">
+                    <span>↓ 所受重力 \(F_2 =\)</span>
+                    <span id="svg_f2" class="font-mono font-black text-red-600 underline">490 N</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 右側 2-3s 大括號加速度標記 -->
+              <div class="w-full flex items-center justify-end pr-3 py-0.5 text-xs font-mono">
+                <span class="text-slate-400 mr-2 text-sm">}</span>
+                <span class="font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                  \(a_{2-3} = 9.8	ext{ m/s}^2\)
+                </span>
+              </div>
+
+              <!-- 3秒 (含重力箭頭) -->
+              <div class="relative z-10 w-full flex flex-col items-center">
+                <div class="w-full flex items-center justify-between px-2">
+                  <div class="w-24 text-right">
+                    <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold font-mono">3秒</span>
+                    <span class="text-slate-400 text-xs mx-0.5">⋯</span>
+                  </div>
+                  
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 shadow-md flex items-center justify-center text-[9px] text-white font-black font-mono border border-amber-300">
+                    3s
+                  </div>
+
+                  <div class="w-24 text-left pl-2">
+                    <span class="text-xs font-mono font-bold text-slate-700">\(v_3 =\) <span id="svg_v3" class="text-amber-700 underline font-black">29.4</span>\(	ext{ m/s}\)</span>
+                  </div>
+                </div>
+
+                <!-- 3s 所受重力向下箭頭標記 -->
+                <div class="flex flex-col items-center pt-1">
+                  <div class="text-xs text-sky-800 font-bold flex items-center gap-1">
+                    <span>↓ 所受重力 \(F_3 =\)</span>
+                    <span id="svg_f3" class="font-mono font-black text-red-600 underline">490 N</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 右側 3-4s 大括號加速度標記 -->
+              <div class="w-full flex items-center justify-end pr-3 py-0.5 text-xs font-mono">
+                <span class="text-slate-400 mr-2 text-sm">}</span>
+                <span class="font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                  \(a_{3-4} = \)<span id="svg_a34" class="text-amber-700 underline font-black">9.8</span>\(	ext{ m/s}^2\)
+                </span>
+              </div>
+
+              <!-- 4秒 -->
+              <div class="relative z-10 w-full flex items-center justify-between px-2">
+                <div class="w-24 text-right">
+                  <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold font-mono">4秒</span>
+                  <span class="text-slate-400 text-xs mx-0.5">⋯</span>
+                </div>
+                
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 shadow-md flex items-center justify-center text-[9px] text-white font-black font-mono border border-amber-300">
+                  4s
+                </div>
+
+                <div class="w-24 text-left pl-2">
+                  <span class="text-xs font-mono font-bold text-slate-700">\(v_4 = 39.2	ext{ m/s}\)</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 卡片 4：即時物理落體動態模擬器 (Dynamic Physics Simulator) -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-100 text-emerald-700 font-bold text-xs">🎬</span>
+              <h3 class="text-sm font-black text-slate-900">物理動態落體模擬沙盒</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="simTimeBadge" class="px-2 py-0.5 rounded-full bg-slate-900 text-amber-400 font-mono text-xs font-bold">t = 0.00 s</span>
+            </div>
+          </div>
+
+          <!-- 參數切換控制 -->
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">🌍 星球環境 / 重力 g：</label>
+              <select id="planetSelect" class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-bold text-slate-800 text-xs focus:ring-2 focus:ring-sky-500">
+                <option value="9.8" selected>🌍 地球 (g = 9.8 m/s²)</option>
+                <option value="1.63">🌕 月球 (g = 1.63 m/s²)</option>
+                <option value="3.72">🔴 火星 (g = 3.72 m/s²)</option>
+                <option value="24.79">🪐 木星 (g = 24.79 m/s²)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">⚖️ 物體質量 m (kg)：</label>
+              <select id="massSelect" class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-bold text-slate-800 text-xs focus:ring-2 focus:ring-sky-500">
+                <option value="10">10 kg (輕量)</option>
+                <option value="50" selected>50 kg (課本標準)</option>
+                <option value="100">100 kg (加倍重物)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 物理動畫視窗 (Canvas) -->
+          <div class="relative bg-slate-900 rounded-xl overflow-hidden shadow-inner h-[220px] border border-slate-700 flex">
+            <canvas id="fallCanvas" class="w-full h-full block"></canvas>
+            
+            <!-- 即時動態數值儀表板 -->
+            <div class="absolute top-2.5 right-2.5 bg-slate-900/85 backdrop-blur-sm border border-slate-700 rounded-lg p-2.5 text-right font-mono text-xs space-y-1">
+              <div class="text-slate-400 text-[10px]">即時物理量監控</div>
+              <div class="text-amber-400 font-bold">速度 v: <span id="liveV">0.00</span> m/s</div>
+              <div class="text-sky-400 font-bold">下落 y: <span id="liveY">0.00</span> m</div>
+              <div class="text-red-400 font-bold">重力 F: <span id="liveF">490.0</span> N</div>
+            </div>
+          </div>
+
+          <!-- 控制操作按鈕與時間軸滑桿 -->
+          <div class="space-y-2.5 pt-1">
+            <div class="flex items-center gap-2">
+              <button id="playFallBtn" class="flex-1 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all">
+                <span>▶ 釋放物體 (0s ➔ 4s)</span>
+              </button>
+              <button id="stepFallBtn" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all">
+                <span>+0.5s 單步</span>
+              </button>
+              <button id="resetFallBtn" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all">
+                <span>重設</span>
+              </button>
+            </div>
+
+            <!-- 時間軸滑桿 -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-[10px] font-mono text-slate-500 font-bold">
+                <span>0.0s (靜止)</span>
+                <span>1.0s</span>
+                <span>2.0s</span>
+                <span>3.0s</span>
+                <span>4.0s (著地)</span>
+              </div>
+              <input type="range" id="timeSlider" min="0" max="4" step="0.05" value="0" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-600">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 底部功能區：即時雙圖表繪製 (v-t / y-t) 與 4 題隨堂概念檢測評量 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- 左下 (6/12)：動態圖表 (v-t / y-t 圖) -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs">📈</span>
+            <h3 class="text-sm font-black text-slate-900">自由落體 v-t 與 y-t 即時圖表</h3>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="inline-flex items-center gap-1 text-sky-600 font-bold"><span class="w-2.5 h-2.5 rounded-full bg-sky-500 inline-block"></span>v-t 速度圖</span>
+            <span class="inline-flex items-center gap-1 text-amber-600 font-bold"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>y-t 位移圖</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- v-t 圖 -->
+          <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 space-y-1.5">
+            <div class="flex justify-between items-center text-[11px] text-sky-300 font-bold font-mono">
+              <span>v-t 圖 (斜率 = 9.8)</span>
+              <span class="text-[10px] text-slate-400">等加速度直線</span>
+            </div>
+            <canvas id="vtGraphCanvas" class="w-full h-36 block"></canvas>
+          </div>
+
+          <!-- y-t 圖 -->
+          <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 space-y-1.5">
+            <div class="flex justify-between items-center text-[11px] text-amber-300 font-bold font-mono">
+              <span>y-t 圖 (y = 0.5gt²)</span>
+              <span class="text-[10px] text-slate-400">二次拋物線</span>
+            </div>
+            <canvas id="ytGraphCanvas" class="w-full h-36 block"></canvas>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-500 leading-relaxed">
+          💡 <strong>圖表解析小錦囊</strong>：\(v-t\) 圖下方與時間軸圍成的三角形面積，即為物體落下的<strong>垂直位移（落下高度 \(y\)）</strong>！例如 \(0\sim 2	ext{s}\) 位移為 \(rac{1}{2} 	imes 2 	imes 19.6 = 19.6	ext{ m}\)。
+        </p>
+      </div>
+
+      <!-- 右下 (6/12)：4 題會考即時概念闖關測驗 -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-lg bg-rose-100 text-rose-700 font-bold text-xs">🎯</span>
+            <h3 class="text-sm font-black text-slate-900">即時概念闖關評量（4 題）</h3>
+          </div>
+          <span id="quizScoreBadge" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-mono text-xs font-bold">得分：0 / 4</span>
+        </div>
+
+        <div class="space-y-3.5 max-h-[360px] overflow-y-auto pr-1" id="quizContainer">
+          
+          <!-- Q1 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-xs font-bold text-slate-900 flex items-start gap-1.5">
+              <span class="text-sky-600">Q1.</span>
+              <span>質量 \(50	ext{ kg}\) 的物體在地球上自由落下，第 3 秒末的瞬間速度大小為多少？</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="1" data-ans="B">A. 19.6 m/s</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="1" data-ans="B" data-correct="true">B. 29.4 m/s</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="1" data-ans="B">C. 39.2 m/s</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="1" data-ans="B">D. 49.0 m/s</button>
+            </div>
+            <div id="quiz-expl-1" class="hidden text-[11px] text-slate-600 bg-sky-50 p-2 rounded-lg border border-sky-100">
+              解析：\(v_3 = v_0 + gt = 0 + 9.8 	imes 3 = 29.4	ext{ m/s}\)。
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-xs font-bold text-slate-900 flex items-start gap-1.5">
+              <span class="text-sky-600">Q2.</span>
+              <span>若將落下物體改為質量 \(100	ext{ kg}\)（增加為2倍），忽略空氣阻力，其下落加速度為多少？</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="2" data-ans="C">A. 4.9 m/s²</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="2" data-ans="C">B. 19.6 m/s²</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="2" data-ans="C" data-correct="true">C. 9.8 m/s²</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="2" data-ans="C">D. 490 m/s²</button>
+            </div>
+            <div id="quiz-expl-2" class="hidden text-[11px] text-slate-600 bg-sky-50 p-2 rounded-lg border border-sky-100">
+              解析：自由落體之加速度與物體質量無關，地球表面附近恆為 \(g = 9.8	ext{ m/s}^2\)。
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-xs font-bold text-slate-900 flex items-start gap-1.5">
+              <span class="text-sky-600">Q3.</span>
+              <span>質量 \(50	ext{ kg}\) 的物體在落下過程中，每秒所受的地球引力大小為何？</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="3" data-ans="D">A. 隨速度增加而變大</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="3" data-ans="D">B. 50 N</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="3" data-ans="D">C. 9.8 N</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="3" data-ans="D" data-correct="true">D. 恆為 490 N</button>
+            </div>
+            <div id="quiz-expl-3" class="hidden text-[11px] text-slate-600 bg-sky-50 p-2 rounded-lg border border-sky-100">
+              解析：\(F = mg = 50 	imes 9.8 = 490	ext{ N}\)，在落下過程中重力恆定不變。
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-xs font-bold text-slate-900 flex items-start gap-1.5">
+              <span class="text-sky-600">Q4.</span>
+              <span>自由落體運動是屬於下列哪一種運動？</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="4" data-ans="A" data-correct="true">A. 等加速度直線運動</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="4" data-ans="A">B. 等速度直線運動</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="4" data-ans="A">C. 變加速度運動</button>
+              <button class="quiz-btn p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 text-left font-medium transition-all" data-q="4" data-ans="A">D. 簡諧運動</button>
+            </div>
+            <div id="quiz-expl-4" class="hidden text-[11px] text-slate-600 bg-sky-50 p-2 rounded-lg border border-sky-100">
+              解析：自由落體方向固定鉛直向下，加速度大小固定為 \(g=9.8	ext{ m/s}^2\)，故為等加速度直線運動。
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- 頁腳 -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-1.5">
+      <p class="font-bold text-slate-700">國中自然 3 上 · 第 2 章 力與運動 · 2-2 牛頓第二運動定律生活應用探索</p>
+      <p>依據 115 康軒國中自然課本 P.41 探索活動設計 · 整合 Central Hub 數位基地教學平台</p>
+    </div>
+  </footer>
+
+  <!-- 核心互動 JavaScript 邏輯 -->
+  <script>
+    // 晶片音效合成器 (Web Audio API)
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+      playCorrect() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+        osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+      playWrong() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(146.83, now + 0.25);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
+      playClick() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      }
+    }
+
+    const sfx = new SoundFX();
+
+    // 音效切換
+    document.getElementById('soundToggle').addEventListener('click', () => {
+      sfx.enabled = !sfx.enabled;
+      document.getElementById('soundIcon').textContent = sfx.enabled ? '🔔' : '🔕';
+    });
+
+    // 語音朗讀合成器
+    let isSpeaking = false;
+    const speechBtn = document.getElementById('speechBtn');
+    const speechText = document.getElementById('speechText');
+    const speechIcon = document.getElementById('speechIcon');
+
+    speechBtn.addEventListener('click', () => {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        speechText.textContent = '語音解說';
+        speechIcon.textContent = '🔊';
+        return;
+      }
+
+      const script = '歡迎來到康軒國中自然三上，第二章二之二，自由落體運動的探討。物體在自由落下的過程中，不受空氣阻力時，速度每秒增加九點八公尺每秒。因此加速度恆為九點八公尺每秒平方，稱為重力加速度。依據牛頓第二運動定律，五十公斤的物體所受地球引力為五十乘上九點八，等於四百九十牛頓。';
+      
+      const utter = new SpeechSynthesisUtterance(script);
+      utter.lang = 'zh-TW';
+      utter.rate = 1.0;
+      utter.pitch = 1.0;
+      
+      utter.onstart = () => {
+        isSpeaking = true;
+        speechText.textContent = '停止朗讀';
+        speechIcon.textContent = '⏹️';
+      };
+      utter.onend = () => {
+        isSpeaking = false;
+        speechText.textContent = '語音解說';
+        speechIcon.textContent = '🔊';
+      };
+      
+      window.speechSynthesis.speak(utter);
+    });
+
+    // 1. 課本填答檢查邏輯
+    const inputs = [
+      { id: 'ans_a01', correct: ['9.8'], feedId: 'feed_a01', expl: '0~1s 加速度 = (9.8 - 0)/1 = 9.8 m/s²' },
+      { id: 'ans_f2', correct: ['490', '490N', '490牛頓'], feedId: 'feed_f2', expl: 'F₂ = m × a = 50 × 9.8 = 490 N' },
+      { id: 'ans_v3', correct: ['29.4'], feedId: 'feed_v3', expl: 'v₃ = v₂ + 9.8 = 19.6 + 9.8 = 29.4 m/s' },
+      { id: 'ans_f3', correct: ['490', '490N', '490牛頓'], feedId: 'feed_f3', expl: 'F₃ = m × a = 50 × 9.8 = 490 N' },
+      { id: 'ans_a34', correct: ['9.8'], feedId: 'feed_a34', expl: '3~4s 加速度 = (39.2 - 29.4)/1 = 9.8 m/s²' },
+      { id: 'ans_q2_name', correct: ['重力', '等', '重力加速度', '等加速度'], feedId: 'feed_q2', expl: '自由落體在任何時刻之 a 皆相同，稱為「重力」加速度。' }
+    ];
+
+    function checkAnswers(autoFeedback = true) {
+      let allCorrect = true;
+
+      inputs.forEach(item => {
+        const el = document.getElementById(item.id);
+        const feedEl = document.getElementById(item.feedId);
+        const val = el.value.trim();
+
+        if (item.correct.includes(val)) {
+          el.classList.add('correct');
+          el.classList.remove('incorrect');
+          if (feedEl) {
+            feedEl.innerHTML = `<span class="text-emerald-600 font-bold">✓ 正確！</span> ${item.expl}`;
+            feedEl.classList.remove('hidden');
+          }
+        } else {
+          allCorrect = false;
+          el.classList.add('incorrect');
+          el.classList.remove('correct');
+          if (feedEl) {
+            feedEl.innerHTML = `<span class="text-rose-600 font-bold">✗ 需修正</span> （提示：${item.expl}）`;
+            feedEl.classList.remove('hidden');
+          }
+        }
+      });
+
+      // 檢查 Q2 廣播單選
+      const optSame = document.getElementById('opt_same');
+      if (!optSame.checked) {
+        allCorrect = false;
+      }
+
+      if (allCorrect) {
+        sfx.playCorrect();
+        document.getElementById('scoreBanner').classList.remove('hidden');
+      } else {
+        if (autoFeedback) sfx.playWrong();
+      }
+    }
+
+    document.getElementById('checkAnswersBtn').addEventListener('click', () => checkAnswers(true));
+
+    document.getElementById('revealAnswersBtn').addEventListener('click', () => {
+      sfx.playClick();
+      document.getElementById('ans_a01').value = '9.8';
+      document.getElementById('ans_f2').value = '490';
+      document.getElementById('ans_v3').value = '29.4';
+      document.getElementById('ans_f3').value = '490';
+      document.getElementById('ans_a34').value = '9.8';
+      document.getElementById('opt_same').checked = true;
+      document.getElementById('ans_q2_name').value = '重力';
+      checkAnswers(false);
+    });
+
+    // 2. 物理落體模擬器 (Canvas Animation)
+    const fallCanvas = document.getElementById('fallCanvas');
+    const fctx = fallCanvas.getContext('2d');
+    const timeSlider = document.getElementById('timeSlider');
+    const simTimeBadge = document.getElementById('simTimeBadge');
+    const liveV = document.getElementById('liveV');
+    const liveY = document.getElementById('liveY');
+    const liveF = document.getElementById('liveF');
+    const planetSelect = document.getElementById('planetSelect');
+    const massSelect = document.getElementById('massSelect');
+
+    let currentT = 0;
+    let isPlaying = false;
+    let animId = null;
+    let lastTime = 0;
+
+    function resizeCanvas() {
+      fallCanvas.width = fallCanvas.clientWidth * (window.devicePixelRatio || 1);
+      fallCanvas.height = fallCanvas.clientHeight * (window.devicePixelRatio || 1);
+      fctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    }
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    function drawFallSimulation() {
+      const w = fallCanvas.clientWidth;
+      const h = fallCanvas.clientHeight;
+      fctx.clearRect(0, 0, w, h);
+
+      const g = parseFloat(planetSelect.value);
+      const m = parseFloat(massSelect.value);
+      const maxT = 4.0;
+      const maxY = 0.5 * g * (maxT * maxT); // 總下落距離
+      
+      const v = g * currentT;
+      const y = 0.5 * g * currentT * currentT;
+      const f = m * g;
+
+      // 更新儀表板
+      simTimeBadge.textContent = `t = ${currentT.toFixed(2)} s`;
+      liveV.textContent = v.toFixed(2);
+      liveY.textContent = y.toFixed(2);
+      liveF.textContent = f.toFixed(1);
+      timeSlider.value = currentT;
+
+      // 繪製背景參考線與標尺
+      const startX = 60;
+      const startY = 25;
+      const trackH = h - 50;
+
+      // 標尺軌道
+      fctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      fctx.lineWidth = 1;
+      for (let s = 0; s <= 4; s++) {
+        const py = startY + (0.5 * g * s * s / maxY) * trackH;
+        fctx.beginPath();
+        fctx.moveTo(startX - 20, py);
+        fctx.lineTo(w - 20, py);
+        fctx.stroke();
+
+        fctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        fctx.font = '10px JetBrains Mono';
+        fctx.fillText(`${s}s (${(0.5 * g * s * s).toFixed(1)}m)`, startX - 48, py + 3);
+      }
+
+      // 繪製殘影閃頻軌跡點 (Ghost markers for 0s, 1s, 2s, 3s, 4s)
+      for (let s = 0; s <= Math.floor(currentT); s++) {
+        const py = startY + (0.5 * g * s * s / maxY) * trackH;
+        fctx.beginPath();
+        fctx.arc(startX + 60, py, 6, 0, Math.PI * 2);
+        fctx.fillStyle = 'rgba(245, 158, 11, 0.35)';
+        fctx.fill();
+        fctx.strokeStyle = 'rgba(245, 158, 11, 0.7)';
+        fctx.lineWidth = 1.5;
+        fctx.stroke();
+      }
+
+      // 當前球體位置
+      const ballY = startY + (y / maxY) * trackH;
+      const ballX = startX + 60;
+
+      // 繪製重力向量箭頭 (F_g) - 紅色向下
+      const fArrowLen = Math.min(60, 20 + f * 0.08);
+      fctx.strokeStyle = '#ef4444';
+      fctx.lineWidth = 3;
+      fctx.beginPath();
+      fctx.moveTo(ballX, ballY);
+      fctx.lineTo(ballX, ballY + fArrowLen);
+      fctx.stroke();
+      // 箭頭頂
+      fctx.fillStyle = '#ef4444';
+      fctx.beginPath();
+      fctx.moveTo(ballX - 5, ballY + fArrowLen - 6);
+      fctx.lineTo(ballX + 5, ballY + fArrowLen - 6);
+      fctx.lineTo(ballX, ballY + fArrowLen + 2);
+      fctx.fill();
+
+      // 向量文字標示
+      fctx.fillStyle = '#f87171';
+      fctx.font = 'bold 10px Noto Sans TC';
+      fctx.fillText(`重力 F=${f.toFixed(0)}N`, ballX + 8, ballY + fArrowLen - 4);
+
+      // 繪製即時速度向量箭頭 (v) - 青色向右下
+      if (v > 0) {
+        const vArrowLen = Math.min(50, v * 1.2);
+        fctx.strokeStyle = '#38bdf8';
+        fctx.lineWidth = 2;
+        fctx.setLineDash([3, 3]);
+        fctx.beginPath();
+        fctx.moveTo(ballX, ballY);
+        fctx.lineTo(ballX + 30, ballY + vArrowLen);
+        fctx.stroke();
+        fctx.setLineDash([]);
+      }
+
+      // 實體球體
+      const grad = fctx.createRadialGradient(ballX - 3, ballY - 3, 2, ballX, ballY, 12);
+      grad.addColorStop(0, '#fed7aa');
+      grad.addColorStop(0.5, '#f97316');
+      grad.addColorStop(1, '#c2410c');
+      fctx.beginPath();
+      fctx.arc(ballX, ballY, 11, 0, Math.PI * 2);
+      fctx.fillStyle = grad;
+      fctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
+      fctx.shadowBlur = 10;
+      fctx.fill();
+      fctx.shadowBlur = 0;
+      fctx.strokeStyle = '#fff';
+      fctx.lineWidth = 2;
+      fctx.stroke();
+    }
+
+    function simLoop(timestamp) {
+      if (!isPlaying) return;
+      if (!lastTime) lastTime = timestamp;
+      const dt = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+
+      currentT += dt * 0.8; // 速度適中
+      if (currentT >= 4.0) {
+        currentT = 4.0;
+        isPlaying = false;
+        document.getElementById('playFallBtn').innerHTML = '<span>▶ 重新釋放 (0s ➔ 4s)</span>';
+      }
+
+      drawFallSimulation();
+      drawGraphs();
+
+      if (isPlaying) {
+        animId = requestAnimationFrame(simLoop);
+      }
+    }
+
+    document.getElementById('playFallBtn').addEventListener('click', () => {
+      sfx.playClick();
+      if (isPlaying) {
+        isPlaying = false;
+        document.getElementById('playFallBtn').innerHTML = '<span>▶ 繼續落下</span>';
+      } else {
+        if (currentT >= 4.0) currentT = 0;
+        isPlaying = true;
+        lastTime = 0;
+        document.getElementById('playFallBtn').innerHTML = '<span>⏸ 暫停</span>';
+        animId = requestAnimationFrame(simLoop);
+      }
+    });
+
+    document.getElementById('stepFallBtn').addEventListener('click', () => {
+      sfx.playClick();
+      isPlaying = false;
+      document.getElementById('playFallBtn').innerHTML = '<span>▶ 釋放物體</span>';
+      currentT = Math.min(4.0, currentT + 0.5);
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    document.getElementById('resetFallBtn').addEventListener('click', () => {
+      sfx.playClick();
+      isPlaying = false;
+      currentT = 0;
+      document.getElementById('playFallBtn').innerHTML = '<span>▶ 釋放物體 (0s ➔ 4s)</span>';
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    timeSlider.addEventListener('input', (e) => {
+      isPlaying = false;
+      currentT = parseFloat(e.target.value);
+      document.getElementById('playFallBtn').innerHTML = '<span>▶ 繼續釋放</span>';
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    planetSelect.addEventListener('change', () => {
+      sfx.playClick();
+      drawFallSimulation();
+      drawGraphs();
+    });
+    massSelect.addEventListener('change', () => {
+      sfx.playClick();
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    // 3. 繪製動態雙圖表 (v-t & y-t)
+    const vtCanvas = document.getElementById('vtGraphCanvas');
+    const ytCanvas = document.getElementById('ytGraphCanvas');
+    const vtCtx = vtCanvas.getContext('2d');
+    const ytCtx = ytCanvas.getContext('2d');
+
+    function drawGraphs() {
+      const g = parseFloat(planetSelect.value);
+
+      // 繪製 v-t 圖
+      const vw = vtCanvas.clientWidth;
+      const vh = vtCanvas.clientHeight;
+      vtCanvas.width = vw * (window.devicePixelRatio || 1);
+      vtCanvas.height = vh * (window.devicePixelRatio || 1);
+      vtCtx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      vtCtx.clearRect(0, 0, vw, vh);
+
+      const margin = 24;
+      const maxGraphT = 4;
+      const maxGraphV = g * 4;
+
+      // 坐標軸
+      vtCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      vtCtx.lineWidth = 1;
+      vtCtx.beginPath();
+      vtCtx.moveTo(margin, margin / 2);
+      vtCtx.lineTo(margin, vh - margin);
+      vtCtx.lineTo(vw - margin / 2, vh - margin);
+      vtCtx.stroke();
+
+      // 軸文字標籤
+      vtCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      vtCtx.font = '9px JetBrains Mono';
+      vtCtx.fillText('v (m/s)', margin - 15, margin / 2 - 2);
+      vtCtx.fillText('t (s)', vw - margin, vh - margin + 14);
+
+      // 曲線（等加速度斜線）
+      vtCtx.strokeStyle = '#38bdf8';
+      vtCtx.lineWidth = 2.5;
+      vtCtx.beginPath();
+      vtCtx.moveTo(margin, vh - margin);
+      const curX = margin + (currentT / maxGraphT) * (vw - margin * 1.5);
+      const curY = (vh - margin) - (g * currentT / maxGraphV) * (vh - margin * 1.5);
+      vtCtx.lineTo(curX, curY);
+      vtCtx.stroke();
+
+      // 面積填色 (代表位移)
+      vtCtx.fillStyle = 'rgba(56, 189, 248, 0.2)';
+      vtCtx.beginPath();
+      vtCtx.moveTo(margin, vh - margin);
+      vtCtx.lineTo(curX, curY);
+      vtCtx.lineTo(curX, vh - margin);
+      vtCtx.closePath();
+      vtCtx.fill();
+
+      // 當前游標點
+      vtCtx.fillStyle = '#fff';
+      vtCtx.beginPath();
+      vtCtx.arc(curX, curY, 4, 0, Math.PI * 2);
+      vtCtx.fill();
+
+
+      // 繪製 y-t 圖
+      const yw = ytCanvas.clientWidth;
+      const yh = ytCanvas.clientHeight;
+      ytCanvas.width = yw * (window.devicePixelRatio || 1);
+      ytCanvas.height = yh * (window.devicePixelRatio || 1);
+      ytCtx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      ytCtx.clearRect(0, 0, yw, yh);
+
+      // 坐標軸
+      ytCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ytCtx.lineWidth = 1;
+      ytCtx.beginPath();
+      ytCtx.moveTo(margin, margin / 2);
+      ytCtx.lineTo(margin, yh - margin);
+      ytCtx.lineTo(yw - margin / 2, yh - margin);
+      ytCtx.stroke();
+
+      // 軸文字標籤
+      ytCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ytCtx.font = '9px JetBrains Mono';
+      ytCtx.fillText('y (m)', margin - 15, margin / 2 - 2);
+      ytCtx.fillText('t (s)', yw - margin, yh - margin + 14);
+
+      // 曲線（二次拋物線）
+      ytCtx.strokeStyle = '#fbbf24';
+      ytCtx.lineWidth = 2.5;
+      ytCtx.beginPath();
+      ytCtx.moveTo(margin, yh - margin);
+      const maxY = 0.5 * g * 16;
+      for (let t = 0; t <= currentT; t += 0.05) {
+        const px = margin + (t / maxGraphT) * (yw - margin * 1.5);
+        const py = (yh - margin) - (0.5 * g * t * t / maxY) * (yh - margin * 1.5);
+        ytCtx.lineTo(px, py);
+      }
+      ytCtx.stroke();
+
+      // 當前游標點
+      const curYPos = (yh - margin) - (0.5 * g * currentT * currentT / maxY) * (yh - margin * 1.5);
+      ytCtx.fillStyle = '#fff';
+      ytCtx.beginPath();
+      ytCtx.arc(curX, curYPos, 4, 0, Math.PI * 2);
+      ytCtx.fill();
+    }
+
+    // 4. 即時隨堂評量題目點擊邏輯
+    let quizScore = 0;
+    const answered = {};
+
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = btn.dataset.q;
+        if (answered[q]) return; // 已答過
+        answered[q] = true;
+
+        const isCorrect = btn.dataset.correct === 'true';
+        const explEl = document.getElementById(`quiz-expl-${q}`);
+        if (explEl) explEl.classList.remove('hidden');
+
+        if (isCorrect) {
+          sfx.playCorrect();
+          btn.classList.remove('bg-white', 'hover:bg-sky-50', 'border-slate-200');
+          btn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900', 'font-bold');
+          quizScore++;
+        } else {
+          sfx.playWrong();
+          btn.classList.remove('bg-white', 'hover:bg-sky-50', 'border-slate-200');
+          btn.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900', 'font-bold');
+          
+          // 標出正確答案
+          document.querySelectorAll(`.quiz-btn[data-q="${q}"][data-correct="true"]`).forEach(cBtn => {
+            cBtn.classList.remove('bg-white', 'border-slate-200');
+            cBtn.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-800', 'font-bold');
+          });
+        }
+
+        document.getElementById('quizScoreBadge').textContent = `得分：${quizScore} / 4`;
+        if (quizScore === 4) {
+          document.getElementById('quizScoreBadge').classList.remove('bg-slate-100', 'text-slate-700');
+          document.getElementById('quizScoreBadge').classList.add('bg-emerald-200', 'text-emerald-900');
+        }
+      });
+    });
+
+    // 全域重設按鈕
+    document.getElementById('globalResetBtn').addEventListener('click', () => {
+      sfx.playClick();
+      inputs.forEach(item => {
+        const el = document.getElementById(item.id);
+        el.value = '';
+        el.classList.remove('correct', 'incorrect');
+        const feedEl = document.getElementById(item.feedId);
+        if (feedEl) feedEl.classList.add('hidden');
+      });
+      document.getElementById('opt_same').checked = false;
+      document.getElementById('opt_diff').checked = false;
+      document.getElementById('scoreBanner').classList.add('hidden');
+
+      currentT = 0;
+      isPlaying = false;
+      document.getElementById('playFallBtn').innerHTML = '<span>▶ 釋放物體 (0s ➔ 4s)</span>';
+      drawFallSimulation();
+      drawGraphs();
+    });
+
+    // 初始化渲染
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\(', right: '\)', display: false },
+          { left: '\[', right: '\]', display: true }
+        ]
+      });
+
+      resizeCanvas();
+      drawFallSimulation();
+      drawGraphs();
+    });
+  </script>
+</body>
+</html>

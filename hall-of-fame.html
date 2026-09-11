@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>世界名人堂 - 個人主網頁</title>
+  <meta name="description" content="世界名人堂 - 探索 12 位先驅科學家生平傳奇、課堂互動教具、精選影音與沈浸式閱讀理解密室逃脫。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 背景與卡片色彩 */
+      --bg-main: #f0f7ff;
+      --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #fdf4ff 45%, #f0fdf4 100%);
+      --bg-surface: #ffffff;
+      --bg-surface-muted: #f8fafc;
+      --bg-card-muted: #f1f5f9;
+      
+      /* 文字色彩 */
+      --text-main: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      
+      /* 邊框與分割線 */
+      --border-color: #e2e8f0;
+      --border-cute: #bae6fd;
+      --border-muted: #cbd5e1;
+      
+      /* 活潑色彩系統 */
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --primary-light-text: #0369a1;
+      
+      --gold: #b45309;
+      --gold-light: #fef3c7;
+      --gold-dark: #92400e;
+      
+      --accent-blue: #2563eb;
+      --accent-blue-light: #dbeafe;
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #f3e8ff;
+      --accent-red: #ef4444;
+      --accent-red-light: #fee2e2;
+      --accent-green: #10b981;
+      --accent-green-light: #d1fae5;
+      
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 2px 6px rgba(14, 165, 233, 0.06);
+      --shadow-md: 0 10px 22px -4px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 18px 32px -6px rgba(14, 165, 233, 0.14), 0 8px 12px -4px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      
+      --font-stack: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Site Header */
+    .site-header {
+      background-color: rgba(255, 255, 255, 0.92);
+      border-bottom: 1.5px solid var(--border-color);
+      padding: 0.85rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 1rem;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-cute);
+      border-radius: var(--radius-full);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-home-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin: 1.5rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumbs a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 2.25rem 0 1.75rem;
+      position: relative;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.95rem;
+      background-color: #ffffff;
+      color: var(--primary);
+      border: 1.5px solid var(--border-cute);
+      font-size: 0.875rem;
+      font-weight: 800;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #f43f5e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      max-width: 760px;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.1rem;
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-cute);
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-stat-badge .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+      margin: 1.75rem 0 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3.1rem;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-light);
+    }
+
+    /* Filter Controls */
+    .filter-tabs {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border-color);
+      background-color: #ffffff;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--border-cute);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 1rem 0 5rem;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid rgba(2, 132, 199, 0.15);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-count {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: #ffffff;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border-cute);
+    }
+
+    /* Cards Grid (3 Columns) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 980px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+    }
+
+    .resource-card {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .resource-card.featured::before {
+      background: var(--gold);
+      opacity: 1;
+    }
+
+    .resource-card.yt-card::before {
+      background: var(--accent-red);
+      opacity: 1;
+    }
+
+    .resource-card.game-card::before {
+      background: var(--accent-purple);
+      opacity: 1;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-cute);
+    }
+
+    .resource-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-order-tag {
+      font-family: 'Outfit', monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      background-color: var(--bg-surface-muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-wrap {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      flex-shrink: 0;
+      background-color: var(--primary-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .yt-icon-wrap {
+      background-color: var(--accent-red-light);
+    }
+
+    .game-icon-wrap {
+      background-color: var(--accent-purple-light);
+    }
+
+    .gold-icon-wrap {
+      background-color: var(--gold-light);
+    }
+
+    .badge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+
+    .badge-online {
+      background-color: var(--accent-green-light);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-hub {
+      background-color: var(--accent-purple-light);
+      color: var(--accent-purple);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .badge-soon {
+      background-color: #f3f4f6;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-latin {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-highlights {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .card-highlights li {
+      font-size: 0.85rem;
+      color: #334155;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .card-highlights li span {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.25);
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(180, 83, 9, 0.35);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(2, 132, 199, 0.3);
+    }
+
+    .btn-youtube {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+    }
+
+    .btn-youtube:hover {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-escape {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(124, 58, 237, 0.25);
+    }
+
+    .btn-escape:hover {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-disabled {
+      background-color: #e2e8f0;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--bg-surface);
+      border-top: 1.5px solid var(--border-color);
+      padding: 2rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
+        <span>🏠</span>
+        <span>回數位基地首頁 ↗</span>
+      </a>
+      <div class="header-brand">
+        <span style="background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 700;">🏛️ 世界名人堂</span>
+        <span>世界名人堂 · 國二理化科學發展史</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="路徑導覽">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/">首頁</a>
+      <span>›</span>
+      <span>世界名人堂</span>
+      <span>›</span>
+      <span>國二理化科學發展史</span>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag">🏛️ 世界名人堂專區 · 國二理化科學發展史</div>
+      <h1 class="hero-title">世界名人堂學習殿堂</h1>
+      <p class="hero-description">
+        收錄國二科學發展史 12 位跨世代先驅科學家生平傳奇、突破性發明與課堂數位互動教具，並結合影音教學與閱讀理解密室逃脫，引領學生探索大師智慧與科學探索精神。
+      </p>
+      <div class="hero-stats-row">
+        <div class="hero-stat-badge">
+          <span class="stat-num">12</span>
+          <span class="stat-label">位科學巨擘</span>
+        </div>
+        <div class="hero-stat-badge">
+          <span class="stat-num">14</span>
+          <span class="stat-label">大核心資源</span>
+        </div>
+        <div class="hero-stat-badge">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">課堂數位互動即刻上線</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controls Bar -->
+  <div class="container">
+    <div class="controls-bar">
+      <!-- Search Box -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="scientistSearchInput" class="search-box" placeholder="搜尋科學家姓名、代表成就、領域或關鍵字（如：諾貝爾、拉瓦節、道耳頓、門得列夫、週期表、密室逃脫）...">
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-cat="all">🌟 全部資源 (14)</button>
+        <button class="filter-btn" data-cat="online">🟢 已上線 (12)</button>
+        <button class="filter-btn" data-cat="physics-chem">⚗️ 物理化學 (6)</button>
+        <button class="filter-btn" data-cat="bio-med">🧬 生命醫學 (3)</button>
+        <button class="filter-btn" data-cat="earth-space">🌍 地球天文 (3)</button>
+        <button class="filter-btn" data-cat="hubs">🎮 影音與密室 (2)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="section-title-wrap">
+        <h2 class="section-title"><span>✨</span> 科學家傳奇與互動學習卡片 (依講義排序)</h2>
+        <span class="section-count" id="scientistCountDisplay">顯示 14 項資源</span>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid">
+<!-- Card 1: 諾貝爾 -->
+        <article class="resource-card featured" data-category="physics-chem online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap gold-icon-wrap">💥</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">01 · P.1-2</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">阿爾弗雷德·諾貝爾</h3>
+            <p class="card-latin">Alfred Bernhard Nobel (1833–1896)</p>
+            <p class="card-description">
+              炸藥之父與和平遺產。發明雷管導出「起爆原理」，創立矽藻土黃色炸藥降低傷亡並加速工程，晚年設立諾貝爾獎。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 整合 5 大線上互動教具 (AI訪談/配對/搶答/測驗)</li>
+              <li><span>✓</span> 起爆原理、矽藻土固態化與 350+ 項專利</li>
+              <li><span>✓</span> 史實闢謠 (無數學獎真相) 與搞笑諾貝爾獎</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/nobel.html" class="card-action-btn btn-gold">
+              進入諾貝爾課堂網頁 <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: 愛因斯坦 -->
+        <article class="resource-card" data-category="physics-chem online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">⚛️</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">02 · P.3-4</span>
+                <span class="status-badge badge-online">密室已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">阿爾伯特·愛因斯坦</h3>
+            <p class="card-latin">Albert Einstein (1879–1955)</p>
+            <p class="card-description">
+              現代物理學之父。提出狹義與廣義相對論、質能互換公式 $E=mc^2$、解釋光電效應與布朗運動，奠定量子力學基礎。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 1905 奇蹟年四大重大突破論文</li>
+              <li><span>✓</span> 光電效應榮獲 1921 年諾貝爾物理學獎</li>
+              <li><span>✓</span> 專屬沈浸式閱讀理解密室逃脫解謎</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/einstein-escape-room/index.html" class="card-action-btn btn-primary">
+              進入愛因斯坦密室 <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: 愛德溫·哈伯 -->
+        <article class="resource-card" data-category="earth-space">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🔭</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">03 · P.5-6</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">愛德溫·哈伯</h3>
+            <p class="card-latin">Edwin Powell Hubble (1889–1953)</p>
+            <p class="card-description">
+              星系天文學之父與觀測宇宙學開創者。發現銀河系外星系，確立哈伯定律證明宇宙正在膨脹，哈伯太空望遠鏡以其命名。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 仙女座大星系造父變星測距突破</li>
+              <li><span>✓</span> 哈伯定律：星系退行速度與距離成正比</li>
+              <li><span>✓</span> 宇宙膨脹第一直接觀測證據</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4: 達爾文 -->
+        <article class="resource-card" data-category="bio-med">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🐢</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">04 · P.7-8</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">查爾斯·達爾文</h3>
+            <p class="card-latin">Charles Robert Darwin (1809–1882)</p>
+            <p class="card-description">
+              演化論之父。搭乘小獵犬號進行環球科學考察，深入加拉巴哥群島觀察物種差異，發表《物種起源》提出天擇說。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 小獵犬號五年環球考察日記</li>
+              <li><span>✓</span> 物種起源：過度繁殖、生存競爭與適者生存</li>
+              <li><span>✓</span> 徹底改變現代生物學與人類自然觀</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 5: 韋格納 -->
+        <article class="resource-card" data-category="earth-space">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🧩</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">05 · P.9-10</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">阿爾弗雷德·韋格納</h3>
+            <p class="card-latin">Alfred Lothar Wegener (1880–1930)</p>
+            <p class="card-description">
+              大陸漂移學說創始者。提出古生代「盤古大陸 (Pangea)」假說，以海岸線輪廓、古生物化石與古氣候證據撼動地質學界。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 大西洋兩岸海岸線拼圖與舌羊齒化石</li>
+              <li><span>✓</span> 古冰川沉積物分布地質證據</li>
+              <li><span>✓</span> 板塊構造學說與海底擴張論的先驅基石</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 6: 華生、克立克、富蘭克林 -->
+        <article class="resource-card" data-category="bio-med">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🧬</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">06 · P.11-13</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">華生、克立克、富蘭克林</h3>
+            <p class="card-latin">Watson, Crick & Franklin</p>
+            <p class="card-description">
+              DNA 雙螺旋結構解密者。結合 X 射線晶體繞射關鍵 Photo 51 與鹼基互補配對模型，揭開遺傳物質複製與生命的奧秘。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 羅莎琳·富蘭克林關鍵 X 射線晶體繞射照片</li>
+              <li><span>✓</span> 雙螺旋模型與 A-T、C-G 鹼基互補配對</li>
+              <li><span>✓</span> 榮獲 1962 年諾貝爾生理醫學獎</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 7: 林媽利 -->
+        <article class="resource-card" data-category="bio-med">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">💉</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">07 · P.14</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">林媽利 醫師</h3>
+            <p class="card-latin">Marie Lin (1938– )</p>
+            <p class="card-description">
+              台灣輸血醫學之母與血型基因研究權威。建立台灣現代化醫院血庫與安全輸血作業準則，深耕台灣族群 HLA 基因與血緣研究。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 建立全台無償捐血與輸血安全檢驗體系</li>
+              <li><span>✓</span> 發現罕見血型 Miltenberger 與稀有抗原</li>
+              <li><span>✓</span> 台灣人體生物資料庫與血緣基因分析</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 8: 張衡 -->
+        <article class="resource-card" data-category="earth-space">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🐲</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">08 · P.15-16</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">張衡</h3>
+            <p class="card-latin">Zhang Heng (78–139)</p>
+            <p class="card-description">
+              東漢通才科學大師。發明世界上第一台地震觀測儀「候風地動儀」，創製以水力運轉的「水運渾天儀」，著有《靈憲》闡述宇宙。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 候風地動儀：八龍吐珠與都柱慣性原理</li>
+              <li><span>✓</span> 水運渾天儀與日月運行天球儀器</li>
+              <li><span>✓</span> 世界上最早精確計算圓周率的科學巨匠</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 9: 羅伯特·虎克 -->
+        <article class="resource-card" data-category="physics-chem">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🔬</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">09 · P.17-18</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">羅伯特·虎克</h3>
+            <p class="card-latin">Robert Hooke (1635–1703)</p>
+            <p class="card-description">
+              顯微鏡之眼與物理力學大師。改良複合顯微鏡觀察軟木塞組織命名「細胞 (Cell)」，出版《微觀圖誌》，提出虎克彈性定律。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 《微觀圖誌》精美手繪跳蚤與軟木塞細胞</li>
+              <li><span>✓</span> 虎克定律：彈簧伸長量與受力成正比 $F=k\Delta x$</li>
+              <li><span>✓</span> 英國皇家學會實驗主管與萬能發明家</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 10: 阿基米德 -->
+        <article class="resource-card" data-category="physics-chem">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">👑</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">10 · P.19-21</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">阿基米德</h3>
+            <p class="card-latin">Archimedes (c. 287 – c. 212 BC)</p>
+            <p class="card-description">
+              古希臘物理力學與數學之神。在浴缸中悟出阿基米德浮力原理（Eureka!），建立槓桿原理與滑輪組，以窮竭法計算圓周率。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 浮力定律：物體所受浮力＝排開液體重</li>
+              <li><span>✓</span> 「給我一個支點，我就能舉起整個地球」</li>
+              <li><span>✓</span> 螺旋抽水機與敘拉古保衛戰防禦機械</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 11: 伽利略 -->
+        <article class="resource-card" data-category="physics-chem">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">🔭</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">11 · P.22-23</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">伽利略·伽利萊</h3>
+            <p class="card-latin">Galileo Galilei (1564–1642)</p>
+            <p class="card-description">
+              近代科學與實驗物理學之父。首創以望遠鏡觀測天體（發現木星四衛星、月球坑洞、金星盈虧），提出單擺等時性與落體實驗。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 開創以實驗檢驗理論之現代科學方法</li>
+              <li><span>✓</span> 觀察木星衛星有力支持哥白尼日心說</li>
+              <li><span>✓</span> 斜面等加速度運動與自由落體定律</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 12: 瑪麗·居禮 -->
+        <article class="resource-card" data-category="physics-chem">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap">✨</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">12 · P.24-25</span>
+                <span class="status-badge badge-prep">課程籌備中</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">瑪麗·居禮 (居禮夫人)</h3>
+            <p class="card-latin">Marie Skłodowska-Curie (1867–1934)</p>
+            <p class="card-description">
+              放射性研究傳奇先驅。史上首位女性諾貝爾獎得主、唯一獲得物理與化學雙諾貝爾獎之科學家，發現放射性元素釙 (Po) 與鐳 (Ra)。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 自瀝青鈾礦中提煉純鐳與釙元素</li>
+              <li><span>✓</span> 1903 物理獎 ✕ 1911 化學獎雙料巨擘</li>
+              <li><span>✓</span> 一戰期間創立行動 X 光救護車援助傷兵</li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="card-action-btn btn-disabled" disabled>
+              課程建置中 · 敬請期待
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 13: YouTube 教學頻道 (原有卡片 1) -->
+        <article class="resource-card yt-card" data-category="hubs online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap yt-icon-wrap">📺</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">13 · 影音專區</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">Juiying 教學頻道</h3>
+            <p class="card-latin">YouTube Official Channel</p>
+            <p class="card-description">
+              世界名人堂與課堂教學相關影片頻道，精選各領域科學家精彩生平故事、理化課程知識點講解與素養主題影片。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 世界名人堂人物傳記影片</li>
+              <li><span>✓</span> 國中理化與自然課堂重點講解</li>
+              <li><span>✓</span> 生動有趣的科學素養補充</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://www.youtube.com/@Juiying-t8i9y" target="_blank" rel="noopener noreferrer" class="card-action-btn btn-youtube">
+              觀看 YouTube 教學頻道 <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 14: 密室逃脫 (原有卡片 2) -->
+        <article class="resource-card game-card" data-category="hubs online">
+          <div>
+            <div class="card-header-row">
+              <div class="card-icon-wrap game-icon-wrap">🎮</div>
+              <div class="badge-wrap">
+                <span class="card-order-tag">14 · 遊戲專區</span>
+                <span class="status-badge badge-online">已上線</span>
+              </div>
+            </div>
+
+            <h3 class="card-title">密室逃脫</h3>
+            <p class="card-latin">Reading Escape Rooms Hub</p>
+            <p class="card-description">
+              收錄〈諾貝爾傳奇〉與〈愛因斯坦實驗室〉等多款沈浸式閱讀理解密室逃脫解謎遊戲。
+            </p>
+
+            <ul class="card-highlights">
+              <li><span>✓</span> 多主題科學與人物傳記密室</li>
+              <li><span>✓</span> 雙模式挑戰與題目密碼防猜設計</li>
+              <li><span>✓</span> 通關即時產生榮譽證書</li>
+            </ul>
+          </div>
+
+          <div>
+            <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/escape-rooms.html" class="card-action-btn btn-escape">
+              進入密室逃脫專區 <span>→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>國中自然科 · 世界名人堂 國二理化科學發展史教學專區 | 正式發布於 GitHub Pages</p>
+      <p class="footer-copyright">&copy; 2026 我的數位基地 · 個人主網頁. 保留所有權利。</p>
+    </div>
+  </footer>
+
+  <!-- Filter & Search Script -->
+  <script>
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    function applyFilter() {
+      const cards = document.querySelectorAll('.resource-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const itemCats = card.getAttribute('data-category') || '';
+        const cardText = card.innerText.toLowerCase();
+        
+        const matchesCategory = (currentCategory === 'all' || itemCats.includes(currentCategory));
+        const matchesSearch = (!currentSearch || cardText.includes(currentSearch));
+
+        if (matchesCategory && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countDisplay = document.getElementById('scientistCountDisplay');
+      if (countDisplay) {
+        countDisplay.innerText = `顯示 ${visibleCount} 項資源`;
+      }
+    }
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-cat') || 'all';
+        applyFilter();
+      });
+    });
+
+    const searchInput = document.getElementById('scientistSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        applyFilter();
+      });
+    }
+
+    // Initialize
+    applyFilter();
+  </script>
+</body>
+</html>

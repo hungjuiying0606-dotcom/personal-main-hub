@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2-2 動腦時間：太空失重如何測量質量？ | 康軒國中自然3上</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Formatting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .math-font { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .answer-input {
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-align: center;
+    }
+    .answer-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+      border-color: #0284c7;
+    }
+    .answer-input.correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+    }
+    .answer-input.incorrect {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+    @keyframes floatHero {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+    .floating-astronaut { animation: floatHero 4s infinite ease-in-out; }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all border border-slate-700">
+          <span>🏠</span>
+          <span>返回主網頁</span>
+        </a>
+        <div class="h-4 w-px bg-slate-700 hidden sm:block"></div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">康軒 3 上 2-2</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">課本 P.40</span>
+            <h1 class="text-sm sm:text-base font-black text-white truncate">動腦時間：太空失重如何測量質量？</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="speechBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-sky-300 bg-sky-950/80 hover:bg-sky-900 border border-sky-800 transition-all">
+          <span id="speechIcon">🔊</span>
+          <span id="speechText" class="hidden sm:inline">語音解說</span>
+        </button>
+        <button id="soundToggle" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all">
+          <span id="soundIcon">🔔</span>
+        </button>
+        <button id="globalResetBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-red-400 bg-red-950/80 hover:bg-red-900 border border-red-800 transition-all">
+          <span>🔄</span>
+          <span class="hidden sm:inline">重設</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 w-full">
+
+    <!-- 單元導言橫幅 (太空科技風格) -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-950 via-indigo-950 to-sky-950 border border-slate-800 p-5 sm:p-7 shadow-2xl">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-sky-300 text-xs font-bold">
+            <span>💡 課本動腦提問</span>
+            <span>·</span>
+            <span>慣性質量 vs 重力質量</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>在太空中失重狀態下，無法使用天平，如何測量質量？</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            天平是依賴地球重力（萬有引力）達到力矩平衡。在太空失重環境下，重力效應消失，天平與彈簧秤皆無法直接稱重！但依據牛頓第二定律 \(F = m 	imes a\)，<strong>物體的「慣性」依然存在</strong>，施加已知定力 \(F\) 並測量加速度 \(a\)，即可求出質量 \(m = rac{F}{a}\)！
+          </p>
+        </div>
+
+        <!-- 課本插圖意象卡 -->
+        <div class="flex-shrink-0 bg-slate-900/80 border border-slate-700 rounded-xl p-3 flex items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-sky-950/80 border border-sky-700 flex items-center justify-center text-3xl floating-astronaut">
+            🧑‍🚀
+          </div>
+          <div class="text-xs font-mono">
+            <div class="text-sky-400 font-bold">太空失重狀態</div>
+            <div class="text-slate-400 text-[11px]">g = 0 （無下壓力）</div>
+            <div class="text-amber-400 font-bold mt-0.5">m = F / a （慣性質量）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要工作區：雙欄佈局 (左：原理步驟與互動計算填答；右：太空站動態慣性質量測量沙盒) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- 左欄 (6/12)：原理解析、步驟填答卡與 NASA 實務應用 -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- 卡片 1：互動解謎與填答卡 -->
+        <div class="bg-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-md border border-slate-700 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-sky-950 text-sky-400 font-bold text-sm border border-sky-800">🧠</span>
+              <div>
+                <h3 class="text-base font-black text-white">牛頓第二定律太空測量任務</h3>
+                <p class="text-xs text-slate-400">依據太空站推進器數據，計算太空人與貨物質量</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button id="checkAnsBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 shadow-sm transition-all flex items-center gap-1">
+                <span>✓</span>
+                <span>檢查答案</span>
+              </button>
+              <button id="revealAnsBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 bg-slate-700 hover:bg-slate-600 transition-all">
+                <span>💡 完整解答</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 解題思考三步驟 -->
+          <div class="space-y-3.5">
+            
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2">
+              <div class="flex items-center gap-2 text-xs font-bold text-sky-400">
+                <span class="w-5 h-5 rounded-full bg-sky-900 border border-sky-700 text-sky-300 flex items-center justify-center text-[10px]">1</span>
+                <span>核心原理思考：質量等於慣性大小</span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                物體在太空中雖然「失重（重量為零）」，但物體所含物質的「質量（慣性）」並沒有改變。要改變物體的運動狀態，依然需要施力！
+              </p>
+            </div>
+
+            <!-- 任務 1：太空人質量測量計算 -->
+            <div class="p-4 rounded-xl bg-slate-900/90 border border-sky-900/50 space-y-2.5">
+              <div class="flex justify-between items-center text-xs font-bold text-white">
+                <span class="flex items-center gap-1.5">
+                  <span>🧑‍🚀</span>
+                  <span>任務一：太空人質量測量（SLAMMD 模擬）</span>
+                </span>
+                <span class="text-amber-400 font-mono">F = 160 N</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                已知太空站儀器對一位連同太空衣的太空人施加恆定推力 <span class="text-sky-300 font-mono font-bold">F = 160 N</span>，測得其瞬間加速度為 <span class="text-amber-300 font-mono font-bold">a = 2.0 m/s²</span>，則該太空人的總質量為：
+              </p>
+              <div class="flex items-center gap-2 pt-1">
+                <span class="text-xs font-mono font-bold text-slate-300">\(m = rac{F}{a} = rac{160}{2.0} =\)</span>
+                <input type="text" id="ans_m_astro" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-800 text-white border border-slate-600 rounded-lg" placeholder="請輸入" data-correct="80">
+                <span class="text-xs font-mono font-bold text-slate-300">公斤（kg）</span>
+              </div>
+              <div id="feed_m_astro" class="text-[11px] text-slate-400 hidden pt-1"></div>
+            </div>
+
+            <!-- 任務 2：未知太空貨物箱測量 -->
+            <div class="p-4 rounded-xl bg-slate-900/90 border border-amber-900/50 space-y-2.5">
+              <div class="flex justify-between items-center text-xs font-bold text-white">
+                <span class="flex items-center gap-1.5">
+                  <span>📦</span>
+                  <span>任務二：太空補給物資箱質量測量</span>
+                </span>
+                <span class="text-amber-400 font-mono">F = 300 N</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                對未知物資箱施加推力 <span class="text-sky-300 font-mono font-bold">F = 300 N</span>，測得加速度為 <span class="text-amber-300 font-mono font-bold">a = 2.5 m/s²</span>，則該物資箱的質量為：
+              </p>
+              <div class="flex items-center gap-2 pt-1">
+                <span class="text-xs font-mono font-bold text-slate-300">\(m = rac{F}{a} = rac{300}{2.5} =\)</span>
+                <input type="text" id="ans_m_box" class="answer-input w-24 px-2 py-1.5 text-sm bg-slate-800 text-white border border-slate-600 rounded-lg" placeholder="請輸入" data-correct="120">
+                <span class="text-xs font-mono font-bold text-slate-300">公斤（kg）</span>
+              </div>
+              <div id="feed_m_box" class="text-[11px] text-slate-400 hidden pt-1"></div>
+            </div>
+
+          </div>
+
+          <!-- 通關橫幅 -->
+          <div id="resultBanner" class="hidden p-4 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🚀</span>
+              <div>
+                <div class="text-sm font-black">答對了！成功掌握慣性質量測量法！</div>
+                <div class="text-xs text-emerald-300">利用已知推力與加速度比值 \(m = F/a\)，在任何無重力環境都能測出質量。</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-800 text-white text-xs font-black font-mono">100分</span>
+          </div>
+
+        </div>
+
+        <!-- 卡片 2：真實太空科技大揭秘 (NASA 國際太空站體重計) -->
+        <div class="bg-slate-800/90 rounded-2xl p-5 shadow-md border border-slate-700 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-700 pb-3">
+            <span class="p-2 rounded-xl bg-indigo-950 text-indigo-400 font-bold text-sm border border-indigo-800">🛰️</span>
+            <h3 class="text-base font-black text-white">真實太空站如何為太空人量體重？</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-1.5">
+              <div class="font-bold text-sky-400 flex items-center gap-1.5">
+                <span>🎯</span>
+                <span>NASA SLAMMD 線性加速度質譜儀</span>
+              </div>
+              <p class="text-slate-300">
+                國際太空站（ISS）安裝的體重計就是依據牛頓第二定律！太空人固定在導軌上，由彈簧釋放精確恆力 \(F\)，光學編碼器測量加速度 \(a\)，直接算出體重 \(m=F/a\)。
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-1.5">
+              <div class="font-bold text-amber-400 flex items-center gap-1.5">
+                <span>🔄</span>
+                <span>BMMD 彈簧震盪週期體重計</span>
+              </div>
+              <p class="text-slate-300">
+                另一種方式是太空人坐上彈簧震盪椅，測量來回震盪的週期 \(T\)。質量越大週期越長（\(T = 2\pi\sqrt{m/k}\)），亦可由震盪頻率反推質量。
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 右欄 (6/12)：太空站慣性質量動態實驗模擬沙盒 -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- 卡片 3：太空物理模擬視窗 (Space Inertia Simulator) -->
+        <div class="bg-slate-800/90 rounded-2xl p-5 shadow-md border border-slate-700 space-y-4">
+          
+          <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-sky-950 text-sky-400 font-bold text-xs border border-sky-800">🚀</span>
+              <h3 class="text-sm font-black text-white">太空站慣性質量測量軌道沙盒</h3>
+            </div>
+            <span id="simStatusBadge" class="px-2.5 py-0.5 rounded-full bg-slate-900 text-sky-400 font-mono text-xs font-bold border border-slate-700">待機中</span>
+          </div>
+
+          <!-- 參數與待測對象切換 -->
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">🎯 選擇測量對象：</label>
+              <select id="targetSelect" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded-lg font-bold text-white text-xs focus:ring-2 focus:ring-sky-500">
+                <option value="80" data-name="太空人" data-icon="🧑‍🚀" selected>🧑‍🚀 太空人 (未知質量 A)</option>
+                <option value="120" data-name="補給物資箱" data-icon="📦">📦 補給物資箱 (未知質量 B)</option>
+                <option value="40" data-name="科研探測儀" data-icon="🛰️">🛰️ 科研探測儀 (未知質量 C)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">⚡ 設定推桿恆力 F (N)：</label>
+              <select id="forceSelect" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded-lg font-bold text-white text-xs focus:ring-2 focus:ring-sky-500">
+                <option value="80">F = 80 N</option>
+                <option value="160" selected>F = 160 N (標準推力)</option>
+                <option value="240">F = 240 N</option>
+                <option value="320">F = 320 N (強力推進)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 宇宙星空物理軌道 Canvas -->
+          <div class="relative bg-slate-950 rounded-xl overflow-hidden shadow-inner h-[230px] border border-slate-700">
+            <canvas id="spaceCanvas" class="w-full h-full block"></canvas>
+            
+            <!-- 即時動態數據儀表板 -->
+            <div class="absolute top-2.5 right-2.5 bg-slate-900/90 backdrop-blur-md border border-slate-700 rounded-lg p-2.5 text-right font-mono text-xs space-y-1">
+              <div class="text-slate-400 text-[10px]">即時傳感器監控</div>
+              <div class="text-sky-400 font-bold">推力 F: <span id="dashF">160</span> N</div>
+              <div class="text-amber-400 font-bold">加速度 a: <span id="dashA">2.00</span> m/s²</div>
+              <div class="text-emerald-400 font-bold">計算質量 m = F/a: <span id="dashM">80.0</span> kg</div>
+            </div>
+          </div>
+
+          <!-- 操作按鈕 -->
+          <div class="space-y-2.5 pt-1">
+            <div class="flex items-center gap-2">
+              <button id="launchBtn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg transition-all">
+                <span>🚀 啟動恆力推進測量 (F ➔ a ➔ m)</span>
+              </button>
+              <button id="resetSimBtn" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition-all">
+                <span>重設</span>
+              </button>
+            </div>
+
+            <!-- 時間滑桿 -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-[10px] font-mono text-slate-400 font-bold">
+                <span>0.0s (起點光電門)</span>
+                <span>1.0s</span>
+                <span>2.0s</span>
+                <span>2.5s (終點光電門)</span>
+              </div>
+              <input type="range" id="timeSlider" min="0" max="2.5" step="0.05" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 卡片 4：重力質量 vs 慣性質量 概念對照 -->
+        <div class="bg-slate-800/90 rounded-2xl p-5 shadow-md border border-slate-700 space-y-3">
+          <div class="flex items-center gap-2 border-b border-slate-700 pb-2">
+            <span class="p-1.5 rounded-lg bg-amber-950 text-amber-400 font-bold text-xs border border-amber-800">⚖️</span>
+            <h3 class="text-sm font-black text-white">「質量」的兩種物理定義對照</h3>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300 border-collapse">
+              <thead>
+                <tr class="border-b border-slate-700 text-slate-400 text-[11px]">
+                  <th class="py-1.5 font-bold">比較項目</th>
+                  <th class="py-1.5 font-bold text-amber-400">重力質量（重量）</th>
+                  <th class="py-1.5 font-bold text-sky-400">慣性質量（運動）</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-700/50">
+                <tr>
+                  <td class="py-1.5 font-bold text-slate-400">測量原理</td>
+                  <td class="py-1.5">利用物體所受引力（\(W=mg\)）</td>
+                  <td class="py-1.5">利用牛頓第二定律（\(m=F/a\)）</td>
+                </tr>
+                <tr>
+                  <td class="py-1.5 font-bold text-slate-400">常見工具</td>
+                  <td class="py-1.5">等臂天平、彈簧秤</td>
+                  <td class="py-1.5">加速度計、SLAMMD 太空體重計</td>
+                </tr>
+                <tr>
+                  <td class="py-1.5 font-bold text-slate-400">太空失重時</td>
+                  <td class="py-1.5 text-rose-400 font-bold">❌ 失效（無法稱重）</td>
+                  <td class="py-1.5 text-emerald-400 font-bold">✅ 依然有效（慣性恆存）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 底部功能區：4 題隨堂概念檢測評量 -->
+    <div class="bg-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-md border border-slate-700 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-rose-950 text-rose-400 font-bold text-xs border border-rose-800">🎯</span>
+          <h3 class="text-base font-black text-white">太空與慣性質量隨堂通關評量（4 題）</h3>
+        </div>
+        <span id="quizScoreBadge" class="px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-300 font-mono text-xs font-bold border border-slate-700">得分：0 / 4</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quizContainer">
+        
+        <!-- Q1 -->
+        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2">
+          <div class="text-xs font-bold text-white flex items-start gap-1.5">
+            <span class="text-sky-400">Q1.</span>
+            <span>在太空站失重環境中，下列哪一種測量工具「完全無法正常使用」？</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="1" data-ans="A" data-correct="true">A. 上皿等臂天平</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="1" data-ans="B">B. 打點計時器</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="1" data-ans="C">C. 直尺與游標卡尺</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="1" data-ans="D">D. 光電門碼錶</button>
+          </div>
+          <div id="quiz-expl-1" class="hidden text-[11px] text-slate-300 bg-sky-950/60 p-2 rounded-lg border border-sky-800">
+            解析：天平需要兩側物體受重力產生力矩才能平衡，失重狀態下重力為零，天平無法傾斜平衡。
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2">
+          <div class="text-xs font-bold text-white flex items-start gap-1.5">
+            <span class="text-sky-400">Q2.</span>
+            <span>在太空中對一質量 \(60	ext{ kg}\) 的太空人施加 \(120	ext{ N}\) 的推力，太空人的加速度為多少？</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="2" data-ans="A">A. 0 m/s²（因為失重）</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="2" data-ans="B" data-correct="true">B. 2.0 m/s²</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="2" data-ans="C">C. 9.8 m/s²</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="2" data-ans="D">D. 0.5 m/s²</button>
+          </div>
+          <div id="quiz-expl-2" class="hidden text-[11px] text-slate-300 bg-sky-950/60 p-2 rounded-lg border border-sky-800">
+            解析：由牛頓第二定律 \(a = rac{F}{m} = rac{120}{60} = 2.0	ext{ m/s}^2\)。
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2">
+          <div class="text-xs font-bold text-white flex items-start gap-1.5">
+            <span class="text-sky-400">Q3.</span>
+            <span>將同一個物體分別置於「地球」、「月球」與「太空站」，其質量大小關係為何？</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="3" data-ans="A">A. 地球 > 月球 > 太空站</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="3" data-ans="B">B. 太空站質量為零</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="3" data-ans="C" data-correct="true">C. 地球 = 月球 = 太空站</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="3" data-ans="D">D. 月球是地球的 1/6</button>
+          </div>
+          <div id="quiz-expl-3" class="hidden text-[11px] text-slate-300 bg-sky-950/60 p-2 rounded-lg border border-sky-800">
+            解析：質量是物體所含物質的本質（慣性大小），不隨地點或重力環境改變，三者完全相等！
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2">
+          <div class="text-xs font-bold text-white flex items-start gap-1.5">
+            <span class="text-sky-400">Q4.</span>
+            <span>利用 \(m = F/a\) 在太空測量質量時，若施加的推力 \(F\) 加倍，則測得的加速度 \(a\) 與計算的質量 \(m\) 會如何？</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="4" data-ans="A">A. a 不變，m 變為 2 倍</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="4" data-ans="B" data-correct="true">B. a 變為 2 倍，m 保持不變</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="4" data-ans="C">C. a 與 m 皆變為 2 倍</button>
+            <button class="quiz-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-left font-medium text-slate-200 transition-all" data-q="4" data-ans="D">D. a 減半，m 不變</button>
+          </div>
+          <div id="quiz-expl-4" class="hidden text-[11px] text-slate-300 bg-sky-950/60 p-2 rounded-lg border border-sky-800">
+            解析：推力 \(F\) 加倍時，產生的加速度 \(a\) 亦成正比加倍，兩者比值 \(m = F/a\) 恆定不變。
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁腳 -->
+  <footer class="bg-slate-950 border-t border-slate-800 py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-1.5">
+      <p class="font-bold text-slate-400">國中自然 3 上 · 第 2 章 力與運動 · 2-2 動腦時間：太空失重質量測量儀</p>
+      <p>依據 115 康軒國中自然課本 P.40 動腦時間設計 · 整合 Central Hub 數位基地教學平台</p>
+    </div>
+  </footer>
+
+  <!-- 核心 JavaScript 互動邏輯 -->
+  <script>
+    // 晶片音效合成器
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+      playCorrect() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.1);
+        osc.frequency.setValueAtTime(783.99, now + 0.2);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+      playWrong() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(146.83, now + 0.25);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
+      playClick() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      }
+      playThrust() {
+        if (!this.enabled) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(60, now + 0.6);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        osc.start(now);
+        osc.stop(now + 0.6);
+      }
+    }
+
+    const sfx = new SoundFX();
+
+    document.getElementById('soundToggle').addEventListener('click', () => {
+      sfx.enabled = !sfx.enabled;
+      document.getElementById('soundIcon').textContent = sfx.enabled ? '🔔' : '🔕';
+    });
+
+    // 語音朗讀合成器
+    let isSpeaking = false;
+    const speechBtn = document.getElementById('speechBtn');
+    const speechText = document.getElementById('speechText');
+    const speechIcon = document.getElementById('speechIcon');
+
+    speechBtn.addEventListener('click', () => {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        speechText.textContent = '語音解說';
+        speechIcon.textContent = '🔊';
+        return;
+      }
+
+      const script = '歡迎來到康軒國中自然三上，第二章二之二動腦時間。在太空中失重的狀態下，無法使用天平測量質量。但是依據牛頓第二運動定律，物體的慣性依然存在！只要對物體施加一個已知的恆力 F，並測量物體獲得的加速度 a，利用公式 m 等於 F 除以 a，就可以精確測量出質量。國際太空站上的太空體重計就是依據這個原理運作的！';
+      
+      const utter = new SpeechSynthesisUtterance(script);
+      utter.lang = 'zh-TW';
+      utter.rate = 1.0;
+      utter.pitch = 1.0;
+      
+      utter.onstart = () => {
+        isSpeaking = true;
+        speechText.textContent = '停止朗讀';
+        speechIcon.textContent = '⏹️';
+      };
+      utter.onend = () => {
+        isSpeaking = false;
+        speechText.textContent = '語音解說';
+        speechIcon.textContent = '🔊';
+      };
+      
+      window.speechSynthesis.speak(utter);
+    });
+
+    // 1. 任務填答驗證
+    const inputs = [
+      { id: 'ans_m_astro', correct: ['80', '80.0', '80kg'], feedId: 'feed_m_astro', expl: 'm = F / a = 160 / 2.0 = 80 kg' },
+      { id: 'ans_m_box', correct: ['120', '120.0', '120kg'], feedId: 'feed_m_box', expl: 'm = F / a = 300 / 2.5 = 120 kg' }
+    ];
+
+    function checkAnswers(autoSound = true) {
+      let allCorrect = true;
+
+      inputs.forEach(item => {
+        const el = document.getElementById(item.id);
+        const feedEl = document.getElementById(item.feedId);
+        const val = el.value.trim();
+
+        if (item.correct.includes(val)) {
+          el.classList.add('correct');
+          el.classList.remove('incorrect');
+          if (feedEl) {
+            feedEl.innerHTML = `<span class="text-emerald-400 font-bold">✓ 計算正確！</span> ${item.expl}`;
+            feedEl.classList.remove('hidden');
+          }
+        } else {
+          allCorrect = false;
+          el.classList.add('incorrect');
+          el.classList.remove('correct');
+          if (feedEl) {
+            feedEl.innerHTML = `<span class="text-rose-400 font-bold">✗ 需修正</span> （提示：${item.expl}）`;
+            feedEl.classList.remove('hidden');
+          }
+        }
+      });
+
+      if (allCorrect) {
+        if (autoSound) sfx.playCorrect();
+        document.getElementById('resultBanner').classList.remove('hidden');
+      } else {
+        if (autoSound) sfx.playWrong();
+      }
+    }
+
+    document.getElementById('checkAnsBtn').addEventListener('click', () => checkAnswers(true));
+
+    document.getElementById('revealAnsBtn').addEventListener('click', () => {
+      sfx.playClick();
+      document.getElementById('ans_m_astro').value = '80';
+      document.getElementById('ans_m_box').value = '120';
+      checkAnswers(false);
+    });
+
+    // 2. 太空物理模擬器 (Canvas Animation)
+    const spaceCanvas = document.getElementById('spaceCanvas');
+    const sctx = spaceCanvas.getContext('2d');
+    const targetSelect = document.getElementById('targetSelect');
+    const forceSelect = document.getElementById('forceSelect');
+    const timeSlider = document.getElementById('timeSlider');
+    const simStatusBadge = document.getElementById('simStatusBadge');
+    const dashF = document.getElementById('dashF');
+    const dashA = document.getElementById('dashA');
+    const dashM = document.getElementById('dashM');
+
+    let currentT = 0;
+    let isPlaying = false;
+    let animId = null;
+    let lastTime = 0;
+    const maxT = 2.5;
+
+    // 星星背景粒子
+    const stars = [];
+    for (let i = 0; i < 50; i++) {
+      stars.push({
+        x: Math.random() * 600,
+        y: Math.random() * 230,
+        r: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.7 + 0.3
+      });
+    }
+
+    function resizeCanvas() {
+      spaceCanvas.width = spaceCanvas.clientWidth * (window.devicePixelRatio || 1);
+      spaceCanvas.height = spaceCanvas.clientHeight * (window.devicePixelRatio || 1);
+      sctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    }
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      drawSpaceSim();
+    });
+
+    function drawSpaceSim() {
+      const w = spaceCanvas.clientWidth;
+      const h = spaceCanvas.clientHeight;
+      sctx.clearRect(0, 0, w, h);
+
+      const m = parseFloat(targetSelect.value);
+      const f = parseFloat(forceSelect.value);
+      const a = f / m; // 加速度
+
+      const v = a * currentT;
+      const x = 0.5 * a * currentT * currentT;
+      const maxX = 0.5 * a * maxT * maxT;
+
+      dashF.textContent = f.toFixed(0);
+      dashA.textContent = a.toFixed(2);
+      dashM.textContent = (f / a).toFixed(1);
+      timeSlider.value = currentT;
+
+      // 1. 繪製星空背景
+      stars.forEach(star => {
+        sctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        sctx.beginPath();
+        sctx.arc((star.x / 600) * w, (star.y / 230) * h, star.r, 0, Math.PI * 2);
+        sctx.fill();
+      });
+
+      // 2. 繪製太空站導軌
+      const trackY = h / 2 + 25;
+      const startX = 80;
+      const endX = w - 80;
+      const trackW = endX - startX;
+
+      sctx.strokeStyle = 'rgba(56, 189, 248, 0.3)';
+      sctx.lineWidth = 4;
+      sctx.beginPath();
+      sctx.moveTo(startX, trackY);
+      sctx.lineTo(endX, trackY);
+      sctx.stroke();
+
+      // 光電門 1 (起點)
+      sctx.strokeStyle = '#38bdf8';
+      sctx.lineWidth = 2;
+      sctx.setLineDash([2, 2]);
+      sctx.beginPath();
+      sctx.moveTo(startX, trackY - 50);
+      sctx.lineTo(startX, trackY + 20);
+      sctx.stroke();
+
+      // 光電門 2 (終點)
+      sctx.strokeStyle = '#fbbf24';
+      sctx.beginPath();
+      sctx.moveTo(endX, trackY - 50);
+      sctx.lineTo(endX, trackY + 20);
+      sctx.stroke();
+      sctx.setLineDash([]);
+
+      sctx.fillStyle = '#38bdf8';
+      sctx.font = 'bold 9px JetBrains Mono';
+      sctx.fillText('門 1 (0s)', startX - 18, trackY - 55);
+
+      sctx.fillStyle = '#fbbf24';
+      sctx.fillText('門 2 (2.5s)', endX - 22, trackY - 55);
+
+      // 3. 物體位置
+      const curObjX = startX + (x / maxX) * (trackW - 50);
+      const curObjY = trackY - 30;
+
+      // 4. 推進器火焰噴射特效 (施力 F)
+      if (isPlaying || currentT > 0) {
+        const flameLen = Math.min(40, 15 + f * 0.1);
+        const grad = sctx.createLinearGradient(curObjX - flameLen, curObjY + 15, curObjX, curObjY + 15);
+        grad.addColorStop(0, 'rgba(56, 189, 248, 0)');
+        grad.addColorStop(0.6, '#38bdf8');
+        grad.addColorStop(1, '#60a5fa');
+
+        sctx.fillStyle = grad;
+        sctx.beginPath();
+        sctx.moveTo(curObjX, curObjY + 8);
+        sctx.lineTo(curObjX - flameLen, curObjY + 15);
+        sctx.lineTo(curObjX, curObjY + 22);
+        sctx.fill();
+
+        // 推力向量標記
+        sctx.fillStyle = '#60a5fa';
+        sctx.font = 'bold 10px JetBrains Mono';
+        sctx.fillText(`推力 F=${f}N ➔`, curObjX - flameLen - 65, curObjY + 18);
+      }
+
+      // 5. 繪製測量對象角色
+      const opt = targetSelect.selectedOptions[0];
+      const icon = opt.dataset.icon || '🧑‍🚀';
+
+      sctx.font = '36px Noto Sans TC';
+      sctx.fillText(icon, curObjX, curObjY + 24);
+
+      // 加速度即時向量箭頭 (青綠色)
+      if (v > 0) {
+        sctx.strokeStyle = '#34d399';
+        sctx.lineWidth = 2.5;
+        sctx.beginPath();
+        sctx.moveTo(curObjX + 45, curObjY + 15);
+        sctx.lineTo(curObjX + 80, curObjY + 15);
+        sctx.stroke();
+
+        sctx.fillStyle = '#34d399';
+        sctx.beginPath();
+        sctx.moveTo(curObjX + 80, curObjY + 15);
+        sctx.lineTo(curObjX + 74, curObjY + 11);
+        sctx.lineTo(curObjX + 74, curObjY + 19);
+        sctx.fill();
+
+        sctx.font = 'bold 9px JetBrains Mono';
+        sctx.fillText(`a=${a.toFixed(1)}m/s²`, curObjX + 45, curObjY + 8);
+      }
+    }
+
+    function simLoop(timestamp) {
+      if (!isPlaying) return;
+      if (!lastTime) lastTime = timestamp;
+      const dt = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+
+      currentT += dt * 0.8;
+      if (currentT >= maxT) {
+        currentT = maxT;
+        isPlaying = false;
+        simStatusBadge.textContent = '測量完成';
+        simStatusBadge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-400 font-mono text-xs font-bold border border-emerald-700';
+        document.getElementById('launchBtn').innerHTML = '<span>🚀 重新推進測量</span>';
+      }
+
+      drawSpaceSim();
+
+      if (isPlaying) {
+        animId = requestAnimationFrame(simLoop);
+      }
+    }
+
+    document.getElementById('launchBtn').addEventListener('click', () => {
+      sfx.playThrust();
+      if (isPlaying) {
+        isPlaying = false;
+        simStatusBadge.textContent = '已暫停';
+        document.getElementById('launchBtn').innerHTML = '<span>🚀 繼續推進</span>';
+      } else {
+        if (currentT >= maxT) currentT = 0;
+        isPlaying = true;
+        lastTime = 0;
+        simStatusBadge.textContent = '推進加速中';
+        simStatusBadge.className = 'px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-400 font-mono text-xs font-bold border border-amber-700';
+        document.getElementById('launchBtn').innerHTML = '<span>⏸ 暫停推進</span>';
+        animId = requestAnimationFrame(simLoop);
+      }
+    });
+
+    document.getElementById('resetSimBtn').addEventListener('click', () => {
+      sfx.playClick();
+      isPlaying = false;
+      currentT = 0;
+      simStatusBadge.textContent = '待機中';
+      simStatusBadge.className = 'px-2.5 py-0.5 rounded-full bg-slate-900 text-sky-400 font-mono text-xs font-bold border border-slate-700';
+      document.getElementById('launchBtn').innerHTML = '<span>🚀 啟動恆力推進測量 (F ➔ a ➔ m)</span>';
+      drawSpaceSim();
+    });
+
+    timeSlider.addEventListener('input', (e) => {
+      isPlaying = false;
+      currentT = parseFloat(e.target.value);
+      drawSpaceSim();
+    });
+
+    targetSelect.addEventListener('change', () => {
+      sfx.playClick();
+      drawSpaceSim();
+    });
+    forceSelect.addEventListener('change', () => {
+      sfx.playClick();
+      drawSpaceSim();
+    });
+
+    // 3. 隨堂評量題目邏輯
+    let quizScore = 0;
+    const answered = {};
+
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = btn.dataset.q;
+        if (answered[q]) return;
+        answered[q] = true;
+
+        const isCorrect = btn.dataset.correct === 'true';
+        const explEl = document.getElementById(`quiz-expl-${q}`);
+        if (explEl) explEl.classList.remove('hidden');
+
+        if (isCorrect) {
+          sfx.playCorrect();
+          btn.classList.remove('bg-slate-800', 'hover:bg-slate-700', 'border-slate-700');
+          btn.classList.add('bg-emerald-950', 'border-emerald-500', 'text-emerald-300', 'font-bold');
+          quizScore++;
+        } else {
+          sfx.playWrong();
+          btn.classList.remove('bg-slate-800', 'hover:bg-slate-700', 'border-slate-700');
+          btn.classList.add('bg-rose-950', 'border-rose-500', 'text-rose-300', 'font-bold');
+          
+          document.querySelectorAll(`.quiz-btn[data-q="${q}"][data-correct="true"]`).forEach(cBtn => {
+            cBtn.classList.remove('bg-slate-800', 'border-slate-700');
+            cBtn.classList.add('bg-emerald-950/60', 'border-emerald-600', 'text-emerald-300', 'font-bold');
+          });
+        }
+
+        document.getElementById('quizScoreBadge').textContent = `得分：${quizScore} / 4`;
+        if (quizScore === 4) {
+          document.getElementById('quizScoreBadge').classList.remove('bg-slate-900', 'text-slate-300');
+          document.getElementById('quizScoreBadge').classList.add('bg-emerald-900', 'text-emerald-200');
+        }
+      });
+    });
+
+    // 全域重設
+    document.getElementById('globalResetBtn').addEventListener('click', () => {
+      sfx.playClick();
+      inputs.forEach(item => {
+        const el = document.getElementById(item.id);
+        el.value = '';
+        el.classList.remove('correct', 'incorrect');
+        const feedEl = document.getElementById(item.feedId);
+        if (feedEl) feedEl.classList.add('hidden');
+      });
+      document.getElementById('resultBanner').classList.add('hidden');
+
+      currentT = 0;
+      isPlaying = false;
+      simStatusBadge.textContent = '待機中';
+      document.getElementById('launchBtn').innerHTML = '<span>🚀 啟動恆力推進測量 (F ➔ a ➔ m)</span>';
+      drawSpaceSim();
+    });
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\(', right: '\)', display: false },
+          { left: '\[', right: '\]', display: true }
+        ]
+      });
+
+      resizeCanvas();
+      drawSpaceSim();
+    });
+  </script>
+</body>
+</html>

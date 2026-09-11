@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071a2d">
+  <title>實驗器材知識對決｜單機版</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f4fbff;
+      --muted: #a8c0d2;
+      --navy-950: #04111f;
+      --navy-900: #071a2d;
+      --navy-800: #0c2943;
+      --navy-700: #123b5d;
+      --line: rgba(171, 221, 255, .18);
+      --cyan: #42e8e0;
+      --cyan-2: #77f7c7;
+      --blue: #4ea1ff;
+      --orange: #ff9f43;
+      --red: #ff5f6d;
+      --gold: #ffd166;
+      --green: #55e38f;
+      --panel: rgba(8, 30, 50, .86);
+      --shadow: 0 22px 70px rgba(0, 0, 0, .35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(66, 232, 224, .13), transparent 28rem),
+        radial-gradient(circle at 90% 80%, rgba(78, 161, 255, .12), transparent 30rem),
+        linear-gradient(145deg, var(--navy-950), #08243a 52%, #061522);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    button, input, select { font: inherit; }
+    button { touch-action: manipulation; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 999;
+      top: 10px;
+      left: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #021522;
+      background: var(--cyan);
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 26px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 8px 4px 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(119, 247, 199, .35);
+      border-radius: 14px;
+      color: var(--cyan-2);
+      background: rgba(66, 232, 224, .08);
+      box-shadow: inset 0 0 18px rgba(66, 232, 224, .08);
+    }
+
+    .brand-mark svg { width: 26px; height: 26px; }
+    .brand-sub { color: var(--muted); font-size: 12px; font-weight: 700; }
+
+    .top-actions { display: flex; gap: 8px; }
+
+    .icon-button {
+      display: grid;
+      min-width: 44px;
+      height: 44px;
+      padding: 0 13px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--ink);
+      background: rgba(7, 26, 45, .7);
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .icon-button:hover { border-color: rgba(66,232,224,.55); transform: translateY(-2px); }
+    .icon-button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(66, 232, 224, .58);
+      outline-offset: 3px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; animation: screen-in .42s ease both; }
+
+    @keyframes screen-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .start-layout {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-panel, .setup-card, .question-card, .end-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 580px;
+      padding: clamp(28px, 5vw, 56px);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      right: -160px;
+      bottom: -210px;
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(66,232,224,.17);
+      border-radius: 50%;
+      box-shadow: 0 0 0 45px rgba(66,232,224,.025), 0 0 0 95px rgba(66,232,224,.02);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(119,247,199,.28);
+      border-radius: 999px;
+      color: var(--cyan-2);
+      background: rgba(119,247,199,.07);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 620px;
+      margin-bottom: 20px;
+      font-size: clamp(44px, 7vw, 80px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+
+    h1 span {
+      color: transparent;
+      background: linear-gradient(90deg, var(--cyan), var(--cyan-2));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 600px;
+      margin-bottom: 28px;
+      color: #c3d5e2;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .feature-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .feature-chip {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #cce1ed;
+      background: rgba(255,255,255,.035);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .battle-preview {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      max-width: 520px;
+      margin-top: auto;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      background: rgba(1, 12, 22, .42);
+    }
+
+    .preview-team { text-align: center; }
+    .preview-avatar {
+      display: grid;
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 8px;
+      place-items: center;
+      border-radius: 22px;
+      color: var(--cyan);
+      background: rgba(66,232,224,.1);
+    }
+    .preview-team:last-child .preview-avatar { color: var(--orange); background: rgba(255,159,67,.1); }
+    .preview-avatar svg { width: 56px; height: 56px; }
+    .versus { color: var(--gold); font-size: 20px; font-weight: 1000; font-style: italic; }
+
+    .setup-card {
+      padding: clamp(24px, 4vw, 38px);
+    }
+
+    .setup-card h2 { margin-bottom: 8px; font-size: 28px; }
+    .setup-intro { margin-bottom: 24px; color: var(--muted); line-height: 1.65; }
+
+    .mode-picker {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .mode-option { position: relative; }
+    .mode-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .mode-option span {
+      display: flex;
+      min-height: 64px;
+      padding: 12px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--muted);
+      background: rgba(255,255,255,.025);
+      text-align: center;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+    .mode-option input:checked + span {
+      border-color: var(--cyan);
+      color: var(--ink);
+      background: rgba(66,232,224,.1);
+      box-shadow: inset 0 0 0 1px rgba(66,232,224,.25);
+    }
+    .mode-option input:focus-visible + span { outline: 3px solid rgba(66,232,224,.58); outline-offset: 3px; }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; margin-bottom: 7px; color: #cfe3ef; font-size: 14px; font-weight: 800; }
+    .field input, .field select {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--ink);
+      background: #081d31;
+    }
+    .field input::placeholder { color: #688397; }
+    .field.hidden { display: none; }
+
+    .primary-button, .secondary-button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 14px;
+      font-weight: 1000;
+      letter-spacing: .03em;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+    .primary-button {
+      border: 0;
+      color: #032229;
+      background: linear-gradient(120deg, var(--cyan), var(--cyan-2));
+      box-shadow: 0 12px 28px rgba(66,232,224,.2);
+    }
+    .primary-button:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(66,232,224,.26); }
+    .secondary-button {
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(255,255,255,.035);
+    }
+    .secondary-button:hover { border-color: rgba(66,232,224,.5); background: rgba(66,232,224,.07); }
+
+    .setup-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 6px; }
+
+    .privacy-note {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin: 18px 0 0;
+      color: #88a6b9;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* Battle */
+    .battle-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      margin-bottom: 14px;
+    }
+
+    .player-card {
+      position: relative;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(7,26,45,.78);
+      overflow: hidden;
+      transition: .25s ease;
+    }
+    .player-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      background: linear-gradient(100deg, transparent, rgba(66,232,224,.11), transparent);
+      transform: translateX(-100%);
+    }
+    .player-card.active {
+      border-color: rgba(66,232,224,.62);
+      box-shadow: 0 0 0 2px rgba(66,232,224,.08), 0 16px 40px rgba(0,0,0,.2);
+    }
+    .player-card.active::before { opacity: 1; animation: scan 2.3s linear infinite; }
+    .player-card.team-b.active { border-color: rgba(255,159,67,.72); box-shadow: 0 0 0 2px rgba(255,159,67,.08), 0 16px 40px rgba(0,0,0,.2); }
+    .player-card.hit { animation: hit .4s ease; }
+    .player-card.attack { animation: attack .38s ease; }
+
+    @keyframes scan { to { transform: translateX(100%); } }
+    @keyframes hit { 20%, 60% { transform: translateX(-8px); filter: brightness(1.7); } 40%, 80% { transform: translateX(8px); } }
+    @keyframes attack { 50% { transform: scale(1.035); filter: drop-shadow(0 0 12px rgba(66,232,224,.6)); } }
+
+    .player-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 10px; }
+    .player-name { min-width: 0; font-weight: 1000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .player-meta { color: var(--muted); font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .hp-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; font-weight: 900; }
+    .hp-track { height: 12px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .hp-fill { width: 100%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .55s cubic-bezier(.2,.8,.2,1), background .3s; }
+    .team-b .hp-fill { background: linear-gradient(90deg, #ff6f59, var(--orange)); }
+    .hp-fill.low { background: linear-gradient(90deg, #ff4055, var(--gold)); }
+
+    .round-hub {
+      display: grid;
+      min-width: 148px;
+      padding: 10px 18px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(4,17,31,.82);
+      text-align: center;
+    }
+    .round-label { color: var(--muted); font-size: 12px; font-weight: 900; letter-spacing: .08em; }
+    .round-value { color: var(--gold); font-size: 21px; font-weight: 1000; }
+
+    .question-card {
+      display: grid;
+      grid-template-columns: minmax(235px, .78fr) minmax(0, 1.22fr);
+      min-height: 530px;
+      overflow: hidden;
+    }
+
+    .visual-panel {
+      position: relative;
+      display: flex;
+      min-height: 100%;
+      padding: 28px;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at center, rgba(66,232,224,.12), transparent 58%),
+        rgba(3,18,31,.45);
+      overflow: hidden;
+    }
+
+    .question-type {
+      align-self: flex-start;
+      padding: 7px 11px;
+      border: 1px solid rgba(66,232,224,.32);
+      border-radius: 999px;
+      color: var(--cyan-2);
+      background: rgba(66,232,224,.06);
+      font-size: 12px;
+      font-weight: 1000;
+      letter-spacing: .06em;
+    }
+
+    .equipment-stage {
+      position: relative;
+      display: grid;
+      width: min(100%, 310px);
+      aspect-ratio: 1;
+      margin: 16px auto;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50%;
+      color: var(--cyan);
+      background: radial-gradient(circle, rgba(66,232,224,.08), rgba(0,0,0,.04) 62%, transparent 63%);
+    }
+    .equipment-stage::before, .equipment-stage::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px dashed rgba(66,232,224,.19);
+      border-radius: 50%;
+      animation: spin 28s linear infinite;
+    }
+    .equipment-stage::after { inset: 24%; animation-direction: reverse; animation-duration: 18s; }
+    .equipment-stage svg { position: relative; z-index: 1; width: 72%; height: 72%; filter: drop-shadow(0 14px 18px rgba(0,0,0,.22)); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .turn-chip {
+      display: flex;
+      min-height: 42px;
+      padding: 8px 12px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      color: #cfe8f3;
+      background: rgba(255,255,255,.045);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .quiz-panel {
+      display: flex;
+      padding: clamp(24px, 4vw, 42px);
+      flex-direction: column;
+    }
+
+    .quiz-top { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; }
+    .question-kicker { margin-bottom: 8px; color: var(--muted); font-size: 12px; font-weight: 900; letter-spacing: .08em; }
+    .question-text { margin-bottom: 24px; font-size: clamp(22px, 3vw, 33px); line-height: 1.35; letter-spacing: -.02em; }
+
+    .timer {
+      --progress: 360deg;
+      position: relative;
+      display: grid;
+      flex: 0 0 62px;
+      width: 62px;
+      height: 62px;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ink);
+      background: conic-gradient(var(--cyan) var(--progress), rgba(255,255,255,.08) 0);
+      font-size: 19px;
+      font-weight: 1000;
+    }
+    .timer::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: #09243a; }
+    .timer span { position: relative; z-index: 1; }
+    .timer.warning { color: var(--gold); background: conic-gradient(var(--gold) var(--progress), rgba(255,255,255,.08) 0); animation: timer-pulse .8s ease infinite alternate; }
+    @keyframes timer-pulse { to { transform: scale(1.06); } }
+
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: auto; }
+    .option-button {
+      position: relative;
+      display: flex;
+      min-height: 72px;
+      padding: 14px 16px 14px 54px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--ink);
+      background: rgba(255,255,255,.035);
+      text-align: left;
+      font-weight: 900;
+      line-height: 1.35;
+      cursor: pointer;
+      transition: .16s ease;
+    }
+    .option-button:hover:not(:disabled) { border-color: rgba(66,232,224,.62); background: rgba(66,232,224,.08); transform: translateY(-2px); }
+    .option-button:disabled { cursor: default; }
+    .option-index {
+      position: absolute;
+      left: 14px;
+      display: grid;
+      width: 29px;
+      height: 29px;
+      place-items: center;
+      border-radius: 9px;
+      color: var(--muted);
+      background: rgba(255,255,255,.07);
+      font-size: 13px;
+    }
+    .option-button.correct { border-color: rgba(85,227,143,.8); background: rgba(85,227,143,.14); }
+    .option-button.correct .option-index { color: #052315; background: var(--green); }
+    .option-button.wrong { border-color: rgba(255,95,109,.75); background: rgba(255,95,109,.14); }
+    .option-button.wrong .option-index { color: #31080c; background: var(--red); }
+
+    .feedback {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(1,12,22,.45);
+      line-height: 1.55;
+    }
+    .feedback.show { display: block; animation: feedback-in .28s ease both; }
+    .feedback strong { display: block; margin-bottom: 4px; color: var(--cyan-2); }
+    .feedback.bad strong { color: #ff8f99; }
+    @keyframes feedback-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+    .question-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+    .next-button { display: none; min-width: 190px; }
+    .next-button.show { display: inline-flex; align-items: center; justify-content: center; }
+
+    .damage-pop {
+      position: fixed;
+      z-index: 20;
+      pointer-events: none;
+      color: var(--gold);
+      font-size: 32px;
+      font-weight: 1000;
+      text-shadow: 0 4px 14px rgba(0,0,0,.5);
+      animation: damage-pop 1s ease both;
+    }
+    @keyframes damage-pop { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.7); } 25% { opacity: 1; transform: translate(-50%, -5px) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -58px) scale(1); } }
+
+    /* End */
+    .end-wrap { display: grid; min-height: 640px; place-items: center; }
+    .end-card { width: min(720px, 100%); padding: clamp(28px, 6vw, 58px); text-align: center; }
+    .trophy {
+      display: grid;
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 20px;
+      place-items: center;
+      border: 1px solid rgba(255,209,102,.38);
+      border-radius: 34px;
+      color: var(--gold);
+      background: rgba(255,209,102,.1);
+      box-shadow: 0 16px 50px rgba(255,209,102,.12);
+      font-size: 52px;
+    }
+    .end-label { color: var(--cyan-2); font-size: 13px; font-weight: 1000; letter-spacing: .12em; }
+    .end-title { margin: 10px 0 10px; font-size: clamp(34px, 6vw, 58px); }
+    .end-summary { margin-bottom: 28px; color: var(--muted); line-height: 1.7; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+    .result-team { padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.03); }
+    .result-team.winner { border-color: rgba(255,209,102,.5); background: rgba(255,209,102,.06); }
+    .result-name { margin-bottom: 10px; font-weight: 1000; }
+    .result-stat { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; color: var(--muted); font-size: 13px; }
+    .result-stat b { display: block; color: var(--ink); font-size: 20px; }
+    .end-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+    dialog {
+      width: min(610px, calc(100% - 30px));
+      max-height: min(720px, calc(100vh - 30px));
+      padding: 0;
+      border: 1px solid rgba(171,221,255,.22);
+      border-radius: 22px;
+      color: var(--ink);
+      background: #092239;
+      box-shadow: 0 30px 90px rgba(0,0,0,.6);
+    }
+    dialog::backdrop { background: rgba(0,8,16,.76); backdrop-filter: blur(5px); }
+    .dialog-body { padding: 28px; }
+    .dialog-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+    .dialog-head h2 { margin: 0; }
+    .dialog-close { min-width: 42px; height: 42px; padding: 0; }
+    .rule-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .rule-list li { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.035); line-height: 1.55; }
+    .rule-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; color: #05212b; background: var(--cyan); font-weight: 1000; }
+    .source-note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .cpu-thinking .equipment-stage svg { animation: think 1.1s ease-in-out infinite alternate; }
+    @keyframes think { to { transform: scale(.92) rotate(3deg); opacity: .75; } }
+
+    @media (max-width: 900px) {
+      .start-layout { grid-template-columns: 1fr; }
+      .hero-panel { min-height: auto; }
+      .battle-preview { display: none; }
+      .question-card { grid-template-columns: 230px minmax(0, 1fr); }
+      .visual-panel { padding: 20px; }
+    }
+
+    @media (max-width: 700px) {
+      .app-shell { width: min(100% - 18px, 1180px); padding-top: 8px; }
+      .brand-sub { display: none; }
+      .top-actions .text-label { display: none; }
+      .hero-panel, .setup-card, .question-card, .end-card { border-radius: 19px; }
+      .hero-panel { padding: 27px 22px; }
+      h1 { font-size: clamp(42px, 14vw, 62px); }
+      .field-grid { grid-template-columns: 1fr; gap: 0; }
+      .setup-actions { grid-template-columns: 1fr; }
+      .battle-head { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .round-hub { grid-column: 1 / -1; grid-row: 1; min-height: 50px; padding: 6px 12px; }
+      .player-card { padding: 12px; }
+      .question-card { display: block; min-height: 0; }
+      .visual-panel { min-height: 238px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .equipment-stage { width: 160px; margin: 8px auto; }
+      .turn-chip { position: absolute; right: 16px; bottom: 16px; left: 16px; }
+      .quiz-panel { padding: 22px 17px; }
+      .question-text { padding-right: 0; font-size: 23px; }
+      .timer { width: 54px; height: 54px; flex-basis: 54px; }
+      .options { grid-template-columns: 1fr; }
+      .option-button { min-height: 60px; }
+      .result-grid { grid-template-columns: 1fr; }
+      .end-wrap { min-height: 0; }
+    }
+
+    @media (max-height: 760px) and (min-width: 701px) {
+      .app-shell { padding-top: 6px; }
+      .topbar { min-height: 48px; padding-bottom: 8px; }
+      .question-card { min-height: 490px; }
+      .equipment-stage { width: 250px; }
+      .quiz-panel { padding-top: 25px; padding-bottom: 25px; }
+      .option-button { min-height: 62px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到遊戲內容</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="實驗器材知識對決">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 8h16M28 8v17L14 50c-2 4 1 7 6 7h24c5 0 8-3 6-7L36 25V8"/>
+            <path d="M20 43h24M24 37c5 3 11-3 16 0"/>
+          </svg>
+        </span>
+        <span>實驗器材知識對決 <span class="brand-sub">OFFLINE BATTLE</span></span>
+      </div>
+      <div class="top-actions">
+        <button id="soundButton" class="icon-button" type="button" aria-pressed="true" title="切換音效"><span aria-hidden="true">🔊</span><span class="text-label">音效</span></button>
+        <button id="rulesButton" class="icon-button" type="button" title="查看玩法"><span aria-hidden="true">?</span><span class="text-label">玩法</span></button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="startScreen" class="screen active" aria-labelledby="gameTitle">
+        <div class="start-layout">
+          <article class="hero-panel">
+            <p class="eyebrow">31 種器材・3 類題型・完全離線</p>
+            <h1 id="gameTitle">實驗器材<br><span>知識對決</span></h1>
+            <p class="hero-copy">看圖辨識、功能選擇與安全判斷，答對就發動攻擊。支援同一台電腦雙人輪流作答，也能單人挑戰電腦。</p>
+            <div class="feature-row" aria-label="遊戲特色">
+              <span class="feature-chip">免安裝</span>
+              <span class="feature-chip">無網路可玩</span>
+              <span class="feature-chip">鍵盤 1–4 作答</span>
+              <span class="feature-chip">手機／電腦皆可</span>
+            </div>
+            <div class="battle-preview" aria-hidden="true">
+              <div class="preview-team">
+                <div class="preview-avatar" id="previewIconA"></div>
+                <strong>藍色試劑隊</strong>
+              </div>
+              <div class="versus">VS</div>
+              <div class="preview-team">
+                <div class="preview-avatar" id="previewIconB"></div>
+                <strong>橘色火焰隊</strong>
+              </div>
+            </div>
+          </article>
+
+          <form id="setupForm" class="setup-card">
+            <h2>建立對戰</h2>
+            <p class="setup-intro">選擇模式與節奏，名字留白會自動使用隊名。</p>
+
+            <div class="mode-picker" role="radiogroup" aria-label="遊戲模式">
+              <label class="mode-option"><input type="radio" name="mode" value="local" checked><span>👥 同機雙人</span></label>
+              <label class="mode-option"><input type="radio" name="mode" value="cpu"><span>🤖 挑戰電腦</span></label>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="playerOne">玩家一</label>
+                <input id="playerOne" maxlength="12" autocomplete="off" placeholder="藍色試劑隊">
+              </div>
+              <div id="playerTwoField" class="field">
+                <label for="playerTwo">玩家二</label>
+                <input id="playerTwo" maxlength="12" autocomplete="off" placeholder="橘色火焰隊">
+              </div>
+              <div id="cpuLevelField" class="field hidden">
+                <label for="cpuLevel">電腦強度</label>
+                <select id="cpuLevel">
+                  <option value="0.58">見習助手</option>
+                  <option value="0.74" selected>實驗高手</option>
+                  <option value="0.88">研究所魔王</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="roundCount">總題數</label>
+                <select id="roundCount">
+                  <option value="8">8 題・快速賽</option>
+                  <option value="12" selected>12 題・標準賽</option>
+                  <option value="16">16 題・耐力賽</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="timeLimit">每題時間</label>
+                <select id="timeLimit">
+                  <option value="0">無倒數・練習</option>
+                  <option value="25" selected>25 秒・標準</option>
+                  <option value="12">12 秒・快攻</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setup-actions">
+              <button class="primary-button" type="submit">開始對戰 →</button>
+              <button id="setupRulesButton" class="secondary-button" type="button">先看規則</button>
+            </div>
+            <p class="privacy-note"><span aria-hidden="true">◉</span><span>所有題目、圖示與成績都留在這個檔案中，不會上傳，也不需要登入。</span></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="battleScreen" class="screen" aria-labelledby="questionText">
+        <div class="battle-head">
+          <article id="playerCard0" class="player-card team-a">
+            <div class="player-top"><span id="playerName0" class="player-name">玩家一</span><span id="playerMeta0" class="player-meta">答對 0・連擊 0</span></div>
+            <div class="hp-label"><span>能量</span><span id="hpText0">100 / 100</span></div>
+            <div class="hp-track"><div id="hpFill0" class="hp-fill"></div></div>
+          </article>
+          <div class="round-hub" aria-live="polite">
+            <span class="round-label">BATTLE ROUND</span>
+            <span id="roundValue" class="round-value">1 / 12</span>
+          </div>
+          <article id="playerCard1" class="player-card team-b">
+            <div class="player-top"><span id="playerName1" class="player-name">玩家二</span><span id="playerMeta1" class="player-meta">答對 0・連擊 0</span></div>
+            <div class="hp-label"><span>能量</span><span id="hpText1">100 / 100</span></div>
+            <div class="hp-track"><div id="hpFill1" class="hp-fill"></div></div>
+          </article>
+        </div>
+
+        <article class="question-card">
+          <div class="visual-panel">
+            <span id="questionType" class="question-type">看圖辨識</span>
+            <div id="equipmentStage" class="equipment-stage" role="img" aria-label="器材示意圖"></div>
+            <div id="turnChip" class="turn-chip" aria-live="polite">玩家一的回合</div>
+          </div>
+          <div class="quiz-panel">
+            <div class="quiz-top">
+              <div>
+                <p class="question-kicker">選出最正確的答案</p>
+                <h2 id="questionText" class="question-text">這個實驗器材是什麼？</h2>
+              </div>
+              <div id="timer" class="timer" role="timer" aria-label="剩餘時間"><span id="timerText">25</span></div>
+            </div>
+            <div id="options" class="options" aria-label="答案選項"></div>
+            <div id="feedback" class="feedback" role="status" aria-live="assertive"></div>
+            <div class="question-actions"><button id="nextButton" class="primary-button next-button" type="button">下一回合 →</button></div>
+          </div>
+        </article>
+      </section>
+
+      <section id="endScreen" class="screen" aria-labelledby="endTitle">
+        <div class="end-wrap">
+          <article class="end-card">
+            <div class="trophy" aria-hidden="true">🏆</div>
+            <div class="end-label">BATTLE COMPLETE</div>
+            <h2 id="endTitle" class="end-title">對戰完成</h2>
+            <p id="endSummary" class="end-summary"></p>
+            <div id="resultGrid" class="result-grid"></div>
+            <div class="end-actions">
+              <button id="rematchButton" class="primary-button" type="button">使用相同設定再戰</button>
+              <button id="backButton" class="secondary-button" type="button">回到設定</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="rulesDialog" aria-labelledby="rulesTitle">
+    <div class="dialog-body">
+      <div class="dialog-head">
+        <div><p class="eyebrow">HOW TO PLAY</p><h2 id="rulesTitle">對戰規則</h2></div>
+        <button id="closeRulesButton" class="icon-button dialog-close" type="button" aria-label="關閉規則">×</button>
+      </div>
+      <ul class="rule-list">
+        <li><span class="rule-icon">1</span><span><strong>輪流答題</strong><br>看圖辨識、功能選擇、安全判斷三種題型交錯出現。</span></li>
+        <li><span class="rule-icon">✓</span><span><strong>答對發動攻擊</strong><br>基本傷害 18；連續答對會提升為 22、26，最高 26。</span></li>
+        <li><span class="rule-icon">!</span><span><strong>答錯或逾時</strong><br>實驗操作失誤，自己損失 8 點能量，連擊歸零。</span></li>
+        <li><span class="rule-icon">★</span><span><strong>決定勝負</strong><br>先讓對手能量歸零就獲勝；題目用完時先比剩餘能量，同分再比答對題數。</span></li>
+      </ul>
+      <p class="source-note">題材範圍參考翰林「理化實驗常用器材」公開網站；本單機版的介面、向量圖示、題庫文字與對戰機制均為重新設計，執行時不會連線或載入原站素材。</p>
+    </div>
+  </dialog>
+
+  <script>
+    "use strict";
+
+    const equipment = [
+      { id:"beaker", name:"燒杯", group:"container", purpose:"盛裝、混合或加熱液體，刻度只適合粗略估量", note:"燒杯刻度不是精密量測用；需要準確體積時應選量筒或滴定管。" },
+      { id:"balance", name:"天平與砝碼", group:"measure", purpose:"利用砝碼比較並測量物體的質量", note:"藥品應放在秤量紙或容器中，不宜直接接觸秤盤。" },
+      { id:"digitalBalance", name:"電子天平", group:"measure", purpose:"快速測量物體質量，放上容器後可先歸零", note:"使用前確認水平與歸零；加藥時避免把藥品灑入機身。" },
+      { id:"weighPaper", name:"秤量紙", group:"measure", purpose:"秤量固體藥品時承接藥品，避免污染秤盤", note:"秤量紙用於承接固體，不能拿來直接加熱。" },
+      { id:"spatula", name:"刮勺", group:"transfer", purpose:"取用或移送少量粉末、晶體等固體藥品", note:"不同藥品應使用乾淨刮勺，避免交叉污染。" },
+      { id:"filterFlask", name:"吸濾瓶", group:"filter", purpose:"連接抽氣裝置進行減壓過濾", note:"吸濾瓶側管用來連接抽氣設備，瓶身較厚以承受壓力差。" },
+      { id:"wideBottle", name:"廣口瓶", group:"container", purpose:"儲存固體藥品，寬大的瓶口方便取用", note:"取藥後要立即蓋好瓶蓋，避免受潮或污染。" },
+      { id:"thistleFunnel", name:"薊頭漏斗", group:"transfer", purpose:"把液體加入密閉反應裝置，長管可形成液封", note:"需要維持氣密時，漏斗下端通常要伸入液面以下。" },
+      { id:"combustionSpoon", name:"燃燒匙", group:"heat", purpose:"盛裝少量固體並放入氣體中燃燒觀察", note:"燃燒後器材很燙，須等待冷卻或用適當工具處理。" },
+      { id:"filterPaper", name:"濾紙", group:"filter", purpose:"在漏斗中攔截固體，讓液體通過以完成過濾", note:"濾紙折好後應貼合漏斗內壁，邊緣須低於漏斗口。" },
+      { id:"funnel", name:"漏斗", group:"filter", purpose:"搭配濾紙過濾，或協助液體注入窄口容器", note:"過濾時液面不應高過濾紙邊緣，以免固體繞過濾紙。" },
+      { id:"evapDish", name:"蒸發皿", group:"heat", purpose:"加熱溶液，使溶劑蒸發並濃縮或取得固體", note:"加熱後應使用坩鍋鉗移動，不可直接用手碰觸。" },
+      { id:"tongs", name:"坩鍋鉗", group:"hold", purpose:"夾取高溫的坩鍋、蒸發皿等器材", note:"夾取前先確認鉗口乾燥且穩固，避免熱器材滑落。" },
+      { id:"tubeHolder", name:"試管夾", group:"hold", purpose:"夾住試管進行加熱或移動熱試管", note:"通常由試管底部往上套，夾在試管中上部。" },
+      { id:"tripod", name:"陶瓷纖維網與三腳架", group:"heat", purpose:"支撐加熱容器並讓火焰熱量較均勻分散", note:"陶瓷纖維網可分散熱量；加熱後金屬架仍可能很燙。" },
+      { id:"alcoholLamp", name:"酒精燈", group:"heat", purpose:"提供實驗加熱所需的穩定火焰", note:"應用燈帽蓋熄，不能用嘴吹；酒精不足時先熄火再補充。" },
+      { id:"erlenmeyer", name:"錐形瓶", group:"container", purpose:"盛裝反應液並可握住瓶頸搖晃混合，常作滴定受液瓶", note:"錐形瓶瓶口較窄，搖晃時液體較不易濺出。" },
+      { id:"cylinder", name:"量筒", group:"measure", purpose:"量取液體體積，準確度通常高於燒杯", note:"讀數時視線應與液面同高；一般量筒不宜直接加熱。" },
+      { id:"dropper", name:"滴管", group:"transfer", purpose:"吸取並逐滴加入少量液體", note:"吸入液體後不要平放或倒置，以免液體流入膠帽。" },
+      { id:"thermometer", name:"溫度計", group:"measure", purpose:"測量物體或液體的溫度", note:"量測時感溫球不宜碰到容器底部，也不能拿來攪拌。" },
+      { id:"glassRod", name:"玻棒", group:"transfer", purpose:"攪拌液體，或在傾倒時引流避免液體沿杯壁滴落", note:"玻璃棒容易折斷；攪拌時動作要輕，避免撞擊容器。" },
+      { id:"watchGlass", name:"錶玻璃", group:"container", purpose:"盛放少量固體、蒸發少量液體，或覆蓋燒杯", note:"錶玻璃可作臨時容器或杯蓋，但不適合強烈直接加熱。" },
+      { id:"tubeRack", name:"試管及試管架", group:"container", purpose:"以試管進行少量反應，並用試管架直立收納", note:"加熱試管時管口不得朝向自己或他人。" },
+      { id:"indicatorPaper", name:"石蕊試紙與廣用試紙", group:"acid", purpose:"以顏色變化判斷溶液酸鹼性或估計 pH 值", note:"可用玻棒沾取樣品點在試紙上，避免整張試紙污染原溶液。" },
+      { id:"phMeter", name:"pH 計", group:"acid", purpose:"以電極較精確地測量溶液的 pH 值", note:"電極使用前後要依規定沖洗，量測前也常需要校正。" },
+      { id:"washBottle", name:"洗滌瓶", group:"transfer", purpose:"擠出蒸餾水，沖洗器材或把沉澱洗入容器", note:"瓶身通常裝蒸餾水；噴嘴不可朝向他人。" },
+      { id:"burette", name:"滴定管", group:"measure", purpose:"在滴定中精準控制並量出流出的液體體積", note:"讀數時視線與液面同高，並先排除尖嘴中的氣泡。" },
+      { id:"springScale", name:"彈簧秤", group:"measure", purpose:"利用彈簧伸長量測力的大小，單位常用牛頓", note:"使用前要歸零，量測方向應與受力方向一致。" },
+      { id:"ammeter", name:"毫安培計", group:"electric", purpose:"測量較小的電流，使用時串聯在電路中", note:"先選較大量程並注意正負端，避免電流過大損壞儀表。" },
+      { id:"voltmeter", name:"伏特計", group:"electric", purpose:"測量兩點之間的電壓，使用時並聯在待測元件兩端", note:"注意正負端與量程；不可像電流計一樣直接串聯。" },
+      { id:"multimeter", name:"三用電表", group:"electric", purpose:"依檔位測量電壓、電流或電阻等電學量", note:"量測前確認功能與量程；測電阻時應先切斷待測電路電源。" }
+    ];
+
+    const safetyQuestions = [
+      { id:"cylinder", statement:"量筒可以直接放在酒精燈上加熱。", answer:false, explanation:"量筒用於量體積，一般不可直接加熱；需加熱液體可改用燒杯或試管。" },
+      { id:"dropper", statement:"滴管吸入液體後應保持膠帽朝上，避免液體流入膠帽。", answer:true, explanation:"液體進入膠帽可能污染藥品或使膠帽受損，所以不可平放或倒置。" },
+      { id:"thermometer", statement:"溫度計可兼作玻棒，用來快速攪拌溶液。", answer:false, explanation:"溫度計不是攪拌棒，碰撞容器可能破裂；攪拌應使用玻棒。" },
+      { id:"tubeRack", statement:"加熱試管時，試管口不可朝向自己或旁人。", answer:true, explanation:"液體可能突沸或噴出，管口朝向無人的方向才安全。" },
+      { id:"alcoholLamp", statement:"酒精燈應用燈帽蓋熄，不應直接用嘴吹熄。", answer:true, explanation:"用燈帽隔絕空氣可安全熄火；吹火可能使火焰或酒精蒸氣擴散。" },
+      { id:"balance", statement:"固體藥品可以直接倒在天平秤盤上秤量。", answer:false, explanation:"應使用秤量紙或容器承接藥品，避免腐蝕、污染秤盤。" },
+      { id:"digitalBalance", statement:"使用電子天平時，放上空容器後可按歸零再加入藥品。", answer:true, explanation:"先去除容器質量，畫面就能直接顯示藥品的質量。" },
+      { id:"voltmeter", statement:"伏特計測量元件兩端電壓時，應與該元件並聯。", answer:true, explanation:"伏特計量測兩點的電位差，因此接在待測元件兩端。" },
+      { id:"ammeter", statement:"毫安培計要直接並聯在電池兩端，讀值才最清楚。", answer:false, explanation:"電流計內阻很小，直接並聯可能形成過大電流；應串聯於電路。" },
+      { id:"springScale", statement:"彈簧秤主要量測力，常用單位是牛頓。", answer:true, explanation:"彈簧秤依彈簧伸長量測力，而不是直接量測質量。" },
+      { id:"burette", statement:"讀取滴定管刻度時，視線應與液面同高。", answer:true, explanation:"視線同高可減少視差；透明溶液通常讀凹液面最低處。" },
+      { id:"evapDish", statement:"剛加熱完的蒸發皿看起來不紅，所以可以立刻用手拿。", answer:false, explanation:"高溫器材外觀未必明顯，應用坩鍋鉗夾取並放置冷卻。" },
+      { id:"filterPaper", statement:"過濾時，漏斗中的液面不應高過濾紙邊緣。", answer:true, explanation:"若液面高過濾紙，混合物可能從紙與漏斗間流過，降低過濾效果。" },
+      { id:"beaker", statement:"燒杯上的刻度適合做非常精密的體積測量。", answer:false, explanation:"燒杯刻度只供粗估；較準確的量測應使用量筒、滴定管等量器。" },
+      { id:"glassRod", statement:"傾倒液體時讓液體沿玻棒流下，可減少沿杯壁滴落。", answer:true, explanation:"玻棒可引導液流，是常見的安全轉移液體方法。" },
+      { id:"wideBottle", statement:"廣口瓶的寬瓶口方便存放與取用固體藥品。", answer:true, explanation:"瓶口較寬，刮勺較容易進出，適合固體藥品。" },
+      { id:"phMeter", statement:"pH 計電極用完後完全不必沖洗，直接收起即可。", answer:false, explanation:"電極應依規定用適當液體沖洗與保存，避免污染並維持準確度。" },
+      { id:"multimeter", statement:"使用三用電表測電阻前，應先切斷待測電路的電源。", answer:true, explanation:"測電阻時儀表會使用內部電源，外加電源可能造成錯誤或損壞。" }
+    ];
+
+    const iconPaths = {
+      beaker:`<path d="M43 24h74M51 24v85c0 13 9 22 22 22h14c13 0 22-9 22-22V24"/><path d="M52 84c18-9 38 9 56 0v26c0 12-8 20-20 20H72c-12 0-20-8-20-20z" fill="currentColor" opacity=".16"/><path d="M94 48h15M94 62h15M99 76h10"/>`,
+      balance:`<path d="M80 23v101M54 129h52M60 41h40M80 33l-48 18M80 33l48 18"/><path d="M22 52h20l-4 23H26zM118 52h20l-4 23h-12z"/><circle cx="80" cy="32" r="5"/>`,
+      digitalBalance:`<rect x="27" y="61" width="106" height="62" rx="12"/><path d="M48 61V42h64v19M46 92h68"/><rect x="58" y="99" width="44" height="14" rx="4"/><path d="M111 104h8"/>`,
+      weighPaper:`<path d="M31 50l49-22 49 22-18 78H49z"/><path d="M31 50l49 31 49-31M80 28v53M49 128l31-47 31 47"/><path d="M61 70c11-8 27-8 38 0" fill="currentColor" opacity=".18"/>`,
+      spatula:`<path d="M32 118L111 39M106 31l20 20-13 13-20-20z"/><path d="M25 122c-5 5-2 13 5 13 3 0 6-1 8-4l10-14-10-10z"/>`,
+      filterFlask:`<path d="M63 26h34M69 26v31l-37 59c-5 8 1 17 11 17h74c10 0 16-9 11-17L91 57V26"/><path d="M102 76l33-12M126 67l8 18"/><path d="M47 105h66"/>`,
+      wideBottle:`<path d="M56 23h48v18l12 13v65c0 9-7 16-16 16H60c-9 0-16-7-16-16V54l12-13z"/><path d="M52 56h56M58 23v18h44V23M51 88h58"/><path d="M59 96h42v25H59z" fill="currentColor" opacity=".14"/>`,
+      thistleFunnel:`<path d="M53 27c0 18 11 28 27 28s27-10 27-28z"/><path d="M80 55v80M67 135h26"/><path d="M62 39h36"/>`,
+      combustionSpoon:`<path d="M40 122L112 45"/><ellipse cx="120" cy="36" rx="17" ry="11" transform="rotate(-40 120 36)"/><path d="M31 131l14-14"/>`,
+      filterPaper:`<path d="M32 36h96L80 130z"/><path d="M32 36l48 34 48-34M80 70v60"/><path d="M49 48h62" stroke-dasharray="5 6"/>`,
+      funnel:`<path d="M30 31h100L94 83v51H66V83z"/><path d="M39 46h82M66 83h28"/>`,
+      evapDish:`<path d="M25 71c7 39 27 55 55 55s48-16 55-55z"/><path d="M25 71c16 9 94 9 110 0M56 50c-8-13 9-15 0-28M82 50c-8-13 9-15 0-28M108 50c-8-13 9-15 0-28"/>`,
+      tongs:`<path d="M42 27c9 37 28 71 67 106M118 27c-9 37-28 71-67 106"/><path d="M35 24c0 14 7 21 18 23M125 24c0 14-7 21-18 23M49 126c-5 9-2 15 5 17M111 126c5 9 2 15-5 17"/>`,
+      tubeHolder:`<path d="M29 52l102 49M37 38l94 45M45 44l-14 30M113 82l-11 27"/><path d="M112 31v62c0 22-11 36-25 36S62 115 62 93V59"/><path d="M69 104h36" fill="currentColor" opacity=".15"/>`,
+      tripod:`<path d="M35 53h90v16H35zM48 69l-20 66M112 69l20 66M80 69v66"/><path d="M42 53l12 16M58 53l12 16M74 53l12 16M90 53l12 16M106 53l12 16"/>`,
+      alcoholLamp:`<path d="M59 56h42l18 29v27c0 13-10 23-23 23H64c-13 0-23-10-23-23V85z"/><path d="M68 56V43h24v13M73 43V29h14v14"/><path d="M80 28c-13-12-7-24 3-30 0 9 12 13 7 25-2 5-6 8-10 8" fill="currentColor" opacity=".28"/><path d="M50 96h60"/>`,
+      erlenmeyer:`<path d="M62 22h36M68 22v38l-35 58c-5 9 1 17 11 17h72c10 0 16-8 11-17L92 60V22"/><path d="M47 99c20-9 46 10 66 0l13 22c3 6-1 12-9 12H43c-8 0-12-6-9-12z" fill="currentColor" opacity=".16"/>`,
+      cylinder:`<path d="M58 20h44M63 20v101M97 20v101M48 135h64M58 121h44"/><path d="M80 39h17M84 53h13M80 67h17M84 81h13M80 95h17"/><path d="M64 96h32v24H64z" fill="currentColor" opacity=".16"/>`,
+      dropper:`<path d="M47 117l64-64M101 32c7-7 17-7 24 0s7 17 0 24l-9 9-24-24z"/><path d="M40 124l-7 16 16-7z"/><path d="M83 66l11 11M30 118c-8 8-9 16-2 22"/>`,
+      thermometer:`<path d="M68 27a12 12 0 0 1 24 0v72a27 27 0 1 1-24 0z"/><path d="M80 42v76"/><circle cx="80" cy="121" r="13" fill="currentColor" opacity=".2"/><path d="M92 44h15M92 58h9M92 72h15M92 86h9"/>`,
+      glassRod:`<path d="M35 124L124 35" stroke-width="9"/><path d="M48 123c-15 9-27 4-29-7M112 36c15-9 27-4 29 7" stroke-width="3"/><path d="M55 103c11 7 19 7 28 0s18-7 28 0"/>`,
+      watchGlass:`<ellipse cx="80" cy="86" rx="56" ry="32"/><path d="M29 79c13 34 89 34 102 0"/><ellipse cx="80" cy="82" rx="35" ry="13" fill="currentColor" opacity=".13"/>`,
+      tubeRack:`<path d="M24 55h112v19H24zM32 112h96v20H32zM42 74v38M118 74v38"/><path d="M51 29v63c0 11 7 18 16 18s16-7 16-18V29M89 29v63c0 11 7 18 16 18s16-7 16-18V29"/><path d="M58 79h18M96 72h18"/>`,
+      indicatorPaper:`<path d="M29 38h42v96H29zM89 26h42v108H89z"/><path d="M38 52h24M38 68h24M38 84h24M38 100h24M98 42h24M98 58h24M98 74h24M98 90h24M98 106h24"/><path d="M29 38h42v48H29zM89 76h42v58H89z" fill="currentColor" opacity=".16"/>`,
+      phMeter:`<rect x="28" y="23" width="70" height="104" rx="13"/><rect x="41" y="39" width="44" height="28" rx="4"/><path d="M48 52h30M46 86h34M46 100h34"/><path d="M98 53h22v66M113 119v18M105 137h16"/>`,
+      washBottle:`<path d="M54 50h51l13 22v50c0 8-7 15-15 15H51c-8 0-15-7-15-15V72z"/><path d="M65 50V31h27v19M77 31V18h29c14 0 20 9 20 19v13M126 50l14 17"/><path d="M48 93h58"/>`,
+      burette:`<path d="M72 18h17v85H72zM80 103v35M65 108h31M91 103l16 12M107 115h13"/><path d="M49 22v115M34 137h58M49 40h23M49 91h23"/><path d="M75 39h14M75 53h14M75 67h14M75 81h14"/>`,
+      springScale:`<rect x="57" y="24" width="46" height="91" rx="20"/><path d="M80 12v12M80 115v12c0 16 18 12 18 0"/><path d="M80 39c-13 7 13 12 0 19s13 12 0 19 13 12 0 19"/><path d="M62 42h12M62 56h8M62 70h12M62 84h8M62 98h12"/>`,
+      ammeter:`<circle cx="80" cy="75" r="49"/><text x="80" y="88" text-anchor="middle" fill="currentColor" stroke="none" font-size="35" font-weight="900">mA</text><path d="M43 124v15M117 124v15M34 139h18M108 139h18"/>`,
+      voltmeter:`<circle cx="80" cy="75" r="49"/><text x="80" y="91" text-anchor="middle" fill="currentColor" stroke="none" font-size="48" font-weight="900">V</text><path d="M43 124v15M117 124v15M34 139h18M108 139h18"/>`,
+      multimeter:`<rect x="38" y="18" width="84" height="112" rx="13"/><rect x="52" y="31" width="56" height="27" rx="4"/><circle cx="80" cy="87" r="20"/><path d="M80 87l12-10M55 120l-26 20M105 120l26 20"/><circle cx="58" cy="117" r="5"/><circle cx="102" cy="117" r="5"/>`
+    };
+
+    const state = {
+      mode:"local", rounds:12, timeLimit:25, cpuAccuracy:.74,
+      players:[], turn:0, round:0, questions:[], current:null,
+      answered:false, timerId:null, timeRemaining:0, sound:true, finished:false,
+      cpuTimeout:null
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const screens = [$("startScreen"), $("battleScreen"), $("endScreen")];
+    const setupForm = $("setupForm");
+    const optionsEl = $("options");
+    const feedbackEl = $("feedback");
+    const nextButton = $("nextButton");
+    const rulesDialog = $("rulesDialog");
+
+    function shuffle(list) {
+      const copy = [...list];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function iconSvg(id, label="") {
+      const paths = iconPaths[id] || iconPaths.beaker;
+      return `<svg viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
+    }
+
+    function showScreen(target) {
+      screens.forEach(screen => screen.classList.toggle("active", screen === target));
+      window.scrollTo({ top:0, behavior:"smooth" });
+    }
+
+    function setModeFields() {
+      const mode = new FormData(setupForm).get("mode") || "local";
+      $("playerTwoField").classList.toggle("hidden", mode === "cpu");
+      $("cpuLevelField").classList.toggle("hidden", mode !== "cpu");
+    }
+
+    function createPlayer(name) {
+      return { name, hp:100, score:0, streak:0, maxStreak:0, damage:0 };
+    }
+
+    function getDistractors(item, amount=3) {
+      const sameGroup = shuffle(equipment.filter(e => e.group === item.group && e.id !== item.id));
+      const others = shuffle(equipment.filter(e => e.group !== item.group && e.id !== item.id));
+      return [...sameGroup, ...others].slice(0, amount);
+    }
+
+    function buildQuestions(total) {
+      let itemPool = shuffle(equipment);
+      let safetyPool = shuffle(safetyQuestions);
+      const questions = [];
+      for (let i = 0; i < total; i++) {
+        if (!itemPool.length) itemPool = shuffle(equipment);
+        const item = itemPool.pop();
+        const typeIndex = i % 3;
+
+        if (typeIndex === 2) {
+          if (!safetyPool.length) safetyPool = shuffle(safetyQuestions);
+          const safety = safetyPool.pop();
+          const related = equipment.find(e => e.id === safety.id) || item;
+          const choices = shuffle([
+            { label:"正確，可以這樣做", value:true },
+            { label:"錯誤，這樣不安全或不準確", value:false }
+          ]);
+          questions.push({
+            type:"安全判斷", prompt:safety.statement, item:related,
+            choices:choices.map(c => c.label), correct:choices.findIndex(c => c.value === safety.answer),
+            explanation:safety.explanation
+          });
+          continue;
+        }
+
+        const choices = shuffle([item, ...getDistractors(item)]);
+        questions.push({
+          type:typeIndex === 0 ? "看圖辨識" : "功能挑戰",
+          prompt:typeIndex === 0 ? "畫面中的實驗器材是什麼？" : `哪一項器材最適合這項任務：${item.purpose}？`,
+          item,
+          choices:choices.map(c => c.name),
+          correct:choices.findIndex(c => c.id === item.id),
+          explanation:item.note
+        });
+      }
+      return questions;
+    }
+
+    function startGame() {
+      clearTimers();
+      state.mode = new FormData(setupForm).get("mode") || "local";
+      state.rounds = Number($("roundCount").value);
+      state.timeLimit = Number($("timeLimit").value);
+      state.cpuAccuracy = Number($("cpuLevel").value);
+      const nameOne = $("playerOne").value.trim() || "藍色試劑隊";
+      const nameTwo = state.mode === "cpu" ? "實驗室 AI" : ($("playerTwo").value.trim() || "橘色火焰隊");
+      state.players = [createPlayer(nameOne), createPlayer(nameTwo)];
+      state.turn = 0;
+      state.round = 0;
+      state.questions = buildQuestions(state.rounds);
+      state.finished = false;
+      state.answered = false;
+      showScreen($("battleScreen"));
+      renderPlayers();
+      beginQuestion();
+      playTone("start");
+    }
+
+    function renderPlayers() {
+      state.players.forEach((player, index) => {
+        $("playerName" + index).textContent = player.name;
+        $("playerMeta" + index).textContent = `答對 ${player.score}・連擊 ${player.streak}`;
+        $("hpText" + index).textContent = `${Math.max(0, player.hp)} / 100`;
+        const fill = $("hpFill" + index);
+        fill.style.width = Math.max(0, player.hp) + "%";
+        fill.classList.toggle("low", player.hp <= 35);
+        $("playerCard" + index).classList.toggle("active", !state.finished && state.turn === index);
+      });
+      $("roundValue").textContent = `${Math.min(state.round + 1, state.rounds)} / ${state.rounds}`;
+    }
+
+    function beginQuestion() {
+      clearTimers();
+      if (state.finished || state.round >= state.rounds) return finishGame();
+      state.current = state.questions[state.round];
+      state.answered = false;
+      const player = state.players[state.turn];
+      const cpuTurn = state.mode === "cpu" && state.turn === 1;
+
+      $("questionType").textContent = state.current.type;
+      $("questionText").textContent = state.current.prompt;
+      $("equipmentStage").innerHTML = iconSvg(state.current.item.id, state.current.item.name);
+      $("equipmentStage").setAttribute("aria-label", state.current.type === "看圖辨識" ? "待辨識的實驗器材示意圖" : `${state.current.item.name}示意圖`);
+      $("turnChip").textContent = cpuTurn ? `${player.name} 正在分析…` : `${player.name} 的回合・按 1–4 作答`;
+      document.body.classList.toggle("cpu-thinking", cpuTurn);
+
+      optionsEl.innerHTML = "";
+      state.current.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option-button";
+        button.disabled = cpuTurn;
+        button.innerHTML = `<span class="option-index">${index + 1}</span><span>${choice}</span>`;
+        button.addEventListener("click", () => answerQuestion(index));
+        optionsEl.appendChild(button);
+      });
+
+      feedbackEl.className = "feedback";
+      feedbackEl.innerHTML = "";
+      nextButton.classList.remove("show");
+      renderPlayers();
+
+      if (cpuTurn) {
+        $("timerText").textContent = "…";
+        $("timer").style.setProperty("--progress", "360deg");
+        state.cpuTimeout = setTimeout(runCpuTurn, 950 + Math.random() * 650);
+      } else {
+        startTimer();
+        requestAnimationFrame(() => optionsEl.querySelector("button")?.focus({ preventScroll:true }));
+      }
+    }
+
+    function startTimer() {
+      const timer = $("timer");
+      timer.classList.remove("warning");
+      if (!state.timeLimit) {
+        $("timerText").textContent = "∞";
+        timer.style.setProperty("--progress", "360deg");
+        return;
+      }
+      state.timeRemaining = state.timeLimit;
+      updateTimer();
+      state.timerId = setInterval(() => {
+        state.timeRemaining -= 1;
+        updateTimer();
+        if (state.timeRemaining <= 0) answerQuestion(-1, "timeout");
+      }, 1000);
+    }
+
+    function updateTimer() {
+      const timer = $("timer");
+      $("timerText").textContent = String(Math.max(0, state.timeRemaining));
+      const progress = state.timeLimit ? Math.max(0, state.timeRemaining / state.timeLimit * 360) : 360;
+      timer.style.setProperty("--progress", progress + "deg");
+      timer.classList.toggle("warning", state.timeRemaining <= 5);
+    }
+
+    function runCpuTurn() {
+      if (state.answered || state.finished) return;
+      const isCorrect = Math.random() < state.cpuAccuracy;
+      let choice = state.current.correct;
+      if (!isCorrect) {
+        const wrongChoices = state.current.choices.map((_, i) => i).filter(i => i !== state.current.correct);
+        choice = wrongChoices[Math.floor(Math.random() * wrongChoices.length)];
+      }
+      answerQuestion(choice, "cpu");
+    }
+
+    function answerQuestion(choiceIndex, source="player") {
+      if (state.answered || state.finished) return;
+      state.answered = true;
+      clearInterval(state.timerId);
+      state.timerId = null;
+      document.body.classList.remove("cpu-thinking");
+
+      const player = state.players[state.turn];
+      const opponentIndex = 1 - state.turn;
+      const opponent = state.players[opponentIndex];
+      const correct = choiceIndex === state.current.correct;
+      const buttons = [...optionsEl.querySelectorAll("button")];
+      buttons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === state.current.correct) button.classList.add("correct");
+        if (index === choiceIndex && !correct) button.classList.add("wrong");
+      });
+
+      if (correct) {
+        player.score += 1;
+        player.streak += 1;
+        player.maxStreak = Math.max(player.maxStreak, player.streak);
+        const damage = 18 + Math.min((player.streak - 1) * 4, 8);
+        player.damage += damage;
+        opponent.hp = Math.max(0, opponent.hp - damage);
+        feedbackEl.className = "feedback show";
+        feedbackEl.innerHTML = `<strong>答對！造成 ${damage} 點傷害${player.streak >= 2 ? `・${player.streak} 連擊` : ""}</strong>${state.current.explanation}`;
+        animateBattle(state.turn, opponentIndex, damage);
+        playTone(player.streak >= 2 ? "combo" : "correct");
+      } else {
+        player.streak = 0;
+        player.hp = Math.max(0, player.hp - 8);
+        const reason = source === "timeout" ? "時間到！" : "答錯了！";
+        feedbackEl.className = "feedback bad show";
+        feedbackEl.innerHTML = `<strong>${reason} 操作失誤，自損 8 點能量</strong>正確答案：${state.current.choices[state.current.correct]}。${state.current.explanation}`;
+        animateBattle(state.turn, state.turn, 8);
+        playTone("wrong");
+      }
+
+      renderPlayers();
+      const ko = state.players.some(p => p.hp <= 0);
+      const last = state.round >= state.rounds - 1;
+      nextButton.textContent = ko || last ? "查看戰果 →" : `${state.players[opponentIndex].name} 接棒 →`;
+      nextButton.classList.add("show");
+      nextButton.focus({ preventScroll:true });
+    }
+
+    function animateBattle(attackerIndex, targetIndex, damage) {
+      const attacker = $("playerCard" + attackerIndex);
+      const target = $("playerCard" + targetIndex);
+      attacker.classList.remove("attack");
+      target.classList.remove("hit");
+      void attacker.offsetWidth;
+      attacker.classList.add("attack");
+      target.classList.add("hit");
+      setTimeout(() => { attacker.classList.remove("attack"); target.classList.remove("hit"); }, 520);
+
+      const rect = target.getBoundingClientRect();
+      const pop = document.createElement("span");
+      pop.className = "damage-pop";
+      pop.textContent = `−${damage}`;
+      pop.style.left = rect.left + rect.width / 2 + "px";
+      pop.style.top = rect.top + rect.height / 2 + "px";
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 1050);
+    }
+
+    function nextRound() {
+      if (!state.answered) return;
+      if (state.players.some(p => p.hp <= 0) || state.round >= state.rounds - 1) return finishGame();
+      state.round += 1;
+      state.turn = 1 - state.turn;
+      beginQuestion();
+    }
+
+    function finishGame() {
+      if (state.finished) return;
+      clearTimers();
+      state.finished = true;
+      document.body.classList.remove("cpu-thinking");
+      renderPlayers();
+      const [a, b] = state.players;
+      let winnerIndex = -1;
+      if (a.hp !== b.hp) winnerIndex = a.hp > b.hp ? 0 : 1;
+      else if (a.score !== b.score) winnerIndex = a.score > b.score ? 0 : 1;
+
+      $("endTitle").textContent = winnerIndex < 0 ? "勢均力敵，平手！" : `${state.players[winnerIndex].name} 獲勝！`;
+      $("endSummary").textContent = winnerIndex < 0
+        ? "雙方剩餘能量與答對數都相同，這場需要再戰一局才能分出高下。"
+        : `${state.players[winnerIndex].name} 憑著 ${state.players[winnerIndex].score} 題正確答案守住實驗室冠軍席位。`;
+      $("resultGrid").innerHTML = state.players.map((player, index) => `
+        <section class="result-team ${index === winnerIndex ? "winner" : ""}">
+          <div class="result-name">${escapeHtml(player.name)}${index === winnerIndex ? "・冠軍" : ""}</div>
+          <div class="result-stat">
+            <span><b>${player.score}</b>答對題數</span>
+            <span><b>${Math.max(0, player.hp)}</b>剩餘能量</span>
+            <span><b>${player.maxStreak}</b>最高連擊</span>
+            <span><b>${player.damage}</b>總傷害</span>
+          </div>
+        </section>`).join("");
+      showScreen($("endScreen"));
+      playTone(winnerIndex < 0 ? "start" : "win");
+    }
+
+    function clearTimers() {
+      clearInterval(state.timerId);
+      clearTimeout(state.cpuTimeout);
+      state.timerId = null;
+      state.cpuTimeout = null;
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+    }
+
+    let audioContext = null;
+    function playTone(type) {
+      if (!state.sound) return;
+      try {
+        audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+        const patterns = {
+          start:[[420,.07],[560,.08],[720,.12]], correct:[[620,.08],[830,.12]], combo:[[620,.06],[830,.06],[1040,.14]],
+          wrong:[[220,.12],[155,.18]], win:[[520,.08],[660,.08],[780,.1],[1040,.2]]
+        };
+        const notes = patterns[type] || patterns.correct;
+        let offset = 0;
+        notes.forEach(([frequency, duration]) => {
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          oscillator.type = type === "wrong" ? "sawtooth" : "sine";
+          oscillator.frequency.value = frequency;
+          gain.gain.setValueAtTime(.0001, audioContext.currentTime + offset);
+          gain.gain.exponentialRampToValueAtTime(.055, audioContext.currentTime + offset + .012);
+          gain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + offset + duration);
+          oscillator.connect(gain).connect(audioContext.destination);
+          oscillator.start(audioContext.currentTime + offset);
+          oscillator.stop(audioContext.currentTime + offset + duration + .02);
+          offset += duration * .82;
+        });
+      } catch (_) { /* 沒有音效也不影響遊戲 */ }
+    }
+
+    setupForm.addEventListener("submit", event => { event.preventDefault(); startGame(); });
+    setupForm.addEventListener("change", event => { if (event.target.name === "mode") setModeFields(); });
+    nextButton.addEventListener("click", nextRound);
+    $("rematchButton").addEventListener("click", startGame);
+    $("backButton").addEventListener("click", () => { clearTimers(); state.finished = true; showScreen($("startScreen")); });
+
+    [$("rulesButton"), $("setupRulesButton")].forEach(button => button.addEventListener("click", () => rulesDialog.showModal()));
+    $("closeRulesButton").addEventListener("click", () => rulesDialog.close());
+    rulesDialog.addEventListener("click", event => {
+      const rect = rulesDialog.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) rulesDialog.close();
+    });
+
+    $("soundButton").addEventListener("click", () => {
+      state.sound = !state.sound;
+      $("soundButton").setAttribute("aria-pressed", String(state.sound));
+      $("soundButton").querySelector("span").textContent = state.sound ? "🔊" : "🔇";
+      if (state.sound) playTone("correct");
+    });
+
+    document.addEventListener("keydown", event => {
+      if (rulesDialog.open && event.key === "Escape") return;
+      if (!$("battleScreen").classList.contains("active")) return;
+      if (!state.answered && !document.body.classList.contains("cpu-thinking")) {
+        const index = Number(event.key) - 1;
+        if (index >= 0 && index < state.current.choices.length) answerQuestion(index);
+      } else if (state.answered && event.key === "Enter") {
+        nextRound();
+      }
+    });
+
+    window.addEventListener("beforeunload", clearTimers);
+    $("previewIconA").innerHTML = iconSvg("erlenmeyer");
+    $("previewIconB").innerHTML = iconSvg("alcoholLamp");
+    setModeFields();
+  </script>
+</body>
+</html>
