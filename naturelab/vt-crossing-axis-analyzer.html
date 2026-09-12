@@ -715,11 +715,11 @@
     // Draw v-t Graph with Triangles
     function drawGraph(curV) {
       graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
-      const ox = 60, oy = 210, w = 540, h = 260; // Axis origin at v=0 (y=210)
+      const ox = 60, oy = 195, w = 530; // Axis origin at v=0 (y=195)
       const maxV = 10, minV = -6; // Range +10 to -6
 
       const toGx = (t) => ox + (t / maxT) * w;
-      const toGy = (v) => oy - (v / maxV) * 160;
+      const toGy = (v) => oy - (v / maxV) * 180;
 
       // 1. Shaded Triangle 1 (0 to 10s: Positive Area)
       graphCtx.beginPath();
@@ -772,15 +772,15 @@
       graphCtx.strokeStyle = '#0f172a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
 
       graphCtx.beginPath();
-      graphCtx.moveTo(ox, oy - 170); graphCtx.lineTo(ox, oy + 90); // v-axis
+      graphCtx.moveTo(ox, oy - 155); graphCtx.lineTo(ox, oy + 85); // v-axis
       graphCtx.strokeStyle = '#0f172a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
 
-      // Axis Labels
+      // Axis Labels (Placed in clear empty spaces with zero overlap)
       graphCtx.font = 'bold 12px Noto Sans TC'; graphCtx.fillStyle = '#0f172a';
-      graphCtx.textAlign = 'left'; graphCtx.textBaseline = 'middle';
-      graphCtx.fillText('時間 t (秒)', ox + w - 40, oy + 22);
-      graphCtx.textBaseline = 'bottom';
-      graphCtx.fillText('速度 v (m/s)', ox - 35, oy - 175);
+      graphCtx.textAlign = 'right'; graphCtx.textBaseline = 'bottom';
+      graphCtx.fillText('時間 t (秒)', ox + w, oy - 10); // Placed above t-axis in upper-right empty quadrant
+      graphCtx.textAlign = 'left';
+      graphCtx.fillText('速度 v (m/s)', ox - 38, oy - 158);
 
       // X Ticks: 0, 5, 10, 15
       [0, 5, 10, 15].forEach(t => {
@@ -802,7 +802,7 @@
 
       // 5. Time Scrubber Line & Dot
       const scanX = toGx(currentTime);
-      graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - 160); graphCtx.lineTo(scanX, oy + 90);
+      graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - 155); graphCtx.lineTo(scanX, oy + 85);
       graphCtx.strokeStyle = '#9333ea'; graphCtx.lineWidth = 1.5; graphCtx.setLineDash([4, 4]); graphCtx.stroke(); graphCtx.setLineDash([]);
 
       const dotY = toGy(curV);
@@ -811,44 +811,44 @@
       graphCtx.fill();
 
       // 6. TOP-MOST LAYER: Area Text Badges (Drawn on TOP of all lines with crisp readable cards)
-      // Positive Area Label (Inside upper triangle at t=3.5, v=2.5)
-      const posTx = toGx(3.5);
-      const posTy = toGy(2.5);
+      // Positive Area Label (Inside upper triangle at t=3.3, v=3.0)
+      const posTx = toGx(3.3);
+      const posTy = toGy(3.0);
       graphCtx.save();
-      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.88)';
-      graphCtx.fillRect(posTx - 64, posTy - 21, 128, 42);
+      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.90)';
+      graphCtx.fillRect(posTx - 59, posTy - 18, 118, 36);
       graphCtx.strokeStyle = '#93c5fd';
       graphCtx.lineWidth = 1.2;
-      graphCtx.strokeRect(posTx - 64, posTy - 21, 128, 42);
+      graphCtx.strokeRect(posTx - 59, posTy - 18, 118, 36);
 
       graphCtx.fillStyle = '#1d4ed8';
       graphCtx.font = 'bold 12px Noto Sans TC';
       graphCtx.textAlign = 'center';
       graphCtx.textBaseline = 'middle';
-      graphCtx.fillText('上方面積 = +40 m', posTx, posTy - 7);
+      graphCtx.fillText('上方面積 = +40 m', posTx, posTy - 6);
       graphCtx.font = '11px Noto Sans TC';
       graphCtx.fillStyle = '#2563eb';
-      graphCtx.fillText('(正向減速)', posTx, posTy + 9);
+      graphCtx.fillText('(正向減速)', posTx, posTy + 8);
       graphCtx.restore();
 
-      // Negative Area Label (Inside lower triangle at t=12.8, v=-1.8)
+      // Negative Area Label (Inside lower triangle at t=12.8, v=-1.6)
       const negTx = toGx(12.8);
-      const negTy = toGy(-1.8);
+      const negTy = toGy(-1.6);
       graphCtx.save();
-      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.88)';
-      graphCtx.fillRect(negTx - 64, negTy - 21, 128, 42);
+      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+      graphCtx.fillRect(negTx - 55, negTy - 18, 110, 36);
       graphCtx.strokeStyle = '#fca5a5';
       graphCtx.lineWidth = 1.2;
-      graphCtx.strokeRect(negTx - 64, negTy - 21, 128, 42);
+      graphCtx.strokeRect(negTx - 55, negTy - 18, 110, 36);
 
       graphCtx.fillStyle = '#b91c1c';
       graphCtx.font = 'bold 12px Noto Sans TC';
       graphCtx.textAlign = 'center';
       graphCtx.textBaseline = 'middle';
-      graphCtx.fillText('下方面積 = -10 m', negTx, negTy - 7);
+      graphCtx.fillText('下方面積 = -10 m', negTx, negTy - 6);
       graphCtx.font = '11px Noto Sans TC';
       graphCtx.fillStyle = '#dc2626';
-      graphCtx.fillText('(負向加速)', negTx, negTy + 9);
+      graphCtx.fillText('(負向加速)', negTx, negTy + 8);
       graphCtx.restore();
     }
 
