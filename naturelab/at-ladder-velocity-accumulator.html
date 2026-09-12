@@ -715,13 +715,22 @@
 
       // Car
       const carPx = toPx(m.x);
+      trackCtx.save();
       trackCtx.font = '28px sans-serif';
-      trackCtx.fillText('🏎️', carPx - 14, cy + 8);
+      trackCtx.textAlign = 'center';
+      trackCtx.textBaseline = 'middle';
+      trackCtx.translate(carPx, cy + 8);
+      if (m.v >= 0) {
+        trackCtx.scale(-1, 1);
+      }
+      trackCtx.fillText('🏎️', 0, 0);
+      trackCtx.restore();
 
       // Car Tag
       trackCtx.fillStyle = '#ffffff';
       trackCtx.font = 'bold 11px Noto Sans TC';
-      trackCtx.fillText(`v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)} m/s²)`, carPx - 35, cy - 14);
+      trackCtx.textAlign = 'center';
+      trackCtx.fillText(`v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)} m/s²)`, carPx, cy - 14);
     }
 
     // Draw a-t Graph

@@ -693,13 +693,23 @@
 
       // Car Position
       const carPx = toPx(curX);
+      trackCtx.save();
       trackCtx.font = '28px sans-serif';
-      trackCtx.fillText(curV < 0 ? '🏎️' : '🏎️', carPx - 14, cy + 8);
+      trackCtx.textAlign = 'center';
+      trackCtx.textBaseline = 'middle';
+      trackCtx.translate(carPx, cy + 8);
+      // 🏎️ emoji natively faces left; when curV >= 0 (moving right), scale(-1, 1) to face right
+      if (curV >= 0) {
+        trackCtx.scale(-1, 1);
+      }
+      trackCtx.fillText('🏎️', 0, 0);
+      trackCtx.restore();
 
       // Label on car
       trackCtx.fillStyle = '#ffffff';
       trackCtx.font = 'bold 11px Noto Sans TC';
-      trackCtx.fillText(`x = ${curX.toFixed(1)} m (v = ${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s)`, carPx - 35, cy - 14);
+      trackCtx.textAlign = 'center';
+      trackCtx.fillText(`x = ${curX.toFixed(1)} m (v = ${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s)`, carPx, cy - 14);
     }
 
     // Draw v-t Graph with Triangles

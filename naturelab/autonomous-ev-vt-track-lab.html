@@ -762,9 +762,16 @@
 
       // Draw EV Car Avatar
       const curCarPx = toTrackPx(p.x);
+      ctx.save();
       ctx.font = '26px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(p.v >= 0 ? '🏎️' : '🏎️', curCarPx, trackY + 8);
+      ctx.textBaseline = 'middle';
+      ctx.translate(curCarPx, trackY + 8);
+      if (p.v >= 0) {
+        ctx.scale(-1, 1);
+      }
+      ctx.fillText('🏎️', 0, 0);
+      ctx.restore();
 
       // Live Status Flag
       ctx.fillStyle = p.v > 0 ? '#34d399' : (p.v === 0 ? '#fde047' : '#c084fc');

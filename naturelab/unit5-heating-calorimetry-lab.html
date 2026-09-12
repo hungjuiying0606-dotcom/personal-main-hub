@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="九年級理化第三冊單元5，講義第75頁第10、11題互動實驗室：加熱控制變因與熱量散失。">
+  <title>單元5｜P.75 第10、11題互動實驗室</title>
+  <style>
+    :root {
+      --ink: #183047;
+      --muted: #64758a;
+      --paper: #fffdf8;
+      --blue: #1578a6;
+      --blue-dark: #0c5678;
+      --sky: #e7f7ff;
+      --orange: #ee7446;
+      --amber: #f3bb4f;
+      --red: #df3d62;
+      --green: #17835a;
+      --line: #cbdde5;
+      --shadow: 0 18px 48px rgba(21, 84, 107, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(255, 215, 149, 0.42), transparent 28rem),
+        radial-gradient(circle at 100% 20%, rgba(126, 211, 237, 0.3), transparent 31rem),
+        #f4fafb;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+
+    button, input { font: inherit; }
+    button { touch-action: manipulation; }
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.72rem clamp(1rem, 4vw, 3rem);
+      background: rgba(255, 253, 248, 0.93);
+      border-bottom: 1px solid rgba(21, 120, 166, 0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar a { text-decoration: none; font-size: 0.88rem; font-weight: 850; }
+    .crumbs { color: var(--blue-dark); }
+    .pdf-link { padding: 0.42rem 0.75rem; color: white; background: var(--blue); border-radius: 999px; white-space: nowrap; }
+
+    header {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 7vw, 5rem) 1rem 2.2rem;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 0.35rem 0.8rem;
+      color: var(--blue-dark);
+      background: white;
+      border: 1px solid #acd9ea;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      box-shadow: 0 7px 20px rgba(21, 120, 166, 0.08);
+    }
+
+    h1 { margin: 1rem auto 0.65rem; font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.1; letter-spacing: -0.04em; }
+    .accent { color: var(--orange); }
+    .lead { max-width: 760px; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 2vw, 1.14rem); }
+    .mission-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.35rem; }
+    .mission-nav a { padding: 0.52rem 0.86rem; text-decoration: none; background: white; border: 1px solid var(--line); border-radius: 12px; font-size: 0.86rem; font-weight: 850; }
+
+    main { width: min(1160px, calc(100% - 2rem)); margin: 0 auto 4rem; }
+    .question-card { margin-bottom: 2rem; overflow: hidden; background: var(--paper); border: 1px solid rgba(21, 120, 166, 0.22); border-radius: 28px; box-shadow: var(--shadow); }
+    .question-head { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; padding: clamp(1.2rem, 3vw, 2rem); background: linear-gradient(135deg, white, var(--sky)); border-bottom: 1px solid var(--line); }
+    .q-number { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; color: white; background: var(--blue); border-radius: 50%; font-size: 1.2rem; font-weight: 950; box-shadow: 0 8px 18px rgba(21, 120, 166, 0.24); }
+    .question-head h2 { margin: 0 0 0.35rem; font-size: clamp(1.25rem, 2.6vw, 1.8rem); line-height: 1.35; }
+    .source-note { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .question-text { margin: 0.88rem 0 0; font-weight: 700; }
+
+    .lab-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr); gap: 1.2rem; padding: clamp(1rem, 3vw, 2rem); }
+    .panel { padding: clamp(1rem, 2.2vw, 1.35rem); background: white; border: 1px solid var(--line); border-radius: 20px; }
+    .panel-title { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; margin: 0 0 0.9rem; font-size: 1rem; font-weight: 900; }
+    .status-pill { padding: 0.26rem 0.62rem; color: var(--blue-dark); background: var(--sky); border-radius: 999px; font-size: 0.74rem; font-weight: 900; white-space: nowrap; }
+
+    .stage { position: relative; min-height: 390px; overflow: hidden; background: linear-gradient(180deg, #eaf8ff 0%, #fffaf0 75%); border: 1px solid #c6e1eb; border-radius: 18px; }
+    .stage svg { display: block; width: 100%; height: 390px; }
+    .water-fill, .thermo-fill, .flame, .heat-wave { transition: all 0.5s ease; }
+    .heating .flame { animation: flame-flicker 0.38s infinite alternate ease-in-out; }
+    .heating .heat-wave { animation: heat-rise 1.1s infinite ease-in-out; opacity: 1; }
+    @keyframes flame-flicker { to { transform: scale(.84, 1.12) translateY(-3px); } }
+    @keyframes heat-rise { 50% { transform: translateY(-9px); opacity: .42; } }
+
+    .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 0.85rem; }
+    .control { padding: 0.75rem; background: #f7fafb; border: 1px solid var(--line); border-radius: 12px; }
+    .control label { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.4rem; font-size: 0.8rem; font-weight: 850; }
+    input[type="range"] { width: 100%; accent-color: var(--orange); }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+    .action-btn, .answer-btn { border: 1px solid var(--line); border-radius: 12px; background: #f8fbfc; color: var(--ink); cursor: pointer; font-weight: 850; transition: transform .15s ease, background .15s ease, border-color .15s ease; }
+    .action-btn { padding: 0.58rem 0.85rem; }
+    .action-btn.primary { color: white; background: var(--orange); border-color: var(--orange); }
+    .action-btn:hover, .answer-btn:hover { transform: translateY(-2px); }
+
+    .principles { display: grid; gap: 0.6rem; }
+    .principle { display: grid; grid-template-columns: auto 1fr; gap: 0.65rem; align-items: start; padding: 0.78rem; background: #f8fbfc; border: 1px solid var(--line); border-radius: 12px; }
+    .principle b { color: var(--blue-dark); font-size: 0.88rem; }
+    .principle p { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.8rem; }
+    .principle .icon { font-size: 1.3rem; }
+
+    .simulation-note { margin: 0.8rem 0 0; padding: 0.78rem; color: #77521b; background: #fff8df; border-left: 4px solid var(--amber); border-radius: 10px; font-size: 0.8rem; font-weight: 700; }
+    .answers { display: grid; gap: 0.56rem; margin-top: 1rem; }
+    .answer-btn { padding: 0.72rem 0.88rem; text-align: left; }
+    .answer-btn.correct { color: #14532d; background: #dcfce7; border: 2px solid #22c55e; }
+    .answer-btn.wrong { color: #7f1d1d; background: #fee2e2; border: 2px solid #ef4444; }
+    .answer-btn.dim { opacity: 0.62; }
+    .feedback { display: none; margin-top: 0.8rem; padding: 0.9rem; border-radius: 12px; font-size: 0.88rem; font-weight: 750; }
+    .feedback.show { display: block; }
+    .feedback.good { color: #14532d; background: #dcfce7; border: 1px solid #86efac; }
+    .feedback.bad { color: #7f1d1d; background: #fee2e2; border: 1px solid #fca5a5; }
+
+    .heat-dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; margin-top: 0.8rem; }
+    .heat-card { padding: 0.7rem 0.4rem; text-align: center; background: #f8fbfc; border: 1px solid var(--line); border-radius: 12px; }
+    .heat-card strong { display: block; color: var(--blue-dark); font-size: 0.8rem; }
+    .heat-card span { display: block; margin-top: 0.12rem; font-size: 1.03rem; font-weight: 950; }
+    .heat-card.loss span { color: var(--red); }
+
+    .formula-box { margin-top: 0.9rem; padding: 0.9rem; background: #eefaf5; border: 1px solid #b7e5d0; border-radius: 12px; }
+    .formula-box p { margin: 0.25rem 0; font-size: 0.86rem; }
+    .formula-box strong { color: var(--green); }
+    .timeline { margin-top: 0.85rem; }
+    .timeline label { display: flex; justify-content: space-between; gap: 0.8rem; margin-bottom: 0.38rem; font-size: 0.82rem; font-weight: 850; }
+
+    .reset-all { display: block; margin: 1.3rem auto 0; padding: 0.72rem 1.1rem; color: white; background: var(--ink); border: 0; border-radius: 999px; cursor: pointer; font-weight: 900; }
+    footer { padding: 2rem 1rem 3rem; color: var(--muted); text-align: center; font-size: 0.83rem; }
+
+    @media (max-width: 860px) { .lab-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) {
+      .topbar { align-items: flex-start; }
+      .crumbs { max-width: 62%; }
+      .question-head { grid-template-columns: 1fr; }
+      .q-number { width: 2.7rem; height: 2.7rem; }
+      .control-grid, .heat-dashboard { grid-template-columns: 1fr; }
+      .stage, .stage svg { min-height: 330px; height: 330px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="教材導覽">
+    <a class="crumbs" href="../index.html">← 個人主網頁 · 九年級複習 · 第三冊 · 單元5</a>
+    <a class="pdf-link" href="./assets/review-pdf/unit-05.pdf" target="_blank" rel="noopener noreferrer">開啟教用版 PDF ↗</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">講義 P.75 · 精選第 10、11 題</div>
+    <h1>加熱控制 × <span class="accent">熱量追蹤</span></h1>
+    <p class="lead">一題練控制變因，一題追蹤熱往哪裡去。先操作實驗，再回到講義原題作答。</p>
+    <div class="mission-nav">
+      <a href="#question-10">第 10 題｜加熱實驗控制變因</a>
+      <a href="#question-11">第 11 題｜6 分鐘熱量散失</a>
+    </div>
+  </header>
+
+  <main>
+    <article class="question-card" id="question-10">
+      <div class="question-head">
+        <div class="q-number">10</div>
+        <div>
+          <h2>固定熱源、比較水量，找出最合理的實驗原理</h2>
+          <p class="source-note">《實驗題》｜加熱時間與水溫度變化</p>
+          <p class="question-text">在探討加熱時間與水溫度變化的關係實驗中（如右圖），下列實驗操作或原理，何者最合理？</p>
+        </div>
+      </div>
+
+      <div class="lab-grid">
+        <section class="panel" aria-label="加熱時間與水量模擬">
+          <div class="panel-title"><span>🔥 固定熱源加熱模擬</span><span class="status-pill" id="q10-status">尚未加熱</span></div>
+          <div class="stage" id="heating-stage">
+            <svg viewBox="0 0 560 390" role="img" aria-labelledby="heat-title heat-desc">
+              <title id="heat-title">水的加熱控制變因實驗</title>
+              <desc id="heat-desc">調整水的質量與加熱時間，觀察相同熱源下的升溫變化。溫度計液囊懸在水中，不接觸杯底。</desc>
+              <rect width="560" height="390" fill="transparent"/>
+              <text x="25" y="38" fill="#183047" font-size="18" font-weight="900">控制：相同熱源、相同容器、相同初溫</text>
+              <text x="25" y="62" fill="#64758a" font-size="13">只改變水的質量與加熱時間，觀察上升溫度 ΔT</text>
+
+              <g transform="translate(105 80)">
+                <line x1="38" y1="244" x2="328" y2="244" stroke="#546d7a" stroke-width="7"/>
+                <line x1="65" y1="244" x2="50" y2="298" stroke="#546d7a" stroke-width="6"/>
+                <line x1="301" y1="244" x2="316" y2="298" stroke="#546d7a" stroke-width="6"/>
+                <path d="M85 69 L283 69 L267 226 Q265 235 253 235 L115 235 Q103 235 101 226 Z" fill="rgba(255,255,255,.62)" stroke="#1578a6" stroke-width="4"/>
+                <path id="beaker-water" class="water-fill" d="M101 142 L267 142 L259 222 Q258 228 250 228 L118 228 Q110 228 109 222 Z" fill="#66c5e8" opacity=".72"/>
+                <line x1="85" y1="69" x2="283" y2="69" stroke="#1578a6" stroke-width="4"/>
+                <text id="mass-label" x="184" y="188" text-anchor="middle" fill="#0c5678" font-size="22" font-weight="950">100 g 水</text>
+
+                <rect x="170" y="6" width="22" height="181" rx="10" fill="#f8fdff" stroke="#546d7a" stroke-width="3"/>
+                <rect id="q10-thermo" class="thermo-fill" x="177" y="132" width="8" height="47" rx="4" fill="#df3d62"/>
+                <circle cx="181" cy="183" r="12" fill="#df3d62" stroke="#9e2444" stroke-width="2"/>
+                <line x1="196" y1="170" x2="238" y2="170" stroke="#64758a" stroke-dasharray="4 3"/>
+                <text x="244" y="174" fill="#64758a" font-size="12">液囊懸在水中</text>
+                <text x="244" y="192" fill="#17835a" font-size="12" font-weight="900">不碰杯底 ✓</text>
+
+                <path class="flame" d="M184 296 C151 266 176 244 186 229 C188 253 211 259 201 280 C219 266 225 293 205 309 C198 315 170 315 162 307 C147 292 160 276 172 271 C168 284 176 291 184 296 Z" fill="#ee7446" transform-origin="184px 280px"/>
+                <path class="flame" d="M184 300 C172 285 185 270 189 260 C193 275 202 283 196 297 C193 304 187 306 184 300 Z" fill="#ffd25f" transform-origin="184px 280px"/>
+                <g class="heat-wave" opacity="0" fill="none" stroke="#ee7446" stroke-width="3" stroke-linecap="round">
+                  <path d="M132 257 Q122 244 132 231 Q142 218 132 205"/>
+                  <path d="M237 257 Q227 244 237 231 Q247 218 237 205"/>
+                </g>
+              </g>
+
+              <g transform="translate(395 102)">
+                <rect width="135" height="128" rx="16" fill="white" stroke="#cbdde5"/>
+                <text x="67" y="28" text-anchor="middle" fill="#64758a" font-size="12" font-weight="800">目前模擬結果</text>
+                <text id="temp-now" x="67" y="66" text-anchor="middle" fill="#df3d62" font-size="30" font-weight="950">25.0°C</text>
+                <text id="delta-now" x="67" y="94" text-anchor="middle" fill="#1578a6" font-size="15" font-weight="900">ΔT = 0.0°C</text>
+                <text id="time-now" x="67" y="116" text-anchor="middle" fill="#64758a" font-size="12">0.0 分鐘</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="control-grid">
+            <div class="control">
+              <label for="mass-slider"><span>水的質量</span><span id="mass-value">100 g</span></label>
+              <input id="mass-slider" type="range" min="100" max="200" step="100" value="100">
+            </div>
+            <div class="control">
+              <label for="time-slider"><span>加熱時間</span><span id="time-value">0.0 分</span></label>
+              <input id="time-slider" type="range" min="0" max="6" step="0.1" value="0">
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="action-btn primary" id="start-heat" type="button">▶ 開始固定加熱</button>
+            <button class="action-btn" id="reset-heat" type="button">↺ 重設</button>
+          </div>
+          <p class="simulation-note">模擬數值用來呈現比例關係：固定熱源、同種水與相同初溫下，100 g 水的升溫是 200 g 水的 2 倍；講義原題未指定實際熱源功率。</p>
+        </section>
+
+        <section class="panel" aria-label="第10題觀念與作答">
+          <div class="panel-title"><span>🧭 實驗判讀三關</span><span class="status-pill">控制變因</span></div>
+          <div class="principles">
+            <div class="principle"><span class="icon">🔥</span><div><b>熱源條件要固定</b><p>鐵環位置與酒精燈燈芯長度不可隨意改變。</p></div></div>
+            <div class="principle"><span class="icon">🌡️</span><div><b>溫度計液囊不可碰杯底</b><p>要量水溫，不是直接量受火焰加熱的杯底溫度。</p></div></div>
+            <div class="principle"><span class="icon">📈</span><div><b>比較的是上升溫度 ΔT</b><p>加熱時間相同，水量越少，上升溫度越大。</p></div></div>
+          </div>
+
+          <div class="answers" data-question="10">
+            <button class="answer-btn" type="button" data-choice="A">(A) 隨時改變鐵環的位置和酒精燈的燈芯長度</button>
+            <button class="answer-btn" type="button" data-choice="B">(B) 懸吊溫度計時，液囊要碰觸到燒杯的杯底，才能精確測量水溫</button>
+            <button class="answer-btn" type="button" data-choice="C">(C) 水的質量相同時，加熱時間與水的溫度成正比</button>
+            <button class="answer-btn" type="button" data-choice="D">(D) 加熱時間相同時，水上升的溫度與水的質量成反比</button>
+          </div>
+          <div class="feedback" id="feedback-10" role="status" aria-live="polite"></div>
+        </section>
+      </div>
+    </article>
+
+    <article class="question-card" id="question-11">
+      <div class="question-head">
+        <div class="q-number">11</div>
+        <div>
+          <h2>6 分鐘後，多少熱量散失到環境？</h2>
+          <p class="source-note">熱量守恆與環境散熱｜讀圖計算</p>
+          <p class="question-text">小安將 65°C、100g 的熱水如右圖(一)方式浸泡在 15°C、200g 的冷水中，測熱水的溫度並將結果繪於右圖(二)中。請問 6 分鐘內有多少卡的熱量散失？</p>
+        </div>
+      </div>
+
+      <div class="lab-grid">
+        <section class="panel" aria-label="熱水冷水熱交換時間軸">
+          <div class="panel-title"><span>⏱️ 熱交換動態追蹤</span><span class="status-pill" id="q11-status">0.0 分鐘</span></div>
+          <div class="stage">
+            <svg viewBox="0 0 560 390" role="img" aria-labelledby="cal-title cal-desc">
+              <title id="cal-title">熱水浸泡在冷水中的熱交換與溫度曲線</title>
+              <desc id="cal-desc">拖曳時間軸，觀察熱水由65度降至30度、冷水由15度升至30度，以及散失到環境的熱量。</desc>
+              <rect width="560" height="390" fill="transparent"/>
+
+              <g transform="translate(18 42)">
+                <path d="M20 55 L243 55 L232 245 Q230 260 214 260 L49 260 Q33 260 31 245 Z" fill="rgba(255,255,255,.6)" stroke="#1578a6" stroke-width="4"/>
+                <path d="M31 130 L232 130 L226 244 Q225 251 214 251 L49 251 Q38 251 37 244 Z" fill="#7bcbed" opacity=".65"/>
+                <path d="M87 72 L179 72 L172 213 Q171 221 163 221 L103 221 Q95 221 94 213 Z" fill="#fff" stroke="#536b78" stroke-width="3"/>
+                <path d="M94 142 L172 142 L168 211 Q167 215 162 215 L104 215 Q99 215 98 211 Z" fill="#f6a6a2" opacity=".75"/>
+                <text x="133" y="181" text-anchor="middle" fill="#9f2641" font-size="15" font-weight="900">100 g 熱水</text>
+                <text x="133" y="238" text-anchor="middle" fill="#0c5678" font-size="15" font-weight="900">200 g 冷水</text>
+                <rect x="116" y="26" width="12" height="143" rx="6" fill="#fff" stroke="#536b78" stroke-width="2"/>
+                <rect id="hot-thermo" x="120" y="52" width="4" height="112" rx="2" fill="#df3d62"/>
+                <text id="hot-label" x="194" y="98" fill="#df3d62" font-size="15" font-weight="950">熱水 65.0°C</text>
+                <text id="cold-label" x="194" y="122" fill="#1578a6" font-size="15" font-weight="950">冷水 15.0°C</text>
+                <g id="loss-arrows" opacity="0">
+                  <path d="M52 86 Q19 77 16 45" fill="none" stroke="#df3d62" stroke-width="4" marker-end="url(#arrowhead)"/>
+                  <path d="M214 86 Q249 76 251 43" fill="none" stroke="#df3d62" stroke-width="4" marker-end="url(#arrowhead)"/>
+                </g>
+              </g>
+
+              <defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#df3d62"/></marker></defs>
+
+              <g transform="translate(300 45)">
+                <rect width="238" height="245" rx="14" fill="white" stroke="#cbdde5"/>
+                <text x="119" y="24" text-anchor="middle" fill="#183047" font-size="13" font-weight="900">熱水溫度－時間圖</text>
+                <line x1="36" y1="210" x2="218" y2="210" stroke="#536b78" stroke-width="2"/>
+                <line x1="36" y1="210" x2="36" y2="42" stroke="#536b78" stroke-width="2"/>
+                <g stroke="#d9e5ea" stroke-width="1">
+                  <line x1="36" y1="70" x2="218" y2="70"/><line x1="36" y1="112" x2="218" y2="112"/><line x1="36" y1="154" x2="218" y2="154"/>
+                  <line x1="97" y1="42" x2="97" y2="210"/><line x1="158" y1="42" x2="158" y2="210"/>
+                </g>
+                <text x="22" y="72" text-anchor="end" fill="#64758a" font-size="10">60</text><text x="22" y="114" text-anchor="end" fill="#64758a" font-size="10">50</text><text x="22" y="156" text-anchor="end" fill="#64758a" font-size="10">40</text><text x="22" y="198" text-anchor="end" fill="#64758a" font-size="10">30</text>
+                <text x="36" y="227" text-anchor="middle" fill="#64758a" font-size="10">0</text><text x="97" y="227" text-anchor="middle" fill="#64758a" font-size="10">2</text><text x="158" y="227" text-anchor="middle" fill="#64758a" font-size="10">4</text><text x="218" y="227" text-anchor="middle" fill="#64758a" font-size="10">6 分</text>
+                <path d="M36 49 C65 90 105 128 145 156 C174 176 198 188 218 196" fill="none" stroke="#df3d62" stroke-width="4" stroke-linecap="round"/>
+                <line id="graph-guide" x1="36" y1="49" x2="36" y2="210" stroke="#ee7446" stroke-width="2" stroke-dasharray="4 4"/>
+                <circle id="graph-dot" cx="36" cy="49" r="7" fill="#fff" stroke="#df3d62" stroke-width="4"/>
+              </g>
+
+              <g transform="translate(300 310)">
+                <rect width="238" height="54" rx="13" fill="#eefaf5" stroke="#b7e5d0"/>
+                <text id="balance-label" x="119" y="23" text-anchor="middle" fill="#17835a" font-size="13" font-weight="900">熱交換剛開始</text>
+                <text id="loss-label" x="119" y="43" text-anchor="middle" fill="#df3d62" font-size="15" font-weight="950">散失 0 卡</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="timeline">
+            <label for="minute-slider"><span>時間軸</span><span id="minute-value">0.0 分鐘</span></label>
+            <input id="minute-slider" type="range" min="0" max="6" step="0.1" value="0">
+          </div>
+          <div class="action-row">
+            <button class="action-btn primary" id="play-heat-exchange" type="button">▶ 播放 0～6 分鐘</button>
+            <button class="action-btn" id="reset-exchange" type="button">↺ 回到 0 分鐘</button>
+          </div>
+        </section>
+
+        <section class="panel" aria-label="第11題熱量計算與作答">
+          <div class="panel-title"><span>🧮 熱量帳本</span><span class="status-pill">H = M × S × ΔT</span></div>
+          <div class="heat-dashboard">
+            <div class="heat-card"><strong>熱水放熱</strong><span id="released-heat">0 卡</span></div>
+            <div class="heat-card"><strong>冷水吸熱</strong><span id="absorbed-heat">0 卡</span></div>
+            <div class="heat-card loss"><strong>散失至環境</strong><span id="lost-heat">0 卡</span></div>
+          </div>
+          <div class="formula-box" id="formula-box">
+            <p><strong>先把時間拉到 6 分鐘：</strong>讀圖可得熱水最後為 30°C，冷、熱水達熱平衡。</p>
+            <p>熱水放熱：100 × 1 × (65 − 30) = 3500 卡</p>
+            <p>冷水吸熱：200 × 1 × (30 − 15) = 3000 卡</p>
+            <p>散失熱量：3500 − 3000 = <strong>500 卡</strong></p>
+          </div>
+
+          <div class="answers" data-question="11">
+            <button class="answer-btn" type="button" data-choice="A">(A) 500</button>
+            <button class="answer-btn" type="button" data-choice="B">(B) 1000</button>
+            <button class="answer-btn" type="button" data-choice="C">(C) 1500</button>
+            <button class="answer-btn" type="button" data-choice="D">(D) 3000</button>
+          </div>
+          <div class="feedback" id="feedback-11" role="status" aria-live="polite"></div>
+        </section>
+      </div>
+    </article>
+
+    <button class="reset-all" id="reset-all" type="button">🔄 兩題全部重新挑戰</button>
+  </main>
+
+  <footer>九年級複習 · 第三冊 · 單元5 溫度與熱量｜題目來源：指定教用講義第 75 頁</footer>
+
+  <script>
+    const massSlider = document.getElementById('mass-slider');
+    const timeSlider = document.getElementById('time-slider');
+    const heatingStage = document.getElementById('heating-stage');
+    let heatingTimer = null;
+
+    function updateHeating() {
+      const mass = Number(massSlider.value);
+      const time = Number(timeSlider.value);
+      const delta = 30 * (time / 6) * (100 / mass);
+      const temperature = 25 + delta;
+      const waterTop = mass === 100 ? 142 : 104;
+      const thermoHeight = 47 + delta * 1.55;
+      const thermoY = 179 - thermoHeight;
+
+      document.getElementById('mass-value').textContent = mass + ' g';
+      document.getElementById('time-value').textContent = time.toFixed(1) + ' 分';
+      document.getElementById('mass-label').textContent = mass + ' g 水';
+      document.getElementById('temp-now').textContent = temperature.toFixed(1) + '°C';
+      document.getElementById('delta-now').textContent = 'ΔT = ' + delta.toFixed(1) + '°C';
+      document.getElementById('time-now').textContent = time.toFixed(1) + ' 分鐘';
+      document.getElementById('q10-status').textContent = time > 0 ? '固定加熱 · ' + mass + ' g' : '尚未加熱';
+      document.getElementById('beaker-water').setAttribute('d', 'M101 ' + waterTop + ' L267 ' + waterTop + ' L259 222 Q258 228 250 228 L118 228 Q110 228 109 222 Z');
+      document.getElementById('q10-thermo').setAttribute('y', thermoY.toFixed(1));
+      document.getElementById('q10-thermo').setAttribute('height', thermoHeight.toFixed(1));
+      heatingStage.classList.toggle('heating', time > 0 && time < 6 && Boolean(heatingTimer));
+    }
+
+    function stopHeating() {
+      if (heatingTimer) window.clearInterval(heatingTimer);
+      heatingTimer = null;
+      document.getElementById('start-heat').textContent = Number(timeSlider.value) >= 6 ? '↺ 重新加熱' : '▶ 開始固定加熱';
+      updateHeating();
+    }
+
+    function toggleHeating() {
+      if (heatingTimer) { stopHeating(); return; }
+      if (Number(timeSlider.value) >= 6) timeSlider.value = 0;
+      document.getElementById('start-heat').textContent = '⏸ 暫停';
+      heatingTimer = window.setInterval(() => {
+        const next = Math.min(6, Number(timeSlider.value) + 0.1);
+        timeSlider.value = next.toFixed(1);
+        updateHeating();
+        if (next >= 6) stopHeating();
+      }, 65);
+      updateHeating();
+    }
+
+    massSlider.addEventListener('input', updateHeating);
+    timeSlider.addEventListener('input', () => { stopHeating(); updateHeating(); });
+    document.getElementById('start-heat').addEventListener('click', toggleHeating);
+    document.getElementById('reset-heat').addEventListener('click', () => { stopHeating(); massSlider.value = 100; timeSlider.value = 0; updateHeating(); });
+
+    const minuteSlider = document.getElementById('minute-slider');
+    let exchangeTimer = null;
+
+    function hotTemperature(minute) {
+      const ratio = (1 - Math.exp(-minute / 2.8)) / (1 - Math.exp(-6 / 2.8));
+      return 65 - 35 * ratio;
+    }
+
+    function coldTemperature(minute) {
+      const ratio = (1 - Math.exp(-minute / 2.8)) / (1 - Math.exp(-6 / 2.8));
+      return 15 + 15 * ratio;
+    }
+
+    function updateExchange() {
+      const minute = Number(minuteSlider.value);
+      const hot = hotTemperature(minute);
+      const cold = coldTemperature(minute);
+      const released = Math.round(100 * (65 - hot));
+      const absorbed = Math.round(200 * (cold - 15));
+      const lost = Math.max(0, released - absorbed);
+      const ratio = minute / 6;
+      const graphX = 36 + 182 * ratio;
+      const graphY = 49 + 147 * ((65 - hot) / 35);
+      const thermoHeight = 45 + (hot - 30) * 1.9;
+      const thermoY = 164 - thermoHeight;
+
+      document.getElementById('minute-value').textContent = minute.toFixed(1) + ' 分鐘';
+      document.getElementById('q11-status').textContent = minute.toFixed(1) + ' 分鐘';
+      document.getElementById('hot-label').textContent = '熱水 ' + hot.toFixed(1) + '°C';
+      document.getElementById('cold-label').textContent = '冷水 ' + cold.toFixed(1) + '°C';
+      document.getElementById('hot-thermo').setAttribute('y', thermoY.toFixed(1));
+      document.getElementById('hot-thermo').setAttribute('height', thermoHeight.toFixed(1));
+      document.getElementById('graph-guide').setAttribute('x1', graphX.toFixed(1));
+      document.getElementById('graph-guide').setAttribute('x2', graphX.toFixed(1));
+      document.getElementById('graph-guide').setAttribute('y1', graphY.toFixed(1));
+      document.getElementById('graph-dot').setAttribute('cx', graphX.toFixed(1));
+      document.getElementById('graph-dot').setAttribute('cy', graphY.toFixed(1));
+      document.getElementById('released-heat').textContent = released + ' 卡';
+      document.getElementById('absorbed-heat').textContent = absorbed + ' 卡';
+      document.getElementById('lost-heat').textContent = lost + ' 卡';
+      document.getElementById('loss-arrows').setAttribute('opacity', minute > 0 ? Math.min(.9, .2 + ratio).toFixed(2) : '0');
+      document.getElementById('balance-label').textContent = minute >= 6 ? '6 分鐘 · 冷熱水達 30°C' : (minute > 0 ? '熱水放熱 · 冷水吸熱' : '熱交換剛開始');
+      document.getElementById('loss-label').textContent = '散失 ' + lost + ' 卡';
+    }
+
+    function stopExchange() {
+      if (exchangeTimer) window.clearInterval(exchangeTimer);
+      exchangeTimer = null;
+      document.getElementById('play-heat-exchange').textContent = Number(minuteSlider.value) >= 6 ? '↺ 重新播放' : '▶ 播放 0～6 分鐘';
+    }
+
+    function toggleExchange() {
+      if (exchangeTimer) { stopExchange(); return; }
+      if (Number(minuteSlider.value) >= 6) minuteSlider.value = 0;
+      document.getElementById('play-heat-exchange').textContent = '⏸ 暫停';
+      exchangeTimer = window.setInterval(() => {
+        const next = Math.min(6, Number(minuteSlider.value) + 0.1);
+        minuteSlider.value = next.toFixed(1);
+        updateExchange();
+        if (next >= 6) stopExchange();
+      }, 65);
+    }
+
+    minuteSlider.addEventListener('input', () => { stopExchange(); updateExchange(); });
+    document.getElementById('play-heat-exchange').addEventListener('click', toggleExchange);
+    document.getElementById('reset-exchange').addEventListener('click', () => { stopExchange(); minuteSlider.value = 0; updateExchange(); });
+
+    const answerKeys = { '10': 'D', '11': 'A' };
+    const explanations = {
+      '10': '探討加熱時間時，熱源、容器與溫度計位置等條件要固定；溫度計液囊不可碰杯底。固定加熱時間代表吸收熱量相同，同種物質的升溫 ΔT 與質量 M 成反比，因此正解為 (D)。',
+      '11': '6 分鐘時熱水降至 30°C：熱水放出 100 × 1 × (65 − 30) = 3500 卡；冷水吸收 200 × 1 × (30 − 15) = 3000 卡。兩者相差 500 卡，即散失到環境的熱量，正解為 (A)。'
+    };
+
+    function checkAnswer(question, choice) {
+      const group = document.querySelector('[data-question="' + question + '"]');
+      const feedback = document.getElementById('feedback-' + question);
+      const correct = answerKeys[question];
+      group.querySelectorAll('.answer-btn').forEach((button) => {
+        button.classList.remove('correct', 'wrong', 'dim');
+        if (button.dataset.choice === correct) button.classList.add('correct');
+        else if (button.dataset.choice === choice) button.classList.add('wrong');
+        else button.classList.add('dim');
+      });
+      const isCorrect = choice === correct;
+      feedback.className = 'feedback show ' + (isCorrect ? 'good' : 'bad');
+      feedback.innerHTML = (isCorrect ? '✅ <strong>答對了！</strong> ' : '🔎 <strong>再檢查控制變因與熱量帳本。</strong> ') + explanations[question];
+    }
+
+    document.querySelectorAll('.answers').forEach((group) => group.querySelectorAll('.answer-btn').forEach((button) => button.addEventListener('click', () => checkAnswer(group.dataset.question, button.dataset.choice))));
+
+    function resetAll() {
+      stopHeating();
+      stopExchange();
+      massSlider.value = 100;
+      timeSlider.value = 0;
+      minuteSlider.value = 0;
+      updateHeating();
+      updateExchange();
+      document.querySelectorAll('.answer-btn').forEach((button) => button.classList.remove('correct', 'wrong', 'dim'));
+      document.querySelectorAll('.feedback').forEach((feedback) => { feedback.className = 'feedback'; feedback.textContent = ''; });
+      document.getElementById('question-10').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.getElementById('reset-all').addEventListener('click', resetAll);
+    updateHeating();
+    updateExchange();
+  </script>
+</body>
+</html>

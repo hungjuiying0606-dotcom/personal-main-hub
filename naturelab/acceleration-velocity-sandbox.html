@@ -894,8 +894,16 @@
       }
 
       // Car Avatar
+      stageCtx.save();
       stageCtx.font = '40px sans-serif';
-      stageCtx.fillText('🏎️', carPx - 25, cy + 10);
+      stageCtx.textAlign = 'center';
+      stageCtx.textBaseline = 'middle';
+      stageCtx.translate(carPx, cy + 10);
+      if (curV >= 0) {
+        stageCtx.scale(-1, 1);
+      }
+      stageCtx.fillText('🏎️', 0, 0);
+      stageCtx.restore();
 
       // Draw Vector Arrow: Velocity (Blue)
       const vLen = curV * 7;

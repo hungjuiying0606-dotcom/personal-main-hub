@@ -728,15 +728,29 @@
 
       // Cars
       const pxA = toPx(xA);
+      trackCtx.save();
       trackCtx.font = '28px sans-serif';
-      trackCtx.fillText('🏎️', pxA - 15, 52);
-      trackCtx.fillStyle = '#60a5fa'; trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.textAlign = 'center';
+      trackCtx.textBaseline = 'middle';
+      trackCtx.translate(pxA, 42);
+      trackCtx.scale(-1, 1);
+      trackCtx.fillText('🏎️', 0, 0);
+      trackCtx.restore();
+
+      trackCtx.fillStyle = '#60a5fa'; trackCtx.font = 'bold 11px Noto Sans TC'; trackCtx.textAlign = 'left';
       trackCtx.fillText(`甲車 (${vA.toFixed(0)}m/s, ${xA.toFixed(0)}m)`, pxA - 20, 22);
 
       const pxB = toPx(xB);
+      trackCtx.save();
       trackCtx.font = '28px sans-serif';
-      trackCtx.fillText('🏎️', pxB - 15, 122);
-      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.textAlign = 'center';
+      trackCtx.textBaseline = 'middle';
+      trackCtx.translate(pxB, 112);
+      trackCtx.scale(-1, 1);
+      trackCtx.fillText('🏎️', 0, 0);
+      trackCtx.restore();
+
+      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC'; trackCtx.textAlign = 'left';
       trackCtx.fillText(`乙車 (${vB.toFixed(0)}m/s, ${xB.toFixed(0)}m)`, pxB - 20, 92);
     }
 
