@@ -618,12 +618,16 @@
 
   <script>
     // State & Physics
-    let curV = 5.0;     // m/s
-    let curA = 2.0;     // m/s^2
-    let curX = 0.0;     // m
+    let curV = 2.0;     // m/s
+    let curA = 3.0;     // m/s^2
+    let curX = -12.0;   // m
+    let initV = 2.0;
+    let initA = 3.0;
+    let initX = -12.0;
     let isPlaying = false;
     let animId = null;
     let lastTime = 0;
+    let stopReason = null; // null | 'reached_right' | 'reached_left' | 'stopped_zero_v'
 
     // Canvas
     const stageCanvas = document.getElementById('stageCanvas');
@@ -634,25 +638,44 @@
       if (el) el.classList.add('active');
 
       if (type === 'right_accel') {
-        curV = 4.0; curA = 3.0;
+        // ① 向右起步加速：課本圖 1-19
+        initV = 2.0; initA = 3.0; initX = -12.0;
       } else if (type === 'right_brake') {
-        curV = 8.0; curA = -3.0;
+        // ② 向右煞車減速：課本圖 1-20 (於 +0.7m 處速度降為 0 停止)
+        initV = 8.0; initA = -3.0; initX = -10.0;
       } else if (type === 'left_accel') {
-        curV = -4.0; curA = -3.0;
+        // ③ 向左倒車加速
+        initV = -2.0; initA = -3.0; initX = 12.0;
       } else if (type === 'left_brake') {
-        curV = -8.0; curA = 3.0;
+        // ④ 向左倒車煞車 (於 -0.7m 處速度降為 0 停止)
+        initV = -8.0; initA = 3.0; initX = 10.0;
       }
 
-      curX = 0.0;
+      curV = initV;
+      curA = initA;
+      curX = initX;
+      stopReason = null;
+
       document.getElementById('sliderV').value = curV;
       document.getElementById('sliderA').value = curA;
-      onParamChange();
-      resetSim();
+      
+      resetSimState();
+      updateStatusCard();
+      drawStage();
     }
 
-    function onParamChange() {
+    function onParamChange(isReset = false) {
       curV = parseFloat(document.getElementById('sliderV').value);
       curA = parseFloat(document.getElementById('sliderA').value);
+
+      if (!isPlaying) {
+        initV = curV;
+        initA = curA;
+        stopReason = null;
+        if (curX >= 15.0 && curV > 0) curX = -12.0;
+        if (curX <= -15.0 && curV < 0) curX = 12.0;
+        initX = curX;
+      }
 
       document.getElementById('sliderVVal').innerText = `${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s`;
       document.getElementById('sliderAVal').innerText = `${curA > 0 ? '+' : ''}${curA.toFixed(1)} m/s²`;
@@ -664,41 +687,97 @@
     function toggleSim() {
       const btn = document.getElementById('btnPlay');
       if (!isPlaying) {
+        // If at boundary or stopped at v=0, reset to initial starting state and start
+        if (stopReason || curX >= 15.0 || curX <= -15.0 || (curV === 0 && curA === 0) || btn.innerText.includes('重新開始')) {
+          resetSim();
+        }
         isPlaying = true;
+        stopReason = null;
         btn.innerText = '⏸ 暫停運動';
         btn.style.background = '#dc2626';
         lastTime = performance.now();
-        loop();
+        animId = requestAnimationFrame(loop);
       } else {
         isPlaying = false;
         btn.innerText = '▶ 繼續運動';
         btn.style.background = 'var(--velocity-color)';
-        if (animId) cancelAnimationFrame(animId);
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
       }
     }
 
     function resetSim() {
       isPlaying = false;
-      curX = 0.0;
-      document.getElementById('btnPlay').innerText = '▶ 啟動物理運動';
-      document.getElementById('btnPlay').style.background = 'var(--velocity-color)';
-      if (animId) cancelAnimationFrame(animId);
-      onParamChange();
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+      stopReason = null;
+      curX = initX;
+      curV = initV;
+      curA = initA;
+      document.getElementById('sliderV').value = curV;
+      document.getElementById('sliderA').value = curA;
+      document.getElementById('sliderVVal').innerText = `${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s`;
+      document.getElementById('sliderAVal').innerText = `${curA > 0 ? '+' : ''}${curA.toFixed(1)} m/s²`;
+      resetSimState();
+      updateStatusCard();
+      drawStage();
+    }
+
+    function resetSimState() {
+      const btn = document.getElementById('btnPlay');
+      btn.innerText = '▶ 啟動物理運動';
+      btn.style.background = 'var(--velocity-color)';
+    }
+
+    function haltSim() {
+      isPlaying = false;
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+      const btn = document.getElementById('btnPlay');
+      btn.innerText = '🔄 重新開始';
+      btn.style.background = 'var(--velocity-color)';
     }
 
     function loop(now) {
       if (!isPlaying) return;
       if (!now) now = performance.now();
-      const dt = (now - lastTime) / 1000;
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
 
-      // Euler integration
-      curV += curA * dt;
-      curX += curV * dt;
+      const prevV = curV;
+      const newV = curV + curA * dt;
 
-      // Wrap around track x = -20m to +20m
-      if (curX > 20) curX = -20;
-      if (curX < -20) curX = 20;
+      // 1. 速度是 0 就停止（煞車減速至速度降為 0 時停止）
+      if (prevV !== 0 && (prevV * curA < 0)) {
+        if ((prevV > 0 && newV <= 0) || (prevV < 0 && newV >= 0)) {
+          // 計算剛好達到 v = 0 的時間點與精準位移
+          const dt_stop = -prevV / curA;
+          curX += prevV * dt_stop + 0.5 * curA * dt_stop * dt_stop;
+          curV = 0.0;
+          stopReason = 'stopped_zero_v';
+        } else {
+          curV = newV;
+          curX += (prevV + curV) * 0.5 * dt;
+        }
+      } else {
+        curV = newV;
+        curX += (prevV + curV) * 0.5 * dt;
+      }
+
+      // 2. 前進或後退到畫面的最右端(+15m)或最左端(-15m)就停止
+      if (curX >= 15.0) {
+        curX = 15.0;
+        stopReason = 'reached_right';
+      } else if (curX <= -15.0) {
+        curX = -15.0;
+        stopReason = 'reached_left';
+      }
 
       document.getElementById('sliderV').value = curV.toFixed(1);
       document.getElementById('sliderVVal').innerText = `${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s`;
@@ -706,7 +785,11 @@
       updateStatusCard();
       drawStage();
 
-      if (isPlaying) animId = requestAnimationFrame(loop);
+      if (stopReason) {
+        haltSim();
+      } else if (isPlaying) {
+        animId = requestAnimationFrame(loop);
+      }
     }
 
     function updateStatusCard() {
@@ -719,24 +802,48 @@
       const title = document.getElementById('statusHeadline');
       const desc = document.getElementById('statusDesc');
 
-      const isSameDir = (curV * curA > 0);
-      const isStopped = (Math.abs(curV) < 0.1);
-
-      if (isStopped) {
+      if (stopReason === 'stopped_zero_v') {
         card.className = 'status-card slowdown';
-        tag.innerText = '⚠️ 瞬間靜止 / 折返點';
-        title.innerText = '速度瞬間為 0！';
-        desc.innerText = curA !== 0 ? `若加速度 (${curA > 0 ? '+' : ''}${curA} m/s²) 持續作用，小車將立即向${curA > 0 ? '右' : '左'}折返加速！` : '小車完全停止。';
+        tag.innerText = '🛑 煞車完成 · 速度為 0 停止';
+        title.innerText = '小車已完全煞停！';
+        desc.innerText = `加速度與運動方向相反（反向阻力），速度順利降至 0.0 m/s 完全靜止（課本圖 1-20 煞車情境）。`;
+        return;
+      }
+
+      if (stopReason === 'reached_right') {
+        card.className = 'status-card speedup';
+        tag.innerText = '🏁 已達跑道最右端 (+15m)';
+        title.innerText = '抵達右側終點停止！';
+        desc.innerText = `小車向前行駛已抵達最右端邊界 (+15.0 m)，運動自動停止。`;
+        return;
+      }
+
+      if (stopReason === 'reached_left') {
+        card.className = 'status-card speedup';
+        tag.innerText = '🏁 已達跑道最左端 (-15m)';
+        title.innerText = '抵達左側終點停止！';
+        desc.innerText = `小車向後行駛已抵達最左端邊界 (-15.0 m)，運動自動停止。`;
+        return;
+      }
+
+      const isSameDir = (curV * curA > 0);
+      const isVZero = (curV === 0);
+
+      if (isVZero) {
+        card.className = 'status-card slowdown';
+        tag.innerText = '⏸ 初始靜止狀態 (v = 0)';
+        title.innerText = '小車目前為靜止';
+        desc.innerText = curA !== 0 ? `若施加加速度 (${curA > 0 ? '+' : ''}${curA} m/s²)，小車將自靜止起步向${curA > 0 ? '右' : '左'}加速！` : '初速度與加速度皆為 0，物體維持靜止。';
       } else if (isSameDir) {
         card.className = 'status-card speedup';
         tag.innerText = '⚡ 同向運動 · 正在加速';
         title.innerText = '速度越來越快！';
-        desc.innerText = `加速度 a (${curA > 0 ? '+' : ''}${curA}) 與速度 v (${curV > 0 ? '+' : ''}${curV.toFixed(1)}) 同方向，每秒速度持續增加。`;
+        desc.innerText = `加速度 a (${curA > 0 ? '+' : ''}${curA.toFixed(1)}) 與速度 v (${curV > 0 ? '+' : ''}${curV.toFixed(1)}) 同方向，每秒速度持續增加（課本圖 1-19）。`;
       } else {
         card.className = 'status-card slowdown';
         tag.innerText = '🛑 反向阻力 · 正在減速';
         title.innerText = '速度越來越慢！';
-        desc.innerText = `加速度 a (${curA > 0 ? '+' : ''}${curA}) 與速度 v (${curV > 0 ? '+' : ''}${curV.toFixed(1)}) 反方向，相當於踩煞車，速度逐漸減小。`;
+        desc.innerText = `加速度 a (${curA > 0 ? '+' : ''}${curA.toFixed(1)}) 與速度 v (${curV > 0 ? '+' : ''}${curV.toFixed(1)}) 反方向，相當於踩煞車，速度逐漸減小（課本圖 1-20）。`;
       }
     }
 
@@ -781,13 +888,14 @@
         } else if (!isSame && Math.abs(curV) > 0.5) {
           // Smoke
           stageCtx.font = '20px sans-serif';
-          stageCtx.fillText('💨', carPx - 10, cy + 20);
+          const smokeX = curV >= 0 ? carPx - 30 : carPx + 15;
+          stageCtx.fillText('💨', smokeX, cy + 5);
         }
       }
 
       // Car Avatar
       stageCtx.font = '40px sans-serif';
-      stageCtx.fillText(curV < 0 ? '🏎️' : '🏎️', carPx - 25, cy + 10);
+      stageCtx.fillText('🏎️', carPx - 25, cy + 10);
 
       // Draw Vector Arrow: Velocity (Blue)
       const vLen = curV * 7;
@@ -859,7 +967,7 @@
 
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      onParamChange();
+      loadScenario('right_accel', document.querySelector('.scenario-btn.active'));
     });
   </script>
 
