@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="九年級理化第三冊單元5，講義第74頁第3、4題互動實驗室：液體溫度計選材與氣體熱膨脹。">
+  <title>單元5｜P.74 第3、4題互動實驗室</title>
+  <style>
+    :root {
+      --ink: #17324d;
+      --muted: #5d7185;
+      --paper: #fffdf8;
+      --mint: #dff7f2;
+      --teal: #087f8c;
+      --teal-dark: #075b66;
+      --coral: #ef6a6a;
+      --amber: #f2b84b;
+      --sky: #dff2ff;
+      --line: #c9dce2;
+      --good: #15803d;
+      --bad: #b42318;
+      --shadow: 0 18px 50px rgba(26, 73, 86, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 4%, rgba(255, 214, 153, 0.38), transparent 26rem),
+        radial-gradient(circle at 95% 20%, rgba(116, 214, 202, 0.28), transparent 28rem),
+        #f4fbfa;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+
+    button, input { font: inherit; }
+    button { touch-action: manipulation; }
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem clamp(1rem, 4vw, 3rem);
+      background: rgba(255, 253, 248, 0.92);
+      border-bottom: 1px solid rgba(8, 127, 140, 0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .crumbs { color: var(--teal-dark); }
+    .pdf-link {
+      padding: 0.45rem 0.8rem;
+      color: white;
+      background: var(--teal);
+      border-radius: 999px;
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 7vw, 5rem) 1rem 2.2rem;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.8rem;
+      color: var(--teal-dark);
+      background: white;
+      border: 1px solid #abdcd7;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      box-shadow: 0 7px 20px rgba(8, 127, 140, 0.08);
+    }
+
+    h1 {
+      margin: 1rem auto 0.65rem;
+      max-width: 850px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    .accent { color: var(--teal); }
+    .lead {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .mission-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.4rem;
+    }
+
+    .mission-nav a {
+      padding: 0.55rem 0.9rem;
+      text-decoration: none;
+      color: var(--ink);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto 4rem;
+    }
+
+    .question-card {
+      margin-bottom: 2rem;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid rgba(8, 127, 140, 0.22);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .question-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      background: linear-gradient(135deg, white, var(--mint));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .q-number {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      color: white;
+      background: var(--teal);
+      border-radius: 50%;
+      font-size: 1.3rem;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgba(8, 127, 140, 0.25);
+    }
+
+    .question-head h2 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+      line-height: 1.35;
+    }
+
+    .source-note { margin: 0; color: var(--muted); font-size: 0.9rem; }
+    .question-text { margin: 0.9rem 0 0; font-weight: 700; }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 1.25rem;
+      padding: clamp(1rem, 3vw, 2rem);
+    }
+
+    .panel {
+      padding: clamp(1rem, 2.2vw, 1.4rem);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .status-pill {
+      padding: 0.28rem 0.65rem;
+      color: var(--teal-dark);
+      background: var(--mint);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .liquid-picker {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .liquid-btn, .temp-btn, .answer-btn, .action-btn {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fbfc;
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 850;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .liquid-btn { padding: 0.55rem; }
+    .liquid-btn:hover, .temp-btn:hover, .answer-btn:hover, .action-btn:hover { transform: translateY(-2px); }
+    .liquid-btn.active { color: white; background: var(--teal); border-color: var(--teal); }
+
+    .experiment-stage {
+      position: relative;
+      min-height: 355px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #eaf8ff 0%, #fdfcf5 70%);
+      border: 1px solid #c4e1eb;
+      border-radius: 18px;
+    }
+
+    .experiment-stage svg { display: block; width: 100%; height: 355px; }
+
+    .thermo-liquid {
+      transition: y 0.55s cubic-bezier(.2,.8,.2,1), height 0.55s cubic-bezier(.2,.8,.2,1), fill 0.3s ease;
+    }
+
+    .bubble { transform-box: fill-box; transform-origin: center; opacity: 0; }
+    .boiling .bubble { animation: bubble-rise 1.2s infinite ease-in; opacity: 0.9; }
+    .boiling .bubble:nth-of-type(2) { animation-delay: -0.45s; }
+    .boiling .bubble:nth-of-type(3) { animation-delay: -0.8s; }
+
+    @keyframes bubble-rise {
+      from { transform: translateY(24px) scale(0.65); opacity: 0; }
+      35% { opacity: 0.9; }
+      to { transform: translateY(-38px) scale(1.15); opacity: 0; }
+    }
+
+    .temp-controls {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.45rem;
+      margin-top: 0.8rem;
+    }
+
+    .temp-btn { padding: 0.48rem 0.25rem; font-size: 0.8rem; }
+    .temp-btn.active { color: #7a4300; background: #fff0ca; border-color: var(--amber); }
+
+    .data-table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 420px; font-size: 0.86rem; }
+    th, td { padding: 0.57rem 0.45rem; text-align: center; border: 1px solid #abd6d5; }
+    thead th { background: #dff3f1; }
+    tbody th { background: #eff9f8; }
+    tbody tr { cursor: pointer; transition: background 0.15s ease; }
+    tbody tr:hover { background: #f4fbfa; }
+    tbody tr.active { outline: 3px solid rgba(8, 127, 140, 0.35); outline-offset: -3px; background: #e6f8f4; }
+
+    .observation {
+      margin: 0.9rem 0 0;
+      padding: 0.8rem;
+      color: #2a5360;
+      background: #f0faf8;
+      border-left: 4px solid var(--teal);
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .answer-panel { margin-top: 1rem; }
+    .answers { display: grid; gap: 0.58rem; }
+    .answer-btn { padding: 0.75rem 0.9rem; text-align: left; }
+    .answer-btn.correct { color: #14532d; background: #dcfce7; border: 2px solid #22c55e; }
+    .answer-btn.wrong { color: #7f1d1d; background: #fee2e2; border: 2px solid #ef4444; }
+    .answer-btn.dim { opacity: 0.62; }
+
+    .feedback {
+      display: none;
+      margin-top: 0.8rem;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { color: #14532d; background: #dcfce7; border: 1px solid #86efac; }
+    .feedback.bad { color: #7f1d1d; background: #fee2e2; border: 1px solid #fca5a5; }
+
+    .warm-stage { min-height: 420px; }
+    .warm-stage svg { height: 420px; }
+    .air-dot { transition: transform 0.8s ease, opacity 0.5s ease; transform-box: fill-box; transform-origin: center; }
+    .warm .air-dot:nth-of-type(odd) { transform: translate(13px, -9px); }
+    .warm .air-dot:nth-of-type(even) { transform: translate(-12px, 11px); }
+    .warm .air-dot { animation: air-jitter 0.5s infinite alternate ease-in-out; }
+    .water-column { transition: y 1.2s cubic-bezier(.2,.8,.2,1), height 1.2s cubic-bezier(.2,.8,.2,1); }
+    .heat-wave { opacity: 0; transition: opacity 0.35s ease; }
+    .warm .heat-wave { opacity: 1; animation: heat-float 1.25s infinite ease-in-out; }
+
+    @keyframes air-jitter { to { translate: 3px -3px; } }
+    @keyframes heat-float { 50% { transform: translateY(-8px); opacity: 0.45; } }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+    .action-btn { padding: 0.62rem 0.9rem; }
+    .action-btn.primary { color: white; background: var(--coral); border-color: var(--coral); }
+
+    .concept-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.9rem;
+    }
+    .concept-chip { padding: 0.75rem; background: #f7fafb; border: 1px solid var(--line); border-radius: 12px; text-align: center; }
+    .concept-chip strong { display: block; color: var(--teal-dark); font-size: 0.85rem; }
+    .concept-chip span { font-size: 0.76rem; color: var(--muted); }
+
+    .reset-all {
+      display: block;
+      margin: 1.4rem auto 0;
+      padding: 0.75rem 1.15rem;
+      color: white;
+      background: var(--ink);
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    footer { padding: 2rem 1rem 3rem; color: var(--muted); text-align: center; font-size: 0.84rem; }
+
+    @media (max-width: 860px) {
+      .lab-grid { grid-template-columns: 1fr; }
+      .warm-stage { min-height: 360px; }
+      .warm-stage svg { height: 360px; }
+    }
+
+    @media (max-width: 520px) {
+      .topbar { align-items: flex-start; }
+      .crumbs { max-width: 62%; }
+      .question-head { grid-template-columns: 1fr; }
+      .q-number { width: 2.6rem; height: 2.6rem; }
+      .concept-strip { grid-template-columns: 1fr; }
+      .temp-controls { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="教材導覽">
+    <a class="crumbs" href="../index.html">← 個人主網頁 · 九年級複習 · 第三冊 · 單元5</a>
+    <a class="pdf-link" href="./assets/review-pdf/unit-05.pdf" target="_blank" rel="noopener noreferrer">開啟教用版 PDF ↗</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">會考輕鬆試 · 講義 P.74 · 第 3、4 題</div>
+    <h1>溫度計選材 × <span class="accent">熱膨脹解謎</span></h1>
+    <p class="lead">先動手觀察，再回答原題。兩關都破解，就能把「溫度計靈敏度」與「氣體熱膨脹」一次串起來。</p>
+    <div class="mission-nav">
+      <a href="#question-3">第 3 題｜選出合適的測溫液體</a>
+      <a href="#question-4">第 4 題｜讓有色水柱升高</a>
+    </div>
+  </header>
+
+  <main>
+    <article class="question-card" id="question-3">
+      <div class="question-head">
+        <div class="q-number">3</div>
+        <div>
+          <h2>哪一種液體，最適合測量水的凝固點和沸點？</h2>
+          <p class="source-note">重點 1｜溫度、溫度計與溫標</p>
+          <p class="question-text">阿明於一大氣壓下將錐形瓶分別裝入甲～丁四種不同液體（如下圖），觀察在不同溫度下，玻璃細管中的液面高度及液體狀態，結果如下表所示。若要以此裝置測量水的凝固點和沸點，應使用何種液體較為準確？</p>
+        </div>
+      </div>
+
+      <div class="lab-grid">
+        <section class="panel" aria-label="液體溫度計互動觀察">
+          <div class="panel-title"><span>🔬 互動觀察站</span><span class="status-pill" id="q3-status">甲 · -10°C</span></div>
+          <div class="liquid-picker" aria-label="選擇液體">
+            <button class="liquid-btn active" type="button" data-liquid="甲">甲</button>
+            <button class="liquid-btn" type="button" data-liquid="乙">乙</button>
+            <button class="liquid-btn" type="button" data-liquid="丙">丙</button>
+            <button class="liquid-btn" type="button" data-liquid="丁">丁</button>
+          </div>
+
+          <div class="experiment-stage" id="thermometer-stage">
+            <svg viewBox="0 0 520 355" role="img" aria-labelledby="thermo-title thermo-desc">
+              <title id="thermo-title">錐形瓶液體溫度計</title>
+              <desc id="thermo-desc">切換液體與溫度，觀察細管液面高度、凝固或沸騰狀態。</desc>
+              <defs>
+                <linearGradient id="glass-fill" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.8"/>
+                  <stop offset="1" stop-color="#b8e9f6" stop-opacity="0.55"/>
+                </linearGradient>
+              </defs>
+              <rect width="520" height="355" fill="transparent"/>
+              <text x="34" y="42" fill="#17324d" font-size="18" font-weight="900">玻璃細管中的液面高度</text>
+              <text x="34" y="68" fill="#5d7185" font-size="14">觀察：能否保持液態？高度變化是否明顯？</text>
+              <g transform="translate(45 95)">
+                <line x1="0" y1="190" x2="390" y2="190" stroke="#9db8c0" stroke-width="2"/>
+                <rect x="268" y="0" width="18" height="128" rx="8" fill="url(#glass-fill)" stroke="#1d9fd1" stroke-width="3"/>
+                <rect id="thermo-column" class="thermo-liquid" x="274" y="66" width="6" height="80" rx="3" fill="#ef6a6a"/>
+                <path d="M230 92 L230 48 L324 48 L324 92 L354 178 Q357 190 343 190 L211 190 Q197 190 200 178 Z" fill="url(#glass-fill)" stroke="#1d9fd1" stroke-width="4"/>
+                <path id="flask-liquid" d="M217 153 Q277 137 337 153 L348 181 Q350 185 340 185 L214 185 Q204 185 206 181 Z" fill="#ef6a6a" opacity="0.72"/>
+                <circle class="bubble" cx="243" cy="160" r="5" fill="white" stroke="#ef6a6a"/>
+                <circle class="bubble" cx="279" cy="170" r="7" fill="white" stroke="#ef6a6a"/>
+                <circle class="bubble" cx="315" cy="158" r="4" fill="white" stroke="#ef6a6a"/>
+                <rect x="221" y="76" width="112" height="20" rx="5" fill="#7b2d26"/>
+                <rect x="230" y="68" width="94" height="11" rx="4" fill="#9d3b32"/>
+                <text id="liquid-label" x="277" y="174" text-anchor="middle" fill="#17324d" font-size="20" font-weight="900">甲</text>
+                <g fill="#5d7185" font-size="11">
+                  <line x1="290" y1="20" x2="305" y2="20" stroke="#7896a0"/><text x="311" y="24">100 cm</text>
+                  <line x1="290" y1="63" x2="305" y2="63" stroke="#7896a0"/><text x="311" y="67">60 cm</text>
+                  <line x1="290" y1="105" x2="305" y2="105" stroke="#7896a0"/><text x="311" y="109">20 cm</text>
+                </g>
+                <g id="ice-symbol" transform="translate(18 35)">
+                  <circle cx="60" cy="62" r="54" fill="#dff2ff" stroke="#68b9dc" stroke-width="2"/>
+                  <text x="60" y="58" text-anchor="middle" font-size="34">❄️</text>
+                  <text x="60" y="88" text-anchor="middle" fill="#176b92" font-size="15" font-weight="900">凝固</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div class="temp-controls" aria-label="選擇觀察溫度">
+            <button class="temp-btn active" type="button" data-temp="-10">-10°C</button>
+            <button class="temp-btn" type="button" data-temp="30">30°C</button>
+            <button class="temp-btn" type="button" data-temp="70">70°C</button>
+            <button class="temp-btn" type="button" data-temp="110">110°C</button>
+          </div>
+          <p class="observation" id="q3-observation">甲在 -10°C 已凝固，無法靠液面高度判讀溫度。</p>
+        </section>
+
+        <section class="panel" aria-label="第3題資料與作答">
+          <div class="panel-title"><span>📊 原題觀察紀錄</span><span class="status-pill">一大氣壓</span></div>
+          <div class="data-table-wrap">
+            <table>
+              <thead><tr><th>液體</th><th>-10°C</th><th>30°C</th><th>70°C</th><th>110°C</th></tr></thead>
+              <tbody>
+                <tr class="active" data-row="甲"><th>甲</th><td>凝固</td><td>凝固</td><td>20 cm</td><td>60 cm</td></tr>
+                <tr data-row="乙"><th>乙</th><td>100 cm</td><td>106 cm</td><td>沸騰</td><td>沸騰</td></tr>
+                <tr data-row="丙"><th>丙</th><td>25 cm</td><td>35 cm</td><td>45 cm</td><td>65 cm</td></tr>
+                <tr data-row="丁"><th>丁</th><td>95 cm</td><td>65 cm</td><td>35 cm</td><td>5 cm</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="answer-panel">
+            <div class="panel-title"><span>📝 選出答案</span></div>
+            <div class="answers" data-question="3">
+              <button class="answer-btn" type="button" data-choice="A">(A) 甲</button>
+              <button class="answer-btn" type="button" data-choice="B">(B) 乙</button>
+              <button class="answer-btn" type="button" data-choice="C">(C) 丙</button>
+              <button class="answer-btn" type="button" data-choice="D">(D) 丁</button>
+            </div>
+            <div class="feedback" id="feedback-3" role="status" aria-live="polite"></div>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <article class="question-card" id="question-4">
+      <div class="question-head">
+        <div class="q-number">4</div>
+        <div>
+          <h2>摩擦雙手後握住燒瓶，為什麼有色水柱會上升？</h2>
+          <p class="source-note">《實驗題》｜氣體與玻璃的熱膨脹比較</p>
+          <p class="question-text">力中設計一個實驗，實驗步驟如下：在室溫下，先用玻璃管吸一些有顏色的水，套在燒瓶上，如右圖所示，接著將雙手摩擦後，握住燒瓶瓶身，一段時間後，發現有色水柱上升。請問這個實驗告訴我們什麼？</p>
+        </div>
+      </div>
+
+      <div class="lab-grid">
+        <section class="panel" aria-label="空氣熱膨脹互動實驗">
+          <div class="panel-title"><span>🫙 握住燒瓶實驗</span><span class="status-pill" id="q4-status">室溫 · 尚未加熱</span></div>
+          <div class="experiment-stage warm-stage" id="warm-stage">
+            <svg viewBox="0 0 520 420" role="img" aria-labelledby="warm-title warm-desc">
+              <title id="warm-title">雙手加熱燒瓶內空氣實驗</title>
+              <desc id="warm-desc">按下摩擦雙手並握住燒瓶，瓶內空氣受熱膨脹，有色水柱上升。</desc>
+              <defs>
+                <linearGradient id="flask-glass" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#fff" stop-opacity="0.85"/>
+                  <stop offset="1" stop-color="#a8def1" stop-opacity="0.45"/>
+                </linearGradient>
+              </defs>
+              <rect width="520" height="420" fill="transparent"/>
+              <text x="26" y="38" fill="#17324d" font-size="18" font-weight="900">室溫 → 雙手摩擦 → 握住瓶身</text>
+              <g id="warm-scene" transform="translate(0 28)">
+                <path d="M218 78 L218 43 L302 43 L302 78 L323 125 Q365 176 359 232 Q350 315 260 315 Q170 315 161 232 Q155 176 197 125 Z" fill="url(#flask-glass)" stroke="#1d9fd1" stroke-width="4"/>
+                <rect x="247" y="15" width="26" height="170" rx="10" fill="url(#flask-glass)" stroke="#1d9fd1" stroke-width="4"/>
+                <rect class="water-column" id="water-column" x="254" y="116" width="12" height="69" rx="6" fill="#e83f6f"/>
+                <rect x="210" y="70" width="100" height="24" rx="5" fill="#7b2d26"/>
+                <rect x="218" y="61" width="84" height="13" rx="4" fill="#9d3b32"/>
+
+                <g fill="#f2b84b" opacity="0.72">
+                  <circle class="air-dot" cx="212" cy="172" r="6"/>
+                  <circle class="air-dot" cx="270" cy="222" r="7"/>
+                  <circle class="air-dot" cx="307" cy="167" r="5"/>
+                  <circle class="air-dot" cx="221" cy="261" r="5"/>
+                  <circle class="air-dot" cx="318" cy="262" r="6"/>
+                  <circle class="air-dot" cx="258" cy="280" r="4"/>
+                  <circle class="air-dot" cx="190" cy="215" r="4"/>
+                  <circle class="air-dot" cx="330" cy="216" r="4"/>
+                </g>
+
+                <g id="hands" opacity="0.2">
+                  <text x="104" y="265" font-size="78" transform="rotate(-12 104 265)">🤲</text>
+                  <text x="337" y="265" font-size="78" transform="rotate(12 337 265)">🤲</text>
+                </g>
+
+                <g class="heat-wave" fill="none" stroke="#ef6a6a" stroke-width="4" stroke-linecap="round">
+                  <path d="M139 215 Q127 200 139 185 Q151 170 139 155"/>
+                  <path d="M381 215 Q369 200 381 185 Q393 170 381 155"/>
+                  <path d="M159 285 Q147 270 159 255"/>
+                  <path d="M361 285 Q349 270 361 255"/>
+                </g>
+
+                <line x1="280" y1="116" x2="355" y2="116" stroke="#e83f6f" stroke-width="2"/>
+                <text id="column-callout" x="364" y="121" fill="#b4235a" font-size="14" font-weight="900">原始水柱</text>
+                <text x="260" y="350" text-anchor="middle" fill="#5d7185" font-size="14" font-weight="700">燒瓶內主要裝的是空氣，不是有色水</text>
+              </g>
+            </svg>
+          </div>
+          <div class="action-row">
+            <button class="action-btn primary" id="warm-button" type="button">🔥 摩擦雙手並握住燒瓶</button>
+            <button class="action-btn" id="cool-button" type="button">↺ 回到室溫</button>
+          </div>
+          <div class="concept-strip">
+            <div class="concept-chip"><strong>雙手傳熱</strong><span>瓶內空氣與玻璃都吸熱</span></div>
+            <div class="concept-chip"><strong>空氣膨脹較明顯</strong><span>體積變化大於玻璃</span></div>
+            <div class="concept-chip"><strong>水柱被推升</strong><span>成為可觀察的證據</span></div>
+          </div>
+        </section>
+
+        <section class="panel" aria-label="第4題作答">
+          <div class="panel-title"><span>📝 原題作答</span><span class="status-pill">先實驗再選</span></div>
+          <div class="answers" data-question="4">
+            <button class="answer-btn" type="button" data-choice="A">(A) 這是燒瓶內的空氣密度變大，使水柱上升</button>
+            <button class="answer-btn" type="button" data-choice="B">(B) 玻璃管內有色水柱遇熱膨脹</button>
+            <button class="answer-btn" type="button" data-choice="C">(C) 燒瓶內空氣膨脹體積大於燒瓶膨脹體積</button>
+            <button class="answer-btn" type="button" data-choice="D">(D) 玻璃與空氣不容易吸熱</button>
+          </div>
+          <div class="feedback" id="feedback-4" role="status" aria-live="polite"></div>
+
+          <div class="observation" style="margin-top: 1.2rem;">
+            <strong>判讀線索：</strong>空氣與玻璃都會受熱，但有色水柱明顯上升，代表燒瓶內空氣受熱後的體積增加量，比燒瓶本身的膨脹量大。
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <button class="reset-all" id="reset-all" type="button">🔄 兩題全部重新挑戰</button>
+  </main>
+
+  <footer>九年級複習 · 第三冊 · 單元5 溫度與熱量｜題目來源：指定教用講義第 74 頁</footer>
+
+  <script>
+    const liquidData = {
+      '甲': { '-10': '凝固', '30': '凝固', '70': 20, '110': 60, color: '#4ea8de' },
+      '乙': { '-10': 100, '30': 106, '70': '沸騰', '110': '沸騰', color: '#f59e0b' },
+      '丙': { '-10': 25, '30': 35, '70': 45, '110': 65, color: '#16a34a' },
+      '丁': { '-10': 95, '30': 65, '70': 35, '110': 5, color: '#e83f6f' }
+    };
+
+    let selectedLiquid = '甲';
+    let selectedTemp = '-10';
+
+    const stage = document.getElementById('thermometer-stage');
+    const column = document.getElementById('thermo-column');
+    const flaskLiquid = document.getElementById('flask-liquid');
+    const liquidLabel = document.getElementById('liquid-label');
+    const iceSymbol = document.getElementById('ice-symbol');
+    const q3Status = document.getElementById('q3-status');
+    const q3Observation = document.getElementById('q3-observation');
+
+    function selectLiquid(name) {
+      selectedLiquid = name;
+      document.querySelectorAll('.liquid-btn').forEach((button) => button.classList.toggle('active', button.dataset.liquid === name));
+      document.querySelectorAll('[data-row]').forEach((row) => row.classList.toggle('active', row.dataset.row === name));
+      updateThermometer();
+    }
+
+    function selectTemp(temp) {
+      selectedTemp = String(temp);
+      document.querySelectorAll('.temp-btn').forEach((button) => button.classList.toggle('active', button.dataset.temp === selectedTemp));
+      updateThermometer();
+    }
+
+    function updateThermometer() {
+      const liquid = liquidData[selectedLiquid];
+      const reading = liquid[selectedTemp];
+      const isSolid = reading === '凝固';
+      const isBoiling = reading === '沸騰';
+      const height = typeof reading === 'number' ? Math.max(8, Math.min(112, reading)) : 18;
+      const y = 130 - height;
+
+      stage.classList.toggle('boiling', isBoiling);
+      column.setAttribute('y', String(y));
+      column.setAttribute('height', String(height + 16));
+      column.setAttribute('fill', liquid.color);
+      flaskLiquid.setAttribute('fill', liquid.color);
+      liquidLabel.textContent = selectedLiquid;
+      iceSymbol.style.display = isSolid ? 'block' : 'none';
+      q3Status.textContent = selectedLiquid + ' · ' + selectedTemp + '°C';
+
+      if (isSolid) {
+        q3Observation.textContent = selectedLiquid + '在 ' + selectedTemp + '°C 已凝固，無法靠液面高度判讀溫度。';
+      } else if (isBoiling) {
+        q3Observation.textContent = selectedLiquid + '在 ' + selectedTemp + '°C 已沸騰，不適合作為這個溫度範圍的測溫液體。';
+      } else {
+        q3Observation.textContent = selectedLiquid + '在 ' + selectedTemp + '°C 保持液態，玻璃細管中的液面高度為 ' + reading + ' cm。';
+      }
+    }
+
+    document.querySelectorAll('.liquid-btn').forEach((button) => button.addEventListener('click', () => selectLiquid(button.dataset.liquid)));
+    document.querySelectorAll('.temp-btn').forEach((button) => button.addEventListener('click', () => selectTemp(button.dataset.temp)));
+    document.querySelectorAll('[data-row]').forEach((row) => row.addEventListener('click', () => selectLiquid(row.dataset.row)));
+
+    const answerKeys = { '3': 'D', '4': 'C' };
+    const explanations = {
+      '3': '水的凝固點與沸點是 0°C、100°C。丙與丁在這段範圍內都保持液態；丁在相同溫差下的液面高度變化比丙大，刻度更容易分辨，所以測量較準確。正解為 (D) 丁。',
+      '4': '雙手的熱傳給燒瓶與瓶內空氣。空氣受熱後的體積膨脹量大於玻璃燒瓶的膨脹量，因此把有色水柱向上推。正解為 (C)。'
+    };
+
+    function checkAnswer(question, choice) {
+      const group = document.querySelector('[data-question="' + question + '"]');
+      const feedback = document.getElementById('feedback-' + question);
+      const correct = answerKeys[question];
+
+      group.querySelectorAll('.answer-btn').forEach((button) => {
+        button.classList.remove('correct', 'wrong', 'dim');
+        if (button.dataset.choice === correct) button.classList.add('correct');
+        else if (button.dataset.choice === choice) button.classList.add('wrong');
+        else button.classList.add('dim');
+      });
+
+      const isCorrect = choice === correct;
+      feedback.className = 'feedback show ' + (isCorrect ? 'good' : 'bad');
+      feedback.innerHTML = (isCorrect ? '✅ <strong>答對了！</strong> ' : '🔎 <strong>再看一次實驗線索。</strong> ') + explanations[question];
+    }
+
+    document.querySelectorAll('.answers').forEach((group) => {
+      group.querySelectorAll('.answer-btn').forEach((button) => button.addEventListener('click', () => checkAnswer(group.dataset.question, button.dataset.choice)));
+    });
+
+    const warmStage = document.getElementById('warm-stage');
+    const warmScene = document.getElementById('warm-scene');
+    const waterColumn = document.getElementById('water-column');
+    const hands = document.getElementById('hands');
+    const q4Status = document.getElementById('q4-status');
+    const columnCallout = document.getElementById('column-callout');
+
+    function setWarm(isWarm) {
+      warmStage.classList.toggle('warm', isWarm);
+      warmScene.classList.toggle('warm', isWarm);
+      waterColumn.setAttribute('y', isWarm ? '48' : '116');
+      waterColumn.setAttribute('height', isWarm ? '137' : '69');
+      hands.setAttribute('opacity', isWarm ? '1' : '0.2');
+      q4Status.textContent = isWarm ? '受熱 · 水柱上升' : '室溫 · 尚未加熱';
+      columnCallout.textContent = isWarm ? '上升後水柱' : '原始水柱';
+      columnCallout.setAttribute('y', isWarm ? '54' : '121');
+      warmScene.querySelector('line').setAttribute('y1', isWarm ? '48' : '116');
+      warmScene.querySelector('line').setAttribute('y2', isWarm ? '48' : '116');
+    }
+
+    document.getElementById('warm-button').addEventListener('click', () => setWarm(true));
+    document.getElementById('cool-button').addEventListener('click', () => setWarm(false));
+
+    function resetAll() {
+      selectLiquid('甲');
+      selectTemp('-10');
+      setWarm(false);
+      document.querySelectorAll('.answer-btn').forEach((button) => button.classList.remove('correct', 'wrong', 'dim'));
+      document.querySelectorAll('.feedback').forEach((feedback) => { feedback.className = 'feedback'; feedback.textContent = ''; });
+      document.getElementById('question-3').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.getElementById('reset-all').addEventListener('click', resetAll);
+    updateThermometer();
+    setWarm(false);
+  </script>
+</body>
+</html>
