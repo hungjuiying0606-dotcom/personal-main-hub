@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>例題 2-4：牛頓第二運動定律與 v-t 圖 | 康軒國中自然3上</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Formatting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .math-font { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .answer-input {
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-align: center;
+    }
+    .answer-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+      border-color: #0284c7;
+    }
+    .answer-input.correct, select.correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+    }
+    .answer-input.incorrect, select.incorrect {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+    .timeline-scrubber {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      outline: none;
+    }
+    .timeline-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #0284c7;
+      cursor: pointer;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-200 selection:text-sky-900">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all border border-slate-200">
+          <span>🏠</span>
+          <span>返回主網頁</span>
+        </a>
+        <div class="h-4 w-px bg-slate-300 hidden sm:block"></div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">康軒 3 上 2-2</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">課本 P.42</span>
+            <h1 class="text-sm sm:text-base font-black text-slate-900 truncate">例題 2-4：牛頓第二運動定律與 v-t 圖</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="speechBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all">
+          <span id="speechIcon">🔊</span>
+          <span id="speechText" class="hidden sm:inline">語音解說</span>
+        </button>
+        <button id="globalResetBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-all">
+          <span>🔄</span>
+          <span class="hidden sm:inline">重設</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 w-full">
+
+    <!-- 單元導言橫幅 -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 text-white p-5 sm:p-7 shadow-lg">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-sky-200 text-xs font-bold">
+            <span>📝 課本核心例題</span>
+            <span>·</span>
+            <span>牛頓第二定律 \(F = ma\) 與 \(v-t\) 圖斜率全解析</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>水平受力物體的運動狀態、加速度與外力方向剖析</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-sky-100 leading-relaxed">
+            一個質量 \(m = 2\text{ kg}\) 的物體在<strong>光滑水平面</strong>上受外力直線運動。\(v-t\) 圖的<strong>斜率代表加速度 \(a\)</strong>，再由 \(F = ma\) 即可求出外力大小；外力方向與加速度同向，決定物體加速或減速！
+          </p>
+        </div>
+
+        <div class="flex flex-wrap md:flex-col gap-2 flex-shrink-0">
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[120px]">
+            <div class="text-[11px] text-sky-200">物體質量 \(m\)</div>
+            <div class="text-base font-black font-mono text-amber-300">2.0 kg</div>
+          </div>
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[120px]">
+            <div class="text-[11px] text-sky-200">運動環境</div>
+            <div class="text-sm font-bold text-emerald-300">光滑水平面 (無摩擦)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要工作區：左右雙欄佈局 (左：1:1 課本題目與互動填答表格；右：動態物理沙盒與聯動 v-t 圖) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- 左欄 (6/12)：課本原題、1:1 填答表格與詳細分段解題 -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- 卡片 1：課本例題 2-4 1:1 填答表格 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-sky-100 text-sky-700 font-bold text-sm">✍️</span>
+              <div>
+                <h3 class="text-base font-black text-slate-900">例題 2-4 課本填答表格（P.42）</h3>
+                <p class="text-xs text-slate-500">計算各時段之加速度、外力大小並判斷方向</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button id="checkAnsBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-all flex items-center gap-1">
+                <span>✓</span>
+                <span>檢查答案</span>
+              </button>
+              <button id="revealAnsBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">
+                <span>💡 完整解答</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 課本原題題目敘述 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <p class="text-sm text-slate-800 font-medium leading-relaxed">
+              一個質量 <span class="px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded font-bold font-mono">2 公斤</span> 的物體，在<strong>光滑水平面</strong>上受外力作用，沿一直線運動，其速度與時間的關係如圖所示，請完成以下表格：
+            </p>
+          </div>
+
+          <!-- 1:1 課本表格 -->
+          <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-xs">
+            <table class="w-full text-center border-collapse bg-white text-xs sm:text-sm">
+              <thead>
+                <tr class="bg-sky-50 text-slate-800 border-b border-slate-200 font-bold">
+                  <th class="py-2.5 px-2 border-r border-slate-200 w-[22%]">時段</th>
+                  <th class="py-2.5 px-2 border-r border-slate-200 w-[26%]">加速度<br><span class="text-[11px] font-normal text-slate-500">(\(\text{m/s}^2\))</span></th>
+                  <th class="py-2.5 px-2 border-r border-slate-200 w-[26%]">所受外力大小<br><span class="text-[11px] font-normal text-slate-500">(N)</span></th>
+                  <th class="py-2.5 px-2 w-[26%]">外力與物體<br>運動方向</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <!-- 0~2 秒 -->
+                <tr class="hover:bg-sky-50/50 transition-colors">
+                  <td class="py-3 px-2 font-bold font-mono text-sky-900 border-r border-slate-200 bg-slate-50/50">0～2秒</td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <span class="font-mono font-bold text-slate-700 text-sm">15</span>
+                    <span class="text-[10px] text-slate-400 block">(課本給定)</span>
+                  </td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <input type="text" id="ans_f_1" class="answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto" placeholder="請輸入" data-correct="30">
+                  </td>
+                  <td class="py-3 px-2">
+                    <select id="ans_dir_1" class="px-2 py-1 text-xs font-bold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" data-correct="相同">
+                      <option value="">請選擇</option>
+                      <option value="相同">相同</option>
+                      <option value="相反">相反</option>
+                    </select>
+                  </td>
+                </tr>
+
+                <!-- 2~4 秒 -->
+                <tr class="hover:bg-emerald-50/50 transition-colors">
+                  <td class="py-3 px-2 font-bold font-mono text-emerald-900 border-r border-slate-200 bg-slate-50/50">2～4秒</td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <input type="text" id="ans_a_2" class="answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto" placeholder="請輸入" data-correct="0">
+                  </td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <input type="text" id="ans_f_2" class="answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto" placeholder="請輸入" data-correct="0">
+                  </td>
+                  <td class="py-3 px-2 text-slate-400 font-bold font-mono">
+                    —
+                  </td>
+                </tr>
+
+                <!-- 4~7 秒 -->
+                <tr class="hover:bg-amber-50/50 transition-colors">
+                  <td class="py-3 px-2 font-bold font-mono text-amber-900 border-r border-slate-200 bg-slate-50/50">4～7秒</td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <input type="text" id="ans_a_3" class="answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto" placeholder="請輸入" data-correct="-10,10">
+                    <span class="text-[10px] text-slate-400 block">(大小或含正負)</span>
+                  </td>
+                  <td class="py-3 px-2 border-r border-slate-200">
+                    <span class="font-mono font-bold text-slate-700 text-sm">20</span>
+                    <span class="text-[10px] text-slate-400 block">(課本給定)</span>
+                  </td>
+                  <td class="py-3 px-2">
+                    <select id="ans_dir_3" class="px-2 py-1 text-xs font-bold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" data-correct="相反">
+                      <option value="">請選擇</option>
+                      <option value="相同">相同</option>
+                      <option value="相反">相反</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 通關與回饋橫幅 -->
+          <div id="resultBanner" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🎉</span>
+              <div>
+                <div class="text-sm font-black">恭喜完全答對！</div>
+                <div class="text-xs text-emerald-700">精準掌握 \(v-t\) 圖斜率與 \(F = ma\) 牛頓第二運動定律！</div>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-200 text-emerald-800 text-xs font-black font-mono">100分</span>
+          </div>
+
+        </div>
+
+        <!-- 卡片 2：三時段逐步推導與觀念詳解 -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span class="p-2 rounded-xl bg-purple-100 text-purple-700 font-bold text-sm">💡</span>
+            <h3 class="text-base font-black text-slate-900">三大時段解題步驟與物理意義拆解</h3>
+          </div>
+
+          <div class="space-y-3.5">
+            <!-- 0~2秒 -->
+            <div class="p-3.5 rounded-xl bg-sky-50/70 border border-sky-200 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-900 flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-sky-600 text-white flex items-center justify-center text-[10px]">1</span>
+                  <span>\(0 \sim 2\text{ 秒}\)：正向等加速度運動（加速）</span>
+                </span>
+                <span class="text-[11px] font-bold font-mono px-2 py-0.5 rounded bg-sky-200 text-sky-800">速度增加</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                • <strong>加速度</strong>：斜率 \(a_1 = \frac{\Delta v}{\Delta t} = \frac{30 - 0}{2 - 0} = 15\text{ m/s}^2\)<br>
+                • <strong>所受外力</strong>：\(F_1 = m \times a_1 = 2\text{ kg} \times 15\text{ m/s}^2 = 30\text{ N}\)<br>
+                • <strong>方向判斷</strong>：物體向正方向運動（\(v > 0\)）且速度變快，外力與運動方向【<strong>相同</strong>】。
+              </p>
+            </div>
+
+            <!-- 2~4秒 -->
+            <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
+                  <span>\(2 \sim 4\text{ 秒}\)：等速度運動（等速）</span>
+                </span>
+                <span class="text-[11px] font-bold font-mono px-2 py-0.5 rounded bg-emerald-200 text-emerald-800">速度恆定</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                • <strong>加速度</strong>：水平線斜率 \(a_2 = \frac{30 - 30}{4 - 2} = 0\text{ m/s}^2\)<br>
+                • <strong>所受外力</strong>：\(F_2 = m \times a_2 = 2\text{ kg} \times 0 = 0\text{ N}\)（合力為零）<br>
+                • <strong>方向判斷</strong>：合力為零，合力無方向（依慣性定律維持 \(30\text{ m/s}\) 前進）。
+              </p>
+            </div>
+
+            <!-- 4~7秒 -->
+            <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px]">3</span>
+                  <span>\(4 \sim 7\text{ 秒}\)：正向等加速度減速運動（減速）</span>
+                </span>
+                <span class="text-[11px] font-bold font-mono px-2 py-0.5 rounded bg-amber-200 text-amber-800">速度變慢</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                • <strong>加速度</strong>：斜率 \(a_3 = \frac{0 - 30}{7 - 4} = -10\text{ m/s}^2\)（加速度大小為 \(10\text{ m/s}^2\)）<br>
+                • <strong>所受外力</strong>：\(F_3 = m \times |a_3| = 2\text{ kg} \times 10\text{ m/s}^2 = 20\text{ N}\)（方向向後）<br>
+                • <strong>方向判斷</strong>：物體仍向正方向前進（\(v > 0\)）但速度變慢，外力與運動方向【<strong>相反</strong>】。
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 右欄 (6/12)：動態物理沙盒、聯動 v-t 圖與即時向量指示 -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- 卡片 3：動態物理軌道與向量模擬沙盒 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-sm">🚗</span>
+              <div>
+                <h3 class="text-base font-black text-slate-900">光滑水平面動態物理軌道</h3>
+                <p class="text-xs text-slate-500">即時觀測外力 \(\vec{F}\)、速度 \(\vec{v}\) 與加速度 \(\vec{a}\) 向量</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <span id="currentPhaseBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                0~2s 正向加速
+              </span>
+            </div>
+          </div>
+
+          <!-- 動態滑塊跑道 Canvas -->
+          <div class="relative bg-slate-900 rounded-xl overflow-hidden p-3 shadow-inner">
+            <canvas id="trackCanvas" width="600" height="150" class="w-full h-auto block"></canvas>
+          </div>
+
+          <!-- 即時物理量儀表板 -->
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div class="p-2 rounded-xl bg-slate-100 border border-slate-200">
+              <div class="text-[10px] text-slate-500 font-bold">時間 \(t\)</div>
+              <div id="disp_time" class="text-sm sm:text-base font-black font-mono text-slate-900">0.0 s</div>
+            </div>
+            <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="text-[10px] text-emerald-700 font-bold">速度 \(v\)</div>
+              <div id="disp_vel" class="text-sm sm:text-base font-black font-mono text-emerald-700">0.0 m/s</div>
+            </div>
+            <div class="p-2 rounded-xl bg-purple-50 border border-purple-200">
+              <div class="text-[10px] text-purple-700 font-bold">加速度 \(a\)</div>
+              <div id="disp_acc" class="text-sm sm:text-base font-black font-mono text-purple-700">+15.0 m/s²</div>
+            </div>
+            <div class="p-2 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="text-[10px] text-amber-700 font-bold">外力 \(F\)</div>
+              <div id="disp_force" class="text-sm sm:text-base font-black font-mono text-amber-700">30 N (向右)</div>
+            </div>
+          </div>
+
+          <!-- 播放控制與時間軸 -->
+          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-600">
+              <span class="flex items-center gap-1">⏱️ 播放進度：<span id="scrubTimeLabel" class="font-mono text-sky-700">0.0 s / 7.0 s</span></span>
+              <div class="flex items-center gap-2">
+                <span class="text-slate-400">速度：</span>
+                <button class="speed-btn px-2 py-0.5 rounded text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-speed="0.5">0.5x</button>
+                <button class="speed-btn px-2 py-0.5 rounded text-[11px] font-bold bg-sky-600 text-white border border-sky-600" data-speed="1.0">1.0x</button>
+                <button class="speed-btn px-2 py-0.5 rounded text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-speed="1.5">1.5x</button>
+              </div>
+            </div>
+
+            <input type="range" id="timeScrubber" min="0" max="7" step="0.05" value="0" class="timeline-scrubber w-full">
+
+            <div class="flex items-center justify-between gap-2 pt-1">
+              <div class="flex items-center gap-2">
+                <button id="playBtn" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-sm flex items-center gap-1.5 transition-all">
+                  <span id="playIcon">▶️</span>
+                  <span id="playText">播放模擬</span>
+                </button>
+                <button id="resetSimBtn" class="px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 transition-all">
+                  ⏮️ 歸零
+                </button>
+              </div>
+
+              <!-- 分段快捷切換 -->
+              <div class="flex items-center gap-1">
+                <button class="jump-btn px-2 py-1 rounded-lg text-[11px] font-bold bg-sky-100 text-sky-800 hover:bg-sky-200" data-t="0">0~2s</button>
+                <button class="jump-btn px-2 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 text-emerald-800 hover:bg-emerald-200" data-t="2">2~4s</button>
+                <button class="jump-btn px-2 py-1 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-800 hover:bg-amber-200" data-t="4">4~7s</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 聯動 v-t 圖表 Canvas -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                📈 1:1 聯動 \(v-t\) 關係圖（即時掃描點）
+              </span>
+              <span class="text-[11px] text-slate-500 font-mono">
+                總位移 = 梯形面積 = 135 m
+              </span>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 p-2 shadow-xs">
+              <canvas id="vtCanvas" width="600" height="260" class="w-full h-auto block"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 會考觀念挑戰即時測驗 -->
+    <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="p-2 rounded-xl bg-amber-100 text-amber-800 font-bold text-sm">🎯</span>
+          <div>
+            <h3 class="text-base font-black text-slate-900">會考延伸觀念即時挑戰</h3>
+            <p class="text-xs text-slate-500">加深理解牛頓第二運動定律與圖形面積的物理本質</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- 題 1 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q1.</span>
+            全程 \(0 \sim 7\text{ 秒}\) 期間，物體移動的<strong>總位移</strong>是多少公尺？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (A) \(135\text{ m}\)（梯形面積 \(\frac{2+7}{2} \times 30\)）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (B) \(210\text{ m}\)（\(7 \times 30\)）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) \(105\text{ m}\)（三角形面積）
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 2 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q2.</span>
+            在第 \(5\text{ 秒}\) 瞬間，物體的「運動方向」與「外力方向」分別為何？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (A) 運動向左，外力向左
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (B) 運動向前（正向），外力向後（反向）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) 運動向前，外力向前
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 3 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q3.</span>
+            若物體質量改為 \(4\text{ kg}\)，若要在 \(0 \sim 2\text{ s}\) 產生相同的 \(v-t\) 圖，需施加多少牛頓的外力？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (A) \(30\text{ N}\)（外力不變）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (B) \(60\text{ N}\)（\(F = m \times a = 4 \times 15 = 60\text{ N}\)）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) \(15\text{ N}\)（外力減半）
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
+      <p class="font-bold text-slate-700">國中自然 3 上 · 第 2 章 力與運動 · 2-2 牛頓第二運動定律例題 2-4</p>
+      <p>© 洪瑞英老師 數位教學基地 Central Hub · 互動教材實驗室</p>
+    </div>
+  </footer>
+
+  <!-- 互動腳本邏輯 -->
+  <script>
+    // 物理常數與狀態
+    const MASS = 2.0; // kg
+    let simTime = 0.0; // 秒 0 ~ 7
+    let isPlaying = false;
+    let simSpeed = 1.0;
+    let animId = null;
+    let lastTimestamp = 0;
+
+    // 計算給定時間 t 的速度、加速度、外力、位移
+    function getPhysicsState(t) {
+      t = Math.max(0, Math.min(7, t));
+      let v = 0;
+      let a = 0;
+      let F = 0; // 外力大小 (N)
+      let dir = 'none'; // 'forward', 'none', 'backward'
+      let phaseName = '';
+
+      if (t <= 2.0) {
+        // 0 ~ 2s: v = 15 * t
+        a = 15.0;
+        v = 15.0 * t;
+        F = MASS * a; // 30 N
+        dir = 'forward';
+        phaseName = '0~2s 正向加速 (力與運動同向)';
+      } else if (t <= 4.0) {
+        // 2 ~ 4s: v = 30
+        a = 0.0;
+        v = 30.0;
+        F = 0.0;
+        dir = 'none';
+        phaseName = '2~4s 等速慣性 (合力為 0)';
+      } else {
+        // 4 ~ 7s: v = 30 - 10 * (t - 4)
+        a = -10.0;
+        v = 30.0 - 10.0 * (t - 4.0);
+        F = 20.0; // 外力大小
+        dir = 'backward';
+        phaseName = '4~7s 正向減速 (力與運動反向)';
+      }
+
+      // 位移計算 (面積)
+      let x = 0;
+      if (t <= 2.0) {
+        x = 0.5 * 15.0 * t * t;
+      } else if (t <= 4.0) {
+        x = 30.0 + 30.0 * (t - 2.0);
+      } else {
+        let dt = t - 4.0;
+        x = 30.0 + 60.0 + (30.0 * dt - 0.5 * 10.0 * dt * dt);
+      }
+
+      return { t, v, a, F, dir, phaseName, x };
+    }
+
+    // DOM 元素
+    const trackCanvas = document.getElementById('trackCanvas');
+    const trackCtx = trackCanvas.getContext('2d');
+    const vtCanvas = document.getElementById('vtCanvas');
+    const vtCtx = vtCanvas.getContext('2d');
+
+    const dispTime = document.getElementById('disp_time');
+    const dispVel = document.getElementById('disp_vel');
+    const dispAcc = document.getElementById('disp_acc');
+    const dispForce = document.getElementById('disp_force');
+    const currentPhaseBadge = document.getElementById('currentPhaseBadge');
+    const timeScrubber = document.getElementById('timeScrubber');
+    const scrubTimeLabel = document.getElementById('scrubTimeLabel');
+
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const playText = document.getElementById('playText');
+    const resetSimBtn = document.getElementById('resetSimBtn');
+    const globalResetBtn = document.getElementById('globalResetBtn');
+
+    // 繪製跑道與滑塊
+    function drawTrack() {
+      const w = trackCanvas.width;
+      const h = trackCanvas.height;
+      trackCtx.clearRect(0, 0, w, h);
+
+      const state = getPhysicsState(simTime);
+
+      // 背景漸層
+      const bgGrad = trackCtx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0f172a');
+      bgGrad.addColorStop(1, '#1e293b');
+      trackCtx.fillStyle = bgGrad;
+      trackCtx.fillRect(0, 0, w, h);
+
+      // 地面軌道
+      const trackY = 110;
+      trackCtx.strokeStyle = '#64748b';
+      trackCtx.lineWidth = 3;
+      trackCtx.beginPath();
+      trackCtx.moveTo(20, trackY);
+      trackCtx.lineTo(w - 20, trackY);
+      trackCtx.stroke();
+
+      // 跑道刻度與標示
+      trackCtx.fillStyle = '#94a3b8';
+      trackCtx.font = '10px "JetBrains Mono", monospace';
+      trackCtx.textAlign = 'center';
+      for (let i = 0; i <= 6; i++) {
+        const xPos = 40 + (i / 6) * (w - 80);
+        trackCtx.strokeStyle = '#475569';
+        trackCtx.lineWidth = 1;
+        trackCtx.beginPath();
+        trackCtx.moveTo(xPos, trackY);
+        trackCtx.lineTo(xPos, trackY + 8);
+        trackCtx.stroke();
+        trackCtx.fillText(`${(i * 22.5).toFixed(0)}m`, xPos, trackY + 20);
+      }
+
+      // 計算滑塊水平位置 (總位移 135m 對應 跑道 40 ~ w-100)
+      const blockWidth = 54;
+      const blockHeight = 36;
+      const minX = 40;
+      const maxX = w - 100;
+      const blockX = minX + (state.x / 135.0) * (maxX - minX);
+      const blockY = trackY - blockHeight;
+
+      // 繪製滑塊主體 (金屬質感)
+      const blockGrad = trackCtx.createLinearGradient(blockX, blockY, blockX + blockWidth, blockY + blockHeight);
+      blockGrad.addColorStop(0, '#38bdf8');
+      blockGrad.addColorStop(1, '#0284c7');
+      trackCtx.fillStyle = blockGrad;
+      trackCtx.strokeStyle = '#e0f2fe';
+      trackCtx.lineWidth = 2;
+      trackCtx.beginPath();
+      trackCtx.roundRect(blockX, blockY, blockWidth, blockHeight, 6);
+      trackCtx.fill();
+      trackCtx.stroke();
+
+      // 滑塊標籤 (m = 2kg)
+      trackCtx.fillStyle = '#ffffff';
+      trackCtx.font = 'bold 12px "JetBrains Mono", sans-serif';
+      trackCtx.textAlign = 'center';
+      trackCtx.fillText('2 kg', blockX + blockWidth / 2, blockY + 22);
+
+      // 輪子
+      trackCtx.fillStyle = '#1e293b';
+      trackCtx.strokeStyle = '#94a3b8';
+      trackCtx.lineWidth = 1.5;
+      trackCtx.beginPath();
+      trackCtx.arc(blockX + 12, trackY - 4, 4, 0, Math.PI * 2);
+      trackCtx.arc(blockX + blockWidth - 12, trackY - 4, 4, 0, Math.PI * 2);
+      trackCtx.fill();
+      trackCtx.stroke();
+
+      // 繪製速度向量箭頭 (綠色向前)
+      if (state.v > 0) {
+        const arrowLen = Math.min(80, (state.v / 30.0) * 70);
+        const startX = blockX + blockWidth;
+        const arrowY = blockY + 12;
+        drawArrow(trackCtx, startX, arrowY, startX + arrowLen, arrowY, '#10b981', 3, `v = ${state.v.toFixed(1)} m/s`, 'top');
+      }
+
+      // 繪製外力向量箭頭 (橘色向前 30N / 紅色向後 20N)
+      if (state.dir === 'forward') {
+        const startX = blockX - 45;
+        const arrowY = blockY + blockHeight / 2;
+        drawArrow(trackCtx, startX, arrowY, blockX, arrowY, '#f59e0b', 4, `F = 30 N`, 'bottom');
+      } else if (state.dir === 'backward') {
+        const startX = blockX + blockWidth + 40;
+        const arrowY = blockY + blockHeight / 2;
+        drawArrow(trackCtx, startX, arrowY, blockX + blockWidth, arrowY, '#ef4444', 4, `F = 20 N (阻力)`, 'bottom');
+      } else {
+        // 合力為 0
+        trackCtx.fillStyle = '#94a3b8';
+        trackCtx.font = 'bold 11px "JetBrains Mono", sans-serif';
+        trackCtx.textAlign = 'center';
+        trackCtx.fillText('合力 F = 0 N', blockX + blockWidth / 2, blockY - 8);
+      }
+    }
+
+    // 輔助函式：繪製箭頭
+    function drawArrow(ctx, fromx, fromy, tox, toy, color, lineWidth, label, labelPos) {
+      const headlen = 8;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = lineWidth;
+
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      if (label) {
+        ctx.font = 'bold 11px "JetBrains Mono", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, (fromx + tox) / 2, labelPos === 'top' ? fromy - 8 : fromy + 16);
+      }
+    }
+
+    // 繪製 v-t 圖表
+    function drawVTGraph() {
+      const w = vtCanvas.width;
+      const h = vtCanvas.height;
+      vtCtx.clearRect(0, 0, w, h);
+
+      const padLeft = 55;
+      const padRight = 30;
+      const padTop = 30;
+      const padBottom = 40;
+      const graphW = w - padLeft - padRight;
+      const graphH = h - padTop - padBottom;
+
+      const maxT = 7.0;
+      const maxV = 35.0;
+
+      function toX(t) { return padLeft + (t / maxT) * graphW; }
+      function toY(v) { return padTop + graphH - (v / maxV) * graphH; }
+
+      // 繪製三大時段背景著色
+      // 0~2s (淡藍)
+      vtCtx.fillStyle = 'rgba(14, 165, 233, 0.08)';
+      vtCtx.fillRect(toX(0), padTop, toX(2) - toX(0), graphH);
+      // 2~4s (淡綠)
+      vtCtx.fillStyle = 'rgba(16, 185, 129, 0.08)';
+      vtCtx.fillRect(toX(2), padTop, toX(4) - toX(2), graphH);
+      // 4~7s (淡橘)
+      vtCtx.fillStyle = 'rgba(245, 158, 11, 0.08)';
+      vtCtx.fillRect(toX(4), padTop, toX(7) - toX(4), graphH);
+
+      // 網格線
+      vtCtx.strokeStyle = '#f1f5f9';
+      vtCtx.lineWidth = 1;
+      for (let v = 10; v <= 30; v += 10) {
+        vtCtx.beginPath();
+        vtCtx.moveTo(padLeft, toY(v));
+        vtCtx.lineTo(padLeft + graphW, toY(v));
+        vtCtx.stroke();
+      }
+      for (let t = 1; t <= 7; t++) {
+        vtCtx.beginPath();
+        vtCtx.moveTo(toX(t), padTop);
+        vtCtx.lineTo(toX(t), padTop + graphH);
+        vtCtx.stroke();
+      }
+
+      // 虛線輔助線 (t=2, v=30) 與 (t=4, v=30)
+      vtCtx.setLineDash([4, 4]);
+      vtCtx.strokeStyle = '#94a3b8';
+      vtCtx.lineWidth = 1.2;
+
+      vtCtx.beginPath();
+      vtCtx.moveTo(toX(2), toY(0));
+      vtCtx.lineTo(toX(2), toY(30));
+      vtCtx.lineTo(toX(0), toY(30));
+      vtCtx.stroke();
+
+      vtCtx.beginPath();
+      vtCtx.moveTo(toX(4), toY(0));
+      vtCtx.lineTo(toX(4), toY(30));
+      vtCtx.stroke();
+      vtCtx.setLineDash([]);
+
+      // 坐標軸
+      vtCtx.strokeStyle = '#334155';
+      vtCtx.lineWidth = 2;
+      vtCtx.beginPath();
+      vtCtx.moveTo(padLeft, padTop - 10);
+      vtCtx.lineTo(padLeft, toY(0));
+      vtCtx.lineTo(padLeft + graphW + 15, toY(0));
+      vtCtx.stroke();
+
+      // 軸箭頭
+      drawArrowHead(vtCtx, padLeft, padTop - 10, 'up');
+      drawArrowHead(vtCtx, padLeft + graphW + 15, toY(0), 'right');
+
+      // 軸文字
+      vtCtx.fillStyle = '#0f172a';
+      vtCtx.font = 'bold 12px "JetBrains Mono", sans-serif';
+      vtCtx.textAlign = 'right';
+      vtCtx.fillText('v (m/s)', padLeft - 8, padTop - 5);
+      vtCtx.textAlign = 'left';
+      vtCtx.fillText('t (s)', padLeft + graphW + 5, toY(0) + 18);
+
+      // 刻度數字
+      vtCtx.textAlign = 'right';
+      vtCtx.font = '11px "JetBrains Mono", monospace';
+      vtCtx.fillStyle = '#475569';
+      for (let v = 0; v <= 30; v += 10) {
+        vtCtx.fillText(`${v}`, padLeft - 8, toY(v) + 4);
+      }
+      vtCtx.textAlign = 'center';
+      for (let t = 0; t <= 7; t++) {
+        vtCtx.fillText(`${t}`, toX(t), toY(0) + 18);
+      }
+
+      // 繪製課本經典折線 (橘紅色實線)
+      vtCtx.strokeStyle = '#f97316';
+      vtCtx.lineWidth = 3.5;
+      vtCtx.beginPath();
+      vtCtx.moveTo(toX(0), toY(0));
+      vtCtx.lineTo(toX(2), toY(30));
+      vtCtx.lineTo(toX(4), toY(30));
+      vtCtx.lineTo(toX(7), toY(0));
+      vtCtx.stroke();
+
+      // 時段標籤卡片
+      drawBadge(vtCtx, toX(1), toY(18), '0~2s: 加速 (+15)', '#0284c7', '#e0f2fe');
+      drawBadge(vtCtx, toX(3), toY(33), '2~4s: 等速 (a=0)', '#059669', '#d1fae5');
+      drawBadge(vtCtx, toX(5.5), toY(18), '4~7s: 減速 (-10)', '#d97706', '#fef3c7');
+
+      // 即時時間探針與掃描點
+      const curState = getPhysicsState(simTime);
+      const curX = toX(curState.t);
+      const curY = toY(curState.v);
+
+      // 垂直時間掃描線
+      vtCtx.strokeStyle = '#0284c7';
+      vtCtx.lineWidth = 1.5;
+      vtCtx.setLineDash([3, 3]);
+      vtCtx.beginPath();
+      vtCtx.moveTo(curX, padTop);
+      vtCtx.lineTo(curX, toY(0));
+      vtCtx.stroke();
+      vtCtx.setLineDash([]);
+
+      // 掃描光點 (動態高亮)
+      vtCtx.fillStyle = '#0284c7';
+      vtCtx.strokeStyle = '#ffffff';
+      vtCtx.lineWidth = 3;
+      vtCtx.beginPath();
+      vtCtx.arc(curX, curY, 7, 0, Math.PI * 2);
+      vtCtx.fill();
+      vtCtx.stroke();
+
+      // 當前點數值浮動標籤
+      vtCtx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      vtCtx.beginPath();
+      vtCtx.roundRect(curX - 40, curY - 28, 80, 20, 4);
+      vtCtx.fill();
+      vtCtx.fillStyle = '#ffffff';
+      vtCtx.font = 'bold 10px "JetBrains Mono", monospace';
+      vtCtx.textAlign = 'center';
+      vtCtx.fillText(`(${curState.t.toFixed(1)}s, ${curState.v.toFixed(1)})`, curX, curY - 14);
+    }
+
+    function drawArrowHead(ctx, x, y, direction) {
+      ctx.fillStyle = '#334155';
+      ctx.beginPath();
+      if (direction === 'up') {
+        ctx.moveTo(x, y - 6);
+        ctx.lineTo(x - 4, y + 2);
+        ctx.lineTo(x + 4, y + 2);
+      } else if (direction === 'right') {
+        ctx.moveTo(x + 6, y);
+        ctx.lineTo(x - 2, y - 4);
+        ctx.lineTo(x - 2, y + 4);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawBadge(ctx, x, y, text, textColor, bgColor) {
+      ctx.font = 'bold 10px "JetBrains Mono", sans-serif';
+      const textW = ctx.measureText(text).width;
+      const pad = 6;
+      ctx.fillStyle = bgColor;
+      ctx.strokeStyle = textColor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(x - textW / 2 - pad, y - 10, textW + pad * 2, 20, 4);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = textColor;
+      ctx.textAlign = 'center';
+      ctx.fillText(text, x, y + 3.5);
+    }
+
+    // 更新介面與儀表
+    function updateUI() {
+      const state = getPhysicsState(simTime);
+      dispTime.textContent = `${state.t.toFixed(1)} s`;
+      dispVel.textContent = `${state.v.toFixed(1)} m/s`;
+      dispAcc.textContent = `${state.a > 0 ? '+' : ''}${state.a.toFixed(1)} m/s²`;
+      
+      if (state.dir === 'forward') {
+        dispForce.textContent = `${state.F.toFixed(0)} N (向前)`;
+        dispForce.className = 'text-sm sm:text-base font-black font-mono text-sky-700';
+      } else if (state.dir === 'backward') {
+        dispForce.textContent = `${state.F.toFixed(0)} N (向後)`;
+        dispForce.className = 'text-sm sm:text-base font-black font-mono text-amber-700';
+      } else {
+        dispForce.textContent = '0 N (平衡)';
+        dispForce.className = 'text-sm sm:text-base font-black font-mono text-emerald-700';
+      }
+
+      currentPhaseBadge.textContent = state.phaseName;
+      if (state.t <= 2.0) {
+        currentPhaseBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800 border border-sky-200';
+      } else if (state.t <= 4.0) {
+        currentPhaseBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+      } else {
+        currentPhaseBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200';
+      }
+
+      timeScrubber.value = simTime;
+      scrubTimeLabel.textContent = `${simTime.toFixed(1)} s / 7.0 s`;
+
+      drawTrack();
+      drawVTGraph();
+    }
+
+    // 動畫循環
+    function loop(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const dt = (timestamp - lastTimestamp) / 1000.0;
+      lastTimestamp = timestamp;
+
+      if (isPlaying) {
+        simTime += dt * simSpeed;
+        if (simTime >= 7.0) {
+          simTime = 7.0;
+          isPlaying = false;
+          playIcon.textContent = '▶️';
+          playText.textContent = '重播模擬';
+        }
+        updateUI();
+      }
+
+      if (isPlaying) {
+        animId = requestAnimationFrame(loop);
+      }
+    }
+
+    // 事件監聽：播放與控制
+    playBtn.addEventListener('click', () => {
+      if (simTime >= 7.0) simTime = 0.0;
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playIcon.textContent = '⏸️';
+        playText.textContent = '暫停';
+        lastTimestamp = 0;
+        animId = requestAnimationFrame(loop);
+      } else {
+        playIcon.textContent = '▶️';
+        playText.textContent = '繼續播放';
+      }
+    });
+
+    resetSimBtn.addEventListener('click', () => {
+      isPlaying = false;
+      simTime = 0.0;
+      playIcon.textContent = '▶️';
+      playText.textContent = '播放模擬';
+      updateUI();
+    });
+
+    timeScrubber.addEventListener('input', (e) => {
+      simTime = parseFloat(e.target.value);
+      updateUI();
+    });
+
+    // 速度選擇
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.speed-btn').forEach(b => {
+          b.className = 'speed-btn px-2 py-0.5 rounded text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100';
+        });
+        btn.className = 'speed-btn px-2 py-0.5 rounded text-[11px] font-bold bg-sky-600 text-white border border-sky-600';
+        simSpeed = parseFloat(btn.dataset.speed);
+      });
+    });
+
+    // 時段快捷按鈕
+    document.querySelectorAll('.jump-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        simTime = parseFloat(btn.dataset.t);
+        updateUI();
+      });
+    });
+
+    // 表格填答檢查
+    const checkAnsBtn = document.getElementById('checkAnsBtn');
+    const revealAnsBtn = document.getElementById('revealAnsBtn');
+    const resultBanner = document.getElementById('resultBanner');
+
+    checkAnsBtn.addEventListener('click', () => {
+      let allCorrect = true;
+
+      // 檢查 ans_f_1
+      const f1 = document.getElementById('ans_f_1');
+      if (f1.value.trim() === '30') {
+        f1.className = 'answer-input correct w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+      } else {
+        f1.className = 'answer-input incorrect w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+        allCorrect = false;
+      }
+
+      // 檢查 ans_dir_1
+      const d1 = document.getElementById('ans_dir_1');
+      if (d1.value === '相同') {
+        d1.className = 'correct px-2 py-1 text-xs font-bold rounded-lg border';
+      } else {
+        d1.className = 'incorrect px-2 py-1 text-xs font-bold rounded-lg border';
+        allCorrect = false;
+      }
+
+      // 檢查 ans_a_2
+      const a2 = document.getElementById('ans_a_2');
+      if (a2.value.trim() === '0') {
+        a2.className = 'answer-input correct w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+      } else {
+        a2.className = 'answer-input incorrect w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+        allCorrect = false;
+      }
+
+      // 檢查 ans_f_2
+      const f2 = document.getElementById('ans_f_2');
+      if (f2.value.trim() === '0') {
+        f2.className = 'answer-input correct w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+      } else {
+        f2.className = 'answer-input incorrect w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+        allCorrect = false;
+      }
+
+      // 檢查 ans_a_3 (-10 或 10 皆算對)
+      const a3 = document.getElementById('ans_a_3');
+      const valA3 = a3.value.trim();
+      if (valA3 === '-10' || valA3 === '10') {
+        a3.className = 'answer-input correct w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+      } else {
+        a3.className = 'answer-input incorrect w-20 px-2 py-1 text-sm rounded-lg mx-auto border';
+        allCorrect = false;
+      }
+
+      // 檢查 ans_dir_3
+      const d3 = document.getElementById('ans_dir_3');
+      if (d3.value === '相反') {
+        d3.className = 'correct px-2 py-1 text-xs font-bold rounded-lg border';
+      } else {
+        d3.className = 'incorrect px-2 py-1 text-xs font-bold rounded-lg border';
+        allCorrect = false;
+      }
+
+      if (allCorrect) {
+        resultBanner.classList.remove('hidden');
+      } else {
+        resultBanner.classList.add('hidden');
+      }
+    });
+
+    revealAnsBtn.addEventListener('click', () => {
+      document.getElementById('ans_f_1').value = '30';
+      document.getElementById('ans_dir_1').value = '相同';
+      document.getElementById('ans_a_2').value = '0';
+      document.getElementById('ans_f_2').value = '0';
+      document.getElementById('ans_a_3').value = '-10';
+      document.getElementById('ans_dir_3').value = '相反';
+      checkAnsBtn.click();
+    });
+
+    globalResetBtn.addEventListener('click', () => {
+      simTime = 0;
+      isPlaying = false;
+      playIcon.textContent = '▶️';
+      playText.textContent = '播放模擬';
+      document.getElementById('ans_f_1').value = '';
+      document.getElementById('ans_f_1').className = 'answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto';
+      document.getElementById('ans_dir_1').value = '';
+      document.getElementById('ans_dir_1').className = 'px-2 py-1 text-xs font-bold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500';
+      document.getElementById('ans_a_2').value = '';
+      document.getElementById('ans_a_2').className = 'answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto';
+      document.getElementById('ans_f_2').value = '';
+      document.getElementById('ans_f_2').className = 'answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto';
+      document.getElementById('ans_a_3').value = '';
+      document.getElementById('ans_a_3').className = 'answer-input w-20 px-2 py-1 text-sm bg-slate-50 border border-slate-300 rounded-lg mx-auto';
+      document.getElementById('ans_dir_3').value = '';
+      document.getElementById('ans_dir_3').className = 'px-2 py-1 text-xs font-bold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500';
+      resultBanner.classList.add('hidden');
+      updateUI();
+    });
+
+    // 測驗邏輯
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.parentElement;
+        const feed = parent.parentElement.querySelector('.quiz-feed');
+        const isCorrect = btn.dataset.correct === 'true';
+
+        parent.querySelectorAll('.quiz-btn').forEach(b => {
+          b.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 transition-all font-medium opacity-60';
+        });
+
+        if (isCorrect) {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-900 font-bold';
+          feed.textContent = '✓ 答對了！觀念非常清晰！';
+          feed.className = 'quiz-feed text-[11px] text-emerald-700 font-bold block pt-1';
+        } else {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-red-50 border border-red-400 text-red-900 font-bold';
+          feed.textContent = '✗ 答案不正確，請參考上方解題步驟重新思考看看！';
+          feed.className = 'quiz-feed text-[11px] text-red-600 font-bold block pt-1';
+        }
+      });
+    });
+
+    // 語音導讀
+    const speechBtn = document.getElementById('speechBtn');
+    let isSpeaking = false;
+    const narrationText = '歡迎學習康軒國中自然三上，例題二之四，牛頓第二運動定律與速度時間圖。一個質量兩公斤的物體在光滑水平面上運動。在零到兩秒期間，速度由零增加到三十，加速度為十五公尺每秒平方，所受外力為兩公斤乘以十五等於三十牛頓，外力與運動方向相同。在兩到四秒期間，速度維持三十等速運動，加速度為零，外力為零。在四到七秒期間，速度由三十減速到零，加速度大小為十，所受外力為二十牛頓，此時外力與運動方向相反！';
+
+    speechBtn.addEventListener('click', () => {
+      if ('speechSynthesis' in window) {
+        if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speechBtn.classList.remove('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '🔊';
+        } else {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(narrationText);
+          utter.lang = 'zh-TW';
+          utter.rate = 1.0;
+          utter.onend = () => {
+            isSpeaking = false;
+            speechBtn.classList.remove('bg-sky-200');
+            document.getElementById('speechIcon').textContent = '🔊';
+          };
+          window.speechSynthesis.speak(utter);
+          isSpeaking = true;
+          speechBtn.classList.add('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '⏹️';
+        }
+      } else {
+        alert('您的瀏覽器不支援語音合成功能。');
+      }
+    });
+
+    // 初始化渲染
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+      updateUI();
+    });
+  </script>
+</body>
+</html>
