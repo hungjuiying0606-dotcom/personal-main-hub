@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="九年級理化第三冊單元5，講義第76頁第13、14題互動實驗室：熱平衡與比熱升溫曲線。">
+  <title>單元5｜P.76 第13、14題互動實驗室</title>
+  <style>
+    :root{--ink:#183047;--muted:#62758a;--paper:#fffdf8;--teal:#087f8c;--teal-dark:#075763;--cyan:#e4f8f8;--pink:#e43f78;--blue:#1684b5;--amber:#f4b942;--green:#17835a;--line:#cbdde5;--shadow:0 18px 48px rgba(17,92,105,.13)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 10% 0%,rgba(244,185,66,.24),transparent 27rem),radial-gradient(circle at 100% 22%,rgba(47,190,193,.22),transparent 31rem),#f4fafb;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.65}button,input{font:inherit}button{touch-action:manipulation}a{color:inherit}
+    .topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:.72rem clamp(1rem,4vw,3rem);background:rgba(255,253,248,.94);border-bottom:1px solid rgba(8,127,140,.18);backdrop-filter:blur(12px)}.topbar a{text-decoration:none;font-size:.88rem;font-weight:850}.crumbs{color:var(--teal-dark)}.pdf-link{padding:.42rem .75rem;color:#fff;background:var(--teal);border-radius:999px;white-space:nowrap}
+    header{max-width:1120px;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) 1rem 2.2rem;text-align:center}.eyebrow{display:inline-flex;padding:.35rem .8rem;color:var(--teal-dark);background:#fff;border:1px solid #9ddadd;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.04em;box-shadow:0 7px 20px rgba(8,127,140,.08)}h1{margin:1rem auto .65rem;font-size:clamp(2rem,5vw,3.8rem);line-height:1.1;letter-spacing:-.04em}.accent{color:var(--pink)}.lead{max-width:760px;margin:0 auto;color:var(--muted);font-size:clamp(1rem,2vw,1.14rem)}.mission-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem;margin-top:1.35rem}.mission-nav a{padding:.52rem .86rem;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:.86rem;font-weight:850}
+    main{width:min(1160px,calc(100% - 2rem));margin:0 auto 4rem}.question-card{margin-bottom:2rem;overflow:hidden;background:var(--paper);border:1px solid rgba(8,127,140,.22);border-radius:28px;box-shadow:var(--shadow)}.question-head{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;padding:clamp(1.2rem,3vw,2rem);background:linear-gradient(135deg,#fff,var(--cyan));border-bottom:1px solid var(--line)}.q-number{display:grid;place-items:center;width:3.2rem;height:3.2rem;color:#fff;background:var(--teal);border-radius:50%;font-size:1.2rem;font-weight:950;box-shadow:0 8px 18px rgba(8,127,140,.24)}.question-head h2{margin:0 0 .35rem;font-size:clamp(1.25rem,2.6vw,1.8rem);line-height:1.35}.source-note{margin:0;color:var(--muted);font-size:.88rem}.question-text{margin:.88rem 0 0;font-weight:700}
+    .lab-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);gap:1.2rem;padding:clamp(1rem,3vw,2rem)}.panel{padding:clamp(1rem,2.2vw,1.35rem);background:#fff;border:1px solid var(--line);border-radius:20px}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin:0 0 .9rem;font-size:1rem;font-weight:900}.status-pill{padding:.26rem .62rem;color:var(--teal-dark);background:var(--cyan);border-radius:999px;font-size:.74rem;font-weight:900;white-space:nowrap}
+    .data-table{width:100%;margin:.8rem 0;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid #9acfd4;border-radius:13px;font-size:.82rem;text-align:center}.data-table th,.data-table td{padding:.48rem .34rem;border-right:1px solid #b8dce0;border-bottom:1px solid #b8dce0}.data-table th{background:#d7f0f1;color:var(--teal-dark)}.data-table tr:last-child td{border-bottom:0}.data-table th:last-child,.data-table td:last-child{border-right:0}
+    .sphere-stage{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;align-items:end;min-height:245px;padding:1.2rem;background:linear-gradient(180deg,#eaf9fb,#fff7e8);border:1px solid #c3e1e4;border-radius:18px}.sphere-wrap{text-align:center}.sphere{display:grid;place-items:center;width:clamp(74px,11vw,112px);aspect-ratio:1;margin:0 auto;border-radius:50%;color:#fff;background:radial-gradient(circle at 32% 27%,#fff8,transparent 15%),var(--sphere-color);border:4px solid #fff;box-shadow:0 12px 24px #18304725;font-size:1.7rem;font-weight:950;transition:background .45s ease,transform .45s ease}.sphere.active{transform:translateY(-9px);box-shadow:0 16px 30px #e43f7840}.temp-label{display:block;margin-top:.55rem;font-weight:950}.capacity{color:var(--muted);font-size:.74rem}.connector{grid-column:1/-1;display:flex;justify-content:center;align-items:center;gap:.65rem;min-height:30px;color:var(--pink);font-size:.84rem;font-weight:900}.pulse{animation:pulse 1s infinite alternate}@keyframes pulse{to{transform:scale(1.08)}}
+    .action-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.8rem}.action-btn,.answer-btn{border:1px solid var(--line);border-radius:12px;background:#f8fbfc;color:var(--ink);cursor:pointer;font-weight:850;transition:transform .15s ease,background .15s ease,border-color .15s ease}.action-btn{padding:.58rem .85rem}.action-btn.primary{color:#fff;background:var(--pink);border-color:var(--pink)}.action-btn:disabled{opacity:.48;cursor:not-allowed}.action-btn:hover:not(:disabled),.answer-btn:hover{transform:translateY(-2px)}
+    .calc-grid{display:grid;gap:.58rem}.calc-card{padding:.78rem;background:#f8fbfc;border:1px solid var(--line);border-radius:12px}.calc-card b{color:var(--teal-dark)}.calc-card p{margin:.18rem 0 0;color:var(--muted);font-size:.8rem}.result-box{margin-top:.8rem;padding:.82rem;background:#eefaf5;border:1px solid #b7e5d0;border-radius:12px;color:#125d43;font-size:.86rem;font-weight:800}
+    .answers{display:grid;gap:.56rem;margin-top:1rem}.answer-btn{padding:.72rem .88rem;text-align:left}.answer-btn.correct{color:#14532d;background:#dcfce7;border:2px solid #22c55e}.answer-btn.wrong{color:#7f1d1d;background:#fee2e2;border:2px solid #ef4444}.answer-btn.dim{opacity:.62}.feedback{display:none;margin-top:.8rem;padding:.9rem;border-radius:12px;font-size:.88rem;font-weight:750}.feedback.show{display:block}.feedback.good{color:#14532d;background:#dcfce7;border:1px solid #86efac}.feedback.bad{color:#7f1d1d;background:#fee2e2;border:1px solid #fca5a5}
+    .chart-stage{padding:.75rem;background:linear-gradient(180deg,#edfaff,#fff9ec);border:1px solid #c6e1eb;border-radius:18px}.chart-stage svg{display:block;width:100%;height:auto;max-height:390px}.curve{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.graph-guide{stroke:#64758a;stroke-width:2;stroke-dasharray:5 5}.chart-control{margin-top:.85rem}.chart-control label{display:flex;justify-content:space-between;gap:.8rem;margin-bottom:.38rem;font-size:.82rem;font-weight:850}input[type=range]{width:100%;accent-color:var(--pink)}.temp-dashboard{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}.temp-card{padding:.68rem;text-align:center;background:#f8fbfc;border:1px solid var(--line);border-radius:12px}.temp-card strong{display:block;font-size:.78rem}.temp-card span{display:block;margin-top:.1rem;font-size:1.1rem;font-weight:950}.silver{color:var(--pink)}.iron{color:var(--blue)}
+    .graph-options{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1rem}.graph-option{position:relative;padding:.45rem;background:#fff;border:2px solid var(--line);border-radius:13px;cursor:pointer;text-align:left}.graph-option svg{display:block;width:100%;height:auto}.graph-option .letter{position:absolute;top:.38rem;left:.45rem;z-index:2;display:grid;place-items:center;width:1.55rem;height:1.55rem;background:#fff;border:1px solid var(--line);border-radius:50%;font-weight:950}.graph-option.correct{background:#ecfdf3;border-color:#22c55e}.graph-option.wrong{background:#fff1f2;border-color:#ef4444}.graph-option.dim{opacity:.58}
+    .legend{display:flex;flex-wrap:wrap;gap:.8rem;margin:.6rem 0 0;color:var(--muted);font-size:.76rem;font-weight:800}.legend i{display:inline-block;width:18px;height:4px;margin-right:.3rem;border-radius:2px;vertical-align:middle}.note{margin:.8rem 0 0;padding:.75rem;color:#77521b;background:#fff8df;border-left:4px solid var(--amber);border-radius:10px;font-size:.8rem;font-weight:700}.reset-all{display:block;margin:1.3rem auto 0;padding:.72rem 1.1rem;color:#fff;background:var(--ink);border:0;border-radius:999px;cursor:pointer;font-weight:900}footer{padding:2rem 1rem 3rem;color:var(--muted);text-align:center;font-size:.83rem}
+    @media(max-width:860px){.lab-grid{grid-template-columns:1fr}}@media(max-width:560px){.topbar{align-items:flex-start}.crumbs{max-width:62%}.question-head{grid-template-columns:1fr}.q-number{width:2.7rem;height:2.7rem}.sphere-stage{padding:.7rem;gap:.3rem}.sphere{width:72px}.data-table{font-size:.7rem}.data-table th,.data-table td{padding:.4rem .18rem}.graph-options{grid-template-columns:1fr}.temp-dashboard{grid-template-columns:1fr 1fr}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="教材導覽">
+    <a class="crumbs" href="../index.html">← 個人主網頁 · 九年級複習 · 第三冊 · 單元5</a>
+    <a class="pdf-link" href="./assets/review-pdf/unit-05.pdf" target="_blank" rel="noopener noreferrer">開啟教用版 PDF ↗</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">講義 P.76 · 精選第 13、14 題</div>
+    <h1>熱平衡接力 × <span class="accent">比熱曲線</span></h1>
+    <p class="lead">先讓三顆金屬球依序接觸，再把鐵、銀放進沸水。用溫度變化找出熱量傳遞的規則。</p>
+    <div class="mission-nav"><a href="#question-13">第 13 題｜兩階段熱平衡</a><a href="#question-14">第 14 題｜鐵銀升溫曲線</a></div>
+  </header>
+
+  <main>
+    <article class="question-card" id="question-13">
+      <div class="question-head">
+        <div class="q-number">13</div>
+        <div>
+          <h2>依序接觸後，三顆金屬球誰比較熱？</h2>
+          <p class="source-note">熱平衡｜質量 × 比熱決定熱容量</p>
+          <p class="question-text">甲、乙、丙為三顆質量不相同、材質也不一樣的金屬球，如右表所示。今先將甲、乙兩球接觸達熱平衡後分開，再將乙、丙兩球接觸達熱平衡後分開。假設熱量只在三球間傳導，沒有其他熱量流失，則三金屬球最終的溫度大小關係為何？</p>
+        </div>
+      </div>
+      <div class="lab-grid">
+        <section class="panel" aria-label="三金屬球熱平衡模擬">
+          <div class="panel-title"><span>🔗 熱平衡接力</span><span class="status-pill" id="q13-status">初始狀態</span></div>
+          <table class="data-table" aria-label="甲乙丙金屬球資料">
+            <thead><tr><th>金屬球</th><th>體積</th><th>密度</th><th>比熱</th><th>溫度</th></tr></thead>
+            <tbody><tr><td>甲</td><td>10 cm³</td><td>2 g/cm³</td><td>0.5 卡/g·°C</td><td>50°C</td></tr><tr><td>乙</td><td>20 cm³</td><td>3 g/cm³</td><td>0.2 卡/g·°C</td><td>30°C</td></tr><tr><td>丙</td><td>30 cm³</td><td>4 g/cm³</td><td>0.1 卡/g·°C</td><td>10°C</td></tr></tbody>
+          </table>
+          <div class="sphere-stage">
+            <div class="sphere-wrap"><div class="sphere" id="sphere-a">甲</div><span class="temp-label" id="temp-a">50.0°C</span><span class="capacity">熱容量 10 cal/°C</span></div>
+            <div class="sphere-wrap"><div class="sphere" id="sphere-b">乙</div><span class="temp-label" id="temp-b">30.0°C</span><span class="capacity">熱容量 12 cal/°C</span></div>
+            <div class="sphere-wrap"><div class="sphere" id="sphere-c">丙</div><span class="temp-label" id="temp-c">10.0°C</span><span class="capacity">熱容量 12 cal/°C</span></div>
+            <div class="connector" id="connector">先讓甲、乙接觸</div>
+          </div>
+          <div class="action-row"><button class="action-btn primary" id="stage-one" type="button">① 甲、乙接觸至熱平衡</button><button class="action-btn" id="stage-two" type="button" disabled>② 乙、丙接觸至熱平衡</button><button class="action-btn" id="reset-q13" type="button">↺ 重設</button></div>
+        </section>
+        <section class="panel" aria-label="第13題計算與作答">
+          <div class="panel-title"><span>🧮 熱容量帳本</span><span class="status-pill">C = M × S</span></div>
+          <div class="calc-grid">
+            <div class="calc-card"><b>甲：10×2×0.5 = 10 cal/°C</b><p>質量 20 g，初溫 50°C。</p></div>
+            <div class="calc-card"><b>乙：20×3×0.2 = 12 cal/°C</b><p>質量 60 g，初溫 30°C。</p></div>
+            <div class="calc-card"><b>丙：30×4×0.1 = 12 cal/°C</b><p>質量 120 g，初溫 10°C。</p></div>
+          </div>
+          <div class="result-box" id="q13-result">依題目順序完成兩次接觸，觀察最後溫度。</div>
+          <div class="answers" data-question="13"><button class="answer-btn" type="button" data-choice="A">(A) 甲＝乙＝丙</button><button class="answer-btn" type="button" data-choice="B">(B) 甲＞乙＝丙</button><button class="answer-btn" type="button" data-choice="C">(C) 甲＞乙＞丙</button><button class="answer-btn" type="button" data-choice="D">(D) 甲＝乙＞丙</button></div>
+          <div class="feedback" id="feedback-13" role="status" aria-live="polite"></div>
+        </section>
+      </div>
+    </article>
+
+    <article class="question-card" id="question-14">
+      <div class="question-head">
+        <div class="q-number">14</div>
+        <div>
+          <h2>同時投入沸水，鐵塊和銀塊如何升溫？</h2>
+          <p class="source-note">比熱與升溫速率｜圖形判讀</p>
+          <p class="question-text">右表為 3 種不同物質的比熱。將溫度 20°C、質量相等的鐵塊和銀塊，同時投入持續沸騰的水中，經過一段時間後，達成熱平衡。假設沒有熱量的散失，下列圖形何者正確？</p>
+        </div>
+      </div>
+      <div class="lab-grid">
+        <section class="panel" aria-label="鐵塊銀塊升溫曲線模擬">
+          <div class="panel-title"><span>♨️ 持續沸騰水浴</span><span class="status-pill" id="q14-status">0.0 分鐘</span></div>
+          <table class="data-table" aria-label="水鐵銀比熱資料"><thead><tr><th>物質</th><th>比熱（cal/g·°C）</th></tr></thead><tbody><tr><td>水</td><td>1.000</td></tr><tr><td>鐵</td><td>0.113</td></tr><tr><td>銀</td><td>0.056</td></tr></tbody></table>
+          <div class="chart-stage">
+            <svg viewBox="0 0 560 350" role="img" aria-labelledby="chart-title chart-desc">
+              <title id="chart-title">鐵塊與銀塊投入持續沸騰水中的溫度曲線</title><desc id="chart-desc">鐵塊與銀塊皆由20度開始，銀塊先升至100度，鐵塊稍後升至100度，最後達到相同溫度。</desc>
+              <rect x="58" y="20" width="470" height="275" rx="14" fill="#fff" stroke="#cbdde5"/>
+              <g stroke="#dce7eb" stroke-width="1"><line x1="82" y1="255" x2="502" y2="255"/><line x1="82" y1="202" x2="502" y2="202"/><line x1="82" y1="149" x2="502" y2="149"/><line x1="82" y1="96" x2="502" y2="96"/><line x1="82" y1="43" x2="502" y2="43"/></g>
+              <g stroke="#536b78" stroke-width="2"><line x1="82" y1="278" x2="510" y2="278"/><line x1="82" y1="278" x2="82" y2="35"/></g>
+              <g fill="#62758a" font-size="11"><text x="70" y="259" text-anchor="end">20</text><text x="70" y="206" text-anchor="end">40</text><text x="70" y="153" text-anchor="end">60</text><text x="70" y="100" text-anchor="end">80</text><text x="70" y="47" text-anchor="end">100</text><text x="295" y="322" text-anchor="middle">加熱時間（分）</text><text x="23" y="160" transform="rotate(-90 23 160)" text-anchor="middle">溫度（°C）</text></g>
+              <path d="M82 255 L260 43 L502 43" class="curve" stroke="#e43f78"/><path d="M82 255 L438 43 L502 43" class="curve" stroke="#1684b5"/>
+              <line id="time-guide" class="graph-guide" x1="82" y1="35" x2="82" y2="278"/><circle id="silver-dot" cx="82" cy="255" r="7" fill="#fff" stroke="#e43f78" stroke-width="4"/><circle id="iron-dot" cx="82" cy="255" r="7" fill="#fff" stroke="#1684b5" stroke-width="4"/>
+              <text x="274" y="64" fill="#e43f78" font-size="14" font-weight="900">銀塊</text><text x="420" y="80" fill="#1684b5" font-size="14" font-weight="900">鐵塊</text>
+            </svg>
+          </div>
+          <div class="chart-control"><label for="heating-time"><span>加熱時間</span><span id="heating-time-value">0.0 分鐘</span></label><input id="heating-time" type="range" min="0" max="8" step="0.1" value="0"></div>
+          <div class="action-row"><button class="action-btn primary" id="play-q14" type="button">▶ 播放升溫過程</button><button class="action-btn" id="reset-q14" type="button">↺ 回到 0 分鐘</button></div>
+          <div class="temp-dashboard"><div class="temp-card"><strong class="silver">銀塊（比熱較小）</strong><span class="silver" id="silver-temp">20.0°C</span></div><div class="temp-card"><strong class="iron">鐵塊（比熱較大）</strong><span class="iron" id="iron-temp">20.0°C</span></div></div>
+          <p class="note">本模擬以相同質量、相同受熱條件呈現題目的直線趨勢：銀的比熱較小，升溫較快；達熱平衡後兩者都等於持續沸騰水的溫度。</p>
+        </section>
+        <section class="panel" aria-label="第14題圖形選項與作答">
+          <div class="panel-title"><span>📊 選出正確曲線</span><span class="status-pill">A → B → C → D</span></div>
+          <div class="graph-options answers" data-question="14">
+            <button class="graph-option answer-btn" type="button" data-choice="A" aria-label="選項A，溫度對加熱時間，銀較快升溫，最後鐵銀同溫"><span class="letter">A</span><svg viewBox="0 0 210 132"><path d="M35 15V104H194" fill="none" stroke="#526774" stroke-width="2"/><text x="10" y="25" font-size="10">溫度</text><text x="124" y="126" font-size="10">加熱時間</text><path d="M36 89L91 34H174" fill="none" stroke="#e43f78" stroke-width="4"/><path d="M36 89L130 34H174" fill="none" stroke="#1684b5" stroke-width="4"/><text x="96" y="28" font-size="10">銀塊</text><text x="137" y="54" font-size="10">鐵塊</text></svg></button>
+            <button class="graph-option answer-btn" type="button" data-choice="B" aria-label="選項B，溫度對加熱時間，鐵銀最後溫度不同"><span class="letter">B</span><svg viewBox="0 0 210 132"><path d="M35 15V104H194" fill="none" stroke="#526774" stroke-width="2"/><text x="10" y="25" font-size="10">溫度</text><text x="124" y="126" font-size="10">加熱時間</text><path d="M36 89L91 30H174" fill="none" stroke="#e43f78" stroke-width="4"/><path d="M36 89L110 58H174" fill="none" stroke="#1684b5" stroke-width="4"/><text x="96" y="25" font-size="10">銀塊</text><text x="116" y="54" font-size="10">鐵塊</text></svg></button>
+            <button class="graph-option answer-btn" type="button" data-choice="C" aria-label="選項C，溫度變化對加熱時間，初始溫度變化不為零"><span class="letter">C</span><svg viewBox="0 0 210 132"><path d="M35 15V104H194" fill="none" stroke="#526774" stroke-width="2"/><text x="7" y="25" font-size="10">溫度變化</text><text x="124" y="126" font-size="10">加熱時間</text><path d="M36 77L91 34H174" fill="none" stroke="#e43f78" stroke-width="4"/><path d="M36 77L130 34H174" fill="none" stroke="#1684b5" stroke-width="4"/><text x="96" y="28" font-size="10">銀塊</text><text x="137" y="54" font-size="10">鐵塊</text></svg></button>
+            <button class="graph-option answer-btn" type="button" data-choice="D" aria-label="選項D，溫度變化對加熱時間，鐵銀最後溫度變化不同"><span class="letter">D</span><svg viewBox="0 0 210 132"><path d="M35 15V104H194" fill="none" stroke="#526774" stroke-width="2"/><text x="7" y="25" font-size="10">溫度變化</text><text x="124" y="126" font-size="10">加熱時間</text><path d="M36 103L91 30H174" fill="none" stroke="#e43f78" stroke-width="4"/><path d="M36 103L110 58H174" fill="none" stroke="#1684b5" stroke-width="4"/><text x="96" y="25" font-size="10">銀塊</text><text x="116" y="54" font-size="10">鐵塊</text></svg></button>
+          </div>
+          <div class="legend"><span><i style="background:#e43f78"></i>銀塊</span><span><i style="background:#1684b5"></i>鐵塊</span></div>
+          <div class="feedback" id="feedback-14" role="status" aria-live="polite"></div>
+        </section>
+      </div>
+    </article>
+    <button class="reset-all" id="reset-all" type="button">🔄 兩題全部重新挑戰</button>
+  </main>
+  <footer>九年級複習 · 第三冊 · 單元5 溫度與熱量｜題目來源：指定教用講義第 76 頁</footer>
+
+  <script>
+    const temps={a:50,b:30,c:10};let q13Stage=0;
+    function colorFor(t){const ratio=Math.max(0,Math.min(1,(t-10)/40));const r=Math.round(42+196*ratio),g=Math.round(143-64*ratio),b=Math.round(194-98*ratio);return `rgb(${r},${g},${b})`}
+    function updateSpheres(){['a','b','c'].forEach(k=>{document.getElementById('temp-'+k).textContent=temps[k].toFixed(1)+'°C';document.getElementById('sphere-'+k).style.setProperty('--sphere-color',colorFor(temps[k]))})}
+    function setActive(keys){['a','b','c'].forEach(k=>document.getElementById('sphere-'+k).classList.toggle('active',keys.includes(k)))}
+    function stageOne(){temps.a=temps.b=(10*50+12*30)/22;q13Stage=1;updateSpheres();setActive(['a','b']);document.getElementById('q13-status').textContent='第 1 次熱平衡';document.getElementById('connector').textContent='甲、乙同為 '+temps.a.toFixed(1)+'°C，接著分開';document.getElementById('stage-one').disabled=true;document.getElementById('stage-two').disabled=false;document.getElementById('q13-result').textContent='第 1 次：甲、乙達 '+temps.a.toFixed(1)+'°C；丙仍為 10.0°C。'}
+    function stageTwo(){if(q13Stage<1)return;temps.b=temps.c=(12*temps.b+12*10)/24;q13Stage=2;updateSpheres();setActive(['b','c']);document.getElementById('q13-status').textContent='第 2 次熱平衡';document.getElementById('connector').textContent='最後：甲 '+temps.a.toFixed(1)+'°C；乙、丙 '+temps.b.toFixed(1)+'°C';document.getElementById('stage-two').disabled=true;document.getElementById('q13-result').innerHTML='第 2 次：乙、丙的熱容量相同，達 <strong>'+temps.b.toFixed(1)+'°C</strong>。最後可比較出甲＞乙＝丙。'}
+    function resetQ13(){temps.a=50;temps.b=30;temps.c=10;q13Stage=0;updateSpheres();setActive([]);document.getElementById('q13-status').textContent='初始狀態';document.getElementById('connector').textContent='先讓甲、乙接觸';document.getElementById('stage-one').disabled=false;document.getElementById('stage-two').disabled=true;document.getElementById('q13-result').textContent='依題目順序完成兩次接觸，觀察最後溫度。'}
+    document.getElementById('stage-one').addEventListener('click',stageOne);document.getElementById('stage-two').addEventListener('click',stageTwo);document.getElementById('reset-q13').addEventListener('click',resetQ13);
+
+    const heatingTime=document.getElementById('heating-time');let q14Timer=null;
+    function updateQ14(){const t=Number(heatingTime.value),silver=20+80*Math.min(1,t/3.4),iron=20+80*Math.min(1,t/6.8),x=82+420*(t/8),ySilver=255-212*((silver-20)/80),yIron=255-212*((iron-20)/80);document.getElementById('q14-status').textContent=t.toFixed(1)+' 分鐘';document.getElementById('heating-time-value').textContent=t.toFixed(1)+' 分鐘';document.getElementById('silver-temp').textContent=silver.toFixed(1)+'°C';document.getElementById('iron-temp').textContent=iron.toFixed(1)+'°C';document.getElementById('time-guide').setAttribute('x1',x);document.getElementById('time-guide').setAttribute('x2',x);document.getElementById('silver-dot').setAttribute('cx',x);document.getElementById('silver-dot').setAttribute('cy',ySilver);document.getElementById('iron-dot').setAttribute('cx',x);document.getElementById('iron-dot').setAttribute('cy',yIron)}
+    function stopQ14(){if(q14Timer)clearInterval(q14Timer);q14Timer=null;document.getElementById('play-q14').textContent=Number(heatingTime.value)>=8?'↺ 重新播放':'▶ 播放升溫過程'}
+    function playQ14(){if(q14Timer){stopQ14();return}if(Number(heatingTime.value)>=8)heatingTime.value=0;document.getElementById('play-q14').textContent='⏸ 暫停';q14Timer=setInterval(()=>{const next=Math.min(8,Number(heatingTime.value)+.1);heatingTime.value=next.toFixed(1);updateQ14();if(next>=8)stopQ14()},65)}
+    heatingTime.addEventListener('input',()=>{stopQ14();updateQ14()});document.getElementById('play-q14').addEventListener('click',playQ14);document.getElementById('reset-q14').addEventListener('click',()=>{stopQ14();heatingTime.value=0;updateQ14()});
+
+    const answerKeys={'13':'B','14':'A'};const explanations={'13':'甲、乙第一次熱平衡約為 39.1°C；再把乙與丙接觸，兩者熱容量同為 12 cal/°C，所以最後同為約 24.5°C。甲已分開並保持約 39.1°C，因此正解為 (B) 甲＞乙＝丙。','14':'相同質量、相同受熱條件下，比熱較小的銀塊升溫較快；但達成熱平衡時，鐵塊、銀塊與持續沸騰的水溫度相同，都是 100°C，因此正解為 (A)。'};
+    function checkAnswer(question,choice){const group=document.querySelector('[data-question="'+question+'"]'),feedback=document.getElementById('feedback-'+question),correct=answerKeys[question];group.querySelectorAll('.answer-btn').forEach(button=>{button.classList.remove('correct','wrong','dim');if(button.dataset.choice===correct)button.classList.add('correct');else if(button.dataset.choice===choice)button.classList.add('wrong');else button.classList.add('dim')});const ok=choice===correct;feedback.className='feedback show '+(ok?'good':'bad');feedback.innerHTML=(ok?'✅ <strong>答對了！</strong> ':'🔎 <strong>再操作一次，檢查最後溫度。</strong> ')+explanations[question]}
+    document.querySelectorAll('.answers').forEach(group=>group.querySelectorAll('.answer-btn').forEach(button=>button.addEventListener('click',()=>checkAnswer(group.dataset.question,button.dataset.choice))));
+    function resetAnswers(){document.querySelectorAll('.answer-btn').forEach(button=>button.classList.remove('correct','wrong','dim'));document.querySelectorAll('.feedback').forEach(feedback=>{feedback.className='feedback';feedback.textContent=''})}
+    document.getElementById('reset-all').addEventListener('click',()=>{resetQ13();stopQ14();heatingTime.value=0;updateQ14();resetAnswers();document.getElementById('question-13').scrollIntoView({behavior:'smooth',block:'start'})});
+    resetQ13();updateQ14();
+  </script>
+</body>
+</html>
