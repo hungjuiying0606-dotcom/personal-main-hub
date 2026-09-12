@@ -180,28 +180,26 @@
       position: relative;
       overflow: hidden;
       margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
     }
 
     .tower-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      right: 0.75rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
+      position: static;
+      background: #1e293b;
+      border-bottom: 1.5px solid #334155;
+      padding: 0.5rem 0.8rem;
       color: white;
       font-size: 0.85rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     canvas.tower-canvas {
       display: block;
       width: 100%;
-      height: 480px;
+      height: 460px;
     }
 
     /* v-t Graph Box */
@@ -449,12 +447,12 @@
           <span>🍎 自由落體 g=9.8 閃頻解析器與例題 1-9 高度測量儀</span>
           <span class="badge">國中自然 3上 · 課本 P.26 圖 1-26/例題 1-9</span>
         </h1>
-        <p>重力加速度 g=9.8 m/s² 速度階梯、閃頻等時點距比例 (1:3:5:7) 與 v-t 面積求樓高</p>
+        <p>固定塔高 · 重力加速度 g 越大著地時間越短 (\( t = \sqrt{2H/g} \)) · v-t 三角形面積等於固定樓高 H</p>
       </div>
 
       <nav class="nav-tabs">
-        <button class="nav-btn active" onclick="loadMode('textbook')">📖 課本圖 1-26 閃頻實驗 (5秒下落)</button>
-        <button class="nav-btn" onclick="loadMode('example')">📝 例題 1-9 自由落體求高度 (2秒著地)</button>
+        <button class="nav-btn active" onclick="loadMode('textbook')">📖 課本圖 1-26 閃頻實驗 (固定塔高 122.5 m)</button>
+        <button class="nav-btn" onclick="loadMode('example')">📝 例題 1-9 自由落體求高度 (固定樓高 19.6 m)</button>
       </nav>
     </div>
   </header>
@@ -575,17 +573,15 @@
   </footer>
 
   <script>
-    let curMode = 'textbook'; // 'textbook' (5s) or 'example' (2s)
-    let gVal = 9.8; // m/s^2
+    let curMode = 'textbook'; // 'textbook' (H=122.5m) or 'example' (H=19.6m)
+    let fixedH = 122.5;       // Fixed tower height in meters
+    let gVal = 9.8;           // m/s^2
     let planetName = '地球';
-    let maxT = 5.0;
+    let maxT = Math.sqrt((2 * fixedH) / gVal); // Time to reach ground
     let currentTime = 0;
     let isPlaying = false;
     let animId = null;
     let lastTime = 0;
-
-    // Strobe data for Earth g=9.8
-    const strobeSeconds = [0, 1, 2, 3, 4, 5];
 
     // Canvases
     const towerCanvas = document.getElementById('towerCanvas');
@@ -599,14 +595,11 @@
       if (typeof event !== 'undefined' && event && event.target && event.target.classList) { event.target.classList.add('active'); }
 
       if (mode === 'textbook') {
-        maxT = 5.0;
-        document.getElementById('towerTitle').innerText = '🗼 課本圖 1-26 自由落體閃頻攝影塔 (5秒下落)';
-        document.getElementById('timeSlider').max = 5;
+        fixedH = 122.5;
       } else {
-        maxT = 2.0;
-        document.getElementById('towerTitle').innerText = '📝 例題 1-9 自由落體求高度 (2秒著地)';
-        document.getElementById('timeSlider').max = 2;
+        fixedH = 19.6;
       }
+      updateMaxT();
       resetPlay();
     }
 
@@ -615,7 +608,22 @@
       planetName = el.innerText.split(' ')[0];
       document.querySelectorAll('.planet-btn').forEach(b => b.classList.remove('active'));
       el.classList.add('active');
+      updateMaxT();
       resetPlay();
+    }
+
+    function updateMaxT() {
+      maxT = Math.sqrt((2 * fixedH) / gVal);
+      const slider = document.getElementById('timeSlider');
+      slider.min = "0";
+      slider.max = maxT.toFixed(3);
+      slider.step = (maxT / 200).toFixed(4);
+
+      if (curMode === 'textbook') {
+        document.getElementById('towerTitle').innerText = `🗼 課本圖 1-26 自由落體閃頻攝影塔（固定塔高 ${fixedH.toFixed(1)} m · ${planetName}）`;
+      } else {
+        document.getElementById('towerTitle').innerText = `📝 例題 1-9 自由落體求高度（固定樓高 ${fixedH.toFixed(1)} m · ${planetName}）`;
+      }
     }
 
     function togglePlay() {
@@ -637,6 +645,7 @@
 
     function resetPlay() {
       isPlaying = false;
+      if (animId) cancelAnimationFrame(animId);
       currentTime = 0;
       document.getElementById('btnPlayPause').innerText = '▶ 釋放落體';
       document.getElementById('btnPlayPause').style.background = 'var(--primary)';
@@ -646,6 +655,7 @@
 
     function onScrubTime() {
       currentTime = parseFloat(document.getElementById('timeSlider').value);
+      if (currentTime > maxT) currentTime = maxT;
       updateUI();
     }
 
@@ -658,7 +668,12 @@
       currentTime += dt * 0.75;
       if (currentTime >= maxT) {
         currentTime = maxT;
-        togglePlay();
+        document.getElementById('timeSlider').value = currentTime;
+        updateUI();
+        isPlaying = false;
+        document.getElementById('btnPlayPause').innerText = '🔄 重新釋放';
+        document.getElementById('btnPlayPause').style.background = 'var(--primary)';
+        return;
       }
       document.getElementById('timeSlider').value = currentTime;
       updateUI();
@@ -667,14 +682,14 @@
     }
 
     function updateUI() {
-      document.getElementById('timeReadout').innerText = `t = ${currentTime.toFixed(2)} 秒 (全體 ${maxT.toFixed(1)} 秒)`;
-      document.getElementById('hudTime').innerText = `${currentTime.toFixed(2)} 秒`;
+      document.getElementById('timeReadout').innerText = `t = ${currentTime.toFixed(2)} 秒 (著地 ${maxT.toFixed(2)} 秒)`;
+      document.getElementById('hudTime').innerText = `${currentTime.toFixed(2)} / ${maxT.toFixed(2)} 秒`;
 
       const curV = gVal * currentTime;
-      const curH = 0.5 * gVal * currentTime * currentTime;
+      const curH = Math.min(fixedH, 0.5 * gVal * currentTime * currentTime);
 
       document.getElementById('hudV').innerText = `${curV.toFixed(1)} m/s`;
-      document.getElementById('hudH').innerText = `${curH.toFixed(1)} m`;
+      document.getElementById('hudH').innerText = `${curH.toFixed(1)} / ${fixedH.toFixed(1)} m`;
 
       document.getElementById('metricV').innerText = `${curV.toFixed(1)} m/s`;
       document.getElementById('metricH').innerText = `${curH.toFixed(1)} m`;
@@ -683,83 +698,116 @@
       drawGraph(curV, curH);
     }
 
-    // Draw Tower & Strobe Images
+    // Draw Tower & Strobe Images (Fixed Tower Height)
     function drawTower(curH, curV) {
       towerCtx.clearRect(0, 0, towerCanvas.width, towerCanvas.height);
       const cw = towerCanvas.width;
-      const topY = 60;
-      const bottomY = 440;
-      const maxHVal = 0.5 * gVal * maxT * maxT; // Max height at maxT
+      const topY = 45;
+      const bottomY = 405;
 
-      const toPy = (h) => topY + (h / Math.max(1, maxHVal)) * (bottomY - topY);
+      const toPy = (h) => topY + (Math.min(fixedH, h) / fixedH) * (bottomY - topY);
 
       // Tower Structure
       towerCtx.fillStyle = '#1e293b';
-      towerCtx.fillRect(60, topY - 15, 70, (bottomY - topY) + 30);
+      towerCtx.fillRect(55, topY - 15, 75, (bottomY - topY) + 25);
 
       // Metre Ruler on Tower
-      towerCtx.strokeStyle = '#475569';
-      towerCtx.lineWidth = 1;
-      for (let sec = 0; sec <= maxT; sec++) {
-        const hSec = 0.5 * gVal * sec * sec;
-        const py = toPy(hSec);
+      const ticks = fixedH === 122.5 ? [0, 20, 40, 60, 80, 100, 122.5] : [0, 5, 10, 15, 19.6];
+      ticks.forEach(hTick => {
+        const py = toPy(hTick);
         towerCtx.beginPath();
-        towerCtx.moveTo(120, py);
-        towerCtx.lineTo(135, py);
-        towerCtx.strokeStyle = '#94a3b8';
+        towerCtx.moveTo(115, py);
+        towerCtx.lineTo(130, py);
+        towerCtx.strokeStyle = '#64748b';
+        towerCtx.lineWidth = 1.5;
         towerCtx.stroke();
 
         towerCtx.fillStyle = '#94a3b8';
-        towerCtx.font = '10px Outfit';
-        towerCtx.fillText(`${hSec.toFixed(1)}m`, 70, py + 3);
-      }
+        towerCtx.font = 'bold 10px Outfit';
+        towerCtx.textAlign = 'right';
+        towerCtx.textBaseline = 'middle';
+        towerCtx.fillText(`${hTick.toFixed(1)}m`, 110, py);
+      });
 
       // Ground line
       towerCtx.fillStyle = '#334155';
-      towerCtx.fillRect(20, bottomY + 12, cw - 40, 10);
+      towerCtx.fillRect(20, bottomY + 10, cw - 40, 12);
+      towerCtx.fillStyle = '#94a3b8';
+      towerCtx.font = 'bold 11px Noto Sans TC';
+      towerCtx.textAlign = 'center';
+      towerCtx.textBaseline = 'middle';
+      towerCtx.fillText(`地面 (固定高度 H = ${fixedH.toFixed(1)} m)`, cw / 2, bottomY + 34);
 
-      // Strobe Ghost Drops (sec = 0, 1, 2, 3, 4, 5)
-      for (let s = 0; s <= maxT; s++) {
+      // Strobe Ghost Drops for each integer second
+      for (let s = 0; s < Math.floor(maxT); s++) {
+        const hGhost = 0.5 * gVal * s * s;
+        const vGhost = gVal * s;
+        const py = toPy(hGhost);
+
         if (currentTime >= s) {
-          const hGhost = 0.5 * gVal * s * s;
-          const vGhost = gVal * s;
-          const py = toPy(hGhost);
-
           // Ghost Ball
           towerCtx.fillStyle = 'rgba(56, 189, 248, 0.35)';
           towerCtx.beginPath();
-          towerCtx.arc(200, py, 9, 0, Math.PI * 2);
+          towerCtx.arc(180, py, 8, 0, Math.PI * 2);
           towerCtx.fill();
 
           // Label
           towerCtx.fillStyle = '#cbd5e1';
           towerCtx.font = '11px Noto Sans TC';
-          towerCtx.fillText(`t=${s}s: ${vGhost.toFixed(1)} m/s (h=${hGhost.toFixed(1)}m)`, 220, py + 4);
+          towerCtx.textAlign = 'left';
+          towerCtx.textBaseline = 'middle';
+          towerCtx.fillText(`t=${s}s: ${vGhost.toFixed(1)} m/s (h=${hGhost.toFixed(1)}m)`, 195, py);
         }
       }
 
-      // Live Apple / Ball
-      const livePy = toPy(curH);
-      towerCtx.font = '24px sans-serif';
-      towerCtx.fillText('🍎', 188, livePy + 8);
+      // Landing Marker when reached maxT
+      if (currentTime >= maxT) {
+        const py = toPy(fixedH);
+        const vLand = gVal * maxT;
 
-      // Live Tag
-      towerCtx.fillStyle = '#ffffff';
-      towerCtx.font = 'bold 11px Noto Sans TC';
-      towerCtx.fillText(`${curV.toFixed(1)} m/s`, 220, livePy + 4);
+        towerCtx.fillStyle = 'rgba(34, 197, 94, 0.5)';
+        towerCtx.beginPath();
+        towerCtx.arc(180, py, 9, 0, Math.PI * 2);
+        towerCtx.fill();
+
+        towerCtx.fillStyle = '#86efac';
+        towerCtx.font = 'bold 11px Noto Sans TC';
+        towerCtx.textAlign = 'left';
+        towerCtx.textBaseline = 'middle';
+        towerCtx.fillText(`著地 t=${maxT.toFixed(2)}s: ${vLand.toFixed(1)} m/s (h=${fixedH.toFixed(1)}m)`, 195, py);
+      }
+
+      // Live Apple
+      const livePy = toPy(curH);
+      towerCtx.save();
+      towerCtx.font = '24px sans-serif';
+      towerCtx.textAlign = 'center';
+      towerCtx.textBaseline = 'middle';
+      towerCtx.fillText('🍎', 180, livePy);
+      towerCtx.restore();
+
+      // Live Tag next to apple
+      if (currentTime < maxT - 0.05) {
+        towerCtx.fillStyle = '#ffffff';
+        towerCtx.font = 'bold 11px Noto Sans TC';
+        towerCtx.textAlign = 'left';
+        towerCtx.textBaseline = 'middle';
+        towerCtx.fillText(`${curV.toFixed(1)} m/s`, 195, livePy);
+      }
     }
 
     // Draw v-t Graph with Filled Triangle
     function drawGraph(curV, curH) {
       graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
-      const ox = 60, oy = 220, w = 520, h = 180;
-      const maxGraphV = Math.ceil((gVal * maxT) / 10) * 10;
+      const ox = 55, oy = 215, w = 535, h = 175;
+      const maxGraphT = maxT;
+      const maxGraphV = Math.max(10, Math.ceil((gVal * maxT) / 5) * 5);
 
-      const toGx = (t) => ox + (t / maxT) * w;
+      const toGx = (t) => ox + (t / maxGraphT) * w;
       const toGy = (v) => oy - (v / maxGraphV) * h;
 
       // 1. Shaded Triangle Area (0 to currentTime)
-      if (currentTime > 0.05) {
+      if (currentTime > 0.02) {
         graphCtx.beginPath();
         graphCtx.moveTo(toGx(0), toGy(0));
         graphCtx.lineTo(toGx(currentTime), toGy(curV));
@@ -771,7 +819,8 @@
         graphCtx.fillStyle = '#1d4ed8';
         graphCtx.font = 'bold 12px Noto Sans TC';
         graphCtx.textAlign = 'center';
-        graphCtx.fillText(`面積 h = ${curH.toFixed(1)} m`, (toGx(0) + toGx(currentTime)) / 2 + 10, oy - 15);
+        graphCtx.textBaseline = 'middle';
+        graphCtx.fillText(`面積 h = ${curH.toFixed(1)} m / ${fixedH.toFixed(1)} m`, (toGx(0) + toGx(currentTime)) / 2 + 10, oy - 15);
       }
 
       // 2. Axes
@@ -780,38 +829,48 @@
       graphCtx.strokeStyle = '#1e3a8a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
 
       graphCtx.font = 'bold 12px Noto Sans TC'; graphCtx.fillStyle = '#1e3a8a';
-      graphCtx.fillText('時間 t (秒)', ox + w - 35, oy + 28);
+      graphCtx.textAlign = 'left'; graphCtx.textBaseline = 'middle';
+      graphCtx.fillText('時間 t (秒)', ox + w - 40, oy + 28);
       graphCtx.fillText('速度 v (m/s)', ox - 35, oy - h - 12);
 
       // Y Ticks
-      const stepY = maxGraphV <= 20 ? 5 : 10;
+      const stepY = maxGraphV <= 20 ? 5 : (maxGraphV <= 60 ? 10 : 20);
       for (let v = 0; v <= maxGraphV; v += stepY) {
         const gy = toGy(v);
         graphCtx.beginPath(); graphCtx.moveTo(ox - 4, gy); graphCtx.lineTo(ox + w, gy);
         graphCtx.strokeStyle = '#f1f5f9'; graphCtx.stroke();
-        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'right';
-        graphCtx.fillText(v, ox - 6, gy + 3);
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'right'; graphCtx.textBaseline = 'middle';
+        graphCtx.fillText(v, ox - 6, gy);
       }
 
       // X Ticks
-      for (let t = 0; t <= maxT; t += 1) {
+      const stepT = maxT > 8 ? 2 : 1;
+      for (let t = 0; t <= Math.floor(maxT); t += stepT) {
         const gx = toGx(t);
-        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'center';
-        graphCtx.fillText(t, gx, oy + 14);
+        graphCtx.fillStyle = '#64748b'; graphCtx.font = '10px Outfit'; graphCtx.textAlign = 'center'; graphCtx.textBaseline = 'top';
+        graphCtx.fillText(t, gx, oy + 6);
       }
+      // Special Landing time tick
+      const landGx = toGx(maxT);
+      graphCtx.fillStyle = '#1e40af';
+      graphCtx.font = 'bold 10px Outfit';
+      graphCtx.textAlign = 'center';
+      graphCtx.textBaseline = 'top';
+      graphCtx.fillText(`${maxT.toFixed(2)}s (著地)`, landGx, oy + 18);
 
-      // 3. Slope Line
+      // 3. Slope Line (From t=0 to t=maxT)
       graphCtx.beginPath();
       graphCtx.moveTo(toGx(0), toGy(0));
       graphCtx.lineTo(toGx(maxT), toGy(gVal * maxT));
       graphCtx.strokeStyle = '#2563eb';
-      graphCtx.lineWidth = 3.5;
+      graphCtx.lineWidth = 3;
       graphCtx.stroke();
 
       graphCtx.fillStyle = '#2563eb';
       graphCtx.font = 'bold 11px Noto Sans TC';
       graphCtx.textAlign = 'left';
-      graphCtx.fillText(`斜率 g = ${gVal} m/s²`, ox + 40, toGy((gVal * maxT) / 2) - 15);
+      graphCtx.textBaseline = 'middle';
+      graphCtx.fillText(`斜率 g = ${gVal} m/s² (落地末速 ${(gVal * maxT).toFixed(1)} m/s)`, ox + 20, toGy((gVal * maxT) / 2) - 15);
 
       // 4. Time Scrubber & Dot
       const scanX = toGx(currentTime);
@@ -855,11 +914,10 @@
 
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
+      updateMaxT();
       updateUI();
     });
   </script>
-
-  
 
 </body>
 </html>
