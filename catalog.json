@@ -7,6 +7,15 @@
       "order": 10,
       "sites": [
         {
+          "id": "motion-physics-lab",
+          "title": "第1章 直線運動與等加速度互動探究實驗室",
+          "description": "國中三年級自然第1章直線運動探究教學平台，包含位置位移、速度圖形、等加速度賽車三大公式沙盒、打點計時器與自由落體實驗，整合 Cloudflare D1 資料庫與 10 題會考闖關測驗。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 5,
+          "url": "https://motion-physics-lab.pages.dev/"
+        },
+        {
           "id": "grade9-progress",
           "title": "九年級進度",
           "description": "國中三年級自然第一章直線運動互動教具總覽與各節實驗室。",
