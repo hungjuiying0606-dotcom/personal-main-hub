@@ -453,7 +453,7 @@
               <span>📉 加速度-時間關係圖 (a-t 圖)</span>
               <span style="font-size: 0.8rem;">階梯水平線</span>
             </div>
-            <canvas id="atCanvas" class="graph-canvas" width="620" height="180"></canvas>
+            <canvas id="atCanvas" class="graph-canvas" width="620" height="200"></canvas>
           </div>
 
           <!-- v-t Graph -->
@@ -462,7 +462,7 @@
               <span>📈 速度-時間關係圖 (v-t 圖)</span>
               <span style="font-size: 0.8rem;">速度連續累積折線</span>
             </div>
-            <canvas id="vtCanvas" class="graph-canvas" width="620" height="180"></canvas>
+            <canvas id="vtCanvas" class="graph-canvas" width="620" height="200"></canvas>
           </div>
         </div>
 
@@ -736,11 +736,9 @@
     // Draw a-t Graph
     function drawAT(m) {
       atCtx.clearRect(0, 0, atCanvas.width, atCanvas.height);
-      const ox = 50, oy = 110, w = 540, h = 130; // Axis origin at a=0 (y=110)
-      const maxA = 3.5, minA = -2.5;
-
+      const ox = 50, oy = 95, w = 530; // a=0 is at y=95
       const toGx = (t) => ox + (t / maxT) * w;
-      const toGy = (a) => oy - (a / 3.5) * 55;
+      const toGy = (a) => oy - a * 26; // a=+3 -> 17, a=+2 -> 43, a=+1 -> 69, a=0 -> 95, a=-1 -> 121, a=-2 -> 147
 
       // 1. Shaded Areas under a-t Steps
       // 0~4s (+2)
@@ -750,39 +748,83 @@
       atCtx.fillStyle = 'rgba(220, 38, 38, 0.2)';
       atCtx.fillRect(toGx(6), toGy(0), toGx(10) - toGx(6), toGy(-1) - toGy(0));
 
-      // Labels on area
-      atCtx.fillStyle = '#1d4ed8'; atCtx.font = 'bold 11px Outfit'; atCtx.textAlign = 'center';
-      atCtx.fillText('面積 = +8 m/s (速度+8)', (toGx(0) + toGx(4)) / 2, toGy(1));
+      // Labels on area (Centered vertically & horizontally inside the shaded blocks)
+      atCtx.fillStyle = '#1d4ed8';
+      atCtx.font = 'bold 12px Outfit';
+      atCtx.textAlign = 'center';
+      atCtx.textBaseline = 'middle';
+      atCtx.fillText('面積 = +8 m/s (速度+8)', (toGx(0) + toGx(4)) / 2, (toGy(0) + toGy(2)) / 2);
+
       atCtx.fillStyle = '#b91c1c';
-      atCtx.fillText('面積 = -4 m/s (速度-4)', (toGx(6) + toGx(10)) / 2, toGy(-0.5) + 14);
+      atCtx.font = 'bold 12px Outfit';
+      atCtx.textAlign = 'center';
+      atCtx.textBaseline = 'middle';
+      atCtx.fillText('面積 = -4 m/s (速度-4)', (toGx(6) + toGx(10)) / 2, (toGy(0) + toGy(-1)) / 2);
 
       // 2. Axes
+      // t-axis (a=0)
       atCtx.beginPath();
-      atCtx.moveTo(ox, oy); atCtx.lineTo(ox + w, oy); // t-axis
-      atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 2; atCtx.stroke();
+      atCtx.moveTo(ox, oy); atCtx.lineTo(ox + w, oy);
+      atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 1.8; atCtx.stroke();
 
+      // a-axis
       atCtx.beginPath();
-      atCtx.moveTo(ox, oy - 65); atCtx.lineTo(ox, oy + 55); // a-axis
-      atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 2; atCtx.stroke();
+      atCtx.moveTo(ox, toGy(3.2)); atCtx.lineTo(ox, toGy(-2.2));
+      atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 1.8; atCtx.stroke();
 
-      atCtx.font = 'bold 11px Noto Sans TC'; atCtx.fillStyle = '#4338ca';
-      atCtx.fillText('時間 t (s)', ox + w - 35, oy + 18);
-      atCtx.fillText('加速度 a (m/s²)', ox - 35, oy - 70);
+      // Axis Titles
+      atCtx.font = 'bold 11px Noto Sans TC';
+      atCtx.fillStyle = '#4338ca';
+      atCtx.textAlign = 'left';
+      atCtx.textBaseline = 'bottom';
+      atCtx.fillText('加速度 a (m/s²)', ox - 40, toGy(3.2) - 2);
 
-      // Y Ticks: 3, 2, 1, 0, -1, -2
+      // Y Ticks & Grid Lines: +3, +2, +1, 0, -1, -2
       [-2, -1, 0, 1, 2, 3].forEach(a => {
         const gy = toGy(a);
-        atCtx.beginPath(); atCtx.moveTo(ox - 4, gy); atCtx.lineTo(ox + w, gy);
-        atCtx.strokeStyle = a === 0 ? '#4338ca' : '#f1f5f9'; atCtx.stroke();
-        atCtx.fillStyle = '#64748b'; atCtx.font = '10px Outfit'; atCtx.textAlign = 'right';
-        atCtx.fillText((a > 0 ? '+' : '') + a, ox - 6, gy + 3);
+        atCtx.beginPath();
+        atCtx.moveTo(ox - 4, gy);
+        atCtx.lineTo(ox + w, gy);
+        atCtx.strokeStyle = a === 0 ? '#4338ca' : '#f1f5f9';
+        atCtx.lineWidth = a === 0 ? 1.5 : 1;
+        atCtx.stroke();
+
+        atCtx.fillStyle = '#64748b';
+        atCtx.font = '10px Outfit';
+        atCtx.textAlign = 'right';
+        atCtx.textBaseline = 'middle';
+        atCtx.fillText((a > 0 ? '+' : '') + a, ox - 6, gy);
       });
+
+      // Bottom baseline for X Ticks (below a=-2 grid at y=147)
+      const bottomAxisY = 162;
+      atCtx.beginPath();
+      atCtx.moveTo(ox, bottomAxisY);
+      atCtx.lineTo(ox + w, bottomAxisY);
+      atCtx.strokeStyle = '#cbd5e1';
+      atCtx.lineWidth = 1;
+      atCtx.stroke();
+
+      atCtx.fillStyle = '#4338ca';
+      atCtx.font = 'bold 11px Noto Sans TC';
+      atCtx.textAlign = 'left';
+      atCtx.textBaseline = 'top';
+      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 16);
 
       // X Ticks
       [0, 2, 4, 6, 8, 10].forEach(t => {
         const gx = toGx(t);
-        atCtx.fillStyle = '#64748b'; atCtx.font = '10px Outfit'; atCtx.textAlign = 'center';
-        atCtx.fillText(t, gx, oy + 14);
+        atCtx.beginPath();
+        atCtx.moveTo(gx, bottomAxisY);
+        atCtx.lineTo(gx, bottomAxisY + 4);
+        atCtx.strokeStyle = '#94a3b8';
+        atCtx.stroke();
+
+        atCtx.fillStyle = '#64748b';
+        atCtx.font = '10px Outfit';
+        atCtx.textAlign = 'center';
+        atCtx.textBaseline = 'top';
+        atCtx.fillText(t, gx, bottomAxisY + 5);
       });
 
       // 3. Thick Step Lines
@@ -802,14 +844,14 @@
 
       // Scrubber
       const scanX = toGx(currentTime);
-      atCtx.beginPath(); atCtx.moveTo(scanX, oy - 60); atCtx.lineTo(scanX, oy + 50);
+      atCtx.beginPath(); atCtx.moveTo(scanX, toGy(3.2)); atCtx.lineTo(scanX, bottomAxisY);
       atCtx.strokeStyle = '#9333ea'; atCtx.lineWidth = 1.5; atCtx.setLineDash([4, 4]); atCtx.stroke(); atCtx.setLineDash([]);
     }
 
     // Draw v-t Graph
     function drawVT(m) {
       vtCtx.clearRect(0, 0, vtCanvas.width, vtCanvas.height);
-      const ox = 50, oy = 150, w = 540, h = 120;
+      const ox = 50, oy = 160, w = 530, h = 130;
       const maxV = 10;
 
       const toGx = (t) => ox + (t / maxT) * w;
@@ -818,30 +860,48 @@
       // Axes
       vtCtx.beginPath();
       vtCtx.moveTo(ox, oy); vtCtx.lineTo(ox + w, oy);
-      vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 2; vtCtx.stroke();
+      vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 1.8; vtCtx.stroke();
 
       vtCtx.beginPath();
       vtCtx.moveTo(ox, oy - h - 10); vtCtx.lineTo(ox, oy);
-      vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 2; vtCtx.stroke();
+      vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 1.8; vtCtx.stroke();
 
       vtCtx.font = 'bold 11px Noto Sans TC'; vtCtx.fillStyle = '#1e3a8a';
-      vtCtx.fillText('時間 t (s)', ox + w - 35, oy + 18);
-      vtCtx.fillText('速度 v (m/s)', ox - 35, oy - h - 12);
+      vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'top';
+      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 16);
+
+      vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'bottom';
+      vtCtx.fillText('速度 v (m/s)', ox - 40, oy - h - 12);
 
       // Y Ticks: 0, 2, 4, 6, 8, 10
       [0, 2, 4, 6, 8, 10].forEach(v => {
         const gy = toGy(v);
         vtCtx.beginPath(); vtCtx.moveTo(ox - 4, gy); vtCtx.lineTo(ox + w, gy);
-        vtCtx.strokeStyle = '#f1f5f9'; vtCtx.stroke();
-        vtCtx.fillStyle = '#64748b'; vtCtx.font = '10px Outfit'; vtCtx.textAlign = 'right';
-        vtCtx.fillText(v, ox - 6, gy + 3);
+        vtCtx.strokeStyle = v === 0 ? '#1e3a8a' : '#f1f5f9';
+        vtCtx.lineWidth = v === 0 ? 1.5 : 1;
+        vtCtx.stroke();
+
+        vtCtx.fillStyle = '#64748b';
+        vtCtx.font = '10px Outfit';
+        vtCtx.textAlign = 'right';
+        vtCtx.textBaseline = 'middle';
+        vtCtx.fillText(v, ox - 6, gy);
       });
 
       // X Ticks
       [0, 2, 4, 6, 8, 10].forEach(t => {
         const gx = toGx(t);
-        vtCtx.fillStyle = '#64748b'; vtCtx.font = '10px Outfit'; vtCtx.textAlign = 'center';
-        vtCtx.fillText(t, gx, oy + 14);
+        vtCtx.beginPath();
+        vtCtx.moveTo(gx, oy);
+        vtCtx.lineTo(gx, oy + 4);
+        vtCtx.strokeStyle = '#94a3b8';
+        vtCtx.stroke();
+
+        vtCtx.fillStyle = '#64748b';
+        vtCtx.font = '10px Outfit';
+        vtCtx.textAlign = 'center';
+        vtCtx.textBaseline = 'top';
+        vtCtx.fillText(t, gx, oy + 5);
       });
 
       // Continuous v-t Line: (0,0) -> (4,8) -> (6,8) -> (10,4)
