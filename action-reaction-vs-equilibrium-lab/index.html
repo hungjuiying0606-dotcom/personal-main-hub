@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>牛頓第三運動定律 vs 兩力平衡深度對照實驗室 | 康軒國中自然3上</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Formatting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .math-font { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .mode-tab.active {
+      background-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      border-color: #0284c7;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-200 selection:text-sky-900">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all border border-slate-200">
+          <span>🏠</span>
+          <span>返回主網頁</span>
+        </a>
+        <div class="h-4 w-px bg-slate-300 hidden sm:block"></div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">康軒 3 上 2-3</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">課本 P.44</span>
+            <h1 class="text-sm sm:text-base font-black text-slate-900 truncate">圖 2-9、2-10：牛頓第三運動定律 vs 兩力平衡</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="speechBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all">
+          <span id="speechIcon">🔊</span>
+          <span id="speechText" class="hidden sm:inline">語音導讀</span>
+        </button>
+        <button id="globalResetBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-all">
+          <span>🔄</span>
+          <span class="hidden sm:inline">重設</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 w-full">
+
+    <!-- 單元導言橫幅 -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 text-white p-5 sm:p-7 shadow-lg">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-sky-200 text-xs font-bold">
+            <span>⚖️ 課本 2-3 核心破盲</span>
+            <span>·</span>
+            <span>受力對象是關鍵：同一物體（平衡抵消） vs 不同物體（互不抵消）</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>牛頓第三運動定律 與 兩力平衡 的本質差異</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-sky-100 leading-relaxed">
+            不論拉力大小為何，<strong>甲、乙兩彈簧秤讀數必相等且方向相反</strong>！關鍵在於：<strong>作用力與反作用力作用在「不同物體」上，絕不能互相抵消</strong>；而<strong>兩力平衡是作用在「同一物體」上，合力為零互相抵消</strong>。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap md:flex-col gap-2 flex-shrink-0">
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[130px]">
+            <div class="text-[11px] text-sky-200">圖 2-9 作用反作用</div>
+            <div class="text-xs font-bold text-amber-300">兩力在不同物體 (不抵消)</div>
+          </div>
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[130px]">
+            <div class="text-[11px] text-sky-200">圖 2-10 兩力平衡</div>
+            <div class="text-xs font-bold text-emerald-300">兩力在同一物體 (合力為0)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模式切換 Tab -->
+    <div class="flex flex-wrap items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl max-w-2xl mx-auto shadow-inner">
+      <button class="mode-tab active flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5" data-mode="action_reaction">
+        <span>🔄</span>
+        <span>圖 2-9 牛頓第三運動定律</span>
+      </button>
+      <button class="mode-tab flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5" data-mode="equilibrium">
+        <span>⚖️</span>
+        <span>圖 2-10 兩力平衡</span>
+      </button>
+      <button class="mode-tab flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5" data-mode="compare">
+        <span>🔍</span>
+        <span>雙圖並列對照</span>
+      </button>
+    </div>
+
+    <!-- 主要工作區：左右雙欄 (左：動態雙彈簧秤物理模擬；右：受力隔離分析與四大差異黃金矩陣) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- 左欄 (7/12)：動態物理模擬畫布與控制面板 -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- 畫布卡片 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span id="modeIconBadge" class="p-2 rounded-xl bg-sky-100 text-sky-700 font-bold text-sm">🔄</span>
+              <div>
+                <h3 id="modeTitle" class="text-base font-black text-slate-900">圖 2-9：甲、乙雙彈簧秤互扣拉扯（作用力與反作用力）</h3>
+                <p id="modeSubtitle" class="text-xs text-slate-500">甲拉乙與乙拉甲大小相等、方向相反，分別作用在兩個秤上</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 動態彈簧秤 Canvas -->
+          <div class="relative bg-slate-900 rounded-xl overflow-hidden p-2 shadow-inner">
+            <canvas id="springCanvas" width="650" height="280" class="w-full h-auto block"></canvas>
+          </div>
+
+          <!-- 互動拉力控制器 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
+            
+            <!-- 拉力調整滑桿 -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span id="sliderLabelText">手施加之拉力大小：</span>
+                <span id="forceValueText" class="font-mono text-sky-700 font-bold text-sm">100 gw (0.98 N)</span>
+              </div>
+              <input type="range" id="forceSlider" min="0" max="300" step="10" value="100" class="w-full accent-sky-600">
+            </div>
+
+            <!-- 控制選項與切換 -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-bold text-slate-600">受力隔離體檢視：</span>
+                <button class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-600 text-white border border-sky-600" data-iso="all">全部顯示</button>
+                <button class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-iso="jia">僅看甲秤</button>
+                <button class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-iso="yi">僅看乙秤</button>
+                <button id="isoRingBtn" class="iso-btn hidden px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-iso="ring">僅現金屬環</button>
+              </div>
+
+              <div class="flex items-center gap-1">
+                <button id="quick100Btn" class="px-2 py-1 rounded-lg text-[11px] font-bold bg-slate-200 hover:bg-slate-300 text-slate-800">100gw</button>
+                <button id="quick200Btn" class="px-2 py-1 rounded-lg text-[11px] font-bold bg-slate-200 hover:bg-slate-300 text-slate-800">200gw</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 即時讀數與受力數據儀表 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+            <div class="p-2.5 rounded-xl bg-sky-50 border border-sky-200">
+              <div class="text-[10px] text-sky-600 font-bold">甲彈簧秤讀數</div>
+              <div id="disp_jia_reading" class="font-bold font-mono text-sky-800 text-sm mt-0.5">100 gw</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="text-[10px] text-emerald-600 font-bold">乙彈簧秤讀數</div>
+              <div id="disp_yi_reading" class="font-bold font-mono text-emerald-800 text-sm mt-0.5">100 gw</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+              <div class="text-[10px] text-purple-600 font-bold">兩力關係</div>
+              <div id="disp_relation" class="font-bold text-purple-800 text-xs mt-0.5">大小相等 · 方向相反</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="text-[10px] text-amber-600 font-bold">能否互相抵消？</div>
+              <div id="disp_cancel" class="font-bold text-amber-800 text-xs mt-0.5">❌ 無法抵消 (受力物不同)</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 右欄 (5/12)：受力體詳細剖析與四大黃金差異對照表 -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- 卡片 1：當前模式課本 1:1 觀念深度剖析 -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span class="p-2 rounded-xl bg-amber-100 text-amber-800 font-bold text-sm">📖</span>
+            <div>
+              <h3 class="text-base font-black text-slate-900">課本 P.44 實驗與概念核心</h3>
+              <p class="text-xs text-slate-500">受力對象與力的本質對照</p>
+            </div>
+          </div>
+
+          <div id="modeDetailExpl" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 text-xs leading-relaxed text-slate-700">
+            <!-- JS 動態注入解說 -->
+          </div>
+
+          <!-- 核心口訣卡 -->
+          <div class="p-4 rounded-xl bg-sky-50 border border-sky-200 space-y-1.5 text-xs text-sky-900">
+            <div class="font-black flex items-center gap-1.5">
+              <span>🎯</span>
+              <span>秒殺會考判斷口訣</span>
+            </div>
+            <p class="leading-relaxed">
+              • <strong>兩力平衡</strong>：「A 拉 <strong>C</strong>」與「B 拉 <strong>C</strong>」➔ 受力物都是 <strong>C</strong>（同一物體）➔ <strong>可以抵消！</strong><br>
+              • <strong>作用力與反作用力</strong>：「A 拉 <strong>B</strong>」與「B 拉 <strong>A</strong>」➔ 受力物分別是 <strong>B</strong> 與 <strong>A</strong>（不同物體）➔ <strong>絕不抵消！</strong>
+            </p>
+          </div>
+
+        </div>
+
+        <!-- 卡片 2：四大核心差異黃金矩陣表 -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+            <span class="p-1.5 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-bold">📊</span>
+            <h4 class="text-sm font-black text-slate-900">作用力與反作用力 vs 兩力平衡 對照表</h4>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 text-[11px]">
+            <table class="w-full text-center border-collapse bg-white">
+              <thead class="bg-slate-100 font-bold text-slate-700">
+                <tr class="border-b border-slate-200">
+                  <th class="py-2 px-1 text-left pl-2">比較項目</th>
+                  <th class="py-2 px-1 text-amber-700 bg-amber-50/50">作用力與反作用力 (圖2-9)</th>
+                  <th class="py-2 px-1 text-sky-700 bg-sky-50/50">兩力平衡 (圖2-10)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="py-2 px-1 font-bold text-slate-800 text-left pl-2">1. 作用對象</td>
+                  <td class="py-2 px-1 text-amber-800 font-bold">作用在「不同物體」上</td>
+                  <td class="py-2 px-1 text-sky-800 font-bold">作用在「同一物體」上</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="py-2 px-1 font-bold text-slate-800 text-left pl-2">2. 能否抵消</td>
+                  <td class="py-2 px-1 text-red-600 font-bold">❌ 不能抵消（不能求合力）</td>
+                  <td class="py-2 px-1 text-emerald-600 font-bold">⭕ 可以抵消（合力為零）</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="py-2 px-1 font-bold text-slate-800 text-left pl-2">3. 力的性質</td>
+                  <td class="py-2 px-1 text-slate-700">必為「同種類」的力</td>
+                  <td class="py-2 px-1 text-slate-700">可以為「不同種類」的力</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="py-2 px-1 font-bold text-slate-800 text-left pl-2">4. 產生與消失</td>
+                  <td class="py-2 px-1 text-slate-700">同時產生、同時消失</td>
+                  <td class="py-2 px-1 text-slate-700">一力消失，另一力仍可存在</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 會考觀念隨堂大挑戰 -->
+    <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="p-2 rounded-xl bg-purple-100 text-purple-800 font-bold text-sm">🎯</span>
+          <div>
+            <h3 class="text-base font-black text-slate-900">會考必考：作用反作用 vs 兩力平衡 實戰辨析</h3>
+            <p class="text-xs text-slate-500">判斷下列各生活情境屬於「作用力與反作用力」還是「兩力平衡」</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- 題 1 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q1.</span>
+            一本書靜置於水平桌面上，「<strong>書受地球引力（向下）</strong>」與「<strong>桌面支撐書本的力（向上）</strong>」兩者的關係為何？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (A) 兩力平衡（受力物皆為書本）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (B) 作用力與反作用力
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 2 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q2.</span>
+            承上題，「<strong>地球吸引書本的萬有引力</strong>」與「<strong>書本吸引地球的萬有引力</strong>」兩者的關係為何？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (A) 兩力平衡
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (B) 作用力與反作用力（受力物分別是書與地球）
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 3 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q3.</span>
+            拔河比賽時，兩隊僵持不下，繩子中央紅帶靜止不動。「<strong>甲隊拉繩子的力</strong>」與「<strong>乙隊拉繩子的力</strong>」屬於何種關係？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (A) 兩力平衡（受力物皆為繩子）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (B) 作用力與反作用力
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 4 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q4.</span>
+            人用力推牆壁，「<strong>手推牆壁的力</strong>」與「<strong>牆壁推手的力</strong>」屬於何種關係？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (A) 兩力平衡
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (B) 作用力與反作用力（受力物分別是牆與手）
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
+      <p class="font-bold text-slate-700">國中自然 3 上 · 第 2 章 力與運動 · 2-3 牛頓第三運動定律 vs 兩力平衡（圖 2-9、圖 2-10）</p>
+      <p>© 洪瑞英老師 數位教學基地 Central Hub · 互動教材實驗室</p>
+    </div>
+  </footer>
+
+  <!-- 互動腳本 -->
+  <script>
+    // 狀態變數
+    let currentMode = 'action_reaction'; // 'action_reaction', 'equilibrium', 'compare'
+    let currentForce = 100; // gw
+    let isolateMode = 'all'; // 'all', 'jia', 'yi', 'ring'
+
+    // DOM 元素
+    const canvas = document.getElementById('springCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const modeTitle = document.getElementById('modeTitle');
+    const modeSubtitle = document.getElementById('modeSubtitle');
+    const modeIconBadge = document.getElementById('modeIconBadge');
+    const forceSlider = document.getElementById('forceSlider');
+    const forceValueText = document.getElementById('forceValueText');
+    const sliderLabelText = document.getElementById('sliderLabelText');
+    const isoRingBtn = document.getElementById('isoRingBtn');
+
+    const dispJiaReading = document.getElementById('disp_jia_reading');
+    const dispYiReading = document.getElementById('disp_yi_reading');
+    const dispRelation = document.getElementById('disp_relation');
+    const dispCancel = document.getElementById('disp_cancel');
+    const modeDetailExpl = document.getElementById('modeDetailExpl');
+
+    const quick100Btn = document.getElementById('quick100Btn');
+    const quick200Btn = document.getElementById('quick200Btn');
+    const globalResetBtn = document.getElementById('globalResetBtn');
+
+    // 模式說明資料
+    const MODE_CONFIGS = {
+      action_reaction: {
+        title: '圖 2-9：甲、乙雙彈簧秤互扣拉扯（牛頓第三運動定律）',
+        subtitle: '不論拉力大小為何，甲、乙兩秤讀數必完全相等，受力方向相反，作用在不同物體上無法抵消',
+        icon: '🔄',
+        sliderLabel: '兩手拉扯力量大小：',
+        cancelText: '❌ 無法抵消 (受力物為不同秤)',
+        cancelClass: 'font-bold text-amber-800 text-xs mt-0.5',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-amber-900 flex items-center gap-1">
+              <span class="w-4 h-4 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px]">2-9</span>
+              <span>牛頓第三運動定律（作用力與反作用力）</span>
+            </div>
+            <p>1. <strong>實驗現象</strong>：甲、乙兩彈簧秤互相勾住，手向兩側拉開。不論誰用力較大、或是由一人拉另一人固定，<strong>兩秤讀數恆相等</strong>！</p>
+            <p>2. <strong>受力主體分析</strong>：
+              <br>• <span class="text-red-600 font-bold">作用力（紅箭頭向右）</span>：乙拉甲的力，受力物為<strong>甲彈簧秤</strong>。
+              <br>• <span class="text-emerald-600 font-bold">反作用力（綠箭頭向左）</span>：甲拉乙的力，受力物為<strong>乙彈簧秤</strong>。
+            </p>
+            <p>3. <strong>無法抵消</strong>：因為兩力分別施加在「<strong>甲</strong>」與「<strong>乙</strong>」兩個不同物體上，兩力各自使各秤彈簧伸長，<strong>絕不能互相抵消</strong>！</p>
+          </div>
+        `
+      },
+      equilibrium: {
+        title: '圖 2-10：兩彈簧秤拉中間同一金屬環（兩力平衡）',
+        subtitle: '甲、乙兩秤分別拉同一個金屬環，當兩力大小相等方向相反時，合力為零互相抵消（靜止平衡）',
+        icon: '⚖️',
+        sliderLabel: '對金屬環兩側施加之拉力：',
+        cancelText: '⭕ 可以互相抵消 (合力為 0)',
+        cancelClass: 'font-bold text-emerald-800 text-xs mt-0.5',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-sky-900 flex items-center gap-1">
+              <span class="w-4 h-4 rounded-full bg-sky-600 text-white flex items-center justify-center text-[10px]">2-10</span>
+              <span>兩力平衡（同一受力物體）</span>
+            </div>
+            <p>1. <strong>實驗現象</strong>：甲、乙兩彈簧秤同時拉住中間的同一個「<strong>金屬環</strong>」。當兩秤讀數相等且在同一直線上時，金屬環保持<strong>靜止不動</strong>。</p>
+            <p>2. <strong>受力主體分析</strong>：
+              <br>• <span class="text-sky-600 font-bold">左拉力（藍箭頭向左）</span>：甲拉金屬環的力，受力物為<strong>金屬環</strong>。
+              <br>• <span class="text-amber-600 font-bold">右拉力（橘箭頭向右）</span>：乙拉金屬環的力，受力物為<strong>金屬環</strong>。
+            </p>
+            <p>3. <strong>互相抵消</strong>：因為兩個力同時作用在「<strong>同一個金屬環</strong>」上，方向相反且大小相等，合力 \(F_{\\text{合}} = 100 - 100 = 0\\text{ gw}\)，<strong>完全互相抵消</strong>！</p>
+          </div>
+        `
+      },
+      compare: {
+        title: '圖 2-9 與 圖 2-10 雙圖深度直觀對照',
+        subtitle: '上方為牛頓第三定律（互拉），下方為兩力平衡（拉同物），受力對象一目了然',
+        icon: '🔍',
+        sliderLabel: '同步調整拉力讀數：',
+        cancelText: '上方無法抵消 vs 下方互相抵消',
+        cancelClass: 'font-bold text-purple-800 text-xs mt-0.5',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-purple-900 flex items-center gap-1">
+              <span>🔍</span>
+              <span>雙圖核心受力箭頭對照解析</span>
+            </div>
+            <p>• <strong>看箭尾起點</strong>：
+              <br>在<strong>圖 2-9</strong> 中，紅箭頭作用在甲秤、綠箭頭作用在乙秤，箭頭作用在<strong>兩個不同位置</strong>。
+              <br>在<strong>圖 2-10</strong> 中，藍箭頭與橘箭頭的起點<strong>全部集中在中間的金屬環上</strong>。
+            </p>
+            <p>• <strong>結論</strong>：只要確定受力物是「同一個」還是「兩個互相作用的物體」，就能 100% 正確分辨兩力平衡與牛頓第三定律！</p>
+          </div>
+        `
+      }
+    };
+
+    // 切換模式
+    function setMode(modeKey) {
+      currentMode = modeKey;
+      const cfg = MODE_CONFIGS[modeKey];
+
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        if (tab.dataset.mode === modeKey) {
+          tab.className = 'mode-tab active flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5';
+        } else {
+          tab.className = 'mode-tab flex-1 min-w-[150px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5';
+        }
+      });
+
+      modeTitle.textContent = cfg.title;
+      modeSubtitle.textContent = cfg.subtitle;
+      modeIconBadge.textContent = cfg.icon;
+      sliderLabelText.textContent = cfg.sliderLabel;
+      modeDetailExpl.innerHTML = cfg.explHTML;
+
+      dispCancel.textContent = cfg.cancelText;
+      dispCancel.className = cfg.cancelClass;
+
+      if (modeKey === 'equilibrium') {
+        isoRingBtn.classList.remove('hidden');
+      } else {
+        isoRingBtn.classList.add('hidden');
+        if (isolateMode === 'ring') isolateMode = 'all';
+      }
+
+      updateUI();
+    }
+
+    // 更新 UI 與畫布
+    function updateUI() {
+      const forceN = (currentForce * 0.0098).toFixed(2);
+      forceValueText.textContent = `${currentForce} gw (${forceN} N)`;
+
+      dispJiaReading.textContent = `${currentForce} gw`;
+      dispYiReading.textContent = `${currentForce} gw`;
+
+      drawCanvas();
+    }
+
+    // 主繪製函式
+    function drawCanvas() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // 背景漸層
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0f172a');
+      bgGrad.addColorStop(1, '#1e293b');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      if (currentMode === 'action_reaction') {
+        drawActionReactionScene(w, h / 2, 0, false);
+      } else if (currentMode === 'equilibrium') {
+        drawEquilibriumScene(w, h / 2, 0, false);
+      } else {
+        // compare: 雙圖並列 (上下)
+        drawActionReactionScene(w, 75, -50, true);
+        drawEquilibriumScene(w, 205, -50, true);
+      }
+    }
+
+    // 繪製圖 2-9 作用力與反作用力（雙秤互拉）
+    function drawActionReactionScene(w, centerY, offsetY, isCompact) {
+      const stretch = (currentForce / 300.0) * 35;
+      const jiaX = isCompact ? 160 - stretch : 180 - stretch;
+      const yiX = isCompact ? 390 + stretch : 420 + stretch;
+      const scaleY = isCompact ? 0.8 : 1.0;
+
+      // 標題小標籤 (在 compare 模式下)
+      if (isCompact) {
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('圖 2-9 牛頓第三運動定律（兩力作用在不同秤，無法抵消）', 25, centerY - 45);
+      }
+
+      // 繪製甲彈簧秤 (左)
+      if (isolateMode === 'all' || isolateMode === 'jia') {
+        drawSpringScale(ctx, jiaX, centerY, '甲', currentForce, '#0284c7', 'left', scaleY);
+      }
+
+      // 繪製乙彈簧秤 (右)
+      if (isolateMode === 'all' || isolateMode === 'yi') {
+        drawSpringScale(ctx, yiX, centerY, '乙', currentForce, '#10b981', 'right', scaleY);
+      }
+
+      // 繪製人手拉力示意 (兩端)
+      drawHandGrip(ctx, jiaX - 110 * scaleY, centerY, 'left', scaleY);
+      drawHandGrip(ctx, yiX + 110 * scaleY, centerY, 'right', scaleY);
+
+      // 兩秤鉤互扣處連線
+      const hookJiaX = jiaX + 65 * scaleY;
+      const hookYiX = yiX - 65 * scaleY;
+
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(hookJiaX, centerY);
+      ctx.lineTo(hookYiX, centerY);
+      ctx.stroke();
+
+      // 向量箭頭標示
+      const arrowLen = Math.min(100, 30 + (currentForce / 300.0) * 70) * scaleY;
+      const arrowY = centerY + (isCompact ? 35 : 45);
+
+      // 反作用力 (綠色向左，甲拉乙的力，受力物為乙)
+      if (isolateMode === 'all' || isolateMode === 'yi') {
+        drawArrowWithBadge(ctx, hookYiX, arrowY, hookYiX - arrowLen, arrowY, '#22c55e', 3.5, `反作用力 ${currentForce} gw`, '(甲拉乙的力，受力物為乙)', 'bottom', isCompact);
+      }
+
+      // 作用力 (紅色向右，乙拉甲的力，受力物為甲)
+      if (isolateMode === 'all' || isolateMode === 'jia') {
+        drawArrowWithBadge(ctx, hookJiaX, arrowY - (isCompact ? 15 : 20), hookJiaX + arrowLen, arrowY - (isCompact ? 15 : 20), '#ef4444', 3.5, `作用力 ${currentForce} gw`, '(乙拉甲的力，受力物為甲)', 'top', isCompact);
+      }
+    }
+
+    // 繪製圖 2-10 兩力平衡（拉中間金屬環）
+    function drawEquilibriumScene(w, centerY, offsetY, isCompact) {
+      const stretch = (currentForce / 300.0) * 35;
+      const jiaX = isCompact ? 160 - stretch : 180 - stretch;
+      const yiX = isCompact ? 390 + stretch : 420 + stretch;
+      const ringX = w / 2;
+      const scaleY = isCompact ? 0.8 : 1.0;
+
+      // 標題小標籤
+      if (isCompact) {
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('圖 2-10 兩力平衡（兩力作用在同一個金屬環，可以互相抵消）', 25, centerY - 45);
+      }
+
+      // 繪製甲彈簧秤 (左)
+      if (isolateMode === 'all' || isolateMode === 'jia') {
+        drawSpringScale(ctx, jiaX, centerY, '甲', currentForce, '#0284c7', 'left', scaleY);
+      }
+
+      // 繪製乙彈簧秤 (右)
+      if (isolateMode === 'all' || isolateMode === 'yi') {
+        drawSpringScale(ctx, yiX, centerY, '乙', currentForce, '#10b981', 'right', scaleY);
+      }
+
+      // 兩端手
+      drawHandGrip(ctx, jiaX - 110 * scaleY, centerY, 'left', scaleY);
+      drawHandGrip(ctx, yiX + 110 * scaleY, centerY, 'right', scaleY);
+
+      // 中間金屬環 (Ring)
+      const hookJiaX = jiaX + 65 * scaleY;
+      const hookYiX = yiX - 65 * scaleY;
+      const ringRadius = 14 * scaleY;
+
+      // 連接線
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(hookJiaX, centerY);
+      ctx.lineTo(ringX - ringRadius, centerY);
+      ctx.moveTo(hookYiX, centerY);
+      ctx.lineTo(ringX + ringRadius, centerY);
+      ctx.stroke();
+
+      // 繪製金屬環主體
+      if (isolateMode === 'all' || isolateMode === 'ring') {
+        ctx.strokeStyle = '#fbbf24';
+        ctx.fillStyle = '#1e293b';
+        ctx.lineWidth = 4 * scaleY;
+        ctx.beginPath();
+        ctx.arc(ringX, centerY, ringRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${isCompact ? 9 : 11}px "Noto Sans TC", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('物體 (金屬環)', ringX, centerY - 20 * scaleY);
+      }
+
+      // 向量箭頭標示 (兩箭頭皆從金屬環發出)
+      const arrowLen = Math.min(100, 30 + (currentForce / 300.0) * 70) * scaleY;
+      const arrowY = centerY + (isCompact ? 35 : 45);
+
+      // 甲拉金屬環的力 (藍色向左)
+      if (isolateMode === 'all' || isolateMode === 'ring' || isolateMode === 'jia') {
+        drawArrowWithBadge(ctx, ringX, arrowY, ringX - arrowLen, arrowY, '#0284c7', 3.5, `${currentForce} gw`, '(甲拉金屬環的力)', 'bottom', isCompact);
+      }
+
+      // 乙拉金屬環的力 (橘色向右)
+      if (isolateMode === 'all' || isolateMode === 'ring' || isolateMode === 'yi') {
+        drawArrowWithBadge(ctx, ringX, arrowY, ringX + arrowLen, arrowY, '#f97316', 3.5, `${currentForce} gw`, '(乙拉金屬環的力)', 'bottom', isCompact);
+      }
+    }
+
+    // 繪製彈簧秤
+    function drawSpringScale(ctx, x, y, label, force, themeColor, hookDir, scale) {
+      const scaleW = 120 * scale;
+      const scaleH = 38 * scale;
+      const left = x - scaleW / 2;
+      const top = y - scaleH / 2;
+
+      // 秤身外殼 (流線青綠/藍金屬外殼)
+      const bodyGrad = ctx.createLinearGradient(left, top, left, top + scaleH);
+      bodyGrad.addColorStop(0, '#0284c7');
+      bodyGrad.addColorStop(1, '#0369a1');
+      ctx.fillStyle = bodyGrad;
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2 * scale;
+      ctx.beginPath();
+      ctx.roundRect(left, top, scaleW, scaleH, 6 * scale);
+      ctx.fill();
+      ctx.stroke();
+
+      // 刻度透明視窗
+      const winW = scaleW - 30 * scale;
+      const winH = scaleH - 14 * scale;
+      const winX = x - winW / 2;
+      const winY = y - winH / 2;
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(winX, winY, winW, winH, 3 * scale);
+      ctx.fill();
+      ctx.stroke();
+
+      // 刻度線
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 6; i++) {
+        const tickX = winX + (i / 6) * winW;
+        ctx.beginPath();
+        ctx.moveTo(tickX, winY + 2);
+        ctx.lineTo(tickX, winY + (i % 2 === 0 ? 8 * scale : 4 * scale));
+        ctx.stroke();
+      }
+
+      // 紅色指針 (隨讀數移動)
+      const ptrFrac = Math.min(1.0, force / 300.0);
+      let ptrX = 0;
+      if (hookDir === 'left') {
+        // 向左拉，指針向左走
+        ptrX = winX + winW - ptrFrac * winW;
+      } else {
+        // 向右拉，指針向右走
+        ptrX = winX + ptrFrac * winW;
+      }
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 2.5 * scale;
+      ctx.beginPath();
+      ctx.moveTo(ptrX, winY);
+      ctx.lineTo(ptrX, winY + winH);
+      ctx.stroke();
+
+      // 秤名標籤 (甲/乙)
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `bold ${13 * scale}px "JetBrains Mono", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x, top - 6 * scale);
+
+      // 掛環與秤鉤
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 3 * scale;
+      if (hookDir === 'left') {
+        // 右側為固定拉環，左側為秤鉤
+        ctx.beginPath();
+        ctx.arc(left - 8 * scale, y, 6 * scale, 0, Math.PI * 2); // 秤鉤
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(left + scaleW + 8 * scale, y, 8 * scale, 0, Math.PI * 2); // 手拉環
+        ctx.stroke();
+      } else {
+        // 左側為秤鉤，右側為固定拉環
+        ctx.beginPath();
+        ctx.arc(left - 8 * scale, y, 6 * scale, 0, Math.PI * 2); // 秤鉤
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(left + scaleW + 8 * scale, y, 8 * scale, 0, Math.PI * 2); // 手拉環
+        ctx.stroke();
+      }
+    }
+
+    // 繪製手握示意
+    function drawHandGrip(ctx, x, y, dir, scale) {
+      ctx.fillStyle = '#fed7aa';
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 2 * scale;
+      ctx.beginPath();
+      ctx.arc(x, y, 14 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // 向量箭頭繪製輔助 (含多行說明標籤)
+    function drawArrowWithBadge(ctx, fromx, fromy, tox, toy, color, lineWidth, title, subtitle, pos, isCompact) {
+      const headlen = 8 * (isCompact ? 0.8 : 1.0);
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = lineWidth;
+
+      // 箭身
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+
+      // 箭頭
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      // 標籤文字
+      ctx.save();
+      const midX = (fromx + tox) / 2;
+      const offsetY = pos === 'top' ? (isCompact ? -18 : -24) : (isCompact ? 16 : 22);
+
+      ctx.font = `bold ${isCompact ? 10 : 11}px "JetBrains Mono", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = color;
+      ctx.fillText(title, midX, fromy + offsetY);
+
+      if (subtitle) {
+        ctx.font = `${isCompact ? 9 : 10}px "Noto Sans TC", sans-serif`;
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillText(subtitle, midX, fromy + offsetY + (pos === 'top' ? -12 : 14));
+      }
+      ctx.restore();
+    }
+
+    // 事件監聽：模式切換
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        setMode(tab.dataset.mode);
+      });
+    });
+
+    // 拉力滑桿
+    forceSlider.addEventListener('input', (e) => {
+      currentForce = parseInt(e.target.value);
+      updateUI();
+    });
+
+    // 快捷按鈕
+    quick100Btn.addEventListener('click', () => {
+      forceSlider.value = 100;
+      currentForce = 100;
+      updateUI();
+    });
+
+    quick200Btn.addEventListener('click', () => {
+      forceSlider.value = 200;
+      currentForce = 200;
+      updateUI();
+    });
+
+    // 隔離體切換
+    document.querySelectorAll('.iso-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.iso-btn').forEach(b => {
+          b.className = 'iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100';
+        });
+        btn.className = 'iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-600 text-white border border-sky-600';
+        isolateMode = btn.dataset.iso;
+        drawCanvas();
+      });
+    });
+
+    // 全域重設
+    globalResetBtn.addEventListener('click', () => {
+      forceSlider.value = 100;
+      currentForce = 100;
+      isolateMode = 'all';
+      setMode('action_reaction');
+    });
+
+    // 隨堂測驗邏輯
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.parentElement;
+        const feed = parent.parentElement.querySelector('.quiz-feed');
+        const isCorrect = btn.dataset.correct === 'true';
+
+        parent.querySelectorAll('.quiz-btn').forEach(b => {
+          b.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 transition-all font-medium opacity-60';
+        });
+
+        if (isCorrect) {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-900 font-bold';
+          feed.textContent = '✓ 答對了！受力對象判斷精準！';
+          feed.className = 'quiz-feed text-[11px] text-emerald-700 font-bold block pt-1';
+        } else {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-red-50 border border-red-400 text-red-900 font-bold';
+          feed.textContent = '✗ 判斷錯誤！請檢視受力物是否為同一物體。';
+          feed.className = 'quiz-feed text-[11px] text-red-600 font-bold block pt-1';
+        }
+      });
+    });
+
+    // 語音導讀
+    const speechBtn = document.getElementById('speechBtn');
+    let isSpeaking = false;
+    const narrationText = '歡迎學習康軒國中自然三上，第二章二之三，牛頓第三運動定律與兩力平衡。由探索活動發現，不論拉力大小為何，甲、乙兩彈簧秤讀數一定相等，且方向相反。牛頓第三運動定律指出：每施一力必產生一反作用力，大小相等、方向相反、作用在不同物體上，因此絕不會互相抵消。而兩力平衡則是兩力作用在同一物體上，合力為零互相抵消。判斷的關鍵在於受力對象是同一個還是不同物體！';
+
+    speechBtn.addEventListener('click', () => {
+      if ('speechSynthesis' in window) {
+        if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speechBtn.classList.remove('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '🔊';
+        } else {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(narrationText);
+          utter.lang = 'zh-TW';
+          utter.rate = 1.0;
+          utter.onend = () => {
+            isSpeaking = false;
+            speechBtn.classList.remove('bg-sky-200');
+            document.getElementById('speechIcon').textContent = '🔊';
+          };
+          window.speechSynthesis.speak(utter);
+          isSpeaking = true;
+          speechBtn.classList.add('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '⏹️';
+        }
+      } else {
+        alert('您的瀏覽器不支援語音合成功能。');
+      }
+    });
+
+    // 初始化渲染
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+      setMode('action_reaction');
+    });
+  </script>
+</body>
+</html>
