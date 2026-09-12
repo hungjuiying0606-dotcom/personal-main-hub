@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2-3 作用力與反作用力的應用 | 康軒國中自然3上</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Formatting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .math-font { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .scene-tab.active {
+      background-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      border-color: #0284c7;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-200 selection:text-sky-900">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all border border-slate-200">
+          <span>🏠</span>
+          <span>返回主網頁</span>
+        </a>
+        <div class="h-4 w-px bg-slate-300 hidden sm:block"></div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">康軒 3 上 2-3</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">課本 P.45</span>
+            <h1 class="text-sm sm:text-base font-black text-slate-900 truncate">圖 2-11 常見的作用力與反作用力應用</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="speechBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all">
+          <span id="speechIcon">🔊</span>
+          <span id="speechText" class="hidden sm:inline">語音導讀</span>
+        </button>
+        <button id="globalResetBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-all">
+          <span>🔄</span>
+          <span class="hidden sm:inline">重設</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 w-full">
+
+    <!-- 單元導言橫幅 -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 text-white p-5 sm:p-7 shadow-lg">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-sky-200 text-xs font-bold">
+            <span>🚀 課本 2-3 核心概念</span>
+            <span>·</span>
+            <span>作用力與反作用力的三大生活推進應用</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>作用力與反作用力作用在「不同物體」，永不互相抵消！</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-sky-100 leading-relaxed">
+            由於作用力與反作用力分別施加在<strong>兩個不同的受力物體</strong>上，因此<strong>不會互相抵消</strong>！日常生活中，我們常利用向後或向下施加作用力，藉由外界給予的<strong>反作用力作為推動前進與升空的力量</strong>。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap md:flex-col gap-2 flex-shrink-0">
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[130px]">
+            <div class="text-[11px] text-sky-200">核心物理定律</div>
+            <div class="text-base font-black font-mono text-amber-300">\(\vec{F}_{AB} = -\vec{F}_{BA}\)</div>
+          </div>
+          <div class="px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-center min-w-[130px]">
+            <div class="text-[11px] text-sky-200">推進本質</div>
+            <div class="text-xs font-bold text-emerald-300">反衝力 (反作用力)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三大情境切換選單 Tab -->
+    <div class="flex flex-wrap items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl max-w-2xl mx-auto shadow-inner">
+      <button class="scene-tab active flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5" data-scene="running">
+        <span>🏃</span>
+        <span>1. 運動員起跑</span>
+      </button>
+      <button class="scene-tab flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5" data-scene="rowing">
+        <span>🚣</span>
+        <span>2. 划船前進</span>
+      </button>
+      <button class="scene-tab flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5" data-scene="rocket">
+        <span>🚀</span>
+        <span>3. 火箭噴氣升空</span>
+      </button>
+    </div>
+
+    <!-- 主要工作區：左右雙欄 (左：動態向量物理模擬實驗室；右：1:1 課本圖解與受力體分離剖析) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- 左欄 (7/12)：動態物理模擬畫布與控制 -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- 互動模擬卡片 -->
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span id="sceneIconBadge" class="p-2 rounded-xl bg-sky-100 text-sky-700 font-bold text-sm">🏃</span>
+              <div>
+                <h3 id="sceneTitle" class="text-base font-black text-slate-900">運動員起跑：腳對起跑架 vs 起跑架對腳</h3>
+                <p id="sceneSubtitle" class="text-xs text-slate-500">腳向後蹬起跑架，起跑架給腳向前的反作用力向前衝出</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button id="toggleVectorsBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-all">
+                📐 向量標籤
+              </button>
+            </div>
+          </div>
+
+          <!-- 動態物理 Canvas -->
+          <div class="relative bg-slate-900 rounded-xl overflow-hidden p-2 shadow-inner">
+            <canvas id="simCanvas" width="650" height="340" class="w-full h-auto block"></canvas>
+          </div>
+
+          <!-- 互動控制面板 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
+            
+            <!-- 施力強度滑桿 -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span id="forceSliderLabel">施力強度：</span>
+                <span id="forceValueLabel" class="font-mono text-sky-700 font-bold text-sm">500 N</span>
+              </div>
+              <input type="range" id="forceSlider" min="100" max="1000" step="50" value="500" class="w-full accent-sky-600">
+            </div>
+
+            <!-- 控制按鈕列 -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div class="flex items-center gap-2">
+                <button id="playActionBtn" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-sm flex items-center gap-1.5 transition-all">
+                  <span id="actionBtnIcon">⚡</span>
+                  <span id="actionBtnText">觸發動作模擬</span>
+                </button>
+                <button id="resetSceneBtn" class="px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 transition-all">
+                  ⏮️ 歸位
+                </button>
+              </div>
+
+              <!-- 觀察模式切換 -->
+              <div class="flex items-center gap-1">
+                <button id="isolateABtn" class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-target="A">
+                  👤 僅看運動員/主體
+                </button>
+                <button id="isolateBBtn" class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100" data-target="B">
+                  🧱 僅看施力對象
+                </button>
+                <button id="isolateBothBtn" class="iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-600 text-white border border-sky-600" data-target="both">
+                  雙向對照
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 即時受力向量數據儀表 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+            <div class="p-2.5 rounded-xl bg-red-50 border border-red-200">
+              <div class="text-[10px] text-red-600 font-bold">🔴 作用力 \(\vec{F}_{\text{作}}\)</div>
+              <div id="disp_f_action" class="font-bold font-mono text-red-700 mt-0.5">500 N (向後)</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-red-50/60 border border-red-100">
+              <div class="text-[10px] text-red-500 font-bold">作用力受力者</div>
+              <div id="disp_target_action" class="font-bold text-slate-800 mt-0.5">起跑架</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="text-[10px] text-emerald-600 font-bold">🟢 反作用力 \(\vec{F}_{\text{反}}\)</div>
+              <div id="disp_f_reaction" class="font-bold font-mono text-emerald-700 mt-0.5">500 N (向前)</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-emerald-50/60 border border-emerald-100">
+              <div class="text-[10px] text-emerald-500 font-bold">反作用力受力者</div>
+              <div id="disp_target_reaction" class="font-bold text-slate-800 mt-0.5">運動員的腳</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 右欄 (5/12)：課本 1:1 剖析與受力體不抵消深度探究 -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- 卡片 1：當前情境 1:1 課本圖解與受力分析 -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span class="p-2 rounded-xl bg-amber-100 text-amber-800 font-bold text-sm">📖</span>
+            <div>
+              <h3 class="text-base font-black text-slate-900">課本 P.45 圖解核心解析</h3>
+              <p class="text-xs text-slate-500">施力與受力主體對照矩陣</p>
+            </div>
+          </div>
+
+          <!-- 情境詳解說明區塊 -->
+          <div id="detailExplSection" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 text-xs leading-relaxed text-slate-700">
+            <!-- 透過 JS 動態注入當前情境的詳盡文字 -->
+          </div>
+
+          <!-- 為什麼不抵消？關鍵提示卡 -->
+          <div class="p-4 rounded-xl bg-purple-50 border border-purple-200 space-y-2 text-xs">
+            <div class="font-black text-purple-900 flex items-center gap-1.5">
+              <span>💡</span>
+              <span>「作用力與反作用力」為什麼絕不會互相抵消？</span>
+            </div>
+            <p class="text-purple-800 leading-relaxed">
+              • <strong>力的抵消條件</strong>：只有作用在「<strong>同一物體</strong>」上的兩個大小相等、方向相反的力，合力才會為零（互相平衡）。<br>
+              • <strong>牛頓第三定律</strong>：作用力作用於 <strong>B 物體</strong>，反作用力作用於 <strong>A 物體</strong>。因為<strong>受力對象不同</strong>，兩者各自對各自的物體產生加速度效果，絕不能合成為零！
+            </p>
+          </div>
+
+        </div>
+
+        <!-- 卡片 2：三大應用綜合對照表 -->
+        <div class="glass-card rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+            <span class="p-1.5 rounded-lg bg-sky-100 text-sky-700 text-xs font-bold">📋</span>
+            <h4 class="text-sm font-black text-slate-900">課本圖 2-11 三大應用快速對照表</h4>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 text-[11px]">
+            <table class="w-full text-center border-collapse bg-white">
+              <thead class="bg-slate-100 font-bold text-slate-700">
+                <tr class="border-b border-slate-200">
+                  <th class="py-2 px-1.5">情境</th>
+                  <th class="py-2 px-1.5 text-red-600">作用力（施力➔受力）</th>
+                  <th class="py-2 px-1.5 text-emerald-600">反作用力（推進力）</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-sky-50">
+                  <td class="py-2 px-1.5 font-bold text-slate-800">🏃 起跑</td>
+                  <td class="py-2 px-1.5 text-red-700 font-medium">腳施予起跑架（向後）</td>
+                  <td class="py-2 px-1.5 text-emerald-700 font-bold">起跑架給腳（向前衝出）</td>
+                </tr>
+                <tr class="hover:bg-sky-50">
+                  <td class="py-2 px-1.5 font-bold text-slate-800">🚣 划船</td>
+                  <td class="py-2 px-1.5 text-red-700 font-medium">槳施予水（向後推水）</td>
+                  <td class="py-2 px-1.5 text-emerald-700 font-bold">水給槳（向前推船）</td>
+                </tr>
+                <tr class="hover:bg-sky-50">
+                  <td class="py-2 px-1.5 font-bold text-slate-800">🚀 火箭</td>
+                  <td class="py-2 px-1.5 text-red-700 font-medium">火箭施予氣體（向下噴氣）</td>
+                  <td class="py-2 px-1.5 text-emerald-700 font-bold">氣體給火箭（向上推升）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 會考觀念隨堂挑戰 -->
+    <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="p-2 rounded-xl bg-amber-100 text-amber-800 font-bold text-sm">🎯</span>
+          <div>
+            <h3 class="text-base font-black text-slate-900">會考觀念即時測驗</h3>
+            <p class="text-xs text-slate-500">檢驗對作用力反作用力受力體與生活應用的理解</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- 題 1 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q1.</span>
+            火箭在「<strong>外太空接近真空的環境</strong>」中，是否還能藉由噴氣加速前進？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (A) 可以，因為推力來自「噴出氣體對火箭的反作用力」，不需要大氣介質！
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (B) 不行，因為太空中沒有空氣可以讓火箭推擠。
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) 不行，因為太空中沒有重力所以無法產生反作用力。
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 2 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q2.</span>
+            划龍舟比賽時，想要讓船隻「<strong>快速向前衝</strong>」，槳應該向哪個方向划水？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (A) 向前推水，船才會向前
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (B) 向後推水，藉由水給槳向前的反作用力推動船隻
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) 向下壓水，讓浮力變大
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+        <!-- 題 3 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-xs font-bold text-slate-800 leading-relaxed">
+            <span class="text-sky-700 font-mono font-black mr-1">Q3.</span>
+            課本 P.58「『爆』走氣球車」放氣後向前跑，其推進原理與下列何者完全相同？
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="true">
+              (A) 火箭噴氣升空（氣體反作用力）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (B) 伽利略斜面實驗（慣性定律）
+            </button>
+            <button class="quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 hover:bg-sky-50 transition-all font-medium" data-correct="false">
+              (C) 自由落體等加速度運動
+            </button>
+          </div>
+          <div class="quiz-feed text-[11px] text-slate-500 hidden pt-1"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
+      <p class="font-bold text-slate-700">國中自然 3 上 · 第 2 章 力與運動 · 2-3 作用力與反作用力的應用（圖 2-11）</p>
+      <p>© 洪瑞英老師 數位教學基地 Central Hub · 互動教材實驗室</p>
+    </div>
+  </footer>
+
+  <!-- 互動腳本 -->
+  <script>
+    // 情境數據庫
+    const SCENES = {
+      running: {
+        title: '運動員起跑：腳對起跑架 vs 起跑架對腳',
+        subtitle: '腳向後蹬起跑架，起跑架給腳向前的反作用力使運動員向前衝出（圖 2-11 A）',
+        icon: '🏃',
+        sliderLabel: '運動員蹬地力量：',
+        minForce: 200,
+        maxForce: 1000,
+        defaultForce: 600,
+        actionName: '腳用力蹬踏起跑架',
+        fActionText: '腳施予起跑架的作用力',
+        targetAction: '起跑架',
+        fReactionText: '起跑架給腳的反作用力',
+        targetReaction: '運動員的腳',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1">
+              <span class="w-4 h-4 rounded-full bg-sky-600 text-white flex items-center justify-center text-[10px]">A</span>
+              <span>運動員起跑衝刺原理</span>
+            </div>
+            <p>1. <strong>施力過程</strong>：運動員在起跑時，後腳向後下方用力猛蹬起跑架（紅色箭頭：<strong>腳施予起跑架的作用力</strong>）。</p>
+            <p>2. <strong>反作用力推進</strong>：起跑架固定於地面，同時給予運動員的腳一個大小相等、方向向前的推力（綠色箭頭：<strong>起跑架給腳的反作用力</strong>）。</p>
+            <p>3. <strong>運動結果</strong>：運動員受到向前的合力，由 \(F = ma\) 瞬間獲得向前的巨大加速度衝出！</p>
+          </div>
+        `
+      },
+      rowing: {
+        title: '划船前進：槳對水 vs 水對槳',
+        subtitle: '划船時槳向後划水，水給槳向前的反作用力推動船隻前進（圖 2-11 B）',
+        icon: '🚣',
+        sliderLabel: '槳划水推力大小：',
+        minForce: 50,
+        maxForce: 400,
+        defaultForce: 200,
+        actionName: '划動船槳向後撥水',
+        fActionText: '槳施予水的作用力',
+        targetAction: '水流',
+        fReactionText: '水給槳的反作用力',
+        targetReaction: '船槳與船隻',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1">
+              <span class="w-4 h-4 rounded-full bg-sky-600 text-white flex items-center justify-center text-[10px]">B</span>
+              <span>划船推進原理</span>
+            </div>
+            <p>1. <strong>施力過程</strong>：划手將船槳放入水中向後用力撥水（紅色箭頭：<strong>槳施予水的作用力</strong>）。</p>
+            <p>2. <strong>反作用力推進</strong>：水受到向後推力而被排擠向後流動，同時水也給予船槳一個向前的反作用力（綠色箭頭：<strong>水給槳的反作用力</strong>）。</p>
+            <p>3. <strong>運動結果</strong>：透過船槳傳遞到船身，使整艘船克服水阻力向前滑行！若向前推水，則船隻會向後退。</p>
+          </div>
+        `
+      },
+      rocket: {
+        title: '火箭噴氣升空：火箭對氣體 vs 氣體對火箭',
+        subtitle: '燃燒燃料產生大量高壓氣體高速向下噴出，氣體反作用力將火箭向上推升（圖 2-11 C）',
+        icon: '🚀',
+        sliderLabel: '火箭引擎燃燒推力：',
+        minForce: 1000,
+        maxForce: 8000,
+        defaultForce: 4500,
+        actionName: '火箭點火噴射高壓氣體',
+        fActionText: '火箭施予氣體的作用力',
+        targetAction: '噴出的燃燒氣體',
+        fReactionText: '氣體給火箭的反作用力',
+        targetReaction: '火箭主體',
+        explHTML: `
+          <div class="space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1">
+              <span class="w-4 h-4 rounded-full bg-sky-600 text-white flex items-center justify-center text-[10px]">C</span>
+              <span>火箭升空與太空推進原理</span>
+            </div>
+            <p>1. <strong>施力過程</strong>：火箭燃燒室內的燃料劇烈燃燒產生極高壓氣體，引擎強力將氣體向後（向下）噴射排出（紅色箭頭：<strong>火箭施予氣體的作用力</strong>）。</p>
+            <p>2. <strong>反作用力推進</strong>：被排出的高速氣體同時給予火箭一個向相反方向（向上）的巨大推力（綠色箭頭：<strong>氣體給火箭的反作用力</strong>）。</p>
+            <p>3. <strong>太空適用性</strong>：由於反作用力來自於「噴出的氣體本身」，不依賴外界空氣推擠，因此火箭在<strong>外太空真空環境下依然能強力推進與轉向</strong>！</p>
+          </div>
+        `
+      }
+    };
+
+    // 狀態變數
+    let currentScene = 'running';
+    let currentForce = 600;
+    let isolateMode = 'both'; // 'A', 'B', 'both'
+    let showVectorLabels = true;
+    let animProgress = 0; // 0 ~ 1 動作動畫進度
+    let isAnimating = false;
+    let animId = null;
+
+    // DOM 元素
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const sceneTitle = document.getElementById('sceneTitle');
+    const sceneSubtitle = document.getElementById('sceneSubtitle');
+    const sceneIconBadge = document.getElementById('sceneIconBadge');
+    const forceSliderLabel = document.getElementById('forceSliderLabel');
+    const forceValueLabel = document.getElementById('forceValueLabel');
+    const forceSlider = document.getElementById('forceSlider');
+    const actionBtnText = document.getElementById('actionBtnText');
+
+    const dispFAction = document.getElementById('disp_f_action');
+    const dispTargetAction = document.getElementById('disp_target_action');
+    const dispFReaction = document.getElementById('disp_f_reaction');
+    const dispTargetReaction = document.getElementById('disp_target_reaction');
+    const detailExplSection = document.getElementById('detailExplSection');
+
+    const playActionBtn = document.getElementById('playActionBtn');
+    const resetSceneBtn = document.getElementById('resetSceneBtn');
+    const toggleVectorsBtn = document.getElementById('toggleVectorsBtn');
+    const globalResetBtn = document.getElementById('globalResetBtn');
+
+    // 切換情境
+    function setScene(sceneKey) {
+      currentScene = sceneKey;
+      const data = SCENES[sceneKey];
+
+      document.querySelectorAll('.scene-tab').forEach(tab => {
+        if (tab.dataset.scene === sceneKey) {
+          tab.className = 'scene-tab active flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5';
+        } else {
+          tab.className = 'scene-tab flex-1 min-w-[140px] py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5';
+        }
+      });
+
+      sceneTitle.textContent = data.title;
+      sceneSubtitle.textContent = data.subtitle;
+      sceneIconBadge.textContent = data.icon;
+      forceSliderLabel.textContent = data.sliderLabel;
+      actionBtnText.textContent = data.actionName;
+
+      forceSlider.min = data.minForce;
+      forceSlider.max = data.maxForce;
+      forceSlider.step = (data.maxForce - data.minForce) / 20;
+      forceSlider.value = data.defaultForce;
+      currentForce = data.defaultForce;
+
+      detailExplSection.innerHTML = data.explHTML;
+
+      animProgress = 0;
+      isAnimating = false;
+      updateUI();
+    }
+
+    // 更新 UI 與數據儀表
+    function updateUI() {
+      const data = SCENES[currentScene];
+      forceValueLabel.textContent = `${currentForce} N`;
+
+      dispFAction.textContent = `${currentForce} N`;
+      dispTargetAction.textContent = data.targetAction;
+
+      dispFReaction.textContent = `${currentForce} N`;
+      dispTargetReaction.textContent = data.targetReaction;
+
+      drawScene();
+    }
+
+    // 繪製情境
+    function drawScene() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      if (currentScene === 'running') {
+        drawRunningScene(w, h);
+      } else if (currentScene === 'rowing') {
+        drawRowingScene(w, h);
+      } else if (currentScene === 'rocket') {
+        drawRocketScene(w, h);
+      }
+    }
+
+    // 1. 繪製運動員起跑
+    function drawRunningScene(w, h) {
+      // 藍色田徑跑道背景
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0369a1');
+      bgGrad.addColorStop(1, '#0284c7');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 跑道白色標線
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(0, 240);
+      ctx.lineTo(w, 240);
+      ctx.moveTo(0, 300);
+      ctx.lineTo(w, 300);
+      ctx.stroke();
+
+      // 起跑線
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(340, 180);
+      ctx.lineTo(340, h);
+      ctx.stroke();
+
+      // 起跑架 (Block)
+      const blockX = 190;
+      const blockY = 240;
+      if (isolateMode === 'both' || isolateMode === 'B') {
+        ctx.fillStyle = '#334155';
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(blockX, blockY);
+        ctx.lineTo(blockX + 70, blockY);
+        ctx.lineTo(blockX + 45, blockY - 45); // 斜面起跑蹬板
+        ctx.lineTo(blockX + 15, blockY - 45);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 起跑架導軌
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(blockX - 50, blockY, 150, 10);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('起跑架', blockX + 35, blockY + 22);
+      }
+
+      // 運動員身體位置 (隨動畫進度前衝)
+      const runOffset = animProgress * 180;
+      const runnerX = 230 + runOffset;
+      const runnerY = 205 - animProgress * 15;
+
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        // 繪製運動員簡化剪影/姿勢 (起跑姿勢)
+        ctx.strokeStyle = '#f8fafc';
+        ctx.fillStyle = '#f8fafc';
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // 頭部
+        ctx.beginPath();
+        ctx.arc(runnerX + 90, runnerY - 60, 14, 0, Math.PI * 2);
+        ctx.fillStyle = '#fed7aa';
+        ctx.fill();
+        ctx.strokeStyle = '#ea580c';
+        ctx.stroke();
+
+        // 軀幹
+        ctx.beginPath();
+        ctx.moveTo(runnerX + 80, runnerY - 50);
+        ctx.lineTo(runnerX + 30, runnerY - 20); // 傾斜前傾
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 8;
+        ctx.stroke();
+
+        // 前腿
+        ctx.beginPath();
+        ctx.moveTo(runnerX + 30, runnerY - 20);
+        ctx.lineTo(runnerX + 60, runnerY + 10);
+        ctx.lineTo(runnerX + 75, runnerY + 35);
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        // 後腿（蹬在起跑架上）
+        ctx.beginPath();
+        ctx.moveTo(runnerX + 30, runnerY - 20);
+        ctx.lineTo(runnerX - 5, runnerY + 5);
+        ctx.lineTo(runnerX - 15 - (animProgress > 0 ? animProgress * 40 : 0), runnerY + 25);
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        // 跑鞋 (紅色)
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(runnerX - 25 - (animProgress > 0 ? animProgress * 40 : 0), runnerY + 20, 20, 10);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('運動員 (向前衝出)', runnerX + 50, runnerY - 75);
+      }
+
+      // 繪製作用力與反作用力向量箭頭
+      const contactX = blockX + 30;
+      const contactY = blockY - 20;
+      const arrowScale = (currentForce / 1000.0) * 110;
+
+      // 作用力（紅）：腳施予起跑架（向後下 45度）
+      if (isolateMode === 'both' || isolateMode === 'B') {
+        const tox = contactX - arrowScale * 0.8;
+        const toy = contactY + arrowScale * 0.8;
+        drawVectorArrow(ctx, contactX, contactY, tox, toy, '#ef4444', 4, '腳施予起跑架的作用力', 'bottom');
+      }
+
+      // 反作用力（綠）：起跑架給腳（向前上 45度）
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        const tox = contactX + arrowScale * 0.8;
+        const toy = contactY - arrowScale * 0.8;
+        drawVectorArrow(ctx, contactX, contactY, tox, toy, '#22c55e', 4, '起跑架給腳的反作用力 (推力)', 'top');
+      }
+    }
+
+    // 2. 繪製划船前進
+    function drawRowingScene(w, h) {
+      // 碧綠水面漸層
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0f766e');
+      bgGrad.addColorStop(1, '#115e59');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 水波紋
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 6; i++) {
+        const waveY = 50 + i * 50;
+        ctx.beginPath();
+        ctx.moveTo(30, waveY);
+        ctx.bezierCurveTo(150, waveY - 10, 250, waveY + 10, 380, waveY);
+        ctx.bezierCurveTo(480, waveY - 10, 580, waveY + 10, w - 30, waveY);
+        ctx.stroke();
+      }
+
+      // 船隻位置 (隨動畫進度前進)
+      const boatOffset = animProgress * 150;
+      const boatX = 220 + boatOffset;
+      const boatY = 170;
+
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        // 獨木舟船體 (黑色流線型)
+        ctx.fillStyle = '#1e293b';
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(boatX, boatY, 130, 26, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // 划手身體
+        ctx.fillStyle = '#ea580c';
+        ctx.beginPath();
+        ctx.arc(boatX - 10, boatY - 20, 16, 0, Math.PI * 2); // 軀幹
+        ctx.fill();
+        ctx.fillStyle = '#fed7aa';
+        ctx.beginPath();
+        ctx.arc(boatX - 5, boatY - 45, 12, 0, Math.PI * 2); // 頭部
+        ctx.fill();
+
+        // 船槳 (木質褐色)
+        const paddleAngle = -Math.PI / 4 + animProgress * 0.4;
+        ctx.save();
+        ctx.translate(boatX - 10, boatY - 10);
+        ctx.rotate(paddleAngle);
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(-60, 0);
+        ctx.lineTo(70, 0);
+        ctx.stroke();
+        // 槳葉
+        ctx.fillStyle = '#b45309';
+        ctx.fillRect(-85, -8, 28, 16);
+        ctx.fillRect(65, -8, 28, 16);
+        ctx.restore();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('划艇與划手 (向前滑行)', boatX, boatY - 65);
+      }
+
+      // 向量作用點 (水中的槳葉處)
+      const paddleWaterX = boatX - 50;
+      const paddleWaterY = boatY + 55;
+      const arrowScale = (currentForce / 400.0) * 110;
+
+      // 作用力（紅）：槳施予水（向後左方推水）
+      if (isolateMode === 'both' || isolateMode === 'B') {
+        const tox = paddleWaterX - arrowScale;
+        const toy = paddleWaterY;
+        drawVectorArrow(ctx, paddleWaterX, paddleWaterY, tox, toy, '#ef4444', 4, '槳施予水的作用力 (推水)', 'bottom');
+      }
+
+      // 反作用力（綠）：水給槳（向前右方推船）
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        const tox = paddleWaterX + arrowScale;
+        const toy = paddleWaterY;
+        drawVectorArrow(ctx, paddleWaterX, paddleWaterY, tox, toy, '#22c55e', 4, '水給槳的反作用力 (推船)', 'top');
+      }
+    }
+
+    // 3. 繪製火箭噴氣升空
+    function drawRocketScene(w, h) {
+      // 天空與太空漸層
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0f172a');
+      bgGrad.addColorStop(0.6, '#1e293b');
+      bgGrad.addColorStop(1, '#334155');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 星星
+      ctx.fillStyle = '#ffffff';
+      for (let i = 0; i < 15; i++) {
+        const sx = (i * 47) % w;
+        const sy = (i * 29) % (h / 2);
+        ctx.fillRect(sx, sy, 2, 2);
+      }
+
+      // 火箭位置 (隨動畫進度向上飛升)
+      const rocketOffset = animProgress * 120;
+      const rocketX = w / 2;
+      const rocketY = 160 - rocketOffset;
+
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        // 繪製火箭主體
+        ctx.save();
+        ctx.translate(rocketX, rocketY);
+
+        // 火箭彈頭 (紅色錐形)
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(0, -90);
+        ctx.lineTo(-22, -45);
+        ctx.lineTo(22, -45);
+        ctx.closePath();
+        ctx.fill();
+
+        // 火箭筒身 (白色圓柱)
+        ctx.fillStyle = '#f8fafc';
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 2;
+        ctx.fillRect(-22, -45, 44, 90);
+        ctx.strokeRect(-22, -45, 44, 90);
+
+        // 觀景窗
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath();
+        ctx.arc(0, -20, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 兩側尾翼
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(-22, 15);
+        ctx.lineTo(-45, 45);
+        ctx.lineTo(-22, 45);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(22, 15);
+        ctx.lineTo(45, 45);
+        ctx.lineTo(22, 45);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('火箭主體 (向上推升)', rocketX, rocketY - 100);
+      }
+
+      // 噴射火焰與氣體 (向下方噴出)
+      const nozzleX = rocketX;
+      const nozzleY = rocketY + 45;
+
+      if (isolateMode === 'both' || isolateMode === 'B') {
+        // 火焰漸層
+        const flameGrad = ctx.createRadialGradient(nozzleX, nozzleY + 20, 5, nozzleX, nozzleY + 45, 45);
+        flameGrad.addColorStop(0, '#ffffff');
+        flameGrad.addColorStop(0.3, '#facc15');
+        flameGrad.addColorStop(0.7, '#f97316');
+        flameGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+        ctx.fillStyle = flameGrad;
+        ctx.beginPath();
+        ctx.moveTo(nozzleX - 18, nozzleY);
+        ctx.lineTo(nozzleX + 18, nozzleY);
+        ctx.lineTo(nozzleX, nozzleY + 70 + (Math.sin(Date.now() / 80) * 10));
+        ctx.closePath();
+        ctx.fill();
+
+        // 噴出煙霧團
+        ctx.fillStyle = 'rgba(203, 213, 225, 0.4)';
+        for (let i = 0; i < 4; i++) {
+          ctx.beginPath();
+          ctx.arc(nozzleX - 15 + i * 10, nozzleY + 60 + i * 12, 15 + i * 6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // 繪製向量箭頭
+      const arrowScale = (currentForce / 8000.0) * 100;
+
+      // 作用力（紅）：火箭施予氣體（向下噴氣）
+      if (isolateMode === 'both' || isolateMode === 'B') {
+        const tox = nozzleX;
+        const toy = nozzleY + 20 + arrowScale;
+        drawVectorArrow(ctx, nozzleX, nozzleY + 20, tox, toy, '#ef4444', 4, '火箭施予氣體的作用力', 'bottom');
+      }
+
+      // 反作用力（綠）：氣體給火箭（向上推進）
+      if (isolateMode === 'both' || isolateMode === 'A') {
+        const tox = nozzleX;
+        const toy = nozzleY - 20 - arrowScale;
+        drawVectorArrow(ctx, nozzleX, nozzleY - 20, tox, toy, '#22c55e', 4, '氣體給火箭的反作用力 (向上推力)', 'top');
+      }
+    }
+
+    // 向量箭頭繪製輔助
+    function drawVectorArrow(ctx, fromx, fromy, tox, toy, color, lineWidth, label, labelPos) {
+      const headlen = 10;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = lineWidth;
+
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      if (showVectorLabels && label) {
+        ctx.save();
+        ctx.font = 'bold 11px "JetBrains Mono", sans-serif';
+        const midX = (fromx + tox) / 2;
+        const midY = (fromy + toy) / 2;
+        
+        let offsetY = labelPos === 'top' ? -12 : 20;
+        let offsetX = 0;
+        if (Math.abs(dx) < 10) { // 垂直箭頭
+          offsetX = labelPos === 'top' ? 90 : 80;
+          offsetY = 0;
+        }
+
+        const textW = ctx.measureText(label).width;
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.beginPath();
+        ctx.roundRect(midX + offsetX - textW / 2 - 5, midY + offsetY - 10, textW + 10, 20, 4);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.fillText(label, midX + offsetX, midY + offsetY + 4);
+        ctx.restore();
+      }
+    }
+
+    // 動畫循環
+    function runAnimation() {
+      if (!isAnimating) return;
+      animProgress += 0.02;
+      if (animProgress >= 1.0) {
+        animProgress = 1.0;
+        isAnimating = false;
+        playActionBtn.classList.remove('bg-amber-600');
+        playActionBtn.classList.add('bg-sky-600');
+        actionBtnIcon.textContent = '⚡';
+      }
+      drawScene();
+      if (isAnimating) {
+        animId = requestAnimationFrame(runAnimation);
+      }
+    }
+
+    // 事件監聽：情境切換
+    document.querySelectorAll('.scene-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        setScene(tab.dataset.scene);
+      });
+    });
+
+    // 力量滑桿
+    forceSlider.addEventListener('input', (e) => {
+      currentForce = parseInt(e.target.value);
+      updateUI();
+    });
+
+    // 動作按鈕
+    playActionBtn.addEventListener('click', () => {
+      if (isAnimating) {
+        isAnimating = false;
+        playActionBtn.classList.remove('bg-amber-600');
+        playActionBtn.classList.add('bg-sky-600');
+        actionBtnIcon.textContent = '⚡';
+      } else {
+        animProgress = 0;
+        isAnimating = true;
+        playActionBtn.classList.remove('bg-sky-600');
+        playActionBtn.classList.add('bg-amber-600');
+        actionBtnIcon.textContent = '⏸️';
+        animId = requestAnimationFrame(runAnimation);
+      }
+    });
+
+    // 歸位
+    resetSceneBtn.addEventListener('click', () => {
+      isAnimating = false;
+      animProgress = 0;
+      playActionBtn.classList.remove('bg-amber-600');
+      playActionBtn.classList.add('bg-sky-600');
+      actionBtnIcon.textContent = '⚡';
+      drawScene();
+    });
+
+    // 隔離檢視模式
+    document.querySelectorAll('.iso-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.iso-btn').forEach(b => {
+          b.className = 'iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100';
+        });
+        btn.className = 'iso-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-600 text-white border border-sky-600';
+        isolateMode = btn.dataset.target;
+        drawScene();
+      });
+    });
+
+    // 切換向量標籤
+    toggleVectorsBtn.addEventListener('click', () => {
+      showVectorLabels = !showVectorLabels;
+      toggleVectorsBtn.classList.toggle('bg-sky-200');
+      drawScene();
+    });
+
+    // 全局重設
+    globalResetBtn.addEventListener('click', () => {
+      setScene('running');
+    });
+
+    // 隨堂測驗邏輯
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.parentElement;
+        const feed = parent.parentElement.querySelector('.quiz-feed');
+        const isCorrect = btn.dataset.correct === 'true';
+
+        parent.querySelectorAll('.quiz-btn').forEach(b => {
+          b.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-white border border-slate-200 transition-all font-medium opacity-60';
+        });
+
+        if (isCorrect) {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-900 font-bold';
+          feed.textContent = '✓ 答對了！觀念非常清晰！';
+          feed.className = 'quiz-feed text-[11px] text-emerald-700 font-bold block pt-1';
+        } else {
+          btn.className = 'quiz-btn w-full text-left p-2 rounded-lg bg-red-50 border border-red-400 text-red-900 font-bold';
+          feed.textContent = '✗ 答案不正確，請參考上方作用力與受力對象重新思考！';
+          feed.className = 'quiz-feed text-[11px] text-red-600 font-bold block pt-1';
+        }
+      });
+    });
+
+    // 語音導讀
+    const speechBtn = document.getElementById('speechBtn');
+    let isSpeaking = false;
+    const narrationText = '歡迎學習康軒國中自然三上，第二章二之三，作用力與反作用力的應用。作用力與反作用力作用在不同的物體上，所以絕不會互相抵消。在日常生活中，我們常利用向後或向下施力的反作用力作為推動前進的力量。例如運動員起跑時，腳向後蹬起跑架，起跑架給予運動員向前的反作用力衝出；划船時槳向後推水，水給槳向前的反作用力推動船隻；火箭燃燒後向下高速噴出氣體，氣體給火箭向上的反作用力推升火箭！';
+
+    speechBtn.addEventListener('click', () => {
+      if ('speechSynthesis' in window) {
+        if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speechBtn.classList.remove('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '🔊';
+        } else {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(narrationText);
+          utter.lang = 'zh-TW';
+          utter.rate = 1.0;
+          utter.onend = () => {
+            isSpeaking = false;
+            speechBtn.classList.remove('bg-sky-200');
+            document.getElementById('speechIcon').textContent = '🔊';
+          };
+          window.speechSynthesis.speak(utter);
+          isSpeaking = true;
+          speechBtn.classList.add('bg-sky-200');
+          document.getElementById('speechIcon').textContent = '⏹️';
+        }
+      } else {
+        alert('您的瀏覽器不支援語音合成功能。');
+      }
+    });
+
+    // 初始化渲染
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+      setScene('running');
+    });
+  </script>
+</body>
+</html>
