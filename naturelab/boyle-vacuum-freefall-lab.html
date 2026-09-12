@@ -486,29 +486,6 @@
           </div>
           <canvas id="stageCanvas" class="stage-canvas" width="650" height="380"></canvas>
         </div>
-
-        <!-- Controls -->
-        <div class="control-panel">
-          <div class="slider-group">
-            <!-- Playback Speed -->
-            <div class="slider-item">
-              <div class="slider-head">
-                <span>🐌 播放速度</span>
-                <span id="speedVal">0.30x (慢動作)</span>
-              </div>
-              <input type="range" id="speedSlider" min="0.05" max="1.0" step="0.05" value="0.3" oninput="onSpeedChange()">
-            </div>
-
-            <!-- Vacuum Pump Setting (for Boyle mode) -->
-            <div class="slider-item" id="pumpControlBox">
-              <div class="slider-head">
-                <span>💨 右管真空度（氣壓）</span>
-                <span id="pumpVal" style="color: var(--primary);">0.00 atm (完全真空)</span>
-              </div>
-              <input type="range" id="pumpSlider" min="0.0" max="1.0" step="0.05" value="0.0" oninput="onPumpChange()">
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Right Column: Live Data, Explanations & Quiz -->
@@ -600,8 +577,8 @@
     let animId = null;
     let lastTime = 0;
     let elapsedTime = 0;
-    let timeScale = 0.3;
-    let vacuumAtm = 0.0; // 0.0 = full vacuum, 1.0 = normal air
+    const timeScale = 0.50; // 播放速度固定為 0.50x
+    const vacuumAtm = 0.0;  // 右管固定為 0.00 atm (完全真空)
 
     // Physical items
     const g = 9.8; // m/s^2
@@ -624,28 +601,15 @@
 
       if (mode === 'boyle') {
         document.getElementById('stageTitle').innerText = '🧪 波以耳雙玻璃管落體模擬（大氣管 vs 真空管）';
-        document.getElementById('pumpControlBox').style.display = 'flex';
         document.getElementById('cardTitle1').innerText = '🔴 左管：一般大氣環境';
         document.getElementById('cardTitle2').innerText = '🔵 右管：抽真空環境';
       } else {
         document.getElementById('stageTitle').innerText = '🗼 伽利略比薩斜塔落體模擬（10kg 重鐵球 vs 1kg 輕鐵球 vs 羽毛）';
-        document.getElementById('pumpControlBox').style.display = 'none';
         document.getElementById('cardTitle1').innerText = '🗼 比薩斜塔：大氣中 (無阻力簡化)';
         document.getElementById('cardTitle2').innerText = '🪨 輕重鐵球對比';
       }
 
       resetDrop();
-    }
-
-    function onSpeedChange() {
-      timeScale = parseFloat(document.getElementById('speedSlider').value);
-      document.getElementById('speedVal').innerText = `${timeScale.toFixed(2)}x ${timeScale <= 0.3 ? '(慢動作)' : ''}`;
-    }
-
-    function onPumpChange() {
-      vacuumAtm = parseFloat(document.getElementById('pumpSlider').value);
-      document.getElementById('pumpVal').innerText = `${vacuumAtm.toFixed(2)} atm ${vacuumAtm === 0 ? '(完全真空)' : ''}`;
-      document.getElementById('vacAtmLabel').innerText = `${vacuumAtm.toFixed(2)} atm`;
     }
 
     function toggleDrop() {
@@ -657,7 +621,7 @@
         isDropping = true;
         document.getElementById('btnDrop').innerText = '⏸ 暫停落體';
         document.getElementById('btnDrop').style.background = '#dc2626';
-        document.getElementById('hudState').innerText = '下落進行中...';
+        document.getElementById('hudState').innerText = '下落進行中 (0.50x)...';
         lastTime = performance.now();
         loop();
       } else {
@@ -739,12 +703,10 @@
         }
       }
 
-      // 4. Feather in Vacuum (drag depends on vacuumAtm)
+      // 4. Feather in Vacuum (freefall with 0 drag)
       if (!featherVac.landed) {
-        const dragFactor = vacuumAtm * 12.0;
-        featherVac.v += (g - dragFactor * featherVac.v) * dt;
+        featherVac.v += g * dt;
         featherVac.y += featherVac.v * dt;
-        if (vacuumAtm > 0.05) featherVac.wavePhase += dt * (vacuumAtm * 5);
         if (featherVac.y >= tubeHeight) {
           featherVac.y = tubeHeight;
           featherVac.landed = true;
@@ -773,8 +735,8 @@
       const cw = canvas.width;
       const ch = canvas.height;
 
-      const topY = 70;
-      const bottomY = 320;
+      const topY = 82;
+      const bottomY = 312;
       const hSpan = bottomY - topY;
 
       if (mode === 'boyle') {
@@ -782,15 +744,17 @@
         const tubeW = 160;
         const tube1X = 140; // Center of Tube 1 (Air)
         const tube2X = 510; // Center of Tube 2 (Vacuum)
+        const tubeTop = 52;
+        const tubeH = 282;
 
         // Tube 1: Air
-        drawTube(tube1X, topY - 15, tubeW, hSpan + 30, '大氣管 (1.0 atm)', '#fca5a5', false);
+        drawTube(tube1X, tubeTop, tubeW, tubeH, '大氣管 (1.0 atm)', '#fca5a5', false);
         // Tube 2: Vacuum
-        drawTube(tube2X, topY - 15, tubeW, hSpan + 30, `真空管 (${vacuumAtm.toFixed(2)} atm)`, '#93c5fd', true);
+        drawTube(tube2X, tubeTop, tubeW, tubeH, '真空管 (0.00 atm 完全真空)', '#93c5fd', true);
 
         // Ground base
         ctx.fillStyle = '#334155';
-        ctx.fillRect(40, bottomY + 18, cw - 80, 14);
+        ctx.fillRect(40, tubeTop + tubeH, cw - 80, 14);
 
         // Draw items in Tube 1 (Air)
         const yCoinAir = topY + (coinAir.y / tubeHeight) * hSpan;
@@ -803,13 +767,12 @@
         // Draw items in Tube 2 (Vacuum)
         const yCoinVac = topY + (coinVac.y / tubeHeight) * hSpan;
         const yFeaVac = topY + (featherVac.y / tubeHeight) * hSpan;
-        const xFeaVacOffset = (vacuumAtm > 0.05) ? Math.sin(featherVac.wavePhase) * (vacuumAtm * 20) : 0;
 
         drawCoin(tube2X - 35, yCoinVac);
-        drawFeather(tube2X + 35 + xFeaVacOffset, yFeaVac, (vacuumAtm > 0.05) ? Math.sin(featherVac.wavePhase) * 0.3 : 0);
+        drawFeather(tube2X + 35, yFeaVac, 0);
 
         // Alignment guide line in Vacuum
-        if (!coinVac.landed && isDropping && vacuumAtm < 0.05) {
+        if (!coinVac.landed && isDropping) {
           ctx.strokeStyle = '#38bdf8';
           ctx.lineWidth = 1.5;
           ctx.setLineDash([4, 4]);
@@ -820,39 +783,57 @@
           ctx.setLineDash([]);
           ctx.fillStyle = '#38bdf8';
           ctx.font = 'bold 10px Outfit';
-          ctx.fillText('水平切齊同加速度', tube2X - 42, yCoinVac - 8);
+          ctx.textAlign = 'center';
+          ctx.fillText('水平切齊同加速度', tube2X, yCoinVac - 18);
         }
 
       } else {
         // Pisa Tower Mode
+        const towerTop = 52;
+        const towerH = 282;
         ctx.fillStyle = '#cbd5e1';
-        ctx.fillRect(80, topY, 120, hSpan + 20); // Pisa tower mockup
+        ctx.fillRect(80, towerTop, 120, towerH); // Pisa tower mockup
         ctx.fillStyle = '#94a3b8';
-        ctx.fillText('比薩斜塔頂端 (55m)', 85, topY - 10);
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.textAlign = 'left';
+        ctx.fillText('比薩斜塔頂端 (55m)', 85, 42);
 
         // Ground
         ctx.fillStyle = '#334155';
-        ctx.fillRect(40, bottomY + 18, cw - 80, 14);
+        ctx.fillRect(40, towerTop + towerH, cw - 80, 14);
 
         const yCoinVac = topY + (coinVac.y / tubeHeight) * hSpan;
         // Heavy Iron Ball (10kg)
+        ctx.save();
         ctx.font = '32px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillText('🪨', 260, yCoinVac);
+        ctx.restore();
         ctx.fillStyle = '#f87171';
         ctx.font = 'bold 11px Noto Sans TC';
-        ctx.fillText('10kg 重鐵球', 250, yCoinVac - 10);
+        ctx.textAlign = 'center';
+        ctx.fillText('10kg 重鐵球', 260, yCoinVac - 24);
 
         // Light Iron Ball (1kg)
+        ctx.save();
         ctx.font = '24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillText('⚪', 380, yCoinVac);
+        ctx.restore();
         ctx.fillStyle = '#60a5fa';
-        ctx.fillText('1kg 輕鐵球', 375, yCoinVac - 10);
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.textAlign = 'center';
+        ctx.fillText('1kg 輕鐵球', 380, yCoinVac - 20);
 
         // Feather
         const yFeaAir = topY + (featherAir.y / tubeHeight) * hSpan;
         drawFeather(490, yFeaAir, 0);
         ctx.fillStyle = '#fbbf24';
-        ctx.fillText('0.01kg 羽毛 (有阻力)', 460, yFeaAir - 15);
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.textAlign = 'center';
+        ctx.fillText('0.01kg 羽毛 (有阻力)', 490, yFeaAir - 22);
       }
     }
 
@@ -874,9 +855,12 @@
     }
 
     function drawCoin(x, y) {
+      ctx.save();
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
       ctx.fillText('🪙', x, y);
+      ctx.restore();
     }
 
     function drawFeather(x, y, rot) {
@@ -885,6 +869,7 @@
       ctx.rotate(rot);
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
       ctx.fillText('🪶', 0, 0);
       ctx.restore();
     }
