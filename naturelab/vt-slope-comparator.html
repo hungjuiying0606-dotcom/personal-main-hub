@@ -734,8 +734,9 @@
       trackCtx.fillText(`甲車 (${vA.toFixed(0)}m/s, ${xA.toFixed(0)}m)`, pxA - 20, 22);
 
       const pxB = toPx(xB);
+      trackCtx.font = '28px sans-serif';
       trackCtx.fillText('🏎️', pxB - 15, 122);
-      trackCtx.fillStyle = '#f87171';
+      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC';
       trackCtx.fillText(`乙車 (${vB.toFixed(0)}m/s, ${xB.toFixed(0)}m)`, pxB - 20, 92);
     }
 
