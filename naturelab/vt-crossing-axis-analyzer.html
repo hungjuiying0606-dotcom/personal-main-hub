@@ -735,13 +735,6 @@
       graphCtx.stroke();
       graphCtx.setLineDash([]);
 
-      graphCtx.fillStyle = '#1d4ed8';
-      graphCtx.font = 'bold 13px Outfit';
-      graphCtx.textAlign = 'center';
-      graphCtx.fillText('上方面積 = +40 m', toGx(4), toGy(3.5));
-      graphCtx.font = '11px Noto Sans TC';
-      graphCtx.fillText('(正向減速)', toGx(4), toGy(2.0));
-
       // 2. Shaded Triangle 2 (10 to 15s: Negative Area)
       graphCtx.beginPath();
       graphCtx.moveTo(toGx(10), toGy(0));
@@ -756,13 +749,24 @@
       graphCtx.stroke();
       graphCtx.setLineDash([]);
 
-      graphCtx.fillStyle = '#b91c1c';
-      graphCtx.font = 'bold 13px Outfit';
-      graphCtx.fillText('下方面積 = -10 m', toGx(13), toGy(-1.5));
-      graphCtx.font = '11px Noto Sans TC';
-      graphCtx.fillText('(負向加速)', toGx(13), toGy(-2.8));
+      // 3. Grid Lines & Axes
+      [-4, 0, 4, 8].forEach(v => {
+        const gy = toGy(v);
+        graphCtx.beginPath();
+        graphCtx.moveTo(ox - 5, gy);
+        graphCtx.lineTo(ox + w, gy);
+        graphCtx.strokeStyle = v === 0 ? '#0f172a' : '#f1f5f9';
+        graphCtx.lineWidth = v === 0 ? 2 : 1;
+        graphCtx.stroke();
 
-      // 3. Axes
+        graphCtx.fillStyle = '#64748b';
+        graphCtx.font = '11px Outfit';
+        graphCtx.textAlign = 'right';
+        graphCtx.textBaseline = 'middle';
+        graphCtx.fillText((v > 0 ? '+' : '') + v, ox - 8, gy);
+      });
+
+      // t-axis & v-axis
       graphCtx.beginPath();
       graphCtx.moveTo(ox, oy); graphCtx.lineTo(ox + w, oy); // t-axis
       graphCtx.strokeStyle = '#0f172a'; graphCtx.lineWidth = 2.5; graphCtx.stroke();
@@ -773,17 +777,10 @@
 
       // Axis Labels
       graphCtx.font = 'bold 12px Noto Sans TC'; graphCtx.fillStyle = '#0f172a';
+      graphCtx.textAlign = 'left'; graphCtx.textBaseline = 'middle';
       graphCtx.fillText('時間 t (秒)', ox + w - 40, oy + 22);
+      graphCtx.textBaseline = 'bottom';
       graphCtx.fillText('速度 v (m/s)', ox - 35, oy - 175);
-
-      // Y Ticks: 8, 4, 0, -4
-      [-4, 0, 4, 8].forEach(v => {
-        const gy = toGy(v);
-        graphCtx.beginPath(); graphCtx.moveTo(ox - 5, gy); graphCtx.lineTo(ox + w, gy);
-        graphCtx.strokeStyle = v === 0 ? '#0f172a' : '#f1f5f9'; graphCtx.stroke();
-        graphCtx.fillStyle = '#64748b'; graphCtx.font = '11px Outfit'; graphCtx.textAlign = 'right';
-        graphCtx.fillText((v > 0 ? '+' : '') + v, ox - 8, gy + 4);
-      });
 
       // X Ticks: 0, 5, 10, 15
       [0, 5, 10, 15].forEach(t => {
@@ -791,7 +788,8 @@
         graphCtx.fillStyle = t === 10 ? '#dc2626' : '#64748b';
         graphCtx.font = t === 10 ? 'bold 13px Outfit' : '11px Outfit';
         graphCtx.textAlign = 'center';
-        graphCtx.fillText(t + (t === 10 ? ' (折返點)' : ''), gx, oy + 16);
+        graphCtx.textBaseline = 'top';
+        graphCtx.fillText(t + (t === 10 ? ' (折返點)' : ''), gx, oy + 8);
       });
 
       // 4. Thick v-t Line (from (0, 8) to (15, -4))
@@ -802,7 +800,7 @@
       graphCtx.lineWidth = 4;
       graphCtx.stroke();
 
-      // 5. Time Scrubber Line
+      // 5. Time Scrubber Line & Dot
       const scanX = toGx(currentTime);
       graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - 160); graphCtx.lineTo(scanX, oy + 90);
       graphCtx.strokeStyle = '#9333ea'; graphCtx.lineWidth = 1.5; graphCtx.setLineDash([4, 4]); graphCtx.stroke(); graphCtx.setLineDash([]);
@@ -811,6 +809,47 @@
       graphCtx.beginPath(); graphCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
       graphCtx.fillStyle = curV >= 0 ? '#2563eb' : '#dc2626';
       graphCtx.fill();
+
+      // 6. TOP-MOST LAYER: Area Text Badges (Drawn on TOP of all lines with crisp readable cards)
+      // Positive Area Label (Inside upper triangle at t=3.5, v=2.5)
+      const posTx = toGx(3.5);
+      const posTy = toGy(2.5);
+      graphCtx.save();
+      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+      graphCtx.fillRect(posTx - 64, posTy - 21, 128, 42);
+      graphCtx.strokeStyle = '#93c5fd';
+      graphCtx.lineWidth = 1.2;
+      graphCtx.strokeRect(posTx - 64, posTy - 21, 128, 42);
+
+      graphCtx.fillStyle = '#1d4ed8';
+      graphCtx.font = 'bold 12px Noto Sans TC';
+      graphCtx.textAlign = 'center';
+      graphCtx.textBaseline = 'middle';
+      graphCtx.fillText('上方面積 = +40 m', posTx, posTy - 7);
+      graphCtx.font = '11px Noto Sans TC';
+      graphCtx.fillStyle = '#2563eb';
+      graphCtx.fillText('(正向減速)', posTx, posTy + 9);
+      graphCtx.restore();
+
+      // Negative Area Label (Inside lower triangle at t=12.8, v=-1.8)
+      const negTx = toGx(12.8);
+      const negTy = toGy(-1.8);
+      graphCtx.save();
+      graphCtx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+      graphCtx.fillRect(negTx - 64, negTy - 21, 128, 42);
+      graphCtx.strokeStyle = '#fca5a5';
+      graphCtx.lineWidth = 1.2;
+      graphCtx.strokeRect(negTx - 64, negTy - 21, 128, 42);
+
+      graphCtx.fillStyle = '#b91c1c';
+      graphCtx.font = 'bold 12px Noto Sans TC';
+      graphCtx.textAlign = 'center';
+      graphCtx.textBaseline = 'middle';
+      graphCtx.fillText('下方面積 = -10 m', negTx, negTy - 7);
+      graphCtx.font = '11px Noto Sans TC';
+      graphCtx.fillStyle = '#dc2626';
+      graphCtx.fillText('(負向加速)', negTx, negTy + 9);
+      graphCtx.restore();
     }
 
     // Quiz Check
