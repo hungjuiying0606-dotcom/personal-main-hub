@@ -11,10 +11,10 @@
     :root {
       --primary: #0284c7;       /* Blue */
       --primary-dark: #0369a1;
-      --car-a: #3b82f6;         /* Car A (Blue) */
-      --car-b: #64748b;         /* Car B (Gray / Stop) */
-      --car-c: #a855f7;         /* Car C (Purple / Reverse) */
-      --car-d: #ea580c;         /* Car D (Orange / Accelerate) */
+      --car-a: #2563eb;         /* Car A (Blue) */
+      --car-b: #ea580c;         /* Car B (Orange / Stop) */
+      --car-c: #16a34a;         /* Car C (Green / Reverse) */
+      --car-d: #e11d48;         /* Car D (Rose/Pink / Reverse Accel) */
       --bg: #f0f9ff;
       --card-bg: #ffffff;
       --text: #0f172a;
@@ -271,9 +271,9 @@
     }
 
     .car-card.a { border-color: #93c5fd; background: #eff6ff; }
-    .car-card.b { border-color: #cbd5e1; background: #f8fafc; }
-    .car-card.c { border-color: #d8b4fe; background: #faf5ff; }
-    .car-card.d { border-color: #fed7aa; background: #fff7ed; }
+    .car-card.b { border-color: #fed7aa; background: #fff7ed; }
+    .car-card.c { border-color: #bbf7d0; background: #f0fdf4; }
+    .car-card.d { border-color: #fecdd3; background: #fff1f2; }
 
     .car-card h4 {
       font-size: 0.85rem;
@@ -283,9 +283,9 @@
     }
 
     .car-card.a h4 { color: #1d4ed8; }
-    .car-card.b h4 { color: #475569; }
-    .car-card.c h4 { color: #7e22ce; }
-    .car-card.d h4 { color: #c2410c; }
+    .car-card.b h4 { color: #c2410c; }
+    .car-card.c h4 { color: #15803d; }
+    .car-card.d h4 { color: #be123c; }
 
     .car-pos {
       font-family: 'Outfit', sans-serif;
@@ -426,9 +426,9 @@
       <div class="title-group">
         <h1>
           <span>🏎️ 四車 v-t 圖與實體跑道車距變化實驗室</span>
-          <span class="badge">國中自然 3上 · 習作 P.5 第13題 (會考類題)</span>
+          <span class="badge">111 會考第 25 題 · 國中自然 3上 習作 P.5 第13題</span>
         </h1>
-        <p>同起點出發：甲正等速、乙靜止、丙反向、丁正加速；丙丁背道而馳車距越來越遠！</p>
+        <p>同起點出發：甲正等速、乙靜止、丙負等速、丁負等加速；1:1 還原課本圖形與車距判讀！</p>
       </div>
     </div>
   </header>
@@ -452,7 +452,7 @@
         <div class="stage-box">
           <div class="stage-hud">
             <span>⏱️ 時間：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">0.00 秒</strong></span>
-            <span>📡 雷達鎖定：<strong id="hudPairName" style="color: #fde047;">丙車 vs 丁車</strong></span>
+            <span>📡 雷達鎖定：<strong id="hudPairName" style="color: #fde047;">🛑 乙車 vs 🏎️ 丁車</strong></span>
           </div>
           <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
         </div>
@@ -464,9 +464,9 @@
           </div>
           <div class="pair-selector">
             <button class="pair-btn" onclick="selectPair('AB', this)">🚗 甲車 vs 🛑 乙車 (A選項)</button>
-            <button class="pair-btn active" onclick="selectPair('CD', this)">🚙 丙車 vs 🏎️ 丁車 (B選項·習作正解)</button>
+            <button class="pair-btn" onclick="selectPair('CD', this)">🚙 丙車 vs 🏎️ 丁車 (B選項)</button>
             <button class="pair-btn" onclick="selectPair('AC', this)">🚗 甲車 vs 🚙 丙車 (C選項)</button>
-            <button class="pair-btn" onclick="selectPair('BD', this)">🛑 乙車 vs 🏎️ 丁車 (D選項)</button>
+            <button class="pair-btn active" onclick="selectPair('BD', this)">🛑 乙車 vs 🏎️ 丁車 (D選項·會考正解)</button>
           </div>
 
           <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; margin-top: 0.4rem;">
@@ -485,7 +485,7 @@
           <div>
             <div style="font-size: 0.8rem; color: var(--text-muted);">📡 兩車即時直線車距：</div>
             <div id="pairDesc" style="font-weight: 800; font-size: 0.95rem; color: var(--primary-dark);">
-              丙車 (-向) 與 丁車 (+向)
+              乙車 (0.0m) 與 丁車 (0.0m)
             </div>
           </div>
           <div style="text-align: right;">
@@ -519,53 +519,53 @@
           <!-- Car C -->
           <div class="car-card c">
             <h4>
-              <span>🚙 丙車 (反向等速)</span>
-              <span>v = -10 m/s</span>
+              <span>🚙 丙車 (負向等速)</span>
+              <span>v = -5 m/s</span>
             </h4>
             <div class="car-pos" id="posC">x = 0.0 m</div>
-            <div style="color: var(--text-muted);">向負向反向行駛</div>
+            <div style="color: var(--text-muted);">向負向等速行駛</div>
           </div>
 
           <!-- Car D -->
           <div class="car-card d">
             <h4>
-              <span>🏎️ 丁車 (正等加速)</span>
-              <span>a = +5 m/s²</span>
+              <span>🏎️ 丁車 (負向等加速)</span>
+              <span>v₀ = -5, a = -2.5</span>
             </h4>
             <div class="car-pos" id="posD">x = 0.0 m</div>
-            <div style="color: var(--text-muted);">向正向噴射加速</div>
+            <div style="color: var(--text-muted);">向負向加速衝刺</div>
           </div>
         </div>
 
         <!-- Core Concept Callout -->
         <div class="concept-box">
-          <strong>📖 習作 P.5 第 13 題會考解析：</strong>
+          <strong>📖 111 會考第 25 題（習作 P.5 第 13 題）解析：</strong>
           <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>(A) 錯誤：</strong>甲等速前進、乙靜止不動，兩車距離越來越遠（非不變）。</li>
-            <li><strong>(B) 正確：</strong>丙車向負方向移動、丁車向正方向加速，兩者<strong>背道而馳，距離越來越遠</strong>。</li>
-            <li><strong>(C) 錯誤：</strong>甲朝正向、丙朝反向，兩車距離越來越遠（非不變）。</li>
-            <li><strong>(D) 錯誤：</strong>乙靜止不動、丁朝正向加速，兩車距離越來越遠（非越來越近）。</li>
+            <li><strong>(A) 錯誤：</strong>甲等速向正向行駛、乙靜止不動，兩車距離<strong>越來越遠</strong>（非保持不變）。</li>
+            <li><strong>(B) 錯誤：</strong>丙等速向負向開走、丁向負向加速衝刺（丁速率越來越大），丁會逐漸拉開與丙的差距，兩車距離<strong>越來越遠</strong>（非保持不變）。</li>
+            <li><strong>(C) 錯誤：</strong>甲朝正向、丙朝負向，兩車背道而馳，距離<strong>越來越遠</strong>（非愈來愈近）。</li>
+            <li><strong>(D) 正確：</strong>乙靜止在原點、丁朝負方向等加速遠離，兩車距離<strong>越來越遠</strong>。</li>
           </ul>
         </div>
 
         <!-- Quiz Section -->
         <div class="quiz-card">
-          <div class="quiz-title">📝 習作第 13 題會考原題測驗</div>
+          <div class="quiz-title">📝 111 會考原題測驗（習作第 13 題）</div>
 
           <div class="quiz-item">
-            <p>若 t = 0s 時四車位於同一位置，則有關 t ＞ 0s 車輛間距離的敘述，下列何者正確？</p>
+            <p>在筆直的道路上有甲、乙、丙、丁四輛車，圖為四車的速度（v）與時間（t）關係圖。若 \(t = 0\text{ s}\) 時四車位於同一位置，則有關 \(t ＞ 0\text{ s}\) 車輛間距離的敘述，下列何者正確？</p>
             <div class="quiz-options">
               <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">
                 (A) 甲、乙兩車的距離保持不變
               </button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">
-                (B) 丙、丁兩車的距離越來越遠
+                (B) 丙、丁兩車的距離保持不變
               </button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">
-                (C) 甲、丙兩車的距離保持不變
+                (C) 甲、丙兩車的距離愈來愈近
               </button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">
-                (D) 乙、丁兩車的距離越來越近
+                (D) 乙、丁兩車的距離愈來愈遠
               </button>
             </div>
             <div class="quiz-feedback" id="fb1"></div>
@@ -587,22 +587,22 @@
     let animId = null;
     let lastTime = 0;
     let simSeconds = 0; // 0 to 4s
-    let selectedPair = 'CD'; // 'CD', 'AB', 'AC', 'BD'
+    let selectedPair = 'BD'; // Default BD (Option D - exam correct answer)
 
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
     // Physics equations (t in s, pos in m):
-    // Car A: v = +10 -> x(t) = 10 * t
+    // Car A: v = +10 -> x(t) = +10 * t
     // Car B: v = 0   -> x(t) = 0
-    // Car C: v = -10 -> x(t) = -10 * t
-    // Car D: v = 5t  -> x(t) = 0.5 * 5 * t^2 = 2.5 * t^2
+    // Car C: v = -5  -> x(t) = -5 * t
+    // Car D: v = -5 - 2.5t -> x(t) = -5 * t - 1.25 * t^2
     function getCarPositions(t) {
       return {
         a: 10.0 * t,
         b: 0.0,
-        c: -10.0 * t,
-        d: 2.5 * t * t
+        c: -5.0 * t,
+        d: -5.0 * t - 1.25 * t * t
       };
     }
 
@@ -676,27 +676,27 @@
       document.getElementById('posA').innerText = `x = ${pos.a > 0 ? '+' : ''}${pos.a.toFixed(1)} m`;
       document.getElementById('posB').innerText = `x = 0.0 m`;
       document.getElementById('posC').innerText = `x = ${pos.c.toFixed(1)} m`;
-      document.getElementById('posD').innerText = `x = +${pos.d.toFixed(1)} m`;
+      document.getElementById('posD').innerText = `x = ${pos.d.toFixed(1)} m`;
 
       // Calculate pair distance
       let dist = 0;
       let pName = '';
-      if (selectedPair === 'CD') {
-        dist = Math.abs(pos.d - pos.c);
-        pName = '🚙 丙車 vs 🏎️ 丁車';
-        document.getElementById('pairDesc').innerText = `丙車 (${pos.c.toFixed(1)}m) 與 丁車 (+${pos.d.toFixed(1)}m)`;
+      if (selectedPair === 'BD') {
+        dist = Math.abs(pos.d - pos.b);
+        pName = '🛑 乙車 vs 🏎️ 丁車';
+        document.getElementById('pairDesc').innerText = `乙車 (0m) 與 丁車 (${pos.d.toFixed(1)}m)`;
       } else if (selectedPair === 'AB') {
         dist = Math.abs(pos.a - pos.b);
         pName = '🚗 甲車 vs 🛑 乙車';
         document.getElementById('pairDesc').innerText = `甲車 (+${pos.a.toFixed(1)}m) 與 乙車 (0m)`;
+      } else if (selectedPair === 'CD') {
+        dist = Math.abs(pos.d - pos.c);
+        pName = '🚙 丙車 vs 🏎️ 丁車';
+        document.getElementById('pairDesc').innerText = `丙車 (${pos.c.toFixed(1)}m) 與 丁車 (${pos.d.toFixed(1)}m)`;
       } else if (selectedPair === 'AC') {
         dist = Math.abs(pos.a - pos.c);
         pName = '🚗 甲車 vs 🚙 丙車';
         document.getElementById('pairDesc').innerText = `甲車 (+${pos.a.toFixed(1)}m) 與 丙車 (${pos.c.toFixed(1)}m)`;
-      } else if (selectedPair === 'BD') {
-        dist = Math.abs(pos.d - pos.b);
-        pName = '🛑 乙車 vs 🏎️ 丁車';
-        document.getElementById('pairDesc').innerText = `乙車 (0m) 與 丁車 (+${pos.d.toFixed(1)}m)`;
       }
 
       document.getElementById('hudPairName').innerText = pName;
@@ -719,7 +719,7 @@
       // Track Lanes (4 lanes for Car A, B, C, D)
       const laneY = [55, 85, 115, 145];
       const carEmojis = ['🚗 甲', '🛑 乙', '🚙 丙', '🏎️ 丁'];
-      const carColors = ['#3b82f6', '#64748b', '#a855f7', '#ea580c'];
+      const carColors = ['#2563eb', '#ea580c', '#16a34a', '#e11d48'];
       const carXs = [pos.a, pos.b, pos.c, pos.d];
 
       // Draw Lanes
@@ -729,7 +729,7 @@
 
         // Lane label
         ctx.fillStyle = carColors[i];
-        ctx.font = 'bold 10px Noto Sans TC';
+        ctx.font = 'bold 11px Noto Sans TC';
         ctx.textAlign = 'right';
         ctx.fillText(carEmojis[i], trackX1 - 8, laneY[i] + 4);
       }
@@ -755,8 +755,9 @@
       }
 
       // Draw Laser Rangefinder between selected pair
-      let idx1 = 2, idx2 = 3;
+      let idx1 = 1, idx2 = 3;
       if (selectedPair === 'AB') { idx1 = 0; idx2 = 1; }
+      else if (selectedPair === 'CD') { idx1 = 2; idx2 = 3; }
       else if (selectedPair === 'AC') { idx1 = 0; idx2 = 2; }
       else if (selectedPair === 'BD') { idx1 = 1; idx2 = 3; }
 
@@ -776,79 +777,140 @@
       // Divider
       ctx.strokeStyle = '#334155';
       ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(20, 185); ctx.lineTo(cw - 20, 185); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(20, 180); ctx.lineTo(cw - 20, 180); ctx.stroke();
 
       // ==========================================
-      // SECTION 2: BOTTOM v-t GRAPH (y: 200 to 420)
+      // SECTION 2: BOTTOM v-t GRAPH (1:1 還原課本插圖)
       // ==========================================
-      const gx1 = 70, gx2 = cw - 60;
-      const gyZero = 310; // v=0 px
-      const gyTop = 220;  // v=+20 px
-      const gyBot = 400;  // v=-20 px
+      const gx1 = 80, gx2 = cw - 80;
+      const gyZero = 295; // v=0 px (t-axis)
+      const gridH = 28;   // 1 grid height in px
       const maxT = 4.0;
 
       const toGraphX = (t) => gx1 + (t / maxT) * (gx2 - gx1);
-      const toGraphY = (v) => gyZero - (v / 20.0) * (gyZero - gyTop);
+      const toGraphY = (v) => gyZero - (v / 5.0) * gridH;
 
-      // Axes
-      ctx.strokeStyle = '#64748b';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      // Y-axis (v)
-      ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyBot + 10);
-      // X-axis (t at v=0)
-      ctx.moveTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero);
-      ctx.stroke();
+      // 1. Grid lines (課本方格紙背景)
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+      ctx.lineWidth = 1;
 
-      // Y-Labels
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right';
-      ctx.fillText('速度 v (m/s)', gx1 - 10, gyTop - 10);
-      ctx.fillText('+20', gx1 - 8, toGraphY(20) + 4);
-      ctx.fillText('+10', gx1 - 8, toGraphY(10) + 4);
-      ctx.fillText('0', gx1 - 8, toGraphY(0) + 4);
-      ctx.fillText('-10', gx1 - 8, toGraphY(-10) + 4);
+      // Horizontal grid lines from v=+2 grids to v=-3 grids
+      for (let g = -3; g <= 2; g++) {
+        const gy = gyZero - g * gridH;
+        ctx.beginPath();
+        ctx.moveTo(gx1, gy);
+        ctx.lineTo(gx2 + 25, gy);
+        ctx.stroke();
+      }
 
-      // X-Labels
-      ctx.textAlign = 'center';
+      // Vertical grid lines from t=0 to t=4
       for (let t = 0; t <= 4; t++) {
         const tx = toGraphX(t);
-        ctx.fillText(`${t}`, tx, gyZero + 16);
-        ctx.beginPath(); ctx.moveTo(tx, gyZero - 3); ctx.lineTo(tx, gyZero + 3); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(tx, gyZero - 2 * gridH - 12);
+        ctx.lineTo(tx, gyZero + 3 * gridH + 12);
+        ctx.stroke();
       }
-      ctx.fillText('時間 t (s)', gx2 + 10, gyZero + 28);
 
-      // Draw Car A (v = +10, Blue Horizontal)
-      ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(10)); ctx.lineTo(toGraphX(4), toGraphY(10)); ctx.stroke();
-      ctx.fillStyle = '#3b82f6'; ctx.textAlign = 'left';
-      ctx.fillText('甲 (v = +10)', toGraphX(4) + 6, toGraphY(10) + 4);
+      // 2. Axes
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
 
-      // Draw Car B (v = 0, Gray Horizontal on Axis)
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(0)); ctx.lineTo(toGraphX(4), toGraphY(0)); ctx.stroke();
+      // Vertical Axis (v-axis at t=0)
+      ctx.beginPath();
+      ctx.moveTo(gx1, gyZero + 3 * gridH + 14);
+      ctx.lineTo(gx1, gyZero - 2 * gridH - 22);
+      ctx.stroke();
+
+      // Arrowhead on v-axis (upward)
       ctx.fillStyle = '#94a3b8';
-      ctx.fillText('乙 (v = 0)', toGraphX(4) + 6, toGraphY(0) - 8);
+      ctx.beginPath();
+      ctx.moveTo(gx1 - 4, gyZero - 2 * gridH - 18);
+      ctx.lineTo(gx1, gyZero - 2 * gridH - 26);
+      ctx.lineTo(gx1 + 4, gyZero - 2 * gridH - 18);
+      ctx.fill();
 
-      // Draw Car C (v = -10, Purple Horizontal)
-      ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(-10)); ctx.lineTo(toGraphX(4), toGraphY(-10)); ctx.stroke();
-      ctx.fillStyle = '#a855f7';
-      ctx.fillText('丙 (v = -10)', toGraphX(4) + 6, toGraphY(-10) + 4);
+      // Label for v-axis: v (m/s)
+      ctx.font = 'italic bold 13px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('v (m/s)', gx1, gyZero - 2 * gridH - 32);
 
-      // Draw Car D (v = 5t, Orange Sloped Line: (0,0) to (4, 20))
-      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(toGraphX(0), toGraphY(0)); ctx.lineTo(toGraphX(4), toGraphY(20)); ctx.stroke();
-      ctx.fillStyle = '#ea580c';
-      ctx.fillText('丁 (v = 5t 加速)', toGraphX(4) + 6, toGraphY(20) + 4);
+      // Horizontal Axis (t-axis at v=0)
+      ctx.beginPath();
+      ctx.moveTo(gx1, gyZero);
+      ctx.lineTo(gx2 + 35, gyZero);
+      ctx.stroke();
+
+      // Arrowhead on t-axis (rightward)
+      ctx.beginPath();
+      ctx.moveTo(gx2 + 30, gyZero - 4);
+      ctx.lineTo(gx2 + 38, gyZero);
+      ctx.lineTo(gx2 + 30, gyZero + 4);
+      ctx.fill();
+
+      // Label for t-axis: t (s)
+      ctx.textAlign = 'left';
+      ctx.fillText('t (s)', gx2 + 42, gyZero + 4);
+
+      // Label for Origin: 0
+      ctx.textAlign = 'right';
+      ctx.font = 'bold 12px Noto Sans TC, sans-serif';
+      ctx.fillText('0', gx1 - 8, gyZero + 4);
+
+      // 3. Four Cars Lines (課本標準樣式 1:1)
+      // Car A (甲): Blue horizontal line at +2 grids (v = +10 m/s)
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(toGraphX(0), toGraphY(10));
+      ctx.lineTo(toGraphX(4), toGraphY(10));
+      ctx.stroke();
+
+      // Textbook-style label above line
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 16px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('甲', toGraphX(2.5), toGraphY(10) - 8);
+
+      // Car B (乙): Orange horizontal line at v = 0 (t-axis)
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(toGraphX(0), toGraphY(0));
+      ctx.lineTo(toGraphX(4), toGraphY(0));
+      ctx.stroke();
+
+      ctx.fillStyle = '#fb923c';
+      ctx.fillText('乙', toGraphX(2.5), toGraphY(0) - 8);
+
+      // Car C (丙): Green horizontal line at -1 grid (v = -5 m/s)
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(toGraphX(0), toGraphY(-5));
+      ctx.lineTo(toGraphX(4), toGraphY(-5));
+      ctx.stroke();
+
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('丙', toGraphX(2.5), toGraphY(-5) + 20);
+
+      // Car D (丁): Pink/Rose sloped line starting at (0, -5) to (4, -15)
+      ctx.strokeStyle = '#e11d48';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(toGraphX(0), toGraphY(-5));
+      ctx.lineTo(toGraphX(4), toGraphY(-15));
+      ctx.stroke();
+
+      ctx.fillStyle = '#fb7185';
+      ctx.fillText('丁', toGraphX(2.5), toGraphY(-11.25) + 22);
 
       // Dynamic Time Scrubber Line
       const scanX = toGraphX(simSeconds);
-      ctx.strokeStyle = '#f43f5e';
+      ctx.strokeStyle = '#e2e8f0';
       ctx.lineWidth = 2;
       ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(scanX, gyTop - 10); ctx.lineTo(scanX, gyBot + 10); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(scanX, gyZero - 2 * gridH - 12); ctx.lineTo(scanX, gyZero + 3 * gridH + 12); ctx.stroke();
       ctx.setLineDash([]);
     }
 
@@ -859,26 +921,26 @@
       const fb = document.getElementById('fb1');
       fb.className = 'quiz-feedback show';
 
-      if (ans === 'B') {
+      if (ans === 'D') {
         el.classList.add('correct');
         fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！會考高頻核心題！</strong><br>丙車朝負方向等速開走（\\( x_{\\text{丙}} < 0 \\)），丁車朝正方向加速衝刺（\\( x_{\\text{丁}} > 0 \\)），兩車背道而馳，<strong>距離越來越遠</strong>，故 (B) 正確！';
-        selectPair('CD', document.querySelectorAll('.pair-btn')[1]);
+        fb.innerHTML = '✅ <strong>完全正確！111 會考第 25 題官方正解！</strong><br>乙車速度為 \\( 0 \\)（原地靜止於原點），丁車速度為負值且速度量值隨時間越來越大（朝負方向等加速衝刺），因此乙、丁兩車之間的距離會隨著時間增加而<strong>越來越遠</strong>，故 (D) 正確！';
+        selectPair('BD', document.querySelectorAll('.pair-btn')[3]);
       } else if (ans === 'A') {
         el.classList.add('wrong');
         fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車朝正向等速前進、乙車靜止在原地，甲車不斷遠離乙車，因此兩車距離<strong>越來越遠</strong>（非保持不變）！';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車朝正向等速前進、乙車靜止在原點，甲車不斷遠離乙車，因此兩車距離<strong>越來越遠</strong>（非保持不變）！';
         selectPair('AB', document.querySelectorAll('.pair-btn')[0]);
+      } else if (ans === 'B') {
+        el.classList.add('wrong');
+        fb.style.color = 'var(--warn)';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 丙車朝負向等速開走、丁車朝負向等加速衝刺（丁車速率越來越大），丁車會把丙車甩開，兩車距離<strong>越來越遠</strong>（非保持不變）！';
+        selectPair('CD', document.querySelectorAll('.pair-btn')[1]);
       } else if (ans === 'C') {
         el.classList.add('wrong');
         fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車向右開、丙車向左開，兩車反向遠離，距離<strong>越來越遠</strong>（非保持不變）！';
+        fb.innerHTML = '❌ <strong>錯誤！</strong> 甲車向正向（右）開、丙車向負向（左）開，兩車反向背道而馳，距離<strong>越來越遠</strong>（非愈來愈近）！';
         selectPair('AC', document.querySelectorAll('.pair-btn')[2]);
-      } else if (ans === 'D') {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>錯誤！</strong> 乙車停在起點、丁車向右加速衝刺，丁車不斷遠離乙車，因此兩車距離<strong>越來越遠</strong>（非越來越近）！';
-        selectPair('BD', document.querySelectorAll('.pair-btn')[3]);
       }
 
       if (window.triggerMathRender) {
@@ -888,6 +950,7 @@
 
     // Startup
     window.addEventListener('DOMContentLoaded', () => {
+      selectPair('BD', document.querySelectorAll('.pair-btn')[3]);
       updateUI();
     });
   </script>
