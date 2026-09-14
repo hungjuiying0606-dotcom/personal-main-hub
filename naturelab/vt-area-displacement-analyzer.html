@@ -989,11 +989,15 @@
         fb.style.color = 'var(--area-neg)';
         fb.innerHTML = `❌ <strong>答案不完全正確喔！</strong><br>
         提示：<br>
-        • \( 0\sim 4\text{s} \) 上方面積：\( 4 \times (+4) = +16\text{ m} \)<br>
-        • \( 4\sim 8\text{s} \) 靜止停留：\( 4 \times 0 = 0\text{ m} \)<br>
-        • \( 8\sim 10\text{s} \) 下方面積：\( 2 \times (-6) = -12\text{ m} \)<br>
-        • 總位移請代入正負號：\( (+16) + 0 + (-12) = \mathbf{+4\text{ m}} \)<br>
-        • 總路徑長請取絕對值累加：\( 16 + 0 + 12 = \mathbf{28\text{ m}} \)`;
+        • \\( 0\\sim 4\\text{ s} \\) 上方面積：\\( 4 \\times (+4) = +16\\text{ m} \\)<br>
+        • \\( 4\\sim 8\\text{ s} \\) 靜止停留：\\( 4 \\times 0 = 0\\text{ m} \\)<br>
+        • \\( 8\\sim 10\\text{ s} \\) 下方面積：\\( 2 \\times (-6) = -12\\text{ m} \\)<br>
+        • 總位移請代入正負號：\\( (+16) + 0 + (-12) = \\mathbf{+4\\text{ m}} \\)<br>
+        • 總路徑長請取絕對值累加：\\( 16 + 0 + 12 = \\mathbf{28\\text{ m}} \\)`;
+      }
+
+      if (window.triggerMathRender) {
+        window.triggerMathRender();
       }
     }
 
