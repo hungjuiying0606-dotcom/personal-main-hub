@@ -169,7 +169,7 @@
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 440px;
+      height: 460px;
     }
 
     /* Controls Panel */
@@ -440,7 +440,7 @@
             <span>⏱️ 耗時：<strong id="hudDuration">1 小時 30 分</strong></span>
             <span>⚡ 平均速率：<strong id="hudSpeed" style="color: #fde047;">45.1 km/h</strong></span>
           </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+          <canvas id="stageCanvas" class="stage-canvas" width="650" height="460"></canvas>
         </div>
 
         <!-- Train Selector Tabs -->
@@ -640,16 +640,16 @@
       const cw = canvas.width;
 
       // ==========================================
-      // SECTION 1: TOP RAILWAY ROUTE MAP (y: 20 to 200)
+      // SECTION 1: TOP RAILWAY ROUTE MAP (y: 65 to 220)
       // ==========================================
       const stations = [
-        { name: '臺南', km: 353.2, x: 70, y: 70 },
-        { name: '岡山', km: 378.4, x: 160, y: 85 },
-        { name: '新左營', km: 391.3, x: 240, y: 110 },
-        { name: '高雄', km: 399.8, x: 320, y: 135 },
-        { name: '鳳山', km: 405.6, x: 410, y: 130 },
-        { name: '九曲堂', km: 413.6, x: 490, y: 110 },
-        { name: '屏東', km: 420.8, x: 570, y: 85 }
+        { name: '臺南', km: 353.2, x: 70, y: 102 },
+        { name: '岡山', km: 378.4, x: 160, y: 117 },
+        { name: '新左營', km: 391.3, x: 240, y: 142 },
+        { name: '高雄', km: 399.8, x: 320, y: 167 },
+        { name: '鳳山', km: 405.6, x: 410, y: 162 },
+        { name: '九曲堂', km: 413.6, x: 490, y: 142 },
+        { name: '屏東', km: 420.8, x: 570, y: 117 }
       ];
 
       // 1. Draw Red Straight Displacement Vector (Tainan to Pingtung)
@@ -665,7 +665,7 @@
       ctx.fillStyle = '#ef4444';
       ctx.font = 'bold 11px Noto Sans TC';
       ctx.textAlign = 'center';
-      ctx.fillText('🔴 直線位移 Δx ≈ 52 km (平均速度 ≈ 35 km/h)', (stations[0].x + stations[6].x) / 2, 50);
+      ctx.fillText('🔴 直線位移 Δx ≈ 52 km (平均速度 ≈ 35 km/h)', (stations[0].x + stations[6].x) / 2, 75);
 
       // 2. Draw Purple Curved Railway Track
       ctx.strokeStyle = '#a855f7';
@@ -678,7 +678,7 @@
       ctx.stroke();
 
       ctx.fillStyle = '#c084fc';
-      ctx.fillText('🟣 鐵軌路徑長 S = 67.6 km (區間丙平均速率 45 km/h)', (stations[0].x + stations[6].x) / 2, 175);
+      ctx.fillText('🟣 鐵軌路徑長 S = 67.6 km (區間丙平均速率 45 km/h)', (stations[0].x + stations[6].x) / 2, 206);
 
       // 3. Draw Station Points
       stations.forEach((st, idx) => {
@@ -711,14 +711,14 @@
       // Divider
       ctx.strokeStyle = '#334155';
       ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(20, 205); ctx.lineTo(cw - 20, 205); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(20, 228); ctx.lineTo(cw - 20, 228); ctx.stroke();
 
       // ==========================================
       // SECTION 2: BOTTOM IN-STATION v-t GRAPH (Q3)
       // ==========================================
       const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 390;
-      const gyTop = 240;
+      const gyZero = 410;
+      const gyTop = 260;
 
       // Axes
       ctx.strokeStyle = '#64748b';
@@ -789,12 +789,16 @@
         if (ans === 'A') {
           el.classList.add('correct');
           fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！素養高頻題！</strong><br>鐵道路線具有彎道，起訖點直線位移大小 \( |\Delta \vec{x}| < \) 軌道路徑長 \( 67.6\text{km} \)，因此列車的<strong>平均速度大小必定小於平均速率（45 km/h）</strong>，四個選項中只有 <strong>(A) 35 km/h</strong> 小於 45 且合理！';
+          fb.innerHTML = '✅ <strong>完全正確！素養高頻題！</strong><br>鐵道路線具有彎道，起訖點直線位移大小 \\( |\\Delta \\vec{x}| < \\) 軌道路徑長 \\( 67.6\\text{ km} \\)，因此列車的<strong>平均速度大小必定小於平均速率（45 km/h）</strong>，四個選項中只有 <strong>(A) 35 km/h</strong> 小於 45 且合理！';
         } else {
           el.classList.add('wrong');
           fb.style.color = 'var(--warn)';
           fb.innerHTML = '❌ <strong>小心陷阱！</strong> 彎道運動中位移必小於路徑長，故平均速度必小於平均速率（＜ 45 km/h），(B)(C)(D) 都大於 45，故選 (A) 35 km/h！';
         }
+      }
+
+      if (window.triggerMathRender) {
+        window.triggerMathRender();
       }
     }
 
