@@ -167,7 +167,7 @@
     canvas.map-canvas {
       display: block;
       width: 100%;
-      height: 380px;
+      height: 400px;
     }
 
     /* Controls */
@@ -420,7 +420,7 @@
           <div class="map-hud">
             <span>⏱️ 虛擬導航計時：<strong id="hudTime" style="color: #38bdf8; font-family: 'Outfit';">00:00</strong></span>
           </div>
-          <canvas id="mapCanvas" class="map-canvas" width="650" height="380"></canvas>
+          <canvas id="mapCanvas" class="map-canvas" width="650" height="400"></canvas>
         </div>
 
         <!-- Route Legend -->
@@ -531,35 +531,66 @@
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Waypoints for Map
-    // Start: Waterfall (100, 300)
-    // End: Prairie (520, 100)
-    const pStart = { x: 100, y: 300, name: '瀑布登山步道' };
-    const pEnd = { x: 520, y: 100, name: '大草原' };
+    // Waypoints for Map (1:1 matching workbook illustration)
+    // Start: Waterfall Trail (130, 320)
+    // End: Prairie (500, 110)
+    const pStart = { x: 130, y: 320, name: '瀑布登山步道' };
+    const pEnd = { x: 500, y: 110, name: '大草原' };
 
-    // Walking path: Shorter mountain trail (2.3 km)
-    const walkWaypoints = [
-      { x: 100, y: 300 },
-      { x: 160, y: 260 },
-      { x: 210, y: 270 },
-      { x: 270, y: 220 },
-      { x: 330, y: 230 },
-      { x: 400, y: 170 },
-      { x: 460, y: 140 },
-      { x: 520, y: 100 }
-    ];
+    // Catmull-Rom spline generator for smooth, natural mountain roads
+    function generateCatmullRomPath(points, numSamples = 20) {
+      const result = [];
+      if (points.length < 2) return points;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p0 = i > 0 ? points[i - 1] : points[i];
+        const p1 = points[i];
+        const p2 = points[i + 1];
+        const p3 = i + 2 < points.length ? points[i + 2] : p2;
+        for (let s = 0; s < numSamples; s++) {
+          const t = s / numSamples;
+          const t2 = t * t;
+          const t3 = t2 * t;
+          const x = 0.5 * ((2 * p1.x) +
+            (-p0.x + p2.x) * t +
+            (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 +
+            (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3);
+          const y = 0.5 * ((2 * p1.y) +
+            (-p0.y + p2.y) * t +
+            (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 +
+            (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3);
+          result.push({ x, y });
+        }
+      }
+      result.push(points[points.length - 1]);
+      return result;
+    }
 
-    // Driving path: Longer highway bypass (6.5 km)
-    const carWaypoints = [
-      { x: 100, y: 300 },
-      { x: 120, y: 340 },
-      { x: 240, y: 350 },
-      { x: 380, y: 340 },
-      { x: 500, y: 300 },
-      { x: 580, y: 220 },
-      { x: 570, y: 140 },
-      { x: 520, y: 100 }
+    // Driving route: Winding S-shaped mountain highway on the west slope, around northern ridge to prairie (6.5 km)
+    const carControlPts = [
+      { x: 130, y: 320 }, // 起點瀑布登山步道
+      { x: 95, y: 310 },  // 接上公路引道
+      { x: 70, y: 275 },  // 盤山第 1 彎（往左凸）
+      { x: 135, y: 240 }, // 盤山第 2 彎（折向右側）
+      { x: 65, y: 195 },  // 盤山第 3 彎（大 S 彎往左凸）
+      { x: 140, y: 150 }, // 盤山第 4 彎（折向右側）
+      { x: 105, y: 100 }, // 盤山第 5 彎（翻上山頂左側）
+      { x: 175, y: 65 },  // 沿著山頂北側稜線
+      { x: 270, y: 55 },  // 北側稜線段向東
+      { x: 375, y: 62 },  // 東北高地
+      { x: 445, y: 78 },  // 轉向東南下坡
+      { x: 500, y: 110 }  // 到達終點大草原
     ];
+    const carWaypoints = generateCatmullRomPath(carControlPts, 25);
+
+    // Walking path: Direct trail cutting across the valley/ridge (2.3 km)
+    const walkControlPts = [
+      { x: 130, y: 320 }, // 起點瀑布登山步道
+      { x: 215, y: 265 }, // 穿行鞍部緩坡
+      { x: 310, y: 210 }, // 穿越山嶺林間
+      { x: 410, y: 160 }, // 接向東南草原邊緣
+      { x: 500, y: 110 }  // 到達終點大草原
+    ];
+    const walkWaypoints = generateCatmullRomPath(walkControlPts, 20);
 
     function toggleNav() {
       const btn = document.getElementById('btnNav');
@@ -643,57 +674,95 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 1. Map Background Grid & Terrain
-      ctx.fillStyle = '#f1f5f9';
+      // 1. Workbook 1:1 Light Grass Green Map Background
+      ctx.fillStyle = '#dcedd4';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Subtle Mountain / Nature zones
-      ctx.fillStyle = '#dcfce7'; // Forest
+      // Soft mountain contour zones for organic geography
+      ctx.fillStyle = '#d0e5c5';
       ctx.beginPath();
-      ctx.ellipse(280, 220, 160, 90, 0.2, 0, Math.PI * 2);
+      ctx.ellipse(220, 180, 160, 110, -0.25, 0, Math.PI * 2);
       ctx.fill();
 
-      // 2. Draw Straight Displacement Vector (Red Arrow from Start to End)
+      ctx.fillStyle = '#c5deba';
+      ctx.beginPath();
+      ctx.ellipse(250, 160, 110, 75, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Start Guide Roads (gray lines near waterfall start)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(130, 320);
+      ctx.lineTo(155, 345);
+      ctx.moveTo(130, 320);
+      ctx.lineTo(110, 350);
+      ctx.stroke();
+
+      // 3. Driving Highway (Orange Double Layer - Winding mountain road)
+      // Outer border / road bed
+      drawSmoothPolyline(ctx, carWaypoints, '#fdb97b', 8, []);
+      // Inner vibrant orange road
+      drawSmoothPolyline(ctx, carWaypoints, '#ea580c', 4.5, []);
+
+      // 4. Walking Trail (Deep Brown Dotted Trail - straight across)
+      ctx.save();
+      ctx.strokeStyle = '#5c3a21';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.setLineDash([2, 7]);
+      ctx.beginPath();
+      ctx.moveTo(walkWaypoints[0].x, walkWaypoints[0].y);
+      for (let i = 1; i < walkWaypoints.length; i++) {
+        ctx.lineTo(walkWaypoints[i].x, walkWaypoints[i].y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // 5. Draw Straight Displacement Vector (Red Arrow from Start to End)
       drawDisplacementVector(ctx, pStart.x, pStart.y, pEnd.x, pEnd.y);
 
-      // 3. Draw Driving Highway (Orange Outer Route)
-      drawPolyline(ctx, carWaypoints, '#fdba74', 6, [0]);
-      drawPolyline(ctx, carWaypoints, '#ea580c', 3.5, [0]);
+      // 6. Draw Workbook Legend Cards (White box with black border)
+      // Card A: Driving Card (Top-Left)
+      drawWorkbookCard(ctx, 75, 24, 185, 32, '🚗', '#ea580c', 'solid', '15分鐘  6.5公里');
+      // Card B: Walking Card (Bottom-Right)
+      drawWorkbookCard(ctx, 335, 245, 185, 32, '🚶', '#5c3a21', 'dotted', '40分鐘  2.3公里');
 
-      // 4. Draw Walking Trail (Blue Dashed Mountain Route)
-      drawPolyline(ctx, walkWaypoints, '#0284c7', 3, [6, 4]);
+      // 7. Start & End Markers (Workbook Style)
+      // Start: Waterfall (Double red circles)
+      drawStartMarker(ctx, pStart.x, pStart.y, '瀑布登山步道\n起點');
+      // End: Prairie (Red Map Pin)
+      drawEndMarker(ctx, pEnd.x, pEnd.y, '終點  大草原');
 
-      // 5. Draw Start & End Landmark Pins
-      drawLandmark(pStart.x, pStart.y, '🏞️', '起點：瀑布登山步道', '#15803d');
-      drawLandmark(pEnd.x, pEnd.y, '🌲', '終點：大草原', '#b91c1c');
-
-      // 6. Draw Moving Car (Finishes at 15 mins)
+      // 8. Draw Moving Car (Finishes at 15 mins)
       const carProgress = Math.min(1.0, navSimMinutes / 15.0);
       const carPos = getInterpolatedPoint(carWaypoints, carProgress);
-      ctx.font = '26px sans-serif';
+      ctx.font = '24px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('🚗', carPos.x, carPos.y + 8);
       if (carProgress >= 1.0) {
-        ctx.fillStyle = '#ea580c';
-        ctx.font = 'bold 10px Noto Sans TC';
-        ctx.fillText('🚗 已於 15分 到達！', carPos.x, carPos.y - 18);
+        ctx.fillStyle = '#c2410c';
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.fillText('🚗 15分抵達 (26 km/h)', carPos.x + 20, carPos.y - 14);
       }
 
-      // 7. Draw Moving Walker (Finishes at 40 mins)
+      // 9. Draw Moving Walker (Finishes at 40 mins)
       const walkProgress = Math.min(1.0, navSimMinutes / 40.0);
       const walkPos = getInterpolatedPoint(walkWaypoints, walkProgress);
-      ctx.font = '24px sans-serif';
-      ctx.fillText('🚶', walkPos.x, walkPos.y + 8);
+      ctx.font = '22px sans-serif';
+      ctx.fillText('🚶', walkPos.x, walkPos.y + 7);
       if (walkProgress >= 1.0) {
-        ctx.fillStyle = '#0284c7';
-        ctx.font = 'bold 10px Noto Sans TC';
-        ctx.fillText('🚶 於 40分 到達！', walkPos.x, walkPos.y - 18);
+        ctx.fillStyle = '#5c3a21';
+        ctx.font = 'bold 11px Noto Sans TC';
+        ctx.fillText('🚶 40分抵達 (3.45 km/h)', walkPos.x - 30, walkPos.y - 14);
       }
     }
 
-    function drawPolyline(ctx, pts, color, width, dash = []) {
+    function drawSmoothPolyline(ctx, pts, color, width, dash = []) {
       ctx.strokeStyle = color;
       ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.setLineDash(dash);
       ctx.beginPath();
       ctx.moveTo(pts[0].x, pts[0].y);
@@ -704,11 +773,87 @@
       ctx.setLineDash([]);
     }
 
-    function drawDisplacementVector(ctx, x1, y1, x2, y2) {
-      ctx.strokeStyle = '#ef4444';
-      ctx.fillStyle = '#ef4444';
+    function drawWorkbookCard(ctx, x, y, w, h, emoji, lineColor, lineType, text) {
+      // White box with crisp black border
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(x, y, w, h);
+
+      // Emoji
+      ctx.font = '16px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(emoji, x + 8, y + 22);
+
+      // Line indicator
+      ctx.save();
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 3;
+      if (lineType === 'dotted') {
+        ctx.lineCap = 'round';
+        ctx.setLineDash([2, 5]);
+      } else {
+        ctx.setLineDash([]);
+      }
+      ctx.beginPath();
+      ctx.moveTo(x + 32, y + 16);
+      ctx.lineTo(x + 58, y + 16);
+      ctx.stroke();
+      ctx.restore();
+
+      // Text
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.textAlign = 'left';
+      ctx.fillText(text, x + 66, y + 21);
+    }
+
+    function drawStartMarker(ctx, x, y, label) {
+      // Outer red ring with white fill
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#dc2626';
       ctx.lineWidth = 2.5;
-      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+
+      // Inner solid red circle
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 13px Noto Sans TC';
+      ctx.textAlign = 'center';
+      const lines = label.split('\n');
+      lines.forEach((line, idx) => {
+        ctx.fillText(line, x - 2, y + 24 + idx * 16);
+      });
+    }
+
+    function drawEndMarker(ctx, x, y, label) {
+      // Red Map Pin (📍)
+      ctx.font = '22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('📍', x, y + 6);
+
+      // Label
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 13px Noto Sans TC';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, x + 16, y - 2);
+    }
+
+    function drawDisplacementVector(ctx, x1, y1, x2, y2) {
+      ctx.save();
+      ctx.strokeStyle = '#dc2626';
+      ctx.fillStyle = '#dc2626';
+      ctx.lineWidth = 2.2;
+      ctx.setLineDash([5, 5]);
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
@@ -717,7 +862,7 @@
 
       // Arrow head
       const angle = Math.atan2(y2 - y1, x2 - x1);
-      const headLen = 10;
+      const headLen = 12;
       ctx.beginPath();
       ctx.moveTo(x2, y2);
       ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
@@ -725,31 +870,20 @@
       ctx.closePath();
       ctx.fill();
 
-      // Label
+      // Center tag
       const midX = (x1 + x2) / 2;
       const midY = (y1 + y2) / 2;
-      ctx.fillStyle = '#ef4444';
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.textAlign = 'center';
-      ctx.fillText('🔴 直線位移 Δx (1.8km)', midX - 25, midY - 10);
-    }
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 1;
+      ctx.fillRect(midX - 95, midY - 26, 190, 22);
+      ctx.strokeRect(midX - 95, midY - 26, 190, 22);
 
-    function drawLandmark(x, y, emoji, title, color) {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(x, y, 16, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.font = '16px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(emoji, x, y + 5);
-
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = '#b91c1c';
       ctx.font = 'bold 11px Noto Sans TC';
-      ctx.fillText(title, x, y + 28);
+      ctx.textAlign = 'center';
+      ctx.fillText('🔴 直線位移 Δx = 1.8km (兩者相同)', midX, midY - 11);
+      ctx.restore();
     }
 
     // Quiz Check
