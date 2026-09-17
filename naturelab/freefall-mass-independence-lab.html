@@ -3,68 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 自由落體時間無關質量：400g 鐵球 vs 40g 橡皮擦 同步落地實驗室 (習作 P.7 第20題)</title>
+  <title>國中自然 3上 · 自由落體時間無關質量：400g 鐵球 vs 40g 橡皮擦 同步落地 (習作 P.7 第20題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #f59e0b;       /* Amber / Physics */
-      --primary-dark: #d97706;
-      --ball-color: #64748b;    /* Iron Ball (Slate) */
-      --eraser-color: #ec4899;  /* Eraser (Pink) */
-      --bg: #fffbeb;
+      --primary: #d97706;
+      --primary-dark: #b45309;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fde68a;
-      --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(245, 158, 11, 0.08);
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f8fafc;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
+    @media (max-height: 700px) {
+      body { overflow-y: auto; height: auto; }
+    }
+
+    /* Header (38px compact) */
     header {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      padding: 0.35rem 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
     }
 
     .header-content {
-      max-width: 1320px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .title-group h1 {
-      font-size: 1.35rem;
+      font-size: 1.05rem;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -72,309 +62,329 @@
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.1rem 0.5rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .header-subtitle {
+      font-size: 0.78rem;
+      opacity: 0.95;
+      font-weight: 500;
     }
 
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.45rem 0.75rem;
       flex: 1;
       width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 0.65rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
     }
 
     /* Common Card */
     .card {
       background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      padding: 0.55rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #fef3c7;
+      padding-bottom: 0.3rem;
+      border-bottom: 1.5px solid #e2e8f0;
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       font-weight: 800;
-      color: var(--primary-dark);
+      color: #b45309;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
-    /* Main Grid */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Drop Tower Canvas Stage */
+    /* Stage Canvas */
     .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
       position: relative;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      background: #fef3c7;
+      border-bottom: 1px solid #fde68a;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.76rem;
       display: flex;
       justify-content: space-between;
-      z-index: 10;
+      font-weight: 700;
+      color: #78350f;
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 440px;
+      height: 260px;
+      background: #ffffff;
     }
 
-    /* Controls Panel */
+    /* Control Panel */
     .control-panel {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
     }
 
     .btn-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
     .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.32rem 0.75rem;
       border: none;
       border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.78rem;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
       font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      transition: all 0.15s ease;
     }
 
-    .btn-primary {
-      background: #f59e0b;
-      color: #0f172a;
+    .btn-primary { background: #d97706; color: white; }
+    .btn-primary:hover { background: #b45309; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    .btn-primary:hover {
-      background: #d97706;
-      color: white;
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: #d97706;
+      cursor: pointer;
+      height: 4px;
     }
 
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
+    .tip-box {
+      font-size: 0.72rem;
+      color: #475569;
+      background: #fffbeb;
+      border-left: 3px solid #d97706;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      line-height: 1.4;
     }
 
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* Dual Telemetry Cards */
+    /* Right Column: Telemetry Cards & Table & Tabbed Pane */
     .telemetry-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
     }
 
     .t-card {
-      padding: 0.9rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+      padding: 0.4rem 0.6rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
       background: #ffffff;
+      font-size: 0.74rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
     }
 
-    .t-card.ball { border-color: #cbd5e1; background: #f8fafc; }
-    .t-card.eraser { border-color: #fbcfe8; background: #fdf2f8; }
+    .t-card.ball { border-color: #94a3b8; background: #f8fafc; }
+    .t-card.eraser { border-color: #f472b6; background: #fdf2f8; }
 
     .t-card h4 {
-      font-size: 0.85rem;
-      margin-bottom: 0.25rem;
+      font-size: 0.78rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      font-weight: 900;
     }
 
-    .t-card.ball h4 { color: #475569; }
-    .t-card.eraser h4 { color: #db2777; }
+    .t-card.ball h4 { color: #334155; }
+    .t-card.eraser h4 { color: #be185d; }
 
     .t-val {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+      font-size: 0.95rem;
       font-weight: 900;
-      color: var(--text);
+      color: #0f172a;
     }
 
-    /* 4-Second Strobe Table */
+    /* Strobe Table */
     .strobe-table-box {
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
       overflow: hidden;
-      margin-bottom: 1rem;
       background: white;
     }
 
     table.strobe-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       text-align: left;
     }
 
     table.strobe-table th {
       background: #fef3c7;
-      padding: 0.6rem 0.8rem;
-      border-bottom: 2px solid var(--border);
+      padding: 0.25rem 0.5rem;
+      border-bottom: 1.5px solid #fde68a;
       font-weight: 800;
       color: #92400e;
     }
 
     table.strobe-table td {
-      padding: 0.5rem 0.8rem;
-      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0.5rem;
+      border-bottom: 1px solid #f1f5f9;
     }
 
     table.strobe-table tr.active-row {
       background: #fffbeb;
-      font-weight: 800;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #fffbeb;
-      border-left: 4px solid #f59e0b;
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
+      font-weight: 900;
       color: #b45309;
     }
 
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+    /* Tab Bar */
+    .tab-bar {
+      display: flex;
+      gap: 0.35rem;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 0.25rem;
     }
 
-    .quiz-title {
-      font-size: 0.95rem;
+    .tab-btn {
+      padding: 0.25rem 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 0.76rem;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+    .tab-btn.active {
+      background: #d97706;
+      color: white;
     }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Concept Box */
+    .concept-box {
+      background: #fffbeb;
+      border-left: 3.5px solid #d97706;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem;
+      font-size: 0.75rem;
+      line-height: 1.45;
+    }
+
+    .concept-box strong { color: #b45309; }
+
+    /* Quiz */
+    .quiz-item {
+      background: #fff;
+      border: 1px solid #fed7aa;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.6rem;
+      font-size: 0.74rem;
+    }
+
+    .quiz-item p { font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.25rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
+      padding: 0.25rem 0.6rem;
       border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
+      border-radius: 4px;
       background: #f8fafc;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      text-align: left;
+      transition: all 0.15s;
     }
 
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      margin-top: 0.25rem;
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
 
     footer {
       background: #e2e8f0;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      padding: 0.25rem;
+      font-size: 0.7rem;
+      color: #64748b;
+      flex-shrink: 0;
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
+
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
@@ -394,7 +404,6 @@
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(triggerMathRender, 100);
       setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
     });
   </script>
 </head>
@@ -408,150 +417,150 @@
           <span>🍎 自由落體時間無關質量：400g 鐵球 vs 40g 橡皮擦 同步落地實驗室</span>
           <span class="badge">國中自然 3上 · 習作 P.7 第20題</span>
         </h1>
-        <p>忽略空氣阻力下：自由落體加速度 g=9.8 m/s² 恆定，下落時間 t 與物體質量完全無關（皆為 4.0 秒同時落地）！</p>
+      </div>
+      <div class="header-subtitle">
+        忽略空氣阻力下：加速度 g=9.8 m/s² 恆定，下落時間 t 與物體質量完全無關（皆為 4.0 秒精準著地）！
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Drop Tower Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🏢 78.4 公尺高樓自由落體閃頻下落競技場</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnDrop" onclick="toggleDrop()">▶ 同步釋放下落</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回樓頂</button>
-          </div>
+    <!-- Left Column: Drop Arena Stage -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>🏢 78.4 公尺高樓自由落體閃頻下落競技場</span>
         </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 下落計時：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.00 秒</strong></span>
-            <span>🌍 重力加速度：<strong>g = 9.8 m/s² (向下)</strong></span>
-            <span>🏢 樓高：<strong>78.4 m</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
-        </div>
-
-        <!-- Controls / Scrubber -->
-        <div class="control-panel">
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
-            <span>手動拖曳下落進度 (0～4秒)：</span>
-            <span id="sliderVal">t = 0.00 秒</span>
-          </div>
-          <input type="range" id="timeSlider" min="0" max="4" step="0.02" value="0" style="width: 100%; accent-color: #f59e0b;" oninput="onSliderChange(this.value)">
-          <div style="font-size: 0.8rem; color: var(--text-muted);">
-            💡 <strong>關鍵觀察點：</strong>請注意看每過 1 秒（1s, 2s, 3s, 4s）時，鐵球與橡皮擦的<strong>高度完全處於同一水平線上</strong>，分秒不差同時在第 4 秒精準著地！
-          </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btnDrop" onclick="toggleDrop()">▶ 同步釋放下落</button>
+          <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回樓頂</button>
         </div>
       </div>
 
-      <!-- Right Column: Dual Telemetry & Strobe Table & Quiz -->
-      <div>
-        
-        <!-- Dual Telemetry Cards -->
-        <div class="telemetry-grid">
-          <!-- Iron Ball -->
-          <div class="t-card ball">
-            <h4>
-              <span>⚽ 鐵球 (重物)</span>
-              <span>m = 0.4 kg (400g)</span>
-            </h4>
-            <div class="t-val" id="valBall">下落：0.0 m</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);" id="speedBall">速度：0.0 m/s</div>
-          </div>
+      <div class="stage-box">
+        <div class="stage-hud">
+          <span>⏱️ 下落計時：<strong id="hudTime" style="color: #b45309; font-family: 'Outfit'; font-size: 0.82rem;">0.00 秒</strong></span>
+          <span>🌍 重力加速度：<strong style="color: #1e293b;">g = 9.8 m/s² (向下)</strong></span>
+          <span>🏢 樓高：<strong>H = 78.4 m</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas" width="680" height="260"></canvas>
+      </div>
 
-          <!-- Eraser -->
-          <div class="t-card eraser">
-            <h4>
-              <span>🧽 橡皮擦 (輕物)</span>
-              <span>m = 0.04 kg (40g)</span>
-            </h4>
-            <div class="t-val" id="valEraser">下落：0.0 m</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);" id="speedEraser">速度：0.0 m/s</div>
-          </div>
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="slider-row">
+          <span>下落進度 (0～4秒)：</span>
+          <input type="range" id="timeSlider" min="0" max="4" step="0.02" value="0" oninput="onSliderChange(this.value)">
+          <span id="sliderVal" style="min-width: 60px; font-family: 'Outfit'; font-weight: 800; color: #b45309;">t = 0.00s</span>
+        </div>
+        <div class="tip-box">
+          💡 <strong>核心觀察點：</strong>請注意看每過 1 秒（1s, 2s, 3s, 4s），400g 鐵球與 40g 橡皮擦的<strong>高度完全處於同一水平虛線上</strong>，分秒不差同時在第 4 秒著地！
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Dual Telemetry & Strobe Table & Quiz -->
+    <div class="card">
+      <!-- Dual Telemetry Cards -->
+      <div class="telemetry-grid">
+        <div class="t-card ball">
+          <h4>
+            <span>⚽ 鐵球 (重物)</span>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #475569;">m = 0.4 kg (400g)</span>
+          </h4>
+          <div class="t-val" id="valBall">下落：0.0 m</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);" id="speedBall">速度：0.0 m/s</div>
         </div>
 
-        <!-- 4-Second Strobe Table -->
-        <div class="strobe-table-box">
-          <table class="strobe-table">
-            <thead>
-              <tr>
-                <th>時間 \( t \)</th>
-                <th>瞬時速度 \( v = gt \)</th>
-                <th>累積下落高度 \( h = \frac{1}{2}gt^2 \)</th>
-                <th>高度比例</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="sRow1">
-                <td><strong>1.0 秒</strong></td>
-                <td>\( 9.8\text{ m/s} \)</td>
-                <td>\( \mathbf{4.9\text{ m}} \)</td>
-                <td>\( 1\text{ 格} \)</td>
-              </tr>
-              <tr id="sRow2">
-                <td><strong>2.0 秒</strong></td>
-                <td>\( 19.6\text{ m/s} \)</td>
-                <td>\( \mathbf{19.6\text{ m}} \)</td>
-                <td>\( 4\text{ 格} \) (\( 2^2 \))</td>
-              </tr>
-              <tr id="sRow3">
-                <td><strong>3.0 秒</strong></td>
-                <td>\( 29.4\text{ m/s} \)</td>
-                <td>\( \mathbf{44.1\text{ m}} \)</td>
-                <td>\( 9\text{ 格} \) (\( 3^2 \))</td>
-              </tr>
-              <tr id="sRow4">
-                <td><strong>4.0 秒</strong></td>
-                <td>\( 39.2\text{ m/s} \)</td>
-                <td>\( \mathbf{78.4\text{ m}} \) 🏆 <strong>著地</strong></td>
-                <td>\( 16\text{ 格} \) (\( 4^2 \))</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="t-card eraser">
+          <h4>
+            <span>🧽 橡皮擦 (輕物)</span>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #be185d;">m = 0.04 kg (40g)</span>
+          </h4>
+          <div class="t-val" id="valEraser">下落：0.0 m</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);" id="speedEraser">速度：0.0 m/s</div>
         </div>
+      </div>
 
-        <!-- Core Concept Callout -->
+      <!-- 4-Second Strobe Table -->
+      <div class="strobe-table-box">
+        <table class="strobe-table">
+          <thead>
+            <tr>
+              <th>時間 \( t \)</th>
+              <th>瞬時速度 \( v = gt \)</th>
+              <th>累積高度 \( h = \frac{1}{2}gt^2 \)</th>
+              <th>高度比</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="sRow1">
+              <td><strong>1.0 秒</strong></td>
+              <td>\( 9.8\text{ m/s} \)</td>
+              <td>\( \mathbf{4.9\text{ m}} \)</td>
+              <td>\( 1\text{ 格} \)</td>
+            </tr>
+            <tr id="sRow2">
+              <td><strong>2.0 秒</strong></td>
+              <td>\( 19.6\text{ m/s} \)</td>
+              <td>\( \mathbf{19.6\text{ m}} \)</td>
+              <td>\( 4\text{ 格} \) (\( 2^2 \))</td>
+            </tr>
+            <tr id="sRow3">
+              <td><strong>3.0 秒</strong></td>
+              <td>\( 29.4\text{ m/s} \)</td>
+              <td>\( \mathbf{44.1\text{ m}} \)</td>
+              <td>\( 9\text{ 格} \) (\( 3^2 \))</td>
+            </tr>
+            <tr id="sRow4">
+              <td><strong>4.0 秒</strong></td>
+              <td>\( 39.2\text{ m/s} \)</td>
+              <td>\( \mathbf{78.4\text{ m}} \) 🏆 著地</td>
+              <td>\( 16\text{ 格} \) (\( 4^2 \))</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tabbed Panel -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tabBtn1" onclick="switchTab(1)">📖 習作公式與破題秘訣</button>
+        <button class="tab-btn" id="tabBtn2" onclick="switchTab(2)">📝 習作第 20 題隨堂測驗</button>
+      </div>
+
+      <!-- Pane 1: Concept Explanation -->
+      <div class="tab-pane active" id="pane1">
         <div class="concept-box">
-          <strong>📖 習作 P.7 第 20 題核心公式與解析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>自由落體高度公式：</strong>\( h = \frac{1}{2}gt^2 \implies t = \sqrt{\frac{2h}{g}} \)</li>
-            <li><strong>與質量無關：</strong>公式中完全沒有質量 \( m \) 的變數！只要高度 \( h \) 相同且忽略空氣阻力，<strong>400g 鐵球與 40g 橡皮擦落地所需時間完全相同，都是 4 秒</strong>（選 C）。</li>
+          <strong>📖 習作 P.7 第 20 題核心公式與破題：</strong>
+          <ul style="padding-left: 1.1rem; margin-top: 0.2rem;">
+            <li><strong>自由落體公式：</strong>\( h = \frac{1}{2}gt^2 \implies t = \sqrt{\frac{2h}{g}} \)</li>
+            <li><strong>完全與質量無關：</strong>公式中完全沒有質量 \( m \) 的變數！只要高度 \( h \) 相同且忽略空氣阻力，<strong>400g 鐵球與 40g 橡皮擦落地所需時間完全相同，都是 4 秒</strong>（選 C）。</li>
           </ul>
         </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 習作第 20 題自由落體測驗</div>
-
-          <div class="quiz-item">
-            <p>小莉在學校頂樓同時釋放 0.4kg 鐵球與 40g 橡皮擦，鐵球 4 秒後落地，則橡皮擦落地需幾秒？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(20, 'C', this)">
-                (C) 4 秒（自由落體時間與質量無關）
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(20, 'A', this)">
-                (A) 40 秒（因為質量是十分之一）
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(20, 'B', this)">
-                (B) 0.4 秒
-              </button>
-              <button class="quiz-btn" onclick="checkQuiz(20, 'D', this)">
-                (D) 16 秒
-              </button>
-            </div>
-            <div class="quiz-feedback" id="fb20"></div>
-          </div>
-        </div>
-
       </div>
 
+      <!-- Pane 2: Interactive Quiz -->
+      <div class="tab-pane" id="pane2">
+        <div class="quiz-item">
+          <p>小莉在學校頂樓同時釋放 0.4kg 鐵球與 40g 橡皮擦，鐵球 4 秒後落地，則橡皮擦落地需幾秒？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(20, 'C', this)">
+              (C) 4 秒（自由落體下落時間與物體質量完全無關）
+            </button>
+            <button class="quiz-btn" onclick="checkQuiz(20, 'A', this)">
+              (A) 40 秒（誤以為質量小十倍時間多十倍）
+            </button>
+            <button class="quiz-btn" onclick="checkQuiz(20, 'B', this)">
+              (B) 0.4 秒
+            </button>
+            <button class="quiz-btn" onclick="checkQuiz(20, 'D', this)">
+              (D) 16 秒
+            </button>
+          </div>
+          <div class="quiz-feedback" id="fb20"></div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -579,14 +588,12 @@
         isDropping = true;
         btn.innerText = '⏸ 暫停';
         btn.style.background = '#dc2626';
-        btn.style.color = 'white';
         lastTime = performance.now();
         loop();
       } else {
         isDropping = false;
         btn.innerText = '▶ 繼續下落';
-        btn.style.background = '#f59e0b';
-        btn.style.color = '#0f172a';
+        btn.style.background = '#d97706';
         if (animId) cancelAnimationFrame(animId);
       }
     }
@@ -596,8 +603,7 @@
       simSeconds = 0;
       if (animId) cancelAnimationFrame(animId);
       document.getElementById('btnDrop').innerText = '▶ 同步釋放下落';
-      document.getElementById('btnDrop').style.background = '#f59e0b';
-      document.getElementById('btnDrop').style.color = '#0f172a';
+      document.getElementById('btnDrop').style.background = '#d97706';
       document.getElementById('timeSlider').value = 0;
       updateUI();
     }
@@ -613,15 +619,14 @@
       const dt = (now - lastTime) / 1000;
       lastTime = now;
 
-      // 4 seconds in 4 seconds real time
+      // 4s in 4s real-time
       simSeconds += dt * 1.0;
 
       if (simSeconds >= maxDropTime) {
         simSeconds = maxDropTime;
         isDropping = false;
-        document.getElementById('btnDrop').innerText = '🔄 重新釋放';
-        document.getElementById('btnDrop').style.background = '#f59e0b';
-        document.getElementById('btnDrop').style.color = '#0f172a';
+        document.getElementById('btnDrop').innerText = '🔄 重新下落';
+        document.getElementById('btnDrop').style.background = '#d97706';
       }
 
       document.getElementById('timeSlider').value = simSeconds;
@@ -635,7 +640,7 @@
       const curV = g * simSeconds;
 
       document.getElementById('hudTime').innerText = `${simSeconds.toFixed(2)} 秒`;
-      document.getElementById('sliderVal').innerText = `t = ${simSeconds.toFixed(2)} 秒`;
+      document.getElementById('sliderVal').innerText = `t = ${simSeconds.toFixed(2)}s`;
 
       document.getElementById('valBall').innerText = `下落：${curH.toFixed(1)} m`;
       document.getElementById('speedBall').innerText = `速度：${curV.toFixed(1)} m/s`;
@@ -656,94 +661,168 @@
 
     function draw(curH) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const cw = canvas.width;
+      const ch = canvas.height;
 
-      const towerX = 60;
-      const topY = 60, botY = ch - 50;
-      const hPx = botY - topY;
+      // Clean pure white stage
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      const toPxY = (hM) => topY + (hM / totalHeight) * hPx;
+      const topY = 32;
+      const botY = ch - 32; // 228px
+      const hPx = botY - topY; // 196px span for 78.4m
 
-      // 1. Draw School Building / Tower (Left)
-      ctx.fillStyle = '#1e293b';
-      ctx.fillRect(towerX - 40, topY, 70, hPx);
+      const toPxY = (hM) => topY + (Math.min(totalHeight, hM) / totalHeight) * hPx;
 
-      // Windows
-      ctx.fillStyle = '#fef08a';
-      for (let y = topY + 15; y < botY - 20; y += 35) {
-        ctx.fillRect(towerX - 30, y, 16, 18);
-        ctx.fillRect(towerX - 5, y, 16, 18);
+      // 1. School Building / Tower (Left: x = 20 to 85)
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillRect(20, topY, 65, hPx);
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(20, topY, 65, hPx);
+
+      // Building Windows
+      for (let y = topY + 12; y < botY - 15; y += 28) {
+        ctx.fillStyle = '#60a5fa';
+        ctx.fillRect(30, y, 18, 14);
+        ctx.fillRect(55, y, 18, 14);
       }
 
-      // Roof Platform (0m)
-      ctx.fillStyle = '#334155';
-      ctx.fillRect(towerX - 50, topY - 10, 110, 10);
-      ctx.fillStyle = '#fde047';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'left';
-      ctx.fillText('🏫 樓頂釋放點 (h = 0m)', towerX + 70, topY - 15);
+      // Roof Platform (h = 0m)
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.roundRect(14, topY - 14, 80, 18, 4);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10.5px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🏫 樓頂 0m', 54, topY - 5);
 
-      // Ground (78.4m)
-      ctx.fillStyle = '#16a34a';
-      ctx.fillRect(10, botY, cw - 20, 12);
-      ctx.fillStyle = '#4ade80';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.fillText('🏁 地面 (h = 78.4m)', towerX + 70, botY + 28);
+      // Clean Subtle Ground Baseline (No black asphalt bar!)
+      ctx.beginPath();
+      ctx.moveTo(15, botY + 12);
+      ctx.lineTo(cw - 15, botY + 12);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-      // Strobe Height Scale lines on the Right
+      // Strobe Scale Lines across canvas
       [1.0, 2.0, 3.0, 4.0].forEach(t => {
         const hm = 0.5 * g * t * t;
         const py = toPxY(hm);
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.strokeStyle = '#e2e8f0';
         ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
-        ctx.beginPath(); ctx.moveTo(towerX + 30, py); ctx.lineTo(cw - 40, py); ctx.stroke();
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(90, py);
+        ctx.lineTo(cw - 75, py);
+        ctx.stroke();
         ctx.setLineDash([]);
 
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '10px Outfit';
-        ctx.textAlign = 'right';
-        ctx.fillText(`t=${t}s (${hm.toFixed(1)}m)`, cw - 45, py + 3);
+        // Label on the right
+        ctx.fillStyle = (t === 4.0) ? '#15803d' : '#64748b';
+        ctx.font = (t === 4.0) ? '900 11px Outfit, sans-serif' : 'bold 10px Outfit, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`t=${t.toFixed(1)}s (${hm.toFixed(1)}m)`, cw - 70, py);
       });
 
-      // 2. Drop Lanes for Ball and Eraser
-      const lane1X = 220; // Ball
-      const lane2X = 380; // Eraser
+      // 2. Drop Lanes
+      const lane1X = 175; // Ball (Left)
+      const lane2X = 350; // Eraser (Right)
 
-      // Lane Guide Line
-      ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 1;
+      // Vertical track trajectory guide lines
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
       ctx.beginPath();
       ctx.moveTo(lane1X, topY); ctx.lineTo(lane1X, botY);
       ctx.moveTo(lane2X, topY); ctx.lineTo(lane2X, botY);
       ctx.stroke();
-
-      // Horizontal Synchronization Level Line
-      const currentY = toPxY(curH);
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([6, 4]);
-      ctx.beginPath(); ctx.moveTo(lane1X - 25, currentY); ctx.lineTo(lane2X + 25, currentY); ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'center';
-      ctx.fillText(`⚡ 完全同一水平高度 (h = ${curH.toFixed(1)}m)`, (lane1X + lane2X) / 2, currentY - 8);
+      const currentY = toPxY(curH);
 
-      // 3. Draw Iron Ball (0.4kg)
+      // Horizontal Synchronization Line (High contrast Cyan/Blue dashed)
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(lane1X - 30, currentY);
+      ctx.lineTo(lane2X + 30, currentY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Floating Horizontal Alignment Badge (White Pill with Cyan border)
+      const badgeX = (lane1X + lane2X) / 2;
+      const badgeY = currentY - 14;
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(badgeX - 110, badgeY - 10, 220, 20, 5);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#0369a1';
+      ctx.font = '900 10.5px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`⚡ 水平齊頭 · 等加速度 g · 下落 ${curH.toFixed(1)}m`, badgeX, badgeY);
+
+      // 3. Iron Ball (0.4kg)
+      ctx.save();
       ctx.font = '28px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('⚽', lane1X, currentY + 10);
-      ctx.fillStyle = '#e2e8f0';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.fillText('鐵球 (0.4kg)', lane1X, topY - 15);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('⚽', lane1X, currentY);
+      ctx.restore();
 
-      // 4. Draw Eraser (40g)
-      ctx.fillText('🧽', lane2X, currentY + 10);
-      ctx.fillStyle = '#f472b6';
-      ctx.fillText('橡皮擦 (40g)', lane2X, topY - 15);
+      // Ball label
+      ctx.fillStyle = '#334155';
+      ctx.font = '900 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('⚽ 鐵球 (400g)', lane1X, topY - 15);
+
+      // 4. Eraser (40g)
+      ctx.save();
+      ctx.font = '28px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🧽', lane2X, currentY);
+      ctx.restore();
+
+      // Eraser label
+      ctx.fillStyle = '#be185d';
+      ctx.font = '900 11px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🧽 橡皮擦 (40g)', lane2X, topY - 15);
+
+      // Landing celebration
+      if (simSeconds >= maxDropTime - 0.02) {
+        ctx.fillStyle = '#ecfdf5';
+        ctx.strokeStyle = '#16a34a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(badgeX - 130, botY - 12, 260, 24, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#15803d';
+        ctx.font = '900 11.5px Noto Sans TC, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🏁 同步著地！t = 4.00s · 末速 = 39.2 m/s', badgeX, botY);
+      }
+    }
+
+    function switchTab(tabNum) {
+      document.getElementById('tabBtn1').classList.toggle('active', tabNum === 1);
+      document.getElementById('tabBtn2').classList.toggle('active', tabNum === 2);
+      document.getElementById('pane1').classList.toggle('active', tabNum === 1);
+      document.getElementById('pane2').classList.toggle('active', tabNum === 2);
     }
 
     // Quiz Check
@@ -755,22 +834,18 @@
 
       if (ans === 'C') {
         el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>自由落體公式 \( h = \frac{1}{2}gt^2 \implies t = \sqrt{\frac{2h}{g}} \)。在相同高度與忽略空氣阻力下，物體下落時間<strong>只與高度 \( h \) 與重力加速度 \( g \) 有關，與質量無關</strong>！故橡皮擦同樣需 <strong>4 秒</strong> 落地！';
+        fb.style.color = '#15803d';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>自由落體公式 \( h = \frac{1}{2}gt^2 \implies t = \sqrt{\frac{2h}{g}} \)。在相同高度與忽略空氣阻力下，物體下落時間<strong>只與高度 \( h \) 與重力加速度 \( g \) 有關，與物體質量完全無關</strong>！故橡皮擦同樣需 <strong>4 秒</strong> 落地！';
       } else {
         el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心陷阱！</strong> 國中物理自由落體定律指出：在無阻力下，物體下落時間與質量大小「完全無關」！';
+        fb.style.color = '#b91c1c';
+        fb.innerHTML = '❌ <strong>小心陷阱！</strong> 自由落體公式中沒有質量變數，在無阻力下，物體下落時間與質量大小「完全無關」！';
       }
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
       updateUI();
     });
   </script>
-
-  
-
 </body>
 </html>
