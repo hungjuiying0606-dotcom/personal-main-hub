@@ -45,9 +45,9 @@
     }
 
     header {
-      background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);
+      background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
       color: white;
-      padding: 1.25rem 2rem;
+      padding: 0.5rem 1.25rem;
       box-shadow: var(--shadow-md);
       position: sticky;
       top: 0;
@@ -61,11 +61,11 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
     .title-group h1 {
-      font-size: 1.35rem;
+      font-size: 1.15rem;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -73,24 +73,24 @@
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.15rem 0.55rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
 
     .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+      font-size: 0.78rem;
+      opacity: 0.92;
+      margin-top: 0.1rem;
     }
 
     main {
       max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
+      margin: 0.5rem auto 1rem auto;
+      padding: 0 0.85rem;
       flex: 1;
       width: 100%;
     }
@@ -98,11 +98,11 @@
     /* Common Card */
     .card {
       background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
       box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
+      padding: 0.85rem;
+      margin-bottom: 0.75rem;
     }
 
     .card-header {
@@ -110,16 +110,14 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.35rem;
       border-bottom: 2px solid var(--bg);
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.02rem;
       font-weight: 800;
       color: var(--primary);
       display: flex;
@@ -130,8 +128,8 @@
     /* Main Grid */
     .main-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 0.85rem;
     }
 
     @media (max-width: 960px) {
@@ -140,38 +138,41 @@
       }
     }
 
-    /* Track Viewport */
+    /* Track Viewport - High Contrast Classroom Edition */
     .track-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
       overflow: hidden;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
     }
 
     .track-head {
-      background: rgba(15, 23, 42, 0.85);
-      border-bottom: 1px solid #334155;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
+      background: linear-gradient(90deg, #312e81 0%, #4f46e5 100%);
+      border-bottom: 2px solid #4338ca;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: white;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     canvas.track-canvas {
       display: block;
       width: 100%;
-      height: 120px;
+      height: 110px;
+      background: #ffffff;
     }
 
     /* Dual Stacked Graphs */
     .graph-stack {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.55rem;
     }
 
     .graph-card {
@@ -180,14 +181,15 @@
       border-radius: var(--radius-md);
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .graph-card.at { border-color: #c7d2fe; }
     .graph-card.vt { border-color: #93c5fd; }
 
     .graph-card-head {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
       font-weight: 800;
       display: flex;
       justify-content: space-between;
@@ -200,19 +202,20 @@
     canvas.graph-canvas {
       display: block;
       width: 100%;
-      height: 200px;
+      height: 145px;
     }
 
-    /* Playback & Controls */
+    /* Playback & Controls - Positioned right below Track */
     .control-panel {
       background: #f8fafc;
-      border: 1px solid var(--border);
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 0.9rem 1.25rem;
+      padding: 0.5rem 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      margin-top: 1rem;
+      gap: 0.4rem;
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow-sm);
     }
 
     .play-row {
@@ -224,10 +227,10 @@
     }
 
     .btn {
-      padding: 0.45rem 0.9rem;
+      padding: 0.35rem 0.75rem;
       border: none;
       border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -423,16 +426,33 @@
   <!-- Main Content -->
   <main>
     
-    <!-- 1. Real Track Simulator -->
+    <!-- 1. Real Track Simulator - High Contrast Classroom Edition -->
     <div class="track-box">
       <div class="track-head">
         <span>🏎️ 賽車向北運動跑道（初速 v₀ = 0 m/s，依 a-t 階梯加速/等速/減速）</span>
-        <span id="trackTimeStatus">時間：t = 0.00 秒</span>
+        <span id="trackTimeStatus" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 6px; font-family: 'Outfit';">時間：t = 0.00 秒</span>
       </div>
-      <canvas id="trackCanvas" class="track-canvas" width="1280" height="120"></canvas>
+      <canvas id="trackCanvas" class="track-canvas" width="1280" height="110"></canvas>
     </div>
 
-    <!-- 2. Main Two-Column Layout -->
+    <!-- 2. Playback Controller - Directly Below Track for One-Screen Operation -->
+    <div class="control-panel">
+      <div class="play-row">
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" id="btnPlayPause" onclick="togglePlay()">▶ 播放運動</button>
+          <button class="btn btn-secondary" onclick="resetPlay()">🔄 重置</button>
+          <button class="btn btn-secondary" onclick="jumpTime(4)">🎯 第 4 秒</button>
+          <button class="btn btn-secondary" onclick="jumpTime(6)">🎯 第 6 秒</button>
+          <button class="btn btn-secondary" onclick="jumpTime(10)">🏁 第 10 秒</button>
+        </div>
+        <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.05rem; color: var(--primary);" id="timeReadout">
+          t = 0.00 秒
+        </div>
+      </div>
+      <input type="range" id="timeSlider" min="0" max="10" step="0.05" value="0" oninput="onScrubTime()">
+    </div>
+
+    <!-- 3. Main Two-Column Layout -->
     <div class="main-grid">
       
       <!-- Left Column: Dual Stacked Graphs (a-t on top, v-t below) -->
@@ -441,7 +461,7 @@
           <div class="card-title">
             <span>📊 a-t 階梯圖 ➔ v-t 速度圖同步累積</span>
           </div>
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary);">
             💡 a-t 面積 ＝ 速度變化量 \( \Delta v \)
           </div>
         </div>
@@ -451,36 +471,19 @@
           <div class="graph-card at">
             <div class="graph-card-head at">
               <span>📉 加速度-時間關係圖 (a-t 圖)</span>
-              <span style="font-size: 0.8rem;">階梯水平線</span>
+              <span style="font-size: 0.78rem;">階梯水平線</span>
             </div>
-            <canvas id="atCanvas" class="graph-canvas" width="620" height="200"></canvas>
+            <canvas id="atCanvas" class="graph-canvas" width="620" height="145"></canvas>
           </div>
 
           <!-- v-t Graph -->
           <div class="graph-card vt">
             <div class="graph-card-head vt">
               <span>📈 速度-時間關係圖 (v-t 圖)</span>
-              <span style="font-size: 0.8rem;">速度連續累積折線</span>
+              <span style="font-size: 0.78rem;">速度連續累積折線</span>
             </div>
-            <canvas id="vtCanvas" class="graph-canvas" width="620" height="200"></canvas>
+            <canvas id="vtCanvas" class="graph-canvas" width="620" height="145"></canvas>
           </div>
-        </div>
-
-        <!-- Playback Controller -->
-        <div class="control-panel">
-          <div class="play-row">
-            <div style="display: flex; gap: 0.4rem;">
-              <button class="btn btn-primary" id="btnPlayPause" onclick="togglePlay()">▶ 播放運動</button>
-              <button class="btn btn-secondary" onclick="resetPlay()">🔄 重置</button>
-              <button class="btn btn-secondary" onclick="jumpTime(4)">🎯 第 4 秒</button>
-              <button class="btn btn-secondary" onclick="jumpTime(6)">🎯 第 6 秒</button>
-              <button class="btn btn-secondary" onclick="jumpTime(10)">🏁 第 10 秒</button>
-            </div>
-            <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.1rem; color: var(--primary);" id="timeReadout">
-              t = 0.00 秒
-            </div>
-          </div>
-          <input type="range" id="timeSlider" min="0" max="10" step="0.05" value="0" oninput="onScrubTime()">
         </div>
       </div>
 
@@ -690,84 +693,162 @@
       drawVT(m);
     }
 
-    // Draw Track Viewport
+    // Draw Track Viewport - High Contrast Classroom Edition
     function drawTrack(m) {
       trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
       const cw = trackCanvas.width;
-      const cy = 60;
+      const ch = trackCanvas.height;
+      const cy = 54;
       const maxDistance = 60; // Max x at t=10 is 56m
 
-      const toPx = (x) => 60 + (x / maxDistance) * (cw - 120);
+      // Clean bright track background
+      trackCtx.fillStyle = '#ffffff';
+      trackCtx.fillRect(0, 0, cw, ch);
 
-      // Road
-      trackCtx.fillStyle = '#1e293b';
-      trackCtx.fillRect(30, cy + 15, cw - 60, 8);
+      const toPx = (x) => 65 + (x / maxDistance) * (cw - 130);
 
-      // Ticks
-      for (let x = 0; x <= 50; x += 10) {
+      // Track Road Surface (Asphalt Gray with crisp dark borders)
+      trackCtx.fillStyle = '#e2e8f0';
+      trackCtx.fillRect(30, cy + 10, cw - 60, 22);
+      trackCtx.strokeStyle = '#334155';
+      trackCtx.lineWidth = 2;
+      trackCtx.strokeRect(30, cy + 10, cw - 60, 22);
+
+      // Center dash lane
+      trackCtx.beginPath();
+      trackCtx.setLineDash([12, 10]);
+      trackCtx.moveTo(35, cy + 21);
+      trackCtx.lineTo(cw - 35, cy + 21);
+      trackCtx.strokeStyle = '#ffffff';
+      trackCtx.lineWidth = 2;
+      trackCtx.stroke();
+      trackCtx.setLineDash([]);
+
+      // Sub-ticks every 2m
+      for (let x = 0; x <= 60; x += 2) {
+        if (x % 10 !== 0) {
+          const px = toPx(x);
+          trackCtx.beginPath();
+          trackCtx.moveTo(px, cy + 32);
+          trackCtx.lineTo(px, cy + 37);
+          trackCtx.strokeStyle = '#94a3b8';
+          trackCtx.lineWidth = 1.2;
+          trackCtx.stroke();
+        }
+      }
+
+      // Major ticks every 10m
+      for (let x = 0; x <= 60; x += 10) {
         const px = toPx(x);
-        trackCtx.beginPath(); trackCtx.moveTo(px, cy + 10); trackCtx.lineTo(px, cy + 20);
-        trackCtx.strokeStyle = x === 0 ? '#ef4444' : '#64748b'; trackCtx.stroke();
-        trackCtx.fillStyle = x === 0 ? '#f87171' : '#94a3b8';
-        trackCtx.font = '10px Outfit';
-        trackCtx.fillText(x === 0 ? '起點 0m' : x + 'm', px - 10, cy + 35);
+        trackCtx.beginPath();
+        trackCtx.moveTo(px, cy + 32);
+        trackCtx.lineTo(px, cy + 45);
+        trackCtx.strokeStyle = (x === 0) ? '#dc2626' : '#0f172a';
+        trackCtx.lineWidth = (x === 0) ? 3 : 2.2;
+        trackCtx.stroke();
+
+        if (x === 0) {
+          // Starting point badge
+          trackCtx.fillStyle = '#dc2626';
+          trackCtx.beginPath();
+          trackCtx.roundRect(px - 32, cy + 48, 64, 18, 4);
+          trackCtx.fill();
+          trackCtx.fillStyle = '#ffffff';
+          trackCtx.font = 'bold 11px Noto Sans TC';
+          trackCtx.textAlign = 'center';
+          trackCtx.fillText('起點 0m', px, cy + 61);
+        } else {
+          trackCtx.fillStyle = '#0f172a';
+          trackCtx.font = 'bold 13px Outfit, sans-serif';
+          trackCtx.textAlign = 'center';
+          trackCtx.fillText(x + 'm', px, cy + 61);
+        }
       }
 
       // Car
       const carPx = toPx(m.x);
-      trackCtx.save();
-      trackCtx.font = '28px sans-serif';
-      trackCtx.textAlign = 'center';
-      trackCtx.textBaseline = 'middle';
-      trackCtx.translate(carPx, cy + 8);
-      if (m.v >= 0) {
-        trackCtx.scale(-1, 1);
-      }
-      trackCtx.fillText('🏎️', 0, 0);
-      trackCtx.restore();
+      const strokeColor = '#312e81';
 
-      // Car Tag
+      // Car shadow
+      trackCtx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+      trackCtx.beginPath();
+      trackCtx.ellipse(carPx, cy + 12, 22, 5, 0, 0, Math.PI * 2);
+      trackCtx.fill();
+
+      // Main Car Body (Sporty Indigo Racer)
+      trackCtx.fillStyle = '#4f46e5';
+      trackCtx.strokeStyle = strokeColor;
+      trackCtx.lineWidth = 2;
+      trackCtx.beginPath();
+      trackCtx.roundRect(carPx - 22, cy - 14, 44, 20, 5);
+      trackCtx.fill();
+      trackCtx.stroke();
+
+      // Windshield
+      trackCtx.fillStyle = '#c7d2fe';
+      trackCtx.beginPath();
+      trackCtx.roundRect(carPx - 4, cy - 11, 14, 8, 2);
+      trackCtx.fill();
+
+      // Wheels
+      [-12, 12].forEach(off => {
+        trackCtx.fillStyle = '#0f172a';
+        trackCtx.beginPath(); trackCtx.arc(carPx + off, cy + 8, 5, 0, Math.PI * 2); trackCtx.fill();
+        trackCtx.fillStyle = '#cbd5e1';
+        trackCtx.beginPath(); trackCtx.arc(carPx + off, cy + 8, 2.5, 0, Math.PI * 2); trackCtx.fill();
+      });
+
+      // Active Live Speed & Accel Badge (High contrast floating pill)
       trackCtx.fillStyle = '#ffffff';
-      trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.strokeStyle = '#4338ca';
+      trackCtx.lineWidth = 2;
+      trackCtx.shadowColor = 'rgba(0, 0, 0, 0.12)';
+      trackCtx.shadowBlur = 6;
+      trackCtx.shadowOffsetY = 2;
+      trackCtx.beginPath();
+      trackCtx.roundRect(carPx - 68, cy - 44, 136, 25, 12.5);
+      trackCtx.fill();
+      trackCtx.stroke();
+      trackCtx.shadowColor = 'transparent';
+
+      trackCtx.fillStyle = '#312e81';
+      trackCtx.font = '900 12px Noto Sans TC, sans-serif';
       trackCtx.textAlign = 'center';
-      trackCtx.fillText(`v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)} m/s²)`, carPx, cy - 14);
+      trackCtx.fillText(`🏎️ v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)})`, carPx, cy - 28);
     }
 
     // Draw a-t Graph
     function drawAT(m) {
       atCtx.clearRect(0, 0, atCanvas.width, atCanvas.height);
-      const ox = 50, oy = 95, w = 530; // a=0 is at y=95
+      const ox = 50, oy = 72, w = 530; // a=0 is at y=72
       const toGx = (t) => ox + (t / maxT) * w;
-      const toGy = (a) => oy - a * 26; // a=+3 -> 17, a=+2 -> 43, a=+1 -> 69, a=0 -> 95, a=-1 -> 121, a=-2 -> 147
+      const toGy = (a) => oy - a * 19; // a=+3 -> 15, a=0 -> 72, a=-2 -> 110
 
       // 1. Shaded Areas under a-t Steps
-      // 0~4s (+2)
-      atCtx.fillStyle = 'rgba(37, 99, 235, 0.2)';
+      atCtx.fillStyle = 'rgba(37, 99, 235, 0.22)';
       atCtx.fillRect(toGx(0), toGy(2), toGx(4) - toGx(0), toGy(0) - toGy(2));
-      // 6~10s (-1)
-      atCtx.fillStyle = 'rgba(220, 38, 38, 0.2)';
+
+      atCtx.fillStyle = 'rgba(220, 38, 38, 0.22)';
       atCtx.fillRect(toGx(6), toGy(0), toGx(10) - toGx(6), toGy(-1) - toGy(0));
 
-      // Labels on area (Centered vertically & horizontally inside the shaded blocks)
+      // Labels on area
       atCtx.fillStyle = '#1d4ed8';
-      atCtx.font = 'bold 12px Outfit';
+      atCtx.font = 'bold 11px Outfit, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = +8 m/s (速度+8)', (toGx(0) + toGx(4)) / 2, (toGy(0) + toGy(2)) / 2);
 
       atCtx.fillStyle = '#b91c1c';
-      atCtx.font = 'bold 12px Outfit';
+      atCtx.font = 'bold 11px Outfit, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = -4 m/s (速度-4)', (toGx(6) + toGx(10)) / 2, (toGy(0) + toGy(-1)) / 2);
 
       // 2. Axes
-      // t-axis (a=0)
       atCtx.beginPath();
       atCtx.moveTo(ox, oy); atCtx.lineTo(ox + w, oy);
       atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 1.8; atCtx.stroke();
 
-      // a-axis
       atCtx.beginPath();
       atCtx.moveTo(ox, toGy(3.2)); atCtx.lineTo(ox, toGy(-2.2));
       atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 1.8; atCtx.stroke();
@@ -777,9 +858,9 @@
       atCtx.fillStyle = '#4338ca';
       atCtx.textAlign = 'left';
       atCtx.textBaseline = 'bottom';
-      atCtx.fillText('加速度 a (m/s²)', ox - 40, toGy(3.2) - 2);
+      atCtx.fillText('加速度 a (m/s²)', ox - 40, toGy(3.2) - 1);
 
-      // Y Ticks & Grid Lines: +3, +2, +1, 0, -1, -2
+      // Y Ticks: +3, +2, +1, 0, -1, -2
       [-2, -1, 0, 1, 2, 3].forEach(a => {
         const gy = toGy(a);
         atCtx.beginPath();
@@ -789,15 +870,15 @@
         atCtx.lineWidth = a === 0 ? 1.5 : 1;
         atCtx.stroke();
 
-        atCtx.fillStyle = '#64748b';
-        atCtx.font = '10px Outfit';
+        atCtx.fillStyle = '#0f172a';
+        atCtx.font = 'bold 11px Outfit';
         atCtx.textAlign = 'right';
         atCtx.textBaseline = 'middle';
         atCtx.fillText((a > 0 ? '+' : '') + a, ox - 6, gy);
       });
 
-      // Bottom baseline for X Ticks (below a=-2 grid at y=147)
-      const bottomAxisY = 162;
+      // Bottom baseline for X Ticks
+      const bottomAxisY = 122;
       atCtx.beginPath();
       atCtx.moveTo(ox, bottomAxisY);
       atCtx.lineTo(ox + w, bottomAxisY);
@@ -809,7 +890,7 @@
       atCtx.font = 'bold 11px Noto Sans TC';
       atCtx.textAlign = 'left';
       atCtx.textBaseline = 'top';
-      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 16);
+      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 4);
 
       // X Ticks
       [0, 2, 4, 6, 8, 10].forEach(t => {
@@ -820,58 +901,55 @@
         atCtx.strokeStyle = '#94a3b8';
         atCtx.stroke();
 
-        atCtx.fillStyle = '#64748b';
-        atCtx.font = '10px Outfit';
+        atCtx.fillStyle = '#0f172a';
+        atCtx.font = 'bold 11px Outfit';
         atCtx.textAlign = 'center';
         atCtx.textBaseline = 'top';
-        atCtx.fillText(t, gx, bottomAxisY + 5);
+        atCtx.fillText(t, gx, bottomAxisY + 4);
       });
 
-      // 3. Thick Step Lines
-      atCtx.strokeStyle = '#4338ca'; atCtx.lineWidth = 3.5;
-      // 0~4s (a=+2)
-      atCtx.beginPath(); atCtx.moveTo(toGx(0), toGy(2)); atCtx.lineTo(toGx(4), toGy(2)); atCtx.stroke();
-      // 4~6s (a=0)
-      atCtx.beginPath(); atCtx.moveTo(toGx(4), toGy(0)); atCtx.lineTo(toGx(6), toGy(0)); atCtx.stroke();
-      // 6~10s (a=-1)
-      atCtx.beginPath(); atCtx.moveTo(toGx(6), toGy(-1)); atCtx.lineTo(toGx(10), toGy(-1)); atCtx.stroke();
-
-      // Connector dashed lines
-      atCtx.strokeStyle = '#a5b4fc'; atCtx.lineWidth = 1.5; atCtx.setLineDash([3, 3]);
-      atCtx.beginPath(); atCtx.moveTo(toGx(4), toGy(2)); atCtx.lineTo(toGx(4), toGy(0)); atCtx.stroke();
-      atCtx.beginPath(); atCtx.moveTo(toGx(6), toGy(0)); atCtx.lineTo(toGx(6), toGy(-1)); atCtx.stroke();
-      atCtx.setLineDash([]);
+      // a-t Step Line
+      atCtx.beginPath();
+      atCtx.moveTo(toGx(0), toGy(2));
+      atCtx.lineTo(toGx(4), toGy(2));
+      atCtx.lineTo(toGx(4), toGy(0));
+      atCtx.lineTo(toGx(6), toGy(0));
+      atCtx.lineTo(toGx(6), toGy(-1));
+      atCtx.lineTo(toGx(10), toGy(-1));
+      atCtx.strokeStyle = '#4338ca';
+      atCtx.lineWidth = 3.5;
+      atCtx.stroke();
 
       // Scrubber
       const scanX = toGx(currentTime);
-      atCtx.beginPath(); atCtx.moveTo(scanX, toGy(3.2)); atCtx.lineTo(scanX, bottomAxisY);
-      atCtx.strokeStyle = '#9333ea'; atCtx.lineWidth = 1.5; atCtx.setLineDash([4, 4]); atCtx.stroke(); atCtx.setLineDash([]);
+      const dotY = toGy(m.a);
+      atCtx.beginPath(); atCtx.moveTo(scanX, 10); atCtx.lineTo(scanX, bottomAxisY);
+      atCtx.strokeStyle = '#9333ea'; atCtx.lineWidth = 2; atCtx.setLineDash([4, 4]); atCtx.stroke(); atCtx.setLineDash([]);
+
+      atCtx.beginPath(); atCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
+      atCtx.fillStyle = '#4338ca'; atCtx.fill();
+      atCtx.strokeStyle = '#ffffff'; atCtx.lineWidth = 2; atCtx.stroke();
     }
 
     // Draw v-t Graph
     function drawVT(m) {
       vtCtx.clearRect(0, 0, vtCanvas.width, vtCanvas.height);
-      const ox = 50, oy = 160, w = 530, h = 130;
+      const ox = 50, oy = 118, w = 530, h = 95;
       const maxV = 10;
-
       const toGx = (t) => ox + (t / maxT) * w;
       const toGy = (v) => oy - (v / maxV) * h;
 
       // Axes
       vtCtx.beginPath();
-      vtCtx.moveTo(ox, oy); vtCtx.lineTo(ox + w, oy);
-      vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 1.8; vtCtx.stroke();
-
-      vtCtx.beginPath();
-      vtCtx.moveTo(ox, oy - h - 10); vtCtx.lineTo(ox, oy);
+      vtCtx.moveTo(ox, oy - h - 6); vtCtx.lineTo(ox, oy); vtCtx.lineTo(ox + w, oy);
       vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 1.8; vtCtx.stroke();
 
       vtCtx.font = 'bold 11px Noto Sans TC'; vtCtx.fillStyle = '#1e3a8a';
       vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'top';
-      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 16);
+      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 4);
 
       vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'bottom';
-      vtCtx.fillText('速度 v (m/s)', ox - 40, oy - h - 12);
+      vtCtx.fillText('速度 v (m/s)', ox - 40, oy - h - 6);
 
       // Y Ticks: 0, 2, 4, 6, 8, 10
       [0, 2, 4, 6, 8, 10].forEach(v => {
@@ -881,8 +959,8 @@
         vtCtx.lineWidth = v === 0 ? 1.5 : 1;
         vtCtx.stroke();
 
-        vtCtx.fillStyle = '#64748b';
-        vtCtx.font = '10px Outfit';
+        vtCtx.fillStyle = '#0f172a';
+        vtCtx.font = 'bold 11px Outfit';
         vtCtx.textAlign = 'right';
         vtCtx.textBaseline = 'middle';
         vtCtx.fillText(v, ox - 6, gy);
@@ -897,11 +975,11 @@
         vtCtx.strokeStyle = '#94a3b8';
         vtCtx.stroke();
 
-        vtCtx.fillStyle = '#64748b';
-        vtCtx.font = '10px Outfit';
+        vtCtx.fillStyle = '#0f172a';
+        vtCtx.font = 'bold 11px Outfit';
         vtCtx.textAlign = 'center';
         vtCtx.textBaseline = 'top';
-        vtCtx.fillText(t, gx, oy + 5);
+        vtCtx.fillText(t, gx, oy + 4);
       });
 
       // Continuous v-t Line: (0,0) -> (4,8) -> (6,8) -> (10,4)
@@ -918,10 +996,11 @@
       const scanX = toGx(currentTime);
       const dotY = toGy(m.v);
       vtCtx.beginPath(); vtCtx.moveTo(scanX, oy - h); vtCtx.lineTo(scanX, oy);
-      vtCtx.strokeStyle = '#9333ea'; vtCtx.lineWidth = 1.5; vtCtx.setLineDash([4, 4]); vtCtx.stroke(); vtCtx.setLineDash([]);
+      vtCtx.strokeStyle = '#9333ea'; vtCtx.lineWidth = 2; vtCtx.setLineDash([4, 4]); vtCtx.stroke(); vtCtx.setLineDash([]);
 
-      vtCtx.beginPath(); vtCtx.arc(scanX, dotY, 5, 0, Math.PI * 2);
+      vtCtx.beginPath(); vtCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
       vtCtx.fillStyle = '#2563eb'; vtCtx.fill();
+      vtCtx.strokeStyle = '#ffffff'; vtCtx.lineWidth = 2; vtCtx.stroke();
     }
 
     // Quiz Check
