@@ -168,11 +168,18 @@
       background: #ffffff;
     }
 
-    /* Dual Stacked Graphs */
-    .graph-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
+    /* Dual Graphs Grid - Exactly Matching Screenshot 2 */
+    .dual-graphs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    @media (max-width: 860px) {
+      .dual-graphs-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .graph-card {
@@ -187,22 +194,23 @@
     .graph-card.at { border-color: #c7d2fe; }
     .graph-card.vt { border-color: #93c5fd; }
 
-    .graph-card-head {
-      padding: 0.35rem 0.75rem;
-      font-size: 0.82rem;
+    .graph-card-header {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
       font-weight: 800;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid var(--border);
     }
 
-    .graph-card-head.at { background: #eef2ff; color: #4338ca; }
-    .graph-card-head.vt { background: #eff6ff; color: #1d4ed8; }
+    .graph-card-header.at { background: #eef2ff; color: #4338ca; }
+    .graph-card-header.vt { background: #eff6ff; color: #1d4ed8; }
 
     canvas.graph-canvas {
       display: block;
       width: 100%;
-      height: 145px;
+      height: 205px;
     }
 
     /* Playback & Controls - Positioned right below Track */
@@ -268,40 +276,64 @@
       cursor: pointer;
     }
 
-    /* Segments Accordion / Cards */
+    /* Segments Horizontal Cards - 3 Columns Below Dual Graphs */
     .segments-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+
+    @media (max-width: 860px) {
+      .segments-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .segment-card {
-      padding: 0.85rem;
+      padding: 0.75rem 0.85rem;
       border-radius: var(--radius-md);
       border: 1.5px solid var(--border);
       background: #ffffff;
       transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
     }
 
     .segment-card.active {
       border-color: var(--primary);
       background: #f5f3ff;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.12);
     }
 
     .segment-head {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: var(--primary);
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 0.25rem;
     }
 
     .segment-math {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Details Grid: Concept & Quiz side-by-side */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    @media (max-width: 860px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Concept Callout */
@@ -309,8 +341,10 @@
       background: #eff6ff;
       border-left: 4px solid var(--primary);
       border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
+      padding: 0.85rem 1rem;
+      font-size: 0.83rem;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--primary);
     }
 
     .concept-box strong {
@@ -452,131 +486,114 @@
       <input type="range" id="timeSlider" min="0" max="10" step="0.05" value="0" oninput="onScrubTime()">
     </div>
 
-    <!-- 3. Main Two-Column Layout -->
-    <div class="main-grid">
-      
-      <!-- Left Column: Dual Stacked Graphs (a-t on top, v-t below) -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>📊 a-t 階梯圖 ➔ v-t 速度圖同步累積</span>
-          </div>
-          <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary);">
-            💡 a-t 面積 ＝ 速度變化量 \( \Delta v \)
-          </div>
+    <!-- 3. Dual Graphs: a-t and v-t Side by Side (1:1 Matching Screenshot 2) -->
+    <div class="dual-graphs-grid">
+      <!-- a-t Graph (Left) -->
+      <div class="graph-card at">
+        <div class="graph-card-header at">
+          <span>📉 加速度-時間關係圖 (a-t 圖)</span>
+          <span style="font-size: 0.8rem; font-weight: 700;">💡 a-t 面積 ＝ 速度變化量 \( \Delta v \)</span>
         </div>
-
-        <div class="graph-stack">
-          <!-- a-t Graph -->
-          <div class="graph-card at">
-            <div class="graph-card-head at">
-              <span>📉 加速度-時間關係圖 (a-t 圖)</span>
-              <span style="font-size: 0.78rem;">階梯水平線</span>
-            </div>
-            <canvas id="atCanvas" class="graph-canvas" width="620" height="145"></canvas>
-          </div>
-
-          <!-- v-t Graph -->
-          <div class="graph-card vt">
-            <div class="graph-card-head vt">
-              <span>📈 速度-時間關係圖 (v-t 圖)</span>
-              <span style="font-size: 0.78rem;">速度連續累積折線</span>
-            </div>
-            <canvas id="vtCanvas" class="graph-canvas" width="620" height="145"></canvas>
-          </div>
-        </div>
+        <canvas id="atCanvas" class="graph-canvas" width="620" height="205"></canvas>
       </div>
 
-      <!-- Right Column: Segment Math & Quiz -->
-      <div>
-        
-        <!-- 3 Segment Cards -->
-        <div class="segments-grid">
-          <!-- Segment 1 -->
-          <div class="segment-card" id="segCard1">
-            <div class="segment-head">
-              <span>① 0 ～ 4 秒：等加速度加速 (\( a = +2\text{ m/s}^2 \))</span>
-              <strong style="color: var(--success);">變快</strong>
-            </div>
-            <div class="segment-math">
-              • 速度變化量：\( \Delta v_1 = 4\text{s} \times (+2\text{m/s}^2) = \mathbf{+8\text{ m/s}} \)<br>
-              • 在 \( t = 4\text{s} \) 時瞬間速度：\( v = 0 + 8 = \mathbf{8.0\text{ m/s}} \)
-            </div>
-          </div>
-
-          <!-- Segment 2 -->
-          <div class="segment-card" id="segCard2">
-            <div class="segment-head">
-              <span>② 4 ～ 6 秒：等速度運動 (\( a = 0\text{ m/s}^2 \))</span>
-              <strong style="color: var(--primary);">速度不變</strong>
-            </div>
-            <div class="segment-math">
-              • 速度變化量：\( \Delta v_2 = 2\text{s} \times 0 = \mathbf{0\text{ m/s}} \)<br>
-              • 在 \( t = 6\text{s} \) 時瞬間速度：\( v = 8 + 0 = \mathbf{8.0\text{ m/s}} \) (保持等速)
-            </div>
-          </div>
-
-          <!-- Segment 3 -->
-          <div class="segment-card" id="segCard3">
-            <div class="segment-head">
-              <span>③ 6 ～ 10 秒：等加速度減速 (\( a = -1\text{ m/s}^2 \))</span>
-              <strong style="color: var(--warn);">變慢</strong>
-            </div>
-            <div class="segment-math">
-              • 速度變化量：\( \Delta v_3 = 4\text{s} \times (-1\text{m/s}^2) = \mathbf{-4\text{ m/s}} \)<br>
-              • 在 \( t = 10\text{s} \) 時瞬間速度：\( v = 8 + (-4) = \mathbf{4.0\text{ m/s}} \)
-            </div>
-          </div>
+      <!-- v-t Graph (Right) -->
+      <div class="graph-card vt">
+        <div class="graph-card-header vt">
+          <span>📈 速度-時間關係圖 (v-t 圖)</span>
+          <span style="font-size: 0.8rem; font-weight: 700;">💡 速度連續累積折線</span>
         </div>
-
-        <!-- Concept Box -->
-        <div class="concept-box">
-          <strong>📖 課本 P.24 例題 1-8 觀念精華：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>\( a-t \) 圖為水平線代表「等加速度運動」；當 \( a=0 \) 時物體做「<strong>等速度運動</strong>」。</li>
-            <li>\( a-t \) 圖線與時間軸所圍的<strong>面積代表「速度變化量 \(\Delta v\)」</strong>。</li>
-            <li><strong>上方面積（正）</strong>代表速度增加；<strong>下方面積（負）</strong>代表速度減少！</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 例題 1-8 隨堂問題診斷</div>
-
-          <div class="quiz-item">
-            <p>(1) 車子在第 3 秒時，加速度大小為多少 \( \text{m/s}^2 \)？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(1, '2', this)">2 m/s²</button>
-              <button class="quiz-btn" onclick="checkQuiz(1, '0', this)">0 m/s²</button>
-              <button class="quiz-btn" onclick="checkQuiz(1, '-1', this)">-1 m/s²</button>
-            </div>
-            <div class="quiz-feedback" id="fb1"></div>
-          </div>
-
-          <div class="quiz-item">
-            <p>(2) 車子在第 8 秒時，正在進行何種運動？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(2, 'decel', this)">等加速度減速運動</button>
-              <button class="quiz-btn" onclick="checkQuiz(2, 'accel', this)">等加速度加速運動</button>
-              <button class="quiz-btn" onclick="checkQuiz(2, 'uniform', this)">等速度運動</button>
-            </div>
-            <div class="quiz-feedback" id="fb2"></div>
-          </div>
-
-          <div class="quiz-item">
-            <p>(3) 車子在何時正在做「等速度運動」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(3, '4-6', this)">4 ～ 6 秒</button>
-              <button class="quiz-btn" onclick="checkQuiz(3, '0-4', this)">0 ～ 4 秒</button>
-              <button class="quiz-btn" onclick="checkQuiz(3, '6-10', this)">6 ～ 10 秒</button>
-            </div>
-            <div class="quiz-feedback" id="fb3"></div>
-          </div>
-        </div>
-
+        <canvas id="vtCanvas" class="graph-canvas" width="620" height="205"></canvas>
       </div>
-
     </div>
+
+    <!-- 4. Three Segment Cards (3 Columns Horizontal) -->
+    <div class="segments-grid">
+      <!-- Segment 1 -->
+      <div class="segment-card" id="segCard1">
+        <div class="segment-head">
+          <span>① 0 ～ 4 秒：等加速度加速 (\( a = +2\text{ m/s}^2 \))</span>
+          <strong style="color: var(--success);">變快</strong>
+        </div>
+        <div class="segment-math">
+          • 速度變化量：\( \Delta v_1 = 4\text{s} \times (+2\text{m/s}^2) = \mathbf{+8\text{ m/s}} \)<br>
+          • 在 \( t = 4\text{s} \) 時瞬間速度：\( v = 0 + 8 = \mathbf{8.0\text{ m/s}} \)
+        </div>
+      </div>
+
+      <!-- Segment 2 -->
+      <div class="segment-card" id="segCard2">
+        <div class="segment-head">
+          <span>② 4 ～ 6 秒：等速度運動 (\( a = 0\text{ m/s}^2 \))</span>
+          <strong style="color: var(--primary);">速度不變</strong>
+        </div>
+        <div class="segment-math">
+          • 速度變化量：\( \Delta v_2 = 2\text{s} \times 0 = \mathbf{0\text{ m/s}} \)<br>
+          • 在 \( t = 6\text{s} \) 時瞬間速度：\( v = 8 + 0 = \mathbf{8.0\text{ m/s}} \)
+        </div>
+      </div>
+
+      <!-- Segment 3 -->
+      <div class="segment-card" id="segCard3">
+        <div class="segment-head">
+          <span>③ 6 ～ 10 秒：等加速度減速 (\( a = -1\text{ m/s}^2 \))</span>
+          <strong style="color: var(--warn);">變慢</strong>
+        </div>
+        <div class="segment-math">
+          • 速度變化量：\( \Delta v_3 = 4\text{s} \times (-1\text{m/s}^2) = \mathbf{-4\text{ m/s}} \)<br>
+          • 在 \( t = 10\text{s} \) 時瞬間速度：\( v = 8 + (-4) = \mathbf{4.0\text{ m/s}} \)
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Details Grid: Concept Summary & Quiz Side-by-Side -->
+    <div class="details-grid">
+      <!-- Concept Box -->
+      <div class="concept-box">
+        <strong>📖 課本 P.24 例題 1-8 觀念精華：</strong>
+        <ul style="padding-left: 1.1rem; margin-top: 0.35rem; line-height: 1.6;">
+          <li>\( a-t \) 圖為水平線代表「等加速度運動」；當 \( a=0 \) 時物體做「<strong>等速度運動</strong>」。</li>
+          <li>\( a-t \) 圖線與時間軸所圍的<strong>面積代表「速度變化量 \(\Delta v\)」</strong>。</li>
+          <li><strong>上方面積（正）</strong>代表速度增加；<strong>下方面積（負）</strong>代表速度減少！</li>
+        </ul>
+      </div>
+
+      <!-- Quiz Section -->
+      <div class="quiz-card" style="margin-bottom: 0;">
+        <div class="quiz-title">📝 例題 1-8 隨堂問題診斷</div>
+
+        <div class="quiz-item">
+          <p>(1) 車子在第 3 秒時，加速度大小為多少 \( \text{m/s}^2 \)？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(1, '2', this)">2 m/s²</button>
+            <button class="quiz-btn" onclick="checkQuiz(1, '0', this)">0 m/s²</button>
+            <button class="quiz-btn" onclick="checkQuiz(1, '-1', this)">-1 m/s²</button>
+          </div>
+          <div class="quiz-feedback" id="fb1"></div>
+        </div>
+
+        <div class="quiz-item">
+          <p>(2) 車子在第 8 秒時，正在進行何種運動？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(2, 'decel', this)">等加速度減速運動</button>
+            <button class="quiz-btn" onclick="checkQuiz(2, 'accel', this)">等加速度加速運動</button>
+            <button class="quiz-btn" onclick="checkQuiz(2, 'uniform', this)">等速度運動</button>
+          </div>
+          <div class="quiz-feedback" id="fb2"></div>
+        </div>
+
+        <div class="quiz-item">
+          <p>(3) 車子在何時正在做「等速度運動」？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(3, '4-6', this)">4 ～ 6 秒</button>
+            <button class="quiz-btn" onclick="checkQuiz(3, '0-4', this)">0 ～ 4 秒</button>
+            <button class="quiz-btn" onclick="checkQuiz(3, '6-10', this)">6 ～ 10 秒</button>
+          </div>
+          <div class="quiz-feedback" id="fb3"></div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Footer -->
@@ -817,12 +834,12 @@
       trackCtx.fillText(`🏎️ v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)})`, carPx, cy - 28);
     }
 
-    // Draw a-t Graph
+    // Draw a-t Graph - Matched to 205px Height
     function drawAT(m) {
       atCtx.clearRect(0, 0, atCanvas.width, atCanvas.height);
-      const ox = 50, oy = 72, w = 530; // a=0 is at y=72
+      const ox = 52, oy = 105, w = 530; // a=0 is at y=105
       const toGx = (t) => ox + (t / maxT) * w;
-      const toGy = (a) => oy - a * 19; // a=+3 -> 15, a=0 -> 72, a=-2 -> 110
+      const toGy = (a) => oy - a * 25; // a=+3 -> 30, a=0 -> 105, a=-2 -> 155
 
       // 1. Shaded Areas under a-t Steps
       atCtx.fillStyle = 'rgba(37, 99, 235, 0.22)';
@@ -833,13 +850,13 @@
 
       // Labels on area
       atCtx.fillStyle = '#1d4ed8';
-      atCtx.font = 'bold 11px Outfit, sans-serif';
+      atCtx.font = 'bold 12px Outfit, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = +8 m/s (速度+8)', (toGx(0) + toGx(4)) / 2, (toGy(0) + toGy(2)) / 2);
 
       atCtx.fillStyle = '#b91c1c';
-      atCtx.font = 'bold 11px Outfit, sans-serif';
+      atCtx.font = 'bold 12px Outfit, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = -4 m/s (速度-4)', (toGx(6) + toGx(10)) / 2, (toGy(0) + toGy(-1)) / 2);
@@ -878,7 +895,7 @@
       });
 
       // Bottom baseline for X Ticks
-      const bottomAxisY = 122;
+      const bottomAxisY = 168;
       atCtx.beginPath();
       atCtx.moveTo(ox, bottomAxisY);
       atCtx.lineTo(ox + w, bottomAxisY);
@@ -890,7 +907,7 @@
       atCtx.font = 'bold 11px Noto Sans TC';
       atCtx.textAlign = 'left';
       atCtx.textBaseline = 'top';
-      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 4);
+      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 6);
 
       // X Ticks
       [0, 2, 4, 6, 8, 10].forEach(t => {
@@ -905,7 +922,7 @@
         atCtx.font = 'bold 11px Outfit';
         atCtx.textAlign = 'center';
         atCtx.textBaseline = 'top';
-        atCtx.fillText(t, gx, bottomAxisY + 4);
+        atCtx.fillText(t, gx, bottomAxisY + 6);
       });
 
       // a-t Step Line
@@ -923,7 +940,7 @@
       // Scrubber
       const scanX = toGx(currentTime);
       const dotY = toGy(m.a);
-      atCtx.beginPath(); atCtx.moveTo(scanX, 10); atCtx.lineTo(scanX, bottomAxisY);
+      atCtx.beginPath(); atCtx.moveTo(scanX, 25); atCtx.lineTo(scanX, bottomAxisY);
       atCtx.strokeStyle = '#9333ea'; atCtx.lineWidth = 2; atCtx.setLineDash([4, 4]); atCtx.stroke(); atCtx.setLineDash([]);
 
       atCtx.beginPath(); atCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
@@ -931,10 +948,10 @@
       atCtx.strokeStyle = '#ffffff'; atCtx.lineWidth = 2; atCtx.stroke();
     }
 
-    // Draw v-t Graph
+    // Draw v-t Graph - Matched to 205px Height
     function drawVT(m) {
       vtCtx.clearRect(0, 0, vtCanvas.width, vtCanvas.height);
-      const ox = 50, oy = 118, w = 530, h = 95;
+      const ox = 52, oy = 168, w = 530, h = 135;
       const maxV = 10;
       const toGx = (t) => ox + (t / maxT) * w;
       const toGy = (v) => oy - (v / maxV) * h;
@@ -946,7 +963,7 @@
 
       vtCtx.font = 'bold 11px Noto Sans TC'; vtCtx.fillStyle = '#1e3a8a';
       vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'top';
-      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 4);
+      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 6);
 
       vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'bottom';
       vtCtx.fillText('速度 v (m/s)', ox - 40, oy - h - 6);
@@ -979,7 +996,7 @@
         vtCtx.font = 'bold 11px Outfit';
         vtCtx.textAlign = 'center';
         vtCtx.textBaseline = 'top';
-        vtCtx.fillText(t, gx, oy + 4);
+        vtCtx.fillText(t, gx, oy + 6);
       });
 
       // Continuous v-t Line: (0,0) -> (4,8) -> (6,8) -> (10,4)
