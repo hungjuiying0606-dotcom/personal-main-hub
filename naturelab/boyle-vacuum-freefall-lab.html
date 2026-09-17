@@ -844,13 +844,12 @@
         // Tube 2: Vacuum (Soft Azure Blue border & tint)
         drawTube(tube2X, tubeTop, tubeW, tubeH, '🔵 真空管 (0.00 atm 完全真空)', '#2563eb', 'rgba(37, 99, 235, 0.05)', '#1d4ed8');
 
-        // Ground Platform with safety stripes
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(40, tubeTop + tubeH, cw - 80, 14);
-        ctx.fillStyle = '#f59e0b';
-        for (let sx = 45; sx < cw - 80; sx += 24) {
-          ctx.fillRect(sx, tubeTop + tubeH + 1, 12, 3);
-        }
+        // Laboratory Stand Base (Clean subtle slate)
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(40, tubeTop + tubeH, cw - 80, 8);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(40, tubeTop + tubeH, cw - 80, 8);
 
         // Draw items in Tube 1 (Air)
         const yCoinAir = topY + (coinAir.y / tubeHeight) * hSpan;
@@ -914,9 +913,12 @@
         ctx.fillText('🗼 比薩斜塔 (55m)', 125, towerTop - 12);
         ctx.restore();
 
-        // Ground Platform
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(40, towerTop + towerH, cw - 80, 14);
+        // Ground Lawn (Clean subtle green)
+        ctx.fillStyle = '#dcfce7';
+        ctx.fillRect(40, towerTop + towerH, cw - 80, 8);
+        ctx.strokeStyle = '#86efac';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(40, towerTop + towerH, cw - 80, 8);
 
         const yCoinVac = topY + (coinVac.y / tubeHeight) * hSpan;
 

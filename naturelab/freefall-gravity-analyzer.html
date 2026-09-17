@@ -928,21 +928,13 @@
       towerCtx.stroke();
       towerCtx.setLineDash([]);
 
-      // Ground Base Platform (High Contrast Asphalt Base with warning stripes)
-      towerCtx.fillStyle = '#0f172a';
-      towerCtx.fillRect(15, bottomY + 8, cw - 30, 14);
-
-      // Warning hazard stripes on ground border
-      towerCtx.fillStyle = '#f59e0b';
-      for (let sx = 20; sx < cw - 35; sx += 22) {
-        towerCtx.fillRect(sx, bottomY + 9, 10, 3);
-      }
-
-      towerCtx.fillStyle = '#0f172a';
-      towerCtx.font = 'bold 12px Noto Sans TC, sans-serif';
-      towerCtx.textAlign = 'center';
-      towerCtx.textBaseline = 'middle';
-      towerCtx.fillText(`🏁 地面 (總固定高度 H = ${fixedH.toFixed(1)} m)`, cw / 2 + 10, bottomY + 34);
+      // Clean subtle ground reference line
+      towerCtx.beginPath();
+      towerCtx.moveTo(20, bottomY + 14);
+      towerCtx.lineTo(cw - 20, bottomY + 14);
+      towerCtx.strokeStyle = '#e2e8f0';
+      towerCtx.lineWidth = 2;
+      towerCtx.stroke();
 
       // Strobe Ghost Drops for each integer second (s = 1, 2, 3...)
       for (let s = 1; s <= Math.floor(maxT); s++) {
