@@ -913,6 +913,7 @@
       graphCtx.beginPath(); graphCtx.moveTo(scanX, oy - 110); graphCtx.lineTo(scanX, oy + 65);
       graphCtx.strokeStyle = '#9333ea'; graphCtx.lineWidth = 2; graphCtx.setLineDash([4, 4]); graphCtx.stroke(); graphCtx.setLineDash([]);
 
+      const isForward = (curV >= 0);
       graphCtx.beginPath(); graphCtx.arc(scanX, dotY, 6, 0, Math.PI * 2);
       graphCtx.fillStyle = isForward ? '#2563eb' : '#dc2626'; graphCtx.fill();
       graphCtx.strokeStyle = '#ffffff'; graphCtx.lineWidth = 2; graphCtx.stroke();
