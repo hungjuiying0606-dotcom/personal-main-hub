@@ -9,382 +9,307 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ea580c;       /* THSRC Orange */
+      --primary: #ea580c;
       --primary-dark: #c2410c;
-      --accel-blue: #0284c7;    /* Accel Phase */
-      --cruise-amber: #f59e0b;  /* Cruise Phase */
-      --decel-red: #ef4444;     /* Decel Phase */
-      --bg: #fff7ed;
+      --accent: #0284c7;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fed7aa;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(234, 88, 12, 0.08);
+      --danger: #dc2626;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+    }
+    body {
       display: flex;
       flex-direction: column;
     }
-
     header {
       background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+      padding: 0.35rem 1rem;
+      height: 38px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
     }
-
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
-
+    .header-left h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
     .badge {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
-
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .header-info {
+      font-size: 0.72rem;
+      opacity: 0.92;
     }
 
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
       flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #ffedd5;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      padding: 0.5rem 0.75rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-
-    .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 10;
-    }
-
-    canvas.stage-canvas {
-      display: block;
+      gap: 0.6rem;
+      min-height: 0;
+      max-width: 1400px;
       width: 100%;
-      height: 480px;
+      margin: 0 auto;
     }
 
-    /* Controls Panel */
-    .control-panel {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      min-height: 0;
+      overflow: hidden;
     }
 
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .slider-row label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      min-width: 110px;
-    }
-
-    .slider-row input[type="range"] {
+    .canvas-container {
       flex: 1;
-      accent-color: var(--primary);
+      position: relative;
+      background: #ffffff;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
     }
-
-    .btn-row {
+    .stage-hud {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      z-index: 5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stage-hud span { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; }
+
+    canvas.stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
+    .control-panel {
+      padding: 0.45rem 0.65rem;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: nowrap;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
     .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
       font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: white;
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .scrubber-container {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      margin-left: 0.2rem;
+    }
+    .scrubber-container label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .scrubber-container input[type="range"] {
+      flex: 1;
+      height: 5px;
+      accent-color: var(--primary);
+      cursor: pointer;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Pillars Telemetry Grid */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
+      flex-shrink: 0;
     }
-
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
-      background: #ffffff;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem;
       text-align: center;
     }
+    .t-card.t-time { border-color: #bae6fd; background: #f0f9ff; }
+    .t-card.t-speed { border-color: #fed7aa; background: #fff7ed; }
+    .t-card.t-shape { border-color: #fde68a; background: #fffbeb; }
+    .t-title { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; }
+    .t-sub { font-size: 0.65rem; color: #64748b; }
 
-    .t-card.time { border-color: #bae6fd; background: #f0f9ff; }
-    .t-card.speed { border-color: #fed7aa; background: #fff7ed; }
-    .t-card.shape { border-color: #fde68a; background: #fffbeb; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.time h4 { color: #0284c7; }
-    .t-card.speed h4 { color: #ea580c; }
-    .t-card.shape h4 { color: #b45309; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-    }
-
-    .t-card.time .t-val { color: #0284c7; }
-    .t-card.speed .t-val { color: #ea580c; }
-    .t-card.shape .t-val { color: #b45309; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Spec Box */
-    .spec-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .spec-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #fff7ed;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options {
+    .tab-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      min-height: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
     }
-
-    .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      text-align: left;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
       cursor: pointer;
-      transition: all 0.2s;
+      color: #64748b;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+      font-weight: 800;
+    }
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
 
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .formula-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid var(--primary);
+      padding: 0.35rem 0.55rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.35rem;
+    }
+    .formula-step strong { color: var(--primary-dark); }
 
-    .quiz-feedback {
-      font-size: 0.85rem;
+    .quiz-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+    .quiz-item p { font-weight: 700; font-size: 0.76rem; margin-bottom: 0.3rem; }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+    }
+    .quiz-btn {
+      padding: 0.25rem 0.45rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-btn:hover { background: #f1f5f9; }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
       display: none;
     }
 
-    .quiz-feedback.show { display: block; }
-
     footer {
-      background: #e2e8f0;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      padding: 0.2rem;
+      font-size: 0.68rem;
+      color: #64748b;
+      height: 20px;
+      flex-shrink: 0;
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
@@ -401,10 +326,9 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(triggerMathRender, 200);
+      setTimeout(triggerMathRender, 800);
     });
   </script>
 </head>
@@ -412,110 +336,95 @@
 
   <!-- Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🚄 台灣高鐵 2.5 分鐘破 300km/h ＋ 梯形 v-t 圖巡航解析器</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第6頁題組4</span>
-        </h1>
-        <p>常用加速度 2.0 km/h/s (0.55m/s²) ➔ 破 300km/h 約需 2.5 分鐘 (選A)；加速→等速→減速呈現「等腰梯形 v-t 圖」(選B)！</p>
-      </div>
+    <div class="header-left">
+      <a href="chapter1-hub.html" style="color: white; text-decoration: none; font-size: 0.8rem; font-weight: 700; background: rgba(255,255,255,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">❮ 回目錄</a>
+      <h1>
+        <span>🚄 台灣高鐵 2.5 分鐘破 300km/h ＋ 梯形 v-t 圖巡航</span>
+        <span class="badge">全章綜合卷 03 卷第6頁題組4</span>
+      </h1>
+    </div>
+    <div class="header-info">
+      常用加速度 2.0 km/h/s ➔ 破 300km/h 需 2.5 分鐘 ｜ 加速→等速→減速呈等腰梯形
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Grid -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Railway & Trapezoid v-t Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚄 甲站出發至乙站停靠 ＋ 下方 v-t 梯形面積連動</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 啟動高鐵甲站至乙站全巡航</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
-          </div>
+    <!-- Left Column: Canvas & Controls -->
+    <div class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱️ 耗時：<strong id="hudTime" class="hud-val" style="color: #b45309;">0.0 分鐘</strong></span>
+          <span>🚄 速度：<strong id="hudSpeed" class="hud-val" style="color: #ea580c;">0 km/h</strong></span>
+          <span>📍 里程：<strong id="hudDist" class="hud-val" style="color: #0284c7;">0.0 km / 30.9km</strong></span>
         </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
 
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 耗時：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 分鐘</strong></span>
-            <span>🚄 速度：<strong id="hudSpeed" style="color: #fb923c; font-family: 'Outfit';">0 km/h (0.0 m/s)</strong></span>
-            <span>📍 行駛里程：<strong id="hudDist" style="color: #38bdf8; font-family: 'Outfit';">0.0 km / 30.0km</strong></span>
+      <!-- Controls Panel directly below canvas -->
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 啟動高鐵全線巡航</button>
+            <button class="btn" onclick="resetSim()">🔄 重置</button>
           </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div class="slider-row">
-            <label for="timeSlider">⏱️ 時間進度：</label>
-            <input type="range" id="timeSlider" min="0" max="8.5" step="0.1" value="0" oninput="onSliderChange(this.value)">
-            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; min-width: 70px;">0.0 min</span>
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            💡 <strong>題組 4 兩大小題精華：</strong><br>
-            ① <strong>加速耗時推算：</strong>由規格常用加速度 \( 2.0\text{ km/h/s} \)，達到 \( 300\text{ km/h} \) 需時 \( \frac{300}{2.0} = 150\text{ 秒} = \mathbf{2.5\text{ 分鐘}} \)（選 A）。<br>
-            ② <strong>v-t 圖圖形：</strong>加速（上升斜線） ➔ 巡航（水平直線） ➔ 靠站減速（下降斜線） ➔ <strong>梯形（選 B）</strong>！
+          <div class="scrubber-container">
+            <label for="timeSlider">時間軸：</label>
+            <input type="range" id="timeSlider" min="0" max="8.35" step="0.05" value="0" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; font-size: 0.8rem; min-width: 50px;">0.0 min</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Right Column: 3 Pillars & Spec & 2 Quizzes -->
-      <div>
-        
-        <!-- 3 Pillars Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Accel Time -->
-          <div class="t-card time">
-            <h4>⏱️ 加速耗時</h4>
-            <div class="t-val" id="valTime">2.5 分鐘</div>
-            <div class="t-sub"><strong>題組 4(1) 選 (A)</strong></div>
+    <!-- Right Column: Telemetry & Tabs -->
+    <div class="right-col">
+      <!-- 3 Pillars Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="t-card t-time">
+          <div class="t-title">⏱️ 加速耗時</div>
+          <div class="t-val" style="color: #0284c7;">2.5 分鐘</div>
+          <div class="t-sub"><strong>題組 4(1) 選 (A)</strong></div>
+        </div>
+        <div class="t-card t-speed">
+          <div class="t-title">⚡ 最高營運時速</div>
+          <div class="t-val" style="color: #ea580c;">300 km/h</div>
+          <div class="t-sub">約合 83.3 m/s</div>
+        </div>
+        <div class="t-card t-shape">
+          <div class="t-title">📐 v-t 圖型態</div>
+          <div class="t-val" style="color: #b45309;">等腰梯形</div>
+          <div class="t-sub"><strong>題組 4(2) 選 (B)</strong></div>
+        </div>
+      </div>
+
+      <!-- Tabbed Panel -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnExp" onclick="switchRightTab('exp')">📖 題目詳解與規格</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchRightTab('quiz')">📝 原題測驗 (2小題)</button>
+        </div>
+
+        <!-- Tab 1: Explanation -->
+        <div class="tab-content" id="tabContentExp">
+          <div class="formula-step">
+            <strong>📋 官方規格數據精算（第 1 小題）：</strong><br>
+            • <strong>常用加速度：</strong>\( a = 2.0\text{ km/h/s} \)（代表每秒速度增加 2 km/h）。<br>
+            • <strong>加速至最高速 300 km/h 耗時：</strong><br>
+            $$t = \frac{\Delta v}{a} = \frac{300\text{ km/h}}{2.0\text{ km/h/s}} = 150\text{ 秒} = \mathbf{2.5\text{ 分鐘}}\text{（選 A）}$$
           </div>
 
-          <!-- Top Speed -->
-          <div class="t-card speed">
-            <h4>⚡ 最高營運時速</h4>
-            <div class="t-val" id="valSpeed">300 km/h</div>
-            <div class="t-sub">約合 \( 83.3\text{ m/s} \)</div>
-          </div>
-
-          <!-- Graph Shape -->
-          <div class="t-card shape">
-            <h4>📐 v-t 圖型態</h4>
-            <div class="t-val" id="valShape">等腰梯形</div>
-            <div class="t-sub"><strong>題組 4(2) 選 (B)</strong></div>
+          <div class="formula-step">
+            <strong>📐 列車運行 v-t 圖幾何意義（第 2 小題）：</strong><br>
+            • <strong>① 出站加速：</strong>斜線上升（速度由 0 ➔ 300 km/h）。<br>
+            • <strong>② 長途巡航：</strong>水平直線（速度穩定維持 300 km/h）。<br>
+            • <strong>③ 靠站煞車：</strong>斜線下降（速度由 300 ➔ 0 km/h）。<br>
+            三階段合起來正是<strong>梯形（選 B）</strong>！其面積代表甲站到乙站的總行駛里程！
           </div>
         </div>
 
-        <!-- Official Spec Box -->
-        <div class="spec-box">
-          <div class="spec-title">📋 台灣高鐵 700T 列車官方規格表：</div>
-          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
-            <li><strong>常用加速度：</strong>\( 0.55\text{ m/s}^2 \)（約 \( 2.0\text{ km/h/s} \)）。</li>
-            <li><strong>最高營運速度：</strong>\( 300\text{ km/h} \)（\( 83.33\text{ m/s} \)）。</li>
-            <li><strong>常用減速度：</strong>\( 0.75\text{ m/s}^2 \)（約 \( 2.7\text{ km/h/s} \)）。</li>
-            <li><strong>推算加速至 300km/h：</strong>
-              $$t = \frac{300\text{ km/h}}{2.0\text{ km/h/s}} = 150\text{ 秒} = \mathbf{2.5\text{ 分鐘}}\text{（選 A）}$$
-            </li>
-          </ul>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 列車運行 v-t 圖物理意義：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>斜率：</strong>上升斜率為加速度，水平斜率為 0（等速），下降斜率為減速度。</li>
-            <li><strong>梯形面積：</strong>代表甲站至乙站的總行駛里程（位移）！</li>
-          </ul>
-        </div>
-
-        <!-- 2 Quizzes Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷題組 4 原題全兩題測驗</div>
-
+        <!-- Tab 2: Quiz -->
+        <div class="tab-content" id="tabContentQuiz" style="display: none;">
           <div class="quiz-item">
             <p>Q1. (1) 正常起動加速達到最高營運速度（300 km/h），約需要幾分鐘？</p>
             <div class="quiz-options">
@@ -524,29 +433,27 @@
               <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 7.5 分鐘</button>
               <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 10.0 分鐘</button>
             </div>
-            <div class="quiz-feedback" id="fb1"></div>
+            <div class="quiz-fb" id="fb1"></div>
           </div>
 
           <div class="quiz-item">
             <p>Q2. (2) 高鐵列車由甲站行駛至乙站（加速→等速→減速），其 v-t 圖應為下列何者？</p>
             <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 梯形（加速斜線上升 ➔ 等速水平直線 ➔ 減速斜線下降）</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 梯形（加速斜線 ➔ 等速水平 ➔ 減速斜線）</button>
               <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 三角形</button>
               <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) 拋物線</button>
               <button class="quiz-btn" onclick="checkQuiz(2, 'D', this)">(D) 水平直線</button>
             </div>
-            <div class="quiz-feedback" id="fb2"></div>
+            <div class="quiz-fb" id="fb2"></div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+    國中自然 3上 · 1-4 加速度與等加速度運動 · 考卷檢討專題
   </footer>
 
   <script>
@@ -557,12 +464,25 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Profile:
-    // Total distance ~ 30 km
-    // Phase 1 (0 to 2.5 min = 150s): accel from 0 to 300 km/h (v=83.33 m/s). Dist = 1/2 * 83.33 * 150 = 6.25 km
-    // Phase 2 (2.5 to 6.5 min = 240s): cruise at 300 km/h (83.33 m/s). Dist = 83.33 * 240 = 20.0 km
-    // Phase 3 (6.5 to 8.35 min = 111s): decel at 0.75 m/s^2 to 0. Dist = 1/2 * 83.33 * 111 = 4.63 km
-    // Total Dist = 6.25 + 20.0 + 4.63 = 30.88 km ~ 31 km
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchRightTab(tab) {
+      document.getElementById('tabBtnExp').classList.toggle('active', tab === 'exp');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabContentExp').style.display = (tab === 'exp') ? 'block' : 'none';
+      document.getElementById('tabContentQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
+      if (tab === 'exp') setTimeout(window.triggerMathRender, 50);
+    }
+
     function getState(tMin) {
       const tSec = tMin * 60.0;
       let vKmh = 0;
@@ -570,18 +490,15 @@
       let phase = 'accel';
 
       if (tSec <= 150.0) {
-        // Accel: v = 2.0 km/h/s * tSec
         vKmh = (300.0 / 150.0) * tSec;
         distKm = (0.5 * (vKmh / 3.6) * tSec) / 1000.0;
         phase = 'accel';
       } else if (tSec <= 390.0) {
-        // Cruise: 300 km/h
         vKmh = 300.0;
         const cruiseSec = tSec - 150.0;
         distKm = 6.25 + ((83.33 * cruiseSec) / 1000.0);
         phase = 'cruise';
       } else if (tSec <= 501.0) {
-        // Decel: from 300 to 0 in 111s
         const decSec = tSec - 390.0;
         vKmh = Math.max(0, 300.0 - (300.0 / 111.0) * decSec);
         distKm = 26.25 + ((0.5 * (300.0 + vKmh) / 3.6 * decSec) / 1000.0);
@@ -611,7 +528,7 @@
         loop();
       } else {
         isRunning = false;
-        btn.innerText = '▶ 啟動高鐵甲站至乙站全巡航';
+        btn.innerText = '▶ 啟動高鐵全線巡航';
         btn.style.background = 'var(--primary)';
         if (animId) cancelAnimationFrame(animId);
       }
@@ -621,8 +538,9 @@
       isRunning = false;
       simMin = 0;
       if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRun').innerText = '▶ 啟動高鐵甲站至乙站全巡航';
-      document.getElementById('btnRun').style.background = 'var(--primary)';
+      const btn = document.getElementById('btnRun');
+      btn.innerText = '▶ 啟動高鐵全線巡航';
+      btn.style.background = 'var(--primary)';
       document.getElementById('timeSlider').value = 0;
       document.getElementById('sliderVal').innerText = '0.0 min';
       updateUI();
@@ -646,75 +564,76 @@
     function updateUI() {
       const st = getState(simMin);
       document.getElementById('hudTime').innerText = `${simMin.toFixed(2)} 分鐘`;
-      document.getElementById('hudSpeed').innerText = `${st.vKmh.toFixed(0)} km/h (${st.vMs.toFixed(1)} m/s)`;
-      document.getElementById('hudDist').innerText = `${st.distKm.toFixed(1)} km / 30.9km ${st.phase === 'stopped' ? '(已抵達乙站！)' : ''}`;
+      document.getElementById('hudSpeed').innerText = `${st.vKmh.toFixed(0)} km/h`;
+      document.getElementById('hudDist').innerText = `${st.distKm.toFixed(1)} km / 30.9km ${st.phase === 'stopped' ? '(已抵達)' : ''}`;
 
       draw(st);
     }
 
     function draw(st) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
+
+      // Pure White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
       // ==========================================
-      // 1. Top Section: High Speed Rail Track (y: 20 to 140)
+      // 1. Top Section: High Speed Rail Track
       // ==========================================
-      const trackX1 = 80, trackX2 = cw - 70;
-      const trackY = 35, trackH = 65;
+      const trackX1 = 65, trackX2 = cw - 30;
+      const trackY = 32, trackH = 46;
 
       function toTrackPx(dist) { return trackX1 + (dist / 30.88) * (trackX2 - trackX1); }
 
       // Railway Bed
-      ctx.fillStyle = '#1e293b'; ctx.fillRect(trackX1, trackY, trackX2 - trackX1, trackH);
-      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 1.5; ctx.strokeRect(trackX1, trackY, trackX2 - trackX1, trackH);
+      ctx.fillStyle = '#f1f5f9'; ctx.fillRect(trackX1, trackY, trackX2 - trackX1, trackH);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5; ctx.strokeRect(trackX1, trackY, trackX2 - trackX1, trackH);
 
       // Rails
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 22); ctx.lineTo(trackX2, trackY + 22); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 44); ctx.lineTo(trackX2, trackY + 44); ctx.stroke();
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 16); ctx.lineTo(trackX2, trackY + 16); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 30); ctx.lineTo(trackX2, trackY + 30); ctx.stroke();
 
-      // Station Markers
-      // Station A (0km)
-      ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
-      ctx.fillText('🏢 甲站 (起點)', trackX1 + 25, trackY - 8);
+      // Stations
+      ctx.fillStyle = '#b45309'; ctx.font = 'bold 9px Noto Sans TC'; ctx.textAlign = 'left';
+      ctx.fillText('🏢 甲站(起)', trackX1 + 4, trackY - 2);
 
-      // Station B (30.9km)
-      ctx.fillStyle = '#f87171';
-      ctx.fillText('🏢 乙站 (終點)', trackX2 - 25, trackY - 8);
+      ctx.fillStyle = '#dc2626'; ctx.textAlign = 'right';
+      ctx.fillText('🏢 乙站(訖)', trackX2 - 4, trackY - 2);
 
-      // Distance Ticks (0, 10, 20, 30km)
+      // Distance Ticks
       [0, 10, 20, 30.9].forEach(d => {
         const px = toTrackPx(d);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
+        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(px, trackY); ctx.lineTo(px, trackY + trackH); ctx.stroke();
 
-        ctx.fillStyle = (d === 0 || d >= 30) ? '#fde047' : '#64748b';
-        ctx.font = (d === 0 || d >= 30) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${d.toFixed(0)}km`, px, trackY + trackH + 16);
+        ctx.fillStyle = '#64748b'; ctx.font = 'bold 8px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${d.toFixed(0)}km`, px, trackY + trackH + 10);
       });
 
-      // THSRC 700T Train Avatar 🚄
+      // Train
       const trainPx = toTrackPx(st.distKm);
-      ctx.font = '36px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🚄', trainPx, trackY + 44);
+      ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🚄', trainPx, trackY + 30);
 
       // ==========================================
-      // 2. Bottom Section: Trapezoid v-t Graph (y: 170 to 450)
+      // 2. Bottom Section: Trapezoid v-t Graph
       // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 440, gyTop = 180;
+      const gx1 = 55, gx2 = cw - 35;
+      const gyZero = ch - 22, gyTop = 110;
 
       function mapX(tMin) { return gx1 + (tMin / 8.35) * (gx2 - gx1); }
-      function mapY(v) { return gyZero - (v / 330.0) * (gyZero - gyTop); }
+      function mapY(v) { return gyZero - (v / 340.0) * (gyZero - gyTop); }
 
-      // Shaded Trapezoid Area (up to simMin)
+      // Shaded Trapezoid Area up to simMin
       if (simMin > 0) {
-        ctx.fillStyle = 'rgba(234, 88, 12, 0.25)';
+        ctx.fillStyle = 'rgba(234, 88, 12, 0.15)';
         ctx.beginPath();
         ctx.moveTo(mapX(0), gyZero);
 
-        const step = 0.1;
+        const step = 0.05;
         for (let t = 0; t <= simMin; t += step) {
           const s = getState(t);
           ctx.lineTo(mapX(t), mapY(s.vKmh));
@@ -725,35 +644,25 @@
         ctx.fill();
       }
 
-      // Grid Ticks
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
+      // Grid
+      ctx.strokeStyle = '#f1f5f9'; ctx.lineWidth = 1;
       [2.5, 6.5, 8.35].forEach(t => {
         const px = mapX(t);
         ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = (t === 2.5) ? '#fde047' : '#64748b';
-        ctx.font = (t === 2.5) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.fillStyle = (t === 2.5) ? '#ea580c' : '#64748b';
+        ctx.font = (t === 2.5) ? 'bold 10px Outfit' : '9px Outfit';
         ctx.textAlign = 'center';
-        ctx.fillText(`${t.toFixed(1)}分`, px, gyZero + 16);
+        ctx.fillText(`${t.toFixed(1)}分`, px, gyZero + 13);
       });
-      [0, 150, 300].forEach(v => {
+      [150, 300].forEach(v => {
         const py = mapY(v);
         ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (v === 300) ? '#fde047' : '#64748b';
-        ctx.font = (v === 300) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'right';
-        ctx.fillText(`${v}`, gx1 - 8, py + 4);
+        ctx.fillStyle = '#64748b'; ctx.font = 'bold 9px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${v}`, gx1 - 5, py + 3);
       });
 
-      // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('速度 v (km/h)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (分鐘)', gx2 + 10, gyZero + 32);
-
-      // Trapezoid Outline: (0,0) -> (2.5, 300) -> (6.5, 300) -> (8.35, 0)
-      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 4;
+      // Ref Trapezoid outline
+      ctx.strokeStyle = '#fed7aa'; ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(mapX(0), mapY(0));
       ctx.lineTo(mapX(2.5), mapY(300));
@@ -761,56 +670,80 @@
       ctx.lineTo(mapX(8.35), mapY(0));
       ctx.stroke();
 
-      // Highlight Phase Labels on v-t
-      ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
-      ctx.fillText('① 加速 2.5分', mapX(1.25), mapY(150));
-      ctx.fillStyle = '#fbbf24';
-      ctx.fillText('② 300km/h 巡航', mapX(4.5), mapY(315));
-      ctx.fillStyle = '#f87171';
-      ctx.fillText('③ 減速進站', mapX(7.4), mapY(150));
+      // Active curve
+      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(mapX(0), mapY(0));
+      if (simMin <= 2.5) {
+        ctx.lineTo(mapX(simMin), mapY(st.vKmh));
+      } else if (simMin <= 6.5) {
+        ctx.lineTo(mapX(2.5), mapY(300));
+        ctx.lineTo(mapX(simMin), mapY(300));
+      } else {
+        ctx.lineTo(mapX(2.5), mapY(300));
+        ctx.lineTo(mapX(6.5), mapY(300));
+        ctx.lineTo(mapX(simMin), mapY(st.vKmh));
+      }
+      ctx.stroke();
 
-      // Dynamic Current Point
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(mapX(simMin), mapY(st.vKmh), 6, 0, Math.PI * 2); ctx.fill();
+      // Axes
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 6); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 10, gyZero); ctx.stroke();
+
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 10px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('時速 (km/h)', gx1 - 5, gyTop - 2);
+      ctx.textAlign = 'center'; ctx.fillText('時間 (分)', gx2 + 5, gyZero + 13);
+
+      // Phase labels on v-t
+      ctx.fillStyle = '#0284c7'; ctx.font = 'bold 9px Noto Sans TC'; ctx.textAlign = 'center';
+      ctx.fillText('①加速 2.5分', mapX(1.25), mapY(130));
+      ctx.fillStyle = '#d97706';
+      ctx.fillText('②300km/h 巡航', mapX(4.5), mapY(310));
+      ctx.fillStyle = '#dc2626';
+      ctx.fillText('③減速靠站', mapX(7.4), mapY(130));
+
+      // Current point dot
+      ctx.fillStyle = '#ea580c';
+      ctx.beginPath(); ctx.arc(mapX(simMin), mapY(st.vKmh), 5, 0, Math.PI * 2); ctx.fill();
     }
 
-    // Quiz Check
     function checkQuiz(qNum, ans, el) {
       const parent = el.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
       const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      fb.style.display = 'block';
 
       if (qNum === 1) {
         if (ans === 'A') {
           el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>常用加速度為 \( 2.0\\text{ km/h/s} \)，由 0 加速至 300 km/h 所需時間：<br>\( t = \\frac{300}{2.0} = 150\\text{ 秒} = \\mathbf{2.5\\text{ 分鐘}} \)（選 A）！';
+          fb.style.background = '#dcfce7';
+          fb.style.color = '#15803d';
+          fb.innerHTML = '✅ 正確！300 km/h ÷ 2.0 km/h/s ＝ 150 秒 ＝ 2.5 分鐘（選 A）！';
         } else {
           el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心單位換算！</strong> 300 km/h ÷ 2.0 km/h/s ＝ 150 秒 ＝ 2.5 分鐘（選 A）！';
+          fb.style.background = '#fee2e2';
+          fb.style.color = '#b91c1c';
+          fb.innerHTML = '❌ 答錯了！\\( 300 / 2 = 150\\text{ 秒} = 2.5\\text{ 分鐘} \\)（選 A）！';
         }
       } else if (qNum === 2) {
         if (ans === 'B') {
           el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>由甲站至乙站：離站等加速（斜線上揚） ➔ 巡航等速（水平線） ➔ 靠站等減速（斜線下降），整體呈 <strong>梯形（選 B）</strong>！';
+          fb.style.background = '#dcfce7';
+          fb.style.color = '#15803d';
+          fb.innerHTML = '✅ 正確！高鐵加速→等速→減速，v-t 圖為梯形（選 B）！';
         } else {
           el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心 v-t 圖型態！</strong> 包含「加速、等速、減速」三個階段，整體應為梯形（選 B）！';
+          fb.style.background = '#fee2e2';
+          fb.style.color = '#b91c1c';
+          fb.innerHTML = '❌ 答錯了！包含加速斜線、等速水平、減速斜線，整體為梯形（選 B）！';
         }
       }
+      setTimeout(window.triggerMathRender, 50);
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      resizeCanvas();
     });
   </script>
-
-  
-
 </body>
 </html>

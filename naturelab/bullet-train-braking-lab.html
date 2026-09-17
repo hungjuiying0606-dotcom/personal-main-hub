@@ -9,364 +9,307 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0284c7;       /* French TGV Blue */
+      --primary: #0284c7;
       --primary-dark: #0369a1;
-      --train-tgv: #0284c7;
-      --brake-red: #ef4444;
-      --speed-amber: #f59e0b;
-      --bg: #f0f9ff;
+      --accent: #dc2626;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #bae6fd;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+      --danger: #dc2626;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+    }
+    body {
       display: flex;
       flex-direction: column;
     }
-
     header {
       background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+      padding: 0.35rem 1rem;
+      height: 38px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
     }
-
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
-
+    .header-left h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
     .badge {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
-
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .header-info {
+      font-size: 0.72rem;
+      opacity: 0.92;
     }
 
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
       flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e0f2fe;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      padding: 0.5rem 0.75rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-
-    .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 10;
-    }
-
-    canvas.stage-canvas {
-      display: block;
+      gap: 0.6rem;
+      min-height: 0;
+      max-width: 1400px;
       width: 100%;
-      height: 480px;
+      margin: 0 auto;
     }
 
-    /* Controls Panel */
-    .control-panel {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      min-height: 0;
+      overflow: hidden;
     }
 
-    .btn-row {
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      z-index: 5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stage-hud span { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; }
+
+    canvas.stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
+    .control-panel {
+      padding: 0.45rem 0.65rem;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: nowrap;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
     .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
       font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: white;
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .scrubber-container {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      margin-left: 0.2rem;
+    }
+    .scrubber-container label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .scrubber-container input[type="range"] {
+      flex: 1;
+      height: 5px;
+      accent-color: var(--primary);
+      cursor: pointer;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Pillars Grid */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
+      flex-shrink: 0;
     }
-
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
-      background: #ffffff;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem;
       text-align: center;
     }
+    .t-card.t-speed { border-color: #fde68a; background: #fffbeb; }
+    .t-card.t-accel { border-color: #fecaca; background: #fef2f2; }
+    .t-card.t-dist { border-color: #bae6fd; background: #f0f9ff; }
+    .t-title { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; }
+    .t-sub { font-size: 0.65rem; color: #64748b; }
 
-    .t-card.speed { border-color: #fde68a; background: #fffbeb; }
-    .t-card.accel { border-color: #fecaca; background: #fef2f2; }
-    .t-card.dist { border-color: #bae6fd; background: #f0f9ff; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.speed h4 { color: #b45309; }
-    .t-card.accel h4 { color: #dc2626; }
-    .t-card.dist h4 { color: #0284c7; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-    }
-
-    .t-card.speed .t-val { color: #b45309; }
-    .t-card.accel .t-val { color: #dc2626; }
-    .t-card.dist .t-val { color: #0284c7; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Formula Box */
-    .formula-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f0f9ff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options {
+    .tab-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      min-height: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
     }
-
-    .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      text-align: left;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
       cursor: pointer;
-      transition: all 0.2s;
+      color: #64748b;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+      font-weight: 800;
+    }
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
 
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .formula-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid var(--primary);
+      padding: 0.35rem 0.55rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.35rem;
+    }
+    .formula-step strong { color: var(--primary-dark); }
 
-    .quiz-feedback {
-      font-size: 0.85rem;
+    .quiz-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+    .quiz-item p { font-weight: 700; font-size: 0.76rem; margin-bottom: 0.3rem; }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+    }
+    .quiz-btn {
+      padding: 0.25rem 0.45rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-btn:hover { background: #f1f5f9; }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
       display: none;
     }
 
-    .quiz-feedback.show { display: block; }
-
     footer {
-      background: #e2e8f0;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      padding: 0.2rem;
+      font-size: 0.68rem;
+      color: #64748b;
+      height: 20px;
+      flex-shrink: 0;
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
@@ -383,10 +326,9 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(triggerMathRender, 200);
+      setTimeout(triggerMathRender, 800);
     });
   </script>
 </head>
@@ -394,126 +336,115 @@
 
   <!-- Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🚄 法國 360km/h (100m/s) 子彈列車 400m 煞停進站</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第16題</span>
-        </h1>
-        <p>初速 360 km/h ＝ 100 m/s，進站前 400m 煞停 ➔ 平均加速度 a ＝ －12.5 m/s² (選B)；需時 8 秒進站！</p>
-      </div>
+    <div class="header-left">
+      <a href="chapter1-hub.html" style="color: white; text-decoration: none; font-size: 0.8rem; font-weight: 700; background: rgba(255,255,255,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">❮ 回目錄</a>
+      <h1>
+        <span>🚄 法國 360km/h (100m/s) 子彈列車 400m 煞停進站</span>
+        <span class="badge">全章綜合卷 03 卷第16題</span>
+      </h1>
+    </div>
+    <div class="header-info">
+      \( v^2 = v_0^2 + 2aS \implies a = \mathbf{-12.5\text{ m/s}^2} \) ｜ 需時 8 秒進站
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Grid -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Train Platform & v-t Graph Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚄 高鐵進站月台實況 ＋ 下方 v-t 減速面積連動</span>
-          </div>
-          <div class="btn-row">
+    <!-- Left Column: Canvas & Controls -->
+    <div class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱️ 碼錶：<strong id="hudTime" class="hud-val" style="color: #b45309;">0.0 s</strong></span>
+          <span>🚄 當前速度：<strong id="hudSpeed" class="hud-val" style="color: #0284c7;">100.0 m/s (360 km/h)</strong></span>
+          <span>📍 煞車滑行：<strong id="hudDist" class="hud-val" style="color: #15803d;">0.0 m / 400m</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel directly below canvas -->
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
             <button class="btn btn-primary" id="btnBrake" onclick="toggleBrake()">▶ 啟動 400m 極速進站煞車</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+            <button class="btn" onclick="resetSim()">🔄 重置</button>
           </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 碼錶：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
-            <span>🚄 當前速度：<strong id="hudSpeed" style="color: #38bdf8; font-family: 'Outfit';">100.0 m/s (360 km/h)</strong></span>
-            <span>📍 煞車滑行距離：<strong id="hudDist" style="color: #34d399; font-family: 'Outfit';">0.0 m / 400m</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            💡 題目破解關鍵兩步驟：
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            ① <strong>單位換算：</strong>\( 360\text{ km/h} = \frac{360}{3.6} = \mathbf{100\text{ m/s}} \)。<br>
-            ② <strong>公式精算：</strong>\( v^2 = v_0^2 + 2aS \implies 0^2 = 100^2 + 2a(400) \implies 800a = -10000 \implies a = \mathbf{-12.5\text{ m/s}^2} \)（選 B）！
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間軸：</label>
+            <input type="range" id="timeScrubber" min="0" max="80" value="0" oninput="onScrub(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; font-size: 0.8rem; min-width: 40px;">0.0s</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Right Column: 3 Pillars & Formulas & Quiz -->
-      <div>
-        
-        <!-- 3 Pillars Grid -->
-        <div class="telemetry-grid">
-          <!-- Initial Speed -->
-          <div class="t-card speed">
-            <h4>🚄 初速度 v₀</h4>
-            <div class="t-val" id="valSpeed">100 m/s</div>
-            <div class="t-sub">\( 360\text{ km/h} \div 3.6 \)</div>
+    <!-- Right Column: Telemetry & Tabs -->
+    <div class="right-col">
+      <!-- 3 Pillars Telemetry -->
+      <div class="telemetry-grid">
+        <div class="t-card t-speed">
+          <div class="t-title">🚄 初速度 v₀</div>
+          <div class="t-val" style="color: #b45309;">100 m/s</div>
+          <div class="t-sub">\( 360\text{ km/h} \div 3.6 \)</div>
+        </div>
+        <div class="t-card t-accel">
+          <div class="t-title">⚡ 煞車加速度</div>
+          <div class="t-val" style="color: #dc2626;">-12.5 m/s²</div>
+          <div class="t-sub"><strong>題 16 選 (B)</strong></div>
+        </div>
+        <div class="t-card t-dist">
+          <div class="t-title">🏁 煞車滑行距離</div>
+          <div class="t-val" style="color: #0284c7;">400 m</div>
+          <div class="t-sub">耗時 <strong>8.0 秒</strong> 煞停</div>
+        </div>
+      </div>
+
+      <!-- Tabbed Panel -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnExp" onclick="switchRightTab('exp')">📖 題目詳解與推導</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchRightTab('quiz')">📝 原題測驗 (第16題)</button>
+        </div>
+
+        <!-- Tab 1: Explanation -->
+        <div class="tab-content" id="tabContentExp">
+          <div class="formula-step">
+            <strong>📐 步驟一：國際單位換算（必修第一步）</strong><br>
+            $$v_0 = 360\text{ km/h} = \frac{360 \times 1000\text{ m}}{3600\text{ s}} = \mathbf{100\text{ m/s}}$$
           </div>
 
-          <!-- Acceleration -->
-          <div class="t-card accel">
-            <h4>⚡ 煞車加速度</h4>
-            <div class="t-val" id="valAccel">-12.5 m/s²</div>
-            <div class="t-sub"><strong>題 16 選 (B)</strong></div>
+          <div class="formula-step">
+            <strong>📐 步驟二：代入末速度與位移公式求解 a</strong><br>
+            $$v^2 = v_0^2 + 2aS \implies 0^2 = 100^2 + 2 \times a \times 400$$
+            $$800a = -10000 \implies a = \frac{-10000}{800} = \mathbf{-12.5\text{ m/s}^2}\text{（選 B）}$$
           </div>
 
-          <!-- Total Distance -->
-          <div class="t-card dist">
-            <h4>🏁 煞車滑行距離</h4>
-            <div class="t-val" id="valDist">400 m</div>
-            <div class="t-sub">所需時間 <strong>8.0 秒</strong></div>
+          <div class="formula-step">
+            <strong>📐 步驟三：v-t 圖面積與進站時間</strong><br>
+            $$\text{位移 } S = \frac{v_0 + v}{2} \times t \implies 400 = \frac{100 + 0}{2} \times t \implies t = \mathbf{8\text{ 秒}}$$
+            v-t 圖底 8 秒、高 100 m/s，三角形面積剛好等於 400 公尺！
           </div>
         </div>
 
-        <!-- Formula Box -->
-        <div class="formula-box">
-          <div class="form-title">📐 等加速度運動公式完整推導：</div>
-          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
-            <li><strong>Step 1 單位換算：</strong>\( v_0 = 360\text{ km/h} = \frac{360 \times 1000\text{m}}{3600\text{s}} = \mathbf{100\text{ m/s}} \)。</li>
-            <li><strong>Step 2 代入末速公式：</strong>
-              $$v^2 = v_0^2 + 2aS \implies 0 = 100^2 + 2 \times a \times 400$$
-              $$800a = -10000 \implies a = \frac{-10000}{800} = \mathbf{-12.5\text{ m/s}^2}\text{（選 B）}$$
-            </li>
-            <li><strong>Step 3 求煞車耗時：</strong>\( S = \frac{100 + 0}{2} \times t = 400 \implies t = \frac{400}{50} = \mathbf{8\text{ 秒}} \)。</li>
-          </ul>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 國中理化解題大忌提醒：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>千萬不要直接拿 \( 360\text{ km/h} \) 去代公式！公尺（m）與秒（s）為國際標準制單位，<strong>務必先除以 3.6 轉為 100 m/s</strong>！</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷第 16 題原題測驗</div>
-
+        <!-- Tab 2: Quiz -->
+        <div class="tab-content" id="tabContentQuiz" style="display: none;">
           <div class="quiz-item">
-            <p>法國子彈列車最快 360 km/h，進站前 400m 開始煞車至到站剛好停止，平均加速度為多少 m/s²？</p>
+            <p>Q. (第16題) 法國子彈列車最快 360 km/h，進站前 400m 開始煞車至到站剛好停止，平均加速度為多少 m/s²？</p>
             <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(16, 'B', this)">(B) －12.5（360 km/h ＝ 100 m/s ➔ 0² ＝ 100² ＋ 2a(400) ➔ a ＝ －12.5 m/s²）</button>
+              <button class="quiz-btn" onclick="checkQuiz(16, 'B', this)">(B) －12.5</button>
               <button class="quiz-btn" onclick="checkQuiz(16, 'A', this)">(A) －5</button>
               <button class="quiz-btn" onclick="checkQuiz(16, 'C', this)">(C) －25</button>
               <button class="quiz-btn" onclick="checkQuiz(16, 'D', this)">(D) －45</button>
             </div>
-            <div class="quiz-feedback" id="fb16"></div>
+            <div class="quiz-fb" id="fb16"></div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+    國中自然 3上 · 1-4 加速度與等加速度運動 · 考卷檢討專題
   </footer>
 
   <script>
@@ -524,10 +455,25 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Braking Model:
-    // v0 = 100 m/s, a = -12.5 m/s^2
-    // v(t) = max(0, 100 - 12.5*t)
-    // S(t) = (t <= 8) ? 100*t - 6.25*t^2 : 400m
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchRightTab(tab) {
+      document.getElementById('tabBtnExp').classList.toggle('active', tab === 'exp');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabContentExp').style.display = (tab === 'exp') ? 'block' : 'none';
+      document.getElementById('tabContentQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
+      if (tab === 'exp') setTimeout(window.triggerMathRender, 50);
+    }
+
     function getState(t) {
       if (t >= 8.0) return { v: 0, s: 400.0, stopped: true };
       const v = 100.0 - 12.5 * t;
@@ -555,179 +501,191 @@
       isRunning = false;
       simTime = 0;
       if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnBrake').innerText = '▶ 啟動 400m 極速進站煞車';
-      document.getElementById('btnBrake').style.background = 'var(--primary)';
+      const btn = document.getElementById('btnBrake');
+      btn.innerText = '▶ 啟動 400m 極速進站煞車';
+      btn.style.background = 'var(--primary)';
+      document.getElementById('timeScrubber').value = 0;
+      document.getElementById('sliderVal').innerText = '0.0s';
+      updateUI();
+    }
+
+    function onScrub(val) {
+      if (isRunning) {
+        isRunning = false;
+        if (animId) cancelAnimationFrame(animId);
+        document.getElementById('btnBrake').innerText = '▶ 繼續';
+        document.getElementById('btnBrake').style.background = 'var(--primary)';
+      }
+      simTime = val / 10.0;
+      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
       updateUI();
     }
 
     function loop() {
       if (!isRunning) return;
-      simTime += 0.025;
+      simTime += 0.03;
       if (simTime >= 8.0) {
         simTime = 8.0;
         isRunning = false;
-        document.getElementById('btnBrake').innerText = '🔄 重新進站煞車';
+        document.getElementById('btnBrake').innerText = '🔄 重新進站';
         document.getElementById('btnBrake').style.background = 'var(--primary)';
       }
+      document.getElementById('timeScrubber').value = Math.round(simTime * 10);
+      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
       updateUI();
       if (isRunning) animId = requestAnimationFrame(loop);
     }
 
     function updateUI() {
       const st = getState(simTime);
-      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
+      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} s`;
       document.getElementById('hudSpeed').innerText = `${st.v.toFixed(1)} m/s (${(st.v * 3.6).toFixed(0)} km/h)`;
-      document.getElementById('hudDist').innerText = `${st.s.toFixed(1)} m / 400m ${st.stopped ? '(已精準停妥！)' : ''}`;
+      document.getElementById('hudDist').innerText = `${st.s.toFixed(1)} m / 400m ${st.stopped ? '(已精準停妥)' : ''}`;
 
       draw(st);
     }
 
     function draw(st) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
+
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
       // ==========================================
-      // 1. Top Section: Railway Track & Platform (y: 20 to 180)
+      // 1. Top Section: Railway Track & Platform
       // ==========================================
-      const trackX1 = 80, trackX2 = cw - 70;
-      const trackY = 40, trackH = 65;
+      const trackX1 = 65, trackX2 = cw - 30;
+      const trackY = 32, trackH = 46;
 
       function toTrackPx(dist) { return trackX1 + (dist / 400.0) * (trackX2 - trackX1); }
 
-      // Ground & Railway Bed
-      ctx.fillStyle = '#1e293b'; ctx.fillRect(trackX1, trackY, trackX2 - trackX1, trackH);
-      ctx.strokeStyle = '#64748b'; ctx.lineWidth = 2; ctx.strokeRect(trackX1, trackY, trackX2 - trackX1, trackH);
+      // Railway Bed
+      ctx.fillStyle = '#f1f5f9'; ctx.fillRect(trackX1, trackY, trackX2 - trackX1, trackH);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5; ctx.strokeRect(trackX1, trackY, trackX2 - trackX1, trackH);
 
-      // Railway Rails
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 22); ctx.lineTo(trackX2, trackY + 22); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 44); ctx.lineTo(trackX2, trackY + 44); ctx.stroke();
+      // Rails
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 16); ctx.lineTo(trackX2, trackY + 16); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(trackX1, trackY + 30); ctx.lineTo(trackX2, trackY + 30); ctx.stroke();
 
-      // Distance Markers (0m, 100m, 200m, 300m, 400m)
+      // Distance Markers
       [0, 100, 200, 300, 400].forEach(d => {
         const px = toTrackPx(d);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1.5;
+        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(px, trackY); ctx.lineTo(px, trackY + trackH); ctx.stroke();
 
-        ctx.fillStyle = (d === 0 || d === 400) ? '#fde047' : '#64748b';
-        ctx.font = (d === 0 || d === 400) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.fillStyle = (d === 0 || d === 400) ? '#0f172a' : '#64748b';
+        ctx.font = (d === 0 || d === 400) ? 'bold 9px Outfit' : '8px Outfit';
         ctx.textAlign = 'center';
-        ctx.fillText(`${d}m`, px, trackY + trackH + 16);
+        ctx.fillText(`${d}m`, px, trackY + trackH + 11);
       });
 
-      // Start Braking Point Marker (0m in distance scale, meaning starts at trackX1)
-      ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
-      ctx.fillText('⚠️ 400m 開始煞車 (360km/h)', trackX1 + 45, trackY - 8);
-
-      // Station Platform Marker (400m end)
+      // Platform stop line
       const stopPx = toTrackPx(400);
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(stopPx, trackY - 10); ctx.lineTo(stopPx, trackY + trackH + 10); ctx.stroke();
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(stopPx, trackY - 4); ctx.lineTo(stopPx, trackY + trackH + 4); ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = '#ef4444';
-      ctx.fillText('🏁 月台停車線 (0 km/h)', stopPx - 20, trackY - 8);
+      ctx.fillStyle = '#dc2626'; ctx.font = 'bold 9px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillText('🏁 月台停車線', stopPx - 4, trackY - 2);
 
-      // Bullet Train 🚄
+      // Bullet Train
       const trainPx = toTrackPx(st.s);
-      ctx.font = '36px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🚄', trainPx, trackY + 44);
+      ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🚄', trainPx, trackY + 30);
 
-      // Brake Sparks effect
+      // Sparks
       if (isRunning && !st.stopped) {
-        ctx.fillStyle = '#fde047'; ctx.font = '16px sans-serif';
-        ctx.fillText('✨', trainPx - 22, trackY + 52);
+        ctx.font = '12px sans-serif';
+        ctx.fillText('✨', trainPx - 16, trackY + 36);
       }
 
       // ==========================================
-      // 2. Bottom Section: v-t Graph (y: 200 to 450)
+      // 2. Bottom Section: v-t Graph
       // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 430, gyTop = 210;
+      const gx1 = 55, gx2 = cw - 35;
+      const gyZero = ch - 22, gyTop = 110;
 
       function mapX(t) { return gx1 + (t / 8.0) * (gx2 - gx1); }
       function mapY(v) { return gyZero - (v / 110.0) * (gyZero - gyTop); }
 
-      // Shaded Triangle Area (0 to simTime)
-      if (simTime > 0) {
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.25)';
-        ctx.beginPath();
-        ctx.moveTo(mapX(0), gyZero);
-        ctx.lineTo(mapX(0), mapY(100));
-        ctx.lineTo(mapX(simTime), mapY(st.v));
-        ctx.lineTo(mapX(simTime), gyZero);
-        ctx.closePath();
-        ctx.fill();
-      }
+      const curT = Math.min(8.0, simTime);
+
+      // Shaded area
+      ctx.fillStyle = 'rgba(2, 132, 199, 0.15)';
+      ctx.beginPath();
+      ctx.moveTo(mapX(0), gyZero);
+      ctx.lineTo(mapX(0), mapY(100));
+      ctx.lineTo(mapX(curT), mapY(100 - 12.5 * curT));
+      ctx.lineTo(mapX(curT), gyZero);
+      ctx.closePath();
+      ctx.fill();
 
       // Grid
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = '#f1f5f9'; ctx.lineWidth = 1;
       [2, 4, 6, 8].forEach(t => {
         const px = mapX(t);
         ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = (t === 8) ? '#fde047' : '#64748b';
-        ctx.font = (t === 8) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.fillStyle = (t === 8) ? '#0f172a' : '#64748b';
+        ctx.font = (t === 8) ? 'bold 10px Outfit' : '9px Outfit';
         ctx.textAlign = 'center';
-        ctx.fillText(`${t}s`, px, gyZero + 16);
+        ctx.fillText(`${t}s`, px, gyZero + 13);
       });
-      [0, 50, 100].forEach(v => {
+      [50, 100].forEach(v => {
         const py = mapY(v);
         ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (v === 100) ? '#fde047' : '#64748b';
-        ctx.font = (v === 100) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'right';
-        ctx.fillText(`${v}`, gx1 - 8, py + 4);
+        ctx.fillStyle = '#64748b'; ctx.font = 'bold 9px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${v}`, gx1 - 5, py + 3);
       });
 
-      // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
-
-      // v-t Braking Line: (0, 100) to (8, 0)
-      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 4;
+      // Ref line
+      ctx.strokeStyle = '#bae6fd'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(mapX(0), mapY(100)); ctx.lineTo(mapX(8), mapY(0)); ctx.stroke();
 
-      // Current Point
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(mapX(simTime), mapY(st.v), 6, 0, Math.PI * 2); ctx.fill();
+      // Active line
+      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 3.5;
+      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(100)); ctx.lineTo(mapX(curT), mapY(100 - 12.5 * curT)); ctx.stroke();
 
-      // Slope & Area Callouts
-      if (simTime >= 8.0) {
-        ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'center';
-        ctx.fillText('📐 面積 ＝ 煞車位移 400m', mapX(3.5), mapY(35));
-        ctx.fillStyle = '#f87171';
-        ctx.fillText('⚡ 斜率 a ＝ －12.5 m/s² (選 B)', mapX(5.5), mapY(65));
+      // Axes
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 6); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 10, gyZero); ctx.stroke();
+
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 10px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gx1 - 5, gyTop - 2);
+      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 5, gyZero + 13);
+
+      // Callouts
+      if (simTime >= 7.8) {
+        ctx.fillStyle = '#0369a1'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
+        ctx.fillText('三角形面積 ＝ 400m', (mapX(0) + mapX(8)) / 2, (gyZero + mapY(100)) / 2 + 10);
       }
     }
 
-    // Quiz Check
     function checkQuiz(qNum, ans, el) {
       const parent = el.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
       const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      fb.style.display = 'block';
 
       if (ans === 'B') {
         el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>① 單位換算：\( 360\\text{ km/h} = \\frac{360}{3.6} = \\mathbf{100\\text{ m/s}} \)<br>② 代入 \( v^2 = v_0^2 + 2aS \implies 0 = 100^2 + 2a(400) \implies a = \\frac{-10000}{800} = \\mathbf{-12.5\\text{ m/s}^2} \)（選 B）！';
+        fb.style.background = '#dcfce7';
+        fb.style.color = '#15803d';
+        fb.innerHTML = '✅ 正確！360 km/h ＝ 100 m/s，\\( 0^2 = 100^2 + 2a(400) \\implies a = -12.5\\text{ m/s}^2 \\)（選 B）！';
       } else {
         el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心單位換算！</strong> 請先將 360 km/h 轉為 100 m/s，再代入公式求得 a ＝ －12.5 m/s²（選 B）！';
+        fb.style.background = '#fee2e2';
+        fb.style.color = '#b91c1c';
+        fb.innerHTML = '❌ 答錯了！務必先換算 360 km/h 為 100 m/s，代入公式得 a ＝ －12.5 m/s²（選 B）！';
       }
+      setTimeout(window.triggerMathRender, 50);
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      resizeCanvas();
     });
   </script>
-
-  
-
 </body>
 </html>

@@ -9,63 +9,52 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #e11d48;       /* Rose / Deceleration */
+      --primary: #e11d48;
       --primary-dark: #be123c;
-      --vec-vel: #10b981;       /* Velocity (Green) */
-      --vec-disp: #3b82f6;      /* Displacement (Blue) */
-      --vec-acc: #ef4444;       /* Acceleration (Red) */
-      --bg: #fff1f2;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fecdd3;
-      --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(225, 29, 72, 0.08);
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f8fafc;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
+    @media (max-height: 700px) {
+      body { overflow-y: auto; height: auto; }
+    }
+
+    /* Header (38px compact) */
     header {
       background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      padding: 0.35rem 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
     }
 
     .header-content {
-      max-width: 1320px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .title-group h1 {
-      font-size: 1.35rem;
+      font-size: 1.05rem;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -73,329 +62,310 @@
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.1rem 0.5rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .header-subtitle {
+      font-size: 0.78rem;
+      opacity: 0.95;
+      font-weight: 500;
     }
 
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.45rem 0.75rem;
       flex: 1;
       width: 100%;
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 0.65rem;
+      align-items: start;
     }
 
-    /* Common Card */
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
+    }
+
+    /* Clean Card */
     .card {
       background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      padding: 0.55rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #ffe4e6;
+      padding-bottom: 0.3rem;
+      border-bottom: 1.5px solid #e2e8f0;
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       font-weight: 800;
-      color: var(--primary-dark);
+      color: #be123c;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
-    /* Main Grid */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
+    /* Stage Canvas */
     .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
       position: relative;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      background: #fff1f2;
+      border-bottom: 1px solid #fecdd3;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.76rem;
       display: flex;
       justify-content: space-between;
-      z-index: 10;
+      font-weight: 700;
+      color: #be123c;
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 450px;
+      height: 255px;
+      background: #ffffff;
     }
 
-    /* Controls Panel */
+    /* Control Panel */
     .control-panel {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    /* Motion State Tabs */
-    .state-tabs {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .state-tab {
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid #cbd5e1;
-      background: white;
-      font-size: 0.82rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
       gap: 0.35rem;
-    }
-
-    .state-tab:hover { background: #ffe4e6; }
-    .state-tab.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary-dark);
     }
 
     .btn-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.2rem;
     }
 
     .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.32rem 0.75rem;
       border: none;
       border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.78rem;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
       font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      transition: all 0.15s ease;
     }
 
-    .btn-primary {
-      background: var(--primary);
+    .btn-primary { background: #e11d48; color: white; }
+    .btn-primary:hover { background: #be123c; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    /* State Switch Tabs */
+    .state-tabs {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .state-btn {
+      flex: 1;
+      padding: 0.22rem 0.45rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.73rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .state-btn:hover { background: #fff1f2; }
+    .state-btn.active {
+      background: #e11d48;
       color: white;
+      border-color: #be123c;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: #e11d48;
+      cursor: pointer;
+      height: 4px;
     }
 
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Vectors Telemetry Grid */
+    /* Right Column: Telemetry & Tabbed Pane */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.35rem;
     }
 
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
       background: #ffffff;
-      text-align: center;
+      font-size: 0.72rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
     }
 
-    .t-card.disp { border-color: #bae6fd; background: #f0f9ff; }
-    .t-card.vel { border-color: #a7f3d0; background: #ecfdf5; }
-    .t-card.acc { border-color: #fecdd3; background: #fff1f2; }
+    .t-card.disp { border-color: #93c5fd; background: #eff6ff; }
+    .t-card.vel { border-color: #86efac; background: #f0fdf4; }
+    .t-card.acc { border-color: #fca5a5; background: #fef2f2; }
 
     .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.disp h4 { color: #0284c7; }
-    .t-card.vel h4 { color: #059669; }
-    .t-card.acc h4 { color: #e11d48; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+      font-size: 0.74rem;
       font-weight: 900;
     }
 
-    .t-card.disp .t-val { color: #0284c7; }
-    .t-card.vel .t-val { color: #059669; }
-    .t-card.acc .t-val { color: #e11d48; }
+    .t-card.disp h4 { color: #1d4ed8; }
+    .t-card.vel h4 { color: #15803d; }
+    .t-card.acc h4 { color: #b91c1c; }
 
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
+    .t-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: #0f172a;
     }
 
-    /* Comparison Table Box */
-    .table-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+    /* Tab Bar */
+    .tab-bar {
+      display: flex;
+      gap: 0.35rem;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 0.25rem;
     }
 
-    .tab-title {
-      font-size: 0.9rem;
+    .tab-btn {
+      padding: 0.25rem 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 0.76rem;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    /* Core Concept Callout */
+    .tab-btn.active {
+      background: #e11d48;
+      color: white;
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Concept Box */
     .concept-box {
       background: #fff1f2;
-      border-left: 4px solid var(--primary);
+      border-left: 3.5px solid #e11d48;
       border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.75rem;
+      line-height: 1.45;
     }
 
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
+    .concept-box strong { color: #be123c; }
 
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
+    /* Quiz */
     .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
+      background: #fff;
+      border: 1px solid #fecdd3;
       border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+      padding: 0.35rem 0.55rem;
+      font-size: 0.73rem;
     }
+
+    .quiz-item p { font-weight: 700; color: #1e293b; margin-bottom: 0.2rem; }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.2rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
+      padding: 0.2rem 0.5rem;
       border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
+      border-radius: 4px;
       background: #f8fafc;
-      font-size: 0.85rem;
+      font-size: 0.73rem;
       font-weight: 700;
-      text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      text-align: left;
+      transition: all 0.15s;
     }
 
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      margin-top: 0.2rem;
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
 
     footer {
       background: #e2e8f0;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      padding: 0.25rem;
+      font-size: 0.7rem;
+      color: #64748b;
+      flex-shrink: 0;
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
+
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
@@ -415,7 +385,6 @@
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(triggerMathRender, 100);
       setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
     });
   </script>
 </head>
@@ -429,139 +398,113 @@
           <span>🎯 減速跑道三向量雷達：位移與速度永遠同向 vs 加速度反向</span>
           <span class="badge">國中自然 3上 · 單元課次卷 02 卷第22、18題</span>
         </h1>
-        <p>減速運動中：向前跑則速度向右、位移向右 (永遠同向·選C)；加速度向左反向拖拽 (反向)；加速度單位為 m/s²！</p>
+      </div>
+      <div class="header-subtitle">
+        減速時：向前跑則速度向右、位移向右 (永遠同向·選C)；加速度向左反向拖拽 (反向)；加速度單位為 m/s²！
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🏃 跑道三向量雷達 HUD ＋ 水杯慣性水面傾斜儀</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 開始奔馳運動</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
-          </div>
+    <!-- Left Column: Canvas & Controls -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>🏃 跑道三向量 HUD 雷達 ＋ 慣性水杯傾斜儀</span>
         </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>🏃 狀態：<strong id="hudState" style="color: #f87171; font-family: 'Outfit';">🛑 減速煞車中 (向右跑 · a向左)</strong></span>
-            <span>⚖️ 同向判定：<strong style="color: #38bdf8; font-family: 'Outfit';">位移與速度 恆同向！</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="450"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            🎯 點選切換 3 種運動狀態向量雷達：
-          </div>
-          <div class="state-tabs">
-            <button class="state-tab active" onclick="setState('dec', this)">🛑 狀態一：減速運動 (題 22 核心 · 位移與速度同向 · a 反向)</button>
-            <button class="state-tab" onclick="setState('acc', this)">🚀 狀態二：加速運動 (三者全部同向向前)</button>
-            <button class="state-tab" onclick="setState('const', this)">🚗 狀態三：等速運動 (速度與位移同向 · a = 0)</button>
-          </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 奔馳運動</button>
+          <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
         </div>
       </div>
 
-      <!-- Right Column: 3 Vectors & Comparison & Quiz -->
-      <div>
-        
-        <!-- 3 Vectors Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Displacement -->
-          <div class="t-card disp">
-            <h4>🔵 位移向量 Δx</h4>
-            <div class="t-val" id="valDisp">➡️ 向右 (正向)</div>
-            <div class="t-sub">單位：公尺 (m)</div>
-          </div>
+      <div class="stage-box">
+        <div class="stage-hud">
+          <span>🏃 狀態：<strong id="hudState" style="color: #be123c;">🛑 減速中 (跑向右 · a向左)</strong></span>
+          <span id="hudRuling" style="color: #15803d; font-weight: 800;">位移與速度 恆同向 (選C)！</span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas" width="680" height="255"></canvas>
+      </div>
 
-          <!-- Velocity -->
-          <div class="t-card vel">
-            <h4>🟢 速度向量 v</h4>
-            <div class="t-val" id="valVel">➡️ 向右 (正向)</div>
-            <div class="t-sub">單位：m/s<br><strong style="color: #059669;">與位移恆同向 (選C)</strong></div>
-          </div>
-
-          <!-- Acceleration -->
-          <div class="t-card acc">
-            <h4>🔴 加速度向量 a</h4>
-            <div class="t-val" id="valAcc">⬅️ 向左 (反向)</div>
-            <div class="t-sub">單位：m/s²<br><strong style="color: #e11d48;">減速必與速度反向</strong></div>
-          </div>
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="state-tabs">
+          <button class="state-btn active" id="btnState1" onclick="setState('dec')">🛑 減速運動 (題22·位移速度同向·a反向)</button>
+          <button class="state-btn" id="btnState2" onclick="setState('acc')">🚀 加速運動 (三者同向)</button>
+          <button class="state-btn" id="btnState3" onclick="setState('const')">🚗 等速運動 (a = 0)</button>
         </div>
 
-        <!-- Comparison Table Box -->
-        <div class="table-box">
-          <div class="tab-title">⚖️ 物理量三要素與單位黃金對照表：</div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.3rem;">
-            <tr style="background: #f1f5f9; font-weight: 800;">
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">物理量</th>
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">SI 標準單位</th>
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">減速時的方向</th>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">位移 \( \Delta\vec{x} \)</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">\( \text{m} \)（公尺）</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; color: #16a34a; font-weight: bold;">向右（向前）</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">速度 \( \vec{v} \)</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">\( \text{m/s} \)</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; color: #16a34a; font-weight: bold;">向右（向前·與位移同向）</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #e11d48;">加速度 \( \vec{a} \)</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #b91c1c;">\( \text{m/s}^2 \) (題18破盲)</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; color: #dc2626; font-weight: bold;">向左（反向拖拽煞車）</td>
-            </tr>
-          </table>
+        <div class="slider-row">
+          <span>運動進度：</span>
+          <input type="range" id="timeSlider" min="0" max="1" step="0.01" value="0.5" oninput="onSliderChange(this.value)">
+          <span id="sliderVal" style="min-width: 50px; font-family: 'Outfit'; font-weight: 800; color: #e11d48;">50%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Telemetry & Tabbed Pane -->
+    <div class="card">
+      <!-- 3 Vectors Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="t-card disp">
+          <h4>🔵 位移向量 Δx</h4>
+          <div class="t-val" id="valDisp">➡️ 向右 (向前)</div>
+          <div style="font-size: 0.7rem; color: #1d4ed8; font-weight: 800;">單位：m</div>
         </div>
 
-        <!-- Core Concept Callout -->
+        <div class="t-card vel">
+          <h4>🟢 速度向量 v</h4>
+          <div class="t-val" id="valVel">➡️ 向右 (向前)</div>
+          <div style="font-size: 0.7rem; color: #15803d; font-weight: 800;">恆與位移同向 (選C)</div>
+        </div>
+
+        <div class="t-card acc">
+          <h4>🔴 加速度向量 a</h4>
+          <div class="t-val" id="valAcc" style="color: #b91c1c;">⬅️ 向左 (反向)</div>
+          <div style="font-size: 0.7rem; color: #b91c1c; font-weight: 800;">單位：m/s²</div>
+        </div>
+      </div>
+
+      <!-- Tab Bar -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tabBtn1" onclick="switchTab(1)">📖 單元卷 22、18 題詳解</button>
+        <button class="tab-btn" id="tabBtn2" onclick="switchTab(2)">📝 隨堂原題測驗</button>
+      </div>
+
+      <!-- Pane 1: Concept Explanation -->
+      <div class="tab-pane active" id="pane1">
         <div class="concept-box">
           <strong>📖 單元課次卷第 22 題 ＆ 第 18 題解析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>第 22 題：</strong>「位移」代表位置變化，「速度」代表運動快慢與方向。物體向前跑，速度與位移<strong>永遠同向</strong>（選 C）。</li>
-            <li><strong>第 18 題：</strong>加速度單位為 \( \text{m/s}^2 \)，選項 (B) 寫 \( \text{m/s} \) 是錯誤的（選 B）。</li>
+          <ul style="padding-left: 1.1rem; margin-top: 0.2rem;">
+            <li><strong>第 22 題（減速誰同向）：</strong>只要物體持續向前跑，其位置就持續向正向改變，故<strong>位移方向與速度方向永遠同向向前（選 C）</strong>！加速度則朝後方反向拖拽減速。</li>
+            <li><strong>第 18 題（加速度單位破盲）：</strong>加速度公式為 \( a = \frac{\Delta v}{\Delta t} \)，單位是 \( \frac{\text{m/s}}{\text{s}} = \mathbf{\text{m/s}^2} \)。選項 (B) 寫成 \( \text{m/s} \) 是錯誤的！</li>
           </ul>
         </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 22 題 ＆ 第 18 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>Q1. (第22題) 運動員在直線跑道上減速運動，下列何者在減速過程中「方向相同」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(22, 'C', this)">(C) 位移方向與速度方向（向前跑則兩者皆向前，永遠同向）</button>
-              <button class="quiz-btn" onclick="checkQuiz(22, 'A', this)">(A) 位移方向與加速度（減速時加速度反向向後）</button>
-              <button class="quiz-btn" onclick="checkQuiz(22, 'B', this)">(B) 速度與加速度</button>
-              <button class="quiz-btn" onclick="checkQuiz(22, 'D', this)">(D) 三者相同</button>
-            </div>
-            <div class="quiz-feedback" id="fb22"></div>
-          </div>
-
-          <div class="quiz-item">
-            <p>Q2. (第18題) 關於加速度的敘述，下列何者「錯誤」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(18, 'B', this)">(B) 加速度的單位為 m/s（錯誤！加速度單位應為 m/s²）</button>
-              <button class="quiz-btn" onclick="checkQuiz(18, 'A', this)">(A) 加速度大小與速度的變化量成正比</button>
-              <button class="quiz-btn" onclick="checkQuiz(18, 'C', this)">(C) 列跑加速過程需向同方向加速</button>
-            </div>
-            <div class="quiz-feedback" id="fb18"></div>
-          </div>
-        </div>
-
       </div>
 
+      <!-- Pane 2: Interactive Quiz -->
+      <div class="tab-pane" id="pane2">
+        <div class="quiz-item">
+          <p>Q1. (第22題) 運動員在直線跑道上減速運動，下列何者在減速過程中「方向相同」？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(22, 'C', this)">(C) 位移方向與速度方向（兩者恆同向向前）</button>
+            <button class="quiz-btn" onclick="checkQuiz(22, 'A', this)">(A) 位移方向與加速度方向（減速時加速度向後）</button>
+            <button class="quiz-btn" onclick="checkQuiz(22, 'B', this)">(B) 速度方向與加速度方向</button>
+          </div>
+          <div class="quiz-feedback" id="fb22"></div>
+        </div>
+
+        <div class="quiz-item">
+          <p>Q2. (第18題) 關於加速度的敘述，下列何者「錯誤」？</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(18, 'B', this)">(B) 加速度的 SI 制標準單位為 m/s（應為 m/s²）</button>
+            <button class="quiz-btn" onclick="checkQuiz(18, 'A', this)">(A) 加速度有大小也有方向性</button>
+            <button class="quiz-btn" onclick="checkQuiz(18, 'C', this)">(C) 減速時加速度方向與運動方向相反</button>
+          </div>
+          <div class="quiz-feedback" id="fb18"></div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -571,36 +514,41 @@
   </footer>
 
   <script>
-    let motionState = 'dec'; // 'dec', 'acc', 'const'
-    let progress = 0.5;
+    let curState = 'dec'; // 'dec', 'acc', 'const'
+    let progress = 0.5; // 0 to 1
     let isRunning = false;
     let animId = null;
 
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    function setState(s, el) {
-      motionState = s;
-      document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
-      if (el) el.classList.add('active');
+    function setState(st) {
+      curState = st;
+      document.getElementById('btnState1').classList.toggle('active', st === 'dec');
+      document.getElementById('btnState2').classList.toggle('active', st === 'acc');
+      document.getElementById('btnState3').classList.toggle('active', st === 'const');
 
-      resetSim();
-
-      if (s === 'dec') {
-        document.getElementById('hudState').innerText = '🛑 減速煞車中 (向右跑 · a向左)';
-        document.getElementById('valDisp').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valVel').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valAcc').innerText = '⬅️ 向左 (反向)';
-      } else if (s === 'acc') {
-        document.getElementById('hudState').innerText = '🚀 加速衝刺中 (向右跑 · a向右)';
-        document.getElementById('valDisp').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valVel').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valAcc').innerText = '➡️ 向右 (同向推進)';
+      if (st === 'dec') {
+        document.getElementById('hudState').innerText = '🛑 減速中 (跑向右 · a向左)';
+        document.getElementById('hudRuling').innerText = '位移與速度 恆同向 (選C)！';
+        document.getElementById('valDisp').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valVel').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valAcc').innerText = '⬅️ 向左 (反向拖拽)';
+        document.getElementById('valAcc').style.color = '#b91c1c';
+      } else if (st === 'acc') {
+        document.getElementById('hudState').innerText = '🚀 加速中 (跑向右 · a向右)';
+        document.getElementById('hudRuling').innerText = '三者全部同向向前！';
+        document.getElementById('valDisp').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valVel').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valAcc').innerText = '➡️ 向右 (向前加速)';
+        document.getElementById('valAcc').style.color = '#15803d';
       } else {
-        document.getElementById('hudState').innerText = '🚗 等速運動 (向右跑 · a = 0)';
-        document.getElementById('valDisp').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valVel').innerText = '➡️ 向右 (正向)';
-        document.getElementById('valAcc').innerText = '0 (無加速度)';
+        document.getElementById('hudState').innerText = '🚗 等速中 (跑向右 · a = 0)';
+        document.getElementById('hudRuling').innerText = '等速時加速度 a = 0！';
+        document.getElementById('valDisp').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valVel').innerText = '➡️ 向右 (向前)';
+        document.getElementById('valAcc').innerText = '⭕ a = 0 (無加速度)';
+        document.getElementById('valAcc').style.color = '#64748b';
       }
 
       updateUI();
@@ -616,165 +564,197 @@
         loop();
       } else {
         isRunning = false;
-        btn.innerText = '▶ 開始奔馳運動';
-        btn.style.background = 'var(--primary)';
+        btn.innerText = '▶ 奔馳運動';
+        btn.style.background = '#e11d48';
         if (animId) cancelAnimationFrame(animId);
       }
     }
 
     function resetSim() {
       isRunning = false;
-      progress = 0.2;
+      progress = 0.5;
       if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRun').innerText = '▶ 開始奔馳運動';
-      document.getElementById('btnRun').style.background = 'var(--primary)';
+      document.getElementById('btnRun').innerText = '▶ 奔馳運動';
+      document.getElementById('btnRun').style.background = '#e11d48';
+      document.getElementById('timeSlider').value = 0.5;
+      updateUI();
+    }
+
+    function onSliderChange(val) {
+      progress = parseFloat(val);
       updateUI();
     }
 
     function loop() {
       if (!isRunning) return;
-      progress += 0.005;
+      progress += 0.01;
       if (progress >= 1.0) {
         progress = 1.0;
         isRunning = false;
-        document.getElementById('btnRun').innerText = '🔄 重新運動';
-        document.getElementById('btnRun').style.background = 'var(--primary)';
+        document.getElementById('btnRun').innerText = '🔄 重新奔馳';
+        document.getElementById('btnRun').style.background = '#e11d48';
       }
+      document.getElementById('timeSlider').value = progress;
       updateUI();
+
       if (isRunning) animId = requestAnimationFrame(loop);
     }
 
     function updateUI() {
+      document.getElementById('sliderVal').innerText = `${Math.round(progress * 100)}%`;
       draw();
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const cw = canvas.width;
+      const ch = canvas.height;
 
-      // ==========================================
-      // 1. Top Section: Running Track (y: 30 to 180)
-      // ==========================================
-      const trackY = 110;
-      ctx.fillStyle = '#1e293b';
-      ctx.fillRect(40, trackY - 40, cw - 80, 80);
-      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2; ctx.strokeRect(40, trackY - 40, cw - 80, 80);
+      // Pure clean white stage
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      // Track Lanes
-      ctx.strokeStyle = '#fde047'; ctx.lineWidth = 2; ctx.setLineDash([8, 8]);
-      ctx.beginPath(); ctx.moveTo(50, trackY); ctx.lineTo(cw - 50, trackY); ctx.stroke();
+      const trackX1 = 50, trackX2 = cw - 50;
+      const trackY = 190;
+
+      // Road track (light gray with dark borders)
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillRect(trackX1, trackY - 14, trackX2 - trackX1, 28);
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.8;
+      ctx.strokeRect(trackX1, trackY - 14, trackX2 - trackX1, 28);
+
+      // Centerline dashes
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 6]);
+      ctx.beginPath(); ctx.moveTo(trackX1, trackY); ctx.lineTo(trackX2, trackY); ctx.stroke();
       ctx.setLineDash([]);
 
-      // Runner X Position
-      const startPx = 90, endPx = cw - 90;
-      const runnerPx = startPx + progress * (endPx - startPx);
+      // Start line 0m
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(trackX1 + 20, trackY - 18); ctx.lineTo(trackX1 + 20, trackY + 18); ctx.stroke();
 
-      // Runner Avatar 🏃 facing forward/right
+      ctx.fillStyle = '#2563eb';
+      ctx.beginPath(); ctx.roundRect(trackX1, trackY - 32, 44, 14, 3); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9.5px Noto Sans TC';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('起點 0m', trackX1 + 22, trackY - 25);
+
+      // Finish line
+      ctx.strokeStyle = '#15803d';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(trackX2 - 20, trackY - 18); ctx.lineTo(trackX2 - 20, trackY + 18); ctx.stroke();
+
+      ctx.fillStyle = '#15803d';
+      ctx.beginPath(); ctx.roundRect(trackX2 - 45, trackY - 32, 48, 14, 3); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9.5px Noto Sans TC';
+      ctx.fillText('終點 100m', trackX2 - 21, trackY - 25);
+
+      // Meter Ticks
+      for (let i = 0; i <= 10; i++) {
+        const mx = trackX1 + 20 + (i / 10) * (trackX2 - trackX1 - 40);
+        ctx.beginPath(); ctx.moveTo(mx, trackY + 14); ctx.lineTo(mx, trackY + 18);
+        ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.5; ctx.stroke();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 9.5px Outfit, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.fillText(`${i * 10}m`, mx, trackY + 20);
+      }
+
+      // Runner Avatar
+      const curRunnerX = trackX1 + 20 + progress * (trackX2 - trackX1 - 40);
+
       ctx.save();
-      ctx.translate(runnerPx, trackY + 14);
-      ctx.scale(-1, 1); // Flip to face right towards movement direction
-      ctx.font = '40px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'alphabetic';
-      ctx.fillText('🏃', 0, 0);
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🏃', curRunnerX, trackY);
       ctx.restore();
 
-      // ==========================================
-      // 2. Vector Arrows HUD Floating Above Runner (y: 20 to 60)
-      // ==========================================
-      const hudY = trackY - 55;
+      // Inertial Water Glass atop runner
+      const cupX = curRunnerX + 24, cupY = trackY - 6;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.strokeStyle = '#64748b'; ctx.lineWidth = 1.2;
+      ctx.fillRect(cupX - 7, cupY - 12, 14, 16);
+      ctx.strokeRect(cupX - 7, cupY - 12, 14, 16);
 
-      // Helper function to draw vector arrow
-      function drawArrow(x, y, len, col, label, sub) {
-        ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + len, y); ctx.stroke();
+      // Water Level Tilt
+      let waterTilt = 0;
+      if (curState === 'dec') waterTilt = +4; // Water sloshes forward when braking
+      else if (curState === 'acc') waterTilt = -4; // Water sloshes backward when accelerating
 
-        // Arrowhead
-        const dir = Math.sign(len);
-        ctx.beginPath();
-        ctx.moveTo(x + len, y);
-        ctx.lineTo(x + len - dir * 10, y - 6);
-        ctx.lineTo(x + len - dir * 10, y + 6);
-        ctx.fill();
-
-        ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = (dir > 0) ? 'left' : 'right';
-        ctx.fillText(label, x + len + dir * 12, y + 4);
-      }
-
-      // Draw 3 Vectors
-      // 1. Displacement Δx (Blue, always to the right)
-      drawArrow(runnerPx - 20, trackY - 75, 60, '#38bdf8', '🔵 位移 Δx (➡️ 向前)', '');
-
-      // 2. Velocity v (Green, always to the right)
-      drawArrow(runnerPx - 20, trackY - 55, 60, '#34d399', '🟢 速度 v (➡️ 向前·同向！)', '');
-
-      // 3. Acceleration a (Red, depends on state)
-      if (motionState === 'dec') {
-        // Points LEFT (opposite)
-        drawArrow(runnerPx + 10, trackY - 35, -60, '#f87171', '🔴 加速度 a (⬅️ 反向煞車！)', '');
-      } else if (motionState === 'acc') {
-        // Points RIGHT (same)
-        drawArrow(runnerPx - 20, trackY - 35, 60, '#f87171', '🔴 加速度 a (➡️ 同向推動！)', '');
-      } else {
-        // a = 0
-        ctx.fillStyle = '#94a3b8'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'left';
-        ctx.fillText('🔴 加速度 a ＝ 0 (無加速度)', runnerPx - 20, trackY - 32);
-      }
-
-      // ==========================================
-      // 3. Bottom Section: High-speed Train Cup Inertia (y: 220 to 420)
-      // ==========================================
-      const boxX = 60, boxY = 220, boxW = cw - 120, boxH = 190;
-      ctx.fillStyle = '#1e293b'; ctx.fillRect(boxX, boxY, boxW, boxH);
-      ctx.strokeStyle = '#475569'; ctx.lineWidth = 2; ctx.strokeRect(boxX, boxY, boxW, boxH);
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 13px Noto Sans TC'; ctx.textAlign = 'left';
-      ctx.fillText('🚄 題 18 高鐵車廂水杯慣性儀：水面傾斜方向動態偵測', boxX + 15, boxY + 25);
-
-      // Train Car Floor
-      const cupX = cw / 2, cupY = boxY + 110;
-
-      // Draw Water Cup
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3;
-      ctx.strokeRect(cupX - 45, cupY - 30, 90, 60);
-
-      // Water Level Tilt angle depends on acceleration
-      // dec (a < 0, forward inertia -> water surges forward/right)
-      // acc (a > 0, backward inertia -> water surges backward/left)
-      // const (a = 0, flat)
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.6)';
+      ctx.fillStyle = 'rgba(14, 165, 233, 0.7)';
       ctx.beginPath();
-      if (motionState === 'dec') {
-        // Water tilts up on right
-        ctx.moveTo(cupX - 43, cupY + 10);
-        ctx.lineTo(cupX + 43, cupY - 18);
-        ctx.lineTo(cupX + 43, cupY + 28);
-        ctx.lineTo(cupX - 43, cupY + 28);
-      } else if (motionState === 'acc') {
-        // Water tilts up on left
-        ctx.moveTo(cupX - 43, cupY - 18);
-        ctx.lineTo(cupX + 43, cupY + 10);
-        ctx.lineTo(cupX + 43, cupY + 28);
-        ctx.lineTo(cupX - 43, cupY + 28);
-      } else {
-        // Flat
-        ctx.moveTo(cupX - 43, cupY);
-        ctx.lineTo(cupX + 43, cupY);
-        ctx.lineTo(cupX + 43, cupY + 28);
-        ctx.lineTo(cupX - 43, cupY + 28);
-      }
+      ctx.moveTo(cupX - 6, cupY - 3 - waterTilt);
+      ctx.lineTo(cupX + 6, cupY - 3 + waterTilt);
+      ctx.lineTo(cupX + 6, cupY + 3);
+      ctx.lineTo(cupX - 6, cupY + 3);
       ctx.closePath();
       ctx.fill();
 
-      // Explanatory Text
-      ctx.fillStyle = '#fde047'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'center';
-      if (motionState === 'dec') {
-        ctx.fillText('🛑 列車減速中：慣性使水往前湧（水面右高左低）➔ 加速度方向向後（反向）！', cw / 2, boxY + 165);
-      } else if (motionState === 'acc') {
-        ctx.fillText('🚀 列車加速中：慣性使水往後湧（水面左高右低）➔ 加速度方向向前（同向）！', cw / 2, boxY + 165);
+      // ==========================================
+      // THREE VECTOR ARROWS (Upper Half: y = 20 to 120)
+      // ==========================================
+      const vecBaseY = 55;
+
+      // 1. Displacement Vector Δx (Blue, Points Right)
+      drawArrow(curRunnerX - 45, vecBaseY - 32, curRunnerX + 45, vecBaseY - 32, '#2563eb', '🔵 位移 Δx (向前 ➡️)');
+
+      // 2. Velocity Vector v (Green, Points Right)
+      drawArrow(curRunnerX - 40, vecBaseY - 10, curRunnerX + 40, vecBaseY - 10, '#15803d', '🟢 速度 v (向前 ➡️ · 恆與位移同向)');
+
+      // 3. Acceleration Vector a
+      if (curState === 'dec') {
+        // Red, Points Left (Deceleration opposes velocity!)
+        drawArrow(curRunnerX + 45, vecBaseY + 14, curRunnerX - 45, vecBaseY + 14, '#dc2626', '🔴 加速度 a (向後 ⬅️ 煞車拖拽·反向)');
+      } else if (curState === 'acc') {
+        // Points Right (Acceleration assists velocity)
+        drawArrow(curRunnerX - 45, vecBaseY + 14, curRunnerX + 45, vecBaseY + 14, '#dc2626', '🔴 加速度 a (向前 ➡️ 加速衝刺·同向)');
       } else {
-        ctx.fillText('🚗 列車等速中：水面保持水平 ➔ 加速度 a ＝ 0！', cw / 2, boxY + 165);
+        // a = 0
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'bold 11px Noto Sans TC, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('🔴 加速度 a ＝ 0 (等速度運動無加速度)', curRunnerX, vecBaseY + 14);
       }
+    }
+
+    function drawArrow(fromX, fromY, toX, toY, color, label) {
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3.5;
+
+      ctx.beginPath();
+      ctx.moveTo(fromX, fromY);
+      ctx.lineTo(toX, toY);
+      ctx.stroke();
+
+      // Arrowhead
+      const angle = Math.atan2(toY - fromY, toX - fromX);
+      const headLen = 9;
+      ctx.beginPath();
+      ctx.moveTo(toX, toY);
+      ctx.lineTo(toX - headLen * Math.cos(angle - Math.PI / 6), toY - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(toX - headLen * Math.cos(angle + Math.PI / 6), toY - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      // Label
+      ctx.font = '900 10.5px Noto Sans TC, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, (fromX + toX) / 2, fromY - 3);
+    }
+
+    function switchTab(tabNum) {
+      document.getElementById('tabBtn1').classList.toggle('active', tabNum === 1);
+      document.getElementById('tabBtn2').classList.toggle('active', tabNum === 2);
+      document.getElementById('pane1').classList.toggle('active', tabNum === 1);
+      document.getElementById('pane2').classList.toggle('active', tabNum === 2);
     }
 
     // Quiz Check
@@ -787,33 +767,29 @@
       if (qNum === 22) {
         if (ans === 'C') {
           el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>只要物體向前運動，其瞬間速度向前、位移必定也是向前 ➔ <strong>位移與速度方向永遠相同（選 C）</strong>！而減速時加速度為反向向後。';
+          fb.style.color = '#15803d';
+          fb.innerHTML = '✅ <strong>完全正確！</strong> 物體向前跑時，位置持續增加，故<strong>位移與速度方向永遠同向向前（選 C）</strong>！加速度則朝向後方，產生減速效果。';
         } else {
           el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心觀念陷阱！</strong> 減速時「加速度」是反向向後的，只有「位移方向與速度方向」恆同向向前（選 C）！';
+          fb.style.color = '#b91c1c';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 減速時，加速度與運動方向（速度、位移）相反；而速度與位移彼此永遠同向！';
         }
       } else if (qNum === 18) {
         if (ans === 'B') {
           el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>速度的單位才是 \( \\text{m/s} \)，<strong>加速度的標準單位為 \( \\text{m/s}^2 \)</strong>，選項 (B) 敘述錯誤，為本題正解！';
+          fb.style.color = '#15803d';
+          fb.innerHTML = '✅ <strong>答對了！</strong> 加速度代表每秒速度的變化量，SI 制單位為 <strong>m/s²</strong>，而非 m/s（m/s 是速度的單位，故選 B 錯誤）！';
         } else {
           el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>看清楚題目！</strong> 題目要求選出「錯誤」的敘述，加速度單位應為 m/s²（請選 B）！';
+          fb.style.color = '#b91c1c';
+          fb.innerHTML = '❌ <strong>不對喔！</strong> 加速度具有大小與方向性，單位是 m/s²！';
         }
       }
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
       updateUI();
     });
   </script>
-
-  
-
 </body>
 </html>
