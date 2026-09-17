@@ -151,7 +151,7 @@
     canvas.track-canvas {
       display: block;
       width: 100%;
-      height: 115px;
+      height: 135px;
       background: #ffffff;
     }
 
@@ -440,7 +440,7 @@
         <span>🏎️ 實體跑道即時運動與折返點（起點 0m ➔ 折返點 +40m ➔ 終點 +30m）</span>
         <span id="trackTimeStatus" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 6px; font-family: 'Outfit';">時間：t = 0.00 秒</span>
       </div>
-      <canvas id="trackCanvas" class="track-canvas" width="1280" height="115"></canvas>
+      <canvas id="trackCanvas" class="track-canvas" width="1280" height="135"></canvas>
     </div>
 
     <!-- 2. Playback Controller - Directly Below Track for One-Screen Operation -->
@@ -662,7 +662,7 @@
       trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
       const cw = trackCanvas.width;
       const ch = trackCanvas.height;
-      const cy = 54;
+      const cy = 58;
 
       // Clean bright track background
       trackCtx.fillStyle = '#ffffff';
@@ -788,7 +788,9 @@
         trackCtx.beginPath(); trackCtx.arc(carPx + off, cy + 8, 2.5, 0, Math.PI * 2); trackCtx.fill();
       });
 
-      // Active Live Speed & Position Badge (High contrast floating pill)
+      // Active Live Speed & Position Badge (High contrast floating pill with edge clamping)
+      const badgeW = 168;
+      const badgeCenterX = Math.max(badgeW / 2 + 15, Math.min(cw - badgeW / 2 - 15, carPx));
       trackCtx.fillStyle = '#ffffff';
       trackCtx.strokeStyle = strokeColor;
       trackCtx.lineWidth = 2;
@@ -796,15 +798,15 @@
       trackCtx.shadowBlur = 6;
       trackCtx.shadowOffsetY = 2;
       trackCtx.beginPath();
-      trackCtx.roundRect(carPx - 70, cy - 44, 140, 25, 12.5);
+      trackCtx.roundRect(badgeCenterX - badgeW / 2, cy - 44, badgeW, 26, 13);
       trackCtx.fill();
       trackCtx.stroke();
       trackCtx.shadowColor = 'transparent';
 
       trackCtx.fillStyle = strokeColor;
-      trackCtx.font = '900 12px Noto Sans TC, sans-serif';
+      trackCtx.font = '900 12.5px Noto Sans TC, sans-serif';
       trackCtx.textAlign = 'center';
-      trackCtx.fillText(`x = ${curX.toFixed(1)}m (${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s)`, carPx, cy - 28);
+      trackCtx.fillText(`x = ${curX.toFixed(1)}m (${curV > 0 ? '+' : ''}${curV.toFixed(1)} m/s)`, badgeCenterX, cy - 27);
     }
 
     // Draw v-t Graph with Triangles

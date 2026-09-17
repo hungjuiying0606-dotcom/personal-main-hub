@@ -164,7 +164,7 @@
     canvas.track-canvas {
       display: block;
       width: 100%;
-      height: 110px;
+      height: 135px;
       background: #ffffff;
     }
 
@@ -466,7 +466,7 @@
         <span>🏎️ 賽車向北運動跑道（初速 v₀ = 0 m/s，依 a-t 階梯加速/等速/減速）</span>
         <span id="trackTimeStatus" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 6px; font-family: 'Outfit';">時間：t = 0.00 秒</span>
       </div>
-      <canvas id="trackCanvas" class="track-canvas" width="1280" height="110"></canvas>
+      <canvas id="trackCanvas" class="track-canvas" width="1280" height="135"></canvas>
     </div>
 
     <!-- 2. Playback Controller - Directly Below Track for One-Screen Operation -->
@@ -715,7 +715,7 @@
       trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
       const cw = trackCanvas.width;
       const ch = trackCanvas.height;
-      const cy = 54;
+      const cy = 58;
       const maxDistance = 60; // Max x at t=10 is 56m
 
       // Clean bright track background
@@ -815,7 +815,9 @@
         trackCtx.beginPath(); trackCtx.arc(carPx + off, cy + 8, 2.5, 0, Math.PI * 2); trackCtx.fill();
       });
 
-      // Active Live Speed & Accel Badge (High contrast floating pill)
+      // Active Live Speed & Accel Badge (High contrast floating pill with edge clamping)
+      const badgeW = 168;
+      const badgeCenterX = Math.max(badgeW / 2 + 15, Math.min(cw - badgeW / 2 - 15, carPx));
       trackCtx.fillStyle = '#ffffff';
       trackCtx.strokeStyle = '#4338ca';
       trackCtx.lineWidth = 2;
@@ -823,15 +825,15 @@
       trackCtx.shadowBlur = 6;
       trackCtx.shadowOffsetY = 2;
       trackCtx.beginPath();
-      trackCtx.roundRect(carPx - 68, cy - 44, 136, 25, 12.5);
+      trackCtx.roundRect(badgeCenterX - badgeW / 2, cy - 44, badgeW, 26, 13);
       trackCtx.fill();
       trackCtx.stroke();
       trackCtx.shadowColor = 'transparent';
 
       trackCtx.fillStyle = '#312e81';
-      trackCtx.font = '900 12px Noto Sans TC, sans-serif';
+      trackCtx.font = '900 12.5px Noto Sans TC, sans-serif';
       trackCtx.textAlign = 'center';
-      trackCtx.fillText(`🏎️ v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)})`, carPx, cy - 28);
+      trackCtx.fillText(`🏎️ v = ${m.v.toFixed(1)} m/s (a = ${m.a > 0 ? '+' : ''}${m.a.toFixed(0)})`, badgeCenterX, cy - 27);
     }
 
     // Draw a-t Graph - Matched to 205px Height
@@ -850,13 +852,13 @@
 
       // Labels on area
       atCtx.fillStyle = '#1d4ed8';
-      atCtx.font = 'bold 12px Outfit, sans-serif';
+      atCtx.font = 'bold 12px Noto Sans TC, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = +8 m/s (速度+8)', (toGx(0) + toGx(4)) / 2, (toGy(0) + toGy(2)) / 2);
 
       atCtx.fillStyle = '#b91c1c';
-      atCtx.font = 'bold 12px Outfit, sans-serif';
+      atCtx.font = 'bold 12px Noto Sans TC, sans-serif';
       atCtx.textAlign = 'center';
       atCtx.textBaseline = 'middle';
       atCtx.fillText('面積 = -4 m/s (速度-4)', (toGx(6) + toGx(10)) / 2, (toGy(0) + toGy(-1)) / 2);
@@ -905,9 +907,9 @@
 
       atCtx.fillStyle = '#4338ca';
       atCtx.font = 'bold 11px Noto Sans TC';
-      atCtx.textAlign = 'left';
-      atCtx.textBaseline = 'top';
-      atCtx.fillText('時間 t (s)', ox + w - 30, bottomAxisY + 6);
+      atCtx.textAlign = 'right';
+      atCtx.textBaseline = 'bottom';
+      atCtx.fillText('時間 t (s)', ox + w, bottomAxisY - 4);
 
       // X Ticks
       [0, 2, 4, 6, 8, 10].forEach(t => {
@@ -962,8 +964,8 @@
       vtCtx.strokeStyle = '#1e3a8a'; vtCtx.lineWidth = 1.8; vtCtx.stroke();
 
       vtCtx.font = 'bold 11px Noto Sans TC'; vtCtx.fillStyle = '#1e3a8a';
-      vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'top';
-      vtCtx.fillText('時間 t (s)', ox + w - 30, oy + 6);
+      vtCtx.textAlign = 'right'; vtCtx.textBaseline = 'bottom';
+      vtCtx.fillText('時間 t (s)', ox + w, oy - 4);
 
       vtCtx.textAlign = 'left'; vtCtx.textBaseline = 'bottom';
       vtCtx.fillText('速度 v (m/s)', ox - 40, oy - h - 6);

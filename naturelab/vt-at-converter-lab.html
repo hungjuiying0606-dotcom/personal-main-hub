@@ -634,7 +634,7 @@
       strobeCtx.clearRect(0, 0, strobeCanvas.width, strobeCanvas.height);
       const cw = strobeCanvas.width;
       const ch = strobeCanvas.height;
-      const cy = 68; // Road centerline
+      const cy = 58; // Road centerline
       const conf = carConfigs[activeCar];
 
       // Clean bright track background
@@ -783,7 +783,9 @@
         strobeCtx.beginPath(); strobeCtx.arc(livePx + off, cy + 9, 2.5, 0, Math.PI * 2); strobeCtx.fill();
       });
 
-      // Active Live Speed Badge (Floating pill badge with high contrast)
+      // Active Live Speed Badge (Floating pill badge with high contrast and edge clamping)
+      const badgeW = 145;
+      const badgeCenterX = Math.max(badgeW / 2 + 15, Math.min(cw - badgeW / 2 - 15, livePx));
       strobeCtx.fillStyle = '#ffffff';
       strobeCtx.strokeStyle = strokeColor;
       strobeCtx.lineWidth = 2;
@@ -791,7 +793,7 @@
       strobeCtx.shadowBlur = 6;
       strobeCtx.shadowOffsetY = 2;
       strobeCtx.beginPath();
-      strobeCtx.roundRect(livePx - 55, cy - 48, 110, 26, 13);
+      strobeCtx.roundRect(badgeCenterX - badgeW / 2, cy - 48, badgeW, 26, 13);
       strobeCtx.fill();
       strobeCtx.stroke();
       strobeCtx.shadowColor = 'transparent';
@@ -799,7 +801,7 @@
       strobeCtx.fillStyle = strokeColor;
       strobeCtx.font = '900 12.5px Noto Sans TC, sans-serif';
       strobeCtx.textAlign = 'center';
-      strobeCtx.fillText(`${conf.name}: ${curV.toFixed(1)} m/s`, livePx, cy - 31);
+      strobeCtx.fillText(`${conf.name}: ${curV.toFixed(1)} m/s`, badgeCenterX, cy - 31);
     }
 
     // Draw v-t Graph
@@ -816,8 +818,8 @@
 
       // Labels
       vtCtx.font = 'bold 12px Noto Sans TC'; vtCtx.fillStyle = '#1e3a8a';
-      vtCtx.textAlign = 'right';
-      vtCtx.fillText('時間 t (秒)', ox + w, oy + 28);
+      vtCtx.textAlign = 'right'; vtCtx.textBaseline = 'bottom';
+      vtCtx.fillText('時間 t (秒)', ox + w, oy - 6);
       vtCtx.textAlign = 'left';
       vtCtx.fillText('速度 v (m/s)', ox - 45, oy - h - 6);
 
@@ -883,8 +885,8 @@
 
       // Labels
       atCtx.font = 'bold 12px Noto Sans TC'; atCtx.fillStyle = '#4338ca';
-      atCtx.textAlign = 'right';
-      atCtx.fillText('時間 t (秒)', ox + w, oy + 22);
+      atCtx.textAlign = 'right'; atCtx.textBaseline = 'bottom';
+      atCtx.fillText('時間 t (秒)', ox + w, oy - 6);
       atCtx.textAlign = 'left';
       atCtx.fillText('加速度 a (m/s²)', ox - 45, oy - 74);
 
