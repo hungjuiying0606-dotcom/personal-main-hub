@@ -6,388 +6,390 @@
   <title>國中自然 3上 · 龜兔賽跑 x-t 圖：途中 3 次相遇交會 ＋ 烏龜奪冠平均速度儀 (綜合卷第6頁題組3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #16a34a;       /* Forest Green */
+      --primary: #16a34a;
       --primary-dark: #15803d;
-      --tortoise-green: #10b981;/* Tortoise */
-      --hare-amber: #f59e0b;    /* Hare */
-      --intersect-pink: #ec4899;/* 3 Intersections */
-      --bg: #f0fdf4;
+      --primary-light: #dcfce7;
+      --tortoise-green: #059669;
+      --hare-amber: #d97706;
+      --intersect-pink: #db2777;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #bbf7d0;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(22, 163, 74, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(22, 163, 74, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* Compact Top Header (38px) */
     header {
+      height: 38px;
       background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Grid: 1.25fr 1fr */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #dcfce7;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
+      gap: 0.55rem;
       overflow: hidden;
-      margin-bottom: 1rem;
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0.55rem;
+      gap: 0.45rem;
+    }
+
+    /* Left Stage */
+    .stage-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      border: 1.5px solid #16a34a;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      padding: 0.3rem 0.6rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #0f172a;
       z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .stage-hud span strong {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
     }
 
-    canvas.stage-canvas {
-      display: block;
+    canvas {
       width: 100%;
-      height: 480px;
+      height: 100%;
+      display: block;
     }
 
     /* Controls Panel */
     .control-panel {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .slider-row label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      min-width: 110px;
-    }
-
-    .slider-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--primary);
+      gap: 0.35rem;
     }
 
     .btn-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
+    .btn-group {
+      display: flex;
       align-items: center;
       gap: 0.35rem;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .btn {
+      padding: 0.32rem 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .slider-container input[type="range"] {
+      flex: 1;
+      height: 6px;
+      accent-color: var(--primary);
+      cursor: pointer;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Pillars Telemetry Grid */
+    /* Right Column: Telemetry + Tabs */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
     }
 
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+      padding: 0.45rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
       background: #ffffff;
       text-align: center;
     }
-
-    .t-card.tortoise { border-color: #a7f3d0; background: #ecfdf5; }
-    .t-card.hare { border-color: #fde68a; background: #fffbeb; }
     .t-card.meet { border-color: #fbcfe8; background: #fdf2f8; }
+    .t-card.tor { border-color: #a7f3d0; background: #ecfdf5; }
+    .t-card.hare { border-color: #fde68a; background: #fffbeb; }
 
     .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
+      font-size: 0.72rem;
+      margin-bottom: 0.1rem;
+      font-weight: 800;
     }
-
-    .t-card.tortoise h4 { color: #059669; }
-    .t-card.hare h4 { color: #b45309; }
     .t-card.meet h4 { color: #db2777; }
+    .t-card.tor h4 { color: #059669; }
+    .t-card.hare h4 { color: #b45309; }
 
     .t-val {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 900;
+      line-height: 1.1;
     }
-
-    .t-card.tortoise .t-val { color: #059669; }
-    .t-card.hare .t-val { color: #b45309; }
     .t-card.meet .t-val { color: #db2777; }
+    .t-card.tor .t-val { color: #059669; }
+    .t-card.hare .t-val { color: #b45309; }
 
     .t-sub {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
     }
 
-    /* Intersections Table Box */
-    .meet-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+    /* Tab Section */
+    .tab-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
 
-    .meet-title {
-      font-size: 0.9rem;
+    .tab-bar {
+      display: flex;
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      text-align: center;
+      background: transparent;
+      border: none;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--primary); background: #f1f5f9; }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: white;
     }
 
-    /* Core Concept Callout */
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.65rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #334155;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Comparison Table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      margin: 0.35rem 0;
+    }
+    .compare-table th {
+      background: #f1f5f9;
+      padding: 0.35rem;
+      border: 1px solid #cbd5e1;
+      font-weight: 800;
+      color: #1e293b;
+    }
+    .compare-table td {
+      padding: 0.35rem;
+      border: 1px solid #cbd5e1;
+    }
+
     .concept-box {
       background: #f0fdf4;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      border-left: 3.5px solid var(--primary);
+      border-radius: 4px;
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.78rem;
     }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
+    .concept-box strong { color: var(--primary-dark); }
 
     /* Quiz Card */
     .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
+      background: #fffdf5;
       border: 1px solid #fde68a;
       border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+      padding: 0.55rem;
+      margin-bottom: 0.5rem;
     }
-
+    .quiz-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 0.35rem;
+    }
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
     }
-
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
+      padding: 0.35rem 0.6rem;
       border: 1px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: white;
+      font-size: 0.78rem;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .quiz-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+    .quiz-btn.correct { background: #dcfce7; color: #166534; border-color: #22c55e; }
+    .quiz-btn.wrong { background: #fee2e2; color: #991b1b; border-color: #ef4444; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .quiz-feedback.wrong { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    /* Scrollbar */
+    .tab-content::-webkit-scrollbar { width: 4px; }
+    .tab-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <script>
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
@@ -403,169 +405,182 @@
     };
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+      setTimeout(triggerMathRender, 600);
     });
   </script>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Compact Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🐢🐇 龜兔賽跑 x-t 圖：途中 3 次相遇交會 ＋ 烏龜奪冠平均速度儀</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第6頁題組3</span>
-        </h1>
-        <p>烏龜等速直線爬行；兔子暴衝 ➔ 樹下睡覺(x-t水平線) ➔ 狂追！途中相遇 3 次 (選C)；0~50分烏龜位移大·平均速度大 (選A)！</p>
-      </div>
+    <div class="header-left">
+      <a href="./" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🐢 龜兔賽跑 x-t 圖：途中 3 次相遇交會 ＋ 烏龜奪冠平均速度儀</span>
+        <span class="badge">單元綜合卷 03 卷題組3</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>賽程 1000m (50分)</span>
+      <span>x-t 交點 ＝ 途中相遇 3 次</span>
+      <span>烏龜總位移 1000m > 兔子 980m ➔ 烏龜平均速度大！</span>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Content Dashboard -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Race Track & x-t Graph Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🏁 森林跑道實況 ＋ 下方 x-t 圖 3 次交會點連動</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRace" onclick="toggleRace()">▶ 龜兔賽跑起跑 (50分鐘全程)</button>
+    <!-- Left Stage Panel -->
+    <div class="panel">
+      <div class="stage-container">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" style="color: #b45309;">0.0 分</strong></span>
+          <span>🐢 烏龜：<strong id="hudTor" style="color: #059669;">0.0 m</strong></span>
+          <span>🐇 兔子：<strong id="hudHare" style="color: #d97706;">0.0 m</strong></span>
+          <span>🏆 賽況：<strong id="hudLeader" style="color: #db2777;">起點並排起跑</strong></span>
+        </div>
+        <canvas id="stageCanvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="btn-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnRace" onclick="toggleRace()">▶ 龜兔賽跑起跑 (50分)</button>
             <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
           </div>
+          <span style="font-size: 0.74rem; color: #475569; font-weight: 700;">
+            💡 x-t 圖曲線的每一次「交會」，就代表兩者在同一時間到達同一位置（相遇）！
+          </span>
+        </div>
+        <div class="slider-container">
+          <span>賽跑時間：</span>
+          <input type="range" id="timeSlider" min="0" max="50" step="0.2" value="0" oninput="onSlider(this.value)">
+          <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; color: var(--primary); min-width: 55px;">0.0 min</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Telemetry & Tabs Panel -->
+    <div class="panel">
+      <!-- 3 Telemetry Cards -->
+      <div class="telemetry-grid">
+        <div class="t-card meet">
+          <h4>💞 途中相遇次數</h4>
+          <div class="t-val" id="valMeet">3 次</div>
+          <div class="t-sub">不計起訖點，交會 3 次 (選C)</div>
         </div>
 
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 比賽時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 分鐘</strong></span>
-            <span>🐢 烏龜位置：<strong id="hudTor" style="color: #34d399; font-family: 'Outfit';">0 m</strong></span>
-            <span>🐇 兔子位置：<strong id="hudHare" style="color: #f59e0b; font-family: 'Outfit';">0 m</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
+        <div class="t-card tor">
+          <h4>🐢 烏龜 50分位移</h4>
+          <div class="t-val" id="valTor">1000 m</div>
+          <div class="t-sub">抵達終點！\( \bar{v} = 20\text{m/min} \)</div>
         </div>
 
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div class="slider-row">
-            <label for="timeSlider">⏱️ 時間進度：</label>
-            <input type="range" id="timeSlider" min="0" max="50" step="0.5" value="0" oninput="onSliderChange(this.value)">
-            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; min-width: 70px;">0.0 min</span>
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            💡 <strong>題組 3 破題兩大關鍵：</strong><br>
-            ① <strong>相遇次數：</strong>途中曲線交叉點共有 <strong>3 次（選 C）</strong>（兔子超車 ➔ 烏龜趁兔睡覺超車 ➔ 兔子狂追追上）。<br>
-            ② <strong>平均速度：</strong>50 分鐘時烏龜已抵達終點（1000m），兔子還在後方 ➔ <strong>烏龜平均速度大於兔子（選 A）</strong>！
-          </div>
+        <div class="t-card hare">
+          <h4>🐇 兔子 50分位移</h4>
+          <div class="t-val" id="valHare">980 m</div>
+          <div class="t-sub">睡太久落敗！\( \bar{v} = 19.6\text{m/min} \)</div>
         </div>
       </div>
 
-      <!-- Right Column: 3 Pillars & Table & 2 Quizzes -->
-      <div>
-        
-        <!-- 3 Pillars Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Tortoise -->
-          <div class="t-card tortoise">
-            <h4>🐢 烏龜 (等速直跑)</h4>
-            <div class="t-val" id="valTor">0 m</div>
-            <div class="t-sub">50分抵達 1000m 奪冠</div>
-          </div>
-
-          <!-- Hare -->
-          <div class="t-card hare">
-            <h4>🐇 兔子 (跑-睡-追)</h4>
-            <div class="t-val" id="valHare">0 m</div>
-            <div class="t-sub">10~40分在 600m 睡覺</div>
-          </div>
-
-          <!-- Meet Count -->
-          <div class="t-card meet">
-            <h4>✨ 途中相遇次數</h4>
-            <div class="t-val" id="valMeet">3 次</div>
-            <div class="t-sub"><strong>題組 3(1) 選 (C)</strong></div>
-          </div>
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('concept', this)">📖 3 次相遇交會與平均速度詳解</button>
+          <button class="tab-btn" onclick="switchTab('quiz', this)">📝 題組 3 原題雙題測驗</button>
         </div>
 
-        <!-- Intersections Table Box -->
-        <div class="meet-box">
-          <div class="meet-title">📐 龜兔賽跑三大交會相遇點詳解：</div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.3rem;">
-            <tr style="background: #f1f5f9; font-weight: 800;">
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">相遇點</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">時間 t</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">位置 x</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">相遇情境</th>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #db2777;">第 1 次</td>
-              <td>約 5 分</td>
-              <td>100m</td>
-              <td>兔子起跑暴衝，由後方超越烏龜</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #db2777;">第 2 次</td>
-              <td>30 分</td>
-              <td>600m</td>
-              <td>兔子在樹下睡覺，烏龜默默超越兔子</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #db2777;">第 3 次</td>
-              <td>約 48 分</td>
-              <td>960m</td>
-              <td>兔子驚醒狂追，在終點前追上烏龜</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 平均速度核心定義：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>平均速度 \( \bar{v} = \frac{\Delta x}{\Delta t} \)。</li>
-            <li>在 \( 0 \sim 50 \) 分鐘內，兩者時間 \( \Delta t = 50\text{min} \) 相同，但<strong>烏龜位移（1000m）大於兔子位移</strong> ➔ 烏龜平均速度較大（選 A）！</li>
-          </ul>
-        </div>
-
-        <!-- 2 Quizzes Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷題組 3 原題全兩題測驗</div>
-
-          <div class="quiz-item">
-            <p>Q1. (1) 龜與兔在途中共相遇幾次？（不計起點與終點）</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(1, 'C', this)">(C) 三次（兔子超車一次、烏龜反超一次、兔子追上一次）</button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'A', this)">(A) 一次</button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'B', this)">(B) 兩次</button>
-              <button class="quiz-btn" onclick="checkQuiz(1, 'D', this)">(D) 四次</button>
+        <div class="tab-content">
+          <!-- Pane 1: Concept -->
+          <div class="tab-pane active" id="pane-concept">
+            <div class="concept-box">
+              <strong>💡 破題核心觀念：</strong>
+              <div style="margin-top: 0.2rem;">
+                ① <strong>相遇次數：</strong>在 \( x-t \) 圖中，<strong>兩圖線的交點</strong>即代表在相同時間到達相同位置（相遇）。<br>
+                ② <strong>平均速度大小：</strong>\( \bar{v} = \frac{\Delta x}{\Delta t} \)。時間同樣是 50 分鐘，<strong>誰的總位移大，誰的平均速度就大</strong>！
+              </div>
             </div>
-            <div class="quiz-feedback" id="fb1"></div>
+
+            <div style="font-weight: 800; color: var(--primary-dark); margin-bottom: 0.25rem;">
+              🔍 途中 3 次相遇詳細情境：
+            </div>
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>相遇序號</th>
+                  <th>相遇時間 t</th>
+                  <th>相遇位置 x</th>
+                  <th>相遇動態情境</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 800; color: #db2777;">第 1 次</td>
+                  <td>約 5.0 分</td>
+                  <td>約 100 m</td>
+                  <td>兔子起跑暴衝，由後方強勢超越烏龜</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 800; color: #db2777;">第 2 次</td>
+                  <td>30.0 分</td>
+                  <td>600 m</td>
+                  <td>兔子在樹下打瞌睡，烏龜默默爬過超越兔子</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 800; color: #db2777;">第 3 次</td>
+                  <td>約 48.0 分</td>
+                  <td>約 960 m</td>
+                  <td>兔子驚醒急起直追，終點前再度追上烏龜</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="font-weight: 800; color: var(--primary-dark); margin: 0.4rem 0 0.2rem 0;">
+              🏁 50 分鐘平均速度判斷：
+            </div>
+            <ul style="padding-left: 1.1rem; font-size: 0.78rem; line-height: 1.5;">
+              <li>烏龜在 50 分鐘時恰好跑完全程 1000m，總位移 \( \Delta x_{\text{龜}} = \mathbf{1000\text{ m}} \)。</li>
+              <li>兔子在 50 分鐘時僅到達 980m，總位移 \( \Delta x_{\text{兔}} = \mathbf{980\text{ m}} \)。</li>
+              <li>兩者花費時間同為 50 分鐘，因 \( \Delta x_{\text{龜}} > \Delta x_{\text{兔}} \)，故<strong>烏龜的平均速度較大（選 A）</strong>！</li>
+            </ul>
           </div>
 
-          <div class="quiz-item">
-            <p>Q2. (2) 0～50 分鐘期間，何者的「平均速度」較大？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 龜（50 分鐘時烏龜已先抵達終點，總位移較大）</button>
-              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 兔</button>
-              <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) 兩者一樣大</button>
-              <button class="quiz-btn" onclick="checkQuiz(2, 'D', this)">(D) 無法比較</button>
+          <!-- Pane 2: Quiz -->
+          <div class="tab-pane" id="pane-quiz">
+            <!-- Quiz 1 -->
+            <div class="quiz-card">
+              <div class="quiz-title">📝 題組 3 第 (1) 題：相遇次數</div>
+              <p style="font-size: 0.78rem; font-weight: 500; color: #1e293b;">
+                根據龜兔賽跑的 x-t 關係圖，龜與兔在賽跑途中共相遇幾次？（不計起點與終點）
+              </p>
+              <div class="quiz-options">
+                <button class="quiz-btn" onclick="checkQuiz1(this, 'C')">(C) 三次（兔子超車一次、烏龜反超一次、兔子終點前再追上一次）</button>
+                <button class="quiz-btn" onclick="checkQuiz1(this, 'A')">(A) 一次</button>
+                <button class="quiz-btn" onclick="checkQuiz1(this, 'B')">(B) 兩次</button>
+                <button class="quiz-btn" onclick="checkQuiz1(this, 'D')">(D) 四次</button>
+              </div>
+              <div class="quiz-feedback" id="quizFb1"></div>
             </div>
-            <div class="quiz-feedback" id="fb2"></div>
+
+            <!-- Quiz 2 -->
+            <div class="quiz-card">
+              <div class="quiz-title">📝 題組 3 第 (2) 題：平均速度比較</div>
+              <p style="font-size: 0.78rem; font-weight: 500; color: #1e293b;">
+                在 0～50 分鐘期間，何者的「平均速度」較大？
+              </p>
+              <div class="quiz-options">
+                <button class="quiz-btn" onclick="checkQuiz2(this, 'A')">(A) 龜（50 分鐘時烏龜已抵達 1000m 終點，總位移較大）</button>
+                <button class="quiz-btn" onclick="checkQuiz2(this, 'B')">(B) 兔（誤以為兔子跑得快平均速度就大）</button>
+                <button class="quiz-btn" onclick="checkQuiz2(this, 'C')">(C) 兩者一樣大</button>
+                <button class="quiz-btn" onclick="checkQuiz2(this, 'D')">(D) 無法比較</button>
+              </div>
+              <div class="quiz-feedback" id="quizFb2"></div>
+            </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
 
   <script>
     let simTime = 0; // 0 to 50 mins
@@ -576,12 +591,7 @@
     const ctx = canvas.getContext('2d');
 
     // Motion Model:
-    // Finish line = 1000m
-    // Tortoise: x_tor(t) = 20 * t (0 to 1000m in 50 mins)
-    // Hare:
-    // 0 to 10 mins: x_hare(t) = 60 * t (0 to 600m)
-    // 10 to 40 mins: x_hare(t) = 600m (Sleep)
-    // 40 to 50 mins: x_hare(t) = 600 + 38 * (t - 40) (600m to 980m)
+    // Finish line = 1000m in 50 mins
     function getState(t) {
       const xTor = Math.min(1000.0, 20.0 * t);
 
@@ -601,10 +611,23 @@
       return { xTor, xHare, hareState };
     }
 
-    function onSliderChange(val) {
-      simTime = parseFloat(val);
-      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)} min`;
-      updateUI();
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      draw();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('pane-' + tabId).classList.add('active');
+      if (window.triggerMathRender) triggerMathRender();
     }
 
     function toggleRace() {
@@ -617,7 +640,7 @@
         loop();
       } else {
         isRunning = false;
-        btn.innerText = '▶ 龜兔賽跑起跑 (50分鐘全程)';
+        btn.innerText = '▶ 龜兔賽跑起跑 (50分)';
         btn.style.background = 'var(--primary)';
         if (animId) cancelAnimationFrame(animId);
       }
@@ -627,10 +650,21 @@
       isRunning = false;
       simTime = 0;
       if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRace').innerText = '▶ 龜兔賽跑起跑 (50分鐘全程)';
+      document.getElementById('btnRace').innerText = '▶ 龜兔賽跑起跑 (50分)';
       document.getElementById('btnRace').style.background = 'var(--primary)';
       document.getElementById('timeSlider').value = 0;
       document.getElementById('sliderVal').innerText = '0.0 min';
+      updateUI();
+    }
+
+    function onSlider(val) {
+      simTime = parseFloat(val);
+      if (isRunning) {
+        isRunning = false;
+        document.getElementById('btnRace').innerText = '▶ 龜兔賽跑起跑 (50分)';
+        document.getElementById('btnRace').style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
       updateUI();
     }
 
@@ -651,201 +685,236 @@
 
     function updateUI() {
       const st = getState(simTime);
-      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 分鐘`;
-      document.getElementById('hudTor').innerText = `${st.xTor.toFixed(0)} m ${st.xTor >= 1000 ? '(🏆 冠軍撞線！)' : ''}`;
-      document.getElementById('hudHare').innerText = `${st.xHare.toFixed(0)} m ${st.hareState === 'sleep' ? '(💤 樹下大睡中)' : ''}`;
+      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 分`;
+      document.getElementById('hudTor').innerText = `${st.xTor.toFixed(0)} m`;
+      document.getElementById('hudHare').innerText = `${st.xHare.toFixed(0)} m`;
 
-      document.getElementById('valTor').innerText = `${st.xTor.toFixed(0)} m`;
-      document.getElementById('valHare').innerText = `${st.xHare.toFixed(0)} m`;
+      let leaderStr = '';
+      if (simTime === 0) leaderStr = '起點並排起跑';
+      else if (st.xTor > st.xHare) leaderStr = '🏆 烏龜暫時領先！';
+      else if (st.xTor < st.xHare) leaderStr = '⚡ 兔子暫時領先！';
+      else leaderStr = '💞 兩者在此刻相遇交會！';
+      document.getElementById('hudLeader').innerText = leaderStr;
 
       draw(st);
     }
 
     function draw(st) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      if (!st) st = getState(simTime);
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width;
+      const ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
 
-      // ==========================================
-      // 1. Top Section: Forest Race Track (y: 20 to 140)
-      // ==========================================
-      const laneX1 = 80, laneX2 = cw - 70;
-      const laneH = 45;
-      const laneTorY = 25, laneHareY = 80;
+      // White Canvas Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      function toTrackPx(dist) { return laneX1 + (dist / 1000.0) * (laneX2 - laneX1); }
+      // ===================================================
+      // 1. Top Section: 1000m Race Track (y: 34 to 112)
+      // ===================================================
+      const trkX1 = 65, trkX2 = cw - 65;
+      const trkY = 36, trkH = 76;
 
-      // Lanes (Grass Bed)
-      ctx.fillStyle = '#064e3b'; ctx.fillRect(laneX1, laneTorY, laneX2 - laneX1, laneH);
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 1.5; ctx.strokeRect(laneX1, laneTorY, laneX2 - laneX1, laneH);
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(trkX1, trkY, trkX2 - trkX1, trkH);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(trkX1, trkY, trkX2 - trkX1, trkH);
 
-      ctx.fillStyle = '#022c22'; ctx.fillRect(laneX1, laneHareY, laneX2 - laneX1, laneH);
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1.5; ctx.strokeRect(laneX1, laneHareY, laneX2 - laneX1, laneH);
+      function toTrackPx(x) { return trkX1 + (x / 1000.0) * (trkX2 - trkX1); }
 
-      // Distance Ticks (0, 200, 400, 600, 800, 1000m)
-      [0, 200, 400, 600, 800, 1000].forEach(d => {
-        const px = toTrackPx(d);
-        ctx.strokeStyle = '#047857'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(px, laneTorY); ctx.lineTo(px, laneHareY + laneH); ctx.stroke();
-
-        ctx.fillStyle = (d === 600 || d === 1000) ? '#fde047' : '#64748b';
-        ctx.font = (d === 600 || d === 1000) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${d}m`, px, laneHareY + laneH + 16);
+      // Ticks
+      [200, 400, 600, 800].forEach(x => {
+        const px = toTrackPx(x);
+        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(px, trkY); ctx.lineTo(px, trkY + trkH); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${x}m`, px, trkY + trkH + 11);
       });
 
-      // Tree at 600m for Rabbit Nap
-      const px600 = toTrackPx(600);
-      ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🌳', px600, laneHareY - 6);
+      // Tree at 600m
+      const treeX = toTrackPx(600);
+      ctx.font = '16px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🌳', treeX, trkY - 6);
 
-      // Finish Line Marker at 1000m
-      const px1000 = toTrackPx(1000);
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(px1000, laneTorY - 8); ctx.lineTo(px1000, laneHareY + laneH + 8); ctx.stroke();
+      // Finish banner at 1000m
+      ctx.fillStyle = '#dc2626'; ctx.font = 'bold 10px Noto Sans TC';
+      ctx.fillText('🏁 終點 (1000m)', trkX2, trkY - 6);
+      ctx.fillStyle = '#059669'; ctx.textAlign = 'left';
+      ctx.fillText('🚩 起點 (0m)', trkX1, trkY - 6);
+
+      // Two Lanes (Tortoise on top, Hare on bottom)
+      const laneH = trkH / 2;
+      const laneTorY = trkY + laneH * 0.5;
+      const laneHareY = trkY + laneH * 1.5;
+
+      // Divider
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(trkX1, trkY + laneH); ctx.lineTo(trkX2, trkY + laneH); ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = '#ef4444'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.fillText('🏁 終點 1000m', px1000 - 10, laneTorY - 12);
 
-      // Lane Labels
-      ctx.fillStyle = '#34d399'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'right';
-      ctx.fillText('🐢 烏龜', laneX1 - 10, laneTorY + 28);
-      ctx.fillStyle = '#fde047';
-      ctx.fillText('🐇 兔子', laneX1 - 10, laneHareY + 28);
+      // Lane labels
+      ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillStyle = '#059669'; ctx.fillText('龜', trkX1 - 8, laneTorY + 4);
+      ctx.fillStyle = '#d97706'; ctx.fillText('兔', trkX1 - 8, laneHareY + 4);
 
       // Draw Avatars
-      const pxTor = toTrackPx(st.xTor);
-      const pxHare = toTrackPx(st.xHare);
+      ctx.font = '20px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🐢', toTrackPx(st.xTor), laneTorY);
 
-      // Tortoise 🐢
-      ctx.font = '28px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🐢', pxTor, laneTorY + 32);
-
-      // Hare 🐇
-      ctx.fillText('🐇', pxHare, laneHareY + 32);
       if (st.hareState === 'sleep') {
-        ctx.font = '16px sans-serif';
-        ctx.fillText('💤', pxHare + 18, laneHareY + 16);
+        ctx.fillText('💤🐇', toTrackPx(st.xHare), laneHareY);
+      } else {
+        ctx.fillText('🐇', toTrackPx(st.xHare), laneHareY);
       }
 
-      // ==========================================
-      // 2. Bottom Section: x-t Graph (y: 170 to 450)
-      // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 440, gyTop = 180;
+      // ===================================================
+      // 2. Lower Section: x-t Graph (y: 138 to ch - 26)
+      // ===================================================
+      const gX = 65, gW = cw - 95;
+      const gY = 138, gH = ch - gY - 26;
 
-      function mapX(t) { return gx1 + (t / 50.0) * (gx2 - gx1); }
-      function mapY(x) { return gyZero - (x / 1000.0) * (gyZero - gyTop); }
+      function toPx(t, x) {
+        return {
+          px: gX + (t / 52.0) * gW,
+          py: (gY + gH) - (x / 1100.0) * gH
+        };
+      }
 
       // Grid
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      [10, 30, 40, 50].forEach(t => {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = (t === 50) ? '#fde047' : '#64748b';
-        ctx.font = (t === 50) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${t}分`, px, gyZero + 16);
-      });
-      [0, 600, 1000].forEach(x => {
-        const py = mapY(x);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (x === 1000) ? '#fde047' : '#64748b';
-        ctx.font = (x === 1000) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'right';
-        ctx.fillText(`${x}m`, gx1 - 8, py + 4);
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+      for (let t = 0; t <= 50; t += 10) {
+        const px = toPx(t, 0).px;
+        ctx.beginPath(); ctx.moveTo(px, gY); ctx.lineTo(px, gY + gH); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 10px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${t}分`, px, gY + gH + 14);
+      }
+      [0, 200, 400, 600, 800, 1000].forEach(x => {
+        const py = toPx(0, x).py;
+        ctx.beginPath(); ctx.moveTo(gX, py); ctx.lineTo(gX + gW, py); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 10px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${x}`, gX - 8, py + 3);
       });
 
       // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (分)', gx2 + 10, gyZero + 32);
-
-      // Line 1: Tortoise (Straight Green Line: (0,0) to (50, 1000))
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(0)); ctx.lineTo(mapX(50), mapY(1000)); ctx.stroke();
-
-      // Line 2: Hare (Polyline Amber: (0,0) -> (10,600) -> (40,600) -> (50,980))
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3.5;
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(mapX(0), mapY(0));
-      ctx.lineTo(mapX(10), mapY(600));
-      ctx.lineTo(mapX(40), mapY(600));
-      ctx.lineTo(mapX(50), mapY(980));
+      ctx.moveTo(gX, gY); ctx.lineTo(gX, gY + gH); ctx.lineTo(gX + gW, gY + gH);
       ctx.stroke();
 
-      // 3 Intersection Points on x-t:
-      // P1: (5 min, 100m)
-      // P2: (30 min, 600m)
-      // P3: (48 min, 960m)
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gX - 8, gY + 10);
+      ctx.textAlign = 'left'; ctx.fillText('時間 t (分)', gX + gW + 6, gY + gH + 4);
+
+      // Tortoise Line: (0,0) -> (50, 1000)
+      ctx.strokeStyle = '#059669'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(toPx(0, 0).px, toPx(0, 0).py); ctx.lineTo(toPx(50, 1000).px, toPx(50, 1000).py); ctx.stroke();
+
+      // Hare Polyline: (0,0) -> (10, 600) -> (40, 600) -> (50, 980)
+      ctx.strokeStyle = '#d97706'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(toPx(0, 0).px, toPx(0, 0).py);
+      ctx.lineTo(toPx(10, 600).px, toPx(10, 600).py);
+      ctx.lineTo(toPx(40, 600).px, toPx(40, 600).py);
+      ctx.lineTo(toPx(50, 980).px, toPx(50, 980).py);
+      ctx.stroke();
+
+      // Sleeping branch highlight
+      ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
+      const sleep1 = toPx(10, 600), sleep2 = toPx(40, 600);
+      ctx.fillRect(sleep1.px, sleep1.py - 8, sleep2.px - sleep1.px, 16);
+      ctx.fillStyle = '#b45309'; ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'center';
+      ctx.fillText('💤 兔子大睡 30 分鐘 (水平線)', (sleep1.px + sleep2.px) / 2, sleep1.py - 12);
+
+      // 3 Intersection Points (t=5, x=100; t=30, x=600; t=48, x=960)
       const meets = [
-        { t: 5, x: 100, label: '① 兔子起跑超車' },
-        { t: 30, x: 600, label: '② 烏龜反超(兔睡覺)' },
-        { t: 48, x: 960, label: '③ 兔子狂追交會' }
+        { t: 5.0, x: 100, label: '第1次相遇 (約5分)' },
+        { t: 30.0, x: 600, label: '第2次相遇 (30分)' },
+        { t: 48.0, x: 960, label: '第3次相遇 (約48分)' }
       ];
 
       meets.forEach((m, idx) => {
-        const mx = mapX(m.t), my = mapY(m.x);
-        ctx.fillStyle = '#ec4899';
-        ctx.beginPath(); ctx.arc(mx, my, 6, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+        const pt = toPx(m.t, m.x);
+        const passed = simTime >= m.t;
 
-        ctx.fillStyle = '#f472b6'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
-        ctx.fillText(m.label, mx + (idx === 1 ? 0 : 25), my - 10);
+        ctx.fillStyle = passed ? '#db2777' : '#ffffff';
+        ctx.strokeStyle = '#be185d';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(pt.px, pt.py, passed ? 7 : 5, 0, Math.PI * 2);
+        ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = '#be185d'; ctx.font = 'bold 10px Noto Sans TC';
+        if (idx === 1) {
+          ctx.textAlign = 'right';
+          ctx.fillText(m.label, pt.px - 10, pt.py + 4);
+        } else {
+          ctx.textAlign = 'left';
+          ctx.fillText(m.label, pt.px + 10, pt.py + 4);
+        }
       });
 
-      // Current Time Dynamic Vertical Line
-      const curPx = mapX(simTime);
-      ctx.strokeStyle = 'rgba(253, 224, 71, 0.6)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(curPx, gyTop); ctx.lineTo(curPx, gyZero); ctx.stroke();
+      // Finish at 50 min comparison
+      const endTor = toPx(50, 1000), endHare = toPx(50, 980);
+      ctx.fillStyle = '#059669';
+      ctx.beginPath(); ctx.arc(endTor.px, endTor.py, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#d97706';
+      ctx.beginPath(); ctx.arc(endHare.px, endHare.py, 5, 0, Math.PI * 2); ctx.fill();
+
+      // Current Time Needle
+      const needleX = toPx(simTime, 0).px;
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(needleX, gY); ctx.lineTo(needleX, gY + gH); ctx.stroke();
       ctx.setLineDash([]);
 
-      // Finish Celebration at 50 min
-      if (simTime >= 50.0) {
-        ctx.fillStyle = '#fde047'; ctx.font = 'bold 14px Noto Sans TC'; ctx.textAlign = 'center';
-        ctx.fillText('🎊 50分烏龜抵達 1000m 奪冠！平均速度較大 (選 A)！🎊', (gx1 + gx2) / 2, gyTop + 30);
-      }
+      // Current positions on x-t
+      const curTorPt = toPx(simTime, st.xTor);
+      ctx.fillStyle = '#059669';
+      ctx.beginPath(); ctx.arc(curTorPt.px, curTorPt.py, 5, 0, Math.PI * 2); ctx.fill();
+
+      const curHarePt = toPx(simTime, st.xHare);
+      ctx.fillStyle = '#d97706';
+      ctx.beginPath(); ctx.arc(curHarePt.px, curHarePt.py, 5, 0, Math.PI * 2); ctx.fill();
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
+    function checkQuiz1(btn, ans) {
+      const parent = btn.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      const fb = document.getElementById('quizFb1');
 
-      if (qNum === 1) {
-        if (ans === 'C') {
-          el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>途中兩線共相交 <strong>3 次（選 C）</strong>：<br>① 兔子起跑超車一次<br>② 兔子睡覺時烏龜超車一次<br>③ 兔子醒來狂追在終點前追上一次！';
-        } else {
-          el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心交點判定！</strong> 兩曲線在途中共有 3 個交叉點，故相遇 3 次（選 C）！';
-        }
-      } else if (qNum === 2) {
-        if (ans === 'A') {
-          el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>在 50 分鐘時，烏龜已先抵達 1000m 終點（位移最大），兔子尚未跑完 ➔ <strong>烏龜的平均速度較大（選 A）</strong>！';
-        } else {
-          el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心平均速度定義！</strong> 平均速度 ＝ 位移 / 時間。50 分鐘時烏龜位移較大，故烏龜平均速度較大（選 A）！';
-        }
+      if (ans === 'C') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>在 \\( x-t \\) 圖中兩線共有 <strong>3 個交點</strong>（約 5 分、30 分、約 48 分），代表途中相遇 <strong>3 次</strong>（選 C）！';
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong';
+        fb.innerHTML = '❌ <strong>觀念釐清：</strong>請數數看圖線交叉了幾次：兔子起跑超車一次、烏龜趁兔子睡覺反超一次、兔子驚醒在終點前追上一次，共交會 3 次（選 C）！';
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
+    function checkQuiz2(btn, ans) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+      const fb = document.getElementById('quizFb2');
+
+      if (ans === 'A') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>「平均速度 ＝ 位移／時間」。在 0～50 分鐘相同時間下，烏龜抵達 1000m 終點（位移 1000m），而兔子只跑到 980m（位移 980m），故<strong>烏龜的平均速度較大（選 A）</strong>！';
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong';
+        fb.innerHTML = '❌ <strong>小心別被直覺騙了！</strong>平均速度只看「總位移／總時間」。50 分鐘時烏龜位移為 1000m，大於兔子的 980m，因此烏龜的平均速度較大（選 A）！';
+      }
+      if (window.triggerMathRender) triggerMathRender();
+    }
+
+    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
+      resizeCanvas();
       updateUI();
     });
   </script>
-
-  
-
 </body>
 </html>

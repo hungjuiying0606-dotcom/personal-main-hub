@@ -6,370 +6,370 @@
   <title>國中自然 3上 · x-t 折線 ➔ v-t 正負階梯微分儀：前進、停留、折返 (綜合卷第5頁第12題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #6366f1;       /* Indigo / Differential */
-      --primary-dark: #4f46e5;
-      --pos-green: #10b981;
-      --zero-amber: #f59e0b;
-      --neg-red: #ef4444;
-      --bg: #eef2ff;
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --primary-light: #e0e7ff;
+      --pos-green: #059669;
+      --zero-amber: #d97706;
+      --neg-red: #dc2626;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #c7d2fe;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(99, 102, 241, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(79, 70, 229, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* Compact Top Header (38px) */
     header {
-      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      height: 38px;
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Grid: 1.25fr 1fr */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e0e7ff;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
+      gap: 0.55rem;
       overflow: hidden;
-      margin-bottom: 1rem;
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0.55rem;
+      gap: 0.45rem;
+    }
+
+    /* Left Stage */
+    .stage-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      border: 1.5px solid #4f46e5;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      padding: 0.3rem 0.6rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #0f172a;
       z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .stage-hud span strong {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
     }
 
-    canvas.stage-canvas {
-      display: block;
+    canvas {
       width: 100%;
-      height: 500px;
+      height: 100%;
+      display: block;
     }
 
     /* Controls Panel */
     .control-panel {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
     }
 
     .btn-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
+    .btn-group {
+      display: flex;
       align-items: center;
       gap: 0.35rem;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .btn {
+      padding: 0.32rem 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .slider-container input[type="range"] {
+      flex: 1;
+      height: 6px;
+      accent-color: var(--primary);
+      cursor: pointer;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Stage Telemetry Grid */
+    /* Right Column: Telemetry + Tabs */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
     }
 
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+      padding: 0.45rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
       background: #ffffff;
       text-align: center;
     }
-
-    .t-card.s1 { border-color: #a7f3d0; background: #ecfdf5; }
-    .t-card.s2 { border-color: #fde68a; background: #fffbeb; }
-    .t-card.s3 { border-color: #fecaca; background: #fef2f2; }
+    .t-card.stage1 { border-color: #a7f3d0; background: #ecfdf5; }
+    .t-card.stage2 { border-color: #fde68a; background: #fffbeb; }
+    .t-card.stage3 { border-color: #fecaca; background: #fef2f2; }
 
     .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
+      font-size: 0.72rem;
+      margin-bottom: 0.1rem;
+      font-weight: 800;
     }
-
-    .t-card.s1 h4 { color: #059669; }
-    .t-card.s2 h4 { color: #b45309; }
-    .t-card.s3 h4 { color: #dc2626; }
+    .t-card.stage1 h4 { color: #059669; }
+    .t-card.stage2 h4 { color: #b45309; }
+    .t-card.stage3 h4 { color: #dc2626; }
 
     .t-val {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 900;
+      line-height: 1.1;
     }
-
-    .t-card.s1 .t-val { color: #059669; }
-    .t-card.s2 .t-val { color: #b45309; }
-    .t-card.s3 .t-val { color: #dc2626; }
+    .t-card.stage1 .t-val { color: #059669; }
+    .t-card.stage2 .t-val { color: #b45309; }
+    .t-card.stage3 .t-val { color: #dc2626; }
 
     .t-sub {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
     }
 
-    /* Rules Box */
-    .rule-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+    /* Tab Section */
+    .tab-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
 
-    .rule-title {
-      font-size: 0.9rem;
+    .tab-bar {
+      display: flex;
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      text-align: center;
+      background: transparent;
+      border: none;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--primary); background: #f1f5f9; }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: white;
     }
 
-    /* Core Concept Callout */
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.65rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #334155;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
     .concept-box {
       background: #eef2ff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      border-left: 3.5px solid var(--primary);
+      border-radius: 4px;
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.78rem;
     }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
+    .concept-box strong { color: var(--primary-dark); }
 
     /* Quiz Card */
     .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
+      background: #fffdf5;
       border: 1px solid #fde68a;
       border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+      padding: 0.55rem;
     }
-
+    .quiz-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 0.35rem;
+    }
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
     }
-
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
+      padding: 0.35rem 0.6rem;
       border: 1px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: white;
+      font-size: 0.78rem;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .quiz-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+    .quiz-btn.correct { background: #dcfce7; color: #166534; border-color: #22c55e; }
+    .quiz-btn.wrong { background: #fee2e2; color: #991b1b; border-color: #ef4444; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .quiz-feedback.wrong { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    /* Scrollbar */
+    .tab-content::-webkit-scrollbar { width: 4px; }
+    .tab-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <script>
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
@@ -385,152 +385,139 @@
     };
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+      setTimeout(triggerMathRender, 600);
     });
   </script>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Compact Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>📈 x-t 折線 ➔ v-t 正負階梯微分儀：前進、停留、折返</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第12題</span>
-        </h1>
-        <p>x-t 正斜率前進 ➔ v-t 正值水平線；x-t 水平線停留 ➔ v-t 零值線；x-t 負斜率折返 ➔ v-t 負值水平線 (選B)！</p>
-      </div>
+    <div class="header-left">
+      <a href="./" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>📈 x-t 折線 ➔ v-t 正負階梯微分儀：前進、停留、折返</span>
+        <span class="badge">單元綜合卷 03 卷第12題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>x-t 斜率 ＝ v-t 數值</span>
+      <span>正斜率(+2) ➔ 水平(0) ➔ 負斜率(-2)</span>
+      <span>對應 v-t 正階梯 ➔ 零 ➔ 負階梯 (選B)</span>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Content Dashboard -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Tri-Viewport Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚗 實況跑道 ＋ x-t 折線圖 ＋ v-t 正負階梯圖 三重視圖</span>
-          </div>
-          <div class="btn-row">
+    <!-- Left Stage Panel -->
+    <div class="panel">
+      <div class="stage-container">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" style="color: #b45309;">0.0 秒</strong></span>
+          <span>📍 位置：<strong id="hudX" style="color: #4f46e5;">0.0 m</strong></span>
+          <span>🚀 即時速度：<strong id="hudV" style="color: #059669;">+2.0 m/s (正向前進)</strong></span>
+        </div>
+        <canvas id="stageCanvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="btn-row">
+          <div class="btn-group">
             <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 啟動小車運動全歷程</button>
             <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
           </div>
+          <span style="font-size: 0.74rem; color: #475569; font-weight: 700;">
+            💡 觀察上下兩圖：x-t 的每一段斜率，剛好就是下方 v-t 的階梯高度！
+          </span>
+        </div>
+        <div class="slider-container">
+          <span>運動進度：</span>
+          <input type="range" id="timeSlider" min="0" max="6" step="0.05" value="0" oninput="onSlider(this.value)">
+          <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; color: var(--primary); min-width: 45px;">0.0 s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Telemetry & Tabs Panel -->
+    <div class="panel">
+      <!-- 3 Telemetry Cards -->
+      <div class="telemetry-grid">
+        <div class="t-card stage1">
+          <h4>🟢 0～2 秒 (前進)</h4>
+          <div class="t-val" id="valS1">+2 m/s</div>
+          <div class="t-sub">向上斜線 \( \Rightarrow v > 0 \)</div>
         </div>
 
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
-            <span>📍 位置 x：<strong id="hudX" style="color: #38bdf8; font-family: 'Outfit';">0.0 m</strong></span>
-            <span>⚡ 即時速度 v：<strong id="hudV" style="color: #34d399; font-family: 'Outfit';">+2.0 m/s (前進)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="500"></canvas>
+        <div class="t-card stage2">
+          <h4>🟡 2～4 秒 (停留)</h4>
+          <div class="t-val" id="valS2">0 m/s</div>
+          <div class="t-sub">水平直線 \( \Rightarrow v = 0 \)</div>
         </div>
 
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            💡 斜率微分三大核心法則：
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            ① <strong>前進（0～t1）：</strong>\( x-t \) 往上斜（正斜率） ➔ 速度 \( v > 0 \) ➔ \( v-t \) 呈現<strong>上半部正值階梯</strong>。<br>
-            ② <strong>停留（t1～t2）：</strong>\( x-t \) 為水平線（斜率＝0） ➔ 速度 \( v = 0 \) ➔ \( v-t \) 呈現<strong>橫軸零值線</strong>。<br>
-            ③ <strong>折返（t2～t3）：</strong>\( x-t \) 往下斜（負斜率） ➔ 速度 \( v < 0 \) ➔ \( v-t \) 呈現<strong>下半部負值階梯</strong>（選 B）！
-          </div>
+        <div class="t-card stage3">
+          <h4>🔴 4～6 秒 (折返)</h4>
+          <div class="t-val" id="valS3">-2 m/s</div>
+          <div class="t-sub">向下斜線 \( \Rightarrow v < 0 \)</div>
         </div>
       </div>
 
-      <!-- Right Column: 3 Stages & Rules & Quiz -->
-      <div>
-        
-        <!-- 3 Stage Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Stage 1 -->
-          <div class="t-card s1">
-            <h4>🟢 第 1 段 (0~2s)</h4>
-            <div class="t-val" id="valS1">+2 m/s</div>
-            <div class="t-sub">正斜率前進<br>正值階梯</div>
-          </div>
-
-          <!-- Stage 2 -->
-          <div class="t-card s2">
-            <h4>🟡 第 2 段 (2~4s)</h4>
-            <div class="t-val" id="valS2">0 m/s</div>
-            <div class="t-sub">水平線停留<br>零值階梯</div>
-          </div>
-
-          <!-- Stage 3 -->
-          <div class="t-card s3">
-            <h4>🔴 第 3 段 (4~6s)</h4>
-            <div class="t-val" id="valS3">-2 m/s</div>
-            <div class="t-sub">負斜率折返<br>負值階梯</div>
-          </div>
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('concept', this)">📖 x-t 圖微分 ➔ v-t 階梯詳解</button>
+          <button class="tab-btn" onclick="switchTab('quiz', this)">📝 原題即測即評 (第12題)</button>
         </div>
 
-        <!-- Rules Box -->
-        <div class="rule-box">
-          <div class="rule-title">📐 x-t 斜率 轉 v-t 圖型態對照表：</div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.3rem;">
-            <tr style="background: #f1f5f9; font-weight: 800;">
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">運動歷程</th>
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">x-t 圖斜率特徵</th>
-              <th style="padding: 0.4rem; border: 1px solid #cbd5e1;">對應 v-t 圖階梯</th>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">① 正向等速前進</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">向上傾斜直線（斜率 > 0）</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">正值水平線（t 軸上方）</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #b45309;">② 靜止停留不動</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">水平直線（斜率 ＝ 0）</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #b45309;">零值水平線（貼在 t 軸上）</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #dc2626;">③ 反向等速折返</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1;">向下傾斜直線（斜率 < 0）</td>
-              <td style="padding: 0.4rem; border: 1px solid #cbd5e1; font-weight: bold; color: #dc2626;">負值水平線（t 軸下方）</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元綜合卷第 12 題破題關鍵：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>圖形轉換只要記住一句話：<strong>「x-t 圖的斜率就是 v-t 圖的 y 坐標數值」</strong>！</li>
-            <li>斜率：正值 ➔ 零 ➔ 負值，故對應的 v-t 圖必定是：<strong>正階梯 ➔ 零階梯 ➔ 負階梯（選 B）</strong>！</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷第 12 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>某車在直線道路上的 x-t 圖為「向上斜線 ➔ 水平線 ➔ 向下斜線」，改畫成 v-t 圖何者正確？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(12, 'B', this)">(B) 正值水平階梯 ➔ 零階梯 ➔ 負值水平階梯</button>
-              <button class="quiz-btn" onclick="checkQuiz(12, 'A', this)">(A) 全程都在 t 軸上方的連續三角形</button>
-              <button class="quiz-btn" onclick="checkQuiz(12, 'C', this)">(C) 全程等加速度傾斜直線</button>
-              <button class="quiz-btn" onclick="checkQuiz(12, 'D', this)">(D) 速度恆為負值</button>
+        <div class="tab-content">
+          <!-- Pane 1: Concept -->
+          <div class="tab-pane active" id="pane-concept">
+            <div class="concept-box">
+              <strong>💡 破題黃金心法（幾何微分）：</strong>
+              <div style="margin-top: 0.2rem;">
+                <strong>「x-t 圖的直線斜率，就是 v-t 圖上的 y 軸速度數值」！</strong>
+              </div>
             </div>
-            <div class="quiz-feedback" id="fb12"></div>
+
+            <div style="font-weight: 800; color: var(--primary-dark); margin-bottom: 0.3rem;">
+              🔍 三階段斜率對應拆解：
+            </div>
+            <ul style="padding-left: 1.1rem; font-size: 0.78rem; line-height: 1.5;">
+              <li>🟢 <strong>第 1 階段（0～2 秒，向上傾斜線）：</strong>
+                $$ \text{斜率 } = \frac{\Delta x}{\Delta t} = \frac{4 - 0}{2 - 0} = \mathbf{+2\text{ m/s}} $$
+                對應 v-t 圖為橫軸上方的<strong>正值水平階梯（+2）</strong>。
+              </li>
+              <li>🟡 <strong>第 2 階段（2～4 秒，水平直線）：</strong>
+                位置維持在 4m 不動，\( \Delta x = 0 \Rightarrow \mathbf{v = 0\text{ m/s}} \)，對應 v-t 圖為<strong>落在時間軸上的零階梯</strong>。
+              </li>
+              <li>🔴 <strong>第 3 階段（4～6 秒，向下傾斜線）：</strong>
+                $$ \text{斜率 } = \frac{0 - 4}{6 - 4} = \mathbf{-2\text{ m/s}} $$
+                對應 v-t 圖為橫軸下方的<strong>負值水平階梯（-2）</strong>。
+              </li>
+              <li>🏆 <strong>結論：</strong>v-t 圖必定由「正值階梯 ➔ 零階梯 ➔ 負值階梯」構成，故選 <strong>(B)</strong>！</li>
+            </ul>
+          </div>
+
+          <!-- Pane 2: Quiz -->
+          <div class="tab-pane" id="pane-quiz">
+            <div class="quiz-card">
+              <div class="quiz-title">📝 單元綜合卷 03 卷第 12 題</div>
+              <p style="font-size: 0.78rem; font-weight: 500; color: #1e293b;">
+                某車在直線道路上運動，其位置對時間之關係圖（x-t 圖）如左圖所示（向上斜線 ➔ 水平線 ➔ 向下斜線）。若改畫為速度對時間的關係圖（v-t 圖），下列何者正確？
+              </p>
+              <div class="quiz-options">
+                <button class="quiz-btn" onclick="checkQuiz(this, 'B')">(B) 正值水平階梯 ➔ 零階梯 ➔ 負值水平階梯</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'A')">(A) 全程都在時間軸上方的三角形圖</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'C')">(C) 全程等加速度的傾斜直線</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'D')">(D) 速度數值恆為負值</button>
+              </div>
+              <div class="quiz-feedback" id="quizFb"></div>
+            </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
 
   <script>
     let simTime = 0; // 0 to 6s
@@ -540,10 +527,6 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    // 3 Stages Model:
-    // 0 to 2s: x(t) = 2*t (0 to 4m), v = +2 m/s (Forward)
-    // 2 to 4s: x(t) = 4m, v = 0 m/s (Stop)
-    // 4 to 6s: x(t) = 4 - 2*(t - 4) = 12 - 2*t (4m to 0m), v = -2 m/s (Return)
     function getState(t) {
       if (t <= 2.0) {
         return { x: 2.0 * t, v: 2.0, stage: 1, label: '🟢 正向前進 (+2 m/s)' };
@@ -553,6 +536,25 @@
         const curX = Math.max(0, 4.0 - 2.0 * (t - 4.0));
         return { x: curX, v: -2.0, stage: 3, label: '🔴 反向折返 (-2 m/s)' };
       }
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      draw();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('pane-' + tabId).classList.add('active');
+      if (window.triggerMathRender) triggerMathRender();
     }
 
     function toggleRun() {
@@ -577,6 +579,19 @@
       if (animId) cancelAnimationFrame(animId);
       document.getElementById('btnRun').innerText = '▶ 啟動小車運動全歷程';
       document.getElementById('btnRun').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      document.getElementById('sliderVal').innerText = '0.0 s';
+      updateUI();
+    }
+
+    function onSlider(val) {
+      simTime = parseFloat(val);
+      if (isRunning) {
+        isRunning = false;
+        document.getElementById('btnRun').innerText = '▶ 啟動小車運動全歷程';
+        document.getElementById('btnRun').style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
       updateUI();
     }
 
@@ -586,9 +601,11 @@
       if (simTime >= 6.0) {
         simTime = 6.0;
         isRunning = false;
-        document.getElementById('btnRun').innerText = '🔄 重新啟動全歷程';
+        document.getElementById('btnRun').innerText = '🔄 重新啟動';
         document.getElementById('btnRun').style.background = 'var(--primary)';
       }
+      document.getElementById('timeSlider').value = simTime.toFixed(2);
+      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)} s`;
       updateUI();
       if (isRunning) animId = requestAnimationFrame(loop);
     }
@@ -598,165 +615,202 @@
       document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
       document.getElementById('hudX').innerText = `${st.x.toFixed(1)} m`;
       document.getElementById('hudV').innerText = `${st.v > 0 ? '+' : ''}${st.v.toFixed(1)} m/s (${st.label})`;
-
       draw(st);
     }
 
     function draw(st) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      if (!st) st = getState(simTime);
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width;
+      const ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
 
-      // ==========================================
-      // 1. Top Section: Road Track (y: 20 to 90)
-      // ==========================================
-      const roadX1 = 80, roadX2 = cw - 70;
-      const roadY = 30, roadH = 45;
+      // White Canvas Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      function toRoadPx(x) { return roadX1 + (x / 4.0) * (roadX2 - roadX1); }
+      // ===================================================
+      // 1. Top Track: Real-world Motion of Car (y: 32 to 74)
+      // ===================================================
+      const trkX1 = 60, trkX2 = cw - 60;
+      const trkY = 52;
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(trkX1 - 10, trkY - 18, (trkX2 - trkX1) + 20, 36);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(trkX1 - 10, trkY - 18, (trkX2 - trkX1) + 20, 36);
 
-      ctx.fillStyle = '#1e293b'; ctx.fillRect(roadX1, roadY, roadX2 - roadX1, roadH);
-      ctx.strokeStyle = '#6366f1'; ctx.lineWidth = 2; ctx.strokeRect(roadX1, roadY, roadX2 - roadX1, roadH);
+      // Road ticks (0m to 4m)
+      function toRoadPx(x) { return trkX1 + (x / 4.0) * (trkX2 - trkX1); }
+      for (let m = 0; m <= 4; m++) {
+        const px = toRoadPx(m);
+        ctx.beginPath(); ctx.moveTo(px, trkY - 10); ctx.lineTo(px, trkY + 10); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${m}m`, px, trkY + 18);
+      }
 
-      // Distance Ticks (0, 1, 2, 3, 4m)
-      [0, 1, 2, 3, 4].forEach(d => {
-        const px = toRoadPx(d);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(px, roadY); ctx.lineTo(px, roadY + roadH); ctx.stroke();
-        ctx.fillStyle = (d === 0 || d === 4) ? '#fde047' : '#64748b';
-        ctx.font = (d === 0 || d === 4) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${d}m`, px, roadY + roadH + 16);
-      });
+      // Car avatar 🚗
+      const carPx = toRoadPx(st.x);
+      const goingBack = simTime > 4.0;
+      ctx.save();
+      ctx.font = '20px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      if (goingBack) {
+        ctx.translate(carPx, trkY - 2);
+        ctx.scale(-1, 1);
+        ctx.fillText('🚗', 0, 0);
+      } else {
+        ctx.fillText('🚗', carPx, trkY - 2);
+      }
+      ctx.restore();
 
-      // Car 🚗
-      const pxCar = toRoadPx(st.x);
-      ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText(st.v < 0 ? '🚙' : '🚗', pxCar, roadY + 30);
+      // ===================================================
+      // 2. Middle Graph: x-t Graph (y: 92 to (ch-30)/2 + 25)
+      // ===================================================
+      const gX = 60, gW = cw - 95;
+      const g1Y = 94, g1H = (ch - 130) / 2;
 
-      // ==========================================
-      // 2. Middle Section: x-t Graph (y: 120 to 280)
-      // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero1 = 280, gyTop1 = 130;
+      function toXtPx(t, x) {
+        return {
+          px: gX + (t / 6.0) * gW,
+          py: (g1Y + g1H) - (x / 4.5) * g1H
+        };
+      }
 
-      function mapX(t) { return gx1 + (t / 6.0) * (gx2 - gx1); }
-      function mapY1(x) { return gyZero1 - (x / 4.5) * (gyZero1 - gyTop1); }
-
-      // Grid x-t
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      [2, 4, 6].forEach(t => {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop1); ctx.lineTo(px, gyZero1); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`t${t/2}(${t}s)`, px, gyZero1 + 14);
-      });
+      // x-t Grid
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+      for (let t = 0; t <= 6; t += 1) {
+        const px = toXtPx(t, 0).px;
+        ctx.beginPath(); ctx.moveTo(px, g1Y); ctx.lineTo(px, g1Y + g1H); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${t}s`, px, g1Y + g1H + 11);
+      }
       [0, 2, 4].forEach(x => {
-        const py = mapY1(x);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'right';
-        ctx.fillText(`${x}m`, gx1 - 8, py + 4);
+        const py = toXtPx(0, x).py;
+        ctx.beginPath(); ctx.moveTo(gX, py); ctx.lineTo(gX + gW, py); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${x}`, gX - 6, py + 3);
       });
 
-      // Axes x-t
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop1 - 10); ctx.lineTo(gx1, gyZero1); ctx.lineTo(gx2 + 20, gyZero1); ctx.stroke();
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gx1 - 8, gyTop1 + 5);
+      // x-t Axes
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(gX, g1Y); ctx.lineTo(gX, g1Y + g1H); ctx.lineTo(gX + gW, g1Y + g1H); ctx.stroke();
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 10px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gX - 6, g1Y + 6);
 
-      // Draw x-t 3 Segments:
-      // S1: (0,0) to (2,4) - Green
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY1(0)); ctx.lineTo(mapX(2), mapY1(4)); ctx.stroke();
-
-      // S2: (2,4) to (4,4) - Amber
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(2), mapY1(4)); ctx.lineTo(mapX(4), mapY1(4)); ctx.stroke();
-
-      // S3: (4,4) to (6,0) - Red
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(4), mapY1(4)); ctx.lineTo(mapX(6), mapY1(0)); ctx.stroke();
+      // x-t Curves: (0,0)->(2,4) green, (2,4)->(4,4) amber, (4,4)->(6,0) red
+      const pt0 = toXtPx(0,0), pt2 = toXtPx(2,4), pt4 = toXtPx(4,4), pt6 = toXtPx(6,0);
+      ctx.lineWidth = 3;
+      // 0-2s
+      ctx.strokeStyle = '#059669';
+      ctx.beginPath(); ctx.moveTo(pt0.px, pt0.py); ctx.lineTo(pt2.px, pt2.py); ctx.stroke();
+      // 2-4s
+      ctx.strokeStyle = '#d97706';
+      ctx.beginPath(); ctx.moveTo(pt2.px, pt2.py); ctx.lineTo(pt4.px, pt4.py); ctx.stroke();
+      // 4-6s
+      ctx.strokeStyle = '#dc2626';
+      ctx.beginPath(); ctx.moveTo(pt4.px, pt4.py); ctx.lineTo(pt6.px, pt6.py); ctx.stroke();
 
       // Current Point on x-t
-      const curX_px = mapX(simTime);
-      const curY1_px = mapY1(st.x);
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(curX_px, curY1_px, 6, 0, Math.PI * 2); ctx.fill();
+      const curXtPt = toXtPx(simTime, st.x);
+      ctx.fillStyle = '#4f46e5';
+      ctx.beginPath(); ctx.arc(curXtPt.px, curXtPt.py, 5, 0, Math.PI * 2); ctx.fill();
 
-      // ==========================================
-      // 3. Bottom Section: v-t Step Graph (y: 330 to 480)
-      // ==========================================
-      const gyZero2 = 410, gyTop2 = 330, gyBot2 = 480;
+      // ===================================================
+      // 3. Lower Graph: v-t Graph (y: g2Y to ch - 22)
+      // ===================================================
+      const g2Y = g1Y + g1H + 26, g2H = g1H;
+      const zeroVy = g2Y + g2H / 2;
 
-      function mapY2(v) { return gyZero2 - (v / 3.0) * (gyZero2 - gyTop2); }
+      function toVtPx(t, v) {
+        return {
+          px: gX + (t / 6.0) * gW,
+          py: zeroVy - (v / 3.0) * (g2H / 2 - 4)
+        };
+      }
 
-      // Grid v-t
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      [2, 4, 6].forEach(t => {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop2); ctx.lineTo(px, gyBot2); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`t${t/2}(${t}s)`, px, gyBot2 + 14);
+      // v-t Grid
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+      for (let t = 0; t <= 6; t += 1) {
+        const px = toVtPx(t, 0).px;
+        ctx.beginPath(); ctx.moveTo(px, g2Y); ctx.lineTo(px, g2Y + g2H); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${t}s`, px, zeroVy + 11);
+      }
+      [-2, 0, 2].forEach(v => {
+        const py = toVtPx(0, v).py;
+        ctx.beginPath(); ctx.moveTo(gX, py); ctx.lineTo(gX + gW, py); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${v > 0 ? '+' : ''}${v}`, gX - 6, py + 3);
       });
-      [2, 0, -2].forEach(v => {
-        const py = mapY2(v);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (v > 0) ? '#34d399' : (v < 0 ? '#f87171' : '#64748b');
-        ctx.font = 'bold 10px Outfit'; ctx.textAlign = 'right';
-        ctx.fillText(`${v > 0 ? '+' : ''}${v}`, gx1 - 8, py + 4);
-      });
 
-      // Axes v-t
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop2 - 10); ctx.lineTo(gx1, gyBot2); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(gx1, gyZero2); ctx.lineTo(gx2 + 20, gyZero2); ctx.stroke();
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gx1 - 8, gyTop2 + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero2 + 18);
+      // Time axis (v=0) & Y-axis
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(gX, zeroVy); ctx.lineTo(gX + gW, zeroVy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(gX, g2Y); ctx.lineTo(gX, g2Y + g2H); ctx.stroke();
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 10px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gX - 6, g2Y + 6);
 
-      // Draw v-t 3 Step Segments:
-      // S1: (0 to 2) at v = +2 - Green
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 4;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY2(2)); ctx.lineTo(mapX(2), mapY2(2)); ctx.stroke();
+      // v-t Steps
+      ctx.lineWidth = 3.5;
+      // Step 1: 0-2s, v=+2
+      ctx.strokeStyle = '#059669';
+      ctx.beginPath(); ctx.moveTo(toVtPx(0, 2).px, toVtPx(0, 2).py); ctx.lineTo(toVtPx(2, 2).px, toVtPx(2, 2).py); ctx.stroke();
 
-      // S2: (2 to 4) at v = 0 - Amber
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4;
-      ctx.beginPath(); ctx.moveTo(mapX(2), mapY2(0)); ctx.lineTo(mapX(4), mapY2(0)); ctx.stroke();
+      // Step 2: 2-4s, v=0
+      ctx.strokeStyle = '#d97706';
+      ctx.beginPath(); ctx.moveTo(toVtPx(2, 0).px, zeroVy); ctx.lineTo(toVtPx(4, 0).px, zeroVy); ctx.stroke();
 
-      // S3: (4 to 6) at v = -2 - Red
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 4;
-      ctx.beginPath(); ctx.moveTo(mapX(4), mapY2(-2)); ctx.lineTo(mapX(6), mapY2(-2)); ctx.stroke();
+      // Step 3: 4-6s, v=-2
+      ctx.strokeStyle = '#dc2626';
+      ctx.beginPath(); ctx.moveTo(toVtPx(4, -2).px, toVtPx(4, -2).py); ctx.lineTo(toVtPx(6, -2).px, toVtPx(6, -2).py); ctx.stroke();
 
-      // Current Point on v-t
-      const curY2_px = mapY2(st.v);
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(curX_px, curY2_px, 6, 0, Math.PI * 2); ctx.fill();
+      // Vertical connector dashes
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(toVtPx(2, 2).px, toVtPx(2, 2).py); ctx.lineTo(toVtPx(2, 0).px, zeroVy);
+      ctx.moveTo(toVtPx(4, 0).px, zeroVy); ctx.lineTo(toVtPx(4, -2).px, toVtPx(4, -2).py);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Step Labels
+      ctx.font = 'bold 10px Outfit';
+      ctx.fillStyle = '#059669'; ctx.textAlign = 'center';
+      ctx.fillText('+2 (正值階梯)', (toVtPx(0, 2).px + toVtPx(2, 2).px) / 2, toVtPx(0, 2).py - 4);
+      ctx.fillStyle = '#d97706';
+      ctx.fillText('0 (零階梯)', (toVtPx(2, 0).px + toVtPx(4, 0).px) / 2, zeroVy - 4);
+      ctx.fillStyle = '#dc2626';
+      ctx.fillText('-2 (負值階梯)', (toVtPx(4, -2).px + toVtPx(6, -2).px) / 2, toVtPx(0, -2).py + 12);
+
+      // Current Needle across both graphs
+      const needleX = toXtPx(simTime, 0).px;
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(needleX, g1Y); ctx.lineTo(needleX, g2Y + g2H); ctx.stroke();
+      ctx.setLineDash([]);
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
+    function checkQuiz(btn, ans) {
+      const parent = btn.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      const fb = document.getElementById('quizFb');
 
       if (ans === 'B') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>① \( 0 \\sim t_1 \)：\( x-t \) 正斜率 ➔ \( v > 0 \) 正值階梯<br>② \( t_1 \\sim t_2 \)：\( x-t \) 水平線 ➔ \( v = 0 \) 零值線<br>③ \( t_2 \\sim t_3 \)：\( x-t \) 負斜率 ➔ \( v < 0 \) 負值階梯<br>故選 (B)！';
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>\\( x-t \\) 圖的<strong>斜率就是 \\( v-t \\) 圖的速度數值</strong>：<br>① 向上傾斜直線 ➔ 斜率為正 ➔ <strong>正值水平階梯</strong><br>② 水平直線 ➔ 斜率為 0 ➔ <strong>零階梯</strong><br>③ 向下傾斜直線 ➔ 斜率為負 ➔ <strong>負值水平階梯</strong><br>故選 (B)！';
       } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心判讀斜率！</strong> x-t 斜率為正、零、負，對應 v-t 圖就是正階梯、零、負階梯（選 B）！';
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong';
+        fb.innerHTML = '❌ <strong>觀念釐清：</strong>請記住「x-t 圖的斜率就是 v-t 圖的數值」！等速前進斜率為正（正值階梯），靜止斜率為零（零階梯），折返斜率為負（負值階梯），故選 (B)！';
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
+    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
+      resizeCanvas();
       updateUI();
     });
   </script>
-
-  
-
 </body>
 </html>

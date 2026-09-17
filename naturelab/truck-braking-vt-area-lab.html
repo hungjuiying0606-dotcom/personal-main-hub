@@ -9,390 +9,309 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #f97316;       /* Truck Orange */
-      --primary-dark: #ea580c;
-      --trap-gold: #f59e0b;     /* Trapezoid Area */
-      --rect-green: #10b981;    /* Lower Rectangle (100m) */
-      --tri-blue: #3b82f6;      /* Upper Triangle (75m) */
-      --road-gray: #1e293b;
-      --bg: #fff7ed;
+      --primary: #ea580c;
+      --primary-dark: #c2410c;
+      --accent: #2563eb;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fed7aa;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(249, 115, 22, 0.08);
+      --danger: #dc2626;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+    }
+    body {
       display: flex;
       flex-direction: column;
     }
-
     header {
-      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+      background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+      padding: 0.35rem 1rem;
+      height: 38px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
     }
-
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
-
+    .header-left h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
     .badge {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
-
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
+    .header-info {
+      font-size: 0.72rem;
+      opacity: 0.92;
     }
 
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
       flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #ffedd5;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      padding: 0.5rem 0.75rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-
-    .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 10;
-    }
-
-    canvas.stage-canvas {
-      display: block;
+      gap: 0.6rem;
+      min-height: 0;
+      max-width: 1400px;
       width: 100%;
-      height: 450px;
+      margin: 0 auto;
     }
 
-    /* Controls Panel */
-    .control-panel {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      min-height: 0;
+      overflow: hidden;
     }
 
-    .btn-row {
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      z-index: 5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stage-hud span { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; }
+
+    canvas.stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
+    .control-panel {
+      padding: 0.45rem 0.65rem;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: nowrap;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
     .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
       font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: white;
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
     }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-tab { background: #e2e8f0; color: #334155; font-size: 0.72rem; }
+    .btn-tab.active { background: #1e293b; color: white; border-color: #0f172a; }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* Calc Method Tabs */
-    .method-tabs {
+    .scrubber-container {
       display: flex;
+      align-items: center;
       gap: 0.4rem;
-      flex-wrap: wrap;
+      flex: 1;
+      margin-left: 0.2rem;
     }
-
-    .method-tab {
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid #cbd5e1;
-      background: white;
-      font-size: 0.8rem;
-      font-weight: 800;
+    .scrubber-container label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .scrubber-container input[type="range"] {
+      flex: 1;
+      height: 5px;
+      accent-color: var(--primary);
       cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .method-tab:hover { background: #ffedd5; }
-    .method-tab.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary-dark);
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
-
-    /* 3 Pillars Grid */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
+      flex-shrink: 0;
     }
-
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
-      background: #ffffff;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem;
       text-align: center;
     }
+    .t-card.t-disp { border-color: #fed7aa; background: #fff7ed; }
+    .t-card.t-rect { border-color: #bbf7d0; background: #f0fdf4; }
+    .t-card.t-tri { border-color: #bae6fd; background: #f0f9ff; }
+    .t-title { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; }
+    .t-sub { font-size: 0.65rem; color: #64748b; }
 
-    .t-card.disp { border-color: #fed7aa; background: #fff7ed; }
-    .t-card.rect { border-color: #a7f3d0; background: #ecfdf5; }
-    .t-card.tri { border-color: #bae6fd; background: #f0f9ff; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.disp h4 { color: #ea580c; }
-    .t-card.rect h4 { color: #059669; }
-    .t-card.tri h4 { color: #0284c7; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-    }
-
-    .t-card.disp .t-val { color: #ea580c; }
-    .t-card.rect .t-val { color: #059669; }
-    .t-card.tri .t-val { color: #0284c7; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Formula Box */
-    .formula-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #fff7ed;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options {
+    .tab-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      min-height: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
     }
-
-    .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      text-align: left;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
       cursor: pointer;
-      transition: all 0.2s;
+      color: #64748b;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+      font-weight: 800;
+    }
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
 
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .formula-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid var(--primary);
+      padding: 0.35rem 0.55rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.35rem;
+    }
+    .formula-step strong { color: var(--primary-dark); }
 
-    .quiz-feedback {
-      font-size: 0.85rem;
+    .quiz-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+    .quiz-item p { font-weight: 700; font-size: 0.76rem; margin-bottom: 0.3rem; }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+    }
+    .quiz-btn {
+      padding: 0.25rem 0.45rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-btn:hover { background: #f1f5f9; }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
       display: none;
     }
 
-    .quiz-feedback.show { display: block; }
-
     footer {
-      background: #e2e8f0;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      padding: 0.2rem;
+      font-size: 0.68rem;
+      color: #64748b;
+      height: 20px;
+      flex-shrink: 0;
     }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
@@ -409,10 +328,9 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(triggerMathRender, 200);
+      setTimeout(triggerMathRender, 800);
     });
   </script>
 </head>
@@ -420,128 +338,116 @@
 
   <!-- Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🚚 卡車筆直公路煞車減速：v-t 圖梯形面積與 175m 位移積分器</span>
-          <span class="badge">國中自然 3上 · 單元課次卷 02 卷第4題</span>
-        </h1>
-        <p>初速 25 m/s 減速至 10 m/s，耗時 10 秒；梯形面積 (10+25)×10/2 ＝ 長方形 100m ＋ 三角形 75m ＝ 175 公尺！</p>
-      </div>
+    <div class="header-left">
+      <a href="chapter1-hub.html" style="color: white; text-decoration: none; font-size: 0.8rem; font-weight: 700; background: rgba(255,255,255,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">❮ 回目錄</a>
+      <h1>
+        <span>🚚 卡車筆直公路煞車減速：v-t 圖梯形面積 175m</span>
+        <span class="badge">單元課次卷 02 卷第4題</span>
+      </h1>
+    </div>
+    <div class="header-info">
+      初速 25 m/s 減至 10 m/s (10秒) ｜ 位移 ＝ 梯形面積 ＝ 175 公尺 (選 C)
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Grid -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚚 公路卡車煞車 ＋ v-t 圖即時面積積分雙視圖</span>
+    <!-- Left Column: Canvas & Controls -->
+    <div class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" class="hud-val" style="color: #b45309;">10.0 s</strong></span>
+          <span>⚡ 速度：<strong id="hudVel" class="hud-val" style="color: #0284c7;">10.0 m/s</strong></span>
+          <span>🛣️ 位移：<strong id="hudDisp" class="hud-val" style="color: #ea580c;">175.0 m</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel directly below canvas -->
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-tab active" id="tabTrap" onclick="setMethod('trap')">📐 梯形公式</button>
+            <button class="btn btn-tab" id="tabSplit" onclick="setMethod('split')">🧩 拆解法 (100+75)</button>
+            <button class="btn btn-tab" id="tabAvg" onclick="setMethod('avg')">⚖️ 平均速度法</button>
           </div>
-          <div class="btn-row">
+          <div class="btn-group">
             <button class="btn btn-primary" id="btnBrake" onclick="toggleBrake()">▶ 開始煞車減速</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+            <button class="btn" onclick="resetSim()">🔄 重置</button>
           </div>
         </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">10.0 秒</strong></span>
-            <span>⚡ 即時速度：<strong id="hudVel" style="color: #38bdf8; font-family: 'Outfit';">10.0 m/s</strong></span>
-            <span>🛣️ 累計位移：<strong id="hudDisp" style="color: #34d399; font-family: 'Outfit';">175.0 m</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="450"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            🎯 點選切換 3 大幾何面積解法：
-          </div>
-          <div class="method-tabs">
-            <button class="method-tab active" onclick="setMethod('trap', this)">📐 方法一：梯形公式 (上底10+下底25)×10/2</button>
-            <button class="method-tab" onclick="setMethod('split', this)">🧩 方法二：拆解法 (長方形 100m ＋ 三角形 75m)</button>
-            <button class="method-tab" onclick="setMethod('avg', this)">⚖️ 方法三：平均速度 v̄=17.5 m/s 等效矩形</button>
+        <div class="ctrl-row">
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間軸：</label>
+            <input type="range" id="timeScrubber" min="0" max="100" value="100" oninput="onScrub(this.value)">
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Right Column: 3 Pillars & Formulas & Quiz -->
-      <div>
-        
-        <!-- 3 Pillars Grid -->
-        <div class="telemetry-grid">
-          <!-- Total Displacement -->
-          <div class="t-card disp">
-            <h4>🏆 總位移 (面積)</h4>
-            <div class="t-val" id="valDisp">175 m</div>
-            <div class="t-sub">\( 0 \sim 10\text{s} \) 梯形總面積</div>
+    <!-- Right Column: Telemetry & Tabs -->
+    <div class="right-col">
+      <!-- 3 Pillars Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="t-card t-disp">
+          <div class="t-title" style="color: #ea580c;">🏆 總位移 (梯形)</div>
+          <div class="t-val" style="color: #ea580c;">175 m</div>
+          <div class="t-sub">0～10s 總面積 (選C)</div>
+        </div>
+        <div class="t-card t-rect">
+          <div class="t-title" style="color: #15803d;">🟢 下部長方形</div>
+          <div class="t-val" style="color: #15803d;">100 m</div>
+          <div class="t-sub">10m/s × 10s</div>
+        </div>
+        <div class="t-card t-tri">
+          <div class="t-title" style="color: #0284c7;">🔵 上部三角形</div>
+          <div class="t-val" style="color: #0284c7;">75 m</div>
+          <div class="t-sub">(15 × 10) / 2</div>
+        </div>
+      </div>
+
+      <!-- Tabbed Panel -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnExp" onclick="switchRightTab('exp')">📖 題目詳解與推導</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchRightTab('quiz')">📝 原題測驗 (第4題)</button>
+        </div>
+
+        <!-- Tab 1: Explanation -->
+        <div class="tab-content" id="tabContentExp">
+          <div class="formula-step">
+            <strong>📐 核心幾何推導：v-t 圖面積代表位移</strong><br>
+            • 初速度 \( v_0 = 25\text{ m/s} \)（下底），末速度 \( v = 10\text{ m/s} \)（上底），時間 \( \Delta t = 10\text{ s} \)（高）。<br>
+            $$S = \frac{(\text{上底 } 10 + \text{下底 } 25) \times \text{高 } 10}{2} = \frac{35 \times 10}{2} = \mathbf{175\text{ 公尺}}\text{（選 C）}$$
           </div>
 
-          <!-- Base Rectangle -->
-          <div class="t-card rect">
-            <h4>🟢 下部長方形</h4>
-            <div class="t-val" id="valRect">100 m</div>
-            <div class="t-sub">\( 10\text{m/s} \times 10\text{s} \)</div>
-          </div>
-
-          <!-- Top Triangle -->
-          <div class="t-card tri">
-            <h4>🔵 上部三角形</h4>
-            <div class="t-val" id="valTri">75 m</div>
-            <div class="t-sub">\( (15 \times 10) / 2 \)</div>
+          <div class="formula-step">
+            <strong>🧩 拆解雙法對照驗算：</strong><br>
+            • <strong>拆解法：</strong>底層長方形 \( 10 \times 10 = 100\text{m} \)，頂層三角形 \( \frac{(25 - 10) \times 10}{2} = 75\text{m} \)，總和 \( 100 + 75 = \mathbf{175\text{m}} \)！<br>
+            • <strong>平均速度法：</strong>\( \bar{v} = \frac{25 + 10}{2} = 17.5\text{ m/s} \)，位移 \( S = 17.5 \times 10 = \mathbf{175\text{m}} \)！
           </div>
         </div>
 
-        <!-- Formula Box -->
-        <div class="formula-box" id="formulaBox">
-          <div class="form-title">📐 梯形面積計算詳解：</div>
-          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
-            <li><strong>初速度（下底）：</strong>\( v_0 = 25\text{ m/s} \)</li>
-            <li><strong>末速度（上底）：</strong>\( v = 10\text{ m/s} \)</li>
-            <li><strong>時間間隔（高）：</strong>\( \Delta t = 10\text{ s} \)</li>
-            <li><strong>位移（梯形面積）：</strong><br>
-              \( S = \frac{(\text{上底 } 10 + \text{下底 } 25) \times \text{高 } 10}{2} = \frac{35 \times 10}{2} = \mathbf{175\text{ 公尺}} \)（選 C）。
-            </li>
-          </ul>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元課次卷第 4 題核心觀念：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>在 \( v-t \) 圖中，<strong>圖形與時間軸（橫軸）所圍成的面積代表「位移大小」</strong>！</li>
-            <li>無論是用梯形公式、拆解法還是平均速度法，算出來的位移皆為 <strong>175 公尺</strong>。</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 4 題原題測驗</div>
-
+        <!-- Tab 2: Quiz -->
+        <div class="tab-content" id="tabContentQuiz" style="display: none;">
           <div class="quiz-item">
-            <p>卡車在筆直公路上由 25 m/s 減速至 10 m/s，在 0～10 秒內此車共行駛多少公尺？</p>
+            <p>Q. (第4題) 卡車在筆直公路上由 25 m/s 減速至 10 m/s，在 0～10 秒內此車共行駛多少公尺？</p>
             <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(4, 'C', this)">(C) 175 公尺（梯形面積 (10+25)×10/2 ＝ 175m）</button>
-              <button class="quiz-btn" onclick="checkQuiz(4, 'D', this)">(D) 250 公尺（誤以為全程維持 25m/s）</button>
+              <button class="quiz-btn" onclick="checkQuiz(4, 'C', this)">(C) 175 公尺（梯形面積）</button>
+              <button class="quiz-btn" onclick="checkQuiz(4, 'D', this)">(D) 250 公尺（誤以為維持 25m/s）</button>
               <button class="quiz-btn" onclick="checkQuiz(4, 'B', this)">(B) 25 公尺</button>
               <button class="quiz-btn" onclick="checkQuiz(4, 'A', this)">(A) 10 公尺</button>
             </div>
-            <div class="quiz-feedback" id="fb4"></div>
+            <div class="quiz-fb" id="fb4"></div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
+    國中自然 3上 · 1-3 速度與速率 · 考卷檢討專題
   </footer>
 
   <script>
@@ -553,38 +459,30 @@
     const canvas = document.getElementById('stageCanvas');
     const ctx = canvas.getContext('2d');
 
-    function setMethod(m, el) {
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchRightTab(tab) {
+      document.getElementById('tabBtnExp').classList.toggle('active', tab === 'exp');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabContentExp').style.display = (tab === 'exp') ? 'block' : 'none';
+      document.getElementById('tabContentQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
+      if (tab === 'exp') setTimeout(window.triggerMathRender, 50);
+    }
+
+    function setMethod(m) {
       currentMethod = m;
-      document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
-      if (el) el.classList.add('active');
-
-      const fb = document.getElementById('formulaBox');
-      if (m === 'trap') {
-        fb.innerHTML = `
-          <div class="form-title">📐 方法一：梯形公式法</div>
-          <p style="font-size: 0.82rem; line-height: 1.5; color: #334155;">
-            \\( S = \\frac{(\\text{上底 } 10 + \\text{下底 } 25) \\times \\text{高 } 10}{2} = \\frac{35 \\times 10}{2} = \\mathbf{175\\text{ 公尺}} \\)
-          </p>
-        `;
-      } else if (m === 'split') {
-        fb.innerHTML = `
-          <div class="form-title">🧩 方法二：拆解法（長方形 ＋ 三角形）</div>
-          <p style="font-size: 0.82rem; line-height: 1.5; color: #334155;">
-            ① 長方形：\\( 10 \\times 10 = \\mathbf{100\\text{ m}} \\)<br>
-            ② 三角形：\\( \\frac{(25 - 10) \\times 10}{2} = \\mathbf{75\\text{ m}} \\)<br>
-            總位移 ＝ \\( 100 + 75 = \\mathbf{175\\text{ 公尺}} \\)！
-          </p>
-        `;
-      } else {
-        fb.innerHTML = `
-          <div class="form-title">⚖️ 方法三：平均速度等效法</div>
-          <p style="font-size: 0.82rem; line-height: 1.5; color: #334155;">
-            等加速度平均速度：\\( \\bar{v} = \\frac{25 + 10}{2} = \\mathbf{17.5\\text{ m/s}} \\)<br>
-            總位移 ＝ \\( 17.5 \\times 10 = \\mathbf{175\\text{ 公尺}} \\)！
-          </p>
-        `;
-      }
-
+      document.getElementById('tabTrap').classList.toggle('active', m === 'trap');
+      document.getElementById('tabSplit').classList.toggle('active', m === 'split');
+      document.getElementById('tabAvg').classList.toggle('active', m === 'avg');
       draw();
     }
 
@@ -608,29 +506,41 @@
       isRunning = false;
       progress = 0;
       if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnBrake').innerText = '▶ 開始煞車減速';
-      document.getElementById('btnBrake').style.background = 'var(--primary)';
+      const btn = document.getElementById('btnBrake');
+      btn.innerText = '▶ 開始煞車減速';
+      btn.style.background = 'var(--primary)';
+      document.getElementById('timeScrubber').value = 0;
+      updateUI();
+    }
+
+    function onScrub(val) {
+      if (isRunning) {
+        isRunning = false;
+        if (animId) cancelAnimationFrame(animId);
+        document.getElementById('btnBrake').innerText = '▶ 繼續';
+        document.getElementById('btnBrake').style.background = 'var(--primary)';
+      }
+      progress = val / 100.0;
       updateUI();
     }
 
     function loop() {
       if (!isRunning) return;
-      progress += 0.006;
+      progress += 0.008;
       if (progress >= 1.0) {
         progress = 1.0;
         isRunning = false;
         document.getElementById('btnBrake').innerText = '🔄 重新煞車';
         document.getElementById('btnBrake').style.background = 'var(--primary)';
       }
+      document.getElementById('timeScrubber').value = Math.round(progress * 100);
       updateUI();
       if (isRunning) animId = requestAnimationFrame(loop);
     }
 
     function updateUI() {
       const curT = progress * 10.0;
-      // v(t) = 25 - 1.5 * t
       const curV = 25.0 - 1.5 * curT;
-      // S(t) = 25*t - 0.5 * 1.5 * t^2
       const curS = 25.0 * curT - 0.75 * curT * curT;
 
       document.getElementById('hudTime').innerText = `${curT.toFixed(1)} 秒`;
@@ -641,74 +551,73 @@
     }
 
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
+
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
       // ==========================================
-      // 1. Top Section: Truck Braking on Road (y: 30 to 140)
+      // 1. Top Section: Road & Truck
       // ==========================================
-      const roadY = 90;
-      ctx.fillStyle = '#1e293b';
-      ctx.fillRect(40, roadY - 30, cw - 80, 60);
-      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2; ctx.strokeRect(40, roadY - 30, cw - 80, 60);
+      const roadY = 32;
+      const roadX1 = 45, roadX2 = cw - 30;
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.fillRect(roadX1, roadY - 16, roadX2 - roadX1, 32);
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(roadX1, roadY - 16, roadX2 - roadX1, 32);
 
       // Centerline
-      ctx.strokeStyle = '#fde047'; ctx.lineWidth = 2; ctx.setLineDash([8, 8]);
-      ctx.beginPath(); ctx.moveTo(50, roadY); ctx.lineTo(cw - 50, roadY); ctx.stroke();
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 5]);
+      ctx.beginPath(); ctx.moveTo(roadX1 + 5, roadY); ctx.lineTo(roadX2 - 5, roadY); ctx.stroke();
       ctx.setLineDash([]);
 
-      // Road Distance Ticks (0m to 175m)
-      const roadStartPx = 80, roadEndPx = cw - 80;
-      function roadToPx(s) { return roadStartPx + (s / 175.0) * (roadEndPx - roadStartPx); }
+      function roadToPx(s) { return roadX1 + 20 + (s / 175.0) * (roadX2 - roadX1 - 40); }
 
-      ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
+      // Ticks
       [0, 50, 100, 150, 175].forEach(s => {
         const px = roadToPx(s);
-        ctx.beginPath(); ctx.moveTo(px, roadY + 30); ctx.lineTo(px, roadY + 38); ctx.stroke();
-        ctx.fillText(`${s}m`, px, roadY + 50);
+        ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(px, roadY + 16); ctx.lineTo(px, roadY + 22); ctx.stroke();
+        ctx.fillStyle = (s === 175) ? '#ea580c' : '#64748b';
+        ctx.font = (s === 175) ? 'bold 9px Outfit' : '8px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${s}m`, px, roadY + 30);
       });
 
-      // Current Truck Position
       const curT = progress * 10.0;
       const curS = 25.0 * curT - 0.75 * curT * curT;
       const truckPx = roadToPx(curS);
 
-      // Skid Trail (Orange)
-      ctx.strokeStyle = '#f97316'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(roadStartPx, roadY + 12); ctx.lineTo(truckPx, roadY + 12); ctx.stroke();
+      // Skid Trail
+      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(roadToPx(0), roadY + 6); ctx.lineTo(truckPx, roadY + 6); ctx.stroke();
 
-      // Truck Avatar 🚚
-      ctx.font = '34px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('🚚', truckPx, roadY + 8);
-
-      // Red Braking Light / Smoke
-      if (isRunning && progress < 1.0) {
-        ctx.fillStyle = '#ef4444';
-        ctx.beginPath(); ctx.arc(truckPx - 22, roadY - 4, 4, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.fillText('💨', truckPx - 36, roadY + 12);
-      }
+      // Truck
+      ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🚚', truckPx, roadY + 6);
 
       // ==========================================
-      // 2. Bottom Section: v-t Graph (y: 200 to 420)
+      // 2. Bottom Section: v-t Graph
       // ==========================================
-      const gx1 = 90, gx2 = cw - 80;
-      const gyZero = 400, gyTop = 200;
+      const gx1 = 45, gx2 = cw - 30;
+      const gyZero = ch - 20, gyTop = 85;
 
       function mapX(t) { return gx1 + (t / 10.0) * (gx2 - gx1); }
       function mapY(v) { return gyZero - (v / 30.0) * (gyZero - gyTop); }
 
-      // Shaded Areas according to currentMethod
       const curMaxT = Math.min(10.0, curT);
 
       if (currentMethod === 'split') {
-        // Lower Rectangle: 0 to curMaxT, height 0 to 10m/s (Green)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.35)';
+        // Lower Rectangle (100m)
+        ctx.fillStyle = 'rgba(22, 163, 74, 0.2)';
         ctx.fillRect(mapX(0), mapY(10), mapX(curMaxT) - mapX(0), gyZero - mapY(10));
 
-        // Upper Triangle: 0 to curMaxT, hypotenuse from 25 to 10 (Blue)
-        ctx.fillStyle = 'rgba(59, 130, 246, 0.35)';
+        // Upper Triangle (75m)
+        ctx.fillStyle = 'rgba(37, 99, 235, 0.2)';
         ctx.beginPath();
         ctx.moveTo(mapX(0), mapY(25));
         ctx.lineTo(mapX(curMaxT), mapY(25 - 1.5 * curMaxT));
@@ -717,29 +626,28 @@
         ctx.closePath();
         ctx.fill();
 
-        // Area Labels if progress == 1
-        if (progress >= 1.0) {
-          ctx.fillStyle = '#34d399'; ctx.font = 'bold 12px Noto Sans TC';
+        if (progress >= 0.99) {
+          ctx.fillStyle = '#15803d'; ctx.font = 'bold 10px Noto Sans TC';
           ctx.fillText('長方形 100m', mapX(5), mapY(5));
-          ctx.fillStyle = '#60a5fa';
+          ctx.fillStyle = '#1d4ed8';
           ctx.fillText('三角形 75m', mapX(3.5), mapY(16));
         }
       } else if (currentMethod === 'avg') {
-        // Equivalent Rectangle at v=17.5 (Purple)
-        ctx.fillStyle = 'rgba(168, 85, 247, 0.35)';
+        // Average speed rectangle
+        ctx.fillStyle = 'rgba(147, 51, 234, 0.18)';
         ctx.fillRect(mapX(0), mapY(17.5), mapX(curMaxT) - mapX(0), gyZero - mapY(17.5));
 
-        ctx.strokeStyle = '#c084fc'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 3]);
         ctx.beginPath(); ctx.moveTo(mapX(0), mapY(17.5)); ctx.lineTo(mapX(10), mapY(17.5)); ctx.stroke();
         ctx.setLineDash([]);
 
-        if (progress >= 1.0) {
-          ctx.fillStyle = '#e879f9'; ctx.font = 'bold 13px Noto Sans TC';
-          ctx.fillText('等效平均速度 v̄ = 17.5 m/s 矩形 (17.5 × 10 = 175m)', mapX(5), mapY(17.5) - 10);
+        if (progress >= 0.99) {
+          ctx.fillStyle = '#7e22ce'; ctx.font = 'bold 10px Noto Sans TC';
+          ctx.fillText('平均速度 17.5 m/s 矩形 ＝ 175m', mapX(5), mapY(17.5) - 6);
         }
       } else {
-        // Standard Trapezoid (Gold/Orange)
-        ctx.fillStyle = 'rgba(245, 158, 11, 0.35)';
+        // Standard Trapezoid
+        ctx.fillStyle = 'rgba(234, 88, 12, 0.18)';
         ctx.beginPath();
         ctx.moveTo(mapX(0), mapY(0));
         ctx.lineTo(mapX(0), mapY(25));
@@ -748,80 +656,69 @@
         ctx.closePath();
         ctx.fill();
 
-        if (progress >= 1.0) {
-          ctx.fillStyle = '#fde047'; ctx.font = 'bold 14px Noto Sans TC';
+        if (progress >= 0.99) {
+          ctx.fillStyle = '#c2410c'; ctx.font = 'bold 11px Noto Sans TC';
           ctx.fillText('梯形面積 ＝ 175 公尺', mapX(5), mapY(10));
         }
       }
 
-      // Grid Lines
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
+      // Grid
+      ctx.strokeStyle = '#f1f5f9'; ctx.lineWidth = 1;
       for (let t = 2; t <= 10; t += 2) {
         const px = mapX(t);
         ctx.beginPath(); ctx.moveTo(px, gyZero); ctx.lineTo(px, gyTop); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`${t}`, px, gyZero + 18);
+        ctx.fillStyle = '#64748b'; ctx.font = '9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${t}`, px, gyZero + 13);
       }
-      [10, 20, 25, 30].forEach(v => {
+      [10, 20, 25].forEach(v => {
         const py = mapY(v);
         ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (v === 10 || v === 25) ? '#fde047' : '#64748b';
-        ctx.font = (v === 10 || v === 25) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.fillStyle = (v === 10 || v === 25) ? '#0f172a' : '#64748b';
+        ctx.font = (v === 10 || v === 25) ? 'bold 9px Outfit' : '8px Outfit';
         ctx.textAlign = 'right';
-        ctx.fillText(`${v}`, gx1 - 10, py + 4);
+        ctx.fillText(`${v}`, gx1 - 4, py + 3);
       });
 
-      // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero);
-      ctx.lineTo(gx2 + 20, gyZero);
-      ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right';
-      ctx.fillText('速度 v (m/s)', gx1 - 10, gyTop + 5);
-      ctx.textAlign = 'center';
-      ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
-
-      // v-t Line (from 25 to 10)
-      ctx.strokeStyle = '#f97316'; ctx.lineWidth = 4;
+      // Ref line
+      ctx.strokeStyle = '#fed7aa'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(mapX(0), mapY(25)); ctx.lineTo(mapX(10), mapY(10)); ctx.stroke();
 
-      // Key Points
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(mapX(0), mapY(25), 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillText('(0s, 25m/s)', mapX(0) + 40, mapY(25) - 6);
+      // Active line
+      ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3.5;
+      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(25)); ctx.lineTo(mapX(curMaxT), mapY(25 - 1.5 * curMaxT)); ctx.stroke();
 
-      ctx.beginPath(); ctx.arc(mapX(10), mapY(10), 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillText('(10s, 10m/s)', mapX(10) + 42, mapY(10) - 6);
+      // Axes
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 6); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 10, gyZero); ctx.stroke();
+
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 9px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('速度 (m/s)', gx1 - 4, gyTop - 2);
+      ctx.textAlign = 'center'; ctx.fillText('時間 (s)', gx2 + 5, gyZero + 13);
     }
 
-    // Quiz Check
     function checkQuiz(qNum, ans, el) {
       const parent = el.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
       const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      fb.style.display = 'block';
 
       if (ans === 'C') {
         el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>在 \( v-t \) 圖中面積代表位移：<br>梯形面積 ＝ \( \\frac{(10 + 25) \\times 10}{2} = \\mathbf{175\\text{ 公尺}} \)（選 C）！';
+        fb.style.background = '#dcfce7';
+        fb.style.color = '#15803d';
+        fb.innerHTML = '✅ 正確！梯形面積 \\( S = \\frac{(10 + 25) \\times 10}{2} = 175\\text{ 公尺} \\)（選 C）！';
       } else {
         el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心計算！</strong> 請使用梯形面積公式：(上底10 + 下底25) × 高10 ÷ 2 ＝ 175 公尺（選 C）！';
+        fb.style.background = '#fee2e2';
+        fb.style.color = '#b91c1c';
+        fb.innerHTML = '❌ 答錯了！請計算 v-t 圖梯形面積，上底 10、下底 25、高 10，位移為 175 公尺（選 C）！';
       }
+      setTimeout(window.triggerMathRender, 50);
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      resizeCanvas();
     });
   </script>
-
-  
-
 </body>
 </html>

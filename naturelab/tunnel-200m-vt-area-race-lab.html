@@ -6,396 +6,400 @@
   <title>國中自然 3上 · 甲乙丙三車闖 200m 直線隧道：v-t 圖面積積分賽跑儀 (單元卷第3頁第13題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #dc2626;       /* Racing Red */
+      --primary: #dc2626;
       --primary-dark: #b91c1c;
-      --car-bing: #ef4444;      /* Bing (Red - Winner) */
-      --car-jia: #0284c7;       /* Jia (Blue - Constant speed) */
-      --car-yi: #10b981;        /* Yi (Green - Accelerated) */
-      --tunnel-bg: #0f172a;
-      --bg: #fef2f2;
+      --primary-light: #fee2e2;
+      --car-bing: #ef4444;
+      --car-jia: #0284c7;
+      --car-yi: #10b981;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fecaca;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(220, 38, 38, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(220, 38, 38, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* Compact Top Header (38px) */
     header {
+      height: 38px;
       background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Grid: 1.25fr 1fr */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #fee2e2;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
+      gap: 0.55rem;
       overflow: hidden;
-      margin-bottom: 1rem;
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0.55rem;
+      gap: 0.45rem;
+    }
+
+    /* Left Stage */
+    .stage-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      border: 1.5px solid #dc2626;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      padding: 0.3rem 0.6rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #0f172a;
       z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .stage-hud span strong {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
     }
 
-    canvas.stage-canvas {
-      display: block;
+    canvas {
       width: 100%;
-      height: 460px;
+      height: 100%;
+      display: block;
     }
 
     /* Controls Panel */
     .control-panel {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
     }
 
     .btn-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
+    .btn-group {
+      display: flex;
       align-items: center;
       gap: 0.35rem;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .btn {
+      padding: 0.32rem 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .slider-container input[type="range"] {
+      flex: 1;
+      height: 6px;
+      accent-color: var(--primary);
+      cursor: pointer;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Cars Telemetry Grid */
+    /* Right Column: Telemetry + Progress + Tabs */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
     }
 
     .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+      padding: 0.45rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
       background: #ffffff;
       text-align: center;
     }
-
     .t-card.bing { border-color: #fecaca; background: #fef2f2; }
     .t-card.jia { border-color: #bae6fd; background: #f0f9ff; }
     .t-card.yi { border-color: #a7f3d0; background: #ecfdf5; }
 
     .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
+      font-size: 0.72rem;
+      margin-bottom: 0.1rem;
+      font-weight: 800;
     }
-
     .t-card.bing h4 { color: #dc2626; }
     .t-card.jia h4 { color: #0284c7; }
     .t-card.yi h4 { color: #059669; }
 
     .t-val {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 900;
+      line-height: 1.1;
     }
-
     .t-card.bing .t-val { color: #dc2626; }
     .t-card.jia .t-val { color: #0284c7; }
     .t-card.yi .t-val { color: #059669; }
 
     .t-sub {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
     }
 
-    /* Area Progress Bar */
+    /* Progress Box */
     .progress-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
     }
 
-    .prog-title {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .bar-row {
-      margin-bottom: 0.4rem;
-    }
-
+    .bar-row { display: flex; flex-direction: column; gap: 0.15rem; }
     .bar-label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-bottom: 0.15rem;
     }
-
     .bar-track {
-      height: 10px;
+      height: 8px;
       background: #e2e8f0;
       border-radius: 99px;
       overflow: hidden;
     }
-
     .bar-fill {
       height: 100%;
       border-radius: 99px;
-      transition: width 0.1s linear;
+      transition: width 0.05s linear;
     }
 
-    /* Core Concept Callout */
+    /* Tab Section */
+    .tab-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      text-align: center;
+      background: transparent;
+      border: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--primary); background: #f1f5f9; }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: white;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.65rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #334155;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
     .concept-box {
       background: #fef2f2;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      border-left: 3.5px solid var(--primary);
+      border-radius: 4px;
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.78rem;
     }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
+    .concept-box strong { color: var(--primary-dark); }
 
     /* Quiz Card */
     .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
+      background: #fffdf5;
       border: 1px solid #fde68a;
       border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+      padding: 0.55rem;
     }
-
+    .quiz-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 0.35rem;
+    }
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
     }
-
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
+      padding: 0.35rem 0.6rem;
       border: 1px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: white;
+      font-size: 0.78rem;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
+    .quiz-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+    .quiz-btn.correct { background: #dcfce7; color: #166534; border-color: #22c55e; }
+    .quiz-btn.wrong { background: #fee2e2; color: #991b1b; border-color: #ef4444; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .quiz-feedback.wrong { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    /* Scrollbar */
+    .tab-content::-webkit-scrollbar { width: 4px; }
+    .tab-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <script>
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
@@ -411,161 +415,166 @@
     };
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+      setTimeout(triggerMathRender, 600);
     });
   </script>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Compact Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🏎️ 甲乙丙三車闖 200m 直線隧道：v-t 圖面積積分賽跑儀</span>
-          <span class="badge">國中自然 3上 · 單元課次卷 02 卷第13題</span>
-        </h1>
-        <p>通過 200m 隧道 ➔ 誰的 v-t 圖累積面積最先達到 200m 誰先通過！丙車初速高、初期位移累積最快 ➔ 丙車奪冠！</p>
-      </div>
+    <div class="header-left">
+      <a href="./" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🏎️ 甲乙丙三車闖 200m 直線隧道：v-t 圖面積積分賽跑</span>
+        <span class="badge">單元卷 02 卷第13題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>隧道長度 200m</span>
+      <span>v-t 圖面積 ＝ 行駛位移</span>
+      <span>丙車初速高、初期累積最快 ➔ 丙車奪冠！</span>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Content Dashboard -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Tunnel & Graph Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚇 200m 隧道實時競速 ＋ 下方 v-t 圖面積積分連動</span>
-          </div>
-          <div class="btn-row">
+    <!-- Left Stage Panel -->
+    <div class="panel">
+      <div class="stage-container">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" style="color: #b45309;">0.0 秒</strong></span>
+          <span>🏆 實時領先：<strong id="hudLeader" style="color: #dc2626;">🏎️ 丙車 (面積累積最快)</strong></span>
+          <span>🏁 隧道總長：<strong style="color: #0284c7;">200 公尺</strong></span>
+        </div>
+        <canvas id="stageCanvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="btn-row">
+          <div class="btn-group">
             <button class="btn btn-primary" id="btnRace" onclick="toggleRace()">▶ 三車起跑競速</button>
             <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
           </div>
+          <span style="font-size: 0.74rem; color: #475569; font-weight: 700;">
+            💡 哪輛車的曲線下方面積最先填滿 200m，就最先衝出隧道！
+          </span>
+        </div>
+        <div class="slider-container">
+          <span>競速進度：</span>
+          <input type="range" id="timeSlider" min="0" max="12" step="0.05" value="0" oninput="onSlider(this.value)">
+          <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; color: var(--primary); min-width: 50px;">0.0 s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Telemetry & Tabs Panel -->
+    <div class="panel">
+      <!-- 3 Cars Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="t-card bing">
+          <h4>🏆 丙車 (冠軍)</h4>
+          <div class="t-val" id="valBing">7.4 秒</div>
+          <div class="t-sub">初速大 初期面積暴衝<br><strong>最先衝出 200m (選C)</strong></div>
         </div>
 
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
-            <span>🏆 領先者：<strong id="hudLeader" style="color: #f87171; font-family: 'Outfit';">🏎️ 丙車 (面積累積最快)</strong></span>
-            <span>🏁 隧道長度：<strong style="color: #38bdf8; font-family: 'Outfit';">200 公尺</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="460"></canvas>
+        <div class="t-card jia">
+          <h4>🚙 甲車 (等速)</h4>
+          <div class="t-val" id="valJia">10.0 秒</div>
+          <div class="t-sub">等速 20 m/s<br>矩形面積穩定累積</div>
         </div>
 
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            💡 物理幾何心法：
+        <div class="t-card yi">
+          <h4>🚗 乙車 (等加速)</h4>
+          <div class="t-val" id="valYi">11.5 秒</div>
+          <div class="t-sub">靜止起跑等加速<br>前期速度慢面積小</div>
+        </div>
+      </div>
+
+      <!-- Area / Distance Progress Bars -->
+      <div class="progress-box">
+        <!-- Bing Bar -->
+        <div class="bar-row">
+          <div class="bar-label">
+            <span style="color: #dc2626;">🏎️ 丙車累積位移 (v-t 面積)</span>
+            <span id="labelBing" style="font-family: 'Outfit';">0.0 m / 200m</span>
           </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            在 \( v-t \) 圖中，<strong>圖形下方面積 ＝ 行駛位移</strong>！哪一部車的曲線在相同時間內包夾的面積最大，其位移就最大，最先累積滿 200m 通過隧道！
+          <div class="bar-track">
+            <div class="bar-fill" id="barBing" style="background: #ef4444; width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Jia Bar -->
+        <div class="bar-row">
+          <div class="bar-label">
+            <span style="color: #0284c7;">🚙 甲車累積位移 (v-t 面積)</span>
+            <span id="labelJia" style="font-family: 'Outfit';">0.0 m / 200m</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" id="barJia" style="background: #0284c7; width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Yi Bar -->
+        <div class="bar-row">
+          <div class="bar-label">
+            <span style="color: #059669;">🚗 乙車累積位移 (v-t 面積)</span>
+            <span id="labelYi" style="font-family: 'Outfit';">0.0 m / 200m</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" id="barYi" style="background: #10b981; width: 0%;"></div>
           </div>
         </div>
       </div>
 
-      <!-- Right Column: 3 Cars Telemetry & Progress Bars & Quiz -->
-      <div>
-        
-        <!-- 3 Cars Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Bing -->
-          <div class="t-card bing">
-            <h4>🏆 丙車 (冠軍)</h4>
-            <div class="t-val" id="valBing">7.4 秒</div>
-            <div class="t-sub">初速高 早期面積最大<br><strong>最先通過 200m (選C)</strong></div>
-          </div>
-
-          <!-- Jia -->
-          <div class="t-card jia">
-            <h4>🚙 甲車 (等速)</h4>
-            <div class="t-val" id="valJia">10.0 秒</div>
-            <div class="t-sub">等速 20 m/s<br>矩形面積穩定累積</div>
-          </div>
-
-          <!-- Yi -->
-          <div class="t-card yi">
-            <h4>🚗 乙車 (等加速)</h4>
-            <div class="t-val" id="valYi">11.5 秒</div>
-            <div class="t-sub">靜止起跑等加速<br>前期速度慢面積小</div>
-          </div>
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('concept', this)">📖 v-t 面積與微積分觀念</button>
+          <button class="tab-btn" onclick="switchTab('quiz', this)">📝 原題即測即評 (第13題)</button>
         </div>
 
-        <!-- Area / Distance Progress Bars -->
-        <div class="progress-box">
-          <div class="prog-title">📊 隧道 200m 累積位移 (v-t 圖面積進度)：</div>
-          
-          <!-- Bing Bar -->
-          <div class="bar-row">
-            <div class="bar-label">
-              <span style="color: #dc2626;">🏎️ 丙車位移 (面積)</span>
-              <span id="labelBing" style="font-family: 'Outfit';">0.0 m / 200m</span>
+        <div class="tab-content">
+          <!-- Pane 1: Concept -->
+          <div class="tab-pane active" id="pane-concept">
+            <div class="concept-box">
+              <strong>💡 破題核心幾何心法：</strong>
+              <div style="margin-top: 0.2rem;">
+                在 \( v-t \) 圖中，<strong>曲線下方面積 ＝ 行駛位移（\(\Delta x\)）</strong>！通過 200m 隧道，相當於累積滿 200m 的面積。
+              </div>
             </div>
-            <div class="bar-track">
-              <div class="bar-fill" id="barBing" style="background: #ef4444; width: 0%;"></div>
+
+            <div style="font-weight: 800; color: var(--primary-dark); margin-bottom: 0.3rem;">
+              🔍 三車運動特性對比分析：
             </div>
+            <ul style="padding-left: 1.1rem; font-size: 0.78rem; line-height: 1.5;">
+              <li>🏎️ <strong>丙車（初速高減速）：</strong>在剛進入隧道的初期（前 5 秒）速度非常大（超過 30 m/s），底下面積累積速度遠遠凌駕甲、乙兩車，<strong>在約 7.4 秒時面積就最先突破 200m 衝出隧道（選 C 冠軍）</strong>！</li>
+              <li>🚙 <strong>甲車（等速度）：</strong>整段路程以 20 m/s 勻速前進，面積呈現標準矩形，花費 \( 200 / 20 = \mathbf{10.0\text{ 秒}} \) 通過。</li>
+              <li>🚗 <strong>乙車（靜止等加速）：</strong>雖然最後速度飆得最高，但在運動前半段速度極慢，梯形面積在前期累積過慢，需耗費約 <strong>11.5 秒</strong> 才通過。</li>
+            </ul>
           </div>
 
-          <!-- Jia Bar -->
-          <div class="bar-row">
-            <div class="bar-label">
-              <span style="color: #0284c7;">🚙 甲車位移 (面積)</span>
-              <span id="labelJia" style="font-family: 'Outfit';">0.0 m / 200m</span>
-            </div>
-            <div class="bar-track">
-              <div class="bar-fill" id="barJia" style="background: #0284c7; width: 0%;"></div>
-            </div>
-          </div>
-
-          <!-- Yi Bar -->
-          <div class="bar-row">
-            <div class="bar-label">
-              <span style="color: #059669;">🚗 乙車位移 (面積)</span>
-              <span id="labelYi" style="font-family: 'Outfit';">0.0 m / 200m</span>
-            </div>
-            <div class="bar-track">
-              <div class="bar-fill" id="barYi" style="background: #10b981; width: 0%;"></div>
+          <!-- Pane 2: Quiz -->
+          <div class="tab-pane" id="pane-quiz">
+            <div class="quiz-card">
+              <div class="quiz-title">📝 單元課次卷 02 卷第 13 題</div>
+              <p style="font-size: 0.78rem; font-weight: 500; color: #1e293b;">
+                甲、乙、丙三車同時進入長度 200 公尺之直線隧道，附圖為三車之速度與時間關係（v-t 圖）。請問哪一輛車會「最先通過」隧道？
+              </p>
+              <div class="quiz-options">
+                <button class="quiz-btn" onclick="checkQuiz(this, 'C')">(C) 丙車（初速大，v-t 圖面積最快達到 200m）</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'A')">(A) 甲車（誤以為等速最快）</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'B')">(B) 乙車（誤看末速度最高就選乙）</button>
+                <button class="quiz-btn" onclick="checkQuiz(this, 'D')">(D) 無法判斷</button>
+              </div>
+              <div class="quiz-feedback" id="quizFb"></div>
             </div>
           </div>
         </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元課次卷第 13 題核心觀念：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>隧道長度固定為 200 公尺，相當於每部車要在 \( v-t \) 圖中累積 <strong>200 公尺的面積</strong>。</li>
-            <li>觀察附圖，<strong>丙車在初期即擁有極大的速度，其曲線下方面積累積速度最快</strong>，故花費時間最短，最先衝出隧道口（選 C）。</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 13 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>甲、乙、丙三車同時進入 200m 長直線隧道，根據 v-t 圖，哪一部車會最先通過隧道？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(13, 'C', this)">(C) 丙車（初速大，v-t 圖面積最快達到 200m）</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'A', this)">(A) 甲車</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'B', this)">(B) 乙車</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'D', this)">(D) 無法判斷</button>
-            </div>
-            <div class="quiz-feedback" id="fb13"></div>
-          </div>
-        </div>
-
       </div>
-
     </div>
   </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
 
   <script>
     let simTime = 0; // seconds
@@ -576,29 +585,41 @@
     const ctx = canvas.getContext('2d');
 
     // Physics Models:
-    // Tunnel distance = 200m
-    // 1. Bing (Red): High initial speed (e.g. v(t) = 32 - 0.7*t), S(t) = 32t - 0.35t^2
-    //    Reach 200m at t ≈ 7.4s
     function getBing(t) {
       const v = Math.max(0, 32.0 - 0.7 * t);
       const s = Math.min(200, 32.0 * t - 0.35 * t * t);
       return { v, s };
     }
 
-    // 2. Jia (Blue): Constant speed v(t) = 20 m/s, S(t) = 20*t
-    //    Reach 200m at t = 10.0s
     function getJia(t) {
       const v = 20.0;
       const s = Math.min(200, 20.0 * t);
       return { v, s };
     }
 
-    // 3. Yi (Green): Constant acceleration from rest v(t) = 3.0*t, S(t) = 1.5*t^2
-    //    Reach 200m at t ≈ 11.55s
     function getYi(t) {
       const v = 3.0 * t;
       const s = Math.min(200, 1.5 * t * t);
       return { v, s };
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      draw();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('pane-' + tabId).classList.add('active');
+      if (window.triggerMathRender) triggerMathRender();
     }
 
     function toggleRace() {
@@ -623,19 +644,33 @@
       if (animId) cancelAnimationFrame(animId);
       document.getElementById('btnRace').innerText = '▶ 三車起跑競速';
       document.getElementById('btnRace').style.background = 'var(--primary)';
+      document.getElementById('timeSlider').value = 0;
+      document.getElementById('sliderVal').innerText = '0.0 s';
+      updateUI();
+    }
+
+    function onSlider(val) {
+      simTime = parseFloat(val);
+      if (isRunning) {
+        isRunning = false;
+        document.getElementById('btnRace').innerText = '▶ 三車起跑競速';
+        document.getElementById('btnRace').style.background = 'var(--primary)';
+        if (animId) cancelAnimationFrame(animId);
+      }
       updateUI();
     }
 
     function loop() {
       if (!isRunning) return;
       simTime += 0.035;
-
       if (simTime >= 12.0) {
         simTime = 12.0;
         isRunning = false;
         document.getElementById('btnRace').innerText = '🔄 重新競速';
         document.getElementById('btnRace').style.background = 'var(--primary)';
       }
+      document.getElementById('timeSlider').value = simTime.toFixed(2);
+      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)} s`;
       updateUI();
       if (isRunning) animId = requestAnimationFrame(loop);
     }
@@ -647,11 +682,11 @@
 
       document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
       
-      let leader = '🏎️ 丙車 (最先累積達 200m)';
-      if (b.s >= 200) leader = '🏆 丙車已率先通過隧道！(選C)';
+      let leader = '🏎️ 丙車 (面積累積最快)';
+      if (b.s >= 200) leader = '🏆 丙車已率先衝出隧道！(選C)';
       document.getElementById('hudLeader').innerText = leader;
 
-      // Update Progress Bars
+      // Progress bars
       document.getElementById('labelBing').innerText = `${b.s.toFixed(1)} m / 200m`;
       document.getElementById('barBing').style.width = `${(b.s / 200.0) * 100}%`;
 
@@ -665,177 +700,176 @@
     }
 
     function draw(b, j, y) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      if (!b) { b = getBing(simTime); j = getJia(simTime); y = getYi(simTime); }
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const cw = rect.width;
+      const ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
 
-      // ==========================================
-      // 1. Top Section: 200m Tunnel Track (y: 20 to 180)
-      // ==========================================
-      const tunnelX1 = 80, tunnelX2 = cw - 80;
-      const tunnelY = 40, tunnelH = 130;
+      // White Canvas
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      // Tunnel Enclosure (Dark Asphalt with Steel Frame)
-      ctx.fillStyle = '#0f172a';
+      // 1. Top Section: 200m Tunnel Track (y: 34 to 128)
+      const tunnelX1 = 65, tunnelX2 = cw - 65;
+      const tunnelY = 36, tunnelH = 88;
+
+      // Tunnel Enclosure
+      ctx.fillStyle = '#f8fafc';
       ctx.fillRect(tunnelX1, tunnelY, tunnelX2 - tunnelX1, tunnelH);
-      ctx.strokeStyle = '#475569'; ctx.lineWidth = 4;
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5;
       ctx.strokeRect(tunnelX1, tunnelY, tunnelX2 - tunnelX1, tunnelH);
 
-      // Distance Ticks (0m to 200m)
+      // Distance Ticks (0m, 50m, 100m, 150m, 200m)
       function toTunnelPx(s) { return tunnelX1 + (s / 200.0) * (tunnelX2 - tunnelX1); }
 
-      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1;
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
       [50, 100, 150].forEach(s => {
         const px = toTunnelPx(s);
         ctx.beginPath(); ctx.moveTo(px, tunnelY); ctx.lineTo(px, tunnelY + tunnelH); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`${s}m`, px, tunnelY + tunnelH + 16);
+        ctx.fillStyle = '#64748b'; ctx.font = '700 9px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${s}m`, px, tunnelY + tunnelH + 11);
       });
 
       // Entry & Exit Banners
-      ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'center';
-      ctx.fillText('🚇 隧道入口 (0m)', tunnelX1, tunnelY - 10);
-      ctx.fillStyle = '#fde047';
-      ctx.fillText('🏁 隧道出口 (200m)', tunnelX2, tunnelY - 10);
+      ctx.fillStyle = '#0284c7'; ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'center';
+      ctx.fillText('🚇 隧道入口 (0m)', tunnelX1, tunnelY - 8);
+      ctx.fillStyle = '#dc2626';
+      ctx.fillText('🏁 隧道出口 (200m)', tunnelX2, tunnelY - 8);
 
-      // Checkered Finish Line
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(tunnelX2, tunnelY); ctx.lineTo(tunnelX2, tunnelY + tunnelH); ctx.stroke();
+      // 3 Lanes (Bing: top, Jia: middle, Yi: bottom)
+      const laneH = tunnelH / 3;
+      const laneBingY = tunnelY + laneH * 0.5;
+      const laneJiaY = tunnelY + laneH * 1.5;
+      const laneYiY = tunnelY + laneH * 2.5;
+
+      // Lane dividers
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(tunnelX1, tunnelY + laneH); ctx.lineTo(tunnelX2, tunnelY + laneH); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(tunnelX1, tunnelY + laneH * 2); ctx.lineTo(tunnelX2, tunnelY + laneH * 2); ctx.stroke();
       ctx.setLineDash([]);
 
-      // 3 Lanes (Bing: top, Jia: mid, Yi: bot)
-      const lane1Y = tunnelY + 25; // Bing
-      const lane2Y = tunnelY + 65; // Jia
-      const lane3Y = tunnelY + 105; // Yi
+      // Lane labels
+      ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'right';
+      ctx.fillStyle = '#dc2626'; ctx.fillText('丙', tunnelX1 - 8, laneBingY + 4);
+      ctx.fillStyle = '#0284c7'; ctx.fillText('甲', tunnelX1 - 8, laneJiaY + 4);
+      ctx.fillStyle = '#059669'; ctx.fillText('乙', tunnelX1 - 8, laneYiY + 4);
 
-      // Lane separator lines
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1; ctx.setLineDash([6, 6]);
-      ctx.beginPath(); ctx.moveTo(tunnelX1, tunnelY + 45); ctx.lineTo(tunnelX2, tunnelY + 45); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(tunnelX1, tunnelY + 85); ctx.lineTo(tunnelX2, tunnelY + 85); ctx.stroke();
-      ctx.setLineDash([]);
+      // Render 3 Cars
+      ctx.font = '18px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🏎️', toTunnelPx(b.s), laneBingY);
+      ctx.fillText('🚙', toTunnelPx(j.s), laneJiaY);
+      ctx.fillText('🚗', toTunnelPx(y.s), laneYiY);
 
-      // Draw 3 Cars
-      const pxBing = toTunnelPx(b.s);
-      const pxJia = toTunnelPx(j.s);
-      const pxYi = toTunnelPx(y.s);
+      // 2. Lower Section: v-t Graph (y: 155 to ch - 26)
+      const gX = 65, gW = cw - 95;
+      const gY = 150, gH = ch - gY - 26;
 
-      // Bing (Red 🏎️)
-      ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🏎️', pxBing, lane1Y + 6);
-      ctx.fillStyle = '#f87171'; ctx.font = 'bold 10px Noto Sans TC'; ctx.textAlign = 'left';
-      ctx.fillText(`丙車 (${b.s.toFixed(0)}m)`, pxBing + 18, lane1Y + 4);
+      function toPx(t, v) {
+        return {
+          px: gX + (t / 12.0) * gW,
+          py: (gY + gH) - (v / 40.0) * gH
+        };
+      }
 
-      // Jia (Blue 🚙)
-      ctx.fillText('🚙', pxJia, lane2Y + 6);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText(`甲車 (${j.s.toFixed(0)}m)`, pxJia + 18, lane2Y + 4);
-
-      // Yi (Green 🚗)
-      ctx.fillText('🚗', pxYi, lane3Y + 6);
-      ctx.fillStyle = '#34d399';
-      ctx.fillText(`乙車 (${y.s.toFixed(0)}m)`, pxYi + 18, lane3Y + 4);
-
-      // ==========================================
-      // 2. Bottom Section: v-t Graph (y: 220 to 430)
-      // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 420, gyTop = 220;
-
-      function mapX(t) { return gx1 + (t / 12.0) * (gx2 - gx1); }
-      function mapY(v) { return gyZero - (v / 36.0) * (gyZero - gyTop); }
-
-      // Shaded Area for Bing (Red), Jia (Blue), Yi (Green)
-      const curMaxT = simTime;
-
-      // Draw Grid
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      for (let t = 2; t <= 12; t += 2) {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`${t}s`, px, gyZero + 16);
+      // Grid Lines
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+      for (let t = 0; t <= 12; t += 2) {
+        const px = toPx(t, 0).px;
+        ctx.beginPath(); ctx.moveTo(px, gY); ctx.lineTo(px, gY + gH); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 10px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText(`${t}s`, px, gY + gH + 14);
       }
       [10, 20, 30].forEach(v => {
-        const py = mapY(v);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = '#64748b'; ctx.font = '10px Outfit'; ctx.textAlign = 'right';
-        ctx.fillText(`${v}`, gx1 - 8, py + 4);
+        const py = toPx(0, v).py;
+        ctx.beginPath(); ctx.moveTo(gX, py); ctx.lineTo(gX + gW, py); ctx.stroke();
+        ctx.fillStyle = '#64748b'; ctx.font = '700 10px Outfit'; ctx.textAlign = 'right';
+        ctx.fillText(`${v}`, gX - 8, py + 3);
       });
 
-      // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
-
-      // Shaded Area: Bing (Red)
-      if (curMaxT > 0) {
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
-        ctx.beginPath(); ctx.moveTo(mapX(0), gyZero);
-        for (let t = 0; t <= curMaxT; t += 0.2) {
-          ctx.lineTo(mapX(t), mapY(getBing(t).v));
-        }
-        ctx.lineTo(mapX(curMaxT), mapY(getBing(curMaxT).v));
-        ctx.lineTo(mapX(curMaxT), gyZero);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      // Draw Curves:
-      // 1. Bing (Red curve)
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3.5;
+      // Coordinate Axes
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
       ctx.beginPath();
-      for (let t = 0; t <= 12; t += 0.2) {
-        if (t === 0) ctx.moveTo(mapX(t), mapY(getBing(t).v));
-        else ctx.lineTo(mapX(t), mapY(getBing(t).v));
+      ctx.moveTo(gX, gY); ctx.lineTo(gX, gY + gH); ctx.lineTo(gX + gW, gY + gH);
+      ctx.stroke();
+
+      ctx.fillStyle = '#0f172a'; ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right'; ctx.fillText('速度 v (m/s)', gX - 8, gY + 10);
+      ctx.textAlign = 'left'; ctx.fillText('時間 t (s)', gX + gW + 6, gY + gH + 4);
+
+      // Shaded Areas up to current simTime
+      ctx.save();
+      // Bing Shaded Area (Red)
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.12)';
+      ctx.beginPath();
+      ctx.moveTo(toPx(0, 0).px, toPx(0, 0).py);
+      for (let ct = 0; ct <= simTime; ct += 0.2) {
+        const p = toPx(ct, Math.max(0, 32.0 - 0.7 * ct));
+        ctx.lineTo(p.px, p.py);
+      }
+      ctx.lineTo(toPx(simTime, Math.max(0, 32.0 - 0.7 * simTime)).px, toPx(simTime, 0).py);
+      ctx.closePath(); ctx.fill();
+
+      // Full Curves
+      // Bing Curve (Red)
+      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let ct = 0; ct <= 12; ct += 0.2) {
+        const pt = toPx(ct, Math.max(0, 32.0 - 0.7 * ct));
+        if (ct === 0) ctx.moveTo(pt.px, pt.py); else ctx.lineTo(pt.px, pt.py);
       }
       ctx.stroke();
 
-      // 2. Jia (Blue line v=20)
-      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(20)); ctx.lineTo(mapX(12), mapY(20)); ctx.stroke();
+      // Jia Curve (Blue: constant 20)
+      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(toPx(0, 20).px, toPx(0, 20).py);
+      ctx.lineTo(toPx(12, 20).px, toPx(12, 20).py);
+      ctx.stroke();
 
-      // 3. Yi (Green line v=3*t)
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(0)); ctx.lineTo(mapX(12), mapY(36)); ctx.stroke();
+      // Yi Curve (Green: v = 3t)
+      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(toPx(0, 0).px, toPx(0, 0).py);
+      ctx.lineTo(toPx(12, 36).px, toPx(12, 36).py);
+      ctx.stroke();
+      ctx.restore();
 
       // Curve Labels
-      ctx.fillStyle = '#f87171'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'left';
-      ctx.fillText('🔴 丙車 (初速大 · 面積累積最快)', mapX(1), mapY(31));
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.fillStyle = '#ef4444'; ctx.fillText('丙 (初速大)', toPx(1.5, 32).px, toPx(1.5, 32).py - 8);
+      ctx.fillStyle = '#0284c7'; ctx.fillText('甲 (等速 20)', toPx(6, 20).px, toPx(6, 20).py - 8);
+      ctx.fillStyle = '#059669'; ctx.fillText('乙 (等加速)', toPx(9, 27).px, toPx(9, 27).py + 18);
 
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText('🔵 甲車 (等速 20m/s)', mapX(6), mapY(21) - 6);
-
-      ctx.fillStyle = '#34d399';
-      ctx.fillText('🟢 乙車 (等加速)', mapX(7), mapY(25));
+      // Current Time Needle
+      const needleX = toPx(simTime, 0).px;
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(needleX, gY); ctx.lineTo(needleX, gY + gH); ctx.stroke();
+      ctx.setLineDash([]);
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
+    function checkQuiz(btn, ans) {
+      const parent = btn.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+      const fb = document.getElementById('quizFb');
 
       if (ans === 'C') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>在 \( v-t \) 圖中，<strong>圖形面積代表位移</strong>！丙車一開始就具有極大速度，其曲線下方面積最快累積滿 200m，故<strong>丙車最先通過隧道（選 C）</strong>！';
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct';
+        fb.innerHTML = '✅ <strong>完全正確！</strong><br>在 \\( v-t \\) 圖中「面積 ＝ 位移」。丙車擁有最大的初速度，在運動初期曲線下方面積累積得最快，僅需約 <strong>7.4 秒</strong> 就最先累積滿 200 公尺衝出隧道口，故選 (C)！';
       } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心判斷！</strong> 請觀察 v-t 圖中哪條曲線下方的面積累積得最快，丙車在初期面積就極大，故丙車最先通過（選 C）！';
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong';
+        fb.innerHTML = '❌ <strong>觀念釐清：</strong>誰最先通過看的是誰的「面積最快達到 200m」，而不是看誰的末速度最大！丙車初速最高，前期的梯形面積最大，故丙車最先通過（選 C）。';
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
+    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
+      resizeCanvas();
       updateUI();
     });
   </script>
-
-  
-
 </body>
 </html>
