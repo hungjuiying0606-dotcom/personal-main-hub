@@ -3,577 +3,484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 單擺實驗多點數據擬合與任意次數時間預測器 (單元卷第1頁第3題)</title>
+  <title>國中自然 3上 · 單擺實驗數據擬合與任意次數時間預測器 (單元卷第1頁第3題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #4f46e5;       /* Indigo */
-      --primary-dark: #4338ca;
-      --fit-gold: #f59e0b;      /* Gold for Regression Line */
-      --point-blue: #0ea5e9;    /* Sky Blue for Scatter Points */
-      --predict-green: #10b981; /* Green for Extrapolation Line */
-      --bg: #eef2ff;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #c7d2fe;
-      --success: #16a34a;
-      --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(79, 70, 229, 0.08);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
-      color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .badge {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
-      border-radius: 99px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
-    main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e0e7ff;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Scatter Plot Canvas Stage */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-
-    .stage-hud {
-      position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 10;
-    }
-
-    canvas.stage-canvas {
-      display: block;
-      width: 100%;
-      height: 440px;
-    }
-
-    /* Controls Panel */
-    .control-panel {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .btn-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* Quick Targets Bar */
-    .target-bar {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .target-btn {
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid #cbd5e1;
-      background: white;
-      font-size: 0.8rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .target-btn:hover { background: #e0e7ff; }
-    .target-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary-dark);
-    }
-
-    /* Data Table Box */
-    .data-table-box {
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      margin-bottom: 1rem;
-      background: white;
-    }
-
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-      text-align: left;
-    }
-
-    table.data-table th {
-      background: #eef2ff;
-      padding: 0.5rem 0.6rem;
-      border-bottom: 2px solid var(--border);
-      font-weight: 800;
-      color: var(--primary-dark);
-    }
-
-    table.data-table td {
-      padding: 0.45rem 0.6rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    table.data-table tr.active-row {
-      background: #faf5ff;
-      font-weight: 800;
-    }
-
-    /* Prediction Result Box */
-    .prediction-box {
-      background: #ecfdf5;
-      border: 2px solid #a7f3d0;
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .pred-title {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: #047857;
-      margin-bottom: 0.25rem;
-    }
-
-    .pred-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #065f46;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f5f3ff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
-
-    .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
-    .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
-
-    .quiz-feedback {
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-top: 0.5rem;
-      display: none;
-    }
-
-    .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
-  </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
   <script>
-    window.triggerMathRender = function() {
-      if (typeof renderMathInElement === 'function') {
+    function renderMath() {
+      if (window.renderMathInElement) {
         renderMathInElement(document.body, {
           delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '\\(', right: '\\)', display: false},
-            {left: '$', right: '$', display: false}
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "$", right: "$", display: false }
           ],
           throwOnError: false
         });
       }
-    };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      renderMath();
+      setTimeout(renderMath, 200);
+      setTimeout(renderMath, 600);
     });
   </script>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --fit-gold: #d97706;
+      --point-blue: #0284c7;
+      --predict-green: #16a34a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+      color: white;
+      padding: 0.35rem 1rem;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.35); }
+    .header-left h1 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .badge {
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.1rem 0.45rem;
+      border-radius: 99px;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    .header-info {
+      font-size: 0.72rem;
+      opacity: 0.95;
+      font-weight: 700;
+    }
+
+    main {
+      flex: 1;
+      padding: 0.45rem 0.75rem;
+      display: grid;
+      grid-template-columns: 1.28fr 1fr;
+      gap: 0.6rem;
+      min-height: 0;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      z-index: 5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stage-hud span { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 900; }
+
+    canvas.stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .control-panel {
+      padding: 0.45rem 0.65rem;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn {
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-tab { background: #e2e8f0; color: #334155; font-size: 0.72rem; }
+    .btn-tab.active { background: #4338ca; color: white; border-color: #3730a3; }
+
+    .scrubber-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+    }
+    .scrubber-box label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      white-space: nowrap;
+    }
+    .scrubber-box input[type="range"] {
+      flex: 1;
+      height: 6px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
+    }
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .t-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.5rem;
+      text-align: center;
+    }
+    .t-card.t-avg { border-color: #c7d2fe; background: #eef2ff; }
+    .t-card.t-pred { border-color: #bbf7d0; background: #f0fdf4; }
+    .t-title { font-size: 0.7rem; font-weight: 800; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; }
+    .t-sub { font-size: 0.66rem; color: #475569; font-weight: 700; }
+
+    .tab-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
+      cursor: pointer;
+      color: #64748b;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+      font-weight: 800;
+    }
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+      margin-bottom: 0.4rem;
+    }
+    .data-table th, .data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 0.22rem 0.4rem;
+      text-align: center;
+    }
+    .data-table th { background: #f1f5f9; font-weight: 800; color: #0f172a; }
+
+    .formula-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3.5px solid var(--primary);
+      padding: 0.35rem 0.55rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.35rem;
+    }
+    .formula-step strong { color: var(--primary-dark); }
+
+    .quiz-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.76rem; margin-bottom: 0.3rem; color: #0f172a; }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .quiz-btn {
+      padding: 0.25rem 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.1s;
+    }
+    .quiz-btn:hover { background: #f1f5f9; }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
+      display: none;
+    }
+    .quiz-fb.show-correct { display: block; background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .quiz-fb.show-wrong { display: block; background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>⏱️ 單擺實驗多點數據擬合與任意次數時間預測器</span>
-          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第3題</span>
-        </h1>
-        <p>10次(15.1s) ➔ 20次(30.2s) ➔ 50次(75.0s)：單擺等時性 T = 1.50 秒 ➔ 擺動 15 次需 22.5 秒！</p>
-      </div>
+    <div class="header-left">
+      <a href="chapter1-hub.html#exams" class="back-btn">❮ 回目錄</a>
+      <h1>⏱️ 單擺數據擬合與時間預測器</h1>
+      <span class="badge">單元卷 01 卷第3題</span>
+    </div>
+    <div class="header-info">
+      公式核心：\( t = T \times N \)（通過原點的正比斜直線，\( T = 1.50 \text{s} \)）
     </div>
   </header>
 
-  <!-- Main Content -->
   <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Scatter Plot & Virtual Pendulum Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>📈 實驗多點數據擬合直線（時間 vs 擺動次數）</span>
-          </div>
-          <div class="btn-row">
+    <!-- Left Column: Canvas & Control -->
+    <div class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱️ <strong>單擺單次週期：</strong><span class="hud-val" style="color: #4f46e5;">T = 1.50 s</span></span>
+          <span>🎯 <strong>預測點：</strong>擺動 <span class="hud-val" id="hudCount" style="color: #16a34a;">15</span> 次 ➔ 需時 <span class="hud-val" id="hudTime" style="color: #16a34a;">22.5</span> 秒</span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
             <button class="btn btn-primary" id="btnSwing" onclick="toggleSwing()">▶ 虛擬單擺擺動</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
+            <button class="btn" onclick="resetSim()">🔄 重置</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-tab active" id="btnTarget15" onclick="setCountTarget(15, this)">🎯 原題 15次 (22.5s)</button>
+            <button class="btn btn-tab" onclick="setCountTarget(25, this)">25次 (37.5s)</button>
+            <button class="btn btn-tab" onclick="setCountTarget(45, this)">45次 (67.5s)</button>
           </div>
         </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>🎯 預測次數：<strong id="hudCount" style="color: #34d399; font-family: 'Outfit';">15 次</strong></span>
-            <span>⏱️ 預測所需時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">22.5 秒 (題3答案)</strong></span>
-            <span>📐 等時性週期：<strong>T ≈ 1.50 s/次</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
+        <div class="scrubber-box">
+          <label>🎯 預測擺動次數：<span id="sliderCountLabel" style="font-family:'Outfit'; font-size:0.85rem;">15 次</span></label>
+          <input type="range" id="countSlider" min="1" max="55" step="1" value="15" oninput="onSliderChange(this.value)">
         </div>
+      </div>
+    </div>
 
-        <!-- Controls / Scrubber -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            🎯 快速選取預測次數（或拉動下方滑桿）：
-          </div>
-          <div class="target-bar">
-            <button class="target-btn active" onclick="setCount(15, this)">🎯 15 次 (22.5 秒 · 考題題3)</button>
-            <button class="target-btn" onclick="setCount(25, this)">⚡ 25 次 (37.5 秒)</button>
-            <button class="target-btn" onclick="setCount(35, this)">⚡ 35 次 (52.5 秒)</button>
-            <button class="target-btn" onclick="setCount(45, this)">⚡ 45 次 (67.5 秒)</button>
-            <button class="target-btn" onclick="setCount(60, this)">⚡ 60 次 (90.0 秒)</button>
-          </div>
-
-          <div style="margin-top: 0.4rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
-              <span>手動滑動指定擺動次數 (1～60次)：</span>
-              <span id="sliderCountVal" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.05rem;">15 次</span>
-            </div>
-            <input type="range" id="countSlider" min="1" max="60" step="1" value="15" style="width: 100%; accent-color: var(--primary);" oninput="onCountChange(this.value)">
-          </div>
+    <!-- Right Column: Telemetry & Tabs -->
+    <div class="right-col">
+      <div class="telemetry-grid">
+        <div class="t-card t-avg">
+          <div class="t-title" style="color: #4338ca;">📊 單擺等時性週期</div>
+          <div class="t-val" style="color: #4f46e5;">T = 1.50 s</div>
+          <div class="t-sub">5組實驗數據平均值 · 斜率恆定</div>
+        </div>
+        <div class="t-card t-pred">
+          <div class="t-title" style="color: #15803d;">🎯 任意次數推估時間</div>
+          <div class="t-val" id="cardPrediction" style="color: #16a34a;">15次 ➔ 22.5s</div>
+          <div class="t-sub" id="cardFormula">公式：15 × 1.50 = 22.5 秒</div>
         </div>
       </div>
 
-      <!-- Right Column: Data Matrix & Prediction Result & Quiz -->
-      <div>
-        
-        <!-- Prediction Result Display -->
-        <div class="prediction-box">
-          <div class="pred-title">🎯 依等時性正比關係（t = 1.50 × N）預測結果：</div>
-          <div class="pred-val" id="valPrediction">15 次 ➔ 22.5 秒</div>
-          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">
-            計算式：\( 15\text{ 次} \times 1.50\text{ 秒/次} = \mathbf{22.5\text{ 秒}} \)
-          </div>
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('concept', this)">📖 實驗數據與正比推導</button>
+          <button class="tab-btn" onclick="switchTab('quiz', this)">📝 原題測驗 (第3題)</button>
         </div>
 
-        <!-- 5 Points Data Matrix Table -->
-        <div class="data-table-box">
+        <div class="tab-content" id="tabConcept">
           <table class="data-table">
             <thead>
-              <tr>
-                <th>實驗組別</th>
-                <th>擺動次數</th>
-                <th>實測時間</th>
-                <th>單次週期 \( T \)</th>
-              </tr>
+              <tr><th>實驗組別</th><th>擺動次數 (N)</th><th>測得時間 (t)</th><th>單次週期 (t/N)</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td>第 1 組</td>
-                <td>10 次</td>
-                <td>15.1 s</td>
-                <td>1.51 s</td>
-              </tr>
-              <tr>
-                <td>第 2 組</td>
-                <td>20 次</td>
-                <td>30.2 s</td>
-                <td>1.51 s</td>
-              </tr>
-              <tr>
-                <td>第 3 組</td>
-                <td>30 次</td>
-                <td>44.8 s</td>
-                <td>1.49 s</td>
-              </tr>
-              <tr>
-                <td>第 4 組</td>
-                <td>40 次</td>
-                <td>60.1 s</td>
-                <td>1.50 s</td>
-              </tr>
-              <tr>
-                <td>第 5 組</td>
-                <td>50 次</td>
-                <td>75.0 s</td>
-                <td>1.50 s</td>
-              </tr>
+              <tr><td>第 1 組</td><td>10 次</td><td>15.1 s</td><td>1.51 s</td></tr>
+              <tr><td>第 2 組</td><td>20 次</td><td>30.2 s</td><td>1.51 s</td></tr>
+              <tr><td>第 3 組</td><td>30 次</td><td>44.8 s</td><td>1.49 s</td></tr>
+              <tr><td>第 4 組</td><td>40 次</td><td>60.1 s</td><td>1.50 s</td></tr>
+              <tr><td>第 5 組</td><td>50 次</td><td>75.0 s</td><td>1.50 s</td></tr>
               <tr style="background: #e0e7ff; font-weight: 800;">
                 <td colspan="3">📊 平均單次週期 \( T_{\text{avg}} \)</td>
                 <td style="color: var(--primary-dark);">1.50 秒 / 次</td>
               </tr>
             </tbody>
           </table>
+
+          <div class="formula-step">
+            <strong>🎯 破解單元卷第 3 題關鍵：</strong>
+            <ul style="padding-left: 1.1rem; margin-top: 0.2rem;">
+              <li><strong>等時性原理：</strong>同一單擺每次擺動時間固定（\( T \approx 1.50 \) 秒）。</li>
+              <li><strong>通過原點正比直線：</strong>時間 \( t = T \times N \)。</li>
+              <li><strong>精準速算：</strong>擺動 15 次所需時間 \( t = 15 \times 1.50 = \mathbf{22.5\text{ 秒}} \)（選 C）。</li>
+            </ul>
+          </div>
         </div>
 
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元課次卷第 1 頁第 3 題解析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>單擺等時性：</strong>擺長固定時，單擺每次來回所需時間固定（約 \( 1.50\text{ 秒} \)）。</li>
-            <li><strong>正比圖形：</strong>擺動時間 \( t \) 與 擺動次數 \( N \) 呈現<strong>通過原點的正比斜直線（\( t = T \times N \)）</strong>。</li>
-            <li><strong>題目求解：</strong>擺動 15 次所需時間 \( t = 15 \times 1.50 = \mathbf{22.5\text{ 秒}} \)（選 C）。</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 3 題原題測驗</div>
-
+        <div class="tab-content" id="tabQuiz" style="display: none;">
           <div class="quiz-item">
-            <p>小瑪做單擺實驗，所得數據如附表，此單擺擺動 15 次約需多少秒？</p>
+            <p>3. 小瑪做單擺實驗，所得數據如附表，此單擺擺動 15 次約需多少秒？</p>
             <div class="quiz-options">
               <button class="quiz-btn" onclick="checkQuiz(3, 'C', this)">(C) 22.5 秒（15 次 × 1.50 秒 ＝ 22.5 秒）</button>
               <button class="quiz-btn" onclick="checkQuiz(3, 'A', this)">(A) 9.9 秒</button>
               <button class="quiz-btn" onclick="checkQuiz(3, 'B', this)">(B) 16.0 秒</button>
               <button class="quiz-btn" onclick="checkQuiz(3, 'D', this)">(D) 29.5 秒</button>
             </div>
-            <div class="quiz-feedback" id="fb3"></div>
+            <div class="quiz-fb" id="fb3"></div>
           </div>
         </div>
-
       </div>
-
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
   <script>
+    function renderMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\(', right: '\)', display: false},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
     const expData = [
       { count: 10, time: 15.1 },
       { count: 20, time: 30.2 },
@@ -581,29 +488,43 @@
       { count: 40, time: 60.1 },
       { count: 50, time: 75.0 }
     ];
+    const periodAvg = 1.50;
 
-    const periodAvg = 1.50; // seconds per count
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+
     let targetCount = 15;
-
     let isSwinging = false;
     let animId = null;
     let simTime = 0;
     let lastTime = 0;
 
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(resizeCanvas, 50);
+      setTimeout(renderMath, 150);
+    });
 
-    function onCountChange(val) {
-      targetCount = parseInt(val, 10);
-      document.querySelectorAll('.target-btn').forEach(b => b.classList.remove('active'));
+    function setCountTarget(cnt, btn) {
+      targetCount = cnt;
+      document.getElementById('countSlider').value = cnt;
+      document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
       updateUI();
     }
 
-    function setCount(cnt, el) {
-      targetCount = cnt;
-      document.getElementById('countSlider').value = cnt;
-      document.querySelectorAll('.target-btn').forEach(b => b.classList.remove('active'));
-      if (el) el.classList.add('active');
+    function onSliderChange(val) {
+      targetCount = parseInt(val);
+      document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
       updateUI();
     }
 
@@ -611,7 +532,7 @@
       const btn = document.getElementById('btnSwing');
       if (!isSwinging) {
         isSwinging = true;
-        btn.innerText = '⏸ 暫停擺動';
+        btn.innerText = '⏸ 暫停';
         btn.style.background = '#dc2626';
         lastTime = performance.now();
         loop();
@@ -637,187 +558,206 @@
       if (!now) now = performance.now();
       const dt = (now - lastTime) / 1000;
       lastTime = now;
-
       simTime += dt;
       draw();
-
       if (isSwinging) animId = requestAnimationFrame(loop);
     }
 
     function updateUI() {
       const predTime = targetCount * periodAvg;
-
-      document.getElementById('sliderCountVal').innerText = `${targetCount} 次`;
-      document.getElementById('hudCount').innerText = `${targetCount} 次`;
-      document.getElementById('hudTime').innerText = `${predTime.toFixed(1)} 秒`;
-      document.getElementById('valPrediction').innerText = `${targetCount} 次 ➔ ${predTime.toFixed(1)} 秒`;
-
+      document.getElementById('hudCount').innerText = targetCount;
+      document.getElementById('hudTime').innerText = predTime.toFixed(1);
+      document.getElementById('sliderCountLabel').innerText = targetCount + ' 次';
+      document.getElementById('cardPrediction').innerText = targetCount + '次 ➔ ' + predTime.toFixed(1) + 's';
+      document.getElementById('cardFormula').innerText = '公式：' + targetCount + ' × 1.50 = ' + predTime.toFixed(1) + ' 秒';
       draw();
     }
 
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const dpr = window.devicePixelRatio || 1;
+      const cw = canvas.width / dpr;
+      const ch = canvas.height / dpr;
 
-      // ==========================================
-      // SECTION 1: TOP MINI PENDULUM (y: 20 to 110)
-      // ==========================================
-      const pendX = cw - 120, pendY = 35;
-      const pendLen = 55;
-      const curAngle = 0.15 * Math.cos((2 * Math.PI / periodAvg) * simTime);
+      ctx.clearRect(0, 0, cw, ch);
+
+      // Bright clean white background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
+
+      // 1. Top Mini Pendulum Live Swing (cw - 110, y: 35)
+      const pendX = cw - 110, pendY = 32;
+      const pendLen = 48;
+      const curAngle = 0.16 * Math.cos((2 * Math.PI / periodAvg) * simTime);
 
       const bobX = pendX + pendLen * Math.sin(curAngle);
       const bobY = pendY + pendLen * Math.cos(curAngle);
 
-      // Pivot
+      // Pivot Mount
       ctx.fillStyle = '#64748b';
-      ctx.fillRect(pendX - 30, pendY - 8, 60, 6);
-
-      // String
-      ctx.strokeStyle = '#e2e8f0';
+      ctx.fillRect(pendX - 25, pendY - 8, 50, 6);
+      ctx.strokeStyle = '#334155';
       ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(pendX, pendY); ctx.lineTo(bobX, bobY); ctx.stroke();
+      ctx.strokeRect(pendX - 25, pendY - 8, 50, 6);
 
-      // Bob
+      // String (Bold 2.5px dark line for high visibility)
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(pendX, pendY);
+      ctx.lineTo(bobX, bobY);
+      ctx.stroke();
+
+      // Bob (Golden Brass)
       ctx.fillStyle = '#f59e0b';
-      ctx.beginPath(); ctx.arc(bobX, bobY, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(bobX, bobY, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = 'bold 10px Noto Sans TC';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 11px Noto Sans TC';
       ctx.textAlign = 'center';
-      ctx.fillText(`單擺 (T = 1.50s)`, pendX, pendY + pendLen + 24);
+      ctx.fillText('實體單擺 (T=1.50s)', pendX, pendY + pendLen + 20);
 
-      // ==========================================
-      // SECTION 2: SCATTER PLOT & REGRESSION LINE (y: 120 to 410)
-      // ==========================================
-      const gx1 = 70, gx2 = cw - 50;
-      const gyZero = 390;
-      const gyTop = 130;
+      // 2. High-Contrast Coordinate Grid
+      const gx1 = 58, gx2 = cw - 35;
+      const gyZero = ch - 42;
+      const gyTop = 50;
 
-      const maxCount = 65; // x-axis max
-      const maxTime = 100; // y-axis max
+      const maxCount = 60;
+      const maxTime = 90;
 
       function mapX(cnt) { return gx1 + (cnt / maxCount) * (gx2 - gx1); }
       function mapY(t) { return gyZero - (t / maxTime) * (gyZero - gyTop); }
 
       // Grid Lines
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
-      ctx.lineWidth = 1;
-      for (let cnt = 10; cnt <= 60; cnt += 10) {
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1.2;
+      for (let cnt = 10; cnt <= maxCount; cnt += 10) {
         const x = mapX(cnt);
         ctx.beginPath(); ctx.moveTo(x, gyZero); ctx.lineTo(x, gyTop); ctx.stroke();
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '10px Outfit';
+        ctx.fillStyle = '#334155';
+        ctx.font = '800 11px Outfit';
         ctx.textAlign = 'center';
-        ctx.fillText(`${cnt}`, x, gyZero + 18);
+        ctx.fillText(cnt, x, gyZero + 16);
       }
 
-      for (let t = 20; t <= 100; t += 20) {
+      for (let t = 15; t <= maxTime; t += 15) {
         const y = mapY(t);
         ctx.beginPath(); ctx.moveTo(gx1, y); ctx.lineTo(gx2, y); ctx.stroke();
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '10px Outfit';
+        ctx.fillStyle = '#334155';
+        ctx.font = '800 11px Outfit';
         ctx.textAlign = 'right';
-        ctx.fillText(`${t}`, gx1 - 10, y + 4);
+        ctx.fillText(t, gx1 - 8, y + 4);
       }
 
-      // Axes
-      ctx.strokeStyle = '#94a3b8';
-      ctx.lineWidth = 2;
+      // Main Axes (Bold 2.5px Deep Navy)
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero);
-      ctx.lineTo(gx2 + 20, gyZero);
+      // Y-axis
+      ctx.moveTo(gx1, gyZero + 6);
+      ctx.lineTo(gx1, gyTop - 12);
+      // X-axis
+      ctx.moveTo(gx1 - 6, gyZero);
+      ctx.lineTo(gx2 + 15, gyZero);
       ctx.stroke();
 
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = 'bold 11px Noto Sans TC';
+      // Axis Labels (Large bold for back row)
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 12px Noto Sans TC';
+      ctx.textAlign = 'left';
+      ctx.fillText('時間 t (秒)', gx1 - 10, gyTop - 18);
       ctx.textAlign = 'right';
-      ctx.fillText('時間 t (秒)', gx1 - 10, gyTop + 5);
-      ctx.textAlign = 'center';
-      ctx.fillText('擺動次數 N (次)', gx2 + 10, gyZero + 32);
+      ctx.fillText('擺動次數 N (次)', gx2 + 15, gyZero + 32);
 
-      // Gold Regression Line (t = 1.50 * N)
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 3;
+      // Best Fit Regression Line (t = 1.50 * N) -> Bold Gold 3px
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 3.2;
       ctx.beginPath();
       ctx.moveTo(mapX(0), mapY(0));
-      ctx.lineTo(mapX(65), mapY(65 * periodAvg));
+      ctx.lineTo(mapX(55), mapY(55 * periodAvg));
       ctx.stroke();
 
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'left';
-      ctx.fillText('正比擬合線：t = 1.50 × N', mapX(28), mapY(28 * periodAvg) - 14);
-
-      // Draw 5 Experimental Data Points
+      // Plot Experimental 5 Points (Vibrant Blue Dots with dark outline)
       expData.forEach((pt, idx) => {
         const px = mapX(pt.count);
         const py = mapY(pt.time);
 
-        ctx.fillStyle = '#0ea5e9';
-        ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath();
+        ctx.arc(px, py, 6.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0369a1';
+        ctx.lineWidth = 2;
+        ctx.stroke();
 
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`(${pt.count}, ${pt.time})`, px, py - 10);
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '900 11px Outfit';
+        ctx.textAlign = 'left';
+        ctx.fillText('(' + pt.count + ', ' + pt.time + 's)', px + 7, py - 4);
       });
 
-      // Draw Target Prediction Ray (Green Projection Line)
-      const predT = targetCount * periodAvg;
-      const targetPx = mapX(targetCount);
-      const targetPy = mapY(predT);
+      // Target Prediction Point & Projection Lines (Green Dash)
+      const predTime = targetCount * periodAvg;
+      const targetX = mapX(targetCount);
+      const targetY = mapY(predTime);
 
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 2.4;
       ctx.setLineDash([5, 4]);
 
-      // Vertical line from X-axis to curve
-      ctx.beginPath(); ctx.moveTo(targetPx, gyZero); ctx.lineTo(targetPx, targetPy); ctx.stroke();
-      // Horizontal line from curve to Y-axis
-      ctx.beginPath(); ctx.moveTo(targetPx, targetPy); ctx.lineTo(gx1, targetPy); ctx.stroke();
+      // Vertical guide from X-axis to point
+      ctx.beginPath();
+      ctx.moveTo(targetX, gyZero);
+      ctx.lineTo(targetX, targetY);
+      // Horizontal guide from point to Y-axis
+      ctx.lineTo(gx1, targetY);
+      ctx.stroke();
       ctx.setLineDash([]);
 
-      // Intersection Point
-      ctx.fillStyle = '#10b981';
-      ctx.beginPath(); ctx.arc(targetPx, targetPy, 7, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+      // Predicted Node Circle
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath();
+      ctx.arc(targetX, targetY, 8.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
 
-      // Label at Intersection
-      ctx.fillStyle = '#34d399';
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.textAlign = (targetCount > 40) ? 'right' : 'left';
-      const offset = (targetCount > 40) ? -12 : 12;
-      ctx.fillText(`🎯 ${targetCount} 次 ➔ ${predT.toFixed(1)} 秒`, targetPx + offset, targetPy - 10);
+      // Large Prominent Callout Banner on Chart
+      ctx.fillStyle = '#14532d';
+      ctx.font = '900 13px Outfit';
+      ctx.textAlign = 'left';
+      ctx.fillText('★ 預測點：' + targetCount + ' 次 ➔ ' + predTime.toFixed(1) + ' 秒', targetX + 12, targetY - 10);
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tabConcept').style.display = tabId === 'concept' ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = tabId === 'quiz' ? 'block' : 'none';
+      renderMath();
+    }
+
+    function checkQuiz(qNum, choice, btn) {
+      const parent = btn.parentElement;
       parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+
       const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
-
-      if (ans === 'C') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>依數據可算出單擺週期 \( T = \frac{15.1}{10} \approx \frac{30.2}{20} = 1.50\text{ 秒/次} \)。<br>擺動 15 次約需：\( 15 \times 1.50 = \mathbf{22.5\text{ 秒}} \)，故選 (C)！';
+      if (choice === 'C') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-fb show-correct';
+        fb.innerHTML = '🎉 答對了！平均單次週期 \( T = 15.0 / 10 = 1.50 \) 秒。擺動 15 次所需時間 \( t = 15 \times 1.50 = \mathbf{22.5\text{ 秒}} \)！';
       } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>不對喔！</strong> 每次來回需 1.50 秒，擺動 15 次為 \( 15 \times 1.50 = 22.5\text{ 秒} \)！';
+        btn.classList.add('wrong');
+        fb.className = 'quiz-fb show-wrong';
+        fb.innerHTML = '❌ 答錯囉！請利用單擺等時性：每擺動 10 次約需 15 秒（平均一次 1.50 秒），故 15 次為 15 × 1.50 = 22.5 秒。';
       }
+      renderMath();
     }
-
-    // Startup
-    window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
-    });
   </script>
-
-  
-
 </body>
 </html>
