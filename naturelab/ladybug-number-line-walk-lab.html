@@ -443,8 +443,8 @@
       <!-- Controls Panel -->
       <div class="control-panel">
         <div class="preset-grid">
-          <button class="preset-btn active" onclick="setPath('B', this)">🏆 乙：C(-4) ➔ A(-2) ➔ B(+3) (位移+7 · 最大)</button>
           <button class="preset-btn" onclick="setPath('A', this)">⚡ 甲：O(0) ➔ B(+3) ➔ C(-4) ➔ D(+5) (位移+5 · 路徑19)</button>
+          <button class="preset-btn active" onclick="setPath('B', this)">🏆 乙：C(-4) ➔ A(-2) ➔ B(+3) (位移+7 · 最大)</button>
           <button class="preset-btn" onclick="setPath('C', this)">⚡ 丙：D(+5) ➔ B(+3) ➔ O(0) (位移-5 · 路徑5)</button>
           <button class="preset-btn" onclick="setPath('D', this)">⚡ 丁：A(-2) ➔ C(-4) ➔ O(0) ➔ A(-2) (位移0 · 路徑8)</button>
         </div>
@@ -550,8 +550,8 @@
             數線上標示點 C(-4)、A(-2)、O(0)、B(+3)、D(+5)。四隻瓢蟲分別依甲、乙、丙、丁路徑爬行，請問哪一隻瓢蟲爬行的「位移大小最大」？
           </div>
           <div class="quiz-options">
-            <button class="quiz-btn" onclick="checkQuiz(23, 'B', this)">(B) 乙（位移為 +3 - (-4) = +7，大小為 7 最大）</button>
             <button class="quiz-btn" onclick="checkQuiz(23, 'A', this)">(A) 甲（路徑長最大為 19，但位移只有 5）</button>
+            <button class="quiz-btn" onclick="checkQuiz(23, 'B', this)">(B) 乙（位移為 +3 - (-4) = +7，大小為 7 最大）</button>
             <button class="quiz-btn" onclick="checkQuiz(23, 'C', this)">(C) 丙（位移大小為 5）</button>
             <button class="quiz-btn" onclick="checkQuiz(23, 'D', this)">(D) 丁（回到原出發點，位移為 0）</button>
           </div>
@@ -657,7 +657,7 @@
       isAnimating = true;
       function step() {
         if (!isAnimating) return;
-        animProgress += 0.015;
+        animProgress += 0.0045;
         if (animProgress >= 1.0) {
           animProgress = 1.0;
           isAnimating = false;
