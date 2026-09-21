@@ -128,8 +128,8 @@
 
     /* Dual Track Viewport */
     .track-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+      background: #ffffff;
+      border: 3px solid #334155;
       border-radius: var(--radius-md);
       position: relative;
       overflow: hidden;
@@ -137,12 +137,12 @@
     }
 
     .track-head {
-      background: rgba(15, 23, 42, 0.85);
+      background: #ffffff;
       border-bottom: 1px solid #334155;
       padding: 0.4rem 0.8rem;
       font-size: 0.85rem;
       font-weight: 800;
-      color: white;
+      color: #0f172a;
       display: flex;
       justify-content: space-between;
     }
@@ -391,6 +391,198 @@
       font-size: 0.85rem;
       color: var(--text-muted);
       margin-top: auto;
+    }
+
+    /* Classroom large-screen one-page layout */
+    @media (min-width: 961px) {
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        background: #eef2f7;
+      }
+
+      header {
+        padding: 0.75rem 1.5rem;
+      }
+
+      .header-content {
+        max-width: none;
+      }
+
+      .title-group h1 {
+        font-size: 1.4rem;
+      }
+
+      .title-group p {
+        font-size: 0.9rem;
+        margin-top: 0.1rem;
+      }
+
+      main {
+        max-width: none;
+        height: calc(100vh - 86px);
+        min-height: 0;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: grid;
+        grid-template-rows: minmax(150px, 0.42fr) minmax(0, 1fr);
+        gap: 0.75rem;
+      }
+
+      .track-box {
+        min-height: 0;
+        height: 100%;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .track-head {
+        flex: 0 0 auto;
+        padding: 0.45rem 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      canvas.track-canvas {
+        flex: 1;
+        min-height: 0;
+        height: auto;
+      }
+
+      .main-grid {
+        min-height: 0;
+        height: 100%;
+        grid-template-columns: minmax(0, 1.15fr) minmax(390px, 0.95fr);
+        gap: 0.75rem;
+      }
+
+      .main-grid > .card,
+      .main-grid > div {
+        min-height: 0;
+      }
+
+      .main-grid > .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 0.75rem;
+        margin-bottom: 0;
+      }
+
+      .main-grid > div:last-child {
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr) minmax(0, 1fr);
+        gap: 0.65rem;
+      }
+
+      .card-header {
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.35rem;
+        gap: 0.5rem;
+      }
+
+      .card-title {
+        font-size: 1rem;
+      }
+
+      .chart-box {
+        flex: 1;
+        min-height: 180px;
+        margin-bottom: 0.65rem;
+      }
+
+      canvas.chart-canvas {
+        height: 100%;
+        min-height: 0;
+      }
+
+      .control-panel {
+        flex: 0 0 auto;
+        padding: 0.6rem 0.8rem;
+        gap: 0.45rem;
+      }
+
+      .btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.82rem;
+      }
+
+      .cars-compare-grid {
+        gap: 0.6rem;
+        margin-bottom: 0;
+      }
+
+      .car-card {
+        padding: 0.7rem;
+      }
+
+      .car-card h4 {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .car-stat-row {
+        font-size: 0.78rem;
+        margin-bottom: 0.15rem;
+      }
+
+      .accel-slider-box {
+        padding: 0.7rem 0.85rem;
+        gap: 0.5rem;
+        margin-bottom: 0;
+      }
+
+      .accel-slider-head {
+        font-size: 0.8rem;
+      }
+
+      input[type="range"] {
+        height: 8px;
+      }
+
+      .concept-box {
+        min-height: 0;
+        overflow: hidden;
+        padding: 0.65rem 0.8rem;
+        font-size: 0.75rem;
+      }
+
+      .quiz-card {
+        min-height: 0;
+        overflow: auto;
+        margin-top: 0;
+        padding: 0.7rem 0.8rem;
+      }
+
+      .quiz-title {
+        font-size: 0.85rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .quiz-item {
+        padding: 0.55rem 0.65rem;
+        margin-bottom: 0.4rem;
+        font-size: 0.75rem;
+      }
+
+      .quiz-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      .quiz-feedback {
+        font-size: 0.75rem;
+        margin-top: 0.3rem;
+      }
+
+      footer {
+        display: none;
+      }
     }
   </style>
   
@@ -701,18 +893,24 @@
     function drawTrack(xA, xB, vA, vB) {
       trackCtx.clearRect(0, 0, trackCanvas.width, trackCanvas.height);
       const cw = trackCanvas.width;
+
+      // White animation background for clear classroom projection.
+      trackCtx.fillStyle = '#ffffff';
+      trackCtx.fillRect(0, 0, cw, trackCanvas.height);
+
       const maxDistance = 0.5 * Math.max(accelA, accelB) * maxT * maxT * 1.1; // scale to max possible distance
 
       const toPx = (m) => 60 + (m / maxDistance) * (cw - 140);
 
       // Track Lanes
-      trackCtx.fillStyle = '#1e293b';
+      trackCtx.fillStyle = '#dbeafe';
       trackCtx.fillRect(40, 20, cw - 80, 50); // Lane A
+      trackCtx.fillStyle = '#fee2e2';
       trackCtx.fillRect(40, 90, cw - 80, 50); // Lane B
 
       // Lane Divider & Lines
-      trackCtx.strokeStyle = '#64748b';
-      trackCtx.lineWidth = 1.5;
+      trackCtx.strokeStyle = '#475569';
+      trackCtx.lineWidth = 3;
       trackCtx.setLineDash([8, 8]);
       trackCtx.beginPath(); trackCtx.moveTo(40, 45); trackCtx.lineTo(cw - 40, 45); trackCtx.stroke();
       trackCtx.beginPath(); trackCtx.moveTo(40, 115); trackCtx.lineTo(cw - 40, 115); trackCtx.stroke();
@@ -720,10 +918,10 @@
 
       // Start Line (x = 0)
       const startPx = toPx(0);
-      trackCtx.strokeStyle = '#ef4444';
-      trackCtx.lineWidth = 3;
+      trackCtx.strokeStyle = '#dc2626';
+      trackCtx.lineWidth = 4;
       trackCtx.beginPath(); trackCtx.moveTo(startPx, 15); trackCtx.lineTo(startPx, 145); trackCtx.stroke();
-      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC';
+      trackCtx.fillStyle = '#b91c1c'; trackCtx.font = '900 16px Noto Sans TC, sans-serif';
       trackCtx.fillText('起點 0m', startPx - 18, 155);
 
       // Cars
@@ -737,7 +935,7 @@
       trackCtx.fillText('🏎️', 0, 0);
       trackCtx.restore();
 
-      trackCtx.fillStyle = '#60a5fa'; trackCtx.font = 'bold 11px Noto Sans TC'; trackCtx.textAlign = 'left';
+      trackCtx.fillStyle = '#1d4ed8'; trackCtx.font = '900 16px Noto Sans TC, sans-serif'; trackCtx.textAlign = 'left';
       trackCtx.fillText(`甲車 (${vA.toFixed(0)}m/s, ${xA.toFixed(0)}m)`, pxA - 20, 22);
 
       const pxB = toPx(xB);
@@ -750,7 +948,7 @@
       trackCtx.fillText('🏎️', 0, 0);
       trackCtx.restore();
 
-      trackCtx.fillStyle = '#f87171'; trackCtx.font = 'bold 11px Noto Sans TC'; trackCtx.textAlign = 'left';
+      trackCtx.fillStyle = '#b91c1c'; trackCtx.font = '900 16px Noto Sans TC, sans-serif'; trackCtx.textAlign = 'left';
       trackCtx.fillText(`乙車 (${vB.toFixed(0)}m/s, ${xB.toFixed(0)}m)`, pxB - 20, 92);
     }
 
@@ -766,11 +964,11 @@
       chartCtx.lineTo(ox, oy);
       chartCtx.lineTo(ox + w, oy);
       chartCtx.strokeStyle = '#1e3a8a';
-      chartCtx.lineWidth = 2.5;
+      chartCtx.lineWidth = 4;
       chartCtx.stroke();
 
       // Labels
-      chartCtx.font = 'bold 12px Noto Sans TC';
+      chartCtx.font = '900 15px Noto Sans TC, sans-serif';
       chartCtx.fillStyle = '#1e3a8a';
       chartCtx.textAlign = 'center';
       chartCtx.fillText('時間 t (秒)', ox + w - 40, oy + 32);
@@ -780,8 +978,8 @@
       for (let t = 0; t <= maxT; t += 1) {
         const gx = ox + (t / maxT) * w;
         chartCtx.beginPath(); chartCtx.moveTo(gx, oy); chartCtx.lineTo(gx, oy - h);
-        chartCtx.strokeStyle = '#f1f5f9'; chartCtx.stroke();
-        chartCtx.fillStyle = '#64748b'; chartCtx.font = '11px Outfit';
+        chartCtx.strokeStyle = '#cbd5e1'; chartCtx.lineWidth = 2; chartCtx.stroke();
+        chartCtx.fillStyle = '#334155'; chartCtx.font = '900 14px Outfit, "Noto Sans TC", sans-serif';
         chartCtx.fillText(t, gx, oy + 16);
       }
 
@@ -789,29 +987,29 @@
       for (let v = 0; v <= maxYVal; v += 20) {
         const gy = oy - (v / maxYVal) * h;
         chartCtx.beginPath(); chartCtx.moveTo(ox, gy); chartCtx.lineTo(ox + w, gy);
-        chartCtx.strokeStyle = '#f1f5f9'; chartCtx.stroke();
-        chartCtx.fillStyle = '#64748b'; chartCtx.font = '11px Outfit'; chartCtx.textAlign = 'right';
+        chartCtx.strokeStyle = '#cbd5e1'; chartCtx.lineWidth = 2; chartCtx.stroke();
+        chartCtx.fillStyle = '#334155'; chartCtx.font = '900 14px Outfit, "Noto Sans TC", sans-serif'; chartCtx.textAlign = 'right';
         chartCtx.fillText(v, ox - 8, gy + 4);
       }
 
       // Line A (Blue, High Accel)
       const endAy = oy - ((accelA * maxT) / maxYVal) * h;
       chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(ox + w, endAy);
-      chartCtx.strokeStyle = '#2563eb'; chartCtx.lineWidth = 3.5; chartCtx.stroke();
-      chartCtx.fillStyle = '#2563eb'; chartCtx.font = 'bold 13px Noto Sans TC'; chartCtx.textAlign = 'left';
-      chartCtx.fillText(`甲 (斜率 = ${accelA} m/s², 較陡)`, ox + w - 160, endAy - 8);
+      chartCtx.strokeStyle = '#2563eb'; chartCtx.lineWidth = 5; chartCtx.stroke();
+      chartCtx.fillStyle = '#1d4ed8'; chartCtx.font = '900 16px Noto Sans TC, sans-serif'; chartCtx.textAlign = 'left';
+      chartCtx.fillText(`甲 (斜率 = ${accelA} m/s², 較陡)`, ox + w - 260, endAy - 8);
 
       // Line B (Red, Low Accel)
       const endBy = oy - ((accelB * maxT) / maxYVal) * h;
       chartCtx.beginPath(); chartCtx.moveTo(ox, oy); chartCtx.lineTo(ox + w, endBy);
-      chartCtx.strokeStyle = '#dc2626'; chartCtx.lineWidth = 3.5; chartCtx.stroke();
-      chartCtx.fillStyle = '#dc2626'; chartCtx.font = 'bold 13px Noto Sans TC';
-      chartCtx.fillText(`乙 (斜率 = ${accelB} m/s², 較平)`, ox + w - 160, endBy + 18);
+      chartCtx.strokeStyle = '#dc2626'; chartCtx.lineWidth = 5; chartCtx.stroke();
+      chartCtx.fillStyle = '#b91c1c'; chartCtx.font = '900 16px Noto Sans TC, sans-serif';
+      chartCtx.fillText(`乙 (斜率 = ${accelB} m/s², 較平)`, ox + w - 260, endBy + 18);
 
       // Time Scrubber Vertical Line
       const scanX = ox + (currentTime / maxT) * w;
       chartCtx.beginPath(); chartCtx.moveTo(scanX, oy); chartCtx.lineTo(scanX, oy - h);
-      chartCtx.strokeStyle = '#9333ea'; chartCtx.lineWidth = 1.5; chartCtx.setLineDash([4, 4]); chartCtx.stroke(); chartCtx.setLineDash([]);
+      chartCtx.strokeStyle = '#7e22ce'; chartCtx.lineWidth = 3; chartCtx.setLineDash([6, 5]); chartCtx.stroke(); chartCtx.setLineDash([]);
 
       // Current Dots on Lines
       const dotAy = oy - (curVA / maxYVal) * h;
