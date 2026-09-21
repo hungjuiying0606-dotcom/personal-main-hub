@@ -1502,8 +1502,14 @@
         ${labContent}
       `;
 
-      modalActionPrimary.textContent = "關閉視窗";
-      modalActionPrimary.onclick = closeModal;
+      modalActionSecondary.textContent = "關閉";
+      modalActionSecondary.onclick = closeModal;
+      modalActionPrimary.textContent = unitId === 5
+        ? "開啟 P.65–P.78 互動清單 ↗"
+        : "關閉視窗";
+      modalActionPrimary.onclick = unitId === 5
+        ? () => { window.top.location.href = "../index.html#review-unit5"; }
+        : closeModal;
       modal.classList.add('active');
     };
 
