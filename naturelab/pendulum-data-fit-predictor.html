@@ -473,7 +473,7 @@
         renderMathInElement(document.body, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
-            {left: '\(', right: '\)', display: false},
+            {left: '\\(', right: '\\)', display: false},
             {left: '$', right: '$', display: false}
           ],
           throwOnError: false
@@ -584,9 +584,9 @@
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, cw, ch);
 
-      // 1. Top Mini Pendulum Live Swing (cw - 110, y: 35)
-      const pendX = cw - 110, pendY = 32;
-      const pendLen = 48;
+      // 1. Top Mini Pendulum Live Swing (reserve the band above the chart)
+      const pendX = cw - 110, pendY = 68;
+      const pendLen = 42;
       const curAngle = 0.16 * Math.cos((2 * Math.PI / periodAvg) * simTime);
 
       const bobX = pendX + pendLen * Math.sin(curAngle);
@@ -624,7 +624,7 @@
       // 2. High-Contrast Coordinate Grid
       const gx1 = 58, gx2 = cw - 35;
       const gyZero = ch - 42;
-      const gyTop = 50;
+      const gyTop = 145;
 
       const maxCount = 60;
       const maxTime = 90;

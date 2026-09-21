@@ -3,361 +3,510 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 四隻動物 2D 方格坐標方位儀：參考點任意切換與方位距離雷達 (綜合卷第5頁第8題)</title>
+  <title>國中自然 3上 · 四隻動物 2D 方格坐標方位儀：參考點任意切換與方位距離雷達 (綜合卷第8題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #ec4899;       /* Pink / Animals */
-      --primary-dark: #db2777;
-      --ant-red: #ef4444;
-      --bee-amber: #f59e0b;
+      --primary: #db2777;
+      --primary-dark: #be185d;
+      --primary-light: #fdf2f8;
+      --ant-red: #dc2626;
+      --bee-amber: #d97706;
       --butterfly-blue: #0284c7;
-      --grasshopper-green: #10b981;
-      --bg: #fdf2f8;
+      --grasshopper-green: #16a34a;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #fbcfe8;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(236, 72, 153, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(219, 39, 119, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* 38px Header */
     header {
-      background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
+      height: 38px;
+      background: linear-gradient(135deg, #be185d 0%, #db2777 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #fce7f3;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      gap: 0.55rem;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Left Column: Canvas + Controls */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+    .canvas-container {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
+      box-shadow: var(--shadow-sm);
+      min-height: 0;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 480px;
-      cursor: crosshair;
+      height: 100%;
     }
 
     /* Controls Panel */
     .control-panel {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .ref-btn-row {
+    .preset-row {
       display: flex;
-      gap: 0.4rem;
+      align-items: center;
+      gap: 0.35rem;
       flex-wrap: wrap;
     }
 
-    .ref-btn {
-      padding: 0.45rem 0.85rem;
+    .preset-btn {
+      padding: 0.22rem 0.55rem;
       border-radius: var(--radius-sm);
       border: 1.5px solid #cbd5e1;
-      background: white;
-      font-size: 0.82rem;
+      background: #f8fafc;
+      font-size: 0.74rem;
       font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
+      color: #334155;
+      transition: all 0.15s;
     }
-
-    .ref-btn:hover { background: #fce7f3; }
-    .ref-btn.active {
-      background: var(--primary);
+    .preset-btn:hover { background: #fdf2f8; border-color: #db2777; }
+    .preset-btn.active {
+      background: #db2777;
       color: white;
-      border-color: var(--primary-dark);
+      border-color: #be185d;
     }
 
-    /* 4 Animals Telemetry Grid */
+    /* Right Column: 4 Telemetry Cards + Tabs */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
+    }
+
     .telemetry-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
     }
 
-    .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+    .telemetry-card {
       background: #ffffff;
-      text-align: center;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 0.38rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+    .telemetry-card.ant { border-left: 3.5px solid #dc2626; }
+    .telemetry-card.bee { border-left: 3.5px solid #d97706; }
+    .telemetry-card.butterfly { border-left: 3.5px solid #0284c7; }
+    .telemetry-card.grasshopper { border-left: 3.5px solid #16a34a; }
+
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
     }
 
-    .t-card.ant { border-color: #fecaca; background: #fef2f2; }
-    .t-card.bee { border-color: #fde68a; background: #fffbeb; }
-    .t-card.butterfly { border-color: #bae6fd; background: #f0f9ff; }
-    .t-card.grasshopper { border-color: #a7f3d0; background: #ecfdf5; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.ant h4 { color: #dc2626; }
-    .t-card.bee h4 { color: #b45309; }
-    .t-card.butterfly h4 { color: #0284c7; }
-    .t-card.grasshopper h4 { color: #059669; }
-
-    .t-val {
+    .card-val {
       font-family: 'Outfit', sans-serif;
       font-size: 1.15rem;
       font-weight: 900;
+      line-height: 1.15;
+      margin: 0.15rem 0;
+    }
+    .telemetry-card.ant .card-val { color: #dc2626; }
+    .telemetry-card.bee .card-val { color: #d97706; }
+    .telemetry-card.butterfly .card-val { color: #0284c7; }
+    .telemetry-card.grasshopper .card-val { color: #16a34a; }
+
+    .card-sub {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
     }
 
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Options Verification Box */
-    .option-box {
+    /* Tab Container */
+    .tab-container {
+      flex: 1;
       background: #ffffff;
-      border: 2px solid var(--border);
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
 
-    .opt-title {
-      font-size: 0.9rem;
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.38rem 0.4rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
+      color: #64748b;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-btn.active {
+      color: #be185d;
+      background: #ffffff;
+      border-bottom-color: #db2777;
     }
 
-    /* Core Concept Callout */
-    .concept-box {
-      background: #fdf2f8;
-      border-left: 4px solid var(--primary);
+    .tab-content {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .concept-card {
+      background: #f8fafc;
+      border-left: 3.5px solid #db2777;
       border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .concept-card h4 {
+      font-size: 0.78rem;
+      color: #be185d;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .concept-card ul {
+      padding-left: 1.1rem;
+      font-size: 0.76rem;
+      color: #334155;
     }
 
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
+    /* Quiz Tab styling */
     .quiz-title {
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      color: #b45309;
+      margin-bottom: 0.4rem;
+      background: #fef3c7;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #fde68a;
     }
 
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+    .quiz-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
+      padding: 0.32rem 0.55rem;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: #ffffff;
+      font-size: 0.75rem;
       font-weight: 700;
+      color: #1e293b;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    .quiz-feedback.correct-fb { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .quiz-feedback.wrong-fb { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+</head>
+<body>
+
+  <!-- 38px Header -->
+  <header>
+    <div class="header-left">
+      <a href="chapter1-hub.html" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🧭 四隻動物 2D 方格坐標方位儀：參考點任意切換與方位距離雷達</span>
+        <span class="badge">全章綜合卷 03 卷第8題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>📐 蚱蜢在螞蟻西南方：距離 \( \sqrt{3^2+3^2} = 3\sqrt{2} \approx 4.24\text{cm} \neq 3\text{cm} \)</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main>
+    <!-- Left Column: Canvas + Controls -->
+    <div class="left-col">
+      <div class="canvas-container" id="canvasBox">
+        <div class="stage-hud">
+          <span>🚩 基準參考點：<strong id="hudRef" style="color: #dc2626; font-family: 'Outfit';">🐜 螞蟻 (0, 0)</strong></span>
+          <span>📏 蚱蜢相對螞蟻：<strong id="hudTarget" style="color: #16a34a; font-family: 'Outfit';">西南方 4.24 cm (題8選D)</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="preset-row">
+          <span style="font-size: 0.72rem; font-weight: 800; color: #be185d;">切換參考基準點：</span>
+          <button class="preset-btn active" onclick="setRef('ant', this)">🐜 螞蟻為參考點 (原題情境 · 檢驗D)</button>
+          <button class="preset-btn" onclick="setRef('bee', this)">🐝 蜜蜂為參考點</button>
+          <button class="preset-btn" onclick="setRef('butterfly', this)">🦋 蝴蝶為參考點</button>
+          <button class="preset-btn" onclick="setRef('grasshopper', this)">🦗 蚱蜢為參考點</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: 4 Telemetry Cards + Tabs -->
+    <div class="right-col">
+      <!-- 4 Animals Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card ant">
+          <div class="card-label">🐜 螞蟻相對位置</div>
+          <div class="card-val" id="valAnt">(0, 0) cm</div>
+          <div class="card-sub" id="subAnt">當前參考點基準</div>
+        </div>
+
+        <div class="telemetry-card bee">
+          <div class="card-label">🐝 蜜蜂相對位置</div>
+          <div class="card-val" id="valBee">西方 6 cm</div>
+          <div class="card-sub" id="subBee">(-6, 0) · 選項 (A) 正確</div>
+        </div>
+
+        <div class="telemetry-card butterfly">
+          <div class="card-label">🦋 蝴蝶相對位置</div>
+          <div class="card-val" id="valButterfly">西南 6.7 cm</div>
+          <div class="card-sub" id="subButterfly">在蜜蜂南方 3cm · (B) 正確</div>
+        </div>
+
+        <div class="telemetry-card grasshopper">
+          <div class="card-label">🦗 蚱蜢相對位置</div>
+          <div class="card-val" id="valGrasshopper">西南 4.24 cm</div>
+          <div class="card-sub" id="subGrasshopper">非 3cm！選項 (D) 錯誤</div>
+        </div>
+      </div>
+
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnConcept" onclick="switchTab('concept')">📖 核心觀念與選項檢驗</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 原題即測即評 (第8題)</button>
+        </div>
+
+        <!-- Concept Tab -->
+        <div class="tab-content" id="tabConcept">
+          <div class="concept-card">
+            <h4>💡 四隻動物方格坐標定位（以螞蟻為原點）</h4>
+            <ul>
+              <li><strong>🐜 螞蟻：</strong>坐標 \( (0, 0) \)。</li>
+              <li><strong>🐝 蜜蜂：</strong>在螞蟻西方 6 公分 ➔ 坐標 \( (-6, 0) \)。</li>
+              <li><strong>🦋 蝴蝶：</strong>在蜜蜂南方 3 公分 ➔ 坐標 \( (-6, -3) \)。</li>
+              <li><strong>🦗 蚱蜢：</strong>在蝴蝶東方 3 公分 ➔ 坐標 \( (-6+3, -3) = \mathbf{(-3, -3)} \)。</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>🔍 各選項真偽剖析（破題陷阱）</h4>
+            <ul>
+              <li><strong>(A) 蜜蜂在螞蟻西方 6 公分處：</strong>✅ 正確（\( x = -6 \)）。</li>
+              <li><strong>(B) 蝴蝶在蜜蜂南方 3 公分處：</strong>✅ 正確（\( y = -3 \)）。</li>
+              <li><strong>(C) 蚱蜢在蝴蝶東方 3 公分處：</strong>✅ 正確（\( -6 + 3 = -3 \)）。</li>
+              <li><strong>(D) 蚱蜢在螞蟻西南方 3 公分處：</strong>❌ <strong>錯誤！</strong>蚱蜢坐標為 \( (-3, -3) \)，方向為西南方，但直線距離為等腰直角三角形斜邊：\( \sqrt{3^2 + 3^2} = \mathbf{3\sqrt{2} \approx 4.24\text{ 公分}} \)，絕非 3 公分！</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="tabQuiz" style="display: none;">
+          <div class="quiz-title">📝 全章綜合卷 03 卷第 8 題</div>
+          <div class="quiz-q">
+            方格紙每格邊長 1 公分。已知蜜蜂在螞蟻西方 6 公分處，蝴蝶在蜜蜂南方 3 公分處，蚱蜢在蝴蝶東方 3 公分處。下列關於相對位置的敘述，何者「錯誤」？
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(8, 'D', this)">(D) 蚱蜢在螞蟻西南方 3 公分處（錯誤！距離應為 3√2 ≈ 4.24 公分）</button>
+            <button class="quiz-btn" onclick="checkQuiz(8, 'A', this)">(A) 蜜蜂在螞蟻西方 6 公分處（正確）</button>
+            <button class="quiz-btn" onclick="checkQuiz(8, 'B', this)">(B) 蝴蝶在蜜蜂南方 3 公分處（正確）</button>
+            <button class="quiz-btn" onclick="checkQuiz(8, 'C', this)">(C) 蚱蜢在蝴蝶東方 3 公分處（正確）</button>
+          </div>
+          <div class="quiz-feedback" id="fb8"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <script>
+    // Absolute positions (cm): Ant=(0,0), Bee=(-6,0), Butterfly=(-6,-3), Grasshopper=(-3,-3)
+    const animalPositions = {
+      ant: { name: '🐜 螞蟻', x: 0, y: 0, color: '#dc2626' },
+      bee: { name: '🐝 蜜蜂', x: -6, y: 0, color: '#d97706' },
+      butterfly: { name: '🦋 蝴蝶', x: -6, y: -3, color: '#0284c7' },
+      grasshopper: { name: '🦗 蚱蜢', x: -3, y: -3, color: '#16a34a' }
+    };
+
+    let currentRef = 'ant';
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
         renderMathInElement(document.body, {
@@ -370,332 +519,227 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
-</head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🧭 四隻動物 2D 方格坐標方位儀：參考點任意切換與方位距離雷達</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第8題</span>
-        </h1>
-        <p>位置三要素：參考點＋方向＋距離！蜜蜂在螞蟻西6cm、蚱蜢在蝴蝶東3cm、蝴蝶在蜜蜂南3cm；蚱蜢在螞蟻西南4.24cm(非3cm·選D)！</p>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Grid Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🗺️ 2D 方格坐標平面 ＋ 十字方位羅盤雷達 (每格 1cm)</span>
-          </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>🚩 當前參考點 (原點)：<strong id="hudRef" style="color: #fde047; font-family: 'Outfit';">🐜 螞蟻 (0, 0)</strong></span>
-            <span>📏 量測對象：<strong id="hudTarget" style="color: #38bdf8; font-family: 'Outfit';">🦗 蚱蜢 (西南方 4.24cm)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            🎯 點選切換「基準參考點」：
-          </div>
-          <div class="ref-btn-row">
-            <button class="ref-btn active" onclick="setRef('ant', this)">🐜 螞蟻為參考點</button>
-            <button class="ref-btn" onclick="setRef('bee', this)">🐝 蜜蜂為參考點</button>
-            <button class="ref-btn" onclick="setRef('butterfly', this)">🦋 蝴蝶為參考點</button>
-            <button class="ref-btn" onclick="setRef('grasshopper', this)">🦗 蚱蜢為參考點</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: 4 Animals Telemetry & Options Table & Quiz -->
-      <div>
-        
-        <!-- 4 Animals Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Ant -->
-          <div class="t-card ant">
-            <h4>🐜 螞蟻</h4>
-            <div class="t-val" id="valAnt">(0, 0) cm</div>
-            <div class="t-sub" id="subAnt">當前參考點 (原點)</div>
-          </div>
-
-          <!-- Bee -->
-          <div class="t-card bee">
-            <h4>🐝 蜜蜂</h4>
-            <div class="t-val" id="valBee">西方 6 cm</div>
-            <div class="t-sub" id="subBee">(-6, 0) cm · 選項 A 正確</div>
-          </div>
-
-          <!-- Butterfly -->
-          <div class="t-card butterfly">
-            <h4>🦋 蝴蝶</h4>
-            <div class="t-val" id="valButterfly">西南西 6.7 cm</div>
-            <div class="t-sub" id="subButterfly">(-6, -3) cm</div>
-          </div>
-
-          <!-- Grasshopper -->
-          <div class="t-card grasshopper">
-            <h4>🦗 蚱蜢</h4>
-            <div class="t-val" id="valGrasshopper">西南方 4.24 cm</div>
-            <div class="t-sub" id="subGrasshopper">(-3, -3) cm · <strong>3√2 ≈ 4.24 (非3cm)</strong></div>
-          </div>
-        </div>
-
-        <!-- Options Verification Box -->
-        <div class="option-box">
-          <div class="opt-title">📐 原題四個選項全要素檢驗表：</div>
-          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
-            <li><strong>(A) 蜜蜂在螞蟻西方 6cm：</strong>\( \Delta x = -6, \Delta y = 0 \) ➔ 正西方 6cm（<strong>正確</strong>）。</li>
-            <li><strong>(B) 蚱蜢在蝴蝶東方 3cm：</strong>以蝴蝶為參考點，蚱蜢在 \( \Delta x = +3, \Delta y = 0 \) ➔ 正東方 3cm（<strong>正確</strong>）。</li>
-            <li><strong>(C) 蝴蝶在蜜蜂南方 3cm：</strong>以蜜蜂為參考點，蝴蝶在 \( \Delta x = 0, \Delta y = -3 \) ➔ 正南方 3cm（<strong>正確</strong>）。</li>
-            <li><strong>(D) 蚱蜢在螞蟻西南方 3cm：</strong>\( \Delta x = -3, \Delta y = -3 \) ➔ 畢氏距離 \( \sqrt{3^2+3^2} = 3\sqrt{2} \approx \mathbf{4.24\text{cm}} \neq 3\text{cm} \)（<strong>錯誤，選 D</strong>）！</li>
-          </ul>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 位置三要素核心心法：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>① <strong>參考點（Reference Point）：</strong>測量位置的起點原點。</li>
-            <li>② <strong>方向（Direction）：</strong>東、西、南、北或偏向方位。</li>
-            <li>③ <strong>距離（Distance）：</strong>直線距離，斜向必用<strong>畢氏定理 \( \sqrt{\Delta x^2 + \Delta y^2} \)</strong>！</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷第 8 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>附圖是四種動物在坐標上的位置（每格 1cm），則下列敘述何者「錯誤」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(8, 'D', this)">(D) 蚱蜢在螞蟻的西南方 3 公分（距離應為 √(3²+3²) ＝ 3√2 ≈ 4.24 公分）</button>
-              <button class="quiz-btn" onclick="checkQuiz(8, 'A', this)">(A) 蜜蜂在螞蟻的西方 6 公分</button>
-              <button class="quiz-btn" onclick="checkQuiz(8, 'B', this)">(B) 蚱蜢在蝴蝶的東方 3 公分</button>
-              <button class="quiz-btn" onclick="checkQuiz(8, 'C', this)">(C) 蝴蝶在蜜蜂的南方 3 公分</button>
-            </div>
-            <div class="quiz-feedback" id="fb8"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
-  <script>
-    // Absolute Coordinates in cm:
-    // Ant: (3, 3)
-    // Bee: (-3, 3) -> 6cm West of Ant
-    // Butterfly: (-3, 0) -> 3cm South of Bee
-    // Grasshopper: (0, 0) -> 3cm East of Butterfly
-    const animals = {
-      ant: { name: '螞蟻', icon: '🐜', x: 3, y: 3, color: '#ef4444' },
-      bee: { name: '蜜蜂', icon: '🐝', x: -3, y: 3, color: '#f59e0b' },
-      butterfly: { name: '蝴蝶', icon: '🦋', x: -3, y: 0, color: '#0284c7' },
-      grasshopper: { name: '蚱蜢', icon: '🦗', x: 0, y: 0, color: '#10b981' }
-    };
-
-    let currentRefKey = 'ant';
-
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const gridOriginX = 325, gridOriginY = 240;
-    const pxPerCm = 38; // 38 pixels per 1 cm
+    function switchTab(tab) {
+      document.getElementById('tabBtnConcept').classList.toggle('active', tab === 'concept');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabConcept').style.display = (tab === 'concept') ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
+    }
 
     function setRef(key, el) {
-      currentRefKey = key;
-      document.querySelectorAll('.ref-btn').forEach(b => b.classList.remove('active'));
+      currentRef = key;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
       if (el) el.classList.add('active');
       updateUI();
     }
 
+    function formatRel(targetKey) {
+      const ref = animalPositions[currentRef];
+      const target = animalPositions[targetKey];
+      const dx = target.x - ref.x;
+      const dy = target.y - ref.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 0.01) return '當前參考點 (0, 0)';
+
+      let dirStr = '';
+      if (Math.abs(dx) < 0.01 && dy > 0) dirStr = '正北';
+      else if (Math.abs(dx) < 0.01 && dy < 0) dirStr = '正南';
+      else if (Math.abs(dy) < 0.01 && dx > 0) dirStr = '正東';
+      else if (Math.abs(dy) < 0.01 && dx < 0) dirStr = '正西';
+      else if (dx > 0 && dy > 0) dirStr = '東北';
+      else if (dx < 0 && dy > 0) dirStr = '西北';
+      else if (dx < 0 && dy < 0) dirStr = '西南';
+      else if (dx > 0 && dy < 0) dirStr = '東南';
+
+      return `${dirStr} ${dist.toFixed(2)} cm`;
+    }
+
     function updateUI() {
-      const ref = animals[currentRefKey];
-      document.getElementById('hudRef').innerText = `${ref.icon} ${ref.name} (0, 0)`;
+      const ref = animalPositions[currentRef];
+      document.getElementById('hudRef').innerText = `${ref.name} (${ref.x}, ${ref.y})`;
+      
+      const dxG = animalPositions.grasshopper.x - ref.x;
+      const dyG = animalPositions.grasshopper.y - ref.y;
+      const distG = Math.hypot(dxG, dyG);
+      document.getElementById('hudTarget').innerText = (currentRef === 'ant') ? `西南方 4.24 cm (題8選D)` : `${distG.toFixed(2)} cm`;
 
-      // Update 4 cards
-      ['ant', 'bee', 'butterfly', 'grasshopper'].forEach(k => {
-        const a = animals[k];
-        const dx = a.x - ref.x;
-        const dy = a.y - ref.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+      document.getElementById('valAnt').innerText = formatRel('ant');
+      document.getElementById('valBee').innerText = formatRel('bee');
+      document.getElementById('valButterfly').innerText = formatRel('butterfly');
+      document.getElementById('valGrasshopper').innerText = formatRel('grasshopper');
 
-        let desc = '';
-        if (k === currentRefKey) {
-          desc = '當前基準參考點 (原點)';
-          document.getElementById('val' + capitalize(k)).innerText = '(0, 0) cm';
-        } else {
-          let dir = '';
-          if (dy === 0 && dx < 0) dir = `西方 ${Math.abs(dx)}cm`;
-          else if (dy === 0 && dx > 0) dir = `東方 ${dx}cm`;
-          else if (dx === 0 && dy < 0) dir = `南方 ${Math.abs(dy)}cm`;
-          else if (dx === 0 && dy > 0) dir = `北方 ${dy}cm`;
-          else if (dx < 0 && dy < 0) dir = `西南方 ${dist.toFixed(2)}cm`;
-          else if (dx > 0 && dy < 0) dir = `東南方 ${dist.toFixed(2)}cm`;
-          else if (dx < 0 && dy > 0) dir = `西北方 ${dist.toFixed(2)}cm`;
-          else if (dx > 0 && dy > 0) dir = `東北方 ${dist.toFixed(2)}cm`;
-
-          document.getElementById('val' + capitalize(k)).innerText = dir;
-          desc = `(${dx > 0 ? '+' : ''}${dx}, ${dy > 0 ? '+' : ''}${dy}) cm · 距離 ${dist.toFixed(2)}cm`;
-        }
-        document.getElementById('sub' + capitalize(k)).innerText = desc;
-      });
-
+      if (window.triggerMathRender) triggerMathRender();
       draw();
     }
 
-    function capitalize(s) {
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+      const rect = container.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      if (!cw || !ch) return;
 
-      const ref = animals[currentRefKey];
+      ctx.clearRect(0, 0, cw, ch);
 
-      // Coordinate center is shifted so currentRef is at (gridOriginX, gridOriginY)
-      function toCanvasPx(x, y) {
+      // Crisp White Canvas Background for Back-Row Visibility
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
+
+      // Coordinate scaling
+      // X range: -8 to +2 (span 10)
+      // Y range: -5 to +2 (span 7)
+      const scale = Math.min(cw / 12, ch / 8.5);
+      const originX = cw * 0.72; // where x=0 is
+      const originY = ch * 0.32; // where y=0 is
+
+      function toPx(gx, gy) {
         return {
-          x: gridOriginX + (x - ref.x) * pxPerCm,
-          y: gridOriginY - (y - ref.y) * pxPerCm // Invert Y for cartesian
+          x: originX + gx * scale,
+          y: originY - gy * scale
         };
       }
 
-      // ==========================================
-      // 1. Grid Lines (from -6 to +6 cm relative to ref)
-      // ==========================================
-      ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1;
-      for (let g = -7; g <= 7; g++) {
-        const p1 = toCanvasPx(ref.x + g, ref.y - 6);
-        const p2 = toCanvasPx(ref.x + g, ref.y + 6);
-        ctx.beginPath(); ctx.moveTo(p1.x, 20); ctx.lineTo(p1.x, ch - 20); ctx.stroke();
-
-        const p3 = toCanvasPx(ref.x - 7, ref.y + g);
-        ctx.beginPath(); ctx.moveTo(30, p3.y); ctx.lineTo(cw - 30, p3.y); ctx.stroke();
+      // 1. Grid lines (each cell = 1 cm)
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.lineWidth = 1.5;
+      for (let x = -8; x <= 2; x++) {
+        const p1 = toPx(x, -5), p2 = toPx(x, 2);
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+      }
+      for (let y = -5; y <= 2; y++) {
+        const p1 = toPx(-8, y), p2 = toPx(2, y);
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
       }
 
-      // ==========================================
-      // 2. Reference Crosshairs & Compass at Ref Point
-      // ==========================================
-      const refPx = toCanvasPx(ref.x, ref.y);
+      // Main X & Y axes
+      const o = toPx(0, 0);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(toPx(-8, 0).x, o.y); ctx.lineTo(toPx(2, 0).x, o.y);
+      ctx.moveTo(o.x, toPx(0, -5).y); ctx.lineTo(o.x, toPx(0, 2).y);
+      ctx.stroke();
 
-      ctx.strokeStyle = '#f43f5e'; ctx.lineWidth = 2;
-      // X-Axis (East-West)
-      ctx.beginPath(); ctx.moveTo(40, refPx.y); ctx.lineTo(cw - 40, refPx.y); ctx.stroke();
-      // Y-Axis (North-South)
-      ctx.beginPath(); ctx.moveTo(refPx.x, 30); ctx.lineTo(refPx.x, ch - 30); ctx.stroke();
+      // Compass Rose Top Right
+      const compX = cw - 38, compY = 55;
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(compX, compY - 20); ctx.lineTo(compX, compY + 20);
+      ctx.moveTo(compX - 20, compY); ctx.lineTo(compX + 20, compY);
+      ctx.stroke();
 
-      // Compass Labels
-      ctx.fillStyle = '#f43f5e'; ctx.font = 'bold 13px Noto Sans TC'; ctx.textAlign = 'center';
-      ctx.fillText('北方 (North)', refPx.x, 22);
-      ctx.fillText('南方 (South)', refPx.x, ch - 10);
-      ctx.textAlign = 'right'; ctx.fillText('西方 (West)', 35, refPx.y + 4);
-      ctx.textAlign = 'left'; ctx.fillText('東方 (East)', cw - 35, refPx.y + 4);
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.moveTo(compX, compY - 22);
+      ctx.lineTo(compX - 4, compY - 12);
+      ctx.lineTo(compX + 4, compY - 12);
+      ctx.fill();
 
-      // Radar Concentric Circles (3cm, 6cm)
-      [3, 6].forEach(r => {
-        ctx.strokeStyle = 'rgba(236, 72, 153, 0.25)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
-        ctx.beginPath(); ctx.arc(refPx.x, refPx.y, r * pxPerCm, 0, Math.PI * 2); ctx.stroke();
-        ctx.fillStyle = 'rgba(236, 72, 153, 0.6)'; ctx.font = '10px Outfit'; ctx.textAlign = 'left';
-        ctx.fillText(`R=${r}cm`, refPx.x + r * pxPerCm + 4, refPx.y - 4);
-      });
+      ctx.fillStyle = '#dc2626';
+      ctx.font = 'bold 10px Outfit';
+      ctx.textAlign = 'center';
+      ctx.fillText('N', compX, compY - 25);
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('E', compX + 26, compY + 4);
+
+      // 2. Relations Outline Dashed Lines (Ant -> Bee -> Butterfly -> Grasshopper)
+      const pAnt = toPx(0, 0);
+      const pBee = toPx(-6, 0);
+      const pButterfly = toPx(-6, -3);
+      const pGrasshopper = toPx(-3, -3);
+
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(pAnt.x, pAnt.y);
+      ctx.lineTo(pBee.x, pBee.y);
+      ctx.lineTo(pButterfly.x, pButterfly.y);
+      ctx.lineTo(pGrasshopper.x, pGrasshopper.y);
+      ctx.stroke();
       ctx.setLineDash([]);
 
-      // ==========================================
-      // 3. Draw Relative Vector Lines to Other Animals
-      // ==========================================
-      ['ant', 'bee', 'butterfly', 'grasshopper'].forEach(k => {
-        if (k === currentRefKey) return;
-        const a = animals[k];
-        const aPx = toCanvasPx(a.x, a.y);
+      // Highlight ray from Ant to Grasshopper (Diagonal 4.24cm)
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(pAnt.x, pAnt.y);
+      ctx.lineTo(pGrasshopper.x, pGrasshopper.y);
+      ctx.stroke();
 
-        ctx.strokeStyle = a.color; ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.moveTo(refPx.x, refPx.y); ctx.lineTo(aPx.x, aPx.y); ctx.stroke();
+      // Diagonal label
+      ctx.fillStyle = '#b91c1c';
+      ctx.font = 'bold 11px Outfit';
+      ctx.textAlign = 'center';
+      const midDiagX = (pAnt.x + pGrasshopper.x) / 2 + 18;
+      const midDiagY = (pAnt.y + pGrasshopper.y) / 2 - 6;
+      ctx.fillText('3√2 ≈ 4.24cm', midDiagX, midDiagY);
 
-        // Distance Label
-        const dx = a.x - ref.x;
-        const dy = a.y - ref.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        ctx.fillStyle = a.color; ctx.font = 'bold 11px Outfit'; ctx.textAlign = 'center';
-        ctx.fillText(`${dist.toFixed(2)}cm`, (refPx.x + aPx.x) / 2 + 15, (refPx.y + aPx.y) / 2 - 8);
-      });
+      // Distance step labels
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 11px Outfit';
+      ctx.textAlign = 'center';
+      ctx.fillText('6 cm', (pAnt.x + pBee.x) / 2, pAnt.y - 8);
+      ctx.textAlign = 'right';
+      ctx.fillText('3 cm', pBee.x - 8, (pBee.y + pButterfly.y) / 2 + 4);
+      ctx.textAlign = 'center';
+      ctx.fillText('3 cm', (pButterfly.x + pGrasshopper.x) / 2, pButterfly.y + 16);
 
-      // ==========================================
-      // 4. Draw Animal Avatars & Points
-      // ==========================================
-      ['ant', 'bee', 'butterfly', 'grasshopper'].forEach(k => {
-        const a = animals[k];
-        const aPx = toCanvasPx(a.x, a.y);
-
-        // Halo circle
-        ctx.fillStyle = (k === currentRefKey) ? '#f43f5e' : a.color;
-        ctx.beginPath(); ctx.arc(aPx.x, aPx.y, 6, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
-
-        // Icon Avatar
-        ctx.font = '32px sans-serif'; ctx.textAlign = 'center';
-        ctx.fillText(a.icon, aPx.x, aPx.y + 12);
-
-        // Name & Relative Coordinate
-        const dx = a.x - ref.x;
-        const dy = a.y - ref.y;
-        ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 12px Noto Sans TC';
-        ctx.fillText(`${a.name} (${dx > 0 ? '+' : ''}${dx}, ${dy > 0 ? '+' : ''}${dy})`, aPx.x, aPx.y - 20);
-      });
+      // 3. Draw Animal Pins
+      drawAnimalNode(pAnt, animalPositions.ant, currentRef === 'ant');
+      drawAnimalNode(pBee, animalPositions.bee, currentRef === 'bee');
+      drawAnimalNode(pButterfly, animalPositions.butterfly, currentRef === 'butterfly');
+      drawAnimalNode(pGrasshopper, animalPositions.grasshopper, currentRef === 'grasshopper');
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+    function drawAnimalNode(p, info, isRef) {
+      ctx.fillStyle = info.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, isRef ? 10 : 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
 
-      if (ans === 'D') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>蚱蜢在螞蟻的西方 3cm、南方 3cm ➔ 確實是「西南方」，但直線距離為 \( \\sqrt{3^2 + 3^2} = 3\\sqrt{2} \\approx \\mathbf{4.24\\text{ 公分}} \\neq 3\\text{cm} \)，故 (D) 敘述錯誤，答案選 (D)！';
-      } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心畢氏定理陷阱！</strong> 蚱蜢在螞蟻西南方距離應為 3√2 ≈ 4.24 公分，故 (D) 寫 3 公分是錯誤的！';
+      if (isRef) {
+        ctx.strokeStyle = info.color;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 15, 0, Math.PI * 2);
+        ctx.stroke();
       }
+
+      ctx.fillStyle = info.color;
+      ctx.font = 'bold 12px Noto Sans TC';
+      ctx.textAlign = 'center';
+      ctx.fillText(info.name, p.x, p.y + (isRef ? 26 : 20));
     }
 
-    // Startup
+    function checkQuiz(qNum, choice, btn) {
+      const fb = document.getElementById(`fb${qNum}`);
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        b.disabled = true;
+      });
+
+      if (choice === 'D') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct-fb';
+        fb.innerHTML = '🎉 答對了！(D)敘述錯誤！蚱蜢坐標為 (-3, -3)，距離螞蟻 (0, 0) 為直角等腰三角形斜邊：\\( \\sqrt{3^2 + 3^2} = 3\\sqrt{2} \\approx \\mathbf{4.24\\text{ 公分}} \\)，而非 3 公分！';
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong-fb';
+        fb.innerHTML = '❌ 答錯了！本題要選出「錯誤」的敘述。(D)的距離應為 3√2 ≈ 4.24 公分，故選 (D)。';
+      }
+      if (window.triggerMathRender) triggerMathRender();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 250);
     });
   </script>
-
-  
-
 </body>
 </html>

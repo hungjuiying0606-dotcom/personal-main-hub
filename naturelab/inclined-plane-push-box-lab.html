@@ -3,378 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 阿吉推箱上斜面：斜面長 5m vs 水平 4m ＋ 垂直 3m (單元卷第1頁第24題)</title>
+  <title>國中自然 3上 · 阿吉推箱上斜面：斜面長 5m vs 水平 4m ＋ 垂直 3m (單元卷第24題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #0284c7;       /* Sky/Blue */
+      --primary: #0284c7;
       --primary-dark: #0369a1;
-      --vec-disp: #ef4444;      /* Red for Hypotenuse Displacement */
-      --vec-x: #10b981;         /* Green for X Component (4m) */
-      --vec-y: #3b82f6;         /* Blue for Y Component (3m) */
-      --path-purple: #8b5cf6;   /* Purple for Path (5m) */
-      --bg: #f0f9ff;
+      --primary-light: #e0f2fe;
+      --vec-disp: #dc2626;
+      --vec-x: #16a34a;
+      --vec-y: #0284c7;
+      --path-purple: #7e22ce;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #bae6fd;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(2, 132, 199, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* 38px Header */
     header {
+      height: 38px;
       background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e0f2fe;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      min-height: 0;
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      gap: 0.55rem;
+      overflow: hidden;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Left Column: Canvas + Controls */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* Canvas Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+    .canvas-container {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
+      box-shadow: var(--shadow-sm);
+      min-height: 0;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 440px;
+      height: 100%;
+      background: #ffffff;
     }
 
     /* Controls Panel */
     .control-panel {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-row {
+    .preset-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
+      flex-wrap: wrap;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* 3 Pillars Telemetry Grid */
-    .telemetry-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
-      background: #ffffff;
-      text-align: center;
-    }
-
-    .t-card.hypo { border-color: #fecaca; background: #fef2f2; }
-    .t-card.xvec { border-color: #a7f3d0; background: #ecfdf5; }
-    .t-card.yvec { border-color: #bae6fd; background: #f0f9ff; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.hypo h4 { color: #dc2626; }
-    .t-card.xvec h4 { color: #059669; }
-    .t-card.yvec h4 { color: #0284c7; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-    }
-
-    .t-card.hypo .t-val { color: #dc2626; }
-    .t-card.xvec .t-val { color: #059669; }
-    .t-card.yvec .t-val { color: #0284c7; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Myth Buster Box */
-    .myth-box {
-      background: #ffffff;
-      border: 2px solid #fed7aa;
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .myth-title {
-      font-size: 0.9rem;
+    .preset-btn {
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.74rem;
       font-weight: 800;
-      color: #ea580c;
+      cursor: pointer;
+      color: #334155;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover { background: #e0f2fe; border-color: #0284c7; }
+    .preset-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: #0369a1;
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-action {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-action.primary { background: #0284c7; color: white; border-color: #0369a1; }
+    .btn-action.primary:hover { background: #0369a1; }
+
+    .slider-box {
+      flex: 1;
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      margin-bottom: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .slider-box input[type="range"] {
+      flex: 1;
+      accent-color: #0284c7;
+      cursor: pointer;
     }
 
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f0f9ff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+    /* Right Column: 3 Pillars + Tabs */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    .concept-box strong {
-      color: var(--primary-dark);
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.45rem;
     }
 
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
+    .telemetry-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1.25rem;
+      padding: 0.38rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
     }
+    .telemetry-card.disp { border-top: 3.5px solid #dc2626; }
+    .telemetry-card.xvec { border-top: 3.5px solid #16a34a; }
+    .telemetry-card.yvec { border-top: 3.5px solid #0284c7; }
 
-    .quiz-title {
-      font-size: 0.95rem;
+    .card-label {
+      font-size: 0.7rem;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
+    .card-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin: 0.15rem 0;
+    }
+    .telemetry-card.disp .card-val { color: #dc2626; }
+    .telemetry-card.xvec .card-val { color: #16a34a; }
+    .telemetry-card.yvec .card-val { color: #0284c7; }
+
+    .card-sub {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Tab Container */
+    .tab-container {
+      flex: 1;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.38rem 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-btn.active {
+      color: #0369a1;
+      background: #ffffff;
+      border-bottom-color: #0284c7;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .concept-card {
+      background: #f8fafc;
+      border-left: 3.5px solid #0284c7;
       border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .concept-card h4 {
+      font-size: 0.78rem;
+      color: #0369a1;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .concept-card ul {
+      padding-left: 1.1rem;
+      font-size: 0.76rem;
+      color: #334155;
+    }
+
+    /* Quiz Tab styling */
+    .quiz-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 0.4rem;
+      background: #fef3c7;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #fde68a;
+    }
+
+    .quiz-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
+      padding: 0.32rem 0.55rem;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: #ffffff;
+      font-size: 0.75rem;
       font-weight: 700;
+      color: #1e293b;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    .quiz-feedback.correct-fb { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .quiz-feedback.wrong-fb { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+</head>
+<body>
+
+  <!-- 38px Header -->
+  <header>
+    <div class="header-left">
+      <a href="chapter1-hub.html" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>📦 阿吉推箱上斜面：斜面長 5m vs 水平 4m ＋ 垂直 3m</span>
+        <span class="badge">單元卷 01 卷第24題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>📐 斜面 3-4-5：\( \Delta x = 4\text{m},\ \Delta y = 3\text{m} \implies |\Delta \vec{x}| = S = 5\text{m} \)</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main>
+    <!-- Left Column: Canvas + Controls -->
+    <div class="left-col">
+      <div class="canvas-container" id="canvasBox">
+        <div class="stage-hud">
+          <span>🔴 斜面位移大小：<strong id="hudDisp" style="color: #dc2626; font-family: 'Outfit';">5.0 m</strong></span>
+          <span>🟢 水平分量 \( \Delta x \)：<strong id="hudX" style="color: #16a34a; font-family: 'Outfit';">4.0 m</strong></span>
+          <span>🔵 垂直分量 \( \Delta y \)：<strong id="hudY" style="color: #0284c7; font-family: 'Outfit';">3.0 m</strong></span>
+          <span>🟣 實際路徑長 \( S \)：<strong id="hudPath" style="color: #7e22ce; font-family: 'Outfit';">5.0 m</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="preset-row">
+          <span style="font-size: 0.72rem; font-weight: 800; color: #0369a1;">推進節點：</span>
+          <button class="preset-btn active" onclick="setProgress(100, this)">🏆 100% (到達斜面頂端 5m · 考題狀態)</button>
+          <button class="preset-btn" onclick="setProgress(50, this)">⚡ 50% (半途 2.5m · x=2m, y=1.5m)</button>
+          <button class="preset-btn" onclick="setProgress(0, this)">⚡ 0% (地面原點起點)</button>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-action primary" id="btnPush" onclick="togglePush()">▶ 推箱動畫展示</button>
+          <div class="slider-box">
+            <span>推進進度：</span>
+            <input type="range" id="progressSlider" min="0" max="100" step="1" value="100" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; width: 45px;">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: 3 Pillars + Tabs -->
+    <div class="right-col">
+      <!-- 3 Pillars Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card disp">
+          <div class="card-label">🔴 斜邊位移大小</div>
+          <div class="card-val" id="valDisp">5.0 m</div>
+          <div class="card-sub" id="subDisp">\( |\Delta \vec{x}| = \sqrt{4^2 + 3^2} = 5 \)</div>
+        </div>
+
+        <div class="telemetry-card xvec">
+          <div class="card-label">🟢 水平位移分量</div>
+          <div class="card-val" id="valX">4.0 m</div>
+          <div class="card-sub" id="subX">\( \Delta x = 4.0\text{ m} \)</div>
+        </div>
+
+        <div class="telemetry-card yvec">
+          <div class="card-label">🔵 垂直位移分量</div>
+          <div class="card-val" id="valY">3.0 m</div>
+          <div class="card-sub" id="subY">\( \Delta y = 3.0\text{ m} \)</div>
+        </div>
+      </div>
+
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnConcept" onclick="switchTab('concept')">📖 核心觀念與迷思破解</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 原題即測即評 (第24題)</button>
+        </div>
+
+        <!-- Concept Tab -->
+        <div class="tab-content" id="tabConcept">
+          <div class="concept-card">
+            <h4>💡 3-4-5 直角三角形幾何解析</h4>
+            <ul>
+              <li><strong>斜面長度：</strong>長度為 5 公尺（直角三角形之斜邊）。</li>
+              <li><strong>斜面高度：</strong>垂直高 3 公尺（對邊）。</li>
+              <li><strong>底邊長度：</strong>依據畢氏定理，底邊 \( = \sqrt{5^2 - 3^2} = \mathbf{4\text{ 公尺}} \)。</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>⚠️ 學生最易落入之陷阱</h4>
+            <ul>
+              <li><strong>陷阱迷思：</strong>學生常誤以為路徑長是「水平走 4m ＋ 垂直爬 3m ＝ 7m」！</li>
+              <li><strong>觀念導正：</strong>阿吉是直接<strong>沿著斜面</strong>推上去，物體移動的真實軌跡就是斜面本身，因此<strong>路徑長恰好為 5 公尺</strong>，絕非 7 公尺！</li>
+              <li>因為沿著斜面直線單向推行無折返，故<strong>位移大小＝路徑長＝5 公尺</strong>！</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="tabQuiz" style="display: none;">
+          <div class="quiz-title">📝 單元課次卷 01 卷第 24 題</div>
+          <div class="quiz-q">
+            阿吉沿著長 5 公尺、高 3 公尺的斜面，將一重物由地面等速推至頂端。下列關於重物由地面到頂端的物理量敘述，何者錯誤？
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(24, 'D', this)">(D) 整個過程重物行經的路徑長為 7 公尺（錯誤！實際走斜面，路徑長為 5m）</button>
+            <button class="quiz-btn" onclick="checkQuiz(24, 'A', this)">(A) 重物的水平位移大小為 4 公尺（正確，√(5²-3²)=4m）</button>
+            <button class="quiz-btn" onclick="checkQuiz(24, 'B', this)">(B) 重物的垂直位移大小為 3 公尺（正確，高為3m）</button>
+            <button class="quiz-btn" onclick="checkQuiz(24, 'C', this)">(C) 重物的位移大小為 5 公尺（正確，初末直線距離）</button>
+          </div>
+          <div class="quiz-feedback" id="fb24"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <script>
+    let progress = 1.0; // 0.0 to 1.0
+    let isPushing = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
         renderMathInElement(document.body, {
@@ -387,211 +552,66 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
-</head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>📦 阿吉推箱上斜面：斜面長 5m vs 水平 4m ＋ 垂直 3m</span>
-          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第24題</span>
-        </h1>
-        <p>斜面高 3m、長 5m ➔ 水平底邊 4m；到達頂點時：x位移＝4m、y位移＝3m、路徑長＝5m（非 4+3=7m）！</p>
-      </div>
-    </div>
-  </header>
+    function switchTab(tab) {
+      document.getElementById('tabBtnConcept').classList.toggle('active', tab === 'concept');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabConcept').style.display = (tab === 'concept') ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
+    }
 
-  <!-- Main Content -->
-  <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Inclined Plane Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>📦 3-4-5 斜面推箱與向量正交投影光束</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnPush" onclick="togglePush()">▶ 阿吉推箱上坡</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回原點</button>
-          </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>🔴 斜邊直線位移：<strong id="hudDisp" style="color: #f87171; font-family: 'Outfit';">5.0 m</strong></span>
-            <span>🟢 x 位移：<strong id="hudX" style="color: #34d399; font-family: 'Outfit';">4.0 m</strong></span>
-            <span>🔵 y 位移：<strong id="hudY" style="color: #38bdf8; font-family: 'Outfit';">3.0 m</strong></span>
-            <span>🟣 路徑長：<strong id="hudPath" style="color: #c084fc; font-family: 'Outfit';">5.0 m</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
-            <span>推箱推進進度 (0% ～ 100%)：</span>
-            <span id="sliderLabel" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.05rem;">100% (到達頂點)</span>
-          </div>
-          <input type="range" id="progressSlider" min="0" max="100" step="1" value="100" style="width: 100%; accent-color: var(--primary);" oninput="onProgressChange(this.value)">
-
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem;">
-            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;" onclick="setProgress(0)">0% (起點原點)</button>
-            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;" onclick="setProgress(50)">50% (半山腰 2.5m)</button>
-            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;" onclick="setProgress(100)">100% (最高頂點 5m)</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: 3 Pillars Telemetry & Myth Buster & Quiz -->
-      <div>
-        
-        <!-- 3 Pillars Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Hypotenuse -->
-          <div class="t-card hypo">
-            <h4>🔴 斜邊淨位移 \( |\Delta \vec{r}| \)</h4>
-            <div class="t-val" id="valDisp">5.0 m</div>
-            <div class="t-sub">\( \sqrt{4^2 + 3^2} = \mathbf{5.0\text{m}} \)</div>
-          </div>
-
-          <!-- X component -->
-          <div class="t-card xvec">
-            <h4>🟢 x 方向位移 \( \Delta x \)</h4>
-            <div class="t-val" id="valX">4.0 m</div>
-            <div class="t-sub">水平底邊投影</div>
-          </div>
-
-          <!-- Y component -->
-          <div class="t-card yvec">
-            <h4>🔵 y 方向位移 \( \Delta y \)</h4>
-            <div class="t-val" id="valY">3.0 m</div>
-            <div class="t-sub">垂直高度上升</div>
-          </div>
-        </div>
-
-        <!-- Myth Buster Box -->
-        <div class="myth-box">
-          <div class="myth-title">
-            <span>⚡ 破解考卷第 24 題 (D) 選項致命陷阱：</span>
-          </div>
-          <div style="font-size: 0.85rem; line-height: 1.5; color: #334155;">
-            ❌ <strong>常見錯誤迷思：</strong>以為路徑長 ＝ 水平位移 ＋ 垂直位移 ＝ \( 4 + 3 = \mathbf{7\text{ 公尺}} \)（這是在直角拐彎走，不是走斜坡！）。<br>
-            ✅ <strong>真實物理事實：</strong>阿吉是推著箱子沿著直線斜面往上推，故實際推動的<strong>最短路徑長 ＝ 斜面長 ＝ \( \mathbf{5\text{ 公尺}} \)</strong>！
-          </div>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元課次卷第 1 頁第 24 題深度解析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li>(A) \( x \) 方向位移：\( \sqrt{5^2 - 3^2} = \mathbf{4\text{ 公尺}} \)（正確）。</li>
-            <li>(B) \( y \) 方向位移：高度上升 \( \mathbf{3\text{ 公尺}} \)（正確）。</li>
-            <li>(C) 最短路徑長：沿斜面直線為 \( \mathbf{5\text{ 公尺}} \)（正確）。</li>
-            <li>(D) 路徑長寫成 \( 4+3=7\text{m} \) 是<strong>錯誤的</strong>（此題正解選 D）。</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 24 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>阿吉沿斜面將重物推到最高點（高 3m，斜面長 5m），下列敘述何者「錯誤」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(24, 'D', this)">(D) 當阿吉到達最高點，路徑長＝4＋3＝7公尺（實際路徑長為斜面長5公尺）</button>
-              <button class="quiz-btn" onclick="checkQuiz(24, 'A', this)">(A) 當阿吉到達最高點，x方向的位移為4公尺</button>
-              <button class="quiz-btn" onclick="checkQuiz(24, 'B', this)">(B) 當阿吉到達最高點，y方向的位移為3公尺</button>
-              <button class="quiz-btn" onclick="checkQuiz(24, 'C', this)">(C) 當阿吉到達最高點，其最短路徑長為5公尺</button>
-            </div>
-            <div class="quiz-feedback" id="fb24"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
-  <script>
-    let progress = 100; // 0 to 100 %
-    let isRunning = false;
-    let animId = null;
-
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function onProgressChange(val) {
-      progress = parseFloat(val);
+    function setProgress(pct, el) {
+      if (isPushing) togglePush();
+      progress = pct / 100;
+      document.getElementById('progressSlider').value = pct;
+      document.getElementById('sliderVal').innerText = `${pct}%`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
       updateUI();
     }
 
-    function setProgress(val) {
-      progress = val;
-      document.getElementById('progressSlider').value = val;
+    function onSliderChange(val) {
+      if (isPushing) togglePush();
+      progress = parseFloat(val) / 100;
+      document.getElementById('sliderVal').innerText = `${val}%`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
       updateUI();
     }
 
     function togglePush() {
+      isPushing = !isPushing;
       const btn = document.getElementById('btnPush');
-      if (!isRunning) {
-        if (progress >= 100) progress = 0;
-        isRunning = true;
-        btn.innerText = '⏸ 暫停';
+      if (isPushing) {
+        btn.innerText = '⏸ 暫停推箱';
         btn.style.background = '#dc2626';
-        loop();
+        if (progress >= 1.0) progress = 0;
+        pushLoop();
       } else {
-        isRunning = false;
-        btn.innerText = '▶ 阿吉推箱上坡';
-        btn.style.background = 'var(--primary)';
+        btn.innerText = '▶ 推箱動畫展示';
+        btn.style.background = '#0284c7';
         if (animId) cancelAnimationFrame(animId);
       }
     }
 
-    function resetSim() {
-      isRunning = false;
-      progress = 0;
-      if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnPush').innerText = '▶ 阿吉推箱上坡';
-      document.getElementById('btnPush').style.background = 'var(--primary)';
-      document.getElementById('progressSlider').value = 0;
-      updateUI();
-    }
-
-    function loop() {
-      if (!isRunning) return;
-      progress += 0.8;
-      if (progress >= 100) {
-        progress = 100;
-        isRunning = false;
-        document.getElementById('btnPush').innerText = '🔄 重新推箱';
-        document.getElementById('btnPush').style.background = 'var(--primary)';
+    function pushLoop() {
+      if (!isPushing) return;
+      progress += 0.008;
+      if (progress >= 1.0) {
+        progress = 1.0;
+        togglePush();
       }
-      document.getElementById('progressSlider').value = progress;
+      const pct = Math.round(progress * 100);
+      document.getElementById('progressSlider').value = pct;
+      document.getElementById('sliderVal').innerText = `${pct}%`;
       updateUI();
-      if (isRunning) animId = requestAnimationFrame(loop);
+      if (isPushing) animId = requestAnimationFrame(pushLoop);
     }
 
     function updateUI() {
-      const fraction = progress / 100.0;
-      const curDisp = 5.0 * fraction;
-      const curX = 4.0 * fraction;
-      const curY = 3.0 * fraction;
+      const curDisp = 5.0 * progress;
+      const curX = 4.0 * progress;
+      const curY = 3.0 * progress;
 
-      document.getElementById('sliderLabel').innerText = `${progress.toFixed(0)}% (${curDisp.toFixed(1)}m)`;
       document.getElementById('hudDisp').innerText = `${curDisp.toFixed(1)} m`;
       document.getElementById('hudX').innerText = `${curX.toFixed(1)} m`;
       document.getElementById('hudY').innerText = `${curY.toFixed(1)} m`;
@@ -601,169 +621,203 @@
       document.getElementById('valX').innerText = `${curX.toFixed(1)} m`;
       document.getElementById('valY').innerText = `${curY.toFixed(1)} m`;
 
-      draw(fraction, curDisp, curX, curY);
+      document.getElementById('subDisp').innerHTML = `\\( |\\Delta \\vec{x}| = \\sqrt{(${curX.toFixed(1)})^2 + (${curY.toFixed(1)})^2} = ${curDisp.toFixed(1)} \\)`;
+      document.getElementById('subX').innerHTML = `\\( \\Delta x = ${curX.toFixed(1)}\\text{ m} \\)`;
+      document.getElementById('subY').innerHTML = `\\( \\Delta y = ${curY.toFixed(1)}\\text{ m} \\)`;
+
+      if (window.triggerMathRender) triggerMathRender();
+      draw();
     }
 
-    function draw(fraction, curDisp, curX, curY) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+    function draw() {
+      const rect = container.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      if (!cw || !ch) return;
 
-      // Triangle coordinates
-      const originX = 100, originY = 340;
-      const baseLenPx = 360; // 4m = 360px (90px/m)
-      const heightLenPx = 270; // 3m = 270px (90px/m)
+      ctx.clearRect(0, 0, cw, ch);
 
-      const topCornerX = originX + baseLenPx; // 460
-      const topCornerY = originY - heightLenPx; // 70
+      // Crisp White Canvas Background for Back-Row Visibility
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
 
-      // 1. Draw Ground & Incline Wedge
-      ctx.fillStyle = '#1e293b';
+      // Geometry of 3-4-5 Triangle on canvas
+      const padX = 60;
+      const baseLen = cw * 0.65;
+      const heightLen = ch * 0.55;
+      const startX = padX;
+      const startY = ch * 0.78;
+      const endX = startX + baseLen;
+      const endY = startY - heightLen;
+
+      // 1. Draw Incline Wedge
+      ctx.fillStyle = '#e0f2fe';
       ctx.beginPath();
-      ctx.moveTo(originX, originY);
-      ctx.lineTo(topCornerX, originY);
-      ctx.lineTo(topCornerX, topCornerY);
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, startY);
+      ctx.lineTo(endX, endY);
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, startY);
+      ctx.lineTo(endX, endY);
       ctx.stroke();
 
-      // Right Angle Marker at (topCornerX, originY)
-      ctx.strokeStyle = '#94a3b8';
-      ctx.lineWidth = 1.5;
-      ctx.strokeRect(topCornerX - 20, originY - 20, 20, 20);
+      // Right angle marker
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(endX - 24, startY - 24, 24, 24);
 
-      // Base Grid / Dotted Projection
-      ctx.strokeStyle = '#64748b';
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX, topCornerY); ctx.stroke();
-      ctx.setLineDash([]);
+      // Slope hypotenuse track
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
 
-      // 2. Dimension Labels
-      // Base (4m)
-      ctx.fillStyle = '#10b981';
-      ctx.font = 'bold 13px Outfit';
+      // Base Dimension (4m)
+      ctx.fillStyle = '#16a34a';
+      ctx.font = '900 16px Outfit';
       ctx.textAlign = 'center';
-      ctx.fillText('水平底邊 4.0 m', originX + baseLenPx / 2, originY + 28);
+      ctx.fillText('水平底邊 Δx = 4.0 m', startX + baseLen / 2, startY + 22);
 
-      // Height (3m)
-      ctx.fillStyle = '#38bdf8';
+      // Height Dimension (3m)
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '900 16px Outfit';
       ctx.textAlign = 'left';
-      ctx.fillText('高度 3.0 m', topCornerX + 16, originY - heightLenPx / 2);
+      ctx.fillText('垂直高度 Δy = 3.0 m', endX + 10, startY - heightLen / 2);
 
-      // Incline (5m)
-      ctx.fillStyle = '#fde047';
+      // Slope Dimension (5m)
+      ctx.fillStyle = '#7e22ce';
+      ctx.font = '900 16px Outfit';
       ctx.textAlign = 'center';
-      ctx.save();
-      ctx.translate((originX + topCornerX) / 2 - 25, (originY + topCornerY) / 2 - 25);
-      ctx.rotate(-Math.atan2(heightLenPx, baseLenPx));
-      ctx.fillText('斜面長 5.0 m (3-4-5 直角三角形)', 0, 0);
-      ctx.restore();
+      const slopeMidX = (startX + endX) / 2 - 18;
+      const slopeMidY = (startY + endY) / 2 - 14;
+      ctx.fillText('斜面長 S = 5.0 m', slopeMidX, slopeMidY);
 
-      // 3. Current Dynamic Vectors
-      const curBoxX = originX + baseLenPx * fraction;
-      const curBoxY = originY - heightLenPx * fraction;
+      // 2. Current Box Position
+      const boxX = startX + (endX - startX) * progress;
+      const boxY = startY + (endY - startY) * progress;
 
-      // Green X Projection Arrow (Bottom)
-      if (fraction > 0) {
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(originX, originY + 12); ctx.lineTo(curBoxX, originY + 12); ctx.stroke();
-
-        ctx.fillStyle = '#10b981';
+      // Orthogonal dotted lines to box
+      if (progress > 0.05) {
+        ctx.strokeStyle = '#16a34a';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([8, 6]);
         ctx.beginPath();
-        ctx.moveTo(curBoxX, originY + 12);
-        ctx.lineTo(curBoxX - 8, originY + 8);
-        ctx.lineTo(curBoxX - 8, originY + 16);
-        ctx.fill();
+        ctx.moveTo(boxX, boxY);
+        ctx.lineTo(boxX, startY);
+        ctx.stroke();
 
-        // Dotted drop line
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([3, 3]);
-        ctx.beginPath(); ctx.moveTo(curBoxX, curBoxY); ctx.lineTo(curBoxX, originY + 12); ctx.stroke();
+        ctx.strokeStyle = '#0284c7';
+        ctx.beginPath();
+        ctx.moveTo(boxX, boxY);
+        ctx.lineTo(startX, boxY);
+        ctx.stroke();
         ctx.setLineDash([]);
       }
 
-      // Blue Y Projection Arrow (Right side of current box)
-      if (fraction > 0) {
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(curBoxX, originY); ctx.lineTo(curBoxX, curBoxY); ctx.stroke();
-
-        ctx.fillStyle = '#38bdf8';
+      // Net Displacement Vector (Red arrow along slope from start to box)
+      if (progress > 0.05) {
+        ctx.strokeStyle = '#dc2626';
+        ctx.lineWidth = 7;
         ctx.beginPath();
-        ctx.moveTo(curBoxX, curBoxY);
-        ctx.lineTo(curBoxX - 4, curBoxY + 8);
-        ctx.lineTo(curBoxX + 4, curBoxY + 8);
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(boxX, boxY);
+        ctx.stroke();
+
+        const angle = Math.atan2(endY - startY, endX - startX);
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.moveTo(boxX, boxY);
+        ctx.lineTo(boxX - 18 * Math.cos(angle - 0.4), boxY - 18 * Math.sin(angle - 0.4));
+        ctx.lineTo(boxX - 18 * Math.cos(angle + 0.4), boxY - 18 * Math.sin(angle + 0.4));
         ctx.fill();
       }
 
-      // Red Hypotenuse Displacement Arrow
-      if (fraction > 0) {
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(curBoxX, curBoxY); ctx.stroke();
+      // Start Pin
+      ctx.fillStyle = '#d97706';
+      ctx.beginPath();
+      ctx.arc(startX, startY, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3;
+      ctx.stroke();
 
-        const angleHypo = Math.atan2(curBoxY - originY, curBoxX - originX);
-        ctx.fillStyle = '#ef4444';
-        ctx.beginPath();
-        ctx.moveTo(curBoxX, curBoxY);
-        ctx.lineTo(curBoxX - 10 * Math.cos(angleHypo - Math.PI / 6), curBoxY - 10 * Math.sin(angleHypo - Math.PI / 6));
-        ctx.lineTo(curBoxX - 10 * Math.cos(angleHypo + Math.PI / 6), curBoxY - 10 * Math.sin(angleHypo + Math.PI / 6));
-        ctx.fill();
-      }
-
-      // 4. Origin Marker (0,0)
-      ctx.fillStyle = '#22c55e';
-      ctx.beginPath(); ctx.arc(originX, originY, 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fde047';
-      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.fillStyle = '#b45309';
+      ctx.font = '900 16px Noto Sans TC';
       ctx.textAlign = 'right';
-      ctx.fillText('🚩 原點 (0,0)', originX - 10, originY + 5);
+      ctx.fillText('🚩 起點', startX - 8, startY + 4);
 
-      // 5. Cargo Box 📦 and Ah-Ji 🧑‍🔧
+      // End Peak Pin
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath();
+      ctx.arc(endX, endY, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = '#15803d';
+      ctx.font = '900 16px Noto Sans TC';
+      ctx.textAlign = 'left';
+      ctx.fillText('🏁 頂端', endX + 8, endY + 4);
+
+      // Draw Box on Slope
+      const slopeAngle = Math.atan2(endY - startY, endX - startX);
       ctx.save();
-      ctx.translate(curBoxX, curBoxY);
-      ctx.rotate(-Math.atan2(heightLenPx, baseLenPx));
+      ctx.translate(boxX, boxY);
+      ctx.rotate(slopeAngle);
 
-      // Box
-      ctx.font = '32px sans-serif';
+      // Box body
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(-21, -34, 42, 34);
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(-21, -34, 42, 34);
+
+      ctx.fillStyle = '#78350f';
+      ctx.font = '900 12px Outfit';
       ctx.textAlign = 'center';
-      ctx.fillText('📦', 0, -6);
+      ctx.fillText('BOX', 0, -9);
 
-      // Pusher
-      ctx.fillText('🧑‍🔧', -36, -6);
+      // A-Ji avatar pushing behind the box
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath();
+      ctx.arc(-31, -20, 9, 0, Math.PI * 2);
+      ctx.fill();
 
       ctx.restore();
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+    function checkQuiz(qNum, choice, btn) {
+      const fb = document.getElementById(`fb${qNum}`);
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        b.disabled = true;
+      });
 
-      if (ans === 'D') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>阿吉是推著箱子沿著斜坡直線往上推，故實際推動的<strong>最短路徑長 ＝ 斜面長 ＝ 5 公尺</strong>！路徑長絕不能代數相加成 4＋3＝7公尺，故 (D) 敘述錯誤！';
+      if (choice === 'D') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct-fb';
+        fb.innerHTML = '🎉 答對了！(D)敘述錯誤！重物直接沿著斜面推上去，實際移動的軌跡長度就是斜面長度 5 公尺，並非 4+3=7 公尺！';
       } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心！</strong> 此選項是正確的敘述，題目要求選出「錯誤」的選項（請選 D）！';
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong-fb';
+        fb.innerHTML = '❌ 答錯了！本題要選「錯誤」的敘述。(D)的路徑長應為斜面長 5 公尺，而非 7 公尺，故選 (D)。';
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 250);
     });
   </script>
-
-  
-
 </body>
 </html>

@@ -3,392 +3,557 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · 小偉小瑩小哈三車競騎沙盒：等速 vs 靜止停留 vs 變速追逐 (綜合卷第5頁第6題)</title>
+  <title>國中自然 3上 · 小偉小瑩小哈三車競騎沙盒：等速 vs 靜止停留 vs 變速追逐 (綜合卷第6題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #8b5cf6;       /* Violet / Cyclists */
-      --primary-dark: #7c3aed;
-      --cyclist-wei: #ef4444;   /* Wei (Red - Sprint then Stop) */
-      --cyclist-ying: #0284c7;  /* Ying (Blue - Constant speed) */
-      --cyclist-ha: #10b981;    /* Ha (Green - Variable speed) */
-      --bg: #f5f3ff;
+      --primary: #7c3aed;
+      --primary-dark: #6d28d9;
+      --primary-light: #f5f3ff;
+      --wei-red: #dc2626;
+      --ying-blue: #0284c7;
+      --ha-green: #16a34a;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #ddd6fe;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(139, 92, 246, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(124, 58, 237, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* 38px Header */
     header {
-      background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+      height: 38px;
+      background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #ede9fe;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      gap: 0.55rem;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Left Column: Canvas + Controls */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+    .canvas-container {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
+      box-shadow: var(--shadow-sm);
+      min-height: 0;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 480px;
+      height: 100%;
     }
 
     /* Controls Panel */
     .control-panel {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .slider-row {
+    .preset-row {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .slider-row label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      min-width: 100px;
-    }
-
-    .slider-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--primary);
-    }
-
-    .btn-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
+      flex-wrap: wrap;
     }
 
-    .btn-primary {
-      background: var(--primary);
+    .preset-btn {
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.74rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: #334155;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover { background: #f5f3ff; border-color: #7c3aed; }
+    .preset-btn.active {
+      background: #7c3aed;
       color: white;
+      border-color: #6d28d9;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
+    .btn-action {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-action.primary { background: #7c3aed; color: white; border-color: #6d28d9; }
+    .btn-action.primary:hover { background: #6d28d9; }
+    .btn-action.secondary { background: #f1f5f9; color: #334155; }
+    .btn-action.secondary:hover { background: #e2e8f0; }
+
+    .slider-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .slider-box input[type="range"] {
+      flex: 1;
+      accent-color: #7c3aed;
+      cursor: pointer;
     }
 
-    .btn-secondary:hover {
-      background: #cbd5e1;
+    /* Right Column: 3 Cyclists + Tabs */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* 3 Cyclists Telemetry Grid */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.45rem;
     }
 
-    .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+    .telemetry-card {
       background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 0.38rem 0.5rem;
+      display: flex;
+      flex-direction: column;
       text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .telemetry-card.wei { border-top: 3.5px solid #dc2626; }
+    .telemetry-card.ying { border-top: 3.5px solid #0284c7; }
+    .telemetry-card.ha { border-top: 3.5px solid #16a34a; }
+
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
     }
 
-    .t-card.wei { border-color: #fecaca; background: #fef2f2; }
-    .t-card.ying { border-color: #bae6fd; background: #f0f9ff; }
-    .t-card.ha { border-color: #a7f3d0; background: #ecfdf5; }
-
-    .t-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .t-card.wei h4 { color: #dc2626; }
-    .t-card.ying h4 { color: #0284c7; }
-    .t-card.ha h4 { color: #059669; }
-
-    .t-val {
+    .card-val {
       font-family: 'Outfit', sans-serif;
       font-size: 1.25rem;
       font-weight: 900;
+      line-height: 1.15;
+      margin: 0.15rem 0;
+    }
+    .telemetry-card.wei .card-val { color: #dc2626; }
+    .telemetry-card.ying .card-val { color: #0284c7; }
+    .telemetry-card.ha .card-val { color: #16a34a; }
+
+    .card-sub {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
     }
 
-    .t-card.wei .t-val { color: #dc2626; }
-    .t-card.ying .t-val { color: #0284c7; }
-    .t-card.ha .t-val { color: #059669; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Table Box */
-    .table-box {
+    /* Tab Container */
+    .tab-container {
+      flex: 1;
       background: #ffffff;
-      border: 2px solid var(--border);
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
 
-    .tab-title {
-      font-size: 0.9rem;
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.38rem 0.4rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
+      color: #64748b;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-btn.active {
+      color: #6d28d9;
+      background: #ffffff;
+      border-bottom-color: #7c3aed;
     }
 
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f5f3ff;
-      border-left: 4px solid var(--primary);
+    .tab-content {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .concept-card {
+      background: #f8fafc;
+      border-left: 3.5px solid #7c3aed;
       border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .concept-card h4 {
+      font-size: 0.78rem;
+      color: #6d28d9;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .concept-card ul {
+      padding-left: 1.1rem;
+      font-size: 0.76rem;
+      color: #334155;
     }
 
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
+    /* Quiz Tab styling */
     .quiz-title {
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      color: #b45309;
+      margin-bottom: 0.4rem;
+      background: #fef3c7;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #fde68a;
     }
 
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+    .quiz-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
+      padding: 0.32rem 0.55rem;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: #ffffff;
+      font-size: 0.75rem;
       font-weight: 700;
+      color: #1e293b;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    .quiz-feedback.correct-fb { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .quiz-feedback.wrong-fb { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+</head>
+<body>
+
+  <!-- 38px Header -->
+  <header>
+    <div class="header-left">
+      <a href="chapter1-hub.html" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🚴 小偉小瑩小哈三車競騎沙盒：等速 vs 靜止停留 vs 變速追逐</span>
+        <span class="badge">全章綜合卷 03 卷第6題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>📐 0~5秒位移：小偉(10m) ＝ 小瑩(10m) ＜ 小哈(12m)</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main>
+    <!-- Left Column: Canvas + Controls -->
+    <div class="left-col">
+      <div class="canvas-container" id="canvasBox">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" style="color: #7c3aed; font-family: 'Outfit';">5.0 秒</strong></span>
+          <span>🏆 領先者：<strong id="hudLeader" style="color: #16a34a; font-family: 'Outfit';">小哈 (12.0m)</strong></span>
+          <span>🎯 0~5秒位移相同：<strong id="hudSame" style="color: #dc2626; font-family: 'Outfit';">小偉 ＝ 小瑩 (選A)</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="preset-row">
+          <span style="font-size: 0.72rem; font-weight: 800; color: #6d28d9;">關鍵時刻：</span>
+          <button class="preset-btn active" onclick="setTime(5.0, this)">🏆 5.0 秒 (小偉10m ＝ 小瑩10m · 考題正解)</button>
+          <button class="preset-btn" onclick="setTime(2.0, this)">⚡ 2.0 秒 (小偉衝至10m開始停留喝水)</button>
+          <button class="preset-btn" onclick="setTime(0.0, this)">⚡ 0.0 秒 (三車起點待命)</button>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-action primary" id="btnRace" onclick="toggleRace()">▶ 同步競速動畫</button>
+          <button class="btn-action secondary" onclick="resetSim()">🔄 重置</button>
+          <div class="slider-box">
+            <span>時間 \( t \)：</span>
+            <input type="range" id="timeSlider" min="0" max="5" step="0.05" value="5" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; width: 40px;">5.0s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: 3 Cyclists + Tabs -->
+    <div class="right-col">
+      <!-- 3 Cyclists Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card wei">
+          <div class="card-label">🔴 小偉位移 (0~5s)</div>
+          <div class="card-val" id="valWei">10.0 m</div>
+          <div class="card-sub" id="subWei">前2s衝到10m後停留</div>
+        </div>
+
+        <div class="telemetry-card ying">
+          <div class="card-label">🔵 小瑩位移 (0~5s)</div>
+          <div class="card-val" id="valYing">10.0 m</div>
+          <div class="card-sub" id="subYing">等速 2m/s 穩定巡航</div>
+        </div>
+
+        <div class="telemetry-card ha">
+          <div class="card-label">🟢 小哈位移 (0~5s)</div>
+          <div class="card-val" id="valHa">12.0 m</div>
+          <div class="card-sub" id="subHa">變速衝刺超越眾人</div>
+        </div>
+      </div>
+
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnConcept" onclick="switchTab('concept')">📖 核心觀念與 x-t 圖解析</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 原題即測即評 (第6題)</button>
+        </div>
+
+        <!-- Concept Tab -->
+        <div class="tab-content" id="tabConcept">
+          <div class="concept-card">
+            <h4>💡 x-t 圖線型特徵解讀</h4>
+            <ul>
+              <li><strong>水平直線（小偉 2~5秒）：</strong>位置坐標不隨時間改變，表示<strong>「靜止停留」</strong>。</li>
+              <li><strong>斜直線（小瑩全程）：</strong>位置隨時間均勻增加，表示<strong>「等速度運動」</strong>（\( v = 10 / 5 = 2\text{ m/s} \)）。</li>
+              <li><strong>曲線（小哈全程）：</strong>斜率不斷變大，表示<strong>「變速度運動（加速追趕）」</strong>。</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>🎯 破題關鍵：位移判斷</h4>
+            <ul>
+              <li>在 \( t = 0 \) 秒時，三人皆由原點 \( x = 0 \) 出發。</li>
+              <li>在 \( t = 5 \) 秒時：
+                <ul>
+                  <li>小偉位置為 <strong>10 公尺</strong> ➔ 位移為 \( 10 - 0 = \mathbf{10\text{ 公尺}} \)；</li>
+                  <li>小瑩位置為 <strong>10 公尺</strong> ➔ 位移為 \( 10 - 0 = \mathbf{10\text{ 公尺}} \)；</li>
+                  <li>小哈位置為 <strong>12 公尺</strong> ➔ 位移為 \( 12 - 0 = \mathbf{12\text{ 公尺}} \)。</li>
+                </ul>
+              </li>
+              <li>因此在 0~5 秒內，<strong>小偉與小瑩的位移完全相同</strong>（選 A）！</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="tabQuiz" style="display: none;">
+          <div class="quiz-title">📝 全章綜合卷 03 卷第 6 題</div>
+          <div class="quiz-q">
+            小偉、小瑩、小哈三人沿直線向東騎乘自行車，其位置與時間關係如圖所示。在 0～5 秒內，哪兩人的「位移大小相同」？
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(6, 'A', this)">(A) 小偉和小瑩（第 5 秒末兩人位置皆為 10 公尺，位移皆為 10 公尺）</button>
+            <button class="quiz-btn" onclick="checkQuiz(6, 'B', this)">(B) 小偉和小哈</button>
+            <button class="quiz-btn" onclick="checkQuiz(6, 'C', this)">(C) 小瑩和小哈</button>
+            <button class="quiz-btn" onclick="checkQuiz(6, 'D', this)">(D) 三人位移皆不相同</button>
+          </div>
+          <div class="quiz-feedback" id="fb6"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <script>
+    let curTime = 5.0; // 0 to 5.0
+    let isRacing = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+
+    function getPositions(t) {
+      // Wei: 0 to 2s: 0 to 10m; 2 to 5s: 10m
+      let posWei = (t <= 2) ? (t / 2) * 10 : 10;
+      // Ying: constant 2 m/s -> 2 * t
+      let posYing = 2 * t;
+      // Ha: quadratic-like, (0,0) to (5, 12) -> pos = (12/25) * t^2
+      let posHa = (12 / 25) * t * t;
+      return { wei: posWei, ying: posYing, ha: posHa };
+    }
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
         renderMathInElement(document.body, {
@@ -401,400 +566,305 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
-</head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🚴 小偉小瑩小哈三車競騎沙盒：等速 vs 靜止停留 vs 變速追逐</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第6題</span>
-        </h1>
-        <p>小偉前2秒衝至10m後停留喝水；小瑩等速2m/s穩健騎行(5s末同達10m·位移相同·選A)；小哈變速騎行(5s末達12m)！</p>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Race Track & x-t Graph Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🚴 直線跑道實況競騎 ＋ 下方 x-t 圖動態重合連動</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRace" onclick="toggleRace()">▶ 三車同時起跑 (向東)</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
-          </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
-            <span>🏆 領先者：<strong id="hudLeader" style="color: #34d399; font-family: 'Outfit';">三人起跑中</strong></span>
-            <span>🎯 5秒位移同為10m：<strong style="color: #38bdf8; font-family: 'Outfit';">小偉 ＝ 小瑩 (選A)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div class="slider-row">
-            <label for="timeSlider">⏱️ 時間拖曳條：</label>
-            <input type="range" id="timeSlider" min="0" max="5" step="0.1" value="0" oninput="onSliderChange(this.value)">
-            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; min-width: 50px;">0.0s</span>
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            💡 <strong>破題心法：</strong>「位移」只看末位置減初位置（\( \Delta x = x_5 - x_0 \)）。小偉與小瑩在 5 秒末的位置都是 10m ➔ <strong>0～5 秒位移完全相同（10m）</strong>！
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: 3 Cyclists Telemetry & Table & Quiz -->
-      <div>
-        
-        <!-- 3 Cyclists Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Wei -->
-          <div class="t-card wei">
-            <h4>🔴 小偉 (前衝後停)</h4>
-            <div class="t-val" id="valWei">0.0 m</div>
-            <div class="t-sub">2~5s 靜止在 10m<br><strong>5s末位移 10m (選A)</strong></div>
-          </div>
-
-          <!-- Ying -->
-          <div class="t-card ying">
-            <h4>🔵 小瑩 (等速 2m/s)</h4>
-            <div class="t-val" id="valYing">0.0 m</div>
-            <div class="t-sub">每秒前進 2m<br><strong>5s末位移 10m (同小偉)</strong></div>
-          </div>
-
-          <!-- Ha -->
-          <div class="t-card ha">
-            <h4>🟢 小哈 (變速追趕)</h4>
-            <div class="t-val" id="valHa">0.0 m</div>
-            <div class="t-sub">5s末到達 12m<br>全程路徑長最大</div>
-          </div>
-        </div>
-
-        <!-- Official Table Box -->
-        <div class="table-box">
-          <div class="tab-title">📊 單元綜合卷第 6 題原題數據表：</div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: center; margin-top: 0.3rem;">
-            <tr style="background: #f1f5f9; font-weight: 800;">
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">時間（秒）</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">0</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">1</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">2</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">3</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1;">4</th>
-              <th style="padding: 0.35rem; border: 1px solid #cbd5e1; background: #fef9c3;">5</th>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #dc2626;">小偉位置(m)</td>
-              <td>0</td><td>5</td><td>10</td><td>10</td><td>10</td><td style="font-weight: bold; background: #fee2e2;">10</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">小瑩位置(m)</td>
-              <td>0</td><td>2</td><td>4</td><td>6</td><td>8</td><td style="font-weight: bold; background: #e0f2fe;">10</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.35rem; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">小哈位置(m)</td>
-              <td>0</td><td>3</td><td>6</td><td>8</td><td>9</td><td style="font-weight: bold; background: #dcfce7;">12</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元綜合卷第 6 題選項診斷：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>(A) 正確：</strong>小偉和小瑩在第 5 秒末的位置皆為 10m ➔ \( \Delta x = 10 - 0 = \mathbf{10\text{ 公尺}} \)。</li>
-            <li><strong>(B) 錯誤：</strong>小哈 5 秒走 12m，小哈路徑長最大。</li>
-            <li><strong>(C) 錯誤：</strong>小哈 2～5 秒位置由 6m ➔ 12m 持續移動，小偉才是靜止在 10m。</li>
-            <li><strong>(D) 錯誤：</strong>第 3 秒末小偉在 10m、小哈在 8m，小偉最遠。</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷第 6 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>小偉、小瑩、小哈三人騎腳踏車位置時間關係如表，下列敘述何者「正確」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(6, 'A', this)">(A) 小偉和小瑩 0～5 秒內的位移相同（皆為 10 公尺）</button>
-              <button class="quiz-btn" onclick="checkQuiz(6, 'B', this)">(B) 小瑩 0～5 秒的路徑長最大</button>
-              <button class="quiz-btn" onclick="checkQuiz(6, 'C', this)">(C) 小哈 2～5 秒為靜止</button>
-              <button class="quiz-btn" onclick="checkQuiz(6, 'D', this)">(D) 第 3 秒末時，小哈距離原點最遠</button>
-            </div>
-            <div class="quiz-feedback" id="fb6"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
-  <script>
-    let simTime = 0; // 0 to 5s
-    let isRunning = false;
-    let animId = null;
-
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Data points:
-    // Wei: (0,0), (1,5), (2,10), (3,10), (4,10), (5,10)
-    // Ying: (0,0), (1,2), (2,4), (3,6), (4,8), (5,10)
-    // Ha: (0,0), (1,3), (2,6), (3,8), (4,9), (5,12)
-    const weiPts = [0, 5, 10, 10, 10, 10];
-    const yingPts = [0, 2, 4, 6, 8, 10];
-    const haPts = [0, 3, 6, 8, 9, 12];
-
-    function getInterp(arr, t) {
-      if (t <= 0) return arr[0];
-      if (t >= 5) return arr[5];
-      const i = Math.floor(t);
-      const frac = t - i;
-      return arr[i] + (arr[i + 1] - arr[i]) * frac;
+    function switchTab(tab) {
+      document.getElementById('tabBtnConcept').classList.toggle('active', tab === 'concept');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabConcept').style.display = (tab === 'concept') ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
     }
 
-    function onSliderChange(val) {
-      simTime = parseFloat(val);
-      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
+    function setTime(t, el) {
+      if (isRacing) toggleRace();
+      curTime = t;
+      document.getElementById('timeSlider').value = t;
+      document.getElementById('sliderVal').innerText = `${t.toFixed(1)}s`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
       updateUI();
     }
 
+    function onSliderChange(val) {
+      if (isRacing) toggleRace();
+      curTime = parseFloat(val);
+      document.getElementById('sliderVal').innerText = `${curTime.toFixed(1)}s`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      updateUI();
+    }
+
+    function resetSim() {
+      if (isRacing) toggleRace();
+      setTime(0, null);
+    }
+
     function toggleRace() {
+      isRacing = !isRacing;
       const btn = document.getElementById('btnRace');
-      if (!isRunning) {
-        if (simTime >= 5.0) simTime = 0;
-        isRunning = true;
-        btn.innerText = '⏸ 暫停';
+      if (isRacing) {
+        btn.innerText = '⏸ 暫停競速';
         btn.style.background = '#dc2626';
-        loop();
+        if (curTime >= 5.0) curTime = 0;
+        raceLoop();
       } else {
-        isRunning = false;
-        btn.innerText = '▶ 三車同時起跑 (向東)';
-        btn.style.background = 'var(--primary)';
+        btn.innerText = '▶ 同步競速動畫';
+        btn.style.background = '#7c3aed';
         if (animId) cancelAnimationFrame(animId);
       }
     }
 
-    function resetSim() {
-      isRunning = false;
-      simTime = 0;
-      if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRace').innerText = '▶ 三車同時起跑 (向東)';
-      document.getElementById('btnRace').style.background = 'var(--primary)';
-      document.getElementById('timeSlider').value = 0;
-      document.getElementById('sliderVal').innerText = '0.0s';
-      updateUI();
-    }
-
-    function loop() {
-      if (!isRunning) return;
-      simTime += 0.025;
-      if (simTime >= 5.0) {
-        simTime = 5.0;
-        isRunning = false;
-        document.getElementById('btnRace').innerText = '🔄 重新競騎';
-        document.getElementById('btnRace').style.background = 'var(--primary)';
+    function raceLoop() {
+      if (!isRacing) return;
+      curTime += 0.02;
+      if (curTime >= 5.0) {
+        curTime = 5.0;
+        toggleRace();
       }
-      document.getElementById('timeSlider').value = simTime.toFixed(1);
-      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
+      document.getElementById('timeSlider').value = curTime.toFixed(2);
+      document.getElementById('sliderVal').innerText = `${curTime.toFixed(1)}s`;
       updateUI();
-      if (isRunning) animId = requestAnimationFrame(loop);
+      if (isRacing) animId = requestAnimationFrame(raceLoop);
     }
 
     function updateUI() {
-      const xWei = getInterp(weiPts, simTime);
-      const xYing = getInterp(yingPts, simTime);
-      const xHa = getInterp(haPts, simTime);
+      const pos = getPositions(curTime);
 
-      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
+      document.getElementById('hudTime').innerText = `${curTime.toFixed(1)} 秒`;
       
-      let leader = '小偉領先衝刺中';
-      if (simTime >= 2.0 && simTime < 4.5) leader = '小偉停在 10m，小哈小瑩追趕中';
-      else if (simTime >= 4.5) leader = '🏆 小哈率先抵達 12m 奪冠！(小偉小瑩同為 10m)';
+      let leader = '三人起跑中';
+      if (pos.wei > pos.ying && pos.wei > pos.ha) leader = `小偉 (${pos.wei.toFixed(1)}m)`;
+      else if (pos.ha > pos.wei && pos.ha > pos.ying) leader = `小哈 (${pos.ha.toFixed(1)}m)`;
+      else if (Math.abs(pos.wei - pos.ying) < 0.1) leader = `小偉 ＝ 小瑩 (${pos.wei.toFixed(1)}m)`;
       document.getElementById('hudLeader').innerText = leader;
 
-      document.getElementById('valWei').innerText = `${xWei.toFixed(1)} m`;
-      document.getElementById('valYing').innerText = `${xYing.toFixed(1)} m`;
-      document.getElementById('valHa').innerText = `${xHa.toFixed(1)} m`;
+      document.getElementById('valWei').innerText = `${pos.wei.toFixed(1)} m`;
+      document.getElementById('valYing').innerText = `${pos.ying.toFixed(1)} m`;
+      document.getElementById('valHa').innerText = `${pos.ha.toFixed(1)} m`;
 
-      draw(xWei, xYing, xHa);
+      if (curTime >= 4.95) {
+        document.getElementById('subWei').innerHTML = '\\( \\Delta x = 10 - 0 = \\mathbf{10.0\\text{ m}} \\)';
+        document.getElementById('subYing').innerHTML = '\\( \\Delta x = 10 - 0 = \\mathbf{10.0\\text{ m}} \\)';
+        document.getElementById('subHa').innerHTML = '\\( \\Delta x = 12 - 0 = 12.0\\text{ m} \\)';
+      }
+
+      if (window.triggerMathRender) triggerMathRender();
+      draw(pos);
     }
 
-    function draw(xWei, xYing, xHa) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+    function draw(pos) {
+      const rect = container.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      if (!cw || !ch) return;
 
-      // ==========================================
-      // 1. Top Section: 3 Bicycle Lanes (y: 20 to 190)
-      // ==========================================
-      const laneX1 = 80, laneX2 = cw - 70;
-      const laneH = 45;
-      const lane1Y = 25;  // Wei
-      const lane2Y = 80;  // Ying
-      const lane3Y = 135; // Ha
+      ctx.clearRect(0, 0, cw, ch);
 
-      function toRoadPx(x) { return laneX1 + (x / 12.0) * (laneX2 - laneX1); }
+      // Section 1: 3-Lane Track (Top half, height: ch * 0.46)
+      const padX = 40;
+      const trackW = cw - padX * 2;
+      const maxM = 14;
 
-      // Draw 3 Asphalt Lanes
-      [lane1Y, lane2Y, lane3Y].forEach(ly => {
-        ctx.fillStyle = '#1e293b'; ctx.fillRect(laneX1, ly, laneX2 - laneX1, laneH);
-        ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5; ctx.strokeRect(laneX1, ly, laneX2 - laneX1, laneH);
-      });
-
-      // Distance Ticks (0, 2, 4, 6, 8, 10, 12m)
-      [0, 2, 4, 6, 8, 10, 12].forEach(d => {
-        const px = toRoadPx(d);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(px, lane1Y); ctx.lineTo(px, lane3Y + laneH); ctx.stroke();
-
-        ctx.fillStyle = (d === 10 || d === 12) ? '#fde047' : '#64748b';
-        ctx.font = (d === 10 || d === 12) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${d}m`, px, lane3Y + laneH + 16);
-      });
-
-      // Lane Labels
-      ctx.fillStyle = '#f87171'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'right';
-      ctx.fillText('🔴 小偉', laneX1 - 10, lane1Y + 28);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText('🔵 小瑩', laneX1 - 10, lane2Y + 28);
-      ctx.fillStyle = '#34d399';
-      ctx.fillText('🟢 小哈', laneX1 - 10, lane3Y + 28);
-
-      // Draw Cyclists
-      const pxWei = toRoadPx(xWei);
-      const pxYing = toRoadPx(xYing);
-      const pxHa = toRoadPx(xHa);
-
-      // Wei Avatar 🚴
-      ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🚴', pxWei, lane1Y + 30);
-      if (simTime >= 2.0) {
-        ctx.font = '16px sans-serif';
-        ctx.fillText('☕(靜止)', pxWei + 28, lane1Y + 24);
+      function toTrackPx(m) {
+        return padX + (m / maxM) * trackW;
       }
 
-      // Ying Avatar 🚴‍♀️
-      ctx.font = '26px sans-serif';
-      ctx.fillText('🚴‍♀️', pxYing, lane2Y + 30);
+      const lanes = [
+        { name: '🔴 小偉', y: 55, pos: pos.wei, color: '#dc2626' },
+        { name: '🔵 小瑩', y: 95, pos: pos.ying, color: '#0284c7' },
+        { name: '🟢 小哈', y: 135, pos: pos.ha, color: '#16a34a' }
+      ];
 
-      // Ha Avatar 🚴‍♂️
-      ctx.fillText('🚴‍♂️', pxHa, lane3Y + 30);
+      // Track Lanes
+      lanes.forEach(l => {
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(padX, l.y - 12, trackW, 24);
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(padX, l.y - 12, trackW, 24);
 
-      // ==========================================
-      // 2. Bottom Section: x-t Graph (y: 220 to 450)
-      // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 430, gyTop = 220;
-
-      function mapX(t) { return gx1 + (t / 5.0) * (gx2 - gx1); }
-      function mapY(x) { return gyZero - (x / 14.0) * (gyZero - gyTop); }
-
-      // Grid
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      for (let t = 1; t <= 5; t++) {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = (t === 5) ? '#fde047' : '#64748b';
-        ctx.font = (t === 5) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${t}s`, px, gyZero + 16);
-      }
-      [0, 5, 10, 12].forEach(x => {
-        const py = mapY(x);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (x === 10 || x === 12) ? '#fde047' : '#64748b';
-        ctx.font = (x === 10 || x === 12) ? 'bold 11px Outfit' : '10px Outfit';
+        ctx.fillStyle = l.color;
+        ctx.font = 'bold 11px Noto Sans TC';
         ctx.textAlign = 'right';
-        ctx.fillText(`${x}m`, gx1 - 8, py + 4);
+        ctx.fillText(l.name, padX - 6, l.y + 4);
+
+        // Cyclist dot
+        const px = toTrackPx(l.pos);
+        ctx.fillStyle = l.color;
+        ctx.beginPath();
+        ctx.arc(px, l.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = l.color;
+        ctx.font = 'bold 10px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${l.pos.toFixed(1)}m`, px, l.y - 12);
       });
+
+      // Track bottom distance ticks
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1.5;
+      for (let m = 0; m <= 14; m += 2) {
+        const px = toTrackPx(m);
+        ctx.beginPath();
+        ctx.moveTo(px, 147);
+        ctx.lineTo(px, 153);
+        ctx.stroke();
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px Outfit';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${m}m`, px, 165);
+      }
+
+      // Section 2: x-t Graph (Bottom half, height: ch * 0.44)
+      const gx = padX + 20;
+      const gy = 195;
+      const gw = trackW - 30;
+      const gh = ch - gy - 28;
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(gx, gy, gw, gh);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(gx, gy, gw, gh);
 
       // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
-
-      // Draw Curves:
-      // 1. Wei (Red): (0,0) -> (1,5) -> (2,10) -> (5,10)
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(0));
-      for (let t = 1; t <= 5; t++) ctx.lineTo(mapX(t), mapY(weiPts[t]));
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + gh);
+      ctx.lineTo(gx + gw, gy + gh);
       ctx.stroke();
 
-      // 2. Ying (Blue): (0,0) -> (5,10)
-      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(0));
-      for (let t = 1; t <= 5; t++) ctx.lineTo(mapX(t), mapY(yingPts[t]));
-      ctx.stroke();
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 10px Outfit';
+      ctx.textAlign = 'right';
+      ctx.fillText('x (公尺)', gx - 4, gy + 12);
+      ctx.textAlign = 'center';
+      ctx.fillText('t (秒)', gx + gw / 2, gy + gh + 16);
 
-      // 3. Ha (Green): (0,0) -> (1,3) -> (2,6) -> (3,8) -> (4,9) -> (5,12)
-      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(0));
-      for (let t = 1; t <= 5; t++) ctx.lineTo(mapX(t), mapY(haPts[t]));
-      ctx.stroke();
-
-      // Highlight Wei & Ying Coincidence Point at (5s, 10m)
-      const p5x = mapX(5), p5y = mapY(10);
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(p5x, p5y, 7, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
-
-      ctx.fillStyle = '#fde047'; ctx.font = 'bold 12px Noto Sans TC'; ctx.textAlign = 'right';
-      ctx.fillText('✨ 5s末小偉與小瑩位移同為 10m (選 A)', p5x - 12, p5y + 4);
-    }
-
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
-
-      if (ans === 'A') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>位移 ＝ 末位置 － 初位置：<br>① 小偉 0～5 秒位移 ＝ \( 10 - 0 = \\mathbf{10\\text{ 公尺}} \)<br>② 小瑩 0～5 秒位移 ＝ \( 10 - 0 = \\mathbf{10\\text{ 公尺}} \)<br>故<strong>兩人位移完全相同（選 A）</strong>！';
-      } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心判讀數據表！</strong> 小偉與小瑩在 5 秒末的位置都是 10m，故位移相同（選 A）！';
+      function toGraphPx(t, x) {
+        return {
+          x: gx + (t / 5) * gw,
+          y: gy + gh - (x / 14) * gh
+        };
       }
+
+      // Draw 10m target line
+      const p10_start = toGraphPx(0, 10);
+      const p10_end = toGraphPx(5, 10);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(p10_start.x, p10_start.y);
+      ctx.lineTo(p10_end.x, p10_end.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px Outfit';
+      ctx.textAlign = 'right';
+      ctx.fillText('10m', gx - 4, p10_start.y + 3);
+
+      // Draw Curves up to 5s (Faint reference)
+      // Wei: (0,0) -> (2,10) -> (5,10)
+      ctx.strokeStyle = '#fca5a5';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      const w0 = toGraphPx(0, 0), w2 = toGraphPx(2, 10), w5 = toGraphPx(5, 10);
+      ctx.moveTo(w0.x, w0.y); ctx.lineTo(w2.x, w2.y); ctx.lineTo(w5.x, w5.y);
+      ctx.stroke();
+
+      // Ying: (0,0) -> (5,10)
+      ctx.strokeStyle = '#bae6fd';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(w0.x, w0.y); ctx.lineTo(w5.x, w5.y);
+      ctx.stroke();
+
+      // Ha: (0,0) -> (5,12)
+      ctx.strokeStyle = '#bbf7d0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let t = 0; t <= 5; t += 0.1) {
+        const pt = toGraphPx(t, (12 / 25) * t * t);
+        if (t === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+
+      // Draw Active Curve up to curTime
+      // 1. Wei active
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(w0.x, w0.y);
+      if (curTime <= 2) {
+        const curW = toGraphPx(curTime, (curTime / 2) * 10);
+        ctx.lineTo(curW.x, curW.y);
+      } else {
+        ctx.lineTo(w2.x, w2.y);
+        const curW = toGraphPx(curTime, 10);
+        ctx.lineTo(curW.x, curW.y);
+      }
+      ctx.stroke();
+
+      // 2. Ying active
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(w0.x, w0.y);
+      const curYing = toGraphPx(curTime, 2 * curTime);
+      ctx.lineTo(curYing.x, curYing.y);
+      ctx.stroke();
+
+      // 3. Ha active
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let t = 0; t <= curTime; t += 0.05) {
+        const pt = toGraphPx(t, (12 / 25) * t * t);
+        if (t === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+
+      // Current Time Vertical Line
+      const curT_X = gx + (curTime / 5) * gw;
+      ctx.strokeStyle = '#7c3aed';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(curT_X, gy);
+      ctx.lineTo(curT_X, gy + gh);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
 
-    // Startup
+    function checkQuiz(qNum, choice, btn) {
+      const fb = document.getElementById(`fb${qNum}`);
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        b.disabled = true;
+      });
+
+      if (choice === 'A') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct-fb';
+        fb.innerHTML = '🎉 答對了！在 \\( t = 5 \\) 秒末，小偉與小瑩的位置皆位於 10 公尺處，起點皆為 0，因此兩人的「位移皆為 10 公尺」，位移大小完全相同！';
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong-fb';
+        fb.innerHTML = '❌ 答錯了！位移看末位置與初位置之差：小偉與小瑩在 5 秒末皆到達 10m，位移同為 10m，故選 (A)。';
+      }
+      if (window.triggerMathRender) triggerMathRender();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 250);
     });
   </script>
-
-  
-
 </body>
 </html>

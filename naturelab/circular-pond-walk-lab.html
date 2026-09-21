@@ -6,410 +6,611 @@
   <title>國中自然 3上 · 小葵圓形水池漫步：一圈 vs 半圈 vs 任意弧 (單元卷第19題＋題組2)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #0284c7;       /* Pond Blue */
+      --primary: #0284c7;
       --primary-dark: #0369a1;
-      --path-purple: #8b5cf6;   /* Purple for Path Arc */
-      --disp-red: #ef4444;      /* Red for Displacement Chord */
-      --grass: #15803d;
-      --bg: #f0f9ff;
+      --primary-light: #e0f2fe;
+      --path-purple: #7e22ce;
+      --disp-red: #dc2626;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #bae6fd;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(2, 132, 199, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(2, 132, 199, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* 38px Header */
     header {
+      height: 38px;
       background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e0f2fe;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      min-height: 0;
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      gap: 0.55rem;
+      overflow: hidden;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Left Column: Canvas + Controls */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* Circular Pond Canvas Stage */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+    .canvas-container {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
+      box-shadow: var(--shadow-sm);
+      min-height: 0;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 440px;
+      height: 100%;
+      background: #ffffff;
     }
 
     /* Controls Panel */
     .control-panel {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-row {
+    .preset-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    /* Target Nodes Bar */
-    .target-bar {
-      display: flex;
-      gap: 0.4rem;
       flex-wrap: wrap;
     }
 
-    .target-btn {
-      padding: 0.35rem 0.75rem;
+    .preset-btn {
+      padding: 0.22rem 0.55rem;
       border-radius: var(--radius-sm);
       border: 1.5px solid #cbd5e1;
-      background: white;
-      font-size: 0.8rem;
+      background: #f8fafc;
+      font-size: 0.74rem;
       font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s;
+      color: #334155;
+      transition: all 0.15s;
     }
-
-    .target-btn:hover { background: #e0f2fe; }
-    .target-btn.active {
-      background: var(--primary);
+    .preset-btn:hover { background: #e0f2fe; border-color: #0284c7; }
+    .preset-btn.active {
+      background: #0284c7;
       color: white;
-      border-color: var(--primary-dark);
+      border-color: #0369a1;
     }
 
-    /* Dual Telemetry Cards */
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-action {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-action.primary { background: #0284c7; color: white; border-color: #0369a1; }
+    .btn-action.primary:hover { background: #0369a1; }
+    .btn-action.secondary { background: #f1f5f9; color: #334155; }
+    .btn-action.secondary:hover { background: #e2e8f0; }
+
+    .slider-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .slider-box input[type="range"] {
+      flex: 1;
+      accent-color: #0284c7;
+      cursor: pointer;
+    }
+
+    /* Right Column: Telemetry + Tabs */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
+    }
+
     .telemetry-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.45rem;
     }
 
-    .t-card {
-      padding: 0.9rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+    .telemetry-card {
       background: #ffffff;
-    }
-
-    .t-card.disp { border-color: #fecaca; background: #fef2f2; }
-    .t-card.path { border-color: #ddd6fe; background: #faf5ff; }
-
-    .t-card h4 {
-      font-size: 0.85rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .t-card.disp h4 { color: #dc2626; }
-    .t-card.path h4 { color: #7e22ce; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-    }
-
-    .t-card.disp .t-val { color: #dc2626; }
-    .t-card.path .t-val { color: #7e22ce; }
-
-    .t-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 0.25rem;
-    }
-
-    /* Comparison Table Box */
-    .table-box {
-      border: 2px solid var(--border);
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      overflow: hidden;
-      margin-bottom: 1rem;
-      background: white;
+      padding: 0.4rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+    .telemetry-card.disp { border-left: 4px solid #dc2626; }
+    .telemetry-card.path { border-left: 4px solid #7e22ce; }
+
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
     }
 
-    table.compare-table {
+    .card-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 0.15rem 0;
+    }
+    .telemetry-card.disp .card-val { color: #dc2626; }
+    .telemetry-card.path .card-val { color: #7e22ce; }
+
+    .card-sub {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Tab Container */
+    .tab-container {
+      flex: 1;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.38rem 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-btn.active {
+      color: #0369a1;
+      background: #ffffff;
+      border-bottom-color: #0284c7;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    /* Table & Concept */
+    .summary-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.82rem;
-      text-align: left;
+      font-size: 0.76rem;
+      margin-bottom: 0.45rem;
     }
-
-    table.compare-table th {
-      background: #e0f2fe;
-      padding: 0.5rem 0.6rem;
-      border-bottom: 2px solid var(--border);
+    .summary-table th {
+      background: #f1f5f9;
+      padding: 0.3rem 0.45rem;
+      border: 1px solid #cbd5e1;
       font-weight: 800;
-      color: var(--primary-dark);
+      color: #0369a1;
+      text-align: center;
     }
-
-    table.compare-table td {
-      padding: 0.45rem 0.6rem;
-      border-bottom: 1px solid var(--border);
+    .summary-table td {
+      padding: 0.28rem 0.45rem;
+      border: 1px solid #cbd5e1;
+      text-align: center;
     }
-
-    table.compare-table tr.active-row {
+    .summary-table tr.highlight {
       background: #eff6ff;
       font-weight: 800;
     }
 
-    /* Core Concept Callout */
-    .concept-box {
-      background: #f0f9ff;
-      border-left: 4px solid var(--primary);
+    .concept-card {
+      background: #f8fafc;
+      border-left: 3.5px solid #0284c7;
       border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.45rem;
     }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .quiz-title {
-      font-size: 0.95rem;
+    .concept-card h4 {
+      font-size: 0.78rem;
+      color: #0369a1;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.2rem;
+    }
+    .concept-card ul {
+      padding-left: 1.1rem;
+      font-size: 0.76rem;
+      color: #334155;
+    }
+
+    /* Quiz Tab styling */
+    .quiz-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 0.4rem;
+      background: #fef3c7;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #fde68a;
     }
 
     .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
       margin-bottom: 0.6rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .quiz-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
+      padding: 0.3rem 0.5rem;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: #ffffff;
+      font-size: 0.75rem;
       font-weight: 700;
+      color: #1e293b;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    .quiz-feedback.correct-fb { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .quiz-feedback.wrong-fb { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+</head>
+<body>
+
+  <!-- 38px Header -->
+  <header>
+    <div class="header-left">
+      <a href="chapter1-hub.html" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🌊 小葵圓形水池漫步：一圈 vs 半圈幾何位移與路徑長</span>
+        <span class="badge">單元卷 01 卷第19題 ＋ 題組2</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>📐 一整圈回到起點：\( \Delta \vec{x} = 0 \)，\( S = 2\pi R \)</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main>
+    <!-- Left Column: Canvas + Controls -->
+    <div class="left-col">
+      <div class="canvas-container" id="canvasBox">
+        <div class="stage-hud">
+          <span>🎯 旋轉弧度：<strong id="hudAngle" style="color: #0284c7; font-family: 'Outfit';">360° (跑一整圈)</strong></span>
+          <span>🔴 位移 \( |\Delta \vec{x}| \)：<strong id="hudDisp" style="color: #dc2626; font-family: 'Outfit';">0.0 m (題19答案)</strong></span>
+          <span>🟣 路徑長 \( S \)：<strong id="hudPath" style="color: #7e22ce; font-family: 'Outfit';">628.3 m (2πR)</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="preset-row">
+          <span style="font-size: 0.72rem; font-weight: 800; color: #0369a1;">關鍵情境：</span>
+          <button class="preset-btn active" onclick="setAngle(360, this)">🏆 跑一整圈 360° (位移=0 · 路徑長=2πR · 題19)</button>
+          <button class="preset-btn" onclick="setAngle(180, this)">⚡ 跑半圈 180° (位移=2R=200m · 路徑長=πR · 題組2)</button>
+          <button class="preset-btn" onclick="setAngle(90, this)">⚡ 跑 1/4 圈 90° (位移=√2R · 路徑長=0.5πR)</button>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-action primary" id="btnRun" onclick="toggleRun()">▶ 自動旋轉展示</button>
+          <button class="btn-action secondary" onclick="resetAngle()">🔄 重置</button>
+          <div class="slider-box">
+            <span>角度 \( \theta \)：</span>
+            <input type="range" id="angleSlider" min="0" max="360" step="1" value="360" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; width: 40px;">360°</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Telemetry + Tabs -->
+    <div class="right-col">
+      <!-- Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card disp">
+          <div class="card-label">
+            <span>🔴 直線位移大小 \( |\Delta \vec{x}| \)</span>
+            <span>直線弦長</span>
+          </div>
+          <div class="card-val" id="valDisp">0.0 m</div>
+          <div class="card-sub" id="subDisp">起點與終點重合 ➔ 直線距離 = 0</div>
+        </div>
+
+        <div class="telemetry-card path">
+          <div class="card-label">
+            <span>🟣 實際路徑長 \( S \)</span>
+            <span>圓弧軌跡</span>
+          </div>
+          <div class="card-val" id="valPath">628.3 m</div>
+          <div class="card-sub" id="subPath">\( S = 2\pi R \approx 2 \times 3.1416 \times 100 \)</div>
+        </div>
+      </div>
+
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnConcept" onclick="switchTab('concept')">📖 核心觀念與幾何對照</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 原題即測即評 (第19題+題組2)</button>
+        </div>
+
+        <!-- Concept Tab -->
+        <div class="tab-content" id="tabConcept">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>漫步範圍</th>
+                <th>旋轉角</th>
+                <th>直線位移 \( |\Delta \vec{x}| \)</th>
+                <th>路徑長 \( S \)</th>
+                <th>考題對應</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="row360" class="highlight">
+                <td><strong>跑一整圈</strong></td>
+                <td>360°</td>
+                <td><strong style="color: #dc2626;">0 m</strong></td>
+                <td>\( 2\pi R \approx 628\text{ m} \)</td>
+                <td><strong>第 19 題 (選 D)</strong></td>
+              </tr>
+              <tr id="row180">
+                <td><strong>跑半圈</strong></td>
+                <td>180°</td>
+                <td><strong style="color: #dc2626;">2R = 200 m</strong></td>
+                <td>\( \pi R \approx 314\text{ m} \)</td>
+                <td><strong>題組 2</strong></td>
+              </tr>
+              <tr id="row90">
+                <td><strong>跑 1/4 圈</strong></td>
+                <td>90°</td>
+                <td>\( \sqrt{2}R \approx 141.4\text{ m} \)</td>
+                <td>\( 0.5\pi R \approx 157.1\text{ m} \)</td>
+                <td>延伸進階題</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="concept-card">
+            <h4>💡 破題關鍵心法</h4>
+            <ul>
+              <li><strong>位移（向量）：</strong>只看「初位置」與「末位置」的直線連線箭頭。繞一圈回到原出發點，位置變化量為 0，故位移必為 <strong>0</strong>！</li>
+              <li><strong>路徑長（純量）：</strong>運動過程中實際踩過的總長度，繞一圈為圓周長 \( 2\pi R \approx 628.3\text{ m} \)。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="tabQuiz" style="display: none;">
+          <div class="quiz-item">
+            <div class="quiz-title">📝 單元課次卷 01 卷第 19 題</div>
+            <div class="quiz-q">
+              小葵沿半徑 100 公尺的圓形水池跑了一整圈回到起點，請問其「位移大小」為何？
+            </div>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(19, 'D', this)">(D) 0 公尺（回到原出發點，位置變化量為 0）</button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'A', this)">(A) 628 公尺（此為一圈的路徑長，非位移）</button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'B', this)">(B) 314 公尺（此為半圈的路徑長）</button>
+              <button class="quiz-btn" onclick="checkQuiz(19, 'C', this)">(C) 200 公尺（此為水池直徑，半圈的位移）</button>
+            </div>
+            <div class="quiz-feedback" id="fb19"></div>
+          </div>
+
+          <div class="quiz-item">
+            <div class="quiz-title">📝 單元課次卷 01 卷 題組第 2 題</div>
+            <div class="quiz-q">
+              承上題，若小葵只跑了半圈到達水池正對面，請問其「位移大小」與「路徑長」各為何？
+            </div>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(2, 'A', this)">(A) 位移 200 公尺（直徑 2R）；路徑長約 314 公尺（半圓周 πR）</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'B', this)">(B) 位移 314 公尺；路徑長 200 公尺</button>
+              <button class="quiz-btn" onclick="checkQuiz(2, 'C', this)">(C) 位移 0 公尺；路徑長 314 公尺</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <script>
+    const R = 100; // Radius = 100m
+    let angleDeg = 360;
+    let isRunning = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
         renderMathInElement(document.body, {
@@ -422,406 +623,261 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
-</head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🌊 小葵圓形水池漫步：一圈 vs 半圈 vs 任意弧</span>
-          <span class="badge">國中自然 3上 · 單元課次卷 01 卷第19題 ＋ 題組2</span>
-        </h1>
-        <p>半徑 R 水池：跑一圈回到原點 ➔ 位移＝0，路徑長＝2πR；跑半圈到達對角 ➔ 位移＝直徑 2R，路徑長＝πR！</p>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Circular Pond Canvas Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🏊 水池跑道（半徑 R = 100m · 直徑 200m）</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRun" onclick="toggleRun()">▶ 小葵起跑漫步</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置回起點</button>
-          </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>🎯 角度：<strong id="hudAngle" style="color: #38bdf8; font-family: 'Outfit';">360° (跑一圈)</strong></span>
-            <span>🔴 位移 \( |\Delta \vec{x}| \)：<strong id="hudDisp" style="color: #f87171; font-family: 'Outfit';">0.0 m (題19答案)</strong></span>
-            <span>🟣 路徑長 \( S \)：<strong id="hudPath" style="color: #c084fc; font-family: 'Outfit';">628.3 m (2πR)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="440"></canvas>
-        </div>
-
-        <!-- Interactive Quick Targets Bar -->
-        <div class="control-panel">
-          <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);">
-            🎯 快速選取幾何關鍵節點：
-          </div>
-          <div class="target-bar">
-            <button class="target-btn active" onclick="setAngle(360, this)">🏆 跑一整圈 360° (位移=0 · 路徑長=2πR · 題19)</button>
-            <button class="target-btn" onclick="setAngle(180, this)">⚡ 跑半圈 180° (位移=2R=200m · 路徑長=πR=314m · 題組2)</button>
-            <button class="target-btn" onclick="setAngle(90, this)">⚡ 跑 1/4 圈 90° (位移=√2R · 路徑長=0.5πR)</button>
-            <button class="target-btn" onclick="setAngle(270, this)">⚡ 跑 3/4 圈 270° (位移=√2R · 路徑長=1.5πR)</button>
-          </div>
-
-          <div style="margin-top: 0.3rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800;">
-              <span>手動滑動調整水池角度 (0°～360°)：</span>
-              <span id="sliderAngleLabel" style="color: var(--primary-dark); font-family: 'Outfit'; font-size: 1.05rem;">360°</span>
-            </div>
-            <input type="range" id="angleSlider" min="0" max="360" step="1" value="360" style="width: 100%; accent-color: var(--primary);" oninput="onAngleChange(this.value)">
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Dual Telemetry & Comparison Table & Quiz -->
-      <div>
-        
-        <!-- Dual Telemetry Cards -->
-        <div class="telemetry-grid">
-          <!-- Displacement -->
-          <div class="t-card disp">
-            <h4>🔴 起訖點直線位移 \( |\Delta \vec{x}| \)</h4>
-            <div class="t-val" id="valDisp">0.0 m (0 R)</div>
-            <div class="t-sub" id="subDisp">跑一圈回到起點 ➔ 位移為零</div>
-          </div>
-
-          <!-- Path Length -->
-          <div class="t-card path">
-            <h4>🟣 圓弧路徑長 \( S \)</h4>
-            <div class="t-val" id="valPath">628.3 m (2πR)</div>
-            <div class="t-sub" id="subPath">圓周長 \( 2\pi R = 6.28 \times 100\text{m} \)</div>
-          </div>
-        </div>
-
-        <!-- Node Comparison Table -->
-        <div class="table-box">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>運動進度</th>
-                <th>幾何角度</th>
-                <th>直線位移 \( |\Delta \vec{x}| \)</th>
-                <th>總路徑長 \( S \)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="row0">
-                <td>剛起跑</td>
-                <td>0°</td>
-                <td>0 m</td>
-                <td>0 m</td>
-              </tr>
-              <tr id="row90">
-                <td>跑 1/4 圈</td>
-                <td>90°</td>
-                <td>\( \sqrt{2}R \approx 141.4\text{ m} \)</td>
-                <td>\( 0.5\pi R \approx 157.1\text{ m} \)</td>
-              </tr>
-              <tr id="row180">
-                <td><strong>跑半圈 (題組2)</strong></td>
-                <td><strong>180°</strong></td>
-                <td><strong>直徑 \( 2R = \mathbf{200\text{ m}} \) (最大)</strong></td>
-                <td><strong>\( \pi R \approx \mathbf{314\text{ m}} \)</strong></td>
-              </tr>
-              <tr id="row270">
-                <td>跑 3/4 圈</td>
-                <td>270°</td>
-                <td>\( \sqrt{2}R \approx 141.4\text{ m} \)</td>
-                <td>\( 1.5\pi R \approx 471.2\text{ m} \)</td>
-              </tr>
-              <tr id="row360" class="active-row">
-                <td><strong>跑一整圈 (題19)</strong></td>
-                <td><strong>360°</strong></td>
-                <td><strong style="color: var(--warn);">歸零 0 m (選D)</strong></td>
-                <td><strong style="color: var(--path-purple);">\( 2\pi R \approx \mathbf{628\text{ m}} \) (選D)</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 單元課次卷第 19 題與題組 2 核心破析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>第 19 題（跑一圈）：</strong>起點與終點重合，<strong>位移大小必為 0</strong>；走過一整個圓周，<strong>路徑長為 \( 2\pi R \)</strong>（選 D）。</li>
-            <li><strong>題組 2（小狗跑半圈，直徑 200m）：</strong>
-              <ul>
-                <li>位移大小 ＝ 兩端點直線距離（直徑）＝ <strong>200 公尺</strong>（選 B）。</li>
-                <li>路徑長 ＝ 半圓周長 ＝ \( \pi \times 100 \approx \mathbf{314\text{ 公尺}} \)（選 C）。</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元卷第 19 題 ＆ 題組 2 原題測驗</div>
-
-          <div class="quiz-item">
-            <p>Q1. (第19題) 小葵繞著半徑為 R 公尺的圓形水池「跑一圈」，位移大小與路徑長為何？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(19, 'D', this)">(D) 位移大小 0，路徑長 2πR</button>
-              <button class="quiz-btn" onclick="checkQuiz(19, 'B', this)">(B) 位移大小 2πR，路徑長 2πR（誤把位移當路徑長）</button>
-              <button class="quiz-btn" onclick="checkQuiz(19, 'C', this)">(C) 位移大小 0，路徑長 πR</button>
-            </div>
-            <div class="quiz-feedback" id="fb19"></div>
-          </div>
-
-          <div class="quiz-item">
-            <p>Q2. (題組2) 直徑 200m 的圓形水池，小狗「跑了半圈」，位移大小與路徑長為何？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(20, 'BC', this)">位移大小 200m (直徑) ；路徑長 314m (半圓周)</button>
-              <button class="quiz-btn" onclick="checkQuiz(20, 'W1', this)">位移大小 100m ；路徑長 200m</button>
-              <button class="quiz-btn" onclick="checkQuiz(20, 'W2', this)">位移大小 314m ；路徑長 314m</button>
-            </div>
-            <div class="quiz-feedback" id="fb20"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
-  <script>
-    let currentAngleDeg = 360; // 0 to 360
-    const R_meters = 100; // Radius = 100m (Diameter = 200m)
-    let isRunning = false;
-    let animId = null;
-
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function onAngleChange(val) {
-      currentAngleDeg = parseFloat(val);
-      document.querySelectorAll('.target-btn').forEach(b => b.classList.remove('active'));
-      updateUI();
+    function switchTab(tab) {
+      document.getElementById('tabBtnConcept').classList.toggle('active', tab === 'concept');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabConcept').style.display = (tab === 'concept') ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
     }
 
     function setAngle(deg, el) {
-      currentAngleDeg = deg;
+      if (isRunning) toggleRun();
+      angleDeg = deg;
       document.getElementById('angleSlider').value = deg;
-      document.querySelectorAll('.target-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('sliderVal').innerText = `${deg}°`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
       if (el) el.classList.add('active');
+      highlightTableRow(deg);
       updateUI();
     }
 
+    function onSliderChange(val) {
+      if (isRunning) toggleRun();
+      angleDeg = parseFloat(val);
+      document.getElementById('sliderVal').innerText = `${angleDeg}°`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      highlightTableRow(angleDeg);
+      updateUI();
+    }
+
+    function highlightTableRow(deg) {
+      document.querySelectorAll('.summary-table tr').forEach(r => r.classList.remove('highlight'));
+      if (Math.abs(deg - 360) < 5) {
+        document.getElementById('row360')?.classList.add('highlight');
+      } else if (Math.abs(deg - 180) < 5) {
+        document.getElementById('row180')?.classList.add('highlight');
+      } else if (Math.abs(deg - 90) < 5) {
+        document.getElementById('row90')?.classList.add('highlight');
+      }
+    }
+
+    function resetAngle() {
+      if (isRunning) toggleRun();
+      setAngle(360, document.querySelector('.preset-btn'));
+    }
+
     function toggleRun() {
+      isRunning = !isRunning;
       const btn = document.getElementById('btnRun');
-      if (!isRunning) {
-        if (currentAngleDeg >= 360) currentAngleDeg = 0;
-        isRunning = true;
-        btn.innerText = '⏸ 暫停';
+      if (isRunning) {
+        btn.innerText = '⏸ 暫停旋轉';
         btn.style.background = '#dc2626';
-        loop();
+        if (angleDeg >= 360) angleDeg = 0;
+        runLoop();
       } else {
-        isRunning = false;
-        btn.innerText = '▶ 繼續漫步';
-        btn.style.background = 'var(--primary)';
+        btn.innerText = '▶ 自動旋轉展示';
+        btn.style.background = '#0284c7';
         if (animId) cancelAnimationFrame(animId);
       }
     }
 
-    function resetSim() {
-      isRunning = false;
-      currentAngleDeg = 360;
-      if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRun').innerText = '▶ 小葵起跑漫步';
-      document.getElementById('btnRun').style.background = 'var(--primary)';
-      document.getElementById('angleSlider').value = 360;
-      setAngle(360, document.querySelectorAll('.target-btn')[0]);
-    }
-
-    function loop() {
+    function runLoop() {
       if (!isRunning) return;
-      currentAngleDeg += 1.5;
-      if (currentAngleDeg >= 360) {
-        currentAngleDeg = 360;
-        isRunning = false;
-        document.getElementById('btnRun').innerText = '🔄 重新漫步';
-        document.getElementById('btnRun').style.background = 'var(--primary)';
+      angleDeg += 1.2;
+      if (angleDeg >= 360) {
+        angleDeg = 360;
+        toggleRun();
       }
-      document.getElementById('angleSlider').value = currentAngleDeg;
+      document.getElementById('angleSlider').value = Math.round(angleDeg);
+      document.getElementById('sliderVal').innerText = `${Math.round(angleDeg)}°`;
       updateUI();
-      if (isRunning) animId = requestAnimationFrame(loop);
+      if (isRunning) animId = requestAnimationFrame(runLoop);
     }
 
     function updateUI() {
-      const rad = currentAngleDeg * (Math.PI / 180);
-      const pathM = R_meters * rad;
-      const dispM = 2 * R_meters * Math.sin(rad / 2);
+      const rad = (angleDeg * Math.PI) / 180;
+      const disp = (angleDeg === 360) ? 0 : 2 * R * Math.sin(rad / 2);
+      const path = R * rad;
 
-      document.getElementById('sliderAngleLabel').innerText = `${currentAngleDeg.toFixed(0)}°`;
-      document.getElementById('hudAngle').innerText = `${currentAngleDeg.toFixed(0)}°`;
-      document.getElementById('hudDisp').innerText = `${dispM.toFixed(1)} m (${(dispM / R_meters).toFixed(2)} R)`;
-      document.getElementById('hudPath').innerText = `${pathM.toFixed(1)} m (${(pathM / R_meters).toFixed(2)} R)`;
+      document.getElementById('hudAngle').innerText = `${Math.round(angleDeg)}°`;
+      document.getElementById('hudDisp').innerText = (angleDeg === 360) ? '0.0 m (題19答案)' : `${disp.toFixed(1)} m`;
+      document.getElementById('hudPath').innerText = `${path.toFixed(1)} m`;
 
-      document.getElementById('valDisp').innerText = `${dispM.toFixed(1)} m (${(dispM / R_meters).toFixed(2)} R)`;
-      document.getElementById('valPath').innerText = `${pathM.toFixed(1)} m (${(pathM / R_meters).toFixed(2)} R)`;
+      document.getElementById('valDisp').innerText = `${disp.toFixed(1)} m`;
+      document.getElementById('valPath').innerText = `${path.toFixed(1)} m`;
 
-      document.getElementById('subDisp').innerText = (currentAngleDeg === 360 || currentAngleDeg === 0) ? '起點與終點重合 ➔ 位移為零' : `弦長公式：2R·sin(θ/2) ＝ ${dispM.toFixed(1)}m`;
-      document.getElementById('subPath').innerText = `弧長公式：R·θ ＝ ${pathM.toFixed(1)}m`;
-
-      // Highlight Table Rows
-      ['0', '90', '180', '270', '360'].forEach(deg => {
-        const r = document.getElementById('row' + deg);
-        if (Math.abs(currentAngleDeg - parseInt(deg, 10)) <= 3) r.classList.add('active-row');
-        else r.classList.remove('active-row');
-      });
-
-      draw(rad, dispM, pathM);
-    }
-
-    function draw(rad, dispM, pathM) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
-
-      const cx = cw / 2, cy = ch / 2 + 10;
-      const rPx = 135; // Pixel radius for pond
-
-      // 1. Draw Water Pond
-      ctx.fillStyle = '#0284c7';
-      ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#0369a1'; ctx.lineWidth = 4; ctx.stroke();
-
-      // Water Ripple Effect
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(cx, cy, rPx * 0.65, 0, Math.PI * 2); ctx.stroke();
-      ctx.beginPath(); ctx.arc(cx, cy, rPx * 0.35, 0, Math.PI * 2); ctx.stroke();
-
-      // Center Fountain / Label
-      ctx.fillStyle = '#bae6fd';
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.textAlign = 'center';
-      ctx.fillText('⛲ 圓形水池', cx, cy - 8);
-      ctx.font = '10px Outfit';
-      ctx.fillText(`R = ${R_meters}m (直徑 200m)`, cx, cy + 10);
-
-      // Track Outer Border
-      ctx.strokeStyle = '#15803d';
-      ctx.lineWidth = 16;
-      ctx.beginPath(); ctx.arc(cx, cy, rPx + 10, 0, Math.PI * 2); ctx.stroke();
-
-      // Start Point: Top (angle = -Math.PI / 2)
-      const startAngle = -Math.PI / 2;
-      const startPxX = cx + rPx * Math.cos(startAngle);
-      const startPxY = cy + rPx * Math.sin(startAngle);
-
-      // Current Runner Angle: startAngle + rad (Clockwise)
-      const currentAngle = startAngle + rad;
-      const runnerPxX = cx + rPx * Math.cos(currentAngle);
-      const runnerPxY = cy + rPx * Math.sin(currentAngle);
-
-      // 2. Draw Purple Path Arc (路徑長 S)
-      if (currentAngleDeg > 0) {
-        ctx.strokeStyle = '#a855f7';
-        ctx.lineWidth = 6;
-        ctx.beginPath();
-        ctx.arc(cx, cy, rPx, startAngle, currentAngle, false);
-        ctx.stroke();
+      if (angleDeg === 360) {
+        document.getElementById('subDisp').innerHTML = '起點與終點重合 ➔ \\( \\Delta \\vec{x} = 0 \\)';
+        document.getElementById('subPath').innerHTML = '\\( S = 2\\pi R \\approx 628.3\\text{ m} \\)';
+      } else if (Math.abs(angleDeg - 180) < 1) {
+        document.getElementById('subDisp').innerHTML = '直徑距離 ➔ \\( |\\Delta \\vec{x}| = 2R = 200\\text{ m} \\)';
+        document.getElementById('subPath').innerHTML = '\\( S = \\pi R \\approx 314.2\\text{ m} \\)';
+      } else {
+        document.getElementById('subDisp').innerHTML = `弦長 \\( 2R \\sin(\\theta/2) = ${disp.toFixed(1)}\\text{ m} \\)`;
+        document.getElementById('subPath').innerHTML = `弧長 \\( R \\cdot \\theta_{\\text{rad}} = ${path.toFixed(1)}\\text{ m} \\)`;
       }
 
-      // 3. Draw Red Straight Displacement Vector (位移 Δx)
-      if (currentAngleDeg > 0 && currentAngleDeg < 360) {
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 3.5;
-        ctx.beginPath(); ctx.moveTo(startPxX, startPxY); ctx.lineTo(runnerPxX, runnerPxY); ctx.stroke();
+      if (window.triggerMathRender) triggerMathRender();
+      draw(rad, disp, path);
+    }
 
-        // Arrow head on Displacement vector
-        const angleDisp = Math.atan2(runnerPxY - startPxY, runnerPxX - startPxX);
-        ctx.fillStyle = '#ef4444';
+    function draw(rad, disp, path) {
+      const rect = container.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      if (!cw || !ch) return;
+
+      ctx.clearRect(0, 0, cw, ch);
+
+      // Crisp White Canvas Background for Back-Row Visibility
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
+
+      const cx = cw / 2;
+      const cy = ch / 2 + 10;
+      const visualR = Math.min(cw * 0.36, ch * 0.36);
+
+      // 1. Water pond filled circle
+      ctx.fillStyle = '#e0f2fe';
+      ctx.beginPath();
+      ctx.arc(cx, cy, visualR, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Pond border (track)
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, visualR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Center mark & Radius indicator
+      ctx.fillStyle = '#64748b';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Dotted radius line to north
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx, cy - visualR);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#334155';
+      ctx.font = '900 14px Outfit';
+      ctx.textAlign = 'center';
+      ctx.fillText('R = 100m', cx + 28, cy - visualR / 2);
+
+      // Start Point S (East, theta=0)
+      const startX = cx + visualR;
+      const startY = cy;
+
+      // 2. Path Arc (Purple)
+      ctx.strokeStyle = '#7e22ce';
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.arc(cx, cy, visualR, 0, rad, false);
+      ctx.stroke();
+
+      // Current Runner Point P
+      const curX = cx + visualR * Math.cos(rad);
+      const curY = cy + visualR * Math.sin(rad);
+
+      // 3. Displacement Chord (Red arrow from Start S to P)
+      if (angleDeg > 2 && angleDeg < 358) {
+        ctx.strokeStyle = '#dc2626';
+        ctx.lineWidth = 5;
         ctx.beginPath();
-        ctx.moveTo(runnerPxX, runnerPxY);
-        ctx.lineTo(runnerPxX - 12 * Math.cos(angleDisp - Math.PI / 6), runnerPxY - 12 * Math.sin(angleDisp - Math.PI / 6));
-        ctx.lineTo(runnerPxX - 12 * Math.cos(angleDisp + Math.PI / 6), runnerPxY - 12 * Math.sin(angleDisp + Math.PI / 6));
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+
+        // Arrowhead at curX, curY
+        const arrowAngle = Math.atan2(curY - startY, curX - startX);
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.moveTo(curX, curY);
+        ctx.lineTo(curX - 12 * Math.cos(arrowAngle - 0.4), curY - 12 * Math.sin(arrowAngle - 0.4));
+        ctx.lineTo(curX - 12 * Math.cos(arrowAngle + 0.4), curY - 12 * Math.sin(arrowAngle + 0.4));
         ctx.fill();
 
-        // Midpoint Displacement Label
-        ctx.fillStyle = '#f87171';
-        ctx.font = 'bold 11px Noto Sans TC';
-        ctx.textAlign = 'center';
-        ctx.fillText(`🔴 位移 = ${dispM.toFixed(0)}m`, (startPxX + runnerPxX) / 2 + 15, (startPxY + runnerPxY) / 2);
+        // Chord label
+        const midX = (startX + curX) / 2;
+        const midY = (startY + curY) / 2;
+        ctx.fillStyle = '#b91c1c';
+        ctx.font = '900 15px Outfit';
+        ctx.fillText(`位移弦長 |Δx| = ${disp.toFixed(0)}m`, midX, midY - 10);
       }
 
-      // 4. Start Point Marker (Green Flag)
-      ctx.fillStyle = '#22c55e';
-      ctx.beginPath(); ctx.arc(startPxX, startPxY, 7, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+      // Start Point Pin (Gold)
+      ctx.fillStyle = '#d97706';
+      ctx.beginPath();
+      ctx.arc(startX, startY, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
 
-      ctx.fillStyle = '#fde047';
-      ctx.font = 'bold 12px Noto Sans TC';
-      ctx.textAlign = 'center';
-      ctx.fillText('🚩 起點', startPxX, startPxY - 14);
+      ctx.fillStyle = '#b45309';
+      ctx.font = '900 14px Noto Sans TC';
+      ctx.textAlign = 'left';
+      ctx.fillText('🚩 起點 S (0°)', startX + 10, startY + 4);
 
-      // 5. Runner Avatar (小葵 👧)
-      ctx.font = '28px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('👧', runnerPxX, runnerPxY + 10);
+      // Runner Pin (Blue)
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath();
+      ctx.arc(curX, curY, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#0369a1';
+      ctx.font = '900 14px Noto Sans TC';
+      ctx.textAlign = (curX >= cx) ? 'left' : 'right';
+      const offset = (curX >= cx) ? 12 : -12;
+      ctx.fillText(`🏃 小葵 (${Math.round(angleDeg)}°)`, curX + offset, curY - 10);
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+    function checkQuiz(qNum, choice, btn) {
+      const fb = document.getElementById(`fb${qNum}`);
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        b.disabled = true;
+      });
 
       if (qNum === 19) {
-        if (ans === 'D') {
-          el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>跑一整圈回到起點，起訖點重合 ➔ <strong>位移大小 ＝ 0</strong>；跑過一整圈圓周 ➔ <strong>路徑長 ＝ 2πR</strong>，故選 (D)！';
-          setAngle(360, document.querySelectorAll('.target-btn')[0]);
+        if (choice === 'D') {
+          btn.classList.add('correct');
+          fb.className = 'quiz-feedback show correct-fb';
+          fb.innerHTML = '🎉 答對了！跑了一整圈回到原點，位置完全沒有改變，因此「位移＝0」！';
         } else {
-          el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>小心陷阱！</strong> 跑一整圈回到原點，起點等於終點，位移必定為 0；路徑長才是 2πR（選 D）！';
+          btn.classList.add('wrong');
+          fb.className = 'quiz-feedback show wrong-fb';
+          fb.innerHTML = '❌ 答錯了！位移是起點到終點的直線距離，繞一圈回到原點位移必為 0（選 D）。';
         }
-      } else if (qNum === 20) {
-        if (ans === 'BC') {
-          el.classList.add('correct');
-          fb.style.color = 'var(--success)';
-          fb.innerHTML = '✅ <strong>完全正確！</strong><br>跑半圈時：<br>① 位移大小 ＝ 圓直徑 ＝ <strong>200 公尺</strong>！<br>② 路徑長 ＝ 半圓周長 ＝ \( \pi \times 100 \approx \mathbf{314\text{ 公尺}} \)！';
-          setAngle(180, document.querySelectorAll('.target-btn')[1]);
+      } else if (qNum === 2) {
+        if (choice === 'A') {
+          btn.classList.add('correct');
+          fb.className = 'quiz-feedback show correct-fb';
+          fb.innerHTML = '🎉 答對了！跑半圈到達正對面，直線位移為直徑 \\( 2R = 200\\text{m} \\)；路徑長為半圓周 \\( \\pi R \\approx 314\\text{m} \\)！';
         } else {
-          el.classList.add('wrong');
-          fb.style.color = 'var(--warn)';
-          fb.innerHTML = '❌ <strong>不對喔！</strong> 跑半圈的位移是直徑 200m，路徑長是半圓周 314m！';
+          btn.classList.add('wrong');
+          fb.className = 'quiz-feedback show wrong-fb';
+          fb.innerHTML = '❌ 答錯了！位移看直線直徑 \\( 2R = 200\\text{m} \\)，路徑長看弧長 \\( \\pi R \\approx 314\\text{m} \\)。';
         }
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      setAngle(360, document.querySelectorAll('.target-btn')[0]);
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 250);
     });
   </script>
-
-  
-
 </body>
 </html>

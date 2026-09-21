@@ -3,392 +3,552 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國中自然 3上 · A、B 雙車追逐 x-t 領先與交會沙盒：t=0 A車在前方 (綜合卷第6頁第13題)</title>
+  <title>國中自然 3上 · A、B 雙車追逐 x-t 領先與交會沙盒：t=0 A車在前方 (綜合卷第13題)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
   <style>
     :root {
-      --primary: #2563eb;       /* Royal Blue */
+      --primary: #2563eb;
       --primary-dark: #1d4ed8;
-      --car-a: #ef4444;         /* Car A (Red - Constant Speed) */
-      --car-b: #0284c7;         /* Car B (Blue - Accelerating) */
-      --match-gold: #f59e0b;
-      --bg: #eff6ff;
+      --primary-light: #eff6ff;
+      --car-a: #dc2626;
+      --car-b: #0284c7;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #bfdbfe;
+      --text-muted: #475569;
+      --border: #cbd5e1;
       --success: #16a34a;
       --warn: #dc2626;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(37, 99, 235, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(37, 99, 235, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100vh;
+      overflow: hidden;
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient, #f0f7ff); background-attachment: fixed;
+      background: #f1f5f9;
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* 38px Header */
     header {
+      height: 38px;
       background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
       color: white;
-      padding: 1.25rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 50;
     }
 
-    .header-content {
-      max-width: 1320px;
-      margin: 0 auto;
+    .header-left {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
-    .title-group h1 {
-      font-size: 1.35rem;
-      font-weight: 900;
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .nav-back-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.15rem 0.6rem;
+      padding: 0.1rem 0.45rem;
       border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .header-right {
       font-size: 0.75rem;
-      font-weight: 700;
+      opacity: 0.95;
+      font-weight: 500;
+      display: flex;
+      gap: 0.8rem;
     }
 
-    .title-group p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 0.2rem;
-    }
-
+    /* Main Container */
     main {
-      max-width: 1320px;
-      margin: 1.25rem auto;
-      padding: 0 1.25rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Common Card */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
- flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #dbeafe;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Main Grid */
-    .main-grid {
+      height: calc(100vh - 38px);
+      padding: 0.45rem 0.65rem;
       display: grid;
       grid-template-columns: 1.25fr 1fr;
-      gap: 1.25rem;
+      gap: 0.55rem;
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Left Column: Canvas + Controls */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* Canvas Stage Box */
-    .stage-box {
-      background: #0f172a;
-      border: 2px solid #334155;
+    .canvas-container {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
       border-radius: var(--radius-md);
       position: relative;
+      box-shadow: var(--shadow-sm);
+      min-height: 0;
       overflow: hidden;
-      margin-bottom: 1rem;
     }
 
     .stage-hud {
       position: absolute;
-      top: 0.75rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
       backdrop-filter: blur(4px);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     canvas.stage-canvas {
       display: block;
       width: 100%;
-      height: 480px;
+      height: 100%;
     }
 
     /* Controls Panel */
     .control-panel {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
+      padding: 0.45rem 0.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .slider-row {
+    .preset-row {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .slider-row label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      min-width: 100px;
-    }
-
-    .slider-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--primary);
-    }
-
-    .btn-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
+      flex-wrap: wrap;
     }
 
-    .btn-primary {
-      background: var(--primary);
+    .preset-btn {
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.74rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: #334155;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover { background: #eff6ff; border-color: #2563eb; }
+    .preset-btn.active {
+      background: #2563eb;
       color: white;
+      border-color: #1d4ed8;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
+    .btn-action {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-action.primary { background: #2563eb; color: white; border-color: #1d4ed8; }
+    .btn-action.primary:hover { background: #1d4ed8; }
+    .btn-action.secondary { background: #f1f5f9; color: #334155; }
+    .btn-action.secondary:hover { background: #e2e8f0; }
+
+    .slider-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .slider-box input[type="range"] {
+      flex: 1;
+      accent-color: #2563eb;
+      cursor: pointer;
     }
 
-    .btn-secondary:hover {
-      background: #cbd5e1;
+    /* Right Column: 3 Telemetry Cards + Tabs */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
     }
 
-    /* 3 Pillars Telemetry Grid */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.45rem;
     }
 
-    .t-card {
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 2px solid var(--border);
+    .telemetry-card {
       background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 0.38rem 0.5rem;
+      display: flex;
+      flex-direction: column;
       text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .telemetry-card.cara { border-top: 3.5px solid #dc2626; }
+    .telemetry-card.carb { border-top: 3.5px solid #0284c7; }
+    .telemetry-card.state { border-top: 3.5px solid #d97706; }
+
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
     }
 
-    .t-card.cara { border-color: #fecaca; background: #fef2f2; }
-    .t-card.carb { border-color: #bae6fd; background: #f0f9ff; }
-    .t-card.state { border-color: #fde68a; background: #fffbeb; }
+    .card-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin: 0.15rem 0;
+    }
+    .telemetry-card.cara .card-val { color: #dc2626; }
+    .telemetry-card.carb .card-val { color: #0284c7; }
+    .telemetry-card.state .card-val { color: #d97706; }
 
-    .t-card h4 {
+    .card-sub {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Tab Container */
+    .tab-container {
+      flex: 1;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.38rem 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-btn.active {
+      color: #1d4ed8;
+      background: #ffffff;
+      border-bottom-color: #2563eb;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
       font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .concept-card {
+      background: #f8fafc;
+      border-left: 3.5px solid #2563eb;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .concept-card h4 {
+      font-size: 0.78rem;
+      color: #1d4ed8;
+      font-weight: 800;
       margin-bottom: 0.2rem;
     }
-
-    .t-card.cara h4 { color: #dc2626; }
-    .t-card.carb h4 { color: #0284c7; }
-    .t-card.state h4 { color: #b45309; }
-
-    .t-val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 900;
+    .concept-card ul {
+      padding-left: 1.1rem;
+      font-size: 0.76rem;
+      color: #334155;
     }
 
-    .t-card.cara .t-val { color: #dc2626; }
-    .t-card.carb .t-val { color: #0284c7; }
-    .t-card.state .t-val { color: #b45309; }
-
-    .t-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Options Verification Box */
-    .option-box {
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .opt-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    /* Core Concept Callout */
-    .concept-box {
-      background: #eff6ff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .concept-box strong {
-      color: var(--primary-dark);
-    }
-
-    /* Quiz Card */
-    .quiz-card {
-      background: #fff8e6;
-      border: 1.5px solid #ffd166;
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
+    /* Quiz Tab styling */
     .quiz-title {
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      color: #b7791f;
-      margin-bottom: 0.75rem;
+      color: #b45309;
+      margin-bottom: 0.4rem;
+      background: #fef3c7;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #fde68a;
     }
 
-    .quiz-item {
-      background: white;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      margin-bottom: 0.6rem;
+    .quiz-q {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .quiz-btn {
-      padding: 0.45rem 0.8rem;
-      border: 1px solid #cbd5e1;
+      padding: 0.32rem 0.55rem;
+      border: 1.5px solid #cbd5e1;
       border-radius: var(--radius-sm);
-      background: #f8fafc;
-      font-size: 0.85rem;
+      background: #ffffff;
+      font-size: 0.75rem;
       font-weight: 700;
+      color: #1e293b;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
-
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
     .quiz-btn.correct { background: #16a34a; color: white; border-color: #15803d; }
     .quiz-btn.wrong { background: #dc2626; color: white; border-color: #b91c1c; }
 
     .quiz-feedback {
-      font-size: 0.85rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
       display: none;
     }
-
     .quiz-feedback.show { display: block; }
-
-    footer {
-      background: #e2e8f0;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
+    .quiz-feedback.correct-fb { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .quiz-feedback.wrong-fb { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
-  
-  
-  
-  
-  <!-- KaTeX for formula rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+</head>
+<body>
+
+  <!-- 38px Header -->
+  <header>
+    <div class="header-left">
+      <a href="chapter1-hub.html" class="nav-back-btn">❮ 回目錄</a>
+      <h1>
+        <span>🚗 A、B 雙車追逐 x-t 領先與交會沙盒：t=0 A車在前方</span>
+        <span class="badge">全章綜合卷 03 卷第13題</span>
+      </h1>
+    </div>
+    <div class="header-right">
+      <span>📐 t=0 時：\( x_A(0) = 20\text{m} > x_B(0) = 0 \implies \text{A 車在 B 車前方} \)</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main>
+    <!-- Left Column: Canvas + Controls -->
+    <div class="left-col">
+      <div class="canvas-container" id="canvasBox">
+        <div class="stage-hud">
+          <span>⏱️ 時間：<strong id="hudTime" style="color: #2563eb; font-family: 'Outfit';">0.0 秒</strong></span>
+          <span>🔴 A 車：<strong id="hudPosA" style="color: #dc2626; font-family: 'Outfit';">20.0 m (領先)</strong></span>
+          <span>🔵 B 車：<strong id="hudPosB" style="color: #0284c7; font-family: 'Outfit';">0.0 m (原點)</strong></span>
+          <span>🎯 領先狀態：<strong id="hudState" style="color: #d97706; font-family: 'Outfit';">A 車在 B 車前方 20m (選B)</strong></span>
+        </div>
+        <canvas id="stageCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="control-panel">
+        <div class="preset-row">
+          <span style="font-size: 0.72rem; font-weight: 800; color: #1d4ed8;">關鍵時刻：</span>
+          <button class="preset-btn active" onclick="setTime(0.0, this)">🏆 t=0 起跑狀態 (A在20m · B在0m · 題13正解)</button>
+          <button class="preset-btn" onclick="setTime(2.0, this)">⚡ t=2s 速度相等時刻 (切線斜率平行)</button>
+          <button class="preset-btn" onclick="setTime(4.0, this)">⚡ t=4s 兩車交會超車 (x-t 交點)</button>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-action primary" id="btnRace" onclick="toggleRace()">▶ 雙車追逐動畫</button>
+          <button class="btn-action secondary" onclick="resetSim()">🔄 重置</button>
+          <div class="slider-box">
+            <span>時間 \( t \)：</span>
+            <input type="range" id="timeSlider" min="0" max="5.5" step="0.05" value="0" oninput="onSliderChange(this.value)">
+            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; width: 40px;">0.0s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: 3 Telemetry Cards + Tabs -->
+    <div class="right-col">
+      <!-- 3 Telemetry Cards -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card cara">
+          <div class="card-label">🔴 A 車位置 \( x_A \)</div>
+          <div class="card-val" id="valA">20.0 m</div>
+          <div class="card-sub" id="subA">等速度 \( v=10\text{ m/s} \)</div>
+        </div>
+
+        <div class="telemetry-card carb">
+          <div class="card-label">🔵 B 車位置 \( x_B \)</div>
+          <div class="card-val" id="valB">0.0 m</div>
+          <div class="card-sub" id="subB">初速 0 · 加速追趕</div>
+        </div>
+
+        <div class="telemetry-card state">
+          <div class="card-label">🟡 相對領先差距</div>
+          <div class="card-val" id="valGap">+20.0 m</div>
+          <div class="card-sub" id="subGap">A 車領先 B 車</div>
+        </div>
+      </div>
+
+      <!-- Tab Container -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabBtnConcept" onclick="switchTab('concept')">📖 核心觀念與 x-t 圖線型解析</button>
+          <button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 原題即測即評 (第13題)</button>
+        </div>
+
+        <!-- Concept Tab -->
+        <div class="tab-content" id="tabConcept">
+          <div class="concept-card">
+            <h4>💡 x-t 圖三大幾何特徵判讀</h4>
+            <ul>
+              <li><strong>縱軸截距（\( t = 0 \) 時的位置）：</strong>
+                <ul>
+                  <li>A 車直線與縱軸交於 \( x > 0 \)（例如 20m），表示出發時<strong>A 車已經在前方</strong>；</li>
+                  <li>B 車曲線從原點 \( (0, 0) \) 出發。故在 \( t = 0 \) 時，<strong>A 車在 B 車前方（選 B）！</strong></li>
+                </ul>
+              </li>
+              <li><strong>切線斜率（即時速度）：</strong>A 車斜直線斜率固定（等速）；B 車曲線越來越陡（加速）。</li>
+              <li><strong>交點（\( x_A = x_B \)）：</strong>兩車曲線相交處，代表在同一時刻到達同一位置，也就是<strong>相遇或超車</strong>。</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>⚠️ 常見迷思突破</h4>
+            <ul>
+              <li>x-t 圖交點是「相遇（位置相同）」，<strong>不是速度相等</strong>！速度相等發生在兩線「切線斜率平行」的時刻。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="tabQuiz" style="display: none;">
+          <div class="quiz-title">📝 全章綜合卷 03 卷第 13 題</div>
+          <div class="quiz-q">
+            A、B 兩車在同一直線上行駛，其位置與時間關係圖（x-t 圖）如附圖所示。下列關於此圖之敘述，何者正確？
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(13, 'B', this)">(B) 在 t＝0 秒時，A 車在 B 車的前方（由 x 截距可知 A 車初位置大於 B 車）</button>
+            <button class="quiz-btn" onclick="checkQuiz(13, 'A', this)">(A) 在 t＝0 秒時，兩車在同一位置出發</button>
+            <button class="quiz-btn" onclick="checkQuiz(13, 'C', this)">(C) 兩車交會點處兩車的速度必相等（交會是位置相同，非速度相等）</button>
+            <button class="quiz-btn" onclick="checkQuiz(13, 'D', this)">(D) B 車全程作等速度運動</button>
+          </div>
+          <div class="quiz-feedback" id="fb13"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <script>
+    let curTime = 0.0; // 0 to 5.5s
+    let isRacing = false;
+    let animId = null;
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+
+    function getCarPositions(t) {
+      // A: constant speed x = 20 + 10t
+      const posA = 20 + 10 * t;
+      // B: accelerating x = 2.5 * t^2
+      const posB = 2.5 * t * t;
+      return { a: posA, b: posB };
+    }
+
+    function resizeCanvas() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      updateUI();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
     window.triggerMathRender = function() {
       if (typeof renderMathInElement === 'function') {
         renderMathInElement(document.body, {
@@ -401,381 +561,293 @@
         });
       }
     };
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(triggerMathRender, 100);
-      setTimeout(triggerMathRender, 500);
-      setTimeout(triggerMathRender, 1200);
-    });
-  </script>
-</head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="title-group">
-        <h1>
-          <span>🚗 A、B 雙車追逐 x-t 領先與交會沙盒：t=0 A車在前方</span>
-          <span class="badge">國中自然 3上 · 全章綜合卷 03 卷第13題</span>
-        </h1>
-        <p>t=0 時 A 車在前方 x₀>0，B 車自原點加速起跑 ➔ t=0 時 A 車在 B 車前方 (選B)；t₁ 斜率平行速率相等；t₂ 兩線相交交會超車！</p>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main>
-    <div class="main-grid">
-      
-      <!-- Left Column: Race Track & x-t Graph Stage -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🏎️ 直線公路雙車追逐 ＋ 下方 x-t 圖切線斜率連動</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" id="btnRace" onclick="toggleRace()">▶ 雙車同步起跑</button>
-            <button class="btn btn-secondary" onclick="resetSim()">🔄 重置</button>
-          </div>
-        </div>
-
-        <div class="stage-box">
-          <div class="stage-hud">
-            <span>⏱️ 時間：<strong id="hudTime" style="color: #fde047; font-family: 'Outfit';">0.0 秒</strong></span>
-            <span>🔴 A 車位置：<strong id="hudPosA" style="color: #f87171; font-family: 'Outfit';">20.0 m (領先)</strong></span>
-            <span>🔵 B 車位置：<strong id="hudPosB" style="color: #38bdf8; font-family: 'Outfit';">0.0 m (原點)</strong></span>
-          </div>
-          <canvas id="stageCanvas" class="stage-canvas" width="650" height="480"></canvas>
-        </div>
-
-        <!-- Controls Panel -->
-        <div class="control-panel">
-          <div class="slider-row">
-            <label for="timeSlider">⏱️ 時間拖曳條：</label>
-            <input type="range" id="timeSlider" min="0" max="10" step="0.1" value="0" oninput="onSliderChange(this.value)">
-            <span id="sliderVal" style="font-family: 'Outfit'; font-weight: 800; min-width: 50px;">0.0s</span>
-          </div>
-          <div style="font-size: 0.82rem; color: #334155; line-height: 1.5;">
-            💡 <strong>x-t 圖四大關鍵節點：</strong><br>
-            • <strong>\( t = 0 \)：</strong>A 車位置 \( x_A(0) = 20\text{m} \)，B 車 \( x_B(0) = 0\text{m} \) ➔ <strong>A 車在 B 車前方（選 B 正解）</strong>。<br>
-            • <strong>\( t_1 \)（約 4 秒）：</strong>兩曲線切線斜率平行 ➔ <strong>兩車速率相等（\( v_A = v_B \)）</strong>。<br>
-            • <strong>\( t_2 \)（約 8 秒）：</strong>兩曲線相交重合 ➔ <strong>兩車相遇（位置相等，B 車超車）</strong>！
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: 3 Pillars & Options & Quiz -->
-      <div>
-        
-        <!-- 3 Pillars Telemetry Grid -->
-        <div class="telemetry-grid">
-          <!-- Car A -->
-          <div class="t-card cara">
-            <h4>🔴 A 車 (等速度直線)</h4>
-            <div class="t-val" id="valA">20.0 m</div>
-            <div class="t-sub">斜率固定 \( v_A = 5\text{m/s} \)</div>
-          </div>
-
-          <!-- Car B -->
-          <div class="t-card carb">
-            <h4>🔵 B 車 (等加速曲線)</h4>
-            <div class="t-val" id="valB">0.0 m</div>
-            <div class="t-sub">切線斜率越來越陡</div>
-          </div>
-
-          <!-- Relative Status -->
-          <div class="t-card state">
-            <h4>🏆 相對狀態</h4>
-            <div class="t-val" id="valState">A 車領先 20m</div>
-            <div class="t-sub" id="subState">t=0 時 A 車在前方</div>
-          </div>
-        </div>
-
-        <!-- Options Verification Box -->
-        <div class="option-box">
-          <div class="opt-title">📐 原題四個選項全要素檢驗表：</div>
-          <ul style="font-size: 0.82rem; line-height: 1.5; padding-left: 1.1rem; color: #334155;">
-            <li><strong>(A) 錯誤：</strong>兩車圖形皆從縱軸 \( t=0 \) 開始，代表<strong>兩車同時出發</strong>。</li>
-            <li><strong>(B) 正確：在 \( t=0 \) 時，A 車在 B 車前方</strong>（\( x_A(0) > 0 \)，B 車在原點）。</li>
-            <li><strong>(C) 錯誤：</strong>在 \( t_2 \) 時是<strong>「位置相等（相遇）」</strong>，此時 B 車斜率明顯大於 A 車（速率較快）。</li>
-            <li><strong>(D) 錯誤：</strong>在 \( t_1 \)（速率相等點）之後，B 車的速率就已經大於 A 車了。</li>
-          </ul>
-        </div>
-
-        <!-- Core Concept Callout -->
-        <div class="concept-box">
-          <strong>📖 x-t 圖常見考點辨析：</strong>
-          <ul style="padding-left: 1.1rem; margin-top: 0.25rem;">
-            <li><strong>曲線交點（\( t_2 \)）：</strong>代表「位置相同（相遇交會）」，不代表速率相同！</li>
-            <li><strong>斜率相同處（\( t_1 \)）：</strong>代表「瞬時速度相同」，此時往往也是兩車距離的極值點！</li>
-          </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-card">
-          <div class="quiz-title">📝 單元綜合卷第 13 題原題測驗</div>
-
-          <div class="quiz-item">
-            <p>若 A、B 兩車的 x-t 圖如圖所示，下列敘述何者「正確」？</p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="checkQuiz(13, 'B', this)">(B) 在 t＝0 時，A 車在 B 車前方（A 車初位置在正坐標，B 車在原點）</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'A', this)">(A) A 車比 B 車先出發</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'C', this)">(C) 在 t2 時，B 和 A 車的速率相等</button>
-              <button class="quiz-btn" onclick="checkQuiz(13, 'D', this)">(D) 0～t1 期間 B 車速率比 A 小，t2 後 B 車速率才大於 A 車</button>
-            </div>
-            <div class="quiz-feedback" id="fb13"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>自然 · 115 國中自然 3 上單元課次卷配套互動教具</p>
-  </footer>
-
-  <script>
-    let simTime = 0; // 0 to 10s
-    let isRunning = false;
-    let animId = null;
-
-    const canvas = document.getElementById('stageCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Model:
-    // Car A: x_A(t) = 20 + 5*t, v_A = 5 m/s
-    // Car B: x_B(t) = 0.625 * t^2, v_B = 1.25 * t
-    // t1 (equal speed): 1.25*t = 5 -> t1 = 4s (v_A = v_B = 5m/s, x_A = 40m, x_B = 10m, gap = 30m)
-    // t2 (catch up): 0.625*t^2 = 20 + 5*t -> 0.625*t^2 - 5*t - 20 = 0 -> t2 = 8s (x_A = x_B = 60m)
-    function getState(t) {
-      const posA = 20.0 + 5.0 * t;
-      const vA = 5.0;
-
-      const posB = 0.625 * t * t;
-      const vB = 1.25 * t;
-
-      return { posA, vA, posB, vB };
+    function switchTab(tab) {
+      document.getElementById('tabBtnConcept').classList.toggle('active', tab === 'concept');
+      document.getElementById('tabBtnQuiz').classList.toggle('active', tab === 'quiz');
+      document.getElementById('tabConcept').style.display = (tab === 'concept') ? 'block' : 'none';
+      document.getElementById('tabQuiz').style.display = (tab === 'quiz') ? 'block' : 'none';
     }
 
-    function onSliderChange(val) {
-      simTime = parseFloat(val);
-      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
+    function setTime(t, el) {
+      if (isRacing) toggleRace();
+      curTime = t;
+      document.getElementById('timeSlider').value = t;
+      document.getElementById('sliderVal').innerText = `${t.toFixed(1)}s`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
       updateUI();
     }
 
+    function onSliderChange(val) {
+      if (isRacing) toggleRace();
+      curTime = parseFloat(val);
+      document.getElementById('sliderVal').innerText = `${curTime.toFixed(1)}s`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      updateUI();
+    }
+
+    function resetSim() {
+      if (isRacing) toggleRace();
+      setTime(0, null);
+    }
+
     function toggleRace() {
+      isRacing = !isRacing;
       const btn = document.getElementById('btnRace');
-      if (!isRunning) {
-        if (simTime >= 10.0) simTime = 0;
-        isRunning = true;
-        btn.innerText = '⏸ 暫停';
+      if (isRacing) {
+        btn.innerText = '⏸ 暫停競速';
         btn.style.background = '#dc2626';
-        loop();
+        if (curTime >= 5.5) curTime = 0;
+        raceLoop();
       } else {
-        isRunning = false;
-        btn.innerText = '▶ 雙車同步起跑';
-        btn.style.background = 'var(--primary)';
+        btn.innerText = '▶ 雙車追逐動畫';
+        btn.style.background = '#2563eb';
         if (animId) cancelAnimationFrame(animId);
       }
     }
 
-    function resetSim() {
-      isRunning = false;
-      simTime = 0;
-      if (animId) cancelAnimationFrame(animId);
-      document.getElementById('btnRace').innerText = '▶ 雙車同步起跑';
-      document.getElementById('btnRace').style.background = 'var(--primary)';
-      document.getElementById('timeSlider').value = 0;
-      document.getElementById('sliderVal').innerText = '0.0s';
-      updateUI();
-    }
-
-    function loop() {
-      if (!isRunning) return;
-      simTime += 0.035;
-      if (simTime >= 10.0) {
-        simTime = 10.0;
-        isRunning = false;
-        document.getElementById('btnRace').innerText = '🔄 重新競逐';
-        document.getElementById('btnRace').style.background = 'var(--primary)';
+    function raceLoop() {
+      if (!isRacing) return;
+      curTime += 0.025;
+      if (curTime >= 5.5) {
+        curTime = 5.5;
+        toggleRace();
       }
-      document.getElementById('timeSlider').value = simTime.toFixed(1);
-      document.getElementById('sliderVal').innerText = `${simTime.toFixed(1)}s`;
+      document.getElementById('timeSlider').value = curTime.toFixed(2);
+      document.getElementById('sliderVal').innerText = `${curTime.toFixed(1)}s`;
       updateUI();
-      if (isRunning) animId = requestAnimationFrame(loop);
+      if (isRacing) animId = requestAnimationFrame(raceLoop);
     }
 
     function updateUI() {
-      const st = getState(simTime);
-      document.getElementById('hudTime').innerText = `${simTime.toFixed(1)} 秒`;
-      document.getElementById('hudPosA').innerText = `${st.posA.toFixed(1)} m`;
-      document.getElementById('hudPosB').innerText = `${st.posB.toFixed(1)} m`;
+      const pos = getCarPositions(curTime);
+      const gap = pos.a - pos.b;
 
-      document.getElementById('valA').innerText = `${st.posA.toFixed(1)} m`;
-      document.getElementById('valB').innerText = `${st.posB.toFixed(1)} m`;
+      document.getElementById('hudTime').innerText = `${curTime.toFixed(1)} 秒`;
+      document.getElementById('hudPosA').innerText = `${pos.a.toFixed(1)} m`;
+      document.getElementById('hudPosB').innerText = `${pos.b.toFixed(1)} m`;
 
-      const gap = st.posA - st.posB;
       let stateStr = '';
-      if (simTime === 0) stateStr = 'A 車在前方 20m (選 B)';
-      else if (Math.abs(simTime - 4.0) < 0.2) stateStr = 't₁ 速率相等 (v=5m/s)';
-      else if (Math.abs(simTime - 8.0) < 0.2) stateStr = 't₂ 相遇交會超車 (60m)';
-      else if (gap > 0) stateStr = `A 車領先 ${gap.toFixed(1)}m`;
-      else stateStr = `B 車反超領先 ${Math.abs(gap).toFixed(1)}m`;
+      if (curTime < 0.05) {
+        stateStr = 't=0 A 車在 B 車前方 20m (選B)';
+      } else if (gap > 0.5) {
+        stateStr = `A 車領先中 (差距 ${gap.toFixed(1)}m)`;
+      } else if (Math.abs(gap) <= 0.5) {
+        stateStr = '兩車交會相遇 (x-t 交點)';
+      } else {
+        stateStr = `B 車已超車領先 (領先 ${(-gap).toFixed(1)}m)`;
+      }
+      document.getElementById('hudState').innerText = stateStr;
 
-      document.getElementById('valState').innerText = stateStr;
+      document.getElementById('valA').innerText = `${pos.a.toFixed(1)} m`;
+      document.getElementById('valB').innerText = `${pos.b.toFixed(1)} m`;
+      document.getElementById('valGap').innerText = (gap >= 0) ? `+${gap.toFixed(1)} m` : `${gap.toFixed(1)} m`;
 
-      draw(st);
+      if (curTime < 0.05) {
+        document.getElementById('subGap').innerText = 'A 車領先 B 車 (考題狀態)';
+      } else if (gap >= 0) {
+        document.getElementById('subGap').innerText = 'A 車在前方';
+      } else {
+        document.getElementById('subGap').innerText = 'B 車在前方';
+      }
+
+      if (window.triggerMathRender) triggerMathRender();
+      draw(pos);
     }
 
-    function draw(st) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cw = canvas.width, ch = canvas.height;
+    function draw(pos) {
+      const rect = container.getBoundingClientRect();
+      const cw = rect.width, ch = rect.height;
+      if (!cw || !ch) return;
 
-      // ==========================================
-      // 1. Top Section: 2 Race Lanes (y: 20 to 140)
-      // ==========================================
-      const laneX1 = 80, laneX2 = cw - 70;
-      const laneH = 45;
-      const laneAY = 25, laneBY = 80;
+      ctx.clearRect(0, 0, cw, ch);
 
-      function toRoadPx(x) { return laneX1 + (x / 80.0) * (laneX2 - laneX1); }
+      // Section 1: 2-Lane Road Track (Top half, height: ch * 0.42)
+      const padX = 40;
+      const trackW = cw - padX * 2;
+      const maxM = 80;
 
-      // Draw Lanes
-      ctx.fillStyle = '#1e293b'; ctx.fillRect(laneX1, laneAY, laneX2 - laneX1, laneH);
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.5; ctx.strokeRect(laneX1, laneAY, laneX2 - laneX1, laneH);
+      function toTrackPx(m) {
+        return padX + (m / maxM) * trackW;
+      }
 
-      ctx.fillStyle = '#0f172a'; ctx.fillRect(laneX1, laneBY, laneX2 - laneX1, laneH);
-      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 1.5; ctx.strokeRect(laneX1, laneBY, laneX2 - laneX1, laneH);
+      // Lane A
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(padX, 48, trackW, 26);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(padX, 48, trackW, 26);
 
-      // Distance Ticks (0, 20, 40, 60, 80m)
-      [0, 20, 40, 60, 80].forEach(d => {
-        const px = toRoadPx(d);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(px, laneAY); ctx.lineTo(px, laneBY + laneH); ctx.stroke();
+      ctx.fillStyle = '#dc2626';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right';
+      ctx.fillText('🔴 A 車', padX - 6, 65);
 
-        ctx.fillStyle = (d === 20 || d === 60) ? '#fde047' : '#64748b';
-        ctx.font = (d === 20 || d === 60) ? 'bold 11px Outfit' : '10px Outfit';
+      // Car A Icon
+      const pxA = toTrackPx(pos.a);
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(pxA - 14, 52, 28, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9px Outfit';
+      ctx.textAlign = 'center';
+      ctx.fillText('A', pxA, 65);
+
+      // Lane B
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(padX, 90, trackW, 26);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(padX, 90, trackW, 26);
+
+      ctx.fillStyle = '#0284c7';
+      ctx.font = 'bold 11px Noto Sans TC';
+      ctx.textAlign = 'right';
+      ctx.fillText('🔵 B 車', padX - 6, 107);
+
+      // Car B Icon
+      const pxB = toTrackPx(pos.b);
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(pxB - 14, 94, 28, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9px Outfit';
+      ctx.textAlign = 'center';
+      ctx.fillText('B', pxB, 107);
+
+      // Distance scale ticks
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1.5;
+      for (let m = 0; m <= 80; m += 20) {
+        const px = toTrackPx(m);
+        ctx.beginPath();
+        ctx.moveTo(px, 116);
+        ctx.lineTo(px, 122);
+        ctx.stroke();
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px Outfit';
         ctx.textAlign = 'center';
-        ctx.fillText(`${d}m`, px, laneBY + laneH + 16);
-      });
+        ctx.fillText(`${m}m`, px, 134);
+      }
 
-      // Lane Labels
-      ctx.fillStyle = '#f87171'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'right';
-      ctx.fillText('🔴 A 車 (等速)', laneX1 - 10, laneAY + 28);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText('🔵 B 車 (加速)', laneX1 - 10, laneBY + 28);
+      // Section 2: x-t Graph (Bottom half)
+      const gx = padX + 20;
+      const gy = 165;
+      const gw = trackW - 30;
+      const gh = ch - gy - 26;
 
-      // Draw Cars
-      const pxA = toRoadPx(st.posA);
-      const pxB = toRoadPx(st.posB);
-
-      ctx.font = '28px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('🚗', pxA, laneAY + 32);
-      ctx.fillText('🏎️', pxB, laneBY + 32);
-
-      // ==========================================
-      // 2. Bottom Section: x-t Graph (y: 170 to 450)
-      // ==========================================
-      const gx1 = 80, gx2 = cw - 70;
-      const gyZero = 440, gyTop = 180;
-
-      function mapX(t) { return gx1 + (t / 10.0) * (gx2 - gx1); }
-      function mapY(x) { return gyZero - (x / 80.0) * (gyZero - gyTop); }
-
-      // Grid
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.35)'; ctx.lineWidth = 1;
-      [4, 8, 10].forEach(t => {
-        const px = mapX(t);
-        ctx.beginPath(); ctx.moveTo(px, gyTop); ctx.lineTo(px, gyZero); ctx.stroke();
-        ctx.fillStyle = (t === 4 || t === 8) ? '#fde047' : '#64748b';
-        ctx.font = (t === 4 || t === 8) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'center';
-        ctx.fillText(t === 4 ? 't₁(4s)' : (t === 8 ? 't₂(8s)' : `${t}s`), px, gyZero + 16);
-      });
-      [0, 20, 40, 60].forEach(x => {
-        const py = mapY(x);
-        ctx.beginPath(); ctx.moveTo(gx1, py); ctx.lineTo(gx2, py); ctx.stroke();
-        ctx.fillStyle = (x === 20 || x === 60) ? '#fde047' : '#64748b';
-        ctx.font = (x === 20 || x === 60) ? 'bold 11px Outfit' : '10px Outfit';
-        ctx.textAlign = 'right';
-        ctx.fillText(`${x}m`, gx1 - 8, py + 4);
-      });
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(gx, gy, gw, gh);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(gx, gy, gw, gh);
 
       // Axes
-      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(gx1, gyTop - 10); ctx.lineTo(gx1, gyZero); ctx.lineTo(gx2 + 20, gyZero); ctx.stroke();
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 11px Noto Sans TC';
-      ctx.textAlign = 'right'; ctx.fillText('位置 x (m)', gx1 - 8, gyTop + 5);
-      ctx.textAlign = 'center'; ctx.fillText('時間 t (秒)', gx2 + 10, gyZero + 32);
-
-      // Line A (Red Straight Line): (0, 20) to (10, 70)
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3.5;
-      ctx.beginPath(); ctx.moveTo(mapX(0), mapY(20)); ctx.lineTo(mapX(10), mapY(70)); ctx.stroke();
-
-      // Curve B (Blue Parabola): x_B(t) = 0.625 * t^2
-      ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 3.5;
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      for (let t = 0; t <= 10; t += 0.2) {
-        const x = 0.625 * t * t;
-        if (t === 0) ctx.moveTo(mapX(t), mapY(x));
-        else ctx.lineTo(mapX(t), mapY(x));
+      ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + gh);
+      ctx.lineTo(gx + gw, gy + gh);
+      ctx.stroke();
+
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 10px Outfit';
+      ctx.textAlign = 'right';
+      ctx.fillText('x (公尺)', gx - 4, gy + 12);
+      ctx.textAlign = 'center';
+      ctx.fillText('t (秒)', gx + gw / 2, gy + gh + 16);
+
+      function toGraphPx(t, x) {
+        return {
+          x: gx + (t / 5.5) * gw,
+          y: gy + gh - (x / 80) * gh
+        };
+      }
+
+      // Full reference curve A (straight line from 20 to 75)
+      ctx.strokeStyle = '#fca5a5';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      const pA0 = toGraphPx(0, 20), pA5 = toGraphPx(5.5, 20 + 10 * 5.5);
+      ctx.moveTo(pA0.x, pA0.y); ctx.lineTo(pA5.x, pA5.y);
+      ctx.stroke();
+
+      // Full reference curve B (parabola from 0 to 75.6)
+      ctx.strokeStyle = '#bae6fd';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let t = 0; t <= 5.5; t += 0.1) {
+        const pt = toGraphPx(t, 2.5 * t * t);
+        if (t === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y);
       }
       ctx.stroke();
 
-      // Highlight Key Points:
-      // Point 1: t = 0, A at (0, 20m)
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(mapX(0), mapY(20), 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fde047'; ctx.font = 'bold 11px Noto Sans TC'; ctx.textAlign = 'left';
-      ctx.fillText('✨ t=0 A車在前方 (選 B)', mapX(0) + 10, mapY(20) + 4);
+      // Active curve A up to curTime
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(pA0.x, pA0.y);
+      const curA = toGraphPx(curTime, pos.a);
+      ctx.lineTo(curA.x, curA.y);
+      ctx.stroke();
 
-      // Point 2: t1 = 4s (Parallel Slopes)
-      ctx.fillStyle = '#34d399';
-      ctx.beginPath(); ctx.arc(mapX(4), mapY(40), 5, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(mapX(4), mapY(10), 5, 0, Math.PI * 2); ctx.fill();
+      // Active curve B up to curTime
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      for (let t = 0; t <= curTime; t += 0.05) {
+        const pt = toGraphPx(t, 2.5 * t * t);
+        if (t === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
 
-      // Point 3: t2 = 8s (Intersection / Catch Up)
-      ctx.fillStyle = '#fde047';
-      ctx.beginPath(); ctx.arc(mapX(8), mapY(60), 7, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
-      ctx.fillText('🏁 t₂ 雙車相遇交會', mapX(8) - 45, mapY(60) - 12);
+      // Intercept mark at t=0
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.arc(pA0.x, pA0.y, 5, 0, Math.PI * 2);
+      ctx.fill();
 
-      // Current Time Dynamic Line
-      const curPx = mapX(simTime);
-      ctx.strokeStyle = 'rgba(253, 224, 71, 0.6)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(curPx, gyTop); ctx.lineTo(curPx, gyZero); ctx.stroke();
+      ctx.fillStyle = '#b91c1c';
+      ctx.font = 'bold 10px Outfit';
+      ctx.textAlign = 'right';
+      ctx.fillText('A(0)=20m', pA0.x - 6, pA0.y + 3);
+
+      // Current Time Vertical Dash
+      const curT_X = gx + (curTime / 5.5) * gw;
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(curT_X, gy);
+      ctx.lineTo(curT_X, gy + gh);
+      ctx.stroke();
       ctx.setLineDash([]);
     }
 
-    // Quiz Check
-    function checkQuiz(qNum, ans, el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('correct', 'wrong'));
-      const fb = document.getElementById('fb' + qNum);
-      fb.className = 'quiz-feedback show';
+    function checkQuiz(qNum, choice, btn) {
+      const fb = document.getElementById(`fb${qNum}`);
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-btn').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        b.disabled = true;
+      });
 
-      if (ans === 'B') {
-        el.classList.add('correct');
-        fb.style.color = 'var(--success)';
-        fb.innerHTML = '✅ <strong>完全正確！</strong><br>① 在 \( t = 0 \) 時，A 車的縱坐標大於 0（前方），B 車在原點 ➔ <strong>A 車在 B 車前方（選 B）</strong>！<br>② \( t_2 \) 時是位置相等（相遇），非速率相等。';
+      if (choice === 'B') {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show correct-fb';
+        fb.innerHTML = '🎉 答對了！在 \\( t = 0 \\) 秒時，A 車的縱坐標截距 \\( x_0 > 0 \\)（領先），B 車自原點 \\( (0, 0) \\) 出發，因此「A 車在 B 車的前方」！';
       } else {
-        el.classList.add('wrong');
-        fb.style.color = 'var(--warn)';
-        fb.innerHTML = '❌ <strong>小心判讀圖形！</strong> \( t = 0 \) 時 A 車從正坐標出發，B 車從原點出發，故 A 車在 B 車前方（選 B）！';
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show wrong-fb';
+        fb.innerHTML = '❌ 答錯了！觀察縱軸截距，\\( t=0 \\) 時 A 車在前方（截距高於原點），故選 (B)。';
       }
+      if (window.triggerMathRender) triggerMathRender();
     }
 
-    // Startup
     window.addEventListener('DOMContentLoaded', () => {
-      updateUI();
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 250);
     });
   </script>
-
-  
-
 </body>
 </html>
