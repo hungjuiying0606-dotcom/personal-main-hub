@@ -685,16 +685,16 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="header-left">
-        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
-          <span>← 我的數位基地 Central Hub</span>
+        <a href="./#senior-entry" class="back-home-btn">
+          <span>← 回到上一頁</span>
         </a>
         <div class="header-brand">
-          <span style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 700;">🧪 國中自然與實驗</span>
-          <span>九年級進度 · 第一章 直線運動</span>
+          <span>🌱</span>
+          <span>自然 · 第一章 直線運動</span>
         </div>
       </div>
       <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="header-hub-link" target="_blank" rel="noreferrer">
-        <span>🏠 回數位基地首頁 ↗</span>
+        <span>🏠 回到個人主網頁 ↗</span>
       </a>
     </div>
   </header>
@@ -704,9 +704,9 @@
     <section class="hero">
       <div class="hero-banner-card">
         <div class="hero-info">
-          <span class="hero-kicker-badge">🧪 國中自然與實驗 · 九年級進度 · 互動教具總覽</span>
+          <span class="hero-kicker-badge">✨ CHAPTER 1 INTERACTIVE TOOLKIT · 互動教具總覽 ✨</span>
           <h1 class="hero-title">
-            九年級進度 · 第一章 直線運動 <span class="hero-title-gradient">全方位互動教具總覽</span>
+            第一章 直線運動 <span class="hero-title-gradient">全方位互動教具總覽</span>
           </h1>
           <p class="hero-description">
             完整涵蓋課本探索與例題、習作進階題型以及考卷歷屆模擬題，共 66 款高互動性物理教具沙盒。點擊「⚡ 即刻體驗」即可在彈窗中直接操作，亦可點擊「↗」新分頁全螢幕投影。
@@ -735,9 +735,12 @@
 
       <!-- Filter Buttons -->
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterCategory('textbook', this)">📖 課本配套 (14)</button>
+        <button class="filter-btn active" onclick="filterCategory('all', this)">✨ 全部教具 (66)</button>
+        <button class="filter-btn" onclick="filterCategory('textbook', this)">📖 課本配套 (14)</button>
         <button class="filter-btn" onclick="filterCategory('workbook', this)">✏️ 習作題型 (17)</button>
-        <button class="filter-btn" onclick="filterCategory('exams', this)">📄 考卷檢討</button>
+        <button class="filter-btn" onclick="filterCategory('unit1', this)">📄 單元卷 01 (12)</button>
+        <button class="filter-btn" onclick="filterCategory('unit2', this)">📄 單元卷 02 (11)</button>
+        <button class="filter-btn" onclick="filterCategory('unit3', this)">📊 綜合卷 03 (12)</button>
       </div>
     </div>
 
@@ -1536,9 +1539,9 @@
     "sec": "1-2",
     "secName": "1-2 位置與位移",
     "icon": "🎯",
-    "title": "三人數線：位置敘述判讀器",
+    "title": "三人數線：觀測者基準點動態切換器",
     "page": "習作 P.3 第4題",
-    "desc": "固定小碩 -2 m、小雄 0 m、小麗 +3 m，逐項判讀東西方向與前後方敘述。",
+    "desc": "一鍵切換小碩/小雄/小麗為基準點，動態計算東/西方相對方向與距離。",
     "file": "relative-position-observer-lab.html",
     "color": "mint",
     "category": "workbook",
@@ -1788,7 +1791,7 @@
       'past': { title: '🎯 會考與基測歷屆試題突破', desc: '歷屆大考經典運動學試題動態解構' }
     };
 
-    let currentCategory = 'textbook';
+    let currentCategory = 'all';
     let searchQuery = '';
 
     function renderTools(cat) {
@@ -1799,22 +1802,12 @@
       const query = searchQuery.toLowerCase().trim();
 
       const filtered = tools.filter(t => {
-        let matchesCategory = false;
-        if (currentCategory === 'all') {
-          matchesCategory = true;
-        } else if (currentCategory.includes(':')) {
-          const [c, s] = currentCategory.split(':');
-          const matchC = (t.category === c || t.group === c || (c === 'textbook' && (t.category === 'textbook' || t.group === 'textbook')));
-          const matchS = (t.sec === s);
-          matchesCategory = matchC && matchS;
-        } else {
-          matchesCategory = (currentCategory === t.sec) ||
-                            (currentCategory === t.category) ||
-                            (currentCategory === t.group) ||
-                            (currentCategory === 'exams' && ['unit1', 'unit2', 'unit3'].includes(t.category)) ||
-                            (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
-                            (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
-        }
+        const matchesCategory = (currentCategory === 'all') ||
+                                (currentCategory === t.sec) ||
+                                (currentCategory === t.category) ||
+                                (currentCategory === t.group) ||
+                                (currentCategory === 'book' && (t.category === 'textbook' || t.group === 'textbook')) ||
+                                (currentCategory === 'textbook' && (t.category === 'textbook' || t.group === 'textbook'));
 
         const matchesSearch = !query ||
                               t.title.toLowerCase().includes(query) ||
@@ -1920,32 +1913,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlCat = urlParams.get('cat');
-      const urlSec = urlParams.get('sec');
-
-      let targetCat = 'textbook';
-      if (urlCat && urlSec) {
-        targetCat = `${urlCat}:${urlSec}`;
-      } else if (urlCat) {
-        targetCat = urlCat;
-      } else if (urlSec) {
-        targetCat = urlSec;
-      }
-
-      // 嘗試高亮對應按鈕
-      if (urlCat) {
-        const buttonCategory = ['unit1', 'unit2', 'unit3'].includes(urlCat) ? 'exams' : urlCat;
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-          const onclickAttr = btn.getAttribute('onclick') || '';
-          if (onclickAttr.includes(`'${buttonCategory}'`)) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-          }
-        });
-      }
-
-      renderTools(targetCat);
+      renderTools('all');
 
       const searchInput = document.getElementById('toolSearchInput');
       if (searchInput) {
