@@ -895,6 +895,33 @@
       }
     }
   </style>
+  
+  
+  
+  
+  <!-- KaTeX for formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="triggerMathRender()"></script>
+  <script>
+    window.triggerMathRender = function() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    };
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(triggerMathRender, 100);
+      setTimeout(triggerMathRender, 500);
+      setTimeout(triggerMathRender, 1200);
+    });
+  </script>
 </head>
 <body>
 
@@ -902,16 +929,16 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="header-left">
-        <a href="./#student-home" class="back-home-btn">
-          <span>← 回到上一頁</span>
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="back-home-btn">
+          <span>← 我的數位基地 Central Hub</span>
         </a>
         <div class="header-brand">
-          <span>🌱</span>
-          <span>自然 · 理化 3-4 冊 總複習</span>
+          <span style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 700;">🧪 國中自然與實驗</span>
+          <span>九年級複習 · 理化 3-4 冊 總複習</span>
         </div>
       </div>
       <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="header-hub-link" target="_blank" rel="noreferrer">
-        <span>🏠 回到個人主網頁 ↗</span>
+        <span>🏠 回數位基地首頁 ↗</span>
       </a>
     </div>
   </header>
@@ -921,9 +948,9 @@
     <section class="hero">
       <div class="hero-banner-card">
         <div class="hero-info">
-          <span class="hero-kicker-badge">✨ 116 會考複習講義 · 互動全單元 ✨</span>
+          <span class="hero-kicker-badge">🧪 國中自然與實驗 · 九年級複習 · 互動全單元</span>
           <h1 class="hero-title">
-            理化 3-4 冊 <span class="hero-title-gradient">總複習互動題庫與教具總覽</span>
+            九年級複習 · 理化 3-4 冊 <span class="hero-title-gradient">總複習互動題庫與教具總覽</span>
           </h1>
           <p class="hero-description">
             依據理化 3-4 冊複習講義目次，完整整合 11 大單元核心重點、550 格概念挖空練習、Kahoot 30 題隨堂測驗、QR Code 動態實驗室與跨領域生活素養專區！
@@ -963,10 +990,6 @@
         <button class="filter-btn active" data-filter="all">🌟 全部單元 (11)</button>
         <button class="filter-btn" data-filter="book3">📘 第 3 冊 (單元 1~6)</button>
         <button class="filter-btn" data-filter="book4">📙 第 4 冊 (單元 7~11)</button>
-        <button class="filter-btn" data-filter="fill">✏️ 50格概念挖空</button>
-        <button class="filter-btn" data-filter="kahoot">🎯 Kahoot 30題測驗</button>
-        <button class="filter-btn" data-filter="lab">🔬 QR Code 動態實驗</button>
-        <button class="filter-btn" data-filter="literacy">💡 生活素養議題</button>
       </div>
     </div>
 
@@ -1050,6 +1073,7 @@
           matchedCount++;
           const card = document.createElement('div');
           card.className = `unit-card ${unit.color}`;
+          card.id = `unit-card-${unit.id}`;
           card.innerHTML = `
             <div class="card-top">
               <div class="card-title-group">
@@ -1073,6 +1097,13 @@
                     ⚡ 即刻體驗
                   </a>
                   <a href="optics-hub.html" class="btn-link" target="_blank" title="在新分頁開啟光學 17 大動態互動教具總覽 Hub">
+                    ↗
+                  </a>
+                ` : unit.id === 5 ? `
+                  <a href="unit5-hub.html" class="btn-play">
+                    ⚡ 即刻體驗
+                  </a>
+                  <a href="unit5-hub.html" class="btn-link" target="_blank" title="在新分頁開啟單元 5 溫度與熱量 13 大動態互動教具總覽 Hub">
                     ↗
                   </a>
                 ` : unit.id === 1 ? `
@@ -1107,6 +1138,37 @@
         btn.classList.add('active');
         currentFilter = btn.dataset.filter;
         renderUnits();
+
+    function handleReviewHash() {
+      const hash = window.location.hash;
+      if (!hash) return;
+      if (hash.startsWith('#unit-')) {
+        const uId = parseInt(hash.replace('#unit-', ''));
+        const card = document.getElementById('unit-card-' + uId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.outline = '3px solid #0284c7';
+          card.style.transform = 'scale(1.02)';
+          setTimeout(() => {
+            card.style.outline = '';
+            card.style.transform = '';
+          }, 3000);
+        }
+      } else if (hash === '#fill-blanks' || hash === '#blank') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'blank\'"]');
+        if (btn) btn.click();
+      } else if (hash === '#kahoot-quiz' || hash === '#kahoot') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'kahoot\'"]');
+        if (btn) btn.click();
+      } else if (hash === '#literacy-all' || hash === '#literacy') {
+        const btn = document.querySelector('[onclick*="filterUnits(\'literacy\'"]');
+        if (btn) btn.click();
+      }
+    }
+    window.addEventListener('DOMContentLoaded', handleReviewHash);
+    window.addEventListener('hashchange', handleReviewHash);
+    setTimeout(handleReviewHash, 300);
+  
       });
     });
 
@@ -1447,8 +1509,14 @@
         ${labContent}
       `;
 
-      modalActionPrimary.textContent = "關閉視窗";
-      modalActionPrimary.onclick = closeModal;
+      modalActionSecondary.textContent = "關閉";
+      modalActionSecondary.onclick = closeModal;
+      modalActionPrimary.textContent = unitId === 5
+        ? "開啟單元 5 互動教具總覽 ↗"
+        : "關閉視窗";
+      modalActionPrimary.onclick = unitId === 5
+        ? () => { window.location.href = "unit5-hub.html"; }
+        : closeModal;
       modal.classList.add('active');
     };
 
@@ -1558,5 +1626,8 @@
     renderUnits();
   
   </script>
+
+  
+
 </body>
 </html>

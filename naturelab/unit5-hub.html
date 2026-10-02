@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中理化 · 溫度與熱量 13 大動態互動教具總覽 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #203a5b;
+      --accent: #ffd85c;
+      --pink: #ff7082;
+      --purple: #9566d5;
+      --mint: #10b981;
+      --sky: #38bdf8;
+      --orange: #f97316;
+      --bg: #fff7df;
+      --card-bg: #ffffff;
+      --text: #203a5b;
+      --text-muted: #5f7188;
+      --border: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    header.optics-nav {
+      height: 70px;
+      padding: 0 max(22px, calc((100vw - 1160px) / 2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      background: #ffd85c;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #b91c1c 0%, #c2410c 50%, #d97706 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 3.5px solid var(--primary);
+      box-shadow: 8px 10px var(--primary);
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 850px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-tag {
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px rgba(0,0,0,0.25);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    /* Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 1.1rem;
+      border: 2.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 4px 4px var(--accent);
+    }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      border: 2.5px solid var(--primary);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-solid);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-top {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+    }
+
+    .tool-card.blue .card-top { background: #bae6fd; }
+    .tool-card.pink .card-top { background: #fbcfe8; }
+    .tool-card.mint .card-top { background: #bbf7d0; }
+    .tool-card.yellow .card-top { background: #fde68a; }
+    .tool-card.orange .card-top { background: #fed7aa; }
+    .tool-card.purple .card-top { background: #e0e7ff; }
+
+    .card-icon {
+      font-size: 2.2rem;
+    }
+
+    .card-badge {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-section {
+      color: #c2410c;
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .btn-play {
+      padding: 0.65rem 0.9rem;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-play:hover {
+      background: #c2410c;
+      border-color: #c2410c;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="optics-nav">
+    <div class="nav-brand">
+      <a href="review-hub.html#unit-5" class="nav-link-btn">← 回到九年級複習</a>
+      <span>🌱 自然 · 單元 5 溫度與熱量</span>
+    </div>
+    <div class="nav-links">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-link-btn primary" target="_blank" rel="noreferrer">🏠 回個人主網頁 ↗</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div>
+        <span class="hero-tag">🔥 NATURELAB · HEAT & TEMPERATURE INTERACTIVE HUB</span>
+        <h1 class="hero-title">國中理化 · 溫度與熱量<br>13 大動態互動教具總覽</h1>
+        <p class="hero-desc">
+          將國中教育會考最核心的「溫度與溫度計」、「熱量與比熱計算」、「三態變化加熱曲線」、「熱脹冷縮與密度」以及「熱傳播與生活應用」全部轉化為純 HTML5 動態互動實驗室。卡片依據教材頁數由小至大（第 65 頁至第 78 頁）依序排列，點擊即可直達探索！
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">13</div>
+          <div class="hero-stat-label">全端獨立教具</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">會考重點真題覆蓋</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">HTML5</div>
+          <div class="hero-stat-label">即時物理動態模擬</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">免安裝 · 即開即用</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCards('all', event)">
+        <span>🔥</span> 全部教具 (13)
+      </button>
+      <button class="filter-btn" onclick="filterCards('thermometer', event)">
+        <span>🧪</span> 溫度與溫度計 (3)
+      </button>
+      <button class="filter-btn" onclick="filterCards('heat', event)">
+        <span>🌡️</span> 熱量與比熱 (4)
+      </button>
+      <button class="filter-btn" onclick="filterCards('phase', event)">
+        <span>📈</span> 相變化與熱效應 (2)
+      </button>
+      <button class="filter-btn" onclick="filterCards('transfer', event)">
+        <span>🌊</span> 熱傳播與生活應用 (3)
+      </button>
+      <button class="filter-btn" onclick="filterCards('water', event)">
+        <span>🏞️</span> 水的奇異膨脹 (1)
+      </button>
+    </div>
+
+    <!-- Tools Grid: Sorted by Page (65 -> 78) and Question Number -->
+    <div class="tools-grid" id="toolsGrid">
+
+      <!-- 1. Page 65–66 Q2 -->
+      <div class="tool-card blue" data-category="thermometer">
+        <div class="card-top">
+          <span class="card-icon">🧪</span>
+          <span class="card-badge">第 65–66 頁 第 2 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 溫度與溫度計</div>
+          <div class="card-title">自製溫度計靈敏度 ✕ 玻璃管粗細與水量實驗室</div>
+          <div class="card-desc">切換四支自製溫度計，逐一放入同一杯熱水，比較瓶內水量與玻璃管粗細如何影響水柱上升高度，直觀理解測溫原理。</div>
+          <div class="card-actions">
+            <a href="unit5-p65-thermometer-sensitivity-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Page 67 Q2 & Q4 -->
+      <div class="tool-card pink" data-category="heat">
+        <div class="card-top">
+          <span class="card-icon">🌡️</span>
+          <span class="card-badge">第 67 頁 第 2、4 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱量與比熱</div>
+          <div class="card-title">熱容量升溫斜率 ✕ 冷熱水混水熱平衡實驗室</div>
+          <div class="card-desc">操作相同熱源加熱下的升溫斜率，比較三種液體的熱容量；再自由調整冷水質量，動態追蹤混水達到熱平衡過程。</div>
+          <div class="card-actions">
+            <a href="unit5-heat-capacity-mixing-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Page 68 Heating Curve -->
+      <div class="tool-card yellow" data-category="phase">
+        <div class="card-top">
+          <span class="card-icon">📈</span>
+          <span class="card-badge">第 68 頁 重點探索</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 相變化與熱效應</div>
+          <div class="card-title">三態變化加熱與冷卻動態曲線實驗室</div>
+          <div class="card-desc">拖曳或播放加熱與冷卻曲線，即時觀察固體、固液共存、液體、液氣共存與氣體，驗證相變平台期的溫度維持定值。</div>
+          <div class="card-actions">
+            <a href="unit5-heating-curve-phase-change-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Page 69 Lake 4°C Layer -->
+      <div class="tool-card mint" data-category="water">
+        <div class="card-top">
+          <span class="card-icon">🏞️</span>
+          <span class="card-badge">第 69 頁 生活素養題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 水的奇異膨脹</div>
+          <div class="card-title">湖水 4°C 生存層 ✕ 暖季與寒冬深度水溫探測</div>
+          <div class="card-desc">切換暖季與寒冬並探測湖水深度，觀察湖面結冰降溫，以及湖底水因 4°C 密度最大而沉底維持約 4°C 之水生生物保護機制。</div>
+          <div class="card-actions">
+            <a href="unit5-lake-four-degree-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Page 70 Sea Land Breeze -->
+      <div class="tool-card orange" data-category="transfer">
+        <div class="card-top">
+          <span class="card-icon">🌊</span>
+          <span class="card-badge">第 70 頁 自然現象題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱傳播與對流</div>
+          <div class="card-title">海風與陸風動態流場 ✕ 海陸比熱溫差對流實驗室</div>
+          <div class="card-desc">切換白天與夜晚，動態觀察海陸比熱不同所造成的陸地與海洋溫差、氣壓升降，以及海風與陸風近地面流向。</div>
+          <div class="card-actions">
+            <a href="unit5-sea-land-breeze-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Page 71 Q4 & Q5 -->
+      <div class="tool-card orange" data-category="transfer">
+        <div class="card-top">
+          <span class="card-icon">☕</span>
+          <span class="card-badge">第 71 頁 第 4、5 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱傳導與對流</div>
+          <div class="card-title">杯套熱傳導抑制 ✕ 斜試管熱對流循環實驗室</div>
+          <div class="card-desc">比較有無厚紙板杯套時的熱傳導速度，並加熱兩支斜試管不同位置，觀察水的局部對流範圍與各點溫度差異。</div>
+          <div class="card-actions">
+            <a href="unit5-heat-conduction-convection-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Page 72 Q1 & Q5 -->
+      <div class="tool-card pink" data-category="heat">
+        <div class="card-top">
+          <span class="card-icon">🌡️</span>
+          <span class="card-badge">第 72 頁 第 1、5 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱量與比熱</div>
+          <div class="card-title">等體積 vs 等質量比熱比較 ✕ 冷卻散熱配對</div>
+          <div class="card-desc">切換同體積與同質量比較比熱大小，並追蹤熱水與玻璃杯冷卻過程，精確配對兩者在各階段散失的熱量。</div>
+          <div class="card-actions">
+            <a href="unit5-specific-heat-cooling-balance-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Page 73 Q6 & Exam Q2 -->
+      <div class="tool-card blue" data-category="phase">
+        <div class="card-top">
+          <span class="card-icon">🧊</span>
+          <span class="card-badge">第 73 頁 第 6 題、會考第 2 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 相變化與熱效應</div>
+          <div class="card-title">冰加熱曲線熔化平台 ✕ 三態吸熱狀態轉換圖</div>
+          <div class="card-desc">沿著冰的加熱曲線辨認 0°C 熔化水平線，並動態操作固態、液態與氣態之吸熱與放熱箭頭，掌握物態轉換要訣。</div>
+          <div class="card-actions">
+            <a href="unit5-ice-heating-state-map-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Page 74 Q3 & Q4 -->
+      <div class="tool-card purple" data-category="thermometer">
+        <div class="card-top">
+          <span class="card-icon">🌡️</span>
+          <span class="card-badge">第 74 頁 第 3、4 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 溫度與溫度計</div>
+          <div class="card-title">錐形瓶測溫靈敏度 ✕ 空氣熱膨脹雙手加熱實驗室</div>
+          <div class="card-desc">操作錐形瓶液體溫度計，比較不同液體的膨脹靈敏度，並動態模擬雙手包覆燒瓶造成的空氣熱膨脹排氣。</div>
+          <div class="card-actions">
+            <a href="unit5-temperature-thermometer-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Page 75 Q10 & Q11 -->
+      <div class="tool-card yellow" data-category="heat">
+        <div class="card-top">
+          <span class="card-icon">🔥</span>
+          <span class="card-badge">第 75 頁 第 10、11 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱量與比熱</div>
+          <div class="card-title">固定熱源加熱變因 ✕ 冷熱水混水吸放熱追蹤</div>
+          <div class="card-desc">操作固定熱源與水量，判讀加熱實驗控制變因；並沿著 0～6 分鐘曲線即時追蹤熱水放熱、冷水吸熱與環境散熱。</div>
+          <div class="card-actions">
+            <a href="unit5-heating-calorimetry-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Page 76 Q13 & Q14 -->
+      <div class="tool-card mint" data-category="heat">
+        <div class="card-top">
+          <span class="card-icon">🔗</span>
+          <span class="card-badge">第 76 頁 第 13、14 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱量與比熱</div>
+          <div class="card-title">三金屬球接觸熱平衡 ✕ 鐵塊與銀塊沸水升溫曲線</div>
+          <div class="card-desc">依序操作甲乙、乙丙金屬球接觸達熱平衡；並比較相同質量的鐵塊與銀塊投入沸水後的升溫快慢與比熱關係。</div>
+          <div class="card-actions">
+            <a href="unit5-thermal-equilibrium-specific-heat-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. Page 77 Q3 & Q4 -->
+      <div class="tool-card blue" data-category="thermometer">
+        <div class="card-top">
+          <span class="card-icon">🧪</span>
+          <span class="card-badge">第 77 頁 第 3、4 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 溫度與溫度計</div>
+          <div class="card-title">容器與液體膨脹係數 ✕ 自製溫度計液柱升降探索</div>
+          <div class="card-desc">操作不同材質外殼遇冷收縮，以及不同測溫液體受熱膨脹，精確判斷液面瞬間與穩定後的上升或下降。</div>
+          <div class="card-actions">
+            <a href="unit5-homemade-thermometer-expansion-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. Page 78 Q1 & Q2 -->
+      <div class="tool-card pink" data-category="transfer">
+        <div class="card-top">
+          <span class="card-icon">🔥</span>
+          <span class="card-badge">第 78 頁 第 1、2 題</span>
+        </div>
+        <div class="card-body">
+          <div class="card-section">單元 5 · 熱傳播與生活應用</div>
+          <div class="card-title">赤腳走火炭導熱率 ✕ 珍奶 800 大卡熱量預算換算器</div>
+          <div class="card-desc">比較燒紅木炭與鐵板的熱傳導係數與比熱，並將 1 杯珍珠奶茶 800 大卡換算為加熱水升溫水量與慢跑消耗時間。</div>
+          <div class="card-actions">
+            <a href="unit5-firewalking-energy-budget-lab.html" class="btn-play">🚀 進入實驗室</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>國中自然科 · NatureLab 溫度與熱量 13 大動態互動教具總覽 | 正式發布於 GitHub Pages</p>
+  </footer>
+
+  <script>
+    function filterCards(category, evt) {
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+
+      const cards = document.querySelectorAll('.tool-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

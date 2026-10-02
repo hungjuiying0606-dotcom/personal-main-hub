@@ -1099,6 +1099,13 @@
                   <a href="optics-hub.html" class="btn-link" target="_blank" title="在新分頁開啟光學 17 大動態互動教具總覽 Hub">
                     ↗
                   </a>
+                ` : unit.id === 5 ? `
+                  <a href="unit5-hub.html" class="btn-play">
+                    ⚡ 即刻體驗
+                  </a>
+                  <a href="unit5-hub.html" class="btn-link" target="_blank" title="在新分頁開啟單元 5 溫度與熱量 13 大動態互動教具總覽 Hub">
+                    ↗
+                  </a>
                 ` : unit.id === 1 ? `
                   <a href="chapter1-hub.html" class="btn-play">
                     ⚡ 即刻體驗
@@ -1505,10 +1512,10 @@
       modalActionSecondary.textContent = "關閉";
       modalActionSecondary.onclick = closeModal;
       modalActionPrimary.textContent = unitId === 5
-        ? "開啟 P.65–P.78 互動清單 ↗"
+        ? "開啟單元 5 互動教具總覽 ↗"
         : "關閉視窗";
       modalActionPrimary.onclick = unitId === 5
-        ? () => { window.top.location.href = "../index.html#review-unit5"; }
+        ? () => { window.location.href = "unit5-hub.html"; }
         : closeModal;
       modal.classList.add('active');
     };
