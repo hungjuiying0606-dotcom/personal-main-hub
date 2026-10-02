@@ -1106,6 +1106,13 @@
                   <a href="unit5-hub.html" class="btn-link" target="_blank" title="在新分頁開啟單元 5 溫度與熱量 13 大動態互動教具總覽 Hub">
                     ↗
                   </a>
+                ` : unit.id === 6 ? `
+                  <a href="unit6-hub.html" class="btn-play">
+                    ⚡ 即刻體驗
+                  </a>
+                  <a href="unit6-hub.html" class="btn-link" target="_blank" title="在新分頁開啟單元 6 物質的構造 6 大動態互動教具總覽 Hub">
+                    ↗
+                  </a>
                 ` : unit.id === 1 ? `
                   <a href="chapter1-hub.html" class="btn-play">
                     ⚡ 即刻體驗
@@ -1513,9 +1520,13 @@
       modalActionSecondary.onclick = closeModal;
       modalActionPrimary.textContent = unitId === 5
         ? "開啟單元 5 互動教具總覽 ↗"
+        : unitId === 6
+        ? "開啟單元 6 互動教具總覽 ↗"
         : "關閉視窗";
       modalActionPrimary.onclick = unitId === 5
         ? () => { window.location.href = "unit5-hub.html"; }
+        : unitId === 6
+        ? () => { window.location.href = "unit6-hub.html"; }
         : closeModal;
       modal.classList.add('active');
     };

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中理化 · 物質的構造與週期表 6 大動態互動教具總覽 | NatureLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdfbf7;
+      --surface: #ffffff;
+      --primary: #203a5b;
+      --primary-light: #2d507c;
+      --accent: #fcd34d;
+      --accent-hover: #fbbf24;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #203a5b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --shadow-solid: 5px 6px #203a5b;
+      --shadow-hover: 7px 9px #203a5b;
+      --font-base: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      font-family: var(--font-base);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Nav */
+    header {
+      background: var(--surface);
+      border-bottom: 2.5px solid var(--primary);
+      padding: 0.85rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .header-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--primary);
+    }
+
+    .logo-badge {
+      background: #7c3aed;
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--primary);
+      box-shadow: 2px 2px var(--primary);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 99px;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-link-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-link-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #2b4c77;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 40%, #7c3aed 80%, #be185d 100%);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 3.5px solid var(--primary);
+      box-shadow: 8px 10px var(--primary);
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 850px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-tag {
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--primary);
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px rgba(0,0,0,0.25);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0.9;
+      line-height: 1.3;
+    }
+
+    /* Filter & Search Bar */
+    .controls-panel {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 2.5px solid var(--primary);
+      font-size: 0.95rem;
+      font-family: var(--font-base);
+      font-weight: 700;
+      outline: none;
+      box-shadow: 4px 4px var(--primary);
+      transition: all 0.2s;
+      background: #ffffff;
+    }
+
+    .search-box:focus {
+      box-shadow: 6px 6px var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .filter-btn {
+      padding: 0.45rem 1rem;
+      border: 2px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 3px 3px var(--primary);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .filter-btn:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 3px 3px var(--accent);
+    }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      border: 2.5px solid var(--primary);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-solid);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-top {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--primary);
+    }
+
+    .tool-card.blue .card-top { background: #bae6fd; }
+    .tool-card.pink .card-top { background: #fbcfe8; }
+    .tool-card.mint .card-top { background: #bbf7d0; }
+    .tool-card.yellow .card-top { background: #fde68a; }
+    .tool-card.orange .card-top { background: #fed7aa; }
+    .tool-card.purple .card-top { background: #e0e7ff; }
+
+    .card-icon {
+      font-size: 2.2rem;
+    }
+
+    .card-badge {
+      padding: 0.25rem 0.65rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-section {
+      color: #7c3aed;
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .tag-chip {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .btn-play {
+      padding: 0.65rem 0.9rem;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 2px 2px var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-play:hover {
+      background: #2b4c77;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      border-top: 2.5px solid var(--primary);
+      background: #ffffff;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="header-inner">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="logo-group">
+        <div class="logo-badge">⚛️</div>
+        <div class="logo-text">
+          <span class="logo-title">NatureLab · 理化互動教具室</span>
+          <span class="logo-sub">第 3 冊 · 單元六 物質的構造與週期表</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="nav-link-btn">
+          ← 回個人主網頁
+        </a>
+        <a href="review-hub.html" class="nav-link-btn">
+          📚 九年級複習總覽
+        </a>
+        <a href="unit5-hub.html" class="nav-link-btn">
+          🔥 單元五 溫度與熱量
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div>
+        <span class="hero-tag">⚛️ NATURELAB • ATOMIC STRUCTURE & PERIODIC TABLE INTERACTIVE HUB</span>
+        <h1 class="hero-title">國中理化 · 物質的構造與週期表<br>6 大動態互動教具總覽</h1>
+        <p class="hero-desc">
+          將國中教育會考最核心的「週期表族與週期」、「同素異形體與原子結構」、「質子中子電子與離子組裝」、「原子模型發展史」以及「元素偵探與生活素養」全部轉化為純 HTML5 動態互動實驗室。卡片依據教材頁數由小至大（第 89 頁至第 94 頁）依序排列，點擊即可直達探索！
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">6</div>
+          <div class="hero-stat-label">全端獨立教具<br>(12 大會考核心題型)</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">會考重點真題<br>全面覆蓋解析</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">HTML5</div>
+          <div class="hero-stat-label">即時微觀微粒<br>動態物理引擎</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">免安裝 · 零外掛<br>隨開即測即學</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Controls -->
+    <section class="controls-panel">
+      <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜尋教具名稱、頁數、關鍵字（如：週期表、石墨烯、氦原子、拉塞福、鎵、發熱衣）...">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">🌟 全部教具 (6)</button>
+        <button class="filter-btn" data-filter="periodic">🧭 週期表與化學迷宮 (P.89)</button>
+        <button class="filter-btn" data-filter="atom">🧱 同素異形體與原子構造 (P.90)</button>
+        <button class="filter-btn" data-filter="ion">⚛️ 離子配比與微粒組裝 (P.91)</button>
+        <button class="filter-btn" data-filter="history">⏳ 原子模型發展史 (P.92)</button>
+        <button class="filter-btn" data-filter="literacy">🔎 元素偵探與生活素養 (P.93-94)</button>
+      </div>
+    </section>
+
+    <!-- Lab Cards Grid -->
+    <section class="tools-grid" id="toolsGrid">
+
+      <!-- Card 1: P.89 -->
+      <article class="tool-card mint" data-category="periodic" data-keywords="p89 p.89 週期表 化學迷宮 族 週期 金屬 非金屬 鈍氣 惰性氣體 乙丙 同族">
+        <div class="card-top">
+          <span class="card-icon">🧭</span>
+          <span class="card-badge">第 89 頁 第 2、3 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">週期表族性定位 · 化學迷宮闖關</span>
+          <h2 class="card-title">週期表定位與化學迷宮闖關探究</h2>
+          <p class="card-desc">
+            透過直覺的元素週期表地圖，探究乙、丙元素是否同族，並操作「化學迷宮」辨識金屬、非金屬與氣態元素的路徑規律，掌握會考經典題型。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">同族化學性質</span>
+            <span class="tag-chip">金屬與非金屬</span>
+            <span class="tag-chip">迷宮互動路徑</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p89-periodic-maze-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: P.90 -->
+      <article class="tool-card purple" data-category="atom" data-keywords="p90 p.90 同素異形體 石墨 石墨烯 鑽石 碳六十 巴克球 原子模型 質子數 元素 身分">
+        <div class="card-top">
+          <span class="card-icon">🧱</span>
+          <span class="card-badge">第 90 頁 第 7、11 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">同素異形體 · 原子微觀結構辨識</span>
+          <h2 class="card-title">碳同素異形體微觀結構與原子身分鑑別</h2>
+          <p class="card-desc">
+            比較石墨烯、石墨與鑽石的微觀碳原子排列差異，剖析同素異形體之物性差異；並從原子模型圖解中快速辨識相同與不同元素之質子數特徵。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">碳原子排列</span>
+            <span class="tag-chip">同素異形體</span>
+            <span class="tag-chip">原子身分識別</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p90-allotrope-atom-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: P.91 -->
+      <article class="tool-card blue" data-category="ion" data-keywords="p91 p.91 離子 電中性 氦原子 質子 中子 電子 質量數 原子序 he 帶電 配比">
+        <div class="card-top">
+          <span class="card-icon">⚛️</span>
+          <span class="card-badge">第 91 頁 第 12、16 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">離子電中性配比 · 氦原子微粒組裝</span>
+          <h2 class="card-title">電中性離子配比組裝與 ⁴₂He 原子核微粒室</h2>
+          <p class="card-desc">
+            親手組裝金屬離子與非金屬陰離子的電中性比例方程式；並深度剖析甲（質子）、乙（中子）、丙（電子）在氦原子中的精準數量與質量數配置。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">陽離子與陰離子</span>
+            <span class="tag-chip">原子序與質量數</span>
+            <span class="tag-chip">⁴₂He 氦微粒組裝</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p91-ion-helium-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: P.92 -->
+      <article class="tool-card yellow" data-category="history" data-keywords="p92 p.92 原子模型 發展史 道耳頓 湯姆森 拉塞福 波耳 查兌克 粒子 電子 原子核 質子 中子">
+        <div class="card-top">
+          <span class="card-icon">⏳</span>
+          <span class="card-badge">第 92 頁 題組第 1、2 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">科學史專題 · 原子模型演進時間軸</span>
+          <h2 class="card-title">微觀粒子發現歷程與四大原子模型發展史</h2>
+          <p class="card-desc">
+            依序排列電子（湯姆森）、原子核（拉塞福）、質子與中子（查兌克）的發現史；並互動排序實心球、葡萄乾布丁、行星軌道等四大原子模型時間線。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">微觀微粒發現史</span>
+            <span class="tag-chip">四大模型演變</span>
+            <span class="tag-chip">科學家時間軸</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p92-atomic-model-history-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5: P.93 -->
+      <article class="tool-card pink" data-category="literacy" data-keywords="p93 p.93 元素偵探 鎵 門得列夫 類鋁 週期表 預測 推理 導電 熔點 二分法">
+        <div class="card-top">
+          <span class="card-icon">🔎</span>
+          <span class="card-badge">第 93 頁 第 1、4 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">元素偵探推理 · 門得列夫鎵的週期預測</span>
+          <h2 class="card-title">元素偵探二分法推理與門得列夫「類鋁」鎵探索</h2>
+          <p class="card-desc">
+            透過導電性、狀態等條件二分法快速鎖定未知元素；並回溯門得列夫預測鎵（Ga）的驚人預言，精準在週期表第三主族中定位鎵的座標。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">二分法性質推理</span>
+            <span class="tag-chip">門得列夫週期律</span>
+            <span class="tag-chip">鎵元素座標</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p93-element-detective-gallium-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6: P.94 -->
+      <article class="tool-card orange" data-category="literacy" data-keywords="p94 p.94 生活素養 洋蔥式穿法 發熱衣 吸濕放熱 蜂巢衣 羽絨 熱傳導 靜止空氣 散熱 保暖">
+        <div class="card-top">
+          <span class="card-icon">🧥</span>
+          <span class="card-badge">第 94 頁 第 1、3 題</span>
+        </div>
+        <div class="card-body">
+          <span class="card-section">跨領域生活素養 · 熱傳導與保暖科技</span>
+          <h2 class="card-title">吸濕發熱纖維與洋蔥式蜂巢穿法熱傳導實驗室</h2>
+          <p class="card-desc">
+            模擬發熱衣「水分子吸附放熱」的相變物理機制；並分析羽絨與蜂巢中空纖維如何鎖住靜止空氣，抑制熱傳導與對流達成極致保暖。
+          </p>
+          <div class="card-tags">
+            <span class="tag-chip">吸濕發熱原理</span>
+            <span class="tag-chip">靜止空氣不良導體</span>
+            <span class="tag-chip">洋蔥式層次穿搭</span>
+          </div>
+          <div class="card-actions">
+            <a href="unit6-p94-clothing-heat-lab.html" class="btn-play">
+              ⚡ 即刻進入實驗室
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>國中自然科 · NatureLab 互動物理化學實驗室 | 第 3 冊 單元 6 物質的構造與週期表</p>
+    <p style="margin-top: 0.4rem; font-size: 0.75rem; opacity: 0.8;">&copy; 2026 我的數位基地 · Central Hub. 保留所有權利。</p>
+  </footer>
+
+  <script>
+    // Search and Filter functionality
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.tool-card');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function filterCards() {
+      const query = searchQuery.toLowerCase().trim();
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+
+        const matchesFilter = (currentFilter === 'all') || (category === currentFilter);
+        const matchesSearch = !query ||
+          keywords.includes(query) ||
+          title.includes(query) ||
+          desc.includes(query);
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      filterCards();
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        filterCards();
+      });
+    });
+  </script>
+</body>
+</html>
