@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 直線無折返 vs 環形一圈：平均速率 vs 平均速度大小判讀儀 (綜合卷第14題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #ea580c;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { display: flex; flex-direction: column; }
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white; padding: 0.35rem 1rem; height: 38px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-back {
+      color: white; text-decoration: none; font-size: 0.76rem; font-weight: 800;
+      background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+    .header-left h1 { font-size: 0.92rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .badge { background: #fcd34d; color: #78350f; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.7rem; font-weight: 900; }
+    .header-info { font-size: 0.72rem; opacity: 0.95; font-weight: 600; }
+
+    main {
+      flex: 1; padding: 0.45rem 0.75rem; display: grid;
+      grid-template-columns: 1.25fr 1fr; gap: 0.6rem;
+      min-height: 0; max-width: 1440px; width: 100%; margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    .canvas-container {
+      flex: 1; position: relative; background: #ffffff; min-height: 0;
+      display: flex; flex-direction: column; border-bottom: 1.5px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute; top: 6px; left: 8px; right: 8px;
+      background: rgba(255, 255, 255, 0.94); border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm); padding: 0.25rem 0.6rem;
+      font-size: 0.74rem; font-weight: 700; display: flex; justify-content: space-between; z-index: 5;
+    }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+
+    canvas.stage-canvas { width: 100%; height: 100%; display: block; }
+
+    .control-panel {
+      padding: 0.45rem 0.65rem; background: #f1f5f9; display: flex; flex-direction: column; gap: 0.35rem; flex-shrink: 0;
+    }
+    .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+    .btn-group { display: flex; align-items: center; gap: 0.3rem; }
+    .btn {
+      padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 800;
+      border-radius: var(--radius-sm); border: 1.5px solid #cbd5e1; background: white; cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-mode { font-size: 0.72rem; }
+    .btn-mode.active { background: #0f172a; color: white; border-color: #0f172a; }
+
+    .scrubber-container { display: flex; align-items: center; gap: 0.4rem; flex: 1; margin-left: 0.2rem; }
+    .scrubber-container input[type="range"] { flex: 1; height: 6px; accent-color: var(--primary); cursor: pointer; }
+
+    .right-col { display: flex; flex-direction: column; gap: 0.45rem; min-height: 0; }
+    .telemetry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; flex-shrink: 0; }
+    .t-card {
+      background: white; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem; text-align: center;
+    }
+    .t-card.t-l { border-color: #fed7aa; background: #fff7ed; }
+    .t-card.t-x { border-color: #93c5fd; background: #eff6ff; }
+    .t-card.t-res { border-color: #86efac; background: #f0fdf4; }
+    .t-title { font-size: 0.68rem; font-weight: 800; color: #475569; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; line-height: 1.2; }
+    .t-sub { font-size: 0.66rem; font-weight: 700; color: #64748b; }
+
+    .tab-container {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: white; border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    }
+    .tab-bar {
+      display: flex; background: #f1f5f9; border-bottom: 1.5px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem; gap: 0.3rem; flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.35rem 0.75rem; font-size: 0.76rem; font-weight: 800;
+      border: 1.5px solid transparent; border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent; cursor: pointer; color: #64748b;
+    }
+    .tab-btn.active { background: white; color: var(--primary-dark); border-color: var(--border); font-weight: 900; }
+    .tab-content { flex: 1; padding: 0.55rem 0.75rem; overflow-y: auto; font-size: 0.78rem; line-height: 1.5; }
+
+    .formula-step {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-left: 4px solid var(--primary);
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem;
+    }
+    .formula-step strong { color: #0369a1; }
+    .key-alert {
+      background: #fffbeb; border: 1.5px solid #fde68a; border-left: 4px solid #d97706;
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem; font-weight: 700; color: #92400e;
+    }
+    .quiz-item {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem; margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.35rem; color: #0f172a; }
+    .quiz-options { display: grid; grid-template-columns: 1fr; gap: 0.35rem; }
+    .quiz-btn {
+      padding: 0.3rem 0.5rem; font-size: 0.74rem; font-weight: 800; border: 1.5px solid #cbd5e1;
+      border-radius: 5px; background: white; cursor: pointer; text-align: left;
+    }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb { font-size: 0.74rem; font-weight: 700; margin-top: 0.3rem; padding: 0.3rem 0.45rem; border-radius: 4px; display: none; }
+    .quiz-fb.correct { display: block; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .quiz-fb.wrong { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="btn-back">❮ 回主網頁</a>
+      <h1>
+        <span>🏎️ 直線無折返 vs 環形一圈：平均速率 vs 平均速度大小判讀儀</span>
+        <span class="badge">綜合卷 03 卷第14題</span>
+      </h1>
+    </div>
+    <div class="header-info">平均速率 ＝ 路徑長/時間 ｜ 平均速度 ＝ 位移/時間 ｜ 直線無折返: 速率=速度 ｜ 環形一圈: 速度=0</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>🏎️ 運動情境: <strong class="hud-val" id="hudTrack">直線無折返</strong></span>
+          <span>📏 路徑長 L: <strong class="hud-val" id="hudPath" style="color:#ea580c;">0.0 m</strong></span>
+          <span>🏹 位移大小 |Δx|: <strong class="hud-val" id="hudDisp" style="color:#0284c7;">0.0 m</strong></span>
+          <span>⚡ 平均速率 vs 速度: <strong class="hud-val" id="hudComp" style="color:#16a34a;">相等 (10 = 10 m/s)</strong></span>
+        </div>
+        <canvas id="trackCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnPlay">▶ 播放</button>
+            <button class="btn" id="btnReset">↺ 重置</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-mode active" data-mode="line">直線運動 (無折返·正解B)</button>
+            <button class="btn btn-mode" data-mode="circle">圓形軌道 (跑一圈回到起點)</button>
+            <button class="btn btn-mode" data-mode="turnback">直線折返 (前進後倒車)</button>
+          </div>
+          <div class="scrubber-container">
+            <label for="timeScrubber">進度:</label>
+            <input type="range" id="timeScrubber" min="0" max="100" value="0">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="right-col">
+      <div class="telemetry-grid">
+        <div class="t-card t-l">
+          <div class="t-title">平均速率 v̄ (路徑長/t)</div>
+          <div class="t-val" id="tCardSpeed" style="color:#ea580c;">10.0 m/s</div>
+          <div class="t-sub">純量 (恆大於等於0)</div>
+        </div>
+        <div class="t-card t-x">
+          <div class="t-title">平均速度 V̄ (位移/t)</div>
+          <div class="t-val" id="tCardVel" style="color:#0284c7;">10.0 m/s</div>
+          <div class="t-sub">向量 (具方向性)</div>
+        </div>
+        <div class="t-card t-res">
+          <div class="t-title">兩者大小關係</div>
+          <div class="t-val" id="tCardRel" style="color:#16a34a;">完全相等</div>
+          <div class="t-sub">平均速率 ＝ 平均速度大小</div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tabAnalysis">📖 觀念破題與關係比較</button>
+          <button class="tab-btn" data-tab="tabQuiz">📝 原題即測即評 (第14題)</button>
+        </div>
+
+        <div class="tab-content" id="tabAnalysis">
+          <div class="key-alert">
+            🚨 <strong>大屏高對比核心公式：平均速率 vs 平均速度</strong><br>
+            • <strong>平均速率 v̄ ＝ 路徑長 L / 時間 Δt</strong>（走過多長的路，純量不看方向）。<br>
+            • <strong>平均速度 V̄ ＝ 位移 Δx / 時間 Δt</strong>（起點指向終點之直線向量）。<br>
+            • 幾何性質：任何運動之<strong>路徑長必大於或等於位移大小</strong>（L ≥ |Δx|）！
+          </div>
+
+          <div class="formula-step">
+            <strong>情境一：直線運動且「無折返」➔ 兩者必相等！(正解 B)</strong><br>
+            當小車朝固定方向沿直線前進、完全未轉頭折返時，走過的路徑長恰好等於起訖直線距離（L ＝ |Δx|），因此<strong>平均速率必定「等於」平均速度的大小</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>情境二：小車沿圓形軌跡行進「一圈回到起點」➔ 速度歸零！</strong><br>
+            繞圓形一圈回到出發點時，起點與終點重合，<strong>位移 Δx ＝ 0</strong> ➔ 平均速度為 0 m/s！<br>
+            但總路徑長 L ＝ 2πR > 0 ➔ 平均速率 > 0！因此<strong>平均速率大於平均速度大小</strong>，非相等！
+          </div>
+
+          <div class="formula-step">
+            <strong>情境三：直線運動但「有折返」➔ 速率大於速度大小！</strong><br>
+            若小車前進後再倒車，折返路程會累加進路徑長，但位移反而縮短，故平均速率大於平均速度。
+          </div>
+        </div>
+
+        <div class="tab-content" id="tabQuiz" style="display:none;">
+          <div class="quiz-item" data-q="1">
+            <p>14. 阿康觀察小車在軌道中的運動情況，關於「平均速率」與「平均速度」的敘述，下列何者正確？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 小車沿直線運動，若過程中並未折返，則平均速率大於平均速度的大小</button>
+              <button class="quiz-btn" data-ans="B">(B) 小車沿直線運動，若過程中並未折返，則平均速率等於平均速度的大小</button>
+              <button class="quiz-btn" data-ans="C">(C) 小車沿圓形軌跡行進一圈回到起點，平均速率等於平均速度的大小</button>
+              <button class="quiz-btn" data-ans="D">(D) 小車沿圓形軌跡行進一圈回到起點，平均速率小於平均速度的大小</button>
+            </div>
+            <div class="quiz-fb" id="fb1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('trackCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let mode = 'line'; // line, circle, turnback
+    let progress = 0; // 0 ~ 100
+    let isPlaying = true;
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const timeScrubber = document.getElementById('timeScrubber');
+    const hudTrack = document.getElementById('hudTrack');
+    const hudPath = document.getElementById('hudPath');
+    const hudDisp = document.getElementById('hudDisp');
+    const hudComp = document.getElementById('hudComp');
+
+    const tCardSpeed = document.getElementById('tCardSpeed');
+    const tCardVel = document.getElementById('tCardVel');
+    const tCardRel = document.getElementById('tCardRel');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawStage() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+
+      // 背景
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, h);
+
+      const tRatio = progress / 100;
+      let startX, startY, curX, curY, pathLen, dispLen;
+
+      if (mode === 'line') {
+        // 直線無折返
+        startX = w * 0.15;
+        startY = h * 0.5;
+        const totalDist = w * 0.7;
+        curX = startX + totalDist * tRatio;
+        curY = startY;
+
+        pathLen = (totalDist * tRatio * 0.2).toFixed(1);
+        dispLen = pathLen;
+
+        // 軌道
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX + totalDist, startY);
+        ctx.stroke();
+
+        // 路徑長 (橙色軌跡線)
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+
+        // 位移向量 (藍色加粗箭頭)
+        drawArrow(startX, startY - 25, curX, curY - 25, '#0284c7', `位移向量 Δx = ${dispLen}m`);
+      } else if (mode === 'circle') {
+        // 圓形一圈
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        const r = Math.min(w, h) * 0.32;
+        startX = cx + r;
+        startY = cy;
+
+        const angle = -Math.PI * 0.5 + tRatio * (Math.PI * 2);
+        curX = cx + r * Math.cos(angle);
+        curY = cy + r * Math.sin(angle);
+
+        pathLen = (2 * Math.PI * r * tRatio * 0.2).toFixed(1);
+        const dx = (curX - (cx + r * Math.cos(-Math.PI * 0.5))) * 0.2;
+        const dy = (curY - (cy + r * Math.sin(-Math.PI * 0.5))) * 0.2;
+        dispLen = Math.hypot(dx, dy).toFixed(1);
+
+        // 圓形軌道
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // 走過的路徑長
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, -Math.PI * 0.5, angle);
+        ctx.stroke();
+
+        // 位移向量 (從頂部出發點連至當前點)
+        const sX = cx + r * Math.cos(-Math.PI * 0.5);
+        const sY = cy + r * Math.sin(-Math.PI * 0.5);
+        if (tRatio > 0.02) {
+          drawArrow(sX, sY, curX, curY, '#0284c7', `位移 |Δx| = ${dispLen}m`);
+        }
+      } else {
+        // 直線折返
+        startX = w * 0.15;
+        startY = h * 0.5;
+        const maxDist = w * 0.65;
+
+        if (tRatio <= 0.65) {
+          curX = startX + maxDist * (tRatio / 0.65);
+          pathLen = (maxDist * (tRatio / 0.65) * 0.2).toFixed(1);
+        } else {
+          const backT = (tRatio - 0.65) / 0.35;
+          curX = startX + maxDist - (maxDist * 0.4) * backT;
+          pathLen = ((maxDist + (maxDist * 0.4) * backT) * 0.2).toFixed(1);
+        }
+        curY = startY;
+        dispLen = ((curX - startX) * 0.2).toFixed(1);
+
+        // 軌道
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX + maxDist, startY);
+        ctx.stroke();
+
+        // 位移向量
+        drawArrow(startX, startY - 25, curX, curY - 25, '#0284c7', `位移 Δx = ${dispLen}m`);
+      }
+
+      // 起點標誌
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath();
+      ctx.arc(startX, startY, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 11px "Noto Sans TC"';
+      ctx.fillText('起點', startX - 12, startY + 18);
+
+      // 小車本體
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.arc(curX, curY, 11, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // 更新 HUD 與遙測卡
+      hudPath.textContent = `${pathLen} m`;
+      hudDisp.textContent = `${dispLen} m`;
+
+      const speedVal = tRatio > 0 ? (pathLen / (tRatio * 10)).toFixed(1) : '10.0';
+      const velVal = tRatio > 0 ? (dispLen / (tRatio * 10)).toFixed(1) : (mode === 'circle' && tRatio >= 0.99 ? '0.0' : '10.0');
+
+      tCardSpeed.textContent = `${speedVal} m/s`;
+      tCardVel.textContent = `${velVal} m/s`;
+
+      if (mode === 'line') {
+        hudComp.textContent = `相等 (速率 ＝ 速度)`;
+        hudComp.style.color = '#16a34a';
+        tCardRel.textContent = `完全相等 (正解B)`;
+        tCardRel.style.color = '#16a34a';
+      } else {
+        hudComp.textContent = `速率 > 速度大小`;
+        hudComp.style.color = '#ea580c';
+        tCardRel.textContent = `速率 > 速度大小`;
+        tCardRel.style.color = '#ea580c';
+      }
+    }
+
+    function drawArrow(x1, y1, x2, y2, color, label) {
+      if (Math.hypot(x2 - x1, y2 - y1) < 5) return;
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.font = 'bold 11px "Noto Sans TC"';
+      ctx.fillText(label, (x1 + x2) * 0.5 - 25, Math.min(y1, y2) - 8);
+      ctx.restore();
+    }
+
+    function loop() {
+      if (isPlaying) {
+        progress += 0.5;
+        if (progress > 100) progress = 0;
+        timeScrubber.value = progress;
+        drawStage();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    btnPlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸ 暫停' : '▶ 播放';
+    });
+    btnReset.addEventListener('click', () => { progress = 0; timeScrubber.value = 0; drawStage(); });
+    timeScrubber.addEventListener('input', (e) => { progress = parseFloat(e.target.value); drawStage(); });
+
+    document.querySelectorAll('.btn-mode').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        mode = btn.getAttribute('data-mode');
+        progress = 0;
+        timeScrubber.value = 0;
+        hudTrack.textContent = mode === 'line' ? '直線無折返' : (mode === 'circle' ? '圓形軌道一圈' : '直線折返');
+        drawStage();
+      });
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById('tabAnalysis').style.display = tabId === 'tabAnalysis' ? 'block' : 'none';
+        document.getElementById('tabQuiz').style.display = tabId === 'tabQuiz' ? 'block' : 'none';
+      });
+    });
+
+    const quizAnswers = {
+      1: { ans: 'B', exp: '正解 (B)。沿直線運動且過程中未折返時，走過的路徑長 L 剛好等於位移的大小 |Δx|，因此平均速率等於平均速度的大小！' }
+    };
+
+    document.querySelectorAll('.quiz-item').forEach(item => {
+      const qNum = item.getAttribute('data-q');
+      const correctAns = quizAnswers[qNum].ans;
+      const fbBox = item.querySelector('.quiz-fb');
+
+      item.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-ans');
+          item.querySelectorAll('.quiz-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            if (b.getAttribute('data-ans') === correctAns) b.classList.add('correct');
+            else if (b === btn) b.classList.add('wrong');
+          });
+          if (selected === correctAns) {
+            fbBox.className = 'quiz-fb correct';
+            fbBox.textContent = `🎉 答對了！${quizAnswers[qNum].exp}`;
+          } else {
+            fbBox.className = 'quiz-fb wrong';
+            fbBox.textContent = `❌ 答錯囉！${quizAnswers[qNum].exp}`;
+          }
+        });
+      });
+    });
+
+    resizeCanvas();
+    loop();
+  </script>
+</body>
+</html>

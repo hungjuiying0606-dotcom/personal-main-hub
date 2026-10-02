@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 等加速度運動頻閃照相：點距差 Δx=a·Δt² 加速度量測儀 (綜合卷第20題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #16a34a;
+      --accent-orange: #ea580c;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { display: flex; flex-direction: column; }
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white; padding: 0.35rem 1rem; height: 38px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-back {
+      color: white; text-decoration: none; font-size: 0.76rem; font-weight: 800;
+      background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+    .header-left h1 { font-size: 0.92rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .badge { background: #fcd34d; color: #78350f; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.7rem; font-weight: 900; }
+    .header-info { font-size: 0.72rem; opacity: 0.95; font-weight: 600; }
+
+    main {
+      flex: 1; padding: 0.45rem 0.75rem; display: grid;
+      grid-template-columns: 1.25fr 1fr; gap: 0.6rem;
+      min-height: 0; max-width: 1440px; width: 100%; margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    .canvas-container {
+      flex: 1; position: relative; background: #ffffff; min-height: 0;
+    }
+    canvas { display: block; width: 100%; height: 100%; }
+
+    .control-panel {
+      padding: 0.55rem 0.85rem; display: flex; flex-direction: column;
+      gap: 0.45rem; overflow-y: auto; background: #fdfdfe;
+    }
+    .section-title {
+      font-size: 0.85rem; font-weight: 900; color: #0369a1;
+      display: flex; align-items: center; gap: 0.3rem; border-bottom: 2px solid #e0f2fe; padding-bottom: 0.2rem;
+    }
+    .problem-box {
+      background: #eff6ff; border-left: 4px solid #0284c7;
+      padding: 0.4rem 0.6rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.8rem; line-height: 1.35; color: #1e3a8a;
+    }
+    .problem-box strong { color: #1d4ed8; font-weight: 800; }
+
+    .control-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.5rem; background: #f8fafc; padding: 0.35rem 0.6rem;
+      border: 1px solid #e2e8f0; border-radius: var(--radius-sm);
+    }
+    .control-row label { font-size: 0.78rem; font-weight: 700; color: #334155; }
+    .control-row input[type="range"] { flex: 1; max-width: 150px; cursor: pointer; }
+    .control-row .val-tag {
+      font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 800;
+      color: #0369a1; min-width: 58px; text-align: right;
+    }
+
+    .btn-row { display: flex; gap: 0.4rem; }
+    .btn {
+      flex: 1; border: none; padding: 0.4rem 0.5rem; border-radius: var(--radius-sm);
+      font-size: 0.78rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+      transition: all 0.15s ease;
+    }
+    .btn-primary { background: #0284c7; color: white; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary { background: #e2e8f0; color: #334155; }
+    .btn-secondary:hover { background: #cbd5e1; }
+    .btn-flash { background: #ea580c; color: white; }
+    .btn-flash:hover { background: #c2410c; }
+
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem;
+    }
+    .metric-card {
+      background: white; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem; text-align: center;
+    }
+    .metric-card.highlight {
+      border-color: #f59e0b; background: #fffbeb;
+    }
+    .metric-label { font-size: 0.68rem; color: #64748b; font-weight: 700; margin-bottom: 0.1rem; }
+    .metric-val {
+      font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 900;
+      color: #0284c7; line-height: 1.1;
+    }
+    .metric-unit { font-size: 0.65rem; color: #94a3b8; font-weight: 600; margin-left: 2px; }
+
+    .formula-banner {
+      background: #f0fdf4; border: 1.5px dashed #86efac; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem; font-size: 0.75rem; line-height: 1.4; color: #166534;
+    }
+    .formula-banner .title { font-weight: 900; font-size: 0.8rem; margin-bottom: 0.15rem; color: #15803d; }
+    .formula-banner code {
+      background: #dcfce7; padding: 0.1rem 0.35rem; border-radius: 3px;
+      font-family: 'Outfit', monospace; font-weight: 800; color: #166534;
+    }
+
+    .qa-box {
+      background: #fefce8; border: 1.5px solid #fef08a; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem; font-size: 0.76rem; line-height: 1.35; color: #854d0e;
+    }
+    .qa-box strong { color: #a16207; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="./index.html" class="btn-back">← 回自然實驗室</a>
+      <h1>小球等加速度頻閃攝影：點距差推算加速度實驗室</h1>
+      <span class="badge">綜合卷第 20 題</span>
+    </div>
+    <div class="header-info">九年級理化 · 直線等加速度運動與頻閃照相</div>
+  </header>
+
+  <main>
+    <!-- 左側畫布區：頻閃照相軌跡 + 刻度尺 + 即時小球滾動動畫 -->
+    <div class="card">
+      <div class="canvas-container">
+        <canvas id="strobeCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- 右側控制與解析面板 -->
+    <div class="card control-panel">
+      <div class="section-title">📝 原題題目與情境解析</div>
+      <div class="problem-box">
+        <strong>【原題 20】</strong>一小球在水平桌面上沿直線向東滾動，以每隔 <strong>0.1 秒</strong> 閃光一次的照相機拍攝，得到小球位置如下圖（位置由左至右分別為 A、B、C、D）。若 AB 距離為 <strong>1 m</strong>、BC 距離為 <strong>2 m</strong>、CD 距離為 <strong>3 m</strong>，則小球的加速度大小為何？<br>
+        <strong>(A) 10 m/s²　(B) 20 m/s²　(C) 50 m/s²　(D) 100 m/s²</strong>
+      </div>
+
+      <div class="section-title">⚙️ 實驗與觀測控制</div>
+      <div class="control-row">
+        <label>閃光間隔 Δt</label>
+        <input type="range" id="deltaTRange" min="0.05" max="0.2" step="0.01" value="0.1">
+        <span class="val-tag" id="deltaTVal">0.10 s</span>
+      </div>
+      <div class="control-row">
+        <label>點距差 Δ(Δx)</label>
+        <input type="range" id="diffRange" min="0.5" max="2.0" step="0.1" value="1.0">
+        <span class="val-tag" id="diffVal">1.0 m</span>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnPlay">▶ 播放小球滾動</button>
+        <button class="btn btn-flash" id="btnStrobe">📸 頻閃定格曝光</button>
+        <button class="btn btn-secondary" id="btnReset">↺ 重置原題數據</button>
+      </div>
+
+      <div class="section-title">📊 點間數據與遙測指標</div>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">AB 區間位移</div>
+          <div class="metric-val" id="metricAB">1.0<span class="metric-unit">m</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">BC 區間位移</div>
+          <div class="metric-val" id="metricBC">2.0<span class="metric-unit">m</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">CD 區間位移</div>
+          <div class="metric-val" id="metricCD">3.0<span class="metric-unit">m</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">相鄰位移差 Δx</div>
+          <div class="metric-val" id="metricDiff">1.0<span class="metric-unit">m</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">閃光週期 Δt</div>
+          <div class="metric-val" id="metricDt">0.10<span class="metric-unit">s</span></div>
+        </div>
+        <div class="metric-card highlight">
+          <div class="metric-label">推算加速度 a</div>
+          <div class="metric-val" id="metricAccel" style="color: #b45309;">100<span class="metric-unit">m/s²</span></div>
+        </div>
+      </div>
+
+      <div class="section-title">📐 物理規律與公式推導</div>
+      <div class="formula-banner">
+        <div class="title">💡 等加速度點距差金牌公式：Δ(Δx) = a · (Δt)²</div>
+        連續相鄰等時間隔位移差：<code>Δx = x₂ - x₁ = a × (Δt)²</code><br>
+        代入本題數據：<code>1 m = a × (0.1 s)² = a × 0.01 s²</code><br>
+        兩邊同除以 0.01 ➔ <code>a = 1 ÷ 0.01 = 100 m/s²</code>（方向向東）
+      </div>
+
+      <div class="qa-box">
+        <strong>💡 觀念名師拆解：</strong><br>
+        1. <strong>平均速度法</strong>：AB 均速 = 1/0.1 = 10 m/s（對應 t=0.05s）；BC 均速 = 2/0.1 = 20 m/s（對應 t=0.15s）。<br>
+        2. 加速度 a = (20 - 10) / (0.15 - 0.05) = 10 / 0.1 = <strong>100 m/s²</strong>，答案選 <strong>(D)</strong>。
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('strobeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const deltaTRange = document.getElementById('deltaTRange');
+    const diffRange = document.getElementById('diffRange');
+    const deltaTVal = document.getElementById('deltaTVal');
+    const diffVal = document.getElementById('diffVal');
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnStrobe = document.getElementById('btnStrobe');
+    const btnReset = document.getElementById('btnReset');
+
+    const metricAB = document.getElementById('metricAB');
+    const metricBC = document.getElementById('metricBC');
+    const metricCD = document.getElementById('metricCD');
+    const metricDiff = document.getElementById('metricDiff');
+    const metricDt = document.getElementById('metricDt');
+    const metricAccel = document.getElementById('metricAccel');
+
+    let dt = 0.1;
+    let deltaX = 1.0; // 相鄰位移差
+    let baseAB = 1.0;
+
+    let isPlaying = false;
+    let animProgress = 0; // 0 ~ 1 (代表從 0 到 3*dt 的滾動過程)
+    let animStartTime = null;
+    let showFlashes = true;
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      draw();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function updateCalculations() {
+      dt = parseFloat(deltaTRange.value);
+      deltaX = parseFloat(diffRange.value);
+      baseAB = deltaX; // 標準情形 baseAB 與 deltaX 比例
+
+      deltaTVal.textContent = dt.toFixed(2) + ' s';
+      diffVal.textContent = deltaX.toFixed(1) + ' m';
+
+      const sAB = baseAB;
+      const sBC = baseAB + deltaX;
+      const sCD = baseAB + 2 * deltaX;
+
+      const a = deltaX / (dt * dt);
+
+      metricAB.innerHTML = sAB.toFixed(1) + '<span class="metric-unit">m</span>';
+      metricBC.innerHTML = sBC.toFixed(1) + '<span class="metric-unit">m</span>';
+      metricCD.innerHTML = sCD.toFixed(1) + '<span class="metric-unit">m</span>';
+      metricDiff.innerHTML = deltaX.toFixed(1) + '<span class="metric-unit">m</span>';
+      metricDt.innerHTML = dt.toFixed(2) + '<span class="metric-unit">s</span>';
+      metricAccel.innerHTML = Math.round(a) + '<span class="metric-unit">m/s²</span>';
+
+      draw();
+    }
+
+    deltaTRange.addEventListener('input', updateCalculations);
+    diffRange.addEventListener('input', updateCalculations);
+
+    btnPlay.addEventListener('click', () => {
+      isPlaying = true;
+      animStartTime = performance.now();
+      requestAnimationFrame(animateBall);
+    });
+
+    btnStrobe.addEventListener('click', () => {
+      showFlashes = !showFlashes;
+      btnStrobe.textContent = showFlashes ? '📸 頻閃定格曝光' : '📷 即時運動視野';
+      draw();
+    });
+
+    btnReset.addEventListener('click', () => {
+      deltaTRange.value = 0.1;
+      diffRange.value = 1.0;
+      showFlashes = true;
+      btnStrobe.textContent = '📸 頻閃定格曝光';
+      updateCalculations();
+    });
+
+    function animateBall(timestamp) {
+      if (!isPlaying) return;
+      const totalDuration = 2000; // 2 秒慢動作呈現
+      const elapsed = timestamp - animStartTime;
+      animProgress = Math.min(elapsed / totalDuration, 1.0);
+
+      draw();
+
+      if (animProgress < 1.0) {
+        requestAnimationFrame(animateBall);
+      } else {
+        isPlaying = false;
+      }
+    }
+
+    function draw() {
+      const w = canvas.width / window.devicePixelRatio;
+      const h = canvas.height / window.devicePixelRatio;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // 背景微網格
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 30) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let y = 0; y < h; y += 30) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // 上方標題與示意
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 16px "Noto Sans TC"';
+      ctx.fillText('實驗軌跡與閃光底片觀測台 (每隔 Δt 曝光一次)', 25, 35);
+
+      // 箭頭：運動方向向東
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '800 13px "Noto Sans TC"';
+      ctx.fillText('運動方向：向東 →', w - 160, 35);
+
+      // 軌道基準線
+      const trackY = h * 0.45;
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(30, trackY + 18);
+      ctx.lineTo(w - 30, trackY + 18);
+      ctx.stroke();
+
+      // 計算 A, B, C, D 座標
+      // 總位移 = sAB + sBC + sCD = baseAB + (baseAB + deltaX) + (baseAB + 2*deltaX)
+      const sAB = baseAB;
+      const sBC = baseAB + deltaX;
+      const sCD = baseAB + 2 * deltaX;
+      const totalDist = sAB + sBC + sCD;
+
+      const trackStartX = 60;
+      const trackEndX = w - 80;
+      const availableWidth = trackEndX - trackStartX;
+
+      const posA = trackStartX;
+      const posB = trackStartX + (sAB / totalDist) * availableWidth;
+      const posC = posB + (sBC / totalDist) * availableWidth;
+      const posD = posC + (sCD / totalDist) * availableWidth;
+
+      const points = [
+        { name: 'A', x: posA, dist: 0, label: 't = 0' },
+        { name: 'B', x: posB, dist: sAB, label: `t = ${dt.toFixed(2)}s` },
+        { name: 'C', x: posC, dist: sAB + sBC, label: `t = ${(2*dt).toFixed(2)}s` },
+        { name: 'D', x: posD, dist: totalDist, label: `t = ${(3*dt).toFixed(2)}s` }
+      ];
+
+      // 畫區間標記箭頭與長度文字
+      const drawInterval = (p1, p2, text, color, offset) => {
+        const y = trackY - offset;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        // 橫線
+        ctx.beginPath();
+        ctx.moveTo(p1.x, y);
+        ctx.lineTo(p2.x, y);
+        ctx.stroke();
+        // 兩端箭頭 / 短垂線
+        ctx.beginPath();
+        ctx.moveTo(p1.x, y - 5); ctx.lineTo(p1.x, y + 5);
+        ctx.moveTo(p2.x, y - 5); ctx.lineTo(p2.x, y + 5);
+        ctx.stroke();
+
+        // 標籤背景
+        ctx.fillStyle = '#ffffff';
+        const midX = (p1.x + p2.x) / 2;
+        ctx.font = '800 13px "Outfit"';
+        const tw = ctx.measureText(text).width;
+        ctx.fillRect(midX - tw/2 - 4, y - 9, tw + 8, 18);
+
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.fillText(text, midX, y + 4);
+        ctx.textAlign = 'start';
+      };
+
+      drawInterval(points[0], points[1], `${sAB.toFixed(1)} m`, '#0284c7', 35);
+      drawInterval(points[1], points[2], `${sBC.toFixed(1)} m`, '#0284c7', 35);
+      drawInterval(points[2], points[3], `${sCD.toFixed(1)} m`, '#0284c7', 35);
+
+      // 下方畫點距差對比 Δx
+      drawInterval(points[0], points[1], '間距 1', '#64748b', -35);
+      drawInterval(points[1], points[2], `+${deltaX.toFixed(1)} m`, '#ea580c', -35);
+      drawInterval(points[2], points[3], `+${deltaX.toFixed(1)} m`, '#ea580c', -35);
+
+      // 繪製頻閃定格小球（若開啟）
+      if (showFlashes) {
+        points.forEach((p, idx) => {
+          // 閃光外暈
+          const grad = ctx.createRadialGradient(p.x, trackY, 5, p.x, trackY, 26);
+          grad.addColorStop(0, 'rgba(251, 191, 36, 0.7)');
+          grad.addColorStop(1, 'rgba(251, 191, 36, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, trackY, 26, 0, Math.PI * 2);
+          ctx.fill();
+
+          // 定格小球
+          ctx.fillStyle = '#0284c7';
+          ctx.beginPath();
+          ctx.arc(p.x, trackY, 14, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // 點名稱 (A, B, C, D)
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '900 13px "Outfit"';
+          ctx.textAlign = 'center';
+          ctx.fillText(p.name, p.x, trackY + 5);
+
+          // 時間標記
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '700 11px "Outfit"';
+          ctx.fillText(p.label, p.x, trackY + 34);
+          ctx.textAlign = 'start';
+        });
+      }
+
+      // 動畫小球（如果正在播放或進度存在）
+      if (isPlaying || animProgress > 0) {
+        // 等加速運動位移公式：x(t) 隨 t^2 增長
+        // t 從 0 到 1，x 比例為 t^2 (若初速非零則不同，但此題等差數列代表等加速)
+        // 這裡準確插值：
+        const curX = posA + (posD - posA) * Math.pow(animProgress, 1.8);
+
+        // 滾動小球實體
+        ctx.fillStyle = '#ea580c';
+        ctx.beginPath();
+        ctx.arc(curX, trackY, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // 速度向量箭頭 (隨加速度變長)
+        const velArrowLen = 20 + animProgress * 45;
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(curX + 16, trackY);
+        ctx.lineTo(curX + 16 + velArrowLen, trackY);
+        ctx.stroke();
+        // 箭頭尖端
+        ctx.beginPath();
+        ctx.moveTo(curX + 16 + velArrowLen - 6, trackY - 4);
+        ctx.lineTo(curX + 16 + velArrowLen, trackY);
+        ctx.lineTo(curX + 16 + velArrowLen - 6, trackY + 4);
+        ctx.fillStyle = '#ea580c';
+        ctx.fill();
+
+        ctx.fillStyle = '#ea580c';
+        ctx.font = '800 11px "Outfit"';
+        ctx.fillText('v(t)', curX + 16 + velArrowLen + 4, trackY + 4);
+      }
+
+      // 底部說明文字板
+      const boxY = h * 0.72;
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(25, boxY, w - 50, h - boxY - 15);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(25, boxY, w - 50, h - boxY - 15);
+
+      ctx.fillStyle = '#0369a1';
+      ctx.font = '900 13px "Noto Sans TC"';
+      ctx.fillText('🔍 頻閃底片視覺結論：', 40, boxY + 22);
+
+      ctx.fillStyle = '#334155';
+      ctx.font = '500 12px "Noto Sans TC"';
+      const line1 = `• 小球在相等時間間隔 Δt = ${dt.toFixed(2)}s 內，移動距離分別為 ${sAB.toFixed(1)}m、${sBC.toFixed(1)}m、${sCD.toFixed(1)}m。`;
+      const line2 = `• 連續間隔差均為 Δ(Δx) = ${deltaX.toFixed(1)}m，表示加速度 a 恆定（等加速度運動）。`;
+      const line3 = `• 經公式 a = Δ(Δx) / (Δt)² 計算得 a = ${Math.round(deltaX / (dt*dt))} m/s²。`;
+      ctx.fillText(line1, 40, boxY + 42);
+      ctx.fillText(line2, 40, boxY + 62);
+      ctx.fillText(line3, 40, boxY + 82);
+    }
+
+    // 初始化畫布
+    window.onload = () => {
+      resizeCanvas();
+      updateCalculations();
+    };
+  </script>
+</body>
+</html>

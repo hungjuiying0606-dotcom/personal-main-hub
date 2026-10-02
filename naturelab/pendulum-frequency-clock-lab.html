@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 單擺次數-時間圖 X/Y區斜率 ＋ 催眠懷錶 0.8s 週期分析儀 (綜合卷第2、3題＋題組1)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #d97706;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { display: flex; flex-direction: column; }
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white;
+      padding: 0.35rem 1rem;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-back {
+      color: white; text-decoration: none; font-size: 0.76rem; font-weight: 800;
+      background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+    .header-left h1 { font-size: 0.92rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .badge { background: #fcd34d; color: #78350f; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.7rem; font-weight: 900; }
+    .header-info { font-size: 0.72rem; opacity: 0.95; font-weight: 600; }
+
+    main {
+      flex: 1; padding: 0.45rem 0.75rem; display: grid;
+      grid-template-columns: 1.25fr 1fr; gap: 0.6rem;
+      min-height: 0; max-width: 1440px; width: 100%; margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    .canvas-container {
+      flex: 1; position: relative; background: #ffffff; min-height: 0;
+      display: flex; flex-direction: column; border-bottom: 1.5px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute; top: 6px; left: 8px; right: 8px;
+      background: rgba(255, 255, 255, 0.94); border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm); padding: 0.25rem 0.6rem;
+      font-size: 0.74rem; font-weight: 700; display: flex; justify-content: space-between; z-index: 5;
+    }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+
+    canvas.stage-canvas { width: 100%; height: 100%; display: block; }
+
+    .control-panel {
+      padding: 0.45rem 0.65rem; background: #f1f5f9; display: flex; flex-direction: column; gap: 0.35rem; flex-shrink: 0;
+    }
+    .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+    .btn-group { display: flex; align-items: center; gap: 0.3rem; }
+    .btn {
+      padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 800;
+      border-radius: var(--radius-sm); border: 1.5px solid #cbd5e1; background: white; cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .scrubber-container { display: flex; align-items: center; gap: 0.4rem; flex: 1; margin-left: 0.2rem; }
+    .scrubber-container input[type="range"] { flex: 1; height: 6px; accent-color: var(--primary); cursor: pointer; }
+
+    .sliders-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem;
+      background: white; padding: 0.3rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
+    }
+    .slider-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .slider-header { display: flex; justify-content: space-between; font-size: 0.68rem; font-weight: 700; color: #475569; }
+    .slider-header span.val { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--primary-dark); }
+    .slider-item input[type="range"] { height: 4px; accent-color: var(--primary); cursor: pointer; }
+
+    .right-col { display: flex; flex-direction: column; gap: 0.45rem; min-height: 0; }
+    .telemetry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; flex-shrink: 0; }
+    .t-card {
+      background: white; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem; text-align: center;
+    }
+    .t-card.t-a { border-color: #93c5fd; background: #eff6ff; }
+    .t-card.t-b { border-color: #fde047; background: #fefce8; }
+    .t-card.t-w { border-color: #fca5a5; background: #fef2f2; }
+    .t-title { font-size: 0.68rem; font-weight: 800; color: #475569; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; line-height: 1.2; }
+    .t-sub { font-size: 0.66rem; font-weight: 700; color: #64748b; }
+
+    .tab-container {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: white; border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    }
+    .tab-bar {
+      display: flex; background: #f1f5f9; border-bottom: 1.5px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem; gap: 0.3rem; flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.35rem 0.75rem; font-size: 0.76rem; font-weight: 800;
+      border: 1.5px solid transparent; border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent; cursor: pointer; color: #64748b;
+    }
+    .tab-btn.active { background: white; color: var(--primary-dark); border-color: var(--border); font-weight: 900; }
+    .tab-content { flex: 1; padding: 0.55rem 0.75rem; overflow-y: auto; font-size: 0.78rem; line-height: 1.5; }
+
+    .formula-step {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-left: 4px solid var(--primary);
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem;
+    }
+    .formula-step strong { color: #0369a1; }
+    .formula-step code { background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px; font-weight: 800; font-size: 0.75rem; }
+
+    .key-alert {
+      background: #fffbeb; border: 1.5px solid #fde68a; border-left: 4px solid #d97706;
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem; font-weight: 700; color: #92400e;
+    }
+    .quiz-item {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem; margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.35rem; color: #0f172a; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+    .quiz-btn {
+      padding: 0.3rem 0.5rem; font-size: 0.74rem; font-weight: 800; border: 1.5px solid #cbd5e1;
+      border-radius: 5px; background: white; cursor: pointer; text-align: left;
+    }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb { font-size: 0.74rem; font-weight: 700; margin-top: 0.3rem; padding: 0.3rem 0.45rem; border-radius: 4px; display: none; }
+    .quiz-fb.correct { display: block; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .quiz-fb.wrong { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="btn-back">❮ 回主網頁</a>
+      <h1>
+        <span>⏱️ 單擺關係圖 X/Y區斜率 ＋ 催眠懷錶 0.8s 週期分析儀</span>
+        <span class="badge">綜合卷 03 卷第3題＋題組1</span>
+      </h1>
+    </div>
+    <div class="header-info">擺長決定週期 ｜ 斜率＝頻率＝次數/時間 ｜ 擺長愈長週期愈大斜率愈平緩 ｜ T = 60/75 = 0.8s</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>🔵 A擺(20cm): <strong class="hud-val" id="hudA">T=0.90s (頻率高)</strong></span>
+          <span>🟠 B擺(80cm): <strong class="hud-val" id="hudB">T=1.80s (頻率低)</strong></span>
+          <span>⏳ 懷錶(75次/分): <strong class="hud-val" id="hudWatch">T=0.80s (f=1.25Hz)</strong></span>
+        </div>
+        <canvas id="pendulumCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnPlay">▶ 播放</button>
+            <button class="btn" id="btnReset">↺ 重置</button>
+          </div>
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間軸:</label>
+            <input type="range" id="timeScrubber" min="0" max="60" step="0.1" value="0">
+          </div>
+        </div>
+        <div class="sliders-row">
+          <div class="slider-item">
+            <div class="slider-header"><span>自訂C擺長度</span><span class="val" id="valCustomLen">50 cm (Y區)</span></div>
+            <input type="range" id="sliderCustomLen" min="10" max="120" step="5" value="50">
+          </div>
+          <div class="slider-item">
+            <div class="slider-header"><span>懷錶擺動次數/分</span><span class="val" id="valWatchBpm">75 次 (T=0.8s)</span></div>
+            <input type="range" id="sliderWatchBpm" min="40" max="100" step="5" value="75">
+          </div>
+          <div class="slider-item">
+            <div class="slider-header"><span>觀測總時間</span><span class="val" id="valSimTime">60 秒</span></div>
+            <input type="range" id="sliderSimTime" min="20" max="100" step="10" value="60">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="right-col">
+      <div class="telemetry-grid">
+        <div class="t-card t-a">
+          <div class="t-title">A 擺 (20cm)</div>
+          <div class="t-val" id="tCardA" style="color:#0284c7;">50次 / 45s</div>
+          <div class="t-sub">斜率大 ➔ 週期短</div>
+        </div>
+        <div class="t-card t-b">
+          <div class="t-title">B 擺 (80cm)</div>
+          <div class="t-val" id="tCardB" style="color:#b45309;">25次 / 45s</div>
+          <div class="t-sub">斜率小 ➔ 週期長</div>
+        </div>
+        <div class="t-card t-w">
+          <div class="t-title">催眠懷錶 (75次/分)</div>
+          <div class="t-val" id="tCardW" style="color:#b91c1c;">T = 0.80 秒</div>
+          <div class="t-sub">加長鏈長使擺動變慢</div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tabAnalysis">📖 核心破題與斜率分區解析</button>
+          <button class="tab-btn" data-tab="tabQuiz">📝 原題即測即評 (共3題)</button>
+        </div>
+
+        <div class="tab-content" id="tabAnalysis">
+          <div class="key-alert">
+            🚨 <strong>大屏高對比核心公式：斜率 ＝ 擺動次數 / 時間 ＝ 頻率 f ＝ 1 / 週期 T</strong><br>
+            • 擺長愈長 ➔ 週期 T 愈大 ➔ 擺動愈慢 ➔ 單位時間次數愈少 ➔ <strong>斜率愈平緩（靠向 Z 區）</strong>！<br>
+            • 擺長愈短 ➔ 週期 T 愈小 ➔ 擺動愈快 ➔ 單位時間次數愈多 ➔ <strong>斜率愈陡峭（靠向 X 區）</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>❶ 第 3 題：A 擺(20cm) vs B 擺(80cm) 之 X、Y、Z 區定位</strong><br>
+            • A 擺長 20cm，B 擺長 80cm。<br>
+            • <strong>X 區（A 之上方）</strong>：擺長小於 20cm（如 15cm），擺動最快。<br>
+            • <strong>Y 區（A、B 之間）</strong>：擺長介於 20cm～80cm 之間（如 50cm）。<br>
+            • <strong>Z 區（B 之下方）</strong>：擺長大於 80cm（如 100cm），擺動最慢！<br>
+            • 選項 (A) 稱「擺長 100cm 應在 X 區」為<strong>嚴重錯誤（應在 Z 區）</strong>，故選 <strong>(A)</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>❷ 題組 1 (1)：催眠懷錶 1 分鐘擺動 75 次求週期 T</strong><br>
+            • 1 分鐘 ＝ 60 秒。<br>
+            • 週期 T ＝ 總時間 / 總次數 ＝ <code>60 秒 / 75 次 ＝ 0.8 秒</code>！➔ <strong>選 (B)</strong>
+          </div>
+
+          <div class="formula-step">
+            <strong>❸ 題組 1 (2)：想使懷錶擺動變慢一些，該如何操作？</strong><br>
+            • 「擺動變慢」代表<strong>週期變大</strong>。<br>
+            • 影響單擺週期的唯一關鍵是<strong>擺長</strong>（與擺錘質量、黏紙黏土無關）！<br>
+            • 擺長愈長、週期愈大，故應<strong>加長懷錶錶鏈長度</strong> ➔ <strong>選 (A)</strong>！
+          </div>
+        </div>
+
+        <div class="tab-content" id="tabQuiz" style="display:none;">
+          <div class="quiz-item" data-q="1">
+            <p>1. 小悠單擺實驗：A擺長20cm、B擺長80cm繪製如圖，下列何者「錯誤」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 若擺長100cm應在X區</button>
+              <button class="quiz-btn" data-ans="B">(B) 次數與時間成正比</button>
+              <button class="quiz-btn" data-ans="C">(C) C擺在Y區則20&lt;長&lt;80</button>
+              <button class="quiz-btn" data-ans="D">(D) 若擺長15cm應在X區</button>
+            </div>
+            <div class="quiz-fb" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item" data-q="2">
+            <p>2. 小華測量懷錶擺動週期，1 分鐘擺動 75 次，則擺動週期為多少秒？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 1/30</button>
+              <button class="quiz-btn" data-ans="B">(B) 0.8</button>
+              <button class="quiz-btn" data-ans="C">(C) 1.25</button>
+              <button class="quiz-btn" data-ans="D">(D) 30</button>
+            </div>
+            <div class="quiz-fb" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item" data-q="3">
+            <p>3. 小明發現懷錶擺動得太快，若想使懷錶擺動得慢一些，應如何做？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 加長懷錶錶鏈長度</button>
+              <button class="quiz-btn" data-ans="B">(B) 減短懷錶錶鏈長度</button>
+              <button class="quiz-btn" data-ans="C">(C) 拆下懷錶只留錶鏈</button>
+              <button class="quiz-btn" data-ans="D">(D) 在懷錶上黏紙黏土</button>
+            </div>
+            <div class="quiz-fb" id="fb3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('pendulumCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let simTime = 0;
+    let maxTime = 60;
+    let isPlaying = true;
+    let customLen = 50;
+    let watchBpm = 75;
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const timeScrubber = document.getElementById('timeScrubber');
+    const sliderCustomLen = document.getElementById('sliderCustomLen');
+    const sliderWatchBpm = document.getElementById('sliderWatchBpm');
+    const sliderSimTime = document.getElementById('sliderSimTime');
+    const valCustomLen = document.getElementById('valCustomLen');
+    const valWatchBpm = document.getElementById('valWatchBpm');
+    const valSimTime = document.getElementById('valSimTime');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawStage() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+
+      // 雙子視圖：左側動態單擺 (40% 寬度)，右側次數-時間關係圖 (60% 寬度)
+      const leftW = w * 0.38;
+      const rightX = leftW + 20;
+      const rightW = w - rightX - 25;
+
+      // 1. 左側單擺動態
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, leftW, h);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(0, 0, leftW, h);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px "Noto Sans TC"';
+      ctx.fillText('實時單擺動態 (擺長決定頻率)', 12, 22);
+
+      // 繪製三個擺：A擺 (20cm), 自訂C擺, B擺 (80cm)
+      const pendulums = [
+        { name: 'A擺 (20cm)', len: 20, color: '#0284c7', x: leftW * 0.22 },
+        { name: `C擺 (${customLen}cm)`, len: customLen, color: '#d97706', x: leftW * 0.52 },
+        { name: 'B擺 (80cm)', len: 80, color: '#b45309', x: leftW * 0.82 }
+      ];
+
+      const topY = 40;
+      const maxDrawLen = h * 0.65;
+
+      pendulums.forEach(p => {
+        // 週期與角度
+        const T = 2 * Math.PI * Math.sqrt((p.len / 100) / 9.8);
+        const theta = 0.28 * Math.cos((simTime * 2 * Math.PI) / T);
+        const drawLen = 45 + (p.len / 100) * (maxDrawLen - 45);
+
+        const bobX = p.x + drawLen * Math.sin(theta);
+        const bobY = topY + drawLen * Math.cos(theta);
+
+        // 擺繩
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(p.x, topY);
+        ctx.lineTo(bobX, bobY);
+        ctx.stroke();
+
+        // 擺錘
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(bobX, bobY, 11, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 標籤
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 10px "Noto Sans TC"';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.name, p.x, h - 18);
+        ctx.font = 'bold 9px "Outfit"';
+        ctx.fillText(`T=${T.toFixed(2)}s`, p.x, h - 6);
+        ctx.textAlign = 'left';
+      });
+
+      // 2. 右側 次數-時間關係圖 (X, Y, Z 分區)
+      const originX = rightX + 45;
+      const originY = h - 45;
+      const chartW = rightW - 55;
+      const chartH = h - 85;
+
+      // 坐標軸
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(originX, originY - chartH);
+      ctx.lineTo(originX, originY);
+      ctx.lineTo(originX + chartW, originY);
+      ctx.stroke();
+
+      // 坐標軸標籤
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px "Noto Sans TC"';
+      ctx.fillText('擺動時間 t (秒)', originX + chartW - 75, originY + 28);
+      ctx.save();
+      ctx.translate(originX - 30, originY - chartH + 30);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('擺動次數 (次)', 0, 0);
+      ctx.restore();
+
+      // 網格與刻度
+      ctx.font = 'bold 10px "Outfit"';
+      ctx.fillStyle = '#64748b';
+      for (let t = 20; t <= 100; t += 20) {
+        const x = originX + (t / 100) * chartW;
+        ctx.fillText(t, x - 8, originY + 16);
+      }
+      for (let n = 10; n <= 50; n += 10) {
+        const y = originY - (n / 50) * chartH;
+        ctx.fillText(n, originX - 22, y + 4);
+      }
+
+      // A 擺線 (20cm: 100s 約 110 次，繪製至圖表邊界)
+      // 在原題圖中：A 擺 (80s 時約 50次 ➔ 斜率 50/80 = 0.625)
+      // B 擺 (100s 時約 28次 ➔ 斜率 28/100 = 0.28)
+      const slopeA = 50 / 80;
+      const slopeB = 28 / 100;
+      const slopeC = (50 / 80) * Math.sqrt(20 / customLen);
+
+      // 繪製分區 X, Y, Z
+      ctx.font = 'bold 22px "Outfit"';
+      ctx.fillStyle = 'rgba(2, 132, 199, 0.25)';
+      ctx.fillText('X 區 (擺長 < 20cm)', originX + chartW * 0.2, originY - chartH * 0.7);
+
+      ctx.fillStyle = 'rgba(217, 119, 6, 0.25)';
+      ctx.fillText('Y 區 (20cm < 長 < 80cm)', originX + chartW * 0.45, originY - chartH * 0.4);
+
+      ctx.fillStyle = 'rgba(180, 83, 9, 0.25)';
+      ctx.fillText('Z 區 (擺長 > 80cm)', originX + chartW * 0.65, originY - chartH * 0.15);
+
+      // A 擺曲線 (藍色)
+      drawLine(originX, originY, slopeA, chartW, chartH, '#0284c7', 3.5, 'A擺 (20cm)');
+
+      // B 擺曲線 (深橘)
+      drawLine(originX, originY, slopeB, chartW, chartH, '#b45309', 3.5, 'B擺 (80cm)');
+
+      // C 擺曲線 (即時自訂金色)
+      drawLine(originX, originY, slopeC, chartW, chartH, '#ea580c', 2.5, `C擺 (${customLen}cm)`);
+    }
+
+    function drawLine(ox, oy, slope, maxW, maxH, color, lw, label) {
+      const endT = 100;
+      const endN = slope * endT;
+      const endX = ox + maxW;
+      const endY = oy - (endN / 50) * maxH;
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lw;
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(endX, Math.max(oy - maxH, endY));
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.font = 'bold 11px "Noto Sans TC"';
+      ctx.fillText(label, endX - 70, Math.max(oy - maxH + 12, endY - 6));
+    }
+
+    function loop() {
+      if (isPlaying) {
+        simTime += 0.03;
+        if (simTime > maxTime) simTime = 0;
+        timeScrubber.value = simTime;
+        drawStage();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    btnPlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸ 暫停' : '▶ 播放';
+    });
+    btnReset.addEventListener('click', () => { simTime = 0; timeScrubber.value = 0; drawStage(); });
+    timeScrubber.addEventListener('input', (e) => { simTime = parseFloat(e.target.value); drawStage(); });
+
+    sliderCustomLen.addEventListener('input', (e) => {
+      customLen = parseFloat(e.target.value);
+      const zone = customLen < 20 ? 'X區' : (customLen <= 80 ? 'Y區' : 'Z區');
+      valCustomLen.textContent = `${customLen} cm (${zone})`;
+      drawStage();
+    });
+
+    sliderWatchBpm.addEventListener('input', (e) => {
+      watchBpm = parseFloat(e.target.value);
+      const t = (60 / watchBpm).toFixed(2);
+      valWatchBpm.textContent = `${watchBpm} 次 (T=${t}s)`;
+      document.getElementById('hudWatch').textContent = `T=${t}s (f=${(watchBpm/60).toFixed(2)}Hz)`;
+      document.getElementById('tCardW').textContent = `T = ${t} 秒`;
+      drawStage();
+    });
+
+    sliderSimTime.addEventListener('input', (e) => {
+      maxTime = parseFloat(e.target.value);
+      timeScrubber.max = maxTime;
+      valSimTime.textContent = `${maxTime} 秒`;
+      drawStage();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById('tabAnalysis').style.display = tabId === 'tabAnalysis' ? 'block' : 'none';
+        document.getElementById('tabQuiz').style.display = tabId === 'tabQuiz' ? 'block' : 'none';
+      });
+    });
+
+    const quizAnswers = {
+      1: { ans: 'A', exp: '正解 (A)。100cm 擺長大於 80cm，週期更長、擺動更慢，圖形必落於 B 擺之下的 Z 區，非 X 區！' },
+      2: { ans: 'B', exp: '正解 (B) 0.8 秒。週期 T ＝ 60 秒 / 75 次 ＝ 0.8 秒。' },
+      3: { ans: 'A', exp: '正解 (A) 加長錶鏈長度。擺長愈長，擺動週期愈大（擺得愈慢）。' }
+    };
+
+    document.querySelectorAll('.quiz-item').forEach(item => {
+      const qNum = item.getAttribute('data-q');
+      const correctAns = quizAnswers[qNum].ans;
+      const fbBox = item.querySelector('.quiz-fb');
+
+      item.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-ans');
+          item.querySelectorAll('.quiz-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            if (b.getAttribute('data-ans') === correctAns) b.classList.add('correct');
+            else if (b === btn) b.classList.add('wrong');
+          });
+          if (selected === correctAns) {
+            fbBox.className = 'quiz-fb correct';
+            fbBox.textContent = `🎉 答對了！${quizAnswers[qNum].exp}`;
+          } else {
+            fbBox.className = 'quiz-fb wrong';
+            fbBox.textContent = `❌ 答錯囉！${quizAnswers[qNum].exp}`;
+          }
+        });
+      });
+    });
+
+    resizeCanvas();
+    loop();
+  </script>
+</body>
+</html>

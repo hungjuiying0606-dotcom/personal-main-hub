@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 電動滑板等加速前進：v-t 圖三角形面積與 x=1/2vt 位移推導儀 (綜合卷第17題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #16a34a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { display: flex; flex-direction: column; }
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white; padding: 0.35rem 1rem; height: 38px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-back {
+      color: white; text-decoration: none; font-size: 0.76rem; font-weight: 800;
+      background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+    .header-left h1 { font-size: 0.92rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .badge { background: #fcd34d; color: #78350f; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.7rem; font-weight: 900; }
+    .header-info { font-size: 0.72rem; opacity: 0.95; font-weight: 600; }
+
+    main {
+      flex: 1; padding: 0.45rem 0.75rem; display: grid;
+      grid-template-columns: 1.25fr 1fr; gap: 0.6rem;
+      min-height: 0; max-width: 1440px; width: 100%; margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    .canvas-container {
+      flex: 1; position: relative; background: #ffffff; min-height: 0;
+      display: flex; flex-direction: column; border-bottom: 1.5px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute; top: 6px; left: 8px; right: 8px;
+      background: rgba(255, 255, 255, 0.94); border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm); padding: 0.25rem 0.6rem;
+      font-size: 0.74rem; font-weight: 700; display: flex; justify-content: space-between; z-index: 5;
+    }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+
+    canvas.stage-canvas { width: 100%; height: 100%; display: block; }
+
+    .control-panel {
+      padding: 0.45rem 0.65rem; background: #f1f5f9; display: flex; flex-direction: column; gap: 0.35rem; flex-shrink: 0;
+    }
+    .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+    .btn-group { display: flex; align-items: center; gap: 0.3rem; }
+    .btn {
+      padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 800;
+      border-radius: var(--radius-sm); border: 1.5px solid #cbd5e1; background: white; cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .scrubber-container { display: flex; align-items: center; gap: 0.4rem; flex: 1; margin-left: 0.2rem; }
+    .scrubber-container input[type="range"] { flex: 1; height: 6px; accent-color: var(--primary); cursor: pointer; }
+
+    .sliders-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;
+      background: white; padding: 0.3rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
+    }
+    .slider-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .slider-header { display: flex; justify-content: space-between; font-size: 0.68rem; font-weight: 700; color: #475569; }
+    .slider-header span.val { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--primary-dark); }
+    .slider-item input[type="range"] { height: 4px; accent-color: var(--primary); cursor: pointer; }
+
+    .right-col { display: flex; flex-direction: column; gap: 0.45rem; min-height: 0; }
+    .telemetry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; flex-shrink: 0; }
+    .t-card {
+      background: white; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem; text-align: center;
+    }
+    .t-card.t-v { border-color: #86efac; background: #f0fdf4; }
+    .t-card.t-x { border-color: #93c5fd; background: #eff6ff; }
+    .t-card.t-f { border-color: #fed7aa; background: #fff7ed; }
+    .t-title { font-size: 0.68rem; font-weight: 800; color: #475569; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; line-height: 1.2; }
+    .t-sub { font-size: 0.66rem; font-weight: 700; color: #64748b; }
+
+    .tab-container {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: white; border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    }
+    .tab-bar {
+      display: flex; background: #f1f5f9; border-bottom: 1.5px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem; gap: 0.3rem; flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.35rem 0.75rem; font-size: 0.76rem; font-weight: 800;
+      border: 1.5px solid transparent; border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent; cursor: pointer; color: #64748b;
+    }
+    .tab-btn.active { background: white; color: var(--primary-dark); border-color: var(--border); font-weight: 900; }
+    .tab-content { flex: 1; padding: 0.55rem 0.75rem; overflow-y: auto; font-size: 0.78rem; line-height: 1.5; }
+
+    .formula-step {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-left: 4px solid var(--primary);
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem;
+    }
+    .formula-step strong { color: #0369a1; }
+    .key-alert {
+      background: #fffbeb; border: 1.5px solid #fde68a; border-left: 4px solid #d97706;
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem; font-weight: 700; color: #92400e;
+    }
+    .quiz-item {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem; margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.35rem; color: #0f172a; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+    .quiz-btn {
+      padding: 0.3rem 0.5rem; font-size: 0.74rem; font-weight: 800; border: 1.5px solid #cbd5e1;
+      border-radius: 5px; background: white; cursor: pointer; text-align: left;
+    }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb { font-size: 0.74rem; font-weight: 700; margin-top: 0.3rem; padding: 0.3rem 0.45rem; border-radius: 4px; display: none; }
+    .quiz-fb.correct { display: block; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .quiz-fb.wrong { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="btn-back">❮ 回主網頁</a>
+      <h1>
+        <span>🛹 電動滑板等加速前進：v-t 圖三角形面積與 x=1/2vt 位移推導儀</span>
+        <span class="badge">綜合卷 03 卷第17題</span>
+      </h1>
+    </div>
+    <div class="header-info">初速 v₀=0 ｜ 等加速度前進 ｜ v-t 圖面積＝位移 ｜ 底 t × 高 v ÷ 2 ＝ 1/2 vt ｜ 平均速度法</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱ 時間 t: <strong class="hud-val" id="hudT">0.0 s</strong></span>
+          <span>⚡ 當前速度 v: <strong class="hud-val" id="hudV" style="color:#16a34a;">0.0 m/s</strong></span>
+          <span>📏 移動距離 x: <strong class="hud-val" id="hudX" style="color:#0284c7;">0.0 m</strong></span>
+          <span>📐 幾何面積: <strong class="hud-val" id="hudArea" style="color:#ea580c;">x = ½vt (正解A)</strong></span>
+        </div>
+        <canvas id="skateCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnPlay">▶ 播放</button>
+            <button class="btn" id="btnReset">↺ 重置</button>
+          </div>
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間:</label>
+            <input type="range" id="timeScrubber" min="0" max="6" step="0.05" value="0">
+          </div>
+        </div>
+        <div class="sliders-row">
+          <div class="slider-item">
+            <div class="slider-header"><span>加速度 a</span><span class="val" id="valAccel">3.0 m/s²</span></div>
+            <input type="range" id="sliderAccel" min="1.0" max="5.0" step="0.5" value="3.0">
+          </div>
+          <div class="slider-item">
+            <div class="slider-header"><span>最大時間 t_max</span><span class="val" id="valMaxT">6.0 秒</span></div>
+            <input type="range" id="sliderMaxT" min="4" max="10" step="1" value="6">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="right-col">
+      <div class="telemetry-grid">
+        <div class="t-card t-v">
+          <div class="t-title">末速度 v</div>
+          <div class="t-val" id="tCardV" style="color:#16a34a;">18.0 m/s</div>
+          <div class="t-sub">v = a · t</div>
+        </div>
+        <div class="t-card t-x">
+          <div class="t-title">位移 x (距離)</div>
+          <div class="t-val" id="tCardX" style="color:#0284c7;">54.0 m</div>
+          <div class="t-sub">x = ½ · v · t</div>
+        </div>
+        <div class="t-card t-f">
+          <div class="t-title">平均速度 v̄</div>
+          <div class="t-val" id="tCardAvgV" style="color:#ea580c;">9.0 m/s</div>
+          <div class="t-sub">(0 + v) / 2 = ½v</div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tabAnalysis">📖 破題雙解法：幾何面積 vs 平均速度</button>
+          <button class="tab-btn" data-tab="tabQuiz">📝 原題即測即評 (第17題)</button>
+        </div>
+
+        <div class="tab-content" id="tabAnalysis">
+          <div class="key-alert">
+            🚨 <strong>大屏高對比核心觀念：v-t 圖「曲線下方圍成的面積」即為「位移（移動距離）」！</strong><br>
+            • 初速為 0（靜止出發）＋等加速度 ➔ v-t 圖為一條<strong>通過原點的傾斜直線</strong>！<br>
+            • 在 t 秒時，圖形與時間軸圍成的形狀為<strong>直角三角形</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>方法一：幾何三角形面積法 (直觀推導)</strong><br>
+            • 三角形的底 ＝ 時間 <code>t</code><br>
+            • 三角形的高 ＝ 末速度 <code>v</code><br>
+            • 三角形面積 ＝ 底 × 高 ÷ 2 ＝ <code>½ · t · v ＝ ½vt</code> ➔ <strong>選 (A)</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>方法二：平均速度定義法 (公式推導)</strong><br>
+            • 靜止出發初速度 v₀ ＝ 0，t 秒後末速度為 v。<br>
+            • 等加速度運動的平均速度 v̄ ＝ (初速 ＋ 末速) / 2 ＝ (0 ＋ v) / 2 ＝ <code>½v</code>。<br>
+            • 移動距離 x ＝ 平均速度 v̄ × 時間 t ＝ <code>(½v) · t ＝ ½vt</code>！
+          </div>
+
+          <div class="formula-step">
+            <strong>迷思提醒：為什麼不是 (B) vt？</strong><br>
+            • 若為等速度運動（速度一直保持 v 不變），則 v-t 圖為長方形，位移才是 vt。<br>
+            • 本題是由靜止加速，速度從 0 逐漸增加到 v，移動距離只有長方形的一半（三角形面積 ½vt）！
+          </div>
+        </div>
+
+        <div class="tab-content" id="tabQuiz" style="display:none;">
+          <div class="quiz-item" data-q="1">
+            <p>17. 花花騎電動滑板由靜止開始等加速度前進，在 t 秒後的速度為 v m/s，則 t 秒內的移動距離為多少 m？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) ½ vt</button>
+              <button class="quiz-btn" data-ans="B">(B) vt</button>
+              <button class="quiz-btn" data-ans="C">(C) 3/2 vt</button>
+              <button class="quiz-btn" data-ans="D">(D) 2vt</button>
+            </div>
+            <div class="quiz-fb" id="fb1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('skateCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let t = 0;
+    let maxT = 6.0;
+    let accel = 3.0;
+    let isPlaying = true;
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const timeScrubber = document.getElementById('timeScrubber');
+    const sliderAccel = document.getElementById('sliderAccel');
+    const sliderMaxT = document.getElementById('sliderMaxT');
+
+    const valAccel = document.getElementById('valAccel');
+    const valMaxT = document.getElementById('valMaxT');
+
+    const hudT = document.getElementById('hudT');
+    const hudV = document.getElementById('hudV');
+    const hudX = document.getElementById('hudX');
+
+    const tCardV = document.getElementById('tCardV');
+    const tCardX = document.getElementById('tCardX');
+    const tCardAvgV = document.getElementById('tCardAvgV');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawStage() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+
+      // 上方 38%：電動滑板車行駛動態
+      const topH = h * 0.38;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, topH);
+
+      // 地面
+      const groundY = topH - 22;
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(15, groundY);
+      ctx.lineTo(w - 15, groundY);
+      ctx.stroke();
+
+      // 計算物理量
+      const curV = accel * t;
+      const curX = 0.5 * curV * t;
+      const maxX = 0.5 * (accel * maxT) * maxT;
+
+      const skateX = 35 + (curX / maxX) * (w - 110);
+
+      // 滑板本體
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath();
+      ctx.roundRect(skateX, groundY - 8, 48, 6, 3);
+      ctx.fill();
+
+      // 輪子
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(skateX + 8, groundY - 2, 4.5, 0, Math.PI * 2);
+      ctx.arc(skateX + 40, groundY - 2, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 騎士人物
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(skateX + 24, groundY - 8);
+      ctx.lineTo(skateX + 26, groundY - 30); // 身軀
+      ctx.lineTo(skateX + 38, groundY - 20); // 手臂
+      ctx.stroke();
+      // 頭部
+      ctx.fillStyle = '#fde047';
+      ctx.beginPath();
+      ctx.arc(skateX + 28, groundY - 37, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // 速度向量
+      if (curV > 0.5) {
+        drawVector(skateX + 48, groundY - 18, Math.min(curV * 2.5, 55), 0, '#16a34a', `v = ${curV.toFixed(1)} m/s`);
+      }
+
+      // 下方 62%：v-t 圖三角形面積視覺化
+      const chartX = 55;
+      const chartY = topH + 18;
+      const chartW = w - chartX - 35;
+      const chartH = h - chartY - 45;
+
+      // 坐標軸
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(chartX, chartY);
+      ctx.lineTo(chartX, chartY + chartH);
+      ctx.lineTo(chartX + chartW, chartY + chartH);
+      ctx.stroke();
+
+      // 軸標籤
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px "Noto Sans TC"';
+      ctx.fillText('v (速度 m/s)', chartX - 45, chartY + 12);
+      ctx.fillText('t (時間 s)', chartX + chartW - 40, chartY + chartH + 25);
+
+      const maxSpeed = accel * maxT;
+      const curPx = chartX + (t / maxT) * chartW;
+      const curPy = chartY + chartH - (curV / maxSpeed) * chartH;
+
+      // 著色三角形面積 (翡翠綠半透明)
+      if (t > 0) {
+        ctx.fillStyle = 'rgba(22, 163, 74, 0.25)';
+        ctx.beginPath();
+        ctx.moveTo(chartX, chartY + chartH);
+        ctx.lineTo(curPx, chartY + chartH);
+        ctx.lineTo(curPx, curPy);
+        ctx.closePath();
+        ctx.fill();
+
+        // 虛線標注
+        ctx.strokeStyle = '#16a34a';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(curPx, chartY + chartH);
+        ctx.lineTo(curPx, curPy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 三角形面積文字公式標記
+        ctx.fillStyle = '#15803d';
+        ctx.font = 'bold 16px "Outfit", sans-serif';
+        ctx.fillText(`位移 x ＝ ½ · v · t ＝ ${curX.toFixed(1)} m`, chartX + (curPx - chartX) * 0.45, chartY + chartH - 18);
+      }
+
+      // 繪製完整等加速度斜線 (底層淺色)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(chartX, chartY + chartH);
+      ctx.lineTo(chartX + chartW, chartY);
+      ctx.stroke();
+
+      // 當前已走過斜線 (加粗亮綠)
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(chartX, chartY + chartH);
+      ctx.lineTo(curPx, curPy);
+      ctx.stroke();
+
+      // 當前點
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.arc(curPx, curPy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 更新 HUD 與遙測
+      hudT.textContent = `${t.toFixed(2)} s`;
+      hudV.textContent = `${curV.toFixed(1)} m/s`;
+      hudX.textContent = `${curX.toFixed(1)} m`;
+
+      tCardV.textContent = `${curV.toFixed(1)} m/s`;
+      tCardX.textContent = `${curX.toFixed(1)} m`;
+      tCardAvgV.textContent = `${(curV * 0.5).toFixed(1)} m/s`;
+    }
+
+    function drawVector(x, y, dx, dy, color, label) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + dx, y + dy);
+      ctx.stroke();
+      const angle = Math.atan2(dy, dx);
+      ctx.beginPath();
+      ctx.moveTo(x + dx, y + dy);
+      ctx.lineTo(x + dx - 8 * Math.cos(angle - Math.PI / 6), y + dy - 8 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x + dx - 8 * Math.cos(angle + Math.PI / 6), y + dy - 8 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+      ctx.font = 'bold 11px "Noto Sans TC"';
+      ctx.fillText(label, x + 5, y - 6);
+      ctx.restore();
+    }
+
+    function loop() {
+      if (isPlaying) {
+        t += 0.03;
+        if (t > maxT) t = 0;
+        timeScrubber.value = t;
+        drawStage();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    btnPlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸ 暫停' : '▶ 播放';
+    });
+    btnReset.addEventListener('click', () => { t = 0; timeScrubber.value = 0; drawStage(); });
+    timeScrubber.addEventListener('input', (e) => { t = parseFloat(e.target.value); drawStage(); });
+
+    sliderAccel.addEventListener('input', (e) => {
+      accel = parseFloat(e.target.value);
+      valAccel.textContent = `${accel.toFixed(1)} m/s²`;
+      drawStage();
+    });
+
+    sliderMaxT.addEventListener('input', (e) => {
+      maxT = parseFloat(e.target.value);
+      timeScrubber.max = maxT;
+      valMaxT.textContent = `${maxT.toFixed(1)} 秒`;
+      drawStage();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById('tabAnalysis').style.display = tabId === 'tabAnalysis' ? 'block' : 'none';
+        document.getElementById('tabQuiz').style.display = tabId === 'tabQuiz' ? 'block' : 'none';
+      });
+    });
+
+    const quizAnswers = {
+      1: { ans: 'A', exp: '正解 (A) ½vt。由靜止開始等加速度前進，其 v-t 圖與時間軸圍成的面積為直角三角形，面積 ＝ 底(t) × 高(v) ÷ 2 ＝ ½vt！' }
+    };
+
+    document.querySelectorAll('.quiz-item').forEach(item => {
+      const qNum = item.getAttribute('data-q');
+      const correctAns = quizAnswers[qNum].ans;
+      const fbBox = item.querySelector('.quiz-fb');
+
+      item.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-ans');
+          item.querySelectorAll('.quiz-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            if (b.getAttribute('data-ans') === correctAns) b.classList.add('correct');
+            else if (b === btn) b.classList.add('wrong');
+          });
+          if (selected === correctAns) {
+            fbBox.className = 'quiz-fb correct';
+            fbBox.textContent = `🎉 答對了！${quizAnswers[qNum].exp}`;
+          } else {
+            fbBox.className = 'quiz-fb wrong';
+            fbBox.textContent = `❌ 答錯囉！${quizAnswers[qNum].exp}`;
+          }
+        });
+      });
+    });
+
+    resizeCanvas();
+    loop();
+  </script>
+</body>
+</html>

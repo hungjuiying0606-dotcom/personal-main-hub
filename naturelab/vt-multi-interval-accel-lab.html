@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 直線多段行駛 v-t 圖：0~9 秒各區間斜率加速度與方向轉折分析儀 (綜合卷第19題)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #ea580c;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { display: flex; flex-direction: column; }
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: white; padding: 0.35rem 1rem; height: 38px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-back {
+      color: white; text-decoration: none; font-size: 0.76rem; font-weight: 800;
+      background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+    .header-left h1 { font-size: 0.92rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .badge { background: #fcd34d; color: #78350f; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.7rem; font-weight: 900; }
+    .header-info { font-size: 0.72rem; opacity: 0.95; font-weight: 600; }
+
+    main {
+      flex: 1; padding: 0.45rem 0.75rem; display: grid;
+      grid-template-columns: 1.25fr 1fr; gap: 0.6rem;
+      min-height: 0; max-width: 1440px; width: 100%; margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    }
+    .canvas-container {
+      flex: 1; position: relative; background: #ffffff; min-height: 0;
+      display: flex; flex-direction: column; border-bottom: 1.5px solid var(--border);
+    }
+    .stage-hud {
+      position: absolute; top: 6px; left: 8px; right: 8px;
+      background: rgba(255, 255, 255, 0.94); border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm); padding: 0.25rem 0.6rem;
+      font-size: 0.74rem; font-weight: 700; display: flex; justify-content: space-between; z-index: 5;
+    }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+
+    canvas.stage-canvas { width: 100%; height: 100%; display: block; }
+
+    .control-panel {
+      padding: 0.45rem 0.65rem; background: #f1f5f9; display: flex; flex-direction: column; gap: 0.35rem; flex-shrink: 0;
+    }
+    .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+    .btn-group { display: flex; align-items: center; gap: 0.3rem; }
+    .btn {
+      padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 800;
+      border-radius: var(--radius-sm); border: 1.5px solid #cbd5e1; background: white; cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-seg { font-size: 0.72rem; }
+    .btn-seg.active { background: #0f172a; color: white; border-color: #0f172a; }
+
+    .scrubber-container { display: flex; align-items: center; gap: 0.4rem; flex: 1; margin-left: 0.2rem; }
+    .scrubber-container input[type="range"] { flex: 1; height: 6px; accent-color: var(--primary); cursor: pointer; }
+
+    .right-col { display: flex; flex-direction: column; gap: 0.45rem; min-height: 0; }
+    .telemetry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; flex-shrink: 0; }
+    .t-card {
+      background: white; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem; text-align: center;
+    }
+    .t-card.t-a { border-color: #fde047; background: #fefce8; }
+    .t-card.t-v { border-color: #86efac; background: #f0fdf4; }
+    .t-card.t-err { border-color: #fca5a5; background: #fef2f2; }
+    .t-title { font-size: 0.68rem; font-weight: 800; color: #475569; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; line-height: 1.2; }
+    .t-sub { font-size: 0.66rem; font-weight: 700; color: #64748b; }
+
+    .tab-container {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: white; border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    }
+    .tab-bar {
+      display: flex; background: #f1f5f9; border-bottom: 1.5px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem; gap: 0.3rem; flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.35rem 0.75rem; font-size: 0.76rem; font-weight: 800;
+      border: 1.5px solid transparent; border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent; cursor: pointer; color: #64748b;
+    }
+    .tab-btn.active { background: white; color: var(--primary-dark); border-color: var(--border); font-weight: 900; }
+    .tab-content { flex: 1; padding: 0.55rem 0.75rem; overflow-y: auto; font-size: 0.78rem; line-height: 1.5; }
+
+    .formula-step {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-left: 4px solid var(--primary);
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem;
+    }
+    .formula-step strong { color: #0369a1; }
+    .formula-step code { background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px; font-weight: 800; font-size: 0.75rem; }
+
+    .key-alert {
+      background: #fffbeb; border: 1.5px solid #fde68a; border-left: 4px solid #d97706;
+      padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 0.4rem; font-weight: 700; color: #92400e;
+    }
+    .quiz-item {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem; margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.35rem; color: #0f172a; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+    .quiz-btn {
+      padding: 0.3rem 0.5rem; font-size: 0.74rem; font-weight: 800; border: 1.5px solid #cbd5e1;
+      border-radius: 5px; background: white; cursor: pointer; text-align: left;
+    }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb { font-size: 0.74rem; font-weight: 700; margin-top: 0.3rem; padding: 0.3rem 0.45rem; border-radius: 4px; display: none; }
+    .quiz-fb.correct { display: block; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .quiz-fb.wrong { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="btn-back">❮ 回主網頁</a>
+      <h1>
+        <span>📈 直線多段行駛 v-t 圖：0~9 秒各區間斜率加速度與方向轉折分析儀</span>
+        <span class="badge">綜合卷 03 卷第19題</span>
+      </h1>
+    </div>
+    <div class="header-info">v-t 圖斜率＝加速度 ｜ 0~2s (a=3) ｜ 2~4s 煞車 (a=-1) ｜ 4~7s 慢加速 (a=⅓≠0.5·錯C) ｜ 7~9s (a=2)</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="canvas-container">
+        <div class="stage-hud">
+          <span>⏱ 時間 t: <strong class="hud-val" id="hudT">0.0 s</strong></span>
+          <span>⚡ 速度 v: <strong class="hud-val" id="hudV" style="color:#16a34a;">0.0 m/s</strong></span>
+          <span>📐 當前區間加速度 a: <strong class="hud-val" id="hudA" style="color:#ea580c;">+3.00 m/s²</strong></span>
+          <span>🔍 選中區間: <strong class="hud-val" id="hudSeg">0~2s 衝刺</strong></span>
+        </div>
+        <canvas id="vtCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnPlay">▶ 播放</button>
+            <button class="btn" id="btnReset">↺ 重置</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-seg active" data-seg="all">全部區段 (0~9s)</button>
+            <button class="btn btn-seg" data-seg="0">0~2s (a=3)</button>
+            <button class="btn btn-seg" data-seg="1">2~4s (a=-1)</button>
+            <button class="btn btn-seg" data-seg="2">4~7s (a=⅓·錯C)</button>
+            <button class="btn btn-seg" data-seg="3">7~9s (a=2)</button>
+          </div>
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間:</label>
+            <input type="range" id="timeScrubber" min="0" max="9" step="0.05" value="0">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="right-col">
+      <div class="telemetry-grid">
+        <div class="t-card t-a">
+          <div class="t-title">0~2 秒加速度</div>
+          <div class="t-val" style="color:#0284c7;">+3.0 <span style="font-size:0.75rem;">m/s²</span></div>
+          <div class="t-sub">(6 - 0) / 2 = 3</div>
+        </div>
+        <div class="t-card t-v">
+          <div class="t-title">2~4 秒加速度</div>
+          <div class="t-val" style="color:#b45309;">-1.0 <span style="font-size:0.75rem;">m/s²</span></div>
+          <div class="t-sub">(4 - 6) / 2 = -1</div>
+        </div>
+        <div class="t-card t-err">
+          <div class="t-title">4~7 秒加速度 (錯C)</div>
+          <div class="t-val" style="color:#dc2626;">+0.33 <span style="font-size:0.75rem;">m/s²</span></div>
+          <div class="t-sub">1/3 ≠ 0.5 (正解選C)</div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tabAnalysis">📖 0~9 秒四大區間加速度深度解析</button>
+          <button class="tab-btn" data-tab="tabQuiz">📝 原題即測即評 (第19題)</button>
+        </div>
+
+        <div class="tab-content" id="tabAnalysis">
+          <div class="key-alert">
+            🚨 <strong>大屏高對比核心公式：加速度 a ＝ Δv / Δt ＝ (v末 - v初) / (t末 - t初)</strong><br>
+            • 在 v-t 圖中，<strong>每一段直線的「斜率」即代表該區間的「加速度」</strong>！<br>
+            • 斜率向上（右上）➔ a > 0（加速）；斜率向下（右下）➔ a < 0（減速）。
+          </div>
+
+          <div class="formula-step">
+            <strong>選項 (A) 解析：0～2 秒間的加速度為 3 m/s² (正確)</strong><br>
+            • 初速 v(0) = 0 m/s，末速 v(2) = 6 m/s。<br>
+            • a = (6 - 0) / (2 - 0) = <code>6 / 2 ＝ 3 m/s²</code>。
+          </div>
+
+          <div class="formula-step">
+            <strong>選項 (B) 解析：2～4 秒間的加速度為 -1 m/s² (正確)</strong><br>
+            • 初速 v(2) = 6 m/s，末速 v(4) = 4 m/s。<br>
+            • a = (4 - 6) / (4 - 2) = <code>-2 / 2 ＝ -1 m/s²</code>（減速煞車）。
+          </div>
+
+          <div class="formula-step">
+            <strong>選項 (C) 解析：4～7 秒間的加速度為 0.5 m/s² (錯誤 ➔ 正確答案！)</strong><br>
+            • 初速 v(4) = 4 m/s，末速 v(7) = 5 m/s。<br>
+            • Δt = 7 - 4 = 3 秒！Δv = 5 - 4 = 1 m/s！<br>
+            • a = 1 / 3 ＝ <strong>0.33 m/s² ≠ 0.5 m/s²</strong>！題目寫 0.5 是把時間算成 2 秒的常見粗心陷阱！➔ <strong>選 (C)</strong>！
+          </div>
+
+          <div class="formula-step">
+            <strong>選項 (D) 解析：7～9 秒間的加速度為 2 m/s² (正確)</strong><br>
+            • 初速 v(7) = 5 m/s，末速 v(9) = 9 m/s。<br>
+            • a = (9 - 5) / (9 - 7) = <code>4 / 2 ＝ 2 m/s²</code>。
+          </div>
+        </div>
+
+        <div class="tab-content" id="tabQuiz" style="display:none;">
+          <div class="quiz-item" data-q="1">
+            <p>19. 附圖是某車在直線道路上行進的 v-t 圖，下列敘述何者「錯誤」？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 0～2 秒間的加速度為 3 m/s²</button>
+              <button class="quiz-btn" data-ans="B">(B) 2～4 秒間的加速度為 -1 m/s²</button>
+              <button class="quiz-btn" data-ans="C">(C) 4～7 秒間的加速度為 0.5 m/s²</button>
+              <button class="quiz-btn" data-ans="D">(D) 7～9 秒間的加速度為 2 m/s²</button>
+            </div>
+            <div class="quiz-fb" id="fb1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('vtCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let t = 0;
+    let isPlaying = true;
+    let focusSeg = 'all';
+
+    // 關鍵轉折點: [t, v]
+    const keyPoints = [
+      { t: 0, v: 0 },
+      { t: 2, v: 6 },
+      { t: 4, v: 4 },
+      { t: 7, v: 5 },
+      { t: 9, v: 9 }
+    ];
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const timeScrubber = document.getElementById('timeScrubber');
+    const hudT = document.getElementById('hudT');
+    const hudV = document.getElementById('hudV');
+    const hudA = document.getElementById('hudA');
+    const hudSeg = document.getElementById('hudSeg');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function getPhys(curT) {
+      if (curT <= 2) {
+        return { v: 3 * curT, a: 3, segName: '0~2s (衝刺加速)' };
+      } else if (curT <= 4) {
+        return { v: 6 - 1 * (curT - 2), a: -1, segName: '2~4s (煞車減速)' };
+      } else if (curT <= 7) {
+        return { v: 4 + (1/3) * (curT - 4), a: 1/3, segName: '4~7s (緩慢提速·錯C)' };
+      } else {
+        return { v: 5 + 2 * (curT - 7), a: 2, segName: '7~9s (急加速衝線)' };
+      }
+    }
+
+    function drawStage() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+
+      // 上方 30%：小車跑道與即時運動
+      const topH = h * 0.3;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, topH);
+
+      const roadY = topH - 18;
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(15, roadY);
+      ctx.lineTo(w - 15, roadY);
+      ctx.stroke();
+
+      const phys = getPhys(t);
+      // 小車位置用時間示意
+      const carX = 25 + (t / 9) * (w - 95);
+
+      // 小車
+      ctx.fillStyle = phys.a < 0 ? '#dc2626' : '#0284c7';
+      ctx.beginPath();
+      ctx.roundRect(carX, roadY - 18, 50, 15, 3);
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 車輪
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(carX + 10, roadY - 2, 4.5, 0, Math.PI * 2);
+      ctx.arc(carX + 40, roadY - 2, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 速度箭頭
+      if (phys.v > 0.5) {
+        drawVector(carX + 50, roadY - 10, Math.min(phys.v * 3.5, 55), 0, '#16a34a', `v=${phys.v.toFixed(1)}`);
+      }
+
+      // 下方 70%：v-t 圖網格視覺化
+      const chartX = 55;
+      const chartY = topH + 18;
+      const chartW = w - chartX - 35;
+      const chartH = h - chartY - 45;
+
+      // 網格 (大屏清晰)
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let sec = 0; sec <= 9; sec++) {
+        const gx = chartX + (sec / 9) * chartW;
+        ctx.beginPath();
+        ctx.moveTo(gx, chartY);
+        ctx.lineTo(gx, chartY + chartH);
+        ctx.stroke();
+      }
+      for (let vel = 0; vel <= 9; vel++) {
+        const gy = chartY + chartH - (vel / 9) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(chartX, gy);
+        ctx.lineTo(chartX + chartW, gy);
+        ctx.stroke();
+      }
+
+      // 坐標軸
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(chartX, chartY);
+      ctx.lineTo(chartX, chartY + chartH);
+      ctx.lineTo(chartX + chartW, chartY + chartH);
+      ctx.stroke();
+
+      // 刻度數字
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 11px "Outfit"';
+      for (let sec = 0; sec <= 9; sec++) {
+        const gx = chartX + (sec / 9) * chartW;
+        ctx.fillText(sec, gx - 4, chartY + chartH + 18);
+      }
+      for (let vel = 1; vel <= 9; vel++) {
+        const gy = chartY + chartH - (vel / 9) * chartH;
+        ctx.fillText(vel, chartX - 18, gy + 4);
+      }
+      ctx.font = 'bold 12px "Noto Sans TC"';
+      ctx.fillText('v (m/s)', chartX - 45, chartY + 12);
+      ctx.fillText('t (秒)', chartX + chartW - 30, chartY + chartH + 22);
+
+      // 繪製四段折線
+      const segColors = ['#0284c7', '#ea580c', '#dc2626', '#16a34a'];
+      for (let i = 0; i < keyPoints.length - 1; i++) {
+        const p1 = keyPoints[i];
+        const p2 = keyPoints[i + 1];
+        const x1 = chartX + (p1.t / 9) * chartW;
+        const y1 = chartY + chartH - (p1.v / 9) * chartH;
+        const x2 = chartX + (p2.t / 9) * chartW;
+        const y2 = chartY + chartH - (p2.v / 9) * chartH;
+
+        ctx.strokeStyle = (focusSeg === 'all' || focusSeg === String(i)) ? segColors[i] : '#cbd5e1';
+        ctx.lineWidth = (focusSeg === String(i)) ? 5 : 3.5;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        // 節點端點
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(x1, y1, 3.5, 0, Math.PI * 2);
+        ctx.arc(x2, y2, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 當前時間點指示
+      const curPx = chartX + (t / 9) * chartW;
+      const curPy = chartY + chartH - (phys.v / 9) * chartH;
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.arc(curPx, curPy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 虛線下垂線
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(curPx, chartY + chartH);
+      ctx.lineTo(curPx, curPy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 更新 HUD
+      hudT.textContent = `${t.toFixed(2)} s`;
+      hudV.textContent = `${phys.v.toFixed(2)} m/s`;
+      hudA.textContent = `${phys.a >= 0 ? '+' : ''}${phys.a.toFixed(2)} m/s²`;
+      hudSeg.textContent = phys.segName;
+    }
+
+    function drawVector(x, y, dx, dy, color, label) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + dx, y + dy);
+      ctx.stroke();
+      const angle = Math.atan2(dy, dx);
+      ctx.beginPath();
+      ctx.moveTo(x + dx, y + dy);
+      ctx.lineTo(x + dx - 6 * Math.cos(angle - Math.PI / 6), y + dy - 6 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x + dx - 6 * Math.cos(angle + Math.PI / 6), y + dy - 6 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+      ctx.font = 'bold 10px "Noto Sans TC"';
+      ctx.fillText(label, x + 5, y - 5);
+      ctx.restore();
+    }
+
+    function loop() {
+      if (isPlaying) {
+        t += 0.03;
+        if (t > 9) t = 0;
+        timeScrubber.value = t;
+        drawStage();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    btnPlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸ 暫停' : '▶ 播放';
+    });
+    btnReset.addEventListener('click', () => { t = 0; timeScrubber.value = 0; drawStage(); });
+    timeScrubber.addEventListener('input', (e) => { t = parseFloat(e.target.value); drawStage(); });
+
+    document.querySelectorAll('.btn-seg').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-seg').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        focusSeg = btn.getAttribute('data-seg');
+        if (focusSeg === '0') t = 1;
+        else if (focusSeg === '1') t = 3;
+        else if (focusSeg === '2') t = 5.5;
+        else if (focusSeg === '3') t = 8;
+        timeScrubber.value = t;
+        drawStage();
+      });
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById('tabAnalysis').style.display = tabId === 'tabAnalysis' ? 'block' : 'none';
+        document.getElementById('tabQuiz').style.display = tabId === 'tabQuiz' ? 'block' : 'none';
+      });
+    });
+
+    const quizAnswers = {
+      1: { ans: 'C', exp: '正解 (C)。4～7 秒間初速 4 m/s，末速 5 m/s，耗時 7-4=3 秒。a = (5-4)/3 = 1/3 ≈ 0.33 m/s²，非 0.5 m/s²，故 (C) 錯誤！' }
+    };
+
+    document.querySelectorAll('.quiz-item').forEach(item => {
+      const qNum = item.getAttribute('data-q');
+      const correctAns = quizAnswers[qNum].ans;
+      const fbBox = item.querySelector('.quiz-fb');
+
+      item.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-ans');
+          item.querySelectorAll('.quiz-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            if (b.getAttribute('data-ans') === correctAns) b.classList.add('correct');
+            else if (b === btn) b.classList.add('wrong');
+          });
+          if (selected === correctAns) {
+            fbBox.className = 'quiz-fb correct';
+            fbBox.textContent = `🎉 答對了！${quizAnswers[qNum].exp}`;
+          } else {
+            fbBox.className = 'quiz-fb wrong';
+            fbBox.textContent = `❌ 答錯囉！${quizAnswers[qNum].exp}`;
+          }
+        });
+      });
+    });
+
+    resizeCanvas();
+    loop();
+  </script>
+</body>
+</html>
