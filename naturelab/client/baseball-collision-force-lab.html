@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中自然 3上 · 棒球全壘打碰撞力學：144km/h 逆轉勝、加速度與牛頓第三運動定律 (習作第18頁閱讀趣)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #ea580c;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 頂部緊湊導航 (38px) */
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0284c7 100%);
+      color: white;
+      padding: 0.35rem 1rem;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .btn-back {
+      color: white;
+      text-decoration: none;
+      font-size: 0.76rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      transition: all 0.15s;
+    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.35); }
+    .header-left h1 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .badge {
+      background: #fcd34d;
+      color: #78350f;
+      padding: 0.1rem 0.45rem;
+      border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 900;
+    }
+    .header-info {
+      font-size: 0.72rem;
+      opacity: 0.95;
+      font-weight: 600;
+    }
+
+    /* 主畫面雙欄柵格 (1.25fr : 1fr) */
+    main {
+      flex: 1;
+      padding: 0.45rem 0.75rem;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 0.6rem;
+      min-height: 0;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* 左側畫布區 */
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      background: #ffffff;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .stage-hud {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stage-hud span { display: inline-flex; align-items: center; gap: 0.25rem; }
+    .hud-val { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+
+    canvas.stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 左側底部控制面板 */
+    .control-panel {
+      padding: 0.45rem 0.65rem;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn {
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: #e2e8f0; }
+    .btn-primary { background: var(--primary); color: white; border-color: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-tab { background: #e2e8f0; color: #334155; font-size: 0.72rem; }
+    .btn-tab.active { background: #0f172a; color: white; border-color: #0f172a; }
+
+    .scrubber-container {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      margin-left: 0.2rem;
+    }
+    .scrubber-container label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .scrubber-container input[type="range"] {
+      flex: 1;
+      height: 6px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* 變因調整次列 */
+    .sliders-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.4rem;
+      background: white;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .slider-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #475569;
+    }
+    .slider-header span.val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .slider-item input[type="range"] {
+      height: 4px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* 右側欄：大屏高對比遙測卡與教學/題測 */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 0;
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .t-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.45rem;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .t-card.t-v { border-color: #93c5fd; background: #eff6ff; }
+    .t-card.t-a { border-color: #fde047; background: #fefce8; }
+    .t-card.t-f { border-color: #fca5a5; background: #fef2f2; }
+    .t-title { font-size: 0.68rem; font-weight: 800; color: #475569; }
+    .t-val { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; line-height: 1.2; margin: 0.1rem 0; }
+    .t-sub { font-size: 0.66rem; font-weight: 700; color: #64748b; }
+
+    /* 頁籤面板 */
+    .tab-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .tab-bar {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid var(--border);
+      padding: 0.2rem 0.4rem 0 0.4rem;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 800;
+      border: 1.5px solid transparent;
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
+      cursor: pointer;
+      color: #64748b;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+      font-weight: 900;
+    }
+    .tab-content {
+      flex: 1;
+      padding: 0.55rem 0.75rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    /* 內容排版 */
+    .formula-step {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding: 0.4rem 0.6rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.4rem;
+    }
+    .formula-step strong { color: #0369a1; }
+    .formula-step code {
+      background: #e2e8f0;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #0f172a;
+    }
+
+    .key-alert {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-left: 4px solid #d97706;
+      padding: 0.4rem 0.6rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    /* 測驗題目樣式 */
+    .quiz-item {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    .quiz-item p { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.35rem; color: #0f172a; }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+    }
+    .quiz-btn {
+      padding: 0.3rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .quiz-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .quiz-btn.correct { background: #16a34a !important; color: white !important; border-color: #15803d !important; }
+    .quiz-btn.wrong { background: #dc2626 !important; color: white !important; border-color: #b91c1c !important; }
+    .quiz-fb {
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-top: 0.3rem;
+      padding: 0.3rem 0.45rem;
+      border-radius: 4px;
+      display: none;
+    }
+    .quiz-fb.correct { display: block; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .quiz-fb.wrong { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部緊湊導航條 -->
+  <header>
+    <div class="header-left">
+      <a href="https://hungjuiying0606-dotcom.github.io/personal-main-hub/" class="btn-back">❮ 回主網頁</a>
+      <h1>
+        <span>⚾ 棒球全壘打碰撞力學</span>
+        <span class="badge">習作 P.18 閱讀趣</span>
+      </h1>
+    </div>
+    <div class="header-info">
+      九局下 144 km/h 逆轉勝 ｜ 向量正負號 ｜ 牛頓二三定律 ｜ a = 100,000 m/s² ｜ F₁ : F₂ = 1 : 1
+    </div>
+  </header>
+
+  <!-- 主畫面 -->
+  <main>
+    <!-- 左欄：動態物理模擬畫布與調控 -->
+    <section class="card">
+      <div class="canvas-container">
+        <!-- 畫布頂部浮動數據 HUD -->
+        <div class="stage-hud">
+          <span>⚾ 初速 V₁: <strong class="hud-val" id="hudV1" style="color:#0284c7;">-40.0 m/s</strong></span>
+          <span>⚡ 末速 V₂: <strong class="hud-val" id="hudV2" style="color:#16a34a;">+50.0 m/s</strong></span>
+          <span>⏱ 接觸 Δt: <strong class="hud-val" id="hudDt" style="color:#d97706;">0.90 ms</strong></span>
+          <span>💥 撞擊力 F: <strong class="hud-val" id="hudF" style="color:#dc2626;">14,500 N</strong></span>
+        </div>
+
+        <canvas id="baseballCanvas" class="stage-canvas"></canvas>
+      </div>
+
+      <!-- 控制面板 -->
+      <div class="control-panel">
+        <div class="ctrl-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnPlay">▶ 播放</button>
+            <button class="btn" id="btnReset">↺ 重置</button>
+            <button class="btn btn-tab" id="btnSlow">🐌 超慢速 (0.2x)</button>
+          </div>
+          <div class="scrubber-container">
+            <label for="timeScrubber">時間軸:</label>
+            <input type="range" id="timeScrubber" min="0" max="1000" value="0">
+          </div>
+        </div>
+
+        <!-- 參數調整列 -->
+        <div class="sliders-row">
+          <div class="slider-item">
+            <div class="slider-header">
+              <span>球速 (時速)</span>
+              <span class="val" id="valPitchSpeed">144 km/h (-40m/s)</span>
+            </div>
+            <input type="range" id="sliderPitchSpeed" min="120" max="160" step="2" value="144">
+          </div>
+
+          <div class="slider-item">
+            <div class="slider-header">
+              <span>回擊末速</span>
+              <span class="val" id="valExitSpeed">50 m/s (180km/h)</span>
+            </div>
+            <input type="range" id="sliderExitSpeed" min="30" max="60" step="1" value="50">
+          </div>
+
+          <div class="slider-item">
+            <div class="slider-header">
+              <span>接觸時間 Δt</span>
+              <span class="val" id="valContactTime">0.90 ms</span>
+            </div>
+            <input type="range" id="sliderContactTime" min="0.5" max="1.5" step="0.05" value="0.9">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右欄：大屏高對比遙測卡與題測 -->
+    <div class="right-col">
+      <!-- 頂部遙測數據卡 (大屏高對比) -->
+      <div class="telemetry-grid">
+        <div class="t-card t-v">
+          <div class="t-title">速度變化量 ΔV</div>
+          <div class="t-val" id="tCardDv" style="color:#0284c7;">+90.0 <span style="font-size:0.75rem;">m/s</span></div>
+          <div class="t-sub">50 - (-40) = 90</div>
+        </div>
+
+        <div class="t-card t-a">
+          <div class="t-title">擊球加速度 a</div>
+          <div class="t-val" id="tCardAcc" style="color:#b45309;">100,000 <span style="font-size:0.75rem;">m/s²</span></div>
+          <div class="t-sub">約 10,204 倍重力 g</div>
+        </div>
+
+        <div class="t-card t-f">
+          <div class="t-title">平均衝擊力 F</div>
+          <div class="t-val" id="tCardForce" style="color:#b91c1c;">14,500 <span style="font-size:0.75rem;">N</span></div>
+          <div class="t-sub">1.45×10⁴ N (約1.48噸)</div>
+        </div>
+      </div>
+
+      <!-- 頁籤面板 -->
+      <div class="tab-container">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tabAnalysis">📖 題目背景與破題全解析</button>
+          <button class="tab-btn" data-tab="tabQuiz">📝 原題即測即評 (共3題)</button>
+        </div>
+
+        <!-- 頁籤 1：破題解析 -->
+        <div class="tab-content" id="tabAnalysis">
+          <div class="key-alert">
+            🚨 <strong>後排必看重要陷阱：方向正負號</strong><br>
+            以擊出方向為正向（+），則投手投來的直球初速度必為 <strong>負值（-40 m/s）</strong>！<br>
+            速度變化量 ΔV = 50 - (-40) = <strong>90 m/s</strong>，絕不能算成 50 - 40 = 10 m/s！
+          </div>
+
+          <div class="formula-step">
+            <strong>❶ 第 1 題：計算加速度 a（定義式 a = ΔV / Δt）</strong><br>
+            • 初速度 V₁ = <code>-144 km/h = -40 m/s</code><br>
+            • 末速度 V₂ = <code>+50 m/s</code><br>
+            • 接觸時間 Δt = <code>0.9 毫秒 = 0.0009 秒</code><br>
+            • a = [50 - (-40)] / 0.0009 = 90 / 0.0009 = <strong>100,000 m/s²</strong> ➔ <strong>選 (D)</strong>
+          </div>
+
+          <div class="formula-step">
+            <strong>❷ 第 2 題：計算作用力 F（牛頓第二定律 F = m · a）</strong><br>
+            • 棒球質量 m = <code>145 g = 0.145 kg</code>（注意單位必須換成公斤 kg！）<br>
+            • F = 0.145 kg × 100,000 m/s² = <strong>14,500 N = 1.45 × 10⁴ N</strong> ➔ <strong>選 (B)</strong>
+          </div>
+
+          <div class="formula-step">
+            <strong>❸ 第 3 題：球棒力 F₁ vs 球受力 F₂（牛頓第三定律）</strong><br>
+            • 球棒給球的力 F₁ 與球給球棒的力 F₂ 互為<strong>作用力與反作用力</strong>。<br>
+            • 兩力大小必定<strong>完全相等、方向相反</strong>，不論球棒質量（870g）比球（145g）重幾倍！<br>
+            • 因此 F₁ : F₂ = <strong>1 : 1</strong> ➔ <strong>選 (B)</strong>
+          </div>
+        </div>
+
+        <!-- 頁籤 2：即測即評 -->
+        <div class="tab-content" id="tabQuiz" style="display:none;">
+          <!-- 題目 1 -->
+          <div class="quiz-item" data-q="1">
+            <p>1. 阿郎擊球瞬間，棒球的加速度大小約多少 m/s²？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 11.11</button>
+              <button class="quiz-btn" data-ans="B">(B) 100.00</button>
+              <button class="quiz-btn" data-ans="C">(C) 111111</button>
+              <button class="quiz-btn" data-ans="D">(D) 100000</button>
+            </div>
+            <div class="quiz-fb" id="fb1"></div>
+          </div>
+
+          <!-- 題目 2 -->
+          <div class="quiz-item" data-q="2">
+            <p>2. 承上題，阿郎揮棒時，球棒擊球的作用力約為多少牛頓？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 1.61 × 10³</button>
+              <button class="quiz-btn" data-ans="B">(B) 1.45 × 10⁴</button>
+              <button class="quiz-btn" data-ans="C">(C) 1.61 × 10⁶</button>
+              <button class="quiz-btn" data-ans="D">(D) 1.45 × 10⁷</button>
+            </div>
+            <div class="quiz-fb" id="fb2"></div>
+          </div>
+
+          <!-- 題目 3 -->
+          <div class="quiz-item" data-q="3">
+            <p>3. 球棒質量 870g，球棒給球力 F₁，球給球棒力 F₂，則 F₁：F₂ 為何？</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-ans="A">(A) 1：6</button>
+              <button class="quiz-btn" data-ans="B">(B) 1：1</button>
+              <button class="quiz-btn" data-ans="C">(C) 6：1</button>
+              <button class="quiz-btn" data-ans="D">(D) 無法比較</button>
+            </div>
+            <div class="quiz-fb" id="fb3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 物理與動畫狀態
+    const canvas = document.getElementById('baseballCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let pitchSpeedKmh = 144;
+    let v1 = -40; // m/s
+    let v2 = 50;  // m/s
+    let dtMs = 0.9; // ms
+    let ballMassKg = 0.145; // 145g
+
+    let animProgress = 0; // 0 ~ 1000
+    let isPlaying = true;
+    let playSpeed = 1.0;
+    let animId = null;
+
+    // DOM 元素
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const btnSlow = document.getElementById('btnSlow');
+    const timeScrubber = document.getElementById('timeScrubber');
+
+    const sliderPitchSpeed = document.getElementById('sliderPitchSpeed');
+    const sliderExitSpeed = document.getElementById('sliderExitSpeed');
+    const sliderContactTime = document.getElementById('sliderContactTime');
+
+    const valPitchSpeed = document.getElementById('valPitchSpeed');
+    const valExitSpeed = document.getElementById('valExitSpeed');
+    const valContactTime = document.getElementById('valContactTime');
+
+    const hudV1 = document.getElementById('hudV1');
+    const hudV2 = document.getElementById('hudV2');
+    const hudDt = document.getElementById('hudDt');
+    const hudF = document.getElementById('hudF');
+
+    const tCardDv = document.getElementById('tCardDv');
+    const tCardAcc = document.getElementById('tCardAcc');
+    const tCardForce = document.getElementById('tCardForce');
+
+    // 計算物理量
+    function recalculate() {
+      v1 = -(pitchSpeedKmh / 3.6);
+      v2 = parseFloat(sliderExitSpeed.value);
+      dtMs = parseFloat(sliderContactTime.value);
+
+      const dv = v2 - v1; // 50 - (-40) = 90
+      const a = dv / (dtMs / 1000); // 90 / 0.0009 = 100,000
+      const f = ballMassKg * a; // 0.145 * 100000 = 14500
+
+      // 更新 HUD
+      hudV1.textContent = `${v1.toFixed(1)} m/s`;
+      hudV2.textContent = `+${v2.toFixed(1)} m/s`;
+      hudDt.textContent = `${dtMs.toFixed(2)} ms`;
+      hudF.textContent = `${Math.round(f).toLocaleString()} N`;
+
+      // 更新遙測卡
+      tCardDv.innerHTML = `+${dv.toFixed(1)} <span style="font-size:0.75rem;">m/s</span>`;
+      tCardAcc.innerHTML = `${Math.round(a).toLocaleString()} <span style="font-size:0.75rem;">m/s²</span>`;
+      tCardForce.innerHTML = `${Math.round(f).toLocaleString()} <span style="font-size:0.75rem;">N</span>`;
+    }
+
+    // 畫布尺寸自適應
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      drawStage();
+    });
+
+    // 繪製高對比棒球球場與碰撞
+    function drawStage() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. 背景：乾淨的戶外棒球場示意（純白天際與草地）
+      const skyH = h * 0.72;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, skyH);
+
+      // 草皮
+      const grassGrad = ctx.createLinearGradient(0, skyH, 0, h);
+      grassGrad.addColorStop(0, '#15803d');
+      grassGrad.addColorStop(1, '#166534');
+      ctx.fillStyle = grassGrad;
+      ctx.fillRect(0, skyH, w, h - skyH);
+
+      // 本壘板與打擊區 (右側)
+      const homeX = w * 0.68;
+      const homeY = skyH + (h - skyH) * 0.45;
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(homeX - 16, homeY);
+      ctx.lineTo(homeX + 16, homeY);
+      ctx.lineTo(homeX + 16, homeY + 14);
+      ctx.lineTo(homeX, homeY + 24);
+      ctx.lineTo(homeX - 16, homeY + 14);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 投手丘 (左側)
+      const moundX = w * 0.16;
+      const moundY = homeY;
+      ctx.fillStyle = '#ca8a04';
+      ctx.beginPath();
+      ctx.ellipse(moundX, moundY + 8, 30, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // 繪製正向座標軸指示器（向右為正）
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.1, h * 0.16);
+      ctx.lineTo(w * 0.32, h * 0.16);
+      ctx.stroke();
+      // 箭頭
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.moveTo(w * 0.32, h * 0.16);
+      ctx.lineTo(w * 0.32 - 10, h * 0.16 - 5);
+      ctx.lineTo(w * 0.32 - 10, h * 0.16 + 5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.font = 'bold 12px "Noto Sans TC"';
+      ctx.fillText('以回擊飛出方向為正向 (+)', w * 0.1, h * 0.16 - 8);
+
+      // 階段計算：
+      // animProgress 0~450: 投球飛來 (左向右靠近本壘)
+      // animProgress 450~550: 接觸碰撞 (0.9 ms 衝擊波與反作用力)
+      // animProgress 550~1000: 全壘打飛向中外野
+      let ballX, ballY, batAngle;
+      const impactX = homeX;
+      const impactY = homeY - 45;
+
+      if (animProgress <= 450) {
+        // 投球中
+        const t = animProgress / 450;
+        ballX = moundX + (impactX - moundX) * t;
+        ballY = moundY - 20 + Math.sin(t * Math.PI) * -15;
+        batAngle = -Math.PI * 0.25; // 準備揮棒
+      } else if (animProgress <= 550) {
+        // 碰撞中
+        const t = (animProgress - 450) / 100;
+        ballX = impactX;
+        ballY = impactY;
+        batAngle = -Math.PI * 0.25 + t * (Math.PI * 0.55); // 揮中球
+      } else {
+        // 擊出全壘打！
+        const t = (animProgress - 550) / 450;
+        ballX = impactX - t * (w * 0.55); // 往左上方外野飛出 (以螢幕來看逆向或正向)
+        ballY = impactY - Math.sin(t * Math.PI * 0.8) * (h * 0.55) + t * 40;
+        batAngle = Math.PI * 0.3; // 揮棒完成
+      }
+
+      // 繪製打者與球棒
+      ctx.save();
+      ctx.translate(homeX + 25, impactY + 10);
+      // 打者身軀
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(-12, -35, 24, 45);
+      // 頭部
+      ctx.fillStyle = '#fde047';
+      ctx.beginPath();
+      ctx.arc(0, -48, 14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      // 球棒
+      ctx.rotate(batAngle);
+      ctx.fillStyle = '#b45309';
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(-5, -65, 10, 65, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+
+      // 碰撞瞬間特殊效果 (450 ~ 550)
+      if (animProgress >= 450 && animProgress <= 550) {
+        // 衝擊光圈
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(impactX, impactY, 22 + Math.random() * 8, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(impactX, impactY, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 作用力與反作用力雙向量箭頭 (大屏高對比)
+        // F1: 球棒對球 (往右或往飛出方向)
+        drawVector(impactX, impactY - 25, -60, 0, '#dc2626', 'F₁ = 14,500 N (球棒推球)');
+        // F2: 球對球棒 (往右反作用力)
+        drawVector(impactX + 10, impactY + 25, 60, 0, '#7c3aed', 'F₂ = 14,500 N (球反推球棒)');
+
+        // 1:1 醒目指示
+        ctx.fillStyle = '#b91c1c';
+        ctx.font = 'bold 15px "Outfit", sans-serif';
+        ctx.fillText('牛頓第三定律: F₁ : F₂ = 1 : 1', impactX - 90, impactY - 55);
+      }
+
+      // 繪製棒球
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      // 縫線
+      ctx.beginPath();
+      ctx.arc(ballX - 4, ballY, 6, -Math.PI * 0.4, Math.PI * 0.4);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(ballX + 4, ballY, 6, Math.PI * 0.6, Math.PI * 1.4);
+      ctx.stroke();
+
+      // 速度向量 (前/後階段)
+      if (animProgress < 450) {
+        drawVector(ballX, ballY - 18, 45, 0, '#0284c7', `V₁ = -40 m/s (${pitchSpeedKmh}km/h)`);
+      } else if (animProgress > 550) {
+        drawVector(ballX, ballY - 18, -55, -25, '#16a34a', `V₂ = +${v2} m/s (全壘打飛球)`);
+      }
+    }
+
+    // 向量繪製工具函式 (加粗、高對比)
+    function drawVector(x, y, dx, dy, color, label) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3.5;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + dx, y + dy);
+      ctx.stroke();
+
+      // 箭頭頭部
+      const angle = Math.atan2(dy, dx);
+      ctx.beginPath();
+      ctx.moveTo(x + dx, y + dy);
+      ctx.lineTo(x + dx - 10 * Math.cos(angle - Math.PI / 6), y + dy - 10 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x + dx - 10 * Math.cos(angle + Math.PI / 6), y + dy - 10 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      // 標籤文字
+      ctx.font = 'bold 12.5px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText(label, x + dx * 0.5 - 20, y + dy * 0.5 - 8);
+      ctx.restore();
+    }
+
+    // 動畫迴圈
+    function loop() {
+      if (isPlaying) {
+        animProgress += 5 * playSpeed;
+        if (animProgress > 1000) animProgress = 0;
+        timeScrubber.value = animProgress;
+        drawStage();
+      }
+      animId = requestAnimationFrame(loop);
+    }
+
+    // 事件監聽
+    btnPlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸ 暫停' : '▶ 播放';
+    });
+
+    btnReset.addEventListener('click', () => {
+      animProgress = 0;
+      timeScrubber.value = 0;
+      drawStage();
+    });
+
+    btnSlow.addEventListener('click', () => {
+      if (playSpeed === 1.0) {
+        playSpeed = 0.2;
+        btnSlow.textContent = '⚡ 正常速度 (1.0x)';
+        btnSlow.classList.add('active');
+      } else {
+        playSpeed = 1.0;
+        btnSlow.textContent = '🐌 超慢速 (0.2x)';
+        btnSlow.classList.remove('active');
+      }
+    });
+
+    timeScrubber.addEventListener('input', (e) => {
+      animProgress = parseFloat(e.target.value);
+      drawStage();
+    });
+
+    // 拉桿變更
+    sliderPitchSpeed.addEventListener('input', (e) => {
+      pitchSpeedKmh = parseFloat(e.target.value);
+      valPitchSpeed.textContent = `${pitchSpeedKmh} km/h (-${(pitchSpeedKmh/3.6).toFixed(1)}m/s)`;
+      recalculate();
+      drawStage();
+    });
+
+    sliderExitSpeed.addEventListener('input', (e) => {
+      v2 = parseFloat(e.target.value);
+      valExitSpeed.textContent = `${v2} m/s (${Math.round(v2*3.6)}km/h)`;
+      recalculate();
+      drawStage();
+    });
+
+    sliderContactTime.addEventListener('input', (e) => {
+      dtMs = parseFloat(e.target.value);
+      valContactTime.textContent = `${dtMs.toFixed(2)} ms`;
+      recalculate();
+      drawStage();
+    });
+
+    // 頁籤切換
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById('tabAnalysis').style.display = tabId === 'tabAnalysis' ? 'block' : 'none';
+        document.getElementById('tabQuiz').style.display = tabId === 'tabQuiz' ? 'block' : 'none';
+      });
+    });
+
+    // 原題測驗即時判定
+    const quizAnswers = {
+      1: { ans: 'D', exp: '正解 (D) 100000 m/s²。a = [50 - (-40)] / 0.0009 = 90 / 0.0009 = 100,000 m/s²。初速要加負號！' },
+      2: { ans: 'B', exp: '正解 (B) 1.45 × 10⁴ N。F = m × a = 0.145 kg × 100,000 m/s² = 14,500 N = 1.45×10⁴ N。' },
+      3: { ans: 'B', exp: '正解 (B) 1：1。F₁ 與 F₂ 互為作用力與反作用力，大小必相等，與球棒及球的質量無關！' }
+    };
+
+    document.querySelectorAll('.quiz-item').forEach(item => {
+      const qNum = item.getAttribute('data-q');
+      const correctAns = quizAnswers[qNum].ans;
+      const fbBox = item.querySelector('.quiz-fb');
+
+      item.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-ans');
+          item.querySelectorAll('.quiz-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            if (b.getAttribute('data-ans') === correctAns) {
+              b.classList.add('correct');
+            } else if (b === btn) {
+              b.classList.add('wrong');
+            }
+          });
+
+          if (selected === correctAns) {
+            fbBox.className = 'quiz-fb correct';
+            fbBox.textContent = `🎉 答對了！${quizAnswers[qNum].exp}`;
+          } else {
+            fbBox.className = 'quiz-fb wrong';
+            fbBox.textContent = `❌ 答錯囉！${quizAnswers[qNum].exp}`;
+          }
+        });
+      });
+    });
+
+    // 初始化
+    recalculate();
+    resizeCanvas();
+    loop();
+  </script>
+</body>
+</html>
