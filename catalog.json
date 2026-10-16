@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-18",
+  "lastUpdated": "2026-10-16",
   "categories": [
     {
       "id": "teaching",
@@ -14,6 +14,15 @@
           "homepageState": "linked",
           "order": 10,
           "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/chapter1-hub.html"
+        },
+        {
+          "id": "zhongshan-grade9-first-exam",
+          "title": "九年級段考",
+          "description": "中山國中九年級自然科第一次定期評量，50 題逐題互動複習。",
+          "status": "active",
+          "homepageState": "linked",
+          "order": 11,
+          "url": "https://hungjuiying0606-dotcom.github.io/personal-main-hub/naturelab/zhongshan-grade9-first-exam/"
         },
         {
           "id": "naturelab-senior-review",

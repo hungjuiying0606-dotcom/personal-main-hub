@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="高雄市立中山國中 115 學年度第一學期第一次定期評量，九年級自然科 50 題互動複習。"
+    />
+    <title>中山國中九年級自然｜第一次定期評量互動複習</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main id="cover" class="cover-shell">
+      <section class="cover-card" aria-labelledby="cover-title">
+        <a class="home-link" href="../../index.html">← 回到我的數位基地</a>
+        <div class="cover-badge">115 學年度 · 九年級自然科</div>
+        <h1 id="cover-title">第一次定期評量<br /><span>50 題互動複習</span></h1>
+        <p class="cover-lead">
+          高雄市立中山國中｜每次專心解一題，作答後立即核對答案與觀念。
+        </p>
+
+        <div class="cover-stats" aria-label="題庫資訊">
+          <article>
+            <strong>35</strong>
+            <span>理化題</span>
+          </article>
+          <article>
+            <strong>15</strong>
+            <span>地科題</span>
+          </article>
+          <article>
+            <strong>50</strong>
+            <span>單題頁面</span>
+          </article>
+        </div>
+
+        <div class="cover-actions">
+          <button id="start-btn" class="primary-btn" type="button">開始作答</button>
+          <button id="resume-btn" class="secondary-btn" type="button" hidden>繼續上次進度</button>
+        </div>
+        <p class="cover-tip">鍵盤提示：A～D 選答案、Enter 提交、左右方向鍵切題。</p>
+      </section>
+    </main>
+
+    <div id="exam" class="exam-shell" hidden>
+      <header class="topbar">
+        <button id="menu-btn" class="icon-btn" type="button" aria-label="開啟題號目錄" aria-expanded="false">
+          <span aria-hidden="true">☰</span>
+        </button>
+        <div class="brand-lockup">
+          <span>中山國中九年級自然</span>
+          <strong>第一次定期評量</strong>
+        </div>
+        <div class="topbar-progress" aria-label="作答進度">
+          <span id="answered-count">0 / 50</span>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+        </div>
+        <button id="home-btn" class="icon-btn" type="button" aria-label="回到封面">⌂</button>
+      </header>
+
+      <aside id="question-drawer" class="question-drawer" aria-label="題號目錄" aria-hidden="true">
+        <div class="drawer-head">
+          <div>
+            <span class="eyebrow">QUESTION MAP</span>
+            <h2>題號目錄</h2>
+          </div>
+          <button id="close-menu-btn" class="icon-btn" type="button" aria-label="關閉題號目錄">×</button>
+        </div>
+        <div class="legend" aria-label="題目狀態說明">
+          <span><i class="dot unanswered"></i>未作答</span>
+          <span><i class="dot correct"></i>答對</span>
+          <span><i class="dot incorrect"></i>待訂正</span>
+        </div>
+        <div id="question-grid" class="question-grid"></div>
+        <button id="clear-progress-btn" class="text-btn danger" type="button">清除全部作答紀錄</button>
+      </aside>
+      <button id="drawer-scrim" class="drawer-scrim" type="button" aria-label="關閉題號目錄" hidden></button>
+
+      <section class="stage" aria-live="polite">
+        <article class="question-card">
+          <div class="question-meta">
+            <div>
+              <span id="unit-label" class="unit-label">理化 · 運動與力</span>
+              <h1>第 <span id="question-number">1</span> 題</h1>
+            </div>
+            <span id="question-topic" class="topic-chip">平均速率</span>
+          </div>
+
+          <div id="question-scroll" class="question-scroll">
+            <img id="passage-image" class="passage-image" alt="第 48 至 50 題閱讀材料" hidden />
+            <img id="question-image" class="question-image" alt="第 1 題題目" />
+
+            <fieldset id="answer-fieldset" class="answer-fieldset">
+              <legend>選擇你的答案</legend>
+              <div class="answer-grid">
+                <button class="answer-btn" type="button" data-answer="A"><b>A</b><span>選項 A</span></button>
+                <button class="answer-btn" type="button" data-answer="B"><b>B</b><span>選項 B</span></button>
+                <button class="answer-btn" type="button" data-answer="C"><b>C</b><span>選項 C</span></button>
+                <button class="answer-btn" type="button" data-answer="D"><b>D</b><span>選項 D</span></button>
+              </div>
+            </fieldset>
+
+            <div class="submit-row">
+              <button id="submit-btn" class="primary-btn compact" type="button" disabled>確認答案</button>
+              <button id="retry-btn" class="secondary-btn compact" type="button" hidden>重新作答</button>
+              <span id="selection-hint" class="selection-hint">請先選擇 A、B、C 或 D</span>
+            </div>
+
+            <section id="feedback" class="feedback" tabindex="-1" hidden>
+              <div class="feedback-icon" aria-hidden="true"></div>
+              <div>
+                <p id="feedback-title" class="feedback-title"></p>
+                <p id="feedback-answer" class="feedback-answer"></p>
+                <p id="feedback-explanation" class="feedback-explanation"></p>
+              </div>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <nav class="bottom-nav" aria-label="題目導覽">
+        <button id="prev-btn" class="nav-btn" type="button">← 上一題</button>
+        <button id="menu-bottom-btn" class="nav-btn ghost" type="button">題號目錄</button>
+        <button id="next-btn" class="nav-btn" type="button">下一題 →</button>
+      </nav>
+    </div>
+
+    <script src="./questions.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
