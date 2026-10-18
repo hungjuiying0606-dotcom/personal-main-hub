@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="康軒自然三上2-4：觀察圓周運動的速度與向心力方向，預測斷繩後的運動，認識萬有引力，搭配30秒教學影片。">
+  <title>2-4 圓周運動與萬有引力｜互動教室</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div><p class="eyebrow">九年級自然 · 課本 46–49 頁</p><h1>2-4 圓周運動與萬有引力</h1></div>
+    <div class="header-actions"><a href="../" target="_top">返回主網頁</a><button id="fullscreen" type="button">⛶ 全螢幕</button></div>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="教學主題">
+    <button id="tab-orbit" role="tab" aria-selected="true" aria-controls="lesson" data-mode="orbit" type="button">① 圓周與向心力</button>
+    <button id="tab-release" role="tab" aria-selected="false" aria-controls="lesson" data-mode="release" type="button" tabindex="-1">② 斷繩預測</button>
+    <button id="tab-gravity" role="tab" aria-selected="false" aria-controls="lesson" data-mode="gravity" type="button" tabindex="-1">③ 萬有引力</button>
+    <button id="tab-video" role="tab" aria-selected="false" aria-controls="lesson" data-mode="video" type="button" tabindex="-1">④ 30 秒動畫</button>
+  </nav>
+  <main id="lesson" role="tabpanel" aria-labelledby="tab-orbit" tabindex="0">
+    <section class="visual" aria-label="互動示意圖">
+      <div class="visual-top"><span id="scene-name">水平面俯視示意</span><span id="status" class="status" role="status">已暫停</span></div>
+      <div id="diagram-area" class="diagram-area">
+        <svg id="diagram" viewBox="0 0 860 570" role="img" aria-label="繩子拉著小球繞圓；藍色速度箭頭沿切線，橘色向心力箭頭指向圓心">
+          <defs>
+            <marker id="speed-head" markerWidth="4" markerHeight="4" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#075eb5"/></marker>
+            <marker id="force-head" markerWidth="4" markerHeight="4" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b94400"/></marker>
+            <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#dbe3ec"/></pattern>
+          </defs>
+          <rect width="860" height="570" fill="url(#dots)"/>
+          <circle cx="350" cy="275" r="170" fill="none" stroke="#8093a6" stroke-width="3" stroke-dasharray="10 10"/>
+          <path id="tangent" d="M350 105H840" fill="none" stroke="#075eb5" stroke-width="5" stroke-dasharray="12 9" visibility="hidden"/>
+          <line id="rope" x1="350" y1="275" x2="350" y2="105" stroke="#50657b" stroke-width="5"/>
+          <g id="earth" hidden>
+            <circle cx="350" cy="275" r="70" fill="#075eb5" stroke="#102a43" stroke-width="3"/>
+            <path d="M311 223L335 214L348 237L331 254L337 279L320 299L298 278L300 246ZM376 283L402 268L416 284L399 314L379 332L365 307Z" fill="#eaf4ff"/>
+            <text x="350" y="288" text-anchor="middle" class="earth-label">地球</text>
+          </g>
+          <g id="center"><circle cx="350" cy="275" r="7" fill="#102a43"/><rect x="311" y="290" width="78" height="45" rx="8" fill="#fffdf7"/><text x="350" y="322" text-anchor="middle" class="svg-label">圓心</text></g>
+          <path id="force-arrow" d="M350 126V193" fill="none" stroke="#b94400" stroke-width="9" marker-end="url(#force-head)"/>
+          <path id="speed-arrow" d="M373 105H480" fill="none" stroke="#075eb5" stroke-width="9" marker-end="url(#speed-head)"/>
+          <circle id="release-origin" cx="350" cy="105" r="18" fill="#fffdf7" stroke="#075eb5" stroke-width="4" visibility="hidden"/>
+          <g id="ball"><circle r="18" fill="#102a43" stroke="#fffdf7" stroke-width="4"/><circle r="5" fill="#fffdf7"/></g>
+          <g id="satellite" hidden><rect x="-36" y="-15" width="22" height="30" fill="#075eb5" stroke="#102a43" stroke-width="3"/><rect x="14" y="-15" width="22" height="30" fill="#075eb5" stroke="#102a43" stroke-width="3"/><rect x="-12" y="-17" width="24" height="34" rx="3" fill="#fffdf7" stroke="#102a43" stroke-width="4"/></g>
+          <text id="point-label" x="350" y="63" text-anchor="middle" class="svg-label">A 點</text>
+          <text id="speed-label" x="530" y="85" class="speed-label">速度 → 切線</text>
+          <text id="force-label" x="550" y="445" class="force-label">向心力 → 圓心</text>
+          <text x="34" y="535" id="diagram-note" class="svg-note">忽略摩擦；重力與支持力平衡</text>
+        </svg>
+        <div id="flight-result" class="flight-result" hidden>沿當下切線直行</div>
+      </div>
+      <div id="movie-area" class="movie-area" hidden>
+        <video id="movie" controls playsinline preload="metadata" poster="assets/poster.png" aria-label="30秒圓周運動與向心力教學動畫，含繁體中文字幕與台灣男聲">
+          <source src="assets/circular-motion-30s.mp4" type="video/mp4">
+          您的瀏覽器無法播放影片，請使用下方下載連結。
+        </video>
+      </div>
+      <div id="motion-controls" class="controls">
+        <button id="play" class="primary" type="button">▶ 播放</button><button id="reset" type="button">↺ 重設</button>
+        <label class="speed-control" for="speed">示意速率 <input id="speed" type="range" min="0.5" max="1.5" step="0.25" value="1"><output id="speed-value" for="speed">1×</output></label>
+      </div>
+      <div id="video-controls" class="controls video-controls" hidden><button type="button" data-seek="0">0秒 · 速度方向</button><button type="button" data-seek="8">8秒 · 向心力</button><button type="button" data-seek="21">21秒 · 斷繩</button></div>
+    </section>
+    <aside class="teaching" aria-label="觀察重點與互動問題">
+      <section id="orbit-content" class="content">
+        <p class="kicker">觀察重點</p><h2>速率不變，方向在變。</h2>
+        <p>繩的拉力朝向圓心，讓小球轉彎，這個力就是<strong class="force-text">向心力</strong>。</p>
+        <div class="toggles"><label><input id="show-speed" type="checkbox" checked> <span class="speed-text">顯示速度方向</span></label><label><input id="show-force" type="checkbox" checked> <span class="force-text">顯示向心力方向</span></label></div>
+        <fieldset class="quiz" id="orbit-quiz"><legend>速率固定，還有加速度嗎？</legend><button type="button" data-answer="yes">有，因為速度方向改變</button><button type="button" data-answer="no">沒有，因為速率不變</button></fieldset>
+        <p id="orbit-feedback" class="feedback" aria-live="polite">觀察箭頭，再選一個答案。</p>
+      </section>
+      <section id="release-content" class="content" hidden>
+        <p class="kicker">先預測，再驗證</p><h2>斷繩後往哪裡走？</h2>
+        <label class="point-control" for="release-point">選擇起始位置 <select id="release-point"><option value="0">A 上方</option><option value="1">B 右方</option><option value="2">C 下方</option><option value="3">D 左方</option></select></label>
+        <div class="predictions" role="group" aria-label="預測斷繩後的運動方向"><button type="button" data-prediction="tangent" aria-pressed="false">沿當下切線</button><button type="button" data-prediction="outward" aria-pressed="false">沿半徑向外</button><button type="button" data-prediction="inward" aria-pressed="false">朝向圓心</button></div>
+        <button id="release" class="release-button" type="button">✂ 斷繩驗證</button>
+        <p id="release-feedback" class="feedback" aria-live="polite">先選預測，再按「斷繩驗證」。</p>
+        <details class="examples"><summary>生活中的切線運動</summary><label class="example-control" for="example">選擇例子 <select id="example"><option>旋轉拖把</option><option>旋轉雨傘</option><option>洗衣機脫水</option></select></label>
+        <p id="example-note" class="small-note">水離開拖把時，沿當下的切線方向飛出。</p></details>
+      </section>
+      <section id="gravity-content" class="content" hidden>
+        <p class="kicker">同一個方向，不同的力</p><h2>繞地球的力，<br>從哪裡來？</h2>
+        <div class="object-buttons" role="group" aria-label="選擇繞行物體"><button type="button" data-object="moon" aria-pressed="true">月球</button><button type="button" data-object="satellite" aria-pressed="false">人造衛星</button></div>
+        <p>任何兩個物體之間，都有互相吸引的<strong>萬有引力</strong>。</p>
+        <p id="gravity-explanation">月球繞地球所需的向心力，來自<strong class="force-text">地球對月球的萬有引力</strong>。</p>
+        <details class="gravity-question"><summary>想一想：向心力來自哪裡？</summary><fieldset class="quiz" id="gravity-quiz"><legend>月球繞地球的向心力來自？</legend><button type="button" data-answer="gravity">地球對月球的萬有引力</button><button type="button" data-answer="speed">月球向前的速度</button></fieldset>
+        <p id="gravity-feedback" class="feedback" aria-live="polite">速度描述運動；引力使方向改變。</p></details>
+      </section>
+      <section id="video-content" class="content" hidden>
+        <p class="kicker">30 秒重點回顧</p><h2>力向圓心，<br>速度沿切線。</h2>
+        <ol class="takeaways"><li>圓周運動的速度方向持續改變。</li><li>向心力始終指向圓心。</li><li>斷繩後因慣性沿切線前進。</li></ol>
+        <p>台灣男聲 · 放慢語速<br>繁體中文字幕 · 可全螢幕播放</p>
+        <a class="download" href="assets/circular-motion-30s.mp4" download>下載 30 秒動畫 ↓</a>
+      </section>
+    </aside>
+  </main>
+  <footer><span>教材：康軒自然三上 2-4 · 課本 46–49 頁</span><span id="model-note">箭頭表示方向；軌跡為示意</span></footer>
+</div>
+</body>
+</html>
